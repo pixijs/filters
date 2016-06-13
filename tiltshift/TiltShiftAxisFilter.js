@@ -1,6 +1,5 @@
 var core = require('../../core');
-// @see https://github.com/substack/brfs/issues/25
-var fs = require('fs');
+var glslify  = require('glslify');
 
 /**
  * @author Vico @vicocotea
@@ -11,31 +10,30 @@ var fs = require('fs');
  * A TiltShiftAxisFilter.
  *
  * @class
- * @extends PIXI.AbstractFilter
+ * @extends PIXI.Filter
  * @memberof PIXI.filters
  */
 function TiltShiftAxisFilter()
 {
-    core.AbstractFilter.call(this,
+    core.Filter.call(this,
         // vertex shader
-        null,
+        glslify('../fragments/default.vert'),
         // fragment shader
-        fs.readFileSync(__dirname + '/tiltShift.frag', 'utf8'),
-        // custom uniforms
-        {
-            blur:           { type: '1f', value: 100 },
-            gradientBlur:   { type: '1f', value: 600 },
-            start:          { type: 'v2', value: { x: 0,    y: window.innerHeight / 2 } },
-            end:            { type: 'v2', value: { x: 600,  y: window.innerHeight / 2 } },
-            delta:          { type: 'v2', value: { x: 30,   y: 30 } },
-            texSize:        { type: 'v2', value: { x: window.innerWidth, y: window.innerHeight } }
-        }
+        glslify('./tilt-shift.frag')
+
     );
+
+    this.uniforms.blur = 100;
+    this.uniforms.gradientBlur = 600;
+    this.uniforms.start = new PIXI.Point(0, window.innerHeight / 2);
+    this.uniforms.end = new PIXI.Point(600, window.innerHeight / 2);
+    this.uniforms.delta = new PIXI.Point(30, 30);
+    this.uniforms.texSize = new PIXI.Point(window.innerWidth, window.innerHeight);
 
     this.updateDelta();
 }
 
-TiltShiftAxisFilter.prototype = Object.create(core.AbstractFilter.prototype);
+TiltShiftAxisFilter.prototype = Object.create(core.Filter.prototype);
 TiltShiftAxisFilter.prototype.constructor = TiltShiftAxisFilter;
 module.exports = TiltShiftAxisFilter;
 
@@ -46,8 +44,8 @@ module.exports = TiltShiftAxisFilter;
  */
 TiltShiftAxisFilter.prototype.updateDelta = function ()
 {
-    this.uniforms.delta.value.x = 0;
-    this.uniforms.delta.value.y = 0;
+    this.uniforms.delta.x = 0;
+    this.uniforms.delta.y = 0;
 };
 
 Object.defineProperties(TiltShiftAxisFilter.prototype, {
@@ -60,11 +58,11 @@ Object.defineProperties(TiltShiftAxisFilter.prototype, {
     blur: {
         get: function ()
         {
-            return this.uniforms.blur.value;
+            return this.uniforms.blur;
         },
         set: function (value)
         {
-            this.uniforms.blur.value = value;
+            this.uniforms.blur = value;
         }
     },
 
@@ -77,11 +75,11 @@ Object.defineProperties(TiltShiftAxisFilter.prototype, {
     gradientBlur: {
         get: function ()
         {
-            return this.uniforms.gradientBlur.value;
+            return this.uniforms.gradientBlur;
         },
         set: function (value)
         {
-            this.uniforms.gradientBlur.value = value;
+            this.uniforms.gradientBlur = value;
         }
     },
 
@@ -94,11 +92,11 @@ Object.defineProperties(TiltShiftAxisFilter.prototype, {
     start: {
         get: function ()
         {
-            return this.uniforms.start.value;
+            return this.uniforms.start;
         },
         set: function (value)
         {
-            this.uniforms.start.value = value;
+            this.uniforms.start = value;
             this.updateDelta();
         }
     },
@@ -112,11 +110,11 @@ Object.defineProperties(TiltShiftAxisFilter.prototype, {
     end: {
         get: function ()
         {
-            return this.uniforms.end.value;
+            return this.uniforms.end;
         },
         set: function (value)
         {
-            this.uniforms.end.value = value;
+            this.uniforms.end = value;
             this.updateDelta();
         }
     }

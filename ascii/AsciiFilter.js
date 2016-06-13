@@ -1,6 +1,5 @@
 var core = require('../../core');
-// @see https://github.com/substack/brfs/issues/25
-var fs = require('fs');
+var glslify  = require('glslify');
 
 // TODO (cengler) - The Y is flipped in this shader for some reason.
 
@@ -13,25 +12,22 @@ var fs = require('fs');
  * An ASCII filter.
  *
  * @class
- * @extends PIXI.AbstractFilter
+ * @extends PIXI.Filter
  * @memberof PIXI.filters
  */
 function AsciiFilter()
 {
-    core.AbstractFilter.call(this,
+    core.Filter.call(this,
         // vertex shader
-        null,
+        glslify('../fragments/default.vert'),
         // fragment shader
-        fs.readFileSync(__dirname + '/ascii.frag', 'utf8'),
-        // custom uniforms
-        {
-            dimensions: { type: '4fv', value: new Float32Array([0, 0, 0, 0]) },
-            pixelSize:  { type: '1f', value: 8 }
-        }
+        glslify('./ascii.frag')
     );
+
+    this.size = 8;
 }
 
-AsciiFilter.prototype = Object.create(core.AbstractFilter.prototype);
+AsciiFilter.prototype = Object.create(core.Filter.prototype);
 AsciiFilter.prototype.constructor = AsciiFilter;
 module.exports = AsciiFilter;
 
@@ -45,11 +41,11 @@ Object.defineProperties(AsciiFilter.prototype, {
     size: {
         get: function ()
         {
-            return this.uniforms.pixelSize.value;
+            return this.uniforms.pixelSize;
         },
         set: function (value)
         {
-            this.uniforms.pixelSize.value = value;
+            this.uniforms.pixelSize = value;
         }
     }
 });

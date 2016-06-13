@@ -2,17 +2,39 @@ precision mediump float;
 
 varying vec2 vTextureCoord;
 
-uniform vec4 dimensions;
-uniform vec2 pixelSize;
+uniform vec2 size;
 uniform sampler2D uSampler;
+
+uniform vec4 filterArea;
+
+vec2 mapCoord( vec2 coord )
+{
+    coord *= filterArea.xy;
+    coord += filterArea.zw;
+
+    return coord;
+}
+
+vec2 unmapCoord( vec2 coord )
+{
+    coord -= filterArea.zw;
+    coord /= filterArea.xy;
+
+    return coord;
+}
+
+vec2 pixelate(vec2 coord, vec2 size)
+{
+	return floor( coord / size ) * size;
+}
 
 void main(void)
 {
-    vec2 coord = vTextureCoord;
+    vec2 coord = mapCoord(vTextureCoord);
 
-    vec2 size = dimensions.xy / pixelSize;
+    coord = pixelate(coord, size);
 
-    vec2 color = floor( ( vTextureCoord * size ) ) / size + pixelSize/dimensions.xy * 0.5;
+    coord = unmapCoord(coord);
 
-    gl_FragColor = texture2D(uSampler, color);
+    gl_FragColor = texture2D(uSampler, coord);
 }

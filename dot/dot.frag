@@ -3,7 +3,7 @@ precision mediump float;
 varying vec2 vTextureCoord;
 varying vec4 vColor;
 
-uniform vec4 dimensions;
+uniform vec4 filterArea;
 uniform sampler2D uSampler;
 
 uniform float angle;
@@ -12,7 +12,7 @@ uniform float scale;
 float pattern()
 {
    float s = sin(angle), c = cos(angle);
-   vec2 tex = vTextureCoord * dimensions.xy;
+   vec2 tex = vTextureCoord * filterArea.xy;
    vec2 point = vec2(
        c * tex.x - s * tex.y,
        s * tex.x + c * tex.y

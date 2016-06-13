@@ -1,24 +1,23 @@
 var core = require('../../core');
-// @see https://github.com/substack/brfs/issues/25
-var fs = require('fs');
+var glslify  = require('glslify');
 
 /**
  * A Cross Hatch effect filter.
  *
  * @class
- * @extends PIXI.AbstractFilter
+ * @extends PIXI.Filter
  * @memberof PIXI.filters
  */
 function CrossHatchFilter()
 {
-    core.AbstractFilter.call(this,
+    core.Filter.call(this,
         // vertex shader
-        null,
+        glslify('../fragments/default.vert'),
         // fragment shader
-        fs.readFileSync(__dirname + '/crosshatch.frag', 'utf8')
+        glslify('./crosshatch.frag')
     );
 }
 
-CrossHatchFilter.prototype = Object.create(core.AbstractFilter.prototype);
+CrossHatchFilter.prototype = Object.create(core.Filter.prototype);
 CrossHatchFilter.prototype.constructor = CrossHatchFilter;
 module.exports = CrossHatchFilter;

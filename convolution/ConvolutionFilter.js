@@ -1,6 +1,5 @@
 var core = require('../../core');
-// @see https://github.com/substack/brfs/issues/25
-var fs = require('fs');
+var glslify  = require('glslify');
 
 /**
  * The ConvolutionFilter class applies a matrix convolution filter effect.
@@ -10,7 +9,7 @@ var fs = require('fs');
  * See http://docs.gimp.org/en/plug-in-convmatrix.html for more info.
  *
  * @class
- * @extends PIXI.AbstractFilter
+ * @extends PIXI.Filter
  * @memberof PIXI.filters
  * @param matrix {number[]} An array of values used for matrix transformation. Specified as a 9 point Array.
  * @param width {number} Width of the object you are transforming
@@ -18,20 +17,19 @@ var fs = require('fs');
  */
 function ConvolutionFilter(matrix, width, height)
 {
-    core.AbstractFilter.call(this,
+    core.Filter.call(this,
         // vertex shader
-        null,
+        glslify('../fragments/default.vert'),
         // fragment shader
-        fs.readFileSync(__dirname + '/convolution.frag', 'utf8'),
-        // custom uniforms
-        {
-            matrix:     { type: '1fv', value: new Float32Array(matrix) },
-            texelSize:  { type: 'v2', value: { x: 1 / width, y: 1 / height } }
-        }
+        glslify('./convolution.frag')
     );
+
+    this.matrix = matrix;
+    this.width = width;
+    this.height = height;
 }
 
-ConvolutionFilter.prototype = Object.create(core.AbstractFilter.prototype);
+ConvolutionFilter.prototype = Object.create(core.Filter.prototype);
 ConvolutionFilter.prototype.constructor = ConvolutionFilter;
 module.exports = ConvolutionFilter;
 
@@ -45,11 +43,11 @@ Object.defineProperties(ConvolutionFilter.prototype, {
     matrix: {
         get: function ()
         {
-            return this.uniforms.matrix.value;
+            return this.uniforms.matrix;
         },
         set: function (value)
         {
-            this.uniforms.matrix.value = new Float32Array(value);
+            this.uniforms.matrix = new Float32Array(value);
         }
     },
 
@@ -62,11 +60,11 @@ Object.defineProperties(ConvolutionFilter.prototype, {
     width: {
         get: function ()
         {
-            return 1/this.uniforms.texelSize.value.x;
+            return 1/this.uniforms.texelSize[0];
         },
         set: function (value)
         {
-            this.uniforms.texelSize.value.x = 1/value;
+            this.uniforms.texelSize[0] = 1/value;
         }
     },
 
@@ -79,11 +77,11 @@ Object.defineProperties(ConvolutionFilter.prototype, {
     height: {
         get: function ()
         {
-            return 1/this.uniforms.texelSize.value.y;
+            return 1/this.uniforms.texelSize[1];
         },
         set: function (value)
         {
-            this.uniforms.texelSize.value.y = 1/value;
+            this.uniforms.texelSize[1] = 1/value;
         }
     }
 });

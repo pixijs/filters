@@ -1,31 +1,28 @@
 var core = require('../../core');
-// @see https://github.com/substack/brfs/issues/25
-var fs = require('fs');
+var glslify  = require('glslify');
 
 /**
  * This filter applies a twist effect making display objects appear twisted in the given direction.
  *
  * @class
- * @extends PIXI.AbstractFilter
+ * @extends PIXI.Filter
  * @memberof PIXI.filters
  */
 function TwistFilter()
 {
-    core.AbstractFilter.call(this,
+    core.Filter.call(this,
         // vertex shader
-        null,
+        glslify('../fragments/default.vert'),
         // fragment shader
-        fs.readFileSync(__dirname + '/twist.frag', 'utf8'),
-        // custom uniforms
-        {
-            radius:     { type: '1f', value: 0.5 },
-            angle:      { type: '1f', value: 5 },
-            offset:     { type: 'v2', value: { x: 0.5, y: 0.5 } }
-        }
+        glslify('./twist.frag')
     );
+
+    this.radius = 200;
+    this.angle = 4;
+    this.padding = 20;
 }
 
-TwistFilter.prototype = Object.create(core.AbstractFilter.prototype);
+TwistFilter.prototype = Object.create(core.Filter.prototype);
 TwistFilter.prototype.constructor = TwistFilter;
 module.exports = TwistFilter;
 
@@ -39,11 +36,11 @@ Object.defineProperties(TwistFilter.prototype, {
     offset: {
         get: function ()
         {
-            return this.uniforms.offset.value;
+            return this.uniforms.offset;
         },
         set: function (value)
         {
-            this.uniforms.offset.value = value;
+            this.uniforms.offset = value;
         }
     },
 
@@ -56,11 +53,11 @@ Object.defineProperties(TwistFilter.prototype, {
     radius: {
         get: function ()
         {
-            return this.uniforms.radius.value;
+            return this.uniforms.radius;
         },
         set: function (value)
         {
-            this.uniforms.radius.value = value;
+            this.uniforms.radius = value;
         }
     },
 
@@ -73,11 +70,11 @@ Object.defineProperties(TwistFilter.prototype, {
     angle: {
         get: function ()
         {
-            return this.uniforms.angle.value;
+            return this.uniforms.angle;
         },
         set: function (value)
         {
-            this.uniforms.angle.value = value;
+            this.uniforms.angle = value;
         }
     }
 });

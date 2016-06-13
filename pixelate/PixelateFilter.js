@@ -1,6 +1,6 @@
 var core = require('../../core');
 // @see https://github.com/substack/brfs/issues/25
-var fs = require('fs');
+var glslify  = require('glslify');
 
 /**
  * This filter applies a pixelate effect making display objects appear 'blocky'.
@@ -11,20 +11,18 @@ var fs = require('fs');
  */
 function PixelateFilter()
 {
-    core.AbstractFilter.call(this,
+    core.Filter.call(this,
         // vertex shader
-        null,
+        glslify('../fragments/default.vert'),
         // fragment shader
-        fs.readFileSync(__dirname + '/pixelate.frag', 'utf8'),
-        // custom uniforms
-        {
-            dimensions: { type: '4fv',  value: new Float32Array([0, 0, 0, 0]) },
-            pixelSize:  { type: 'v2',   value: { x: 10, y: 10 } }
-        }
+        glslify('./pixelate.frag')
     );
+
+    this.size = [0,0];
+
 }
 
-PixelateFilter.prototype = Object.create(core.AbstractFilter.prototype);
+PixelateFilter.prototype = Object.create(core.Filter.prototype);
 PixelateFilter.prototype.constructor = PixelateFilter;
 module.exports = PixelateFilter;
 
@@ -39,11 +37,11 @@ Object.defineProperties(PixelateFilter.prototype, {
     size: {
         get: function ()
         {
-            return this.uniforms.pixelSize.value;
+            return this.uniforms.size;
         },
         set: function (value)
         {
-            this.uniforms.pixelSize.value = value;
+            this.uniforms.size.value = value;
         }
     }
 });

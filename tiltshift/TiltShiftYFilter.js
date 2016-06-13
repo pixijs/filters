@@ -27,10 +27,10 @@ module.exports = TiltShiftYFilter;
  */
 TiltShiftYFilter.prototype.updateDelta = function ()
 {
-    var dx = this.uniforms.end.value.x - this.uniforms.start.value.x;
-    var dy = this.uniforms.end.value.y - this.uniforms.start.value.y;
+    var dx = this.uniforms.end.x - this.uniforms.start.x;
+    var dy = this.uniforms.end.y - this.uniforms.start.y;
     var d = Math.sqrt(dx * dx + dy * dy);
 
-    this.uniforms.delta.value.x = -dy / d;
-    this.uniforms.delta.value.y = dx / d;
+    this.uniforms.delta.x = -dy / d;
+    this.uniforms.delta.y = dx / d;
 };

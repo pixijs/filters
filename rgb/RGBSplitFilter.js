@@ -1,32 +1,28 @@
 var core = require('../../core');
-// @see https://github.com/substack/brfs/issues/25
-var fs = require('fs');
+var glslify  = require('glslify');
 
 /**
  * An RGB Split Filter.
  *
  * @class
- * @extends PIXI.AbstractFilter
+ * @extends PIXI.Filter
  * @memberof PIXI.filters
  */
 function RGBSplitFilter()
 {
-    core.AbstractFilter.call(this,
+    core.Filter.call(this,
         // vertex shader
-        null,
+        glslify('../fragments/default.vert'),
         // fragment shader
-        fs.readFileSync(__dirname + '/rgbSplit.frag', 'utf8'),
-        // custom uniforms
-        {
-            red:        { type: 'v2', value: { x: 20, y: 20 } },
-            green:      { type: 'v2', value: { x: -20, y: 20 } },
-            blue:       { type: 'v2', value: { x: 20, y: -20 } },
-            dimensions: { type: '4fv', value: [0, 0, 0, 0] }
-        }
+        glslify('./rgb-split.frag')
     );
+
+    this.red = [-10, 0];
+    this.green = [0, 10];
+    this.blue = [0, 0];
 }
 
-RGBSplitFilter.prototype = Object.create(core.AbstractFilter.prototype);
+RGBSplitFilter.prototype = Object.create(core.Filter.prototype);
 RGBSplitFilter.prototype.constructor = RGBSplitFilter;
 module.exports = RGBSplitFilter;
 
@@ -40,11 +36,11 @@ Object.defineProperties(RGBSplitFilter.prototype, {
     red: {
         get: function ()
         {
-            return this.uniforms.red.value;
+            return this.uniforms.red;
         },
         set: function (value)
         {
-            this.uniforms.red.value = value;
+            this.uniforms.red = value;
         }
     },
 
@@ -57,11 +53,11 @@ Object.defineProperties(RGBSplitFilter.prototype, {
     green: {
         get: function ()
         {
-            return this.uniforms.green.value;
+            return this.uniforms.green;
         },
         set: function (value)
         {
-            this.uniforms.green.value = value;
+            this.uniforms.green = value;
         }
     },
 

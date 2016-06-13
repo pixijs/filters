@@ -1,6 +1,5 @@
 var core = require('../../core');
-// @see https://github.com/substack/brfs/issues/25
-var fs = require('fs');
+var glslify  = require('glslify');
 
 /**
  * The ColorMatrixFilter class lets you apply a 4x4 matrix transformation on the RGBA
@@ -8,16 +7,16 @@ var fs = require('fs');
  * with a new set of RGBA color and alpha values. It's pretty powerful!
  *
  * @class
- * @extends PIXI.AbstractFilter
+ * @extends PIXI.Filter
  * @memberof PIXI.filters
  */
 function ShockwaveFilter()
 {
-    core.AbstractFilter.call(this,
+    core.Filter.call(this,
         // vertex shader
-        null,
+        glslify('../fragments/default.vert'),
         // fragment shader
-        fs.readFileSync(__dirname + '/shockwave.frag', 'utf8'),
+        glslify('./shockwave.frag'),
         // custom uniforms
         {
             center: { type: 'v2', value: { x: 0.5, y: 0.5 } },
@@ -25,9 +24,13 @@ function ShockwaveFilter()
             time: { type: '1f', value: 0 }
         }
     );
+
+    this.center = [0.5, 0.5];
+    this.params = [10, 0.8, 0.1];
+    this.time = 0;
 }
 
-ShockwaveFilter.prototype = Object.create(core.AbstractFilter.prototype);
+ShockwaveFilter.prototype = Object.create(core.Filter.prototype);
 ShockwaveFilter.prototype.constructor = ShockwaveFilter;
 module.exports = ShockwaveFilter;
 
@@ -42,11 +45,11 @@ Object.defineProperties(ShockwaveFilter.prototype, {
     center: {
         get: function ()
         {
-            return this.uniforms.center.value;
+            return this.uniforms.center;
         },
         set: function (value)
         {
-            this.uniforms.center.value = value;
+            this.uniforms.center = value;
         }
     },
     /**
@@ -59,11 +62,11 @@ Object.defineProperties(ShockwaveFilter.prototype, {
     params: {
         get: function ()
         {
-            return this.uniforms.params.value;
+            return this.uniforms.params;
         },
         set: function (value)
         {
-            this.uniforms.params.value = value;
+            this.uniforms.params = value;
         }
     },
     /**
@@ -76,11 +79,11 @@ Object.defineProperties(ShockwaveFilter.prototype, {
     time: {
         get: function ()
         {
-            return this.uniforms.time.value;
+            return this.uniforms.time;
         },
         set: function (value)
         {
-            this.uniforms.time.value = value;
+            this.uniforms.time = value;
         }
     }
 });

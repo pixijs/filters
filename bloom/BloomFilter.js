@@ -1,45 +1,43 @@
 var core = require('../../core'),
     BlurXFilter = require('../blur/BlurXFilter'),
     BlurYFilter = require('../blur/BlurYFilter');
+    VoidFilter = require('../void/VoidFilter');
 
 /**
  * The BloomFilter applies a Gaussian blur to an object.
  * The strength of the blur can be set for x- and y-axis separately.
  *
  * @class
- * @extends PIXI.AbstractFilter
+ * @extends PIXI.Filter
  * @memberof PIXI.filters
  */
 function BloomFilter()
 {
-    core.AbstractFilter.call(this);
+    core.Filter.call(this);
 
     this.blurXFilter = new BlurXFilter();
     this.blurYFilter = new BlurYFilter();
 
-    this.defaultFilter = new core.AbstractFilter();
+    this.blurYFilter.blendMode = core.BLEND_MODES.SCREEN;
+
+    this.defaultFilter = new VoidFilter();
 }
 
-BloomFilter.prototype = Object.create(core.AbstractFilter.prototype);
+BloomFilter.prototype = Object.create(core.Filter.prototype);
 BloomFilter.prototype.constructor = BloomFilter;
 module.exports = BloomFilter;
 
-BloomFilter.prototype.applyFilter = function (renderer, input, output)
+BloomFilter.prototype.apply = function (filterManager, input, output)
 {
-    var renderTarget = renderer.filterManager.getRenderTarget(true);
+    var renderTarget = filterManager.getRenderTarget(true);
 
     //TODO - copyTexSubImage2D could be used here?
-    this.defaultFilter.applyFilter(renderer, input, output);
+    this.defaultFilter.apply(filterManager, input, output);
 
-    this.blurXFilter.applyFilter(renderer, input, renderTarget);
+    this.blurXFilter.apply(filterManager, input, renderTarget);
+    this.blurYFilter.apply(filterManager, renderTarget, output);
 
-    renderer.blendModeManager.setBlendMode(core.BLEND_MODES.SCREEN);
-
-    this.blurYFilter.applyFilter(renderer, renderTarget, output);
-
-    renderer.blendModeManager.setBlendMode(core.BLEND_MODES.NORMAL);
-
-    renderer.filterManager.returnRenderTarget(renderTarget);
+    filterManager.returnRenderTarget(renderTarget);
 };
 
 Object.defineProperties(BloomFilter.prototype, {

@@ -1,8 +1,34 @@
-precision mediump float;
+varying vec2 vTextureCoord;
 
-uniform vec4 dimensions;
+uniform vec4 filterArea;
 uniform float pixelSize;
 uniform sampler2D uSampler;
+
+vec2 mapCoord( vec2 coord )
+{
+    coord *= filterArea.xy;
+    coord += filterArea.zw;
+
+    return coord;
+}
+
+vec2 unmapCoord( vec2 coord )
+{
+    coord -= filterArea.zw;
+    coord /= filterArea.xy;
+
+    return coord;
+}
+
+vec2 pixelate(vec2 coord, vec2 size)
+{
+    return floor( coord / size ) * size;
+}
+
+vec2 getMod(vec2 coord, vec2 size)
+{
+    return mod( coord , size) / size;
+}
 
 float character(float n, vec2 p)
 {
@@ -16,11 +42,16 @@ float character(float n, vec2 p)
 
 void main()
 {
-    vec2 uv = gl_FragCoord.xy;
+    vec2 coord = mapCoord(vTextureCoord);
 
-    vec3 col = texture2D(uSampler, floor( uv / pixelSize ) * pixelSize / dimensions.xy).rgb;
+    // get the rounded color..
+    vec2 pixCoord = pixelate(coord, vec2(pixelSize));
+    pixCoord = unmapCoord(pixCoord);
 
-    float gray = (col.r + col.g + col.b) / 3.0;
+    vec4 color = texture2D(uSampler, pixCoord);
+
+    // determine the character to use
+    float gray = (color.r + color.g + color.b) / 3.0;
 
     float n =  65536.0;             // .
     if (gray > 0.2) n = 65600.0;    // :
@@ -31,8 +62,9 @@ void main()
     if (gray > 0.7) n = 13199452.0; // @
     if (gray > 0.8) n = 11512810.0; // #
 
-    vec2 p = mod( uv / ( pixelSize * 0.5 ), 2.0) - vec2(1.0);
-    col = col * character(n, p);
+    // get the mod..
+    vec2 modd = getMod(coord, vec2(pixelSize));
 
-    gl_FragColor = vec4(col, 1.0);
+    gl_FragColor = color * character( n, vec2(-1.0) + modd * 2.0);
+
 }

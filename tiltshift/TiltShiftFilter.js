@@ -11,30 +11,30 @@ var core = require('../../core'),
  * A TiltShift Filter. Manages the pass of both a TiltShiftXFilter and TiltShiftYFilter.
  *
  * @class
- * @extends PIXI.AbstractFilter
+ * @extends PIXI.Filter
  * @memberof PIXI.filters
  */
 function TiltShiftFilter()
 {
-    core.AbstractFilter.call(this);
+    core.Filter.call(this);
 
     this.tiltShiftXFilter = new TiltShiftXFilter();
     this.tiltShiftYFilter = new TiltShiftYFilter();
 }
 
-TiltShiftFilter.prototype = Object.create(core.AbstractFilter.prototype);
+TiltShiftFilter.prototype = Object.create(core.Filter.prototype);
 TiltShiftFilter.prototype.constructor = TiltShiftFilter;
 module.exports = TiltShiftFilter;
 
-TiltShiftFilter.prototype.applyFilter = function (renderer, input, output)
+TiltShiftFilter.prototype.apply = function (filterManager, input, output)
 {
-    var renderTarget = renderer.filterManager.getRenderTarget(true);
+    var renderTarget = filterManager.getRenderTarget(true);
 
-    this.tiltShiftXFilter.applyFilter(renderer, input, renderTarget);
+    this.tiltShiftXFilter.apply(filterManager, input, renderTarget);
 
-    this.tiltShiftYFilter.applyFilter(renderer, renderTarget, output);
+    this.tiltShiftYFilter.apply(filterManager, renderTarget, output);
 
-    renderer.filterManager.returnRenderTarget(renderTarget);
+    filterManager.returnRenderTarget(renderTarget);
 };
 
 Object.defineProperties(TiltShiftFilter.prototype, {
