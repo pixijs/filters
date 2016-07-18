@@ -25,7 +25,7 @@ npm install pixi-filters
 ```
 Use Bower:
 
-``bash
+```bash
 bower install pixi-filters
 ```
 
