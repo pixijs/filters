@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Optional display filters to work with Pixi.js",
   "author": "Mat Groves",
-  "main": "bin/index.js",
+  "main": "bin/pixi-filters.js",
   "homepage": "http://goodboydigital.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
   "license": "MIT",
@@ -25,9 +25,9 @@
     "build:shockwave": "browserify src/shockwave -s shockwave -o bin/shockwave.js --no-bundle-external",
     "build:tiltshift": "browserify src/tiltshift -s tiltshift -o bin/tiltshift.js --no-bundle-external",
     "build:twist": "browserify src/twist -s twist -o bin/twist.js --no-bundle-external",
-    "build:all": "browserify src -s filters -o bin/index.js --no-bundle-external",
+    "build:all": "browserify src -s filters -o bin/pixi-filters.js --no-bundle-external",
     "prebuild": "npm run clean && npm run lint",
-    "start": "watchify src/index.js -s filters -o bin/index.js --no-bundle-external -dv",
+    "start": "watchify src/index.js -s filters -o bin/pixi-filters.js --no-bundle-external -dv",
     "build": "npm run build:all && npm run build:ascii && npm run build:bloom && npm run build:convolution && npm run build:crosshatch && npm run build:dot && npm run build:emboss && npm run build:pixelate && npm run build:rgb && npm run build:shockwave && npm run build:tiltshift && npm run build:twist"
   },
   "peerDependencies": {
