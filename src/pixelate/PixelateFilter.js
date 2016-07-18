@@ -17,7 +17,7 @@ function PixelateFilter()
         glslify('./pixelate.frag')
     );
 
-    this.size = [0,0];
+    this.size = [10,10];
 
 }
 
