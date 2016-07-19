@@ -9,7 +9,8 @@ var options = {
     src: [
         '**/*',
         '!node_modules/**/*',
-        '!git/**/*'
+        '!git/**/*',
+        '!npm-debug.log'
     ],
     dotfiles: true,
     branch: 'release',
