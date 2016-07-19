@@ -12,6 +12,7 @@
     "url": "https://github.com/pixijs/pixi-filters.git"
   },
   "scripts": {
+    "deploy": "node deploy.js",
     "clean": "rimraf bin && mkdir bin",
     "lint": "eslint src/**/*.js",
     "build:ascii": "browserify src/ascii -s ascii -o bin/ascii.js --no-bundle-external",
@@ -36,6 +37,7 @@
   "devDependencies": {
     "browserify": "^13.0.1",
     "eslint": "^3.1.1",
+    "gh-pages": "^0.11.0",
     "glslify": "^5.1.0"
   },
   "browserify": {
