@@ -7,11 +7,11 @@ var ghpages = require('gh-pages');
 var path = require('path');
 var options = {
     src: [
-        'bin/**/*.js',
-        'bower.json',
-        'package.json',
-        'README.md'
+        '**/*',
+        '!node_modules/**/*',
+        '!git/**/*'
     ],
+    dotfiles: true,
     branch: 'release',
     message: 'Auto-generated commit',
     logger: console.log.bind(console)

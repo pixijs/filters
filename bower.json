@@ -5,6 +5,7 @@
   "ignore": [
     "package.json",
     "src",
+    "scripts",
     ".gitignore",
     ".npmignore"
   ]
