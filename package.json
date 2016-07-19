@@ -32,9 +32,6 @@
     "start": "watchify src/index.js -s filters -o bin/pixi-filters.js --no-bundle-external -dv",
     "build": "npm run build:all && npm run build:ascii && npm run build:bloom && npm run build:convolution && npm run build:crosshatch && npm run build:dot && npm run build:emboss && npm run build:pixelate && npm run build:rgb && npm run build:shockwave && npm run build:tiltshift && npm run build:twist"
   },
-  "peerDependencies": {
-    "pixi.js": "^4.0.0"
-  },
   "devDependencies": {
     "browserify": "^13.0.1",
     "eslint": "^3.1.1",
