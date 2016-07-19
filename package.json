@@ -37,7 +37,8 @@
     "eslint": "^3.1.1",
     "gh-pages": "^0.11.0",
     "glslify": "^5.1.0",
-    "rimraf": "^2.5.3"
+    "rimraf": "^2.5.3",
+    "uglifyify": "^3.0.2"
   },
   "browserify": {
     "transform": [
