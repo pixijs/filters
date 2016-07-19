@@ -7,10 +7,13 @@ var ghpages = require('gh-pages');
 var path = require('path');
 var options = {
     src: [
-        '**/*',
-        '!node_modules/**/*',
-        '!git/**/*',
-        '!npm-debug.log'
+        'bin/**/*',
+        'scripts/**/*',
+        'src/**/*',
+        '.npmignore',
+        'bower.json',
+        'package.json',
+        'README.md'
     ],
     dotfiles: true,
     branch: 'publish',
