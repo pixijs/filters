@@ -13,7 +13,7 @@ var options = {
         '!npm-debug.log'
     ],
     dotfiles: true,
-    branch: 'release',
+    branch: 'publish',
     message: 'Auto-generated commit',
     logger: console.log.bind(console)
 };
