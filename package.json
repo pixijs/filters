@@ -12,7 +12,8 @@
     "url": "https://github.com/pixijs/pixi-filters.git"
   },
   "scripts": {
-    "deploy": "node deploy.js",
+    "predeploy": "npm run build",
+    "deploy": "node scripts/deploy.js",
     "clean": "rimraf bin && mkdir bin",
     "lint": "eslint src/**/*.js",
     "build:ascii": "browserify src/ascii -s ascii -o bin/ascii.js --no-bundle-external",

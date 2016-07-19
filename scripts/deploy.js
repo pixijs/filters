@@ -14,14 +14,14 @@ var options = {
     ],
     branch: 'release',
     message: 'Auto-generated commit',
-    push: false,
     logger: console.log.bind(console)
 };
 
-ghpages.publish(__dirname, options, function(err) {
+ghpages.publish(process.cwd(), options, function(err) {
     if (err) {
         console.log(err);
         process.exit(1);
         return;
     }
+    process.exit(0);
 });
