@@ -12,6 +12,8 @@
     "url": "https://github.com/pixijs/pixi-filters.git"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "node scripts/deploy.js",
     "clean": "rimraf bin && mkdir bin",
     "lint": "eslint src/**/*.js",
     "build:ascii": "browserify src/ascii -s ascii -o bin/ascii.js --no-bundle-external",
@@ -30,13 +32,12 @@
     "start": "watchify src/index.js -s filters -o bin/pixi-filters.js --no-bundle-external -dv",
     "build": "npm run build:all && npm run build:ascii && npm run build:bloom && npm run build:convolution && npm run build:crosshatch && npm run build:dot && npm run build:emboss && npm run build:pixelate && npm run build:rgb && npm run build:shockwave && npm run build:tiltshift && npm run build:twist"
   },
-  "peerDependencies": {
-    "pixi.js": "^4.0.0"
-  },
   "devDependencies": {
     "browserify": "^13.0.1",
     "eslint": "^3.1.1",
+    "gh-pages": "^0.11.0",
     "glslify": "^5.1.0",
+    "rimraf": "^2.5.3",
     "uglifyify": "^3.0.2"
   },
   "browserify": {

@@ -1,5 +1,12 @@
 {
   "name": "pixi-filters",
   "version": "1.0.0",
-  "main": "bin/pixi-filters.js"
+  "main": "bin/pixi-filters.js",
+  "ignore": [
+    "package.json",
+    "src",
+    "scripts",
+    ".gitignore",
+    ".npmignore"
+  ]
 }
