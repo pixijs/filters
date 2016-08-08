@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Optional display filters to work with Pixi.js",
   "author": "Mat Groves",
-  "main": "bin/pixi-filters.js",
+  "main": "bin/pixi-filters.min.js",
   "homepage": "http://goodboydigital.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
   "license": "MIT",
@@ -13,37 +13,36 @@
   },
   "scripts": {
     "predeploy": "npm run build",
+    "test": "npm run build",
     "deploy": "node scripts/deploy.js",
-    "clean": "rimraf bin && mkdir bin",
+    "clean": "rimraf bin && mkdirp bin",
     "lint": "eslint src/**/*.js",
-    "build:ascii": "browserify src/ascii -s ascii -o bin/ascii.js --no-bundle-external",
-    "build:bloom": "browserify src/bloom -s bloom -o bin/bloom.js --no-bundle-external",
-    "build:convolution": "browserify src/convolution -s convolution -o bin/convolution.js --no-bundle-external",
-    "build:crosshatch": "browserify src/crosshatch -s crosshatch -o bin/crosshatch.js --no-bundle-external",
-    "build:dot": "browserify src/dot -s dot -o bin/dot.js --no-bundle-external",
-    "build:emboss": "browserify src/emboss -s emboss -o bin/emboss.js --no-bundle-external",
-    "build:pixelate": "browserify src/pixelate -s pixelate -o bin/pixelate.js --no-bundle-external",
-    "build:rgb": "browserify src/rgb -s rgb -o bin/rgb.js --no-bundle-external",
-    "build:shockwave": "browserify src/shockwave -s shockwave -o bin/shockwave.js --no-bundle-external",
-    "build:tiltshift": "browserify src/tiltshift -s tiltshift -o bin/tiltshift.js --no-bundle-external",
-    "build:twist": "browserify src/twist -s twist -o bin/twist.js --no-bundle-external",
-    "build:all": "browserify src -s filters -o bin/pixi-filters.js --no-bundle-external",
+    "build:ascii": "pixify -s src/ascii -n ascii",
+    "build:bloom": "pixify -s src/bloom -n bloom",
+    "build:convolution": "pixify -s src/convolution -n convolution",
+    "build:crosshatch": "pixify -s src/crosshatch -n crosshatch",
+    "build:dot": "pixify -s src/dot -n dot",
+    "build:emboss": "pixify -s src/emboss -n emboss",
+    "build:pixelate": "pixify -s src/pixelate -n pixelate",
+    "build:rgb": "pixify -s src/rgb -n rgb",
+    "build:shockwave": "pixify -s src/shockwave -n shockwave",
+    "build:tiltshift": "pixify -s src/tiltshift -n tiltshift",
+    "build:twist": "pixify -s src/twist -n twist",
+    "build:all": "pixify -s src -n filters",
     "prebuild": "npm run clean && npm run lint",
     "start": "watchify src/index.js -s filters -o bin/pixi-filters.js --no-bundle-external -dv",
     "build": "npm run build:all && npm run build:ascii && npm run build:bloom && npm run build:convolution && npm run build:crosshatch && npm run build:dot && npm run build:emboss && npm run build:pixelate && npm run build:rgb && npm run build:shockwave && npm run build:tiltshift && npm run build:twist"
   },
   "devDependencies": {
-    "browserify": "^13.0.1",
     "eslint": "^3.1.1",
     "gh-pages": "^0.11.0",
     "glslify": "^5.1.0",
-    "rimraf": "^2.5.3",
-    "uglifyify": "^3.0.2"
+    "pixify": "^1.2.0",
+    "rimraf": "^2.5.3"
   },
   "browserify": {
     "transform": [
-      "glslify",
-      "uglifyify"
+      "glslify"
     ]
   },
   "eslintConfig": {
