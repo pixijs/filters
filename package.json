@@ -1,6 +1,6 @@
 {
   "name": "pixi-filters",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Optional display filters to work with Pixi.js",
   "author": "Mat Groves",
   "main": "bin/pixi-filters.min.js",
