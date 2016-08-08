@@ -14,6 +14,7 @@
   "scripts": {
     "predeploy": "npm run build",
     "test": "npm run build",
+    "postversion": "git push && git push --tags",
     "deploy": "node scripts/deploy.js",
     "clean": "rimraf bin && mkdirp bin",
     "lint": "eslint src/**/*.js",
