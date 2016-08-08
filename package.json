@@ -1,6 +1,6 @@
 {
   "name": "pixi-filters",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Optional display filters to work with Pixi.js",
   "author": "Mat Groves",
   "main": "bin/pixi-filters.min.js",
@@ -38,6 +38,7 @@
     "eslint": "^3.1.1",
     "gh-pages": "^0.11.0",
     "glslify": "^5.1.0",
+    "mkdirp": "^0.5.1",
     "pixify": "^1.2.0",
     "rimraf": "^2.5.3"
   },
