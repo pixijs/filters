@@ -1,4 +1,4 @@
-# Pixi.js Filters
+# PIXI Filters
 
 Include optional filters that work with Pixi.js v4.
 
