@@ -1,9 +1,9 @@
 {
   "name": "pixi-filters",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Optional display filters to work with Pixi.js",
   "author": "Mat Groves",
-  "main": "bin/pixi-filters.min.js",
+  "main": "bin/filters.min.js",
   "homepage": "http://goodboydigital.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
   "license": "MIT",
@@ -14,7 +14,6 @@
   "scripts": {
     "predeploy": "npm run build",
     "test": "npm run build",
-    "postversion": "git push && git push --tags",
     "deploy": "node scripts/deploy.js",
     "clean": "rimraf bin && mkdirp bin",
     "lint": "eslint src/**/*.js",
