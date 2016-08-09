@@ -10,7 +10,6 @@ var options = {
         'bin/**/*',
         'scripts/**/*',
         'src/**/*',
-        '.npmignore',
         'bower.json',
         'package.json',
         'README.md'
