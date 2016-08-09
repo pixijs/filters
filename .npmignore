@@ -3,3 +3,4 @@ src
 .gitignore
 scripts
 bower.json
+examples

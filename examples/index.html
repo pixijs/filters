@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>pixi-filters</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <link rel="stylesheet" href="css/main.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.0.0-rc3/pixi.js"></script>
+        <script src="../bin/filters.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h1>pixi-filters</h1>
+            <canvas id="stage" width="300" height="300"></canvas>
+            <ul class="filters">
+                <li><button>AsciiFilter</button></li>
+                <li><button>BloomFilter</button></li>
+                <li><button>ConvolutionFilter</button></li>
+                <li><button>CrossHatchFilter</button></li>
+                <li><button>DotFilter</button></li>
+                <li><button>EmbossFilter</button></li>
+                <li><button>RGBSplitFilter</button></li>
+                <li><button>ShockwaveFilter</button></li>
+                <li><button>TiltShiftFilter</button></li>
+                <li><button>TwistFilter</button></li>
+            </ul>
+        </div>
+        <script>
+
+            // Create the renderer
+            var renderer = new PIXI.autoDetectRenderer(300, 300, {
+                view: document.getElementById("stage"),
+                backgroundColor: 0xffffff
+            });
+
+            var stage = new PIXI.Container();
+            var sprite = new PIXI.Sprite;
+            stage.addChild(sprite);
+
+            // Load the sprite
+            var loader = new PIXI.loaders.Loader();
+            loader.add('pug', 'pug.jpg')
+                .load(function(loader, resources){
+                    var texture = resources.pug.texture;
+                    sprite.texture = texture;
+                });
+
+            // ShockwaveFilter is time-based
+            var shockwave = null;
+
+            function update() {
+
+                // loop the time for ShockwaveFilter
+                if (shockwave) {
+                    shockwave.time += 0.01;
+                    if (shockwave.time >= 1) {
+                        shockwave.time = 0;
+                    }
+                }
+                renderer.render(stage);
+                requestAnimationFrame(update);
+            }
+            update();
+
+            var buttons = Array.prototype.slice.call(document.querySelectorAll('button'), 0);
+            buttons.forEach(function(button){
+
+                var filterClass = button.innerHTML;
+                button.filterClass = filterClass;
+                var filter;
+                switch(filterClass) {
+                    case 'ConvolutionFilter':
+                        filter = new PIXI.filters[filterClass]([0,0,0,1,1,1,0,0,0], 300, 300);
+                        break;
+                    case 'TwistFilter':
+                        filter = new PIXI.filters[filterClass]();
+                        filter.radius = 100;
+                        filter.angle = 2;
+                        filter.offset = new PIXI.Point(150,150);
+                        break;
+                    case 'ShockwaveFilter': 
+                        filter = new PIXI.filters[filterClass]();
+                        shockwave = filter;
+                        break;
+                    default:
+                        filter = new PIXI.filters[filterClass]();
+                        break;
+                }
+                button.filter = filter;
+                button.addEventListener('click', function(){
+                    this.className = !this.className ? 'selected' : '';
+                    refreshFilters();
+                });
+            });
+
+            function refreshFilters() {
+                var filters = [];
+                buttons.forEach(function(button){
+                    if (button.className === 'selected') {
+                        filters.unshift(button.filter);
+                    }
+                });
+                if (filters.length) {
+
+                    sprite.filters = filters;
+                } else {
+                    sprite.filters = null;
+                }
+            }
+        </script>
+    </body>
+</html>

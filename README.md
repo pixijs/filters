@@ -16,6 +16,10 @@ Filters include:
 * **TiltShiftFilter** _pixi-filters/bin/tiltshift_
 * **TwistFilter** _pixi-filters/bin/twist_
 
+## Examples
+
+Click [here](http://pixijs.github.io/pixi-filters/examples) for filter demos.
+
 ## Installation
 
 Using NPM:
