@@ -35,7 +35,7 @@ bower install pixi-filters
 
 ```html
 <script src="pixi.js/bin/pixi.js"></script>
-<script src="pixi-filters/bin/pixi-filters.js"></script>
+<script src="pixi-filters/bin/filters.js"></script>
 ```
 ```js
 var filter = new PIXI.filters.AsciiFilter();
