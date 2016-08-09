@@ -4,17 +4,17 @@ Include optional filters that work with Pixi.js v4.
 
 Filters include:
 
-* AsciiFilter (`pixi-filters/ascii`)
-* BloomFilter (`pixi-filters/bloom`)
-* ConvolutionFilter (`pixi-filters/convolution`)
-* CrossHatchFilter (`pixi-filters/crosshatch`)
-* DotFilter (`pixi-filters/dot`)
-* EmbossFilter (`pixi-filters/emboss`)
-* PixelateFilter (`pixi-filters/pixelate`)
-* RGBSplitFilter (`pixi-filters/rgb`)
-* ShockwaveFilter (`pixi-filters/shockwafe`)
-* TiltShiftFilter (`pixi-filters/tiltshift`)
-* TwistFilter (`pixi-filters/twist`)
+* **AsciiFilter** _pixi-filters/bin/ascii_
+* **BloomFilter** _pixi-filters/bin/bloom_
+* **ConvolutionFilter** _pixi-filters/bin/convolution_
+* **CrossHatchFilter** _pixi-filters/bin/crosshatch_
+* **DotFilter** _pixi-filters/bin/dot_
+* **EmbossFilter** _pixi-filters/bin/emboss_
+* **PixelateFilter** _pixi-filters/bin/pixelate_
+* **RGBSplitFilter** _pixi-filters/bin/rgb_
+* **ShockwaveFilter** _pixi-filters/bin/shockwave_
+* **TiltShiftFilter** _pixi-filters/bin/tiltshift_
+* **TwistFilter** _pixi-filters/bin/twist_
 
 ## Installation
 
@@ -67,7 +67,7 @@ var filter = new PIXI.filters.DotFilter();
 
 ```js
 // Using a single filter
-var AsciiFilter = require('pixi-filters/ascii');
+var AsciiFilter = require('pixi-filters/bin/ascii');
 var filter = new AsciiFilter();
 ```
 
