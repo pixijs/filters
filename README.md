@@ -88,3 +88,6 @@ Run the `build` command to build all filters.
 ```bash
 npm run build
 ```
+## Documentation
+
+API documention can be found [here](http://pixijs.github.io/pixi-filters/docs/).
