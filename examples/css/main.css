@@ -10,35 +10,42 @@ h1 {
 }
 .filters {
     position:absolute;
-    bottom:0;
+    top:50px;
     right:0;
     margin:0;
     list-style:none;
     padding:0 5px;
     box-sizing:border-box;
-    width:200px;
+    width:340px;
+}
+.filters li {
+    display:block;
+    float:left;
+    width:50%;
+    padding:0 2px;
+    box-sizing:border-box;
 }
 .container {
     position:relative;
-    width:500px;
+    width:640px;
     height:350px;
     margin:0 auto;
 }
 canvas {
     position:absolute;
     left:0;
-    bottom:0;
+    top:50px;
 }
 button {
-    font-size:12px;
+    font-size:14px;
     display:block;
     width:100%;
     border:1px solid #09c;
     background:#fff;
     color:#09c;
-    padding:5.2px 0;
+    padding:14px 0;
     cursor:pointer;
-    margin:3px 0 0;
+    margin:0 0 4px;
     outline:none;
 }
 button:hover {
