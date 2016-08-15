@@ -19,7 +19,8 @@
     "pregh-pages": "npm run docs",
     "gh-pages": "node scripts/gh-pages.js",
     "clean": "rimraf bin && mkdirp bin",
-    "lint": "eslint src/**/*.js",
+    "lint": "eslint src",
+    "lint:watch": "watch \"eslint src\" src",
     "build:ascii": "pixify -s src/ascii -n ascii",
     "build:bloom": "pixify -s src/bloom -n bloom",
     "build:convolution": "pixify -s src/convolution -n convolution",
@@ -32,9 +33,11 @@
     "build:tiltshift": "pixify -s src/tiltshift -n tiltshift",
     "build:twist": "pixify -s src/twist -n twist",
     "build:all": "pixify -s src -n filters",
+    "build:all:watch": "pixify -s src -n filters -w",
     "prebuild": "npm run clean && npm run lint",
     "examples": "open http://localhost:8080/examples/index.html && http-server . -s -c-1",
-    "start": "watchify src/index.js -s filters -o bin/pixi-filters.js --no-bundle-external -dv",
+    "prestart": "npm run clean",
+    "start": "parallelshell \"npm run build:all:watch\" \"npm run lint:watch\"",
     "build": "npm run build:all && npm run build:ascii && npm run build:bloom && npm run build:convolution && npm run build:crosshatch && npm run build:dot && npm run build:emboss && npm run build:pixelate && npm run build:rgb && npm run build:shockwave && npm run build:tiltshift && npm run build:twist"
   },
   "devDependencies": {
@@ -45,8 +48,10 @@
     "jaguarjs-jsdoc": "^1.0.0",
     "jsdoc": "^3.4.0",
     "mkdirp": "^0.5.1",
-    "pixify": "^1.2.0",
-    "rimraf": "^2.5.3"
+    "parallelshell": "^2.0.0",
+    "pixify": "^1.4.0",
+    "rimraf": "^2.5.3",
+    "watch": "^0.19.1"
   },
   "browserify": {
     "transform": [
