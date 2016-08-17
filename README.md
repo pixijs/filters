@@ -1,5 +1,7 @@
 # PIXI Filters
 
+[![Build Status](https://travis-ci.org/pixijs/pixi-filters.svg?branch=master)](https://travis-ci.org/pixijs/pixi-filters)
+
 Include optional filters that work with Pixi.js v4.
 
 Filters include:
