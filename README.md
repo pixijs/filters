@@ -1,4 +1,6 @@
-# Pixi.js Filters
+# PIXI Filters
+
+[![Build Status](https://travis-ci.org/pixijs/pixi-filters.svg?branch=master)](https://travis-ci.org/pixijs/pixi-filters)
 
 Include optional filters that work with Pixi.js v4.
 
@@ -15,6 +17,10 @@ Filters include:
 * **ShockwaveFilter** _pixi-filters/bin/shockwave_
 * **TiltShiftFilter** _pixi-filters/bin/tiltshift_
 * **TwistFilter** _pixi-filters/bin/twist_
+
+## Examples
+
+Click [here](http://pixijs.github.io/pixi-filters/examples) for filter demos.
 
 ## Installation
 
@@ -84,3 +90,6 @@ Run the `build` command to build all filters.
 ```bash
 npm run build
 ```
+## Documentation
+
+API documention can be found [here](http://pixijs.github.io/pixi-filters/docs/).
