@@ -10,9 +10,11 @@ var options = {
         'bin/**/*',
         'scripts/**/*',
         'src/**/*',
+        'examples/**/*',
         'bower.json',
         'package.json',
-        'README.md'
+        'README.md',
+        '.travis.yml'
     ],
     dotfiles: true,
     branch: 'publish',

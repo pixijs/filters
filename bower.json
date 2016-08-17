@@ -6,6 +6,7 @@
     "package.json",
     "src",
     "scripts",
+    "examples",
     ".gitignore",
     ".npmignore"
   ]

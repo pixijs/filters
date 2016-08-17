@@ -1,0 +1,37 @@
+language: node_js
+node_js:
+    - "4"
+
+install:
+    - npm install
+
+cache:
+  directories:
+    - node_modules
+
+script:
+    - npm run build
+
+deploy:
+  - provider: s3
+    access_key_id: $S3_ACCESS_KEY_ID
+    secret_access_key: $S3_SECRET_ACCESS_KEY
+    bucket: "pixi-filters-branch"
+    skip_cleanup: true
+    acl: public_read
+    local_dir: bin
+    upload-dir: "$TRAVIS_BRANCH"
+    region: eu-west-1
+    on:
+        all_branches: true
+  - provider: s3
+    access_key_id: $S3_ACCESS_KEY_ID
+    secret_access_key: $S3_SECRET_ACCESS_KEY
+    bucket: "pixi-filters"
+    skip_cleanup: true
+    acl: public_read
+    local_dir: bin
+    upload-dir: "$TRAVIS_TAG"
+    region: eu-west-1
+    on: 
+        tags: true
