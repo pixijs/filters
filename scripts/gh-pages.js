@@ -4,8 +4,8 @@ var ghpages = require('gh-pages');
 var path = require('path');
 var options = {
     src: [
-        'bin/filters.min.js',
-        'bin/filters.min.js.map',
+        'bin/filters.js',
+        'bin/filters.js.map',
         'examples/**/*',
         'docs/**/*'
     ]
