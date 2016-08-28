@@ -32,6 +32,7 @@
     "build:shockwave": "pixify -s src/shockwave -n shockwave",
     "build:tiltshift": "pixify -s src/tiltshift -n tiltshift",
     "build:twist": "pixify -s src/twist -n twist",
+    "build:dropshadow": "pixify -s src/dropshadow -n dropshadow",
     "build:all": "pixify -s src -n filters",
     "build:all:watch": "pixify -s src -n filters -w",
     "prebuild": "npm run clean && npm run lint",
