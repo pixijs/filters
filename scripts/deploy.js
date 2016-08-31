@@ -5,6 +5,7 @@
 
 var ghpages = require('gh-pages');
 var path = require('path');
+var packageInfo = require(path.join(__dirname, '..', 'package.json'));
 var options = {
     src: [
         'bin/**/*',
@@ -18,7 +19,7 @@ var options = {
     ],
     dotfiles: true,
     branch: 'publish',
-    message: 'Auto-generated commit',
+    message: packageInfo.version,
     logger: console.log.bind(console)
 };
 
