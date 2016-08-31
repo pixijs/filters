@@ -5,3 +5,4 @@ scripts
 bower.json
 examples
 .travis.yml
+.npmignore

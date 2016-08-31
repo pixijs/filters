@@ -3,6 +3,9 @@
   "version": "1.0.5",
   "description": "Optional display filters to work with Pixi.js",
   "author": "Mat Groves",
+  "contributors": [
+    "Matt Karl <matt@mattkarl.com>"
+  ],
   "main": "bin/filters.min.js",
   "homepage": "http://goodboydigital.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
@@ -19,7 +22,7 @@
     "pregh-pages": "npm run docs",
     "gh-pages": "node scripts/gh-pages.js",
     "clean": "rimraf bin && mkdirp bin",
-    "lint": "eslint src",
+    "lint": "eslint src scripts",
     "lint:watch": "watch \"eslint src\" src",
     "build:ascii": "pixify -s src/ascii -n ascii",
     "build:bloom": "pixify -s src/bloom -n bloom",
@@ -38,7 +41,13 @@
     "examples": "open http://localhost:8080/examples/index.html && http-server . -s -c-1",
     "prestart": "npm run clean",
     "start": "parallelshell \"npm run build:all:watch\" \"npm run lint:watch\"",
-    "build": "npm run build:all && npm run build:ascii && npm run build:bloom && npm run build:convolution && npm run build:crosshatch && npm run build:dot && npm run build:emboss && npm run build:pixelate && npm run build:rgb && npm run build:shockwave && npm run build:tiltshift && npm run build:twist"
+    "build": "npm run build:all && npm run build:ascii && npm run build:bloom && npm run build:convolution && npm run build:crosshatch && npm run build:dot && npm run build:emboss && npm run build:pixelate && npm run build:rgb && npm run build:shockwave && npm run build:tiltshift && npm run build:twist",
+    "publish:patch": "npm version patch --git=false && npm publish",
+    "publish:minor": "npm version minor --git=false && npm publish",
+    "publish:major": "npm version major --git=false && npm publish",
+    "postversion": "node scripts/versions.js",
+    "prepublish": "npm run build",
+    "postpublish": "node scripts/deploy.js && npm run gh-pages"
   },
   "devDependencies": {
     "eslint": "^3.1.1",
