@@ -19,7 +19,7 @@
             "outputSourceFiles" : true
         },
         "applicationName": "PIXI Filters",
-        "footer"        : "Made with ♥ by <a href='http://goodboydigital.com'>Goodboy Digital</a>",
+        "footer"        : "Made with ♥ by Goodboy Digital (goodboydigital.com)",
         "copyright"     : "PIXI Copyright © 2013-2016 Mat Groves.",
         "disqus": "",
         "googleAnalytics": "",
