@@ -42,9 +42,9 @@
     "prestart": "npm run clean",
     "start": "parallelshell \"npm run build:all:watch\" \"npm run lint:watch\"",
     "build": "npm run build:all && npm run build:ascii && npm run build:bloom && npm run build:convolution && npm run build:crosshatch && npm run build:dot && npm run build:emboss && npm run build:pixelate && npm run build:rgb && npm run build:shockwave && npm run build:tiltshift && npm run build:twist",
-    "publish:patch": "npm version patch --git=false && npm publish",
-    "publish:minor": "npm version minor --git=false && npm publish",
-    "publish:major": "npm version major --git=false && npm publish",
+    "publish:patch": "npm version patch --no-git-tag-version && npm publish",
+    "publish:minor": "npm version minor --no-git-tag-version && npm publish",
+    "publish:major": "npm version major --no-git-tag-version && npm publish",
     "postversion": "node scripts/versions.js",
     "prepublish": "npm run build",
     "postpublish": "node scripts/deploy.js && npm run gh-pages"
