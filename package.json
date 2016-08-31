@@ -1,6 +1,6 @@
 {
   "name": "pixi-filters",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Optional display filters to work with Pixi.js",
   "author": "Mat Groves",
   "contributors": [
@@ -47,7 +47,8 @@
     "publish:major": "npm version major --no-git-tag-version && npm publish",
     "postversion": "node scripts/versions.js",
     "prepublish": "npm run build",
-    "postpublish": "node scripts/deploy.js && npm run gh-pages"
+    "clean-gh-pages": "rimraf node_modules/gh-pages/.cache",
+    "postpublish": "npm run clean-gh-pages && node scripts/deploy.js && npm run clean-gh-pages && npm run gh-pages"
   },
   "devDependencies": {
     "eslint": "^3.1.1",
