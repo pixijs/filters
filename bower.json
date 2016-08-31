@@ -8,6 +8,7 @@
     "scripts",
     "examples",
     ".gitignore",
+    ".travis.yml",
     ".npmignore"
   ]
 }
