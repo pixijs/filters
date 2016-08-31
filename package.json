@@ -47,7 +47,7 @@
     "publish:major": "npm version major --no-git-tag-version && npm publish",
     "postversion": "node scripts/versions.js",
     "prepublish": "npm run build",
-    "postpublish": "node scripts/deploy.js && npm run gh-pages"
+    "postpublish": "node scripts/deploy.js && rimraf node_modules/gh-pages/.cache && npm run gh-pages"
   },
   "devDependencies": {
     "eslint": "^3.1.1",
