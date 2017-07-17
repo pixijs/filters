@@ -1,6 +1,6 @@
 {
   "name": "pixi-filters",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "main": "bin/pixi-filters.js",
   "ignore": [
     "package.json",

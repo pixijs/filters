@@ -1,6 +1,6 @@
 {
   "name": "pixi-filters",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Optional display filters to work with Pixi.js",
   "author": "Mat Groves",
   "contributors": [
