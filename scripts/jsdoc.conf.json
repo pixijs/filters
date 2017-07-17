@@ -22,7 +22,7 @@
         "footer"        : "Made with ♥ by Goodboy Digital (goodboydigital.com)",
         "copyright"     : "PixiJS Copyright © 2013-2016 Mat Groves.",
         "meta": {
-            "title": "PixiJS Filter Documentation",
+            "title": "PixiJS Filters Documentation",
             "description": "API Documentation for PixiJS filters",
             "keyword": "filters, webgl, ascii, bloom, convolution, cross-hatch, dotfilter, emboss, pixelate, shockwave, twist, tiltshift"
         },
