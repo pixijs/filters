@@ -69,11 +69,11 @@ Object.defineProperties(RGBSplitFilter.prototype, {
     blue: {
         get: function ()
         {
-            return this.uniforms.blue.value;
+            return this.uniforms.blue;
         },
         set: function (value)
         {
-            this.uniforms.blue.value = value;
+            this.uniforms.blue = value;
         }
     }
 });
