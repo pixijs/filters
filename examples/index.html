@@ -25,6 +25,7 @@
                 <li><button>ShockwaveFilter</button></li>
                 <li><button>TiltShiftFilter</button></li>
                 <li><button>TwistFilter</button></li>
+                <li><button>DropShadowFilter</button></li>
             </ul>
         </div>
         <script>
@@ -44,6 +45,10 @@
             loader.add('pug', 'pug.jpg')
                 .load(function(loader, resources){
                     var texture = resources.pug.texture;
+                    sprite.scale.x = 0.9;
+                    sprite.scale.y = 0.9;
+                    sprite.x = 5;
+                    sprite.y = 5;
                     sprite.texture = texture;
                 });
 

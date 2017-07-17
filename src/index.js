@@ -15,7 +15,8 @@ var filters = {
     TiltShiftAxisFilter: require('./tiltshift/TiltShiftAxisFilter'),
     TiltShiftXFilter: require('./tiltshift/TiltShiftXFilter'),
     TiltShiftYFilter: require('./tiltshift/TiltShiftYFilter'),
-    TwistFilter: require('./twist/TwistFilter')
+    TwistFilter: require('./twist/TwistFilter'),
+    DropShadowFilter: require('./dropshadow/DropShadowFilter')
 };
 
 // Assign to filters
