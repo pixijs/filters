@@ -40,7 +40,7 @@ Object.defineProperties(PixelateFilter.prototype, {
         },
         set: function (value)
         {
-            this.uniforms.size.value = value;
+            this.uniforms.size = value;
         }
     }
 });

@@ -18,22 +18,13 @@
         "default"       : {
             "outputSourceFiles" : true
         },
-        "applicationName": "PIXI Filters",
+        "applicationName": "PixiJS Filters",
         "footer"        : "Made with ♥ by Goodboy Digital (goodboydigital.com)",
-        "copyright"     : "PIXI Copyright © 2013-2016 Mat Groves.",
-        "disqus": "",
-        "googleAnalytics": "",
-        "openGraph": {
-            "title": "",
-            "type": "website",
-            "image": "",
-            "site_name": "",
-            "url": ""
-        },
+        "copyright"     : "PixiJS Copyright © 2013-2016 Mat Groves.",
         "meta": {
-            "title": "",
-            "description": "",
-            "keyword": ""
+            "title": "PixiJS Filters Documentation",
+            "description": "API Documentation for PixiJS filters",
+            "keyword": "filters, webgl, ascii, bloom, convolution, cross-hatch, dotfilter, emboss, pixelate, shockwave, twist, tiltshift"
         },
         "linenums"      : true
     },

@@ -1,6 +1,6 @@
 /*!
- * pixi-filters - v1.0.6
- * Compiled Wed Aug 31 2016 08:40:25 GMT-0400 (EDT)
+ * pixi-filters - v1.0.7
+ * Compiled Mon, 17 Jul 2017 21:48:46 UTC
  *
  * pixi-filters is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -429,7 +429,7 @@ Object.defineProperties(PixelateFilter.prototype, {
         },
         set: function (value)
         {
-            this.uniforms.size.value = value;
+            this.uniforms.size = value;
         }
     }
 });
@@ -506,11 +506,11 @@ Object.defineProperties(RGBSplitFilter.prototype, {
     blue: {
         get: function ()
         {
-            return this.uniforms.blue.value;
+            return this.uniforms.blue;
         },
         set: function (value)
         {
-            this.uniforms.blue.value = value;
+            this.uniforms.blue = value;
         }
     }
 });
