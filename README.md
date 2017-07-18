@@ -35,12 +35,6 @@ Using NPM:
 ```bash
 npm install pixi-filters
 ```
-Use Bower:
-
-```bash
-bower install pixi-filters
-```
-Or you can get prebuilt files from the [publish branch](https://github.com/pixijs/pixi-filters/tree/publish).
 
 ## Usage 
 
