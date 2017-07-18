@@ -7,23 +7,25 @@ var glslify  = require('glslify');
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
- * @param originalColor {FloatArray32} The color that will be changed, as a 3 component RGB e.g. new Float32Array(1.0, 1.0, 1.0)
- * @param newColor {FloatArray32} The resulting color, as a 3 component RGB e.g. new Float32Array(1.0, 0.5, 1.0)
+ * @param originalColor {number|number[]} The color that will be changed, as a 3 component RGB e.g. [1.0, 1.0, 1.0]
+ * @param newColor {number|number[]} The resulting color, as a 3 component RGB e.g. [1.0, 0.5, 1.0]
  * @param epsilon {float} Tolerance/sensitivity of the floating-point comparison between colors (lower = more exact, higher = more inclusive)
  *
  * @example
  *  // replaces true red with true blue
- *  someSprite.shader = new ColorReplaceFilter(
- *   new Float32Array([1, 0, 0]),
- *   new Float32Array([0, 0, 1]),
+ *  someSprite.filters = [new ColorReplaceFilter(
+ *   [1, 0, 0],
+ *   [0, 0, 1],
  *   0.001
- *  );
+ *   )];
  *  // replaces the RGB color 220, 220, 220 with the RGB color 225, 200, 215
- *  someOtherSprite.shader = new ColorReplaceFilter(
- *   new Float32Array([220/255.0, 220/255.0, 220/255.0]),
- *   new Float32Array([225/255.0, 200/255.0, 215/255.0]),
+ *  someOtherSprite.filters = [new ColorReplaceFilter(
+ *   [220/255.0, 220/255.0, 220/255.0],
+ *   [225/255.0, 200/255.0, 215/255.0],
  *   0.001
- *  );
+ *   )];
+ *  // replaces the RGB color 220, 220, 220 with the RGB color 225, 200, 215
+ *  someOtherSprite.filters = [new ColorReplaceFilter(0xdcdcdc, 0xe1c8d7, 0.001)];
  *
  */
 function ColorReplaceFilter(originalColor, newColor, epsilon) {
@@ -47,15 +49,16 @@ module.exports = ColorReplaceFilter;
 Object.defineProperties(ColorReplaceFilter.prototype, {
     originalColor: {
         set: function (value) {
-            this._originalColor = value;
-            var r = ((value & 0xFF0000) >> 16) / 255;
-            var g = ((value & 0x00FF00) >> 8) / 255;
-            var b = (value & 0x0000FF) / 255;
-            this.uniforms.originalColor = {
-                x: r,
-                y: g,
-                z: b
-            };
+            var arr = this.uniforms.originalColor;
+            if (typeof value === "number") {
+                PIXI.utils.hex2rgb(value, arr);
+                this._originalColor = value;
+            } else {
+                arr[0] = value[0];
+                arr[1] = value[1];
+                arr[2] = value[2];
+                this._originalColor = PIXI.utils.rgb2hex(arr);
+            }
         },
         get: function() {
             return this._originalColor;
@@ -63,15 +66,16 @@ Object.defineProperties(ColorReplaceFilter.prototype, {
     },
     newColor: {
         set: function (value) {
-            this._newColor = value;
-            var r = ((value & 0xFF0000) >> 16) / 255;
-            var g = ((value & 0x00FF00) >> 8) / 255;
-            var b = (value & 0x0000FF) / 255;
-            this.uniforms.newColor = {
-                x: r,
-                y: g,
-                z: b
-            };
+			var arr = this.uniforms.newColor;
+			if (typeof value === "number") {
+				PIXI.utils.hex2rgb(value, arr);
+				this._newColor = value;
+			} else {
+				arr[0] = value[0];
+				arr[1] = value[1];
+				arr[2] = value[2];
+				this._newColor = PIXI.utils.rgb2hex(arr);
+			}
         },
         get: function() {
             return this._newColor;
