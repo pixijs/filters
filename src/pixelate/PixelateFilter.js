@@ -5,7 +5,7 @@ var glslify  = require('glslify');
  * This filter applies a pixelate effect making display objects appear 'blocky'.
  *
  * @class
- * @extends PIXI.AbstractFilter
+ * @extends PIXI.Filter
  * @memberof PIXI.filters
  */
 function PixelateFilter()
@@ -17,7 +17,7 @@ function PixelateFilter()
         glslify('./pixelate.frag')
     );
 
-    this.size = [10,10];
+    this.size = [10, 10];
 
 }
 
