@@ -138,6 +138,16 @@
                 folder.add(glowFilter, 'distance', 10, 20);
                 folder.addColor(glowFilter, 'color');
 
+                var dropFilter = new PIXI.filters.DropShadowFilter();
+                dropFilter.enabled = false;
+                folder = gui.addFolder('DropShadowFilter');
+                folder.add(dropFilter, 'enabled');
+                folder.add(dropFilter, 'blur', 0, 40);
+                folder.add(dropFilter, 'alpha', 0, 1);
+                folder.add(dropFilter, 'distance', 0, 50);
+                folder.add(dropFilter, 'rotation', 0, 360);
+                folder.addColor(dropFilter, 'color');
+
                 // Create and add the fish
                 for (var i = 0; i < 20; i++) {
                     var id = 'fish' + ((i % 4) + 1);
@@ -145,7 +155,8 @@
                     fish.anchor.set(0.5);
                     fish.filters = [
                         outlineFilter,
-                        glowFilter
+                        glowFilter,
+                        dropFilter
                     ];
 
                     pond.addChild(fish);

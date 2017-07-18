@@ -5,6 +5,7 @@ export {default as ColorReplaceFilter} from './colorreplace/ColorReplaceFilter';
 export {default as ConvolutionFilter} from './convolution/ConvolutionFilter';
 export {default as CrossHatchFilter} from './crosshatch/CrossHatchFilter';
 export {default as DotFilter} from './dot/DotFilter';
+export {default as DropShadowFilter} from './dropshadow/DropShadowFilter';
 export {default as EmbossFilter} from './emboss/EmbossFilter';
 export {default as GlowFilter} from './glow/GlowFilter';
 export {default as OutlineFilter} from './outline/OutlineFilter';

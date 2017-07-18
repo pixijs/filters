@@ -13,6 +13,7 @@ Filters include:
 * **ConvolutionFilter** _pixi-filters/bin/convolution_
 * **CrossHatchFilter** _pixi-filters/bin/crosshatch_
 * **DotFilter** _pixi-filters/bin/dot_
+* **DropShadowFilter** _pixi-filters/bin/dropshadow_
 * **GlowFilter** _pixi-filters/bin/glow_
 * **EmbossFilter** _pixi-filters/bin/emboss_
 * **PixelateFilter** _pixi-filters/bin/pixelate_
