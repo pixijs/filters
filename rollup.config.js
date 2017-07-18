@@ -1,5 +1,4 @@
 import pkg from './package.json';
-import preprocess from 'rollup-plugin-preprocess';
 import buble from 'rollup-plugin-buble';
 import resolve from 'rollup-plugin-node-resolve';
 import string from 'rollup-plugin-string';
@@ -24,13 +23,6 @@ const plugins = [
             'src/**/*.frag',
             'src/**/*.vert'
         ]
-    }),
-    preprocess({
-        context: {
-            DEBUG: !prod,
-            RELEASE: prod,
-            VERSION: pkg.version
-        }
     }),
     buble()
 ];
