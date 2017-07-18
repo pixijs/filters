@@ -50,10 +50,12 @@
     "clean-gh-pages": "rimraf node_modules/gh-pages/.cache",
     "postpublish": "npm run clean-gh-pages && node scripts/deploy.js && npm run clean-gh-pages && npm run gh-pages"
   },
+  "dependencies": {
+    "glslify": "^5.1.0"
+  },
   "devDependencies": {
     "eslint": "^3.1.1",
     "gh-pages": "^0.11.0",
-    "glslify": "^5.1.0",
     "http-server": "^0.9.0",
     "jaguarjs-jsdoc": "^1.0.0",
     "jsdoc": "^3.4.0",
