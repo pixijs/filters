@@ -8,13 +8,18 @@ Filters include:
 
 * **AsciiFilter** _pixi-filters/bin/ascii_
 * **BloomFilter** _pixi-filters/bin/bloom_
+* **BulgePinchFilter** _pixi-filters/bin/bulgepinch_
+* **ColorReplaceFilter** _pixi-filters/bin/colorreplace_
 * **ConvolutionFilter** _pixi-filters/bin/convolution_
 * **CrossHatchFilter** _pixi-filters/bin/crosshatch_
 * **DotFilter** _pixi-filters/bin/dot_
+* **GlowFilter** _pixi-filters/bin/glow_
 * **EmbossFilter** _pixi-filters/bin/emboss_
 * **PixelateFilter** _pixi-filters/bin/pixelate_
+* **OutlineFilter** _pixi-filters/bin/outline_
 * **RGBSplitFilter** _pixi-filters/bin/rgb_
 * **ShockwaveFilter** _pixi-filters/bin/shockwave_
+* **SimpleLightmapFilter** _pixi-filters/bin/simplelightmap_
 * **TiltShiftFilter** _pixi-filters/bin/tiltshift_
 * **TwistFilter** _pixi-filters/bin/twist_
 
