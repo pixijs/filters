@@ -1,4 +1,5 @@
-var glslify  = require('glslify');
+import vertex from './outline.vert';
+import fragment from './outline.frag';
 
 /**
  * OutlineFilter, originally by mishaa
@@ -14,44 +15,36 @@ var glslify  = require('glslify');
  * @example
  *  someSprite.shader = new OutlineFilter(9, 0xFF0000);
  */
-function OutlineFilter(thickness, color) {
-    thickness = thickness || 1;
-    PIXI.Filter.call(this,
-        // vertex shader
-        // vertex shader
-        glslify('./outline.vert'),
-        // fragment shader
-        glslify('./outline.frag').replace(/%THICKNESS%/gi, (1.0 / thickness).toFixed(7))
-    );
+export default class OutlineFilter extends PIXI.Filter {
 
-    this.thickness = thickness || 1;
-    this.uniforms.outlineColor = new Float32Array([0, 0, 0, 1]);
-    this.color = color || 0x000000;
+    constructor(thickness = 1, color = 0x000000) {
+        super(vertex, fragment.replace(/%THICKNESS%/gi, (1.0 / thickness).toFixed(7)));
+        this.thickness = thickness;
+        this.uniforms.outlineColor = new Float32Array([0, 0, 0, 1]);
+        this.color = color;
+    }
+
+    /**
+     * The color of the glow.
+     * @member {number}
+     * @default 0x000000
+     */
+    get color() {
+        return PIXI.utils.rgb2hex(this.uniforms.outlineColor);
+    }
+    set color(value) {
+        PIXI.utils.hex2rgb(value, this.uniforms.outlineColor);
+    }
+
+    /**
+     * The tickness of the outline. Make it 2 times more for resolution 2
+     * @member {number}
+     * @default 1
+     */
+    get thickness() {
+        return this.uniforms.thickness;
+    }
+    set thickness(value) {
+        this.uniforms.thickness = value;
+    }
 }
-
-OutlineFilter.prototype = Object.create(PIXI.Filter.prototype);
-OutlineFilter.prototype.constructor = OutlineFilter;
-module.exports = OutlineFilter;
-
-Object.defineProperties(OutlineFilter.prototype, {
-    color: {
-        get: function () {
-            return PIXI.utils.rgb2hex(this.uniforms.outlineColor);
-        },
-        set: function (value) {
-            PIXI.utils.hex2rgb(value, this.uniforms.outlineColor);
-        }
-    }
-});
-
-Object.defineProperties(OutlineFilter.prototype, {
-    thickness: {
-        get: function () {
-            return this.uniforms.thickness;
-        },
-        set: function (value) {
-            this.uniforms.thickness = value;
-        }
-    }
-});
-

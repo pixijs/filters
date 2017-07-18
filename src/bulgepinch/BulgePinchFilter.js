@@ -1,4 +1,5 @@
-var glslify  = require('glslify');
+import vertex from './bulgePinch.vert';
+import fragment from './bulgePinch.frag';
 
 /**
  * @author Julien CLEREL @JuloxRox
@@ -15,71 +16,48 @@ var glslify  = require('glslify');
  * @param {number} [radius=100] The radius of the circle of effect.
  * @param {number} [strength=1] -1 to 1 (-1 is strong pinch, 0 is no effect, 1 is strong bulge)
  */
+export default class BulgePinchFilter extends PIXI.Filter {
 
-function BulgePinchFilter(center, radius, strength) {
-    PIXI.Filter.call(this,
-        // vertex shader
-        glslify('./bulgePinch.vert'),
-        // fragment shader
-        glslify('./bulgePinch.frag')
-    );
+    constructor(center, radius, strength) {
+        super(vertex, fragment);
+        this.center = center || [0.5, 0.5];
+        this.radius = radius || 100;
+        this.strength = strength || 1;
+    }
 
-    this.center = center || [0.5, 0.5];
-    this.radius = radius || 100;
-    this.strength = strength || 1;
-}
-
-BulgePinchFilter.prototype = Object.create(PIXI.Filter.prototype);
-BulgePinchFilter.prototype.constructor = BulgePinchFilter;
-module.exports = BulgePinchFilter;
-
-Object.defineProperties(BulgePinchFilter.prototype, {
     /**
      * The radius of the circle of effect.
      *
-     * @property radius
-     * @type Number
+     * @member {number}
      */
-    radius: {
-        get: function ()
-        {
-            return this.uniforms.radius;
-        },
-        set: function (value)
-        {
-            this.uniforms.radius = value;
-        }
-    },
+    get radius() {
+        return this.uniforms.radius;
+    }
+    set radius(value) {
+        this.uniforms.radius = value;
+    }
+
     /**
      * The strength of the effect. -1 to 1 (-1 is strong pinch, 0 is no effect, 1 is strong bulge)
      *
-     * @property strength
-     * @type Number
+     * @member {number}
      */
-    strength: {
-        get: function ()
-        {
-            return this.uniforms.strength;
-        },
-        set: function (value)
-        {
-            this.uniforms.strength = value;
-        }
-    },
+    get strength() {
+        return this.uniforms.strength;
+    }
+    set strength(value) {
+        this.uniforms.strength = value;
+    }
+
     /**
      * The x and y coordinates of the center of the circle of effect.
      *
-     * @property center
-     * @type Point
+     * @member {PIXI.Point}
      */
-    center: {
-        get: function ()
-        {
-            return this.uniforms.center;
-        },
-        set: function (value)
-        {
-            this.uniforms.center = value;
-        }
+    get center() {
+        return this.uniforms.center;
     }
-});
+    set center(value) {
+        this.uniforms.center = value;
+    }
+}

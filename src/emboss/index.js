@@ -1,8 +1,1 @@
-require('../check');
-
-var filter = PIXI.filters.EmbossFilter = require('./EmbossFilter');
-
-// Export for requiring
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = filter;
-}
+export {default as EmbossFilter} from './EmbossFilter';

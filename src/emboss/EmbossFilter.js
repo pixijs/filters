@@ -1,4 +1,5 @@
-var glslify  = require('glslify');
+import vertex from '../fragments/default.vert';
+import fragment from './emboss.frag';
 
 /**
  * An RGB Split Filter.
@@ -6,40 +7,23 @@ var glslify  = require('glslify');
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @param {number} [strength=5] Strength of the emboss.
  */
-function EmbossFilter()
-{
-    PIXI.Filter.call(this,
-        // vertex shader
-        glslify('../fragments/default.vert'),
-        // fragment shader
-        glslify('./emboss.frag')
-    );
+export default class EmbossFilter extends PIXI.Filter {
+    constructor(strength = 5){
+        super(vertex, fragment);
+        this.strength = strength;
+    }
 
-    this.strength = 5;
-}
-
-EmbossFilter.prototype = Object.create(PIXI.Filter.prototype);
-EmbossFilter.prototype.constructor = EmbossFilter;
-module.exports = EmbossFilter;
-
-Object.defineProperties(EmbossFilter.prototype, {
     /**
-     * Strength of Emboss.
+     * Strength of emboss.
      *
-     * @member {PIXI.Point}
-     * @memberof PIXI.filters.EmbossFilter#
+     * @member {number}
      */
-    strength: {
-        get: function ()
-        {
-            return this.uniforms.strength;
-        },
-        set: function (value)
-        {
-            this.uniforms.strength = value;
-        }
-    },
-
-
-});
+    get strength() {
+        return this.uniforms.strength;
+    }
+    set strength(value) {
+        this.uniforms.strength = value;
+    }
+}

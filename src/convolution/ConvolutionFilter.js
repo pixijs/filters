@@ -1,4 +1,5 @@
-var glslify  = require('glslify');
+import vertex from '../fragments/default.vert';
+import fragment from './convolution.frag';
 
 /**
  * The ConvolutionFilter class applies a matrix convolution filter effect.
@@ -14,73 +15,48 @@ var glslify  = require('glslify');
  * @param width {number} Width of the object you are transforming
  * @param height {number} Height of the object you are transforming
  */
-function ConvolutionFilter(matrix, width, height)
-{
-    PIXI.Filter.call(this,
-        // vertex shader
-        glslify('../fragments/default.vert'),
-        // fragment shader
-        glslify('./convolution.frag')
-    );
+export default class ConvolutionFilter extends PIXI.Filter {
 
-    this.matrix = matrix;
-    this.width = width;
-    this.height = height;
-}
+    constructor(matrix, width, height) {
+        super(vertex, fragment);
+        this.matrix = matrix;
+        this.width = width;
+        this.height = height;
+    }
 
-ConvolutionFilter.prototype = Object.create(PIXI.Filter.prototype);
-ConvolutionFilter.prototype.constructor = ConvolutionFilter;
-module.exports = ConvolutionFilter;
-
-Object.defineProperties(ConvolutionFilter.prototype, {
     /**
      * An array of values used for matrix transformation. Specified as a 9 point Array.
      *
-     * @member {number[]}
-     * @memberof PIXI.filters.ConvolutionFilter#
+     * @member {Array<number>}
      */
-    matrix: {
-        get: function ()
-        {
-            return this.uniforms.matrix;
-        },
-        set: function (value)
-        {
-            this.uniforms.matrix = new Float32Array(value);
-        }
-    },
+    get matrix() {
+        return this.uniforms.matrix;
+    }
+    set matrix(value) {
+        this.uniforms.matrix = new Float32Array(value);
+    }
 
     /**
      * Width of the object you are transforming
      *
      * @member {number}
-     * @memberof PIXI.filters.ConvolutionFilter#
      */
-    width: {
-        get: function ()
-        {
-            return 1/this.uniforms.texelSize[0];
-        },
-        set: function (value)
-        {
-            this.uniforms.texelSize[0] = 1/value;
-        }
-    },
+    get width() {
+        return 1/this.uniforms.texelSize[0];
+    }
+    set width(value) {
+        this.uniforms.texelSize[0] = 1/value;
+    }
 
     /**
      * Height of the object you are transforming
      *
      * @member {number}
-     * @memberof PIXI.filters.ConvolutionFilter#
      */
-    height: {
-        get: function ()
-        {
-            return 1/this.uniforms.texelSize[1];
-        },
-        set: function (value)
-        {
-            this.uniforms.texelSize[1] = 1/value;
-        }
+    get height() {
+        return 1/this.uniforms.texelSize[1];
     }
-});
+    set height(value) {
+        this.uniforms.texelSize[1] = 1/value;
+    }
+}

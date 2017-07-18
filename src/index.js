@@ -1,32 +1,19 @@
-require('./check');
-
-// Require built filters
-var filters = {
-    AsciiFilter: require('./ascii/AsciiFilter'),
-    BloomFilter: require('./bloom/BloomFilter'),
-    BulgePinchFilter: require('./bulgepinch/BulgePinchFilter'),
-    ColorReplaceFilter: require('./colorreplace/ColorReplaceFilter'),
-    ConvolutionFilter: require('./convolution/ConvolutionFilter'),
-    CrossHatchFilter: require('./crosshatch/CrossHatchFilter'),
-    DotFilter: require('./dot/DotFilter'),
-    EmbossFilter: require('./emboss/EmbossFilter'),
-    GlowFilter: require('./glow/GlowFilter'),
-    OutlineFilter: require('./outline/OutlineFilter'),
-    PixelateFilter: require('./pixelate/PixelateFilter'),
-    RGBSplitFilter: require('./rgb/RGBSplitFilter'),
-    ShockwaveFilter: require('./shockwave/ShockwaveFilter'),
-    SimpleLightmapFilter: require('./simplelightmap/SimpleLightmapFilter'),
-    TiltShiftFilter: require('./tiltshift/TiltShiftFilter'),
-    TiltShiftAxisFilter: require('./tiltshift/TiltShiftAxisFilter'),
-    TiltShiftXFilter: require('./tiltshift/TiltShiftXFilter'),
-    TiltShiftYFilter: require('./tiltshift/TiltShiftYFilter'),
-    TwistFilter: require('./twist/TwistFilter')
-};
-
-// Assign to filters
-Object.assign(PIXI.filters, filters);
-
-// Export for requiring
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = filters;
-}
+export {default as AsciiFilter} from './ascii/AsciiFilter';
+export {default as BloomFilter} from './bloom/BloomFilter';
+export {default as BulgePinchFilter} from './bulgepinch/BulgePinchFilter';
+export {default as ColorReplaceFilter} from './colorreplace/ColorReplaceFilter';
+export {default as ConvolutionFilter} from './convolution/ConvolutionFilter';
+export {default as CrossHatchFilter} from './crosshatch/CrossHatchFilter';
+export {default as DotFilter} from './dot/DotFilter';
+export {default as EmbossFilter} from './emboss/EmbossFilter';
+export {default as GlowFilter} from './glow/GlowFilter';
+export {default as OutlineFilter} from './outline/OutlineFilter';
+export {default as PixelateFilter} from './pixelate/PixelateFilter';
+export {default as RGBSplitFilter} from './rgb/RGBSplitFilter';
+export {default as ShockwaveFilter} from './shockwave/ShockwaveFilter';
+export {default as SimpleLightmapFilter} from './simplelightmap/SimpleLightmapFilter';
+export {default as TiltShiftFilter} from './tiltshift/TiltShiftFilter';
+export {default as TiltShiftAxisFilter} from './tiltshift/TiltShiftAxisFilter';
+export {default as TiltShiftXFilter} from './tiltshift/TiltShiftXFilter';
+export {default as TiltShiftYFilter} from './tiltshift/TiltShiftYFilter';
+export {default as TwistFilter} from './twist/TwistFilter';

@@ -1,5 +1,5 @@
-// @see https://github.com/substack/brfs/issues/25
-var glslify  = require('glslify');
+import vertex from '../fragments/default.vert';
+import fragment from './pixelate.frag';
 
 /**
  * This filter applies a pixelate effect making display objects appear 'blocky'.
@@ -7,40 +7,33 @@ var glslify  = require('glslify');
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @param {PIXI.Point|Array<number>|number} [size=10] Either the width/height of the size of the pixels, or square size
  */
-function PixelateFilter()
-{
-    PIXI.Filter.call(this,
-        // vertex shader
-        glslify('../fragments/default.vert'),
-        // fragment shader
-        glslify('./pixelate.frag')
-    );
+export default class PixelateFilter extends PIXI.Filter {
 
-    this.size = [10, 10];
+    constructor(size = 10) {
+        super(vertex, fragment);
+        this.size = size; 
+    }
 
-}
-
-PixelateFilter.prototype = Object.create(PIXI.Filter.prototype);
-PixelateFilter.prototype.constructor = PixelateFilter;
-module.exports = PixelateFilter;
-
-Object.defineProperties(PixelateFilter.prototype, {
     /**
      * This a point that describes the size of the blocks.
      * x is the width of the block and y is the height.
      *
-     * @member {PIXI.Point}
-     * @memberof PIXI.filters.PixelateFilter#
+     * @member {PIXI.Point|Array<number>|number}
+     * @default 10
      */
-    size: {
-        get: function ()
-        {
-            return this.uniforms.size;
-        },
-        set: function (value)
-        {
-            this.uniforms.size = value;
+    get size() {
+        let size = this.uniforms.size;
+        if (size[0] === size[1]) {
+            return size[0];
         }
+        return size;
     }
-});
+    set size(value) {
+        if (typeof value === 'number') {
+            value = [value, value];
+        }
+        this.uniforms.size = value;
+    }
+}

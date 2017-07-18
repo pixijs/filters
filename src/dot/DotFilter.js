@@ -1,4 +1,5 @@
-var glslify  = require('glslify');
+import vertex from '../fragments/default.vert';
+import fragment from './dot.frag';
 
 /**
  * @author Mat Groves http://matgroves.com/ @Doormat23
@@ -12,54 +13,38 @@ var glslify  = require('glslify');
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @param {number} [scale=1] The scale of the effect.
+ * @param {number} [angle=5] The radius of the effect.
  */
-function DotFilter()
-{
-    PIXI.Filter.call(this,
-        // vertex shader
-        glslify('../fragments/default.vert'),
-        // fragment shader
-        glslify('./dot.frag')
-    );
+export default class DotFilter extends PIXI.Filter {
 
-    this.scale = 1;
-    this.angle = 5;
-}
+    constructor(scale = 1, angle = 5) {
+        super(vertex, fragment);
+        this.scale = scale;
+        this.angle = angle;
+    }
 
-DotFilter.prototype = Object.create(PIXI.Filter.prototype);
-DotFilter.prototype.constructor = DotFilter;
-module.exports = DotFilter;
-
-Object.defineProperties(DotFilter.prototype, {
     /**
      * The scale of the effect.
      * @member {number}
-     * @memberof PIXI.filters.DotFilter#
+     * @default 1
      */
-    scale: {
-        get: function ()
-        {
-            return this.uniforms.scale;
-        },
-        set: function (value)
-        {
-            this.uniforms.scale = value;
-        }
-    },
+    get scale() {
+        return this.uniforms.scale;
+    }
+    set scale(value) {
+        this.uniforms.scale = value;
+    }
 
     /**
      * The radius of the effect.
      * @member {number}
-     * @memberof PIXI.filters.DotFilter#
+     * @default 5
      */
-    angle: {
-        get: function ()
-        {
-            return this.uniforms.angle;
-        },
-        set: function (value)
-        {
-            this.uniforms.angle = value;
-        }
+    get angle() {
+        return this.uniforms.angle;
     }
-});
+    set angle(value) {
+        this.uniforms.angle = value;
+    }
+}

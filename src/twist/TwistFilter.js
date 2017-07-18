@@ -1,4 +1,5 @@
-var glslify  = require('glslify');
+import vertex from '../fragments/default.vert';
+import fragment from './twist.frag';
 
 /**
  * This filter applies a twist effect making display objects appear twisted in the given direction.
@@ -6,74 +7,52 @@ var glslify  = require('glslify');
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @param {number} [radius=200] The radius of the twist.
+ * @param {number} [angle=4] The angle of the twist.
+ * @param {number} [padding=20] Padding for filter area.
  */
-function TwistFilter()
-{
-    PIXI.Filter.call(this,
-        // vertex shader
-        glslify('../fragments/default.vert'),
-        // fragment shader
-        glslify('./twist.frag')
-    );
+export default class TwistFilter extends PIXI.Filter {
+    constructor(radius = 200, angle = 4, padding = 20) {
+        super(vertex, fragment);
 
-    this.radius = 200;
-    this.angle = 4;
-    this.padding = 20;
-}
+        this.radius = radius;
+        this.angle = angle;
+        this.padding = padding;
+    }
 
-TwistFilter.prototype = Object.create(PIXI.Filter.prototype);
-TwistFilter.prototype.constructor = TwistFilter;
-module.exports = TwistFilter;
-
-Object.defineProperties(TwistFilter.prototype, {
     /**
      * This point describes the the offset of the twist.
      *
      * @member {PIXI.Point}
-     * @memberof PIXI.filters.TwistFilter#
      */
-    offset: {
-        get: function ()
-        {
-            return this.uniforms.offset;
-        },
-        set: function (value)
-        {
-            this.uniforms.offset = value;
-        }
-    },
-
-    /**
-     * This radius of the twist.
-     *
-     * @member {number}
-     * @memberof PIXI.filters.TwistFilter#
-     */
-    radius: {
-        get: function ()
-        {
-            return this.uniforms.radius;
-        },
-        set: function (value)
-        {
-            this.uniforms.radius = value;
-        }
-    },
-
-    /**
-     * This angle of the twist.
-     *
-     * @member {number}
-     * @memberof PIXI.filters.TwistFilter#
-     */
-    angle: {
-        get: function ()
-        {
-            return this.uniforms.angle;
-        },
-        set: function (value)
-        {
-            this.uniforms.angle = value;
-        }
+    get offset() {
+        return this.uniforms.offset;
     }
-});
+    set offset(value) {
+        this.uniforms.offset = value;
+    }
+
+    /**
+     * The radius of the twist.
+     *
+     * @member {number}
+     */
+    get radius() {
+        return this.uniforms.radius;
+    }
+    set radius(value) {
+        this.uniforms.radius = value;
+    }
+
+    /**
+     * The angle of the twist.
+     *
+     * @member {number}
+     */
+    get angle() {
+        return this.uniforms.angle;
+    }
+    set angle(value) {
+        this.uniforms.angle = value;
+    }
+}

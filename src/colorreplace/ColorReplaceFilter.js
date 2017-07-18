@@ -1,4 +1,5 @@
-var glslify  = require('glslify');
+import vertex from './colorReplace.vert';
+import fragment from './colorReplace.frag';
 
 /**
  * ColorReplaceFilter, originally by mishaa, updated by timetocode
@@ -7,9 +8,9 @@ var glslify  = require('glslify');
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
- * @param originalColor {number|number[]} The color that will be changed, as a 3 component RGB e.g. [1.0, 1.0, 1.0]
- * @param newColor {number|number[]} The resulting color, as a 3 component RGB e.g. [1.0, 0.5, 1.0]
- * @param epsilon {float} Tolerance/sensitivity of the floating-point comparison between colors (lower = more exact, higher = more inclusive)
+ * @param {number|Array<number>} [originalColor=0xFF0000] The color that will be changed, as a 3 component RGB e.g. [1.0, 1.0, 1.0]
+ * @param {number|Array<number>} [newColor=0x000000] The resulting color, as a 3 component RGB e.g. [1.0, 0.5, 1.0]
+ * @param {number} [epsilon=0.4] Tolerance/sensitivity of the floating-point comparison between colors (lower = more exact, higher = more inclusive)
  *
  * @example
  *  // replaces true red with true blue
@@ -28,65 +29,68 @@ var glslify  = require('glslify');
  *  someOtherSprite.filters = [new ColorReplaceFilter(0xdcdcdc, 0xe1c8d7, 0.001)];
  *
  */
-function ColorReplaceFilter(originalColor, newColor, epsilon) {
-    PIXI.Filter.call(this,
-        // vertex shader
-        // vertex shader
-        glslify('./colorReplace.vert'),
-        // fragment shader
-        glslify('./colorReplace.frag')
-    );
+export default class ColorReplaceFilter extends PIXI.Filter {
 
-    this.originalColor = originalColor || 0xFF0000;
-    this.newColor = newColor || 0x000000;
-    this.epsilon = epsilon || 1;
-}
+    constructor(originalColor = 0xFF0000, newColor = 0x000000, epsilon = 0.4) {
+        super(vertex, fragment);
+        this.originalColor = originalColor;
+        this.newColor = newColor;
+        this.epsilon = epsilon;
+    }
 
-ColorReplaceFilter.prototype = Object.create(PIXI.Filter.prototype);
-ColorReplaceFilter.prototype.constructor = ColorReplaceFilter;
-module.exports = ColorReplaceFilter;
-
-Object.defineProperties(ColorReplaceFilter.prototype, {
-    originalColor: {
-        set: function (value) {
-            var arr = this.uniforms.originalColor;
-            if (typeof value === "number") {
-                PIXI.utils.hex2rgb(value, arr);
-                this._originalColor = value;
-            } else {
-                arr[0] = value[0];
-                arr[1] = value[1];
-                arr[2] = value[2];
-                this._originalColor = PIXI.utils.rgb2hex(arr);
-            }
-        },
-        get: function() {
-            return this._originalColor;
+    /**
+     * The color that will be changed, as a 3 component RGB e.g. [1.0, 1.0, 1.0]
+     * @member {number|Array<number>}
+     * @default 0xFF0000
+     */
+    set originalColor(value) {
+        let arr = this.uniforms.originalColor;
+        if (typeof value === 'number') {
+            PIXI.utils.hex2rgb(value, arr);
+            this._originalColor = value;
         }
-    },
-    newColor: {
-        set: function (value) {
-			var arr = this.uniforms.newColor;
-			if (typeof value === "number") {
-				PIXI.utils.hex2rgb(value, arr);
-				this._newColor = value;
-			} else {
-				arr[0] = value[0];
-				arr[1] = value[1];
-				arr[2] = value[2];
-				this._newColor = PIXI.utils.rgb2hex(arr);
-			}
-        },
-        get: function() {
-            return this._newColor;
-        }
-    },
-    epsilon: {
-        set: function (value) {
-            this.uniforms.epsilon = value;
-        },
-        get: function() {
-            return this.uniforms.epsilon;
+        else {
+            arr[0] = value[0];
+            arr[1] = value[1];
+            arr[2] = value[2];
+            this._originalColor = PIXI.utils.rgb2hex(arr);
         }
     }
-});
+    get originalColor() {
+        return this._originalColor;
+    }
+
+    /**
+     * The resulting color, as a 3 component RGB e.g. [1.0, 0.5, 1.0]
+     * @member {number|Array<number>}
+     * @default 0x000000
+     */
+    set newColor(value) {
+        let arr = this.uniforms.newColor;
+        if (typeof value === 'number') {
+            PIXI.utils.hex2rgb(value, arr);
+            this._newColor = value;
+        }
+        else {
+            arr[0] = value[0];
+            arr[1] = value[1];
+            arr[2] = value[2];
+            this._newColor = PIXI.utils.rgb2hex(arr);
+        }
+    }
+    get newColor() {
+        return this._newColor;
+    }
+
+    /**
+     * Tolerance/sensitivity of the floating-point comparison between colors (lower = more exact, higher = more inclusive)
+     * @member {number}
+     * @default 0.4
+     */
+    set epsilon(value) {
+        this.uniforms.epsilon = value;
+    }
+    get epsilon() {
+        return this.uniforms.epsilon;
+    }
+}

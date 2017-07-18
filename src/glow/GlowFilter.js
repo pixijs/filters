@@ -1,4 +1,5 @@
-var glslify  = require('glslify');
+import vertex from './glow.vert';
+import fragment from './glow.frag';
 
 /**
  * GlowFilter, originally by mishaa
@@ -20,72 +21,65 @@ var glslify  = require('glslify');
  *      new GlowFilter(15, 2, 1, 0xFF0000, 0.5)
  *  ];
  */
-function GlowFilter(distance, outerStrength, innerStrength, color, quality) {
+export default class GlowFilter extends PIXI.Filter {
 
-    // default
-    distance = distance || 10;
-    outerStrength = outerStrength || 4;
-    innerStrength = innerStrength || 0;
-    quality = quality || 0.1;
-    color = color || 0xffffff;
-
-    PIXI.Filter.call(this,
-        // vertex shader
-        // vertex shader
-        glslify('./glow.vert'),
-        // fragment shader
-        glslify('./glow.frag')
+    constructor(distance = 10, outerStrength = 4, innerStrength = 0, color = 0xffffff, quality = 0.1) {
+        super(vertex, fragment
             .replace(/%QUALITY_DIST%/gi, '' + (1 / quality / distance).toFixed(7))
-            .replace(/%DIST%/gi, '' + distance.toFixed(7))
-    );
+            .replace(/%DIST%/gi, '' + distance.toFixed(7)));
 
-    this.uniforms.glowColor = new Float32Array([0, 0, 0, 1]);
-
-    quality = Math.pow(quality, 1/3);
-    this.uniforms.distance.value *= quality;
-
-    this.distance = distance;
-    this.quality = quality;
-    this.color = color;
-    this.outerStrength = outerStrength;
-    this.innerStrength = innerStrength;
-}
-
-GlowFilter.prototype = Object.create(PIXI.Filter.prototype);
-GlowFilter.prototype.constructor = GlowFilter;
-module.exports = GlowFilter;
-
-Object.defineProperties(GlowFilter.prototype, {
-    color: {
-        get: function () {
-            return PIXI.utils.rgb2hex(this.uniforms.glowColor);
-        },
-        set: function(value) {
-            PIXI.utils.hex2rgb(value, this.uniforms.glowColor);
-        }
-    },
-    distance: {
-        get: function () {
-            return this.uniforms.distance;
-        },
-        set: function (value) {
-            this.uniforms.distance = value;
-        }
-    },
-    outerStrength: {
-        get: function () {
-            return this.uniforms.outerStrength;
-        },
-        set: function (value) {
-            this.uniforms.outerStrength = value;
-        }
-    },
-    innerStrength: {
-        get: function () {
-            return this.uniforms.innerStrength;
-        },
-        set: function (value) {
-            this.uniforms.innerStrength = value;
-        }
+        this.uniforms.glowColor = new Float32Array([0, 0, 0, 1]);
+        this.distance = distance;
+        this.color = color;
+        this.outerStrength = outerStrength;
+        this.innerStrength = innerStrength;
     }
-});
+
+    /**
+     * The color of the glow.
+     * @member {number}
+     * @default 0xFFFFFF
+     */
+    get color() {
+        return PIXI.utils.rgb2hex(this.uniforms.glowColor);
+    }
+    set color(value) {
+        PIXI.utils.hex2rgb(value, this.uniforms.glowColor);
+    }
+
+    /**
+     * The distance of the glow. Make it 2 times more for resolution=2. It cant be changed after filter creation
+     * @member {number}
+     * @default 10
+     */
+    get distance() {
+        return this.uniforms.distance;
+    }
+    set distance(value) {
+        this.uniforms.distance = value;
+    }
+
+    /**
+     * The strength of the glow outward from the edge of the sprite.
+     * @member {number}
+     * @default 4
+     */
+    get outerStrength() {
+        return this.uniforms.outerStrength;
+    }
+    set outerStrength(value) {
+        this.uniforms.outerStrength = value;
+    }
+
+    /**
+     * The strength of the glow inward from the edge of the sprite.
+     * @member {number}
+     * @default 0
+     */
+    get innerStrength() {
+        return this.uniforms.innerStrength;
+    }
+    set innerStrength(value) {
+        this.uniforms.innerStrength = value;
+    }
+}

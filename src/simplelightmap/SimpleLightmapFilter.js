@@ -1,4 +1,5 @@
-var glslify  = require('glslify');
+import vertex from './simpleLightmap.vert';
+import fragment from './simpleLightmap.frag';
 
 /**
 * SimpleLightmap, originally by Oza94
@@ -10,7 +11,7 @@ var glslify  = require('glslify');
 * @memberof PIXI.filters
 * @param {PIXI.Texture} lightmapTexture a texture where your lightmap is rendered
 * @param {Array<number>} ambientColor An RGBA array of the ambient color
-* @param {Array<number>} [resolution] An array for X/Y resolution
+* @param {Array<number>} [resolution=[1, 1]] An array for X/Y resolution
 *
 * @example
 *  var lightmapTex = new PIXI.RenderTexture(renderer, 400, 300);
@@ -21,47 +22,46 @@ var glslify  = require('glslify');
 *    new SimpleLightmapFilter(lightmapTex, [0.3, 0.3, 0.7, 0.5], [1.0, 1.0])
 *  ];
 */
-function SimpleLightmapFilter(lightmapTexture, ambientColor, resolution) {
-    PIXI.Filter.call(this,
-        // vertex shader
-        // vertex shader
-        glslify('./simpleLightmap.vert'),
-        // fragment shader
-        glslify('./simpleLightmap.frag')
-    );
-    this.uniforms.u_lightmap = lightmapTexture;
-    this.uniforms.resolution = new Float32Array(resolution || [1.0, 1.0]);
-    this.uniforms.ambientColor =  new Float32Array(ambientColor);
-}
+export default class SimpleLightmapFilter extends PIXI.Filter {
 
-SimpleLightmapFilter.prototype = Object.create(PIXI.Filter.prototype);
-SimpleLightmapFilter.prototype.constructor = SimpleLightmapFilter;
-
-Object.defineProperties(SimpleLightmapFilter.prototype, {
-    texture: {
-        get: function () {
-            return this.uniforms.u_lightmap;
-        },
-        set: function (value) {
-            this.uniforms.u_lightmap = value;
-        }
-    },
-    color: {
-        get: function () {
-            return this.uniforms.ambientColor;
-        },
-        set: function (value) {
-            this.uniforms.ambientColor = new Float32Array(value);
-        }
-    },
-    resolution: {
-        get: function () {
-            return this.uniforms.resolution;
-        },
-        set: function (value) {
-            this.uniforms.resolution = new Float32Array(value);
-        }
+    constructor(lightmapTexture, ambientColor, resolution = [1, 1]) {    
+        super(vertex, fragment);
+        this.uniforms.u_lightmap = lightmapTexture;
+        this.uniforms.resolution = new Float32Array(resolution);
+        this.uniforms.ambientColor =  new Float32Array(ambientColor);
     }
-});
 
-module.exports = SimpleLightmapFilter;
+
+    /**
+     * a texture where your lightmap is rendered
+     * @member {PIXI.Texture}
+     */
+    get texture() {
+        return this.uniforms.u_lightmap;
+    }
+    set texture(value) {
+        this.uniforms.u_lightmap = value;
+    }
+
+    /**
+     * An RGBA array of the ambient color
+     * @member {Array<number>}
+     */
+    get color() {
+        return this.uniforms.ambientColor;
+    }
+    set color(value) {
+        this.uniforms.ambientColor = new Float32Array(value);
+    }
+
+    /**
+     * An array for X/Y resolution
+     * @member {Array<number>}
+     */
+    get resolution() {
+        return this.uniforms.resolution;
+    }
+    set resolution(value) {
+        this.uniforms.resolution = new Float32Array(value);
+    }
+}
