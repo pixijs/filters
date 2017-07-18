@@ -41,7 +41,7 @@ npm install pixi-filters
 ### Browser
 
 ```html
-<script src="pixi.js/bin/pixi.js"></script>
+<script src="pixi.js/dist/pixi.js"></script>
 <script src="pixi-filters/bin/filters.js"></script>
 ```
 ```js
@@ -51,7 +51,7 @@ var filter = new PIXI.filters.AsciiFilter();
 #### Individual Filter
 
 ```html
-<script src="pixi.js/bin/pixi.js"></script>
+<script src="pixi.js/dist/pixi.js"></script>
 <script src="pixi-filters/bin/dot.js"></script>
 ```
 ```js
