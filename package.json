@@ -1,13 +1,13 @@
 {
   "name": "pixi-filters",
-  "version": "1.0.7",
-  "description": "Optional display filters to work with Pixi.js",
+  "version": "1.0.8",
+  "description": "Optional display filters to work with PixiJS",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
   "main": "bin/filters.min.js",
-  "homepage": "http://goodboydigital.com/",
+  "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
   "license": "MIT",
   "repository": {
@@ -68,6 +68,9 @@
       "glslify"
     ]
   },
+  "files": [
+    "bin"
+  ],
   "eslintConfig": {
     "extends": "eslint:recommended",
     "rules": {
