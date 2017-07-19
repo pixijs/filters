@@ -263,7 +263,8 @@
                 pixelateFilter.enabled = false;
                 folder = gui.addFolder('PixelateFilter');
                 folder.add(pixelateFilter, 'enabled');
-                folder.add(pixelateFilter, 'size', 4, 40);
+                folder.add(pixelateFilter.size, '0', 4, 40).name('size.x');
+                folder.add(pixelateFilter.size, '1', 4, 40).name('size.y');
 
                 var rgbFilter = new PIXI.filters.RGBSplitFilter();
                 rgbFilter.enabled = false;

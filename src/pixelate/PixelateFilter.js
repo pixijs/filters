@@ -24,11 +24,7 @@ export default class PixelateFilter extends PIXI.Filter {
      * @default 10
      */
     get size() {
-        let size = this.uniforms.size;
-        if (size[0] === size[1]) {
-            return size[0];
-        }
-        return size;
+        return this.uniforms.size;
     }
     set size(value) {
         if (typeof value === 'number') {
