@@ -33,12 +33,15 @@
             #logo {
                 position: absolute;
                 z-index:1;
-                width:240px;
+                width:245px;
                 height:69px;
-                bottom:0;
+                top:0;
                 right: 15px;
                 background:#000;
                 padding:10px 0;
+            }
+            .dg.ac {
+                top:89px !important;
             }
             #logo img {
                 display: block;
@@ -66,8 +69,7 @@
             var app = new PIXI.Application({
                 view: view,
                 width: stageWidth,
-                height: stageHeight,
-                backgroundColor: 0x24aaee
+                height: stageHeight
             });
 
             // Preload the assets needed
@@ -118,11 +120,44 @@
                 // Add the background
                 pond.addChild(bg);
 
+                var folder;
+
+                var outlineFilter = new PIXI.filters.OutlineFilter();
+                outlineFilter.enabled = false;
+                folder = gui.addFolder('OutlineFilter');
+                folder.add(outlineFilter, 'enabled');
+                folder.add(outlineFilter, 'thickness', 0, 20);
+                folder.addColor(outlineFilter, 'color');
+
+                var glowFilter = new PIXI.filters.GlowFilter(15, 2, 1, 0xffffff, 0.1);
+                glowFilter.enabled = false;
+                folder = gui.addFolder('GlowFilter');
+                folder.add(glowFilter, 'enabled');
+                folder.add(glowFilter, 'innerStrength', 0, 20);
+                folder.add(glowFilter, 'outerStrength', 0, 20);
+                folder.add(glowFilter, 'distance', 10, 20);
+                folder.addColor(glowFilter, 'color');
+
+                var dropFilter = new PIXI.filters.DropShadowFilter();
+                dropFilter.enabled = false;
+                folder = gui.addFolder('DropShadowFilter');
+                folder.add(dropFilter, 'enabled');
+                folder.add(dropFilter, 'blur', 0, 40);
+                folder.add(dropFilter, 'alpha', 0, 1);
+                folder.add(dropFilter, 'distance', 0, 50);
+                folder.add(dropFilter, 'rotation', 0, 360);
+                folder.addColor(dropFilter, 'color');
+
                 // Create and add the fish
                 for (var i = 0; i < 20; i++) {
                     var id = 'fish' + ((i % 4) + 1);
                     var fish = new PIXI.Sprite(resources[id].texture);
                     fish.anchor.set(0.5);
+                    fish.filters = [
+                        outlineFilter,
+                        glowFilter,
+                        dropFilter
+                    ];
 
                     pond.addChild(fish);
 
@@ -228,8 +263,7 @@
                 pixelateFilter.enabled = false;
                 folder = gui.addFolder('PixelateFilter');
                 folder.add(pixelateFilter, 'enabled');
-                folder.add(pixelateFilter.size, '0', 4, 40).name('size.x');
-                folder.add(pixelateFilter.size, '1', 4, 40).name('size.y');
+                folder.add(pixelateFilter, 'size', 4, 40);
 
                 var rgbFilter = new PIXI.filters.RGBSplitFilter();
                 rgbFilter.enabled = false;
@@ -277,6 +311,23 @@
                 folder.add(shockwaveFilter.center, '0', 0, 1).name('center.x');
                 folder.add(shockwaveFilter.center, '1', 0, 1).name('center.y');
 
+                var bulgepinchFilter = new PIXI.filters.BulgePinchFilter();
+                bulgepinchFilter.enabled = false;
+                folder = gui.addFolder('BulgePinchFilter');
+                folder.add(bulgepinchFilter, 'enabled');
+                folder.add(bulgepinchFilter, 'radius', 0, 1000);
+                folder.add(bulgepinchFilter, 'strength', -1, 1);
+                folder.add(bulgepinchFilter.center, '0', 0, 1).name('center.x');
+                folder.add(bulgepinchFilter.center, '1', 0, 1).name('center.y');
+
+                var colorReplaceFilter = new PIXI.filters.ColorReplaceFilter();
+                colorReplaceFilter.enabled = false;
+                folder = gui.addFolder('ColorReplaceFilter');
+                folder.add(colorReplaceFilter, 'enabled');
+                folder.addColor(colorReplaceFilter, 'originalColor');
+                folder.addColor(colorReplaceFilter, 'newColor');
+                folder.add(colorReplaceFilter, 'epsilon', 0, 1);
+
                 // Apply filters
                 pond.filterArea = filterArea;
                 pond.filters = [
@@ -294,7 +345,9 @@
                     bloomFilter,
                     convolutionFilter,
                     tiltshiftFilter,
-                    shockwaveFilter
+                    shockwaveFilter,
+                    bulgepinchFilter,
+                    colorReplaceFilter
                 ];
 
                 window.addEventListener('resize', resize);

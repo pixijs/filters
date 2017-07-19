@@ -1,30 +1,21 @@
 #!/usr/bin/env node
 
-// Publish script to push releases of the bin files
-// the normally are gitignored
-
-var ghpages = require('gh-pages');
-var path = require('path');
-var packageInfo = require(path.join(__dirname, '..', 'package.json'));
-var options = {
+const ghpages = require('gh-pages');
+const path = require('path');
+const packageInfo = require(path.join(__dirname, '..', 'package.json'));
+const options = {
     src: [
-        'bin/**/*',
-        'scripts/**/*',
-        'src/**/*',
+        'bin/filters.js',
+        'bin/filters.js.map',
         'examples/**/*',
-        'bower.json',
-        'package.json',
-        'README.md',
-        '.travis.yml'
+        'docs/**/*'
     ],
-    dotfiles: true,
-    branch: 'publish',
-    message: packageInfo.version,
-    logger: console.log.bind(console)
+    message: packageInfo.version
 };
 
 ghpages.publish(process.cwd(), options, function(err) {
     if (err) {
+        // eslint-disable-next-line no-console
         console.log(err);
         process.exit(1);
         return;

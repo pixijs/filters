@@ -1,4 +1,5 @@
-var glslify  = require('glslify');
+import vertex from '../fragments/default.vert';
+import fragment from './shockwave.frag';
 
 /**
  * The ColorMatrixFilter class lets you apply a 4x4 matrix transformation on the RGBA
@@ -8,81 +9,60 @@ var glslify  = require('glslify');
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @param {PIXI.Point} [center=[0.5, 0.5]] See center property
+ * @param {Array<number>} [params=[10, 0.8, 0.1]] See params property
+ * @param {number} [time=0] See time property
  */
-function ShockwaveFilter()
-{
-    PIXI.Filter.call(this,
-        // vertex shader
-        glslify('../fragments/default.vert'),
-        // fragment shader
-        glslify('./shockwave.frag'),
-        // custom uniforms
-        {
+export default class ShockwaveFilter extends PIXI.Filter {
+
+    constructor(center = [0.5, 0.5], params = [10, 0.8, 0.1], time = 0) {
+        super(vertex, fragment, {
             center: { type: 'v2', value: { x: 0.5, y: 0.5 } },
             params: { type: 'v3', value: { x: 10, y: 0.8, z: 0.1 } },
             time: { type: '1f', value: 0 }
-        }
-    );
+        });
 
-    this.center = [0.5, 0.5];
-    this.params = [10, 0.8, 0.1];
-    this.time = 0;
-}
+        this.center = center;
+        this.params = params;
+        this.time = time;
+    }
 
-ShockwaveFilter.prototype = Object.create(PIXI.Filter.prototype);
-ShockwaveFilter.prototype.constructor = ShockwaveFilter;
-module.exports = ShockwaveFilter;
-
-Object.defineProperties(ShockwaveFilter.prototype, {
     /**
      * Sets the center of the shockwave in normalized screen coords. That is
      * (0,0) is the top-left and (1,1) is the bottom right.
      *
-     * @member {object<string, number>}
-     * @memberof PIXI.filters.ShockwaveFilter#
+     * @member {PIXI.Point}
      */
-    center: {
-        get: function ()
-        {
-            return this.uniforms.center;
-        },
-        set: function (value)
-        {
-            this.uniforms.center = value;
-        }
-    },
+    get center() {
+        return this.uniforms.center;
+    }
+    set center(value) {
+        this.uniforms.center = value;
+    }
+
     /**
      * Sets the params of the shockwave. These modify the look and behavior of
      * the shockwave as it ripples out.
      *
-     * @member {object<string, number>}
-     * @memberof PIXI.filters.ShockwaveFilter#
+     * @member {Array<number>}
      */
-    params: {
-        get: function ()
-        {
-            return this.uniforms.params;
-        },
-        set: function (value)
-        {
-            this.uniforms.params = value;
-        }
-    },
+    get params() {
+        return this.uniforms.params;
+    }
+    set params(value) {
+        this.uniforms.params = value;
+    }
+
     /**
      * Sets the elapsed time of the shockwave. This controls the speed at which
      * the shockwave ripples out.
      *
      * @member {number}
-     * @memberof PIXI.filters.ShockwaveFilter#
      */
-    time: {
-        get: function ()
-        {
-            return this.uniforms.time;
-        },
-        set: function (value)
-        {
-            this.uniforms.time = value;
-        }
+    get time() {
+        return this.uniforms.time;
     }
-});
+    set time(value) {
+        this.uniforms.time = value;
+    }
+}

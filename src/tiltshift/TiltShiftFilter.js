@@ -1,5 +1,5 @@
-var TiltShiftXFilter = require('./TiltShiftXFilter'),
-    TiltShiftYFilter = require('./TiltShiftYFilter');
+import TiltShiftXFilter from './TiltShiftXFilter';
+import TiltShiftYFilter from './TiltShiftYFilter';
 
 /**
  * @author Vico @vicocotea
@@ -12,96 +12,71 @@ var TiltShiftXFilter = require('./TiltShiftXFilter'),
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @param {number} [blur=100] The strength of the blur.
+ * @param {number} [gradientBlur=600] The strength of the gradient blur.
+ * @param {PIXI.Point} [start=null] The Y value to start the effect at.
+ * @param {PIXI.Point} [end=null] The Y value to end the effect at.
  */
-function TiltShiftFilter()
-{
-    PIXI.Filter.call(this);
+export default class TiltShiftFilter extends PIXI.Filter {
+    
+    constructor(blur = 100, gradientBlur = 600, start = null, end = null) {
+        super();
+        this.tiltShiftXFilter = new TiltShiftXFilter(blur, gradientBlur, start, end);
+        this.tiltShiftYFilter = new TiltShiftYFilter(blur, gradientBlur, start, end);
+    }
 
-    this.tiltShiftXFilter = new TiltShiftXFilter();
-    this.tiltShiftYFilter = new TiltShiftYFilter();
-}
+    apply(filterManager, input, output) {
+        let renderTarget = filterManager.getRenderTarget(true);
+        this.tiltShiftXFilter.apply(filterManager, input, renderTarget);
+        this.tiltShiftYFilter.apply(filterManager, renderTarget, output);
+        filterManager.returnRenderTarget(renderTarget);
+    }
 
-TiltShiftFilter.prototype = Object.create(PIXI.Filter.prototype);
-TiltShiftFilter.prototype.constructor = TiltShiftFilter;
-module.exports = TiltShiftFilter;
-
-TiltShiftFilter.prototype.apply = function (filterManager, input, output)
-{
-    var renderTarget = filterManager.getRenderTarget(true);
-
-    this.tiltShiftXFilter.apply(filterManager, input, renderTarget);
-
-    this.tiltShiftYFilter.apply(filterManager, renderTarget, output);
-
-    filterManager.returnRenderTarget(renderTarget);
-};
-
-Object.defineProperties(TiltShiftFilter.prototype, {
     /**
      * The strength of the blur.
      *
      * @member {number}
-     * @memberof PIXI.filters.TiltShiftFilter#
      */
-    blur: {
-        get: function ()
-        {
-            return this.tiltShiftXFilter.blur;
-        },
-        set: function (value)
-        {
-            this.tiltShiftXFilter.blur = this.tiltShiftYFilter.blur = value;
-        }
-    },
+    get blur() {
+        return this.tiltShiftXFilter.blur;
+    }
+    set blur(value) {
+        this.tiltShiftXFilter.blur = this.tiltShiftYFilter.blur = value;
+    }
 
     /**
      * The strength of the gradient blur.
      *
      * @member {number}
-     * @memberof PIXI.filters.TiltShiftFilter#
      */
-    gradientBlur: {
-        get: function ()
-        {
-            return this.tiltShiftXFilter.gradientBlur;
-        },
-        set: function (value)
-        {
-            this.tiltShiftXFilter.gradientBlur = this.tiltShiftYFilter.gradientBlur = value;
-        }
-    },
+    get gradientBlur() {
+        return this.tiltShiftXFilter.gradientBlur;
+    }
+    set gradientBlur(value) {
+        this.tiltShiftXFilter.gradientBlur = this.tiltShiftYFilter.gradientBlur = value;
+    }
 
     /**
      * The Y value to start the effect at.
      *
-     * @member {number}
-     * @memberof PIXI.filters.TiltShiftFilter#
+     * @member {PIXI.Point}
      */
-    start: {
-        get: function ()
-        {
-            return this.tiltShiftXFilter.start;
-        },
-        set: function (value)
-        {
-            this.tiltShiftXFilter.start = this.tiltShiftYFilter.start = value;
-        }
-    },
+    get start() {
+        return this.tiltShiftXFilter.start;
+    }
+    set start(value) {
+        this.tiltShiftXFilter.start = this.tiltShiftYFilter.start = value;
+    }
 
     /**
      * The Y value to end the effect at.
      *
-     * @member {number}
-     * @memberof PIXI.filters.TiltShiftFilter#
+     * @member {PIXI.Point}
      */
-    end: {
-        get: function ()
-        {
-            return this.tiltShiftXFilter.end;
-        },
-        set: function (value)
-        {
-            this.tiltShiftXFilter.end = this.tiltShiftYFilter.end = value;
-        }
+    get end() {
+        return this.tiltShiftXFilter.end;
     }
-});
+    set end(value) {
+        this.tiltShiftXFilter.end = this.tiltShiftYFilter.end = value;
+    }
+}

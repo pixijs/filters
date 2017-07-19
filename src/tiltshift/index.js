@@ -1,15 +1,4 @@
-require('../check');
-
-var filters = {
-    TiltShiftFilter: require('./TiltShiftFilter'),
-    TiltShiftXFilter: require('./TiltShiftFilter'),
-    TiltShiftYFilter: require('./TiltShiftFilter'),
-    TiltShiftAxisFilter: require('./TiltShiftAxisFilter')
-};
-
-Object.assign(PIXI.filters, filters);
-
-// Export for requiring
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = filters;
-}
+export {default as TiltShiftFilter} from './TiltShiftFilter';
+export {default as TiltShiftXFilter} from './TiltShiftXFilter';
+export {default as TiltShiftYFilter} from './TiltShiftYFilter';
+export {default as TiltShiftAxisFilter} from './TiltShiftAxisFilter';

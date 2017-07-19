@@ -10,34 +10,35 @@
         "excludePattern": "(^|\\/|\\\\)_"
     },
     "plugins": [
-        "plugins/markdown"
+        "plugins/markdown",
+        "./scripts/jsdoc-fix"
     ],
     "templates": {
-        "cleverLinks"   : false,
+        "cleverLinks": false,
         "monospaceLinks": false,
-        "default"       : {
-            "outputSourceFiles" : true
+        "default": {
+            "outputSourceFiles": true
         },
         "applicationName": "PixiJS Filters",
-        "footer"        : "Made with ♥ by Goodboy Digital (goodboydigital.com)",
-        "copyright"     : "PixiJS Copyright © 2013-2016 Mat Groves.",
+        "footer": "Made with ♥ by Goodboy Digital (goodboydigital.com)",
+        "copyright": "PixiJS Copyright © 2013-2016 Mat Groves.",
         "meta": {
             "title": "PixiJS Filters Documentation",
             "description": "API Documentation for PixiJS filters",
             "keyword": "filters, webgl, ascii, bloom, convolution, cross-hatch, dotfilter, emboss, pixelate, shockwave, twist, tiltshift"
         },
-        "linenums"      : true
+        "linenums": true
     },
-    "markdown"  : {
-        "parser"        : "gfm",
-        "hardwrap"      : true
+    "markdown": {
+        "parser": "gfm",
+        "hardwrap": true
     },
     "opts": {
-        "encoding"      : "utf8",
-        "recurse"       : true,
-        "private"       : false,
-        "lenient"       : true,
-        "destination"   : "./docs",
-        "template"      : "./node_modules/jaguarjs-jsdoc"
+        "encoding": "utf8",
+        "recurse": true,
+        "private": false,
+        "lenient": true,
+        "destination": "./docs",
+        "template": "./node_modules/jaguarjs-jsdoc"
     }
 }

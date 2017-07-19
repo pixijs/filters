@@ -1,4 +1,5 @@
-var glslify  = require('glslify');
+import vertex from '../fragments/default.vert';
+import fragment from './crosshatch.frag';
 
 /**
  * A Cross Hatch effect filter.
@@ -7,16 +8,8 @@ var glslify  = require('glslify');
  * @extends PIXI.Filter
  * @memberof PIXI.filters
  */
-function CrossHatchFilter()
-{
-    PIXI.Filter.call(this,
-        // vertex shader
-        glslify('../fragments/default.vert'),
-        // fragment shader
-        glslify('./crosshatch.frag')
-    );
+export default class CrossHatchFilter extends PIXI.Filter {
+    constructor() {
+        super(vertex, fragment);
+    }
 }
-
-CrossHatchFilter.prototype = Object.create(PIXI.Filter.prototype);
-CrossHatchFilter.prototype.constructor = CrossHatchFilter;
-module.exports = CrossHatchFilter;

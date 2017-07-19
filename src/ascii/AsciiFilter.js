@@ -1,4 +1,5 @@
-var glslify  = require('glslify');
+import vertex from '../fragments/default.vert';
+import fragment from './ascii.frag';
 
 // TODO (cengler) - The Y is flipped in this shader for some reason.
 
@@ -13,38 +14,24 @@ var glslify  = require('glslify');
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @param {number} [size=8] Size of the font
  */
-function AsciiFilter()
-{
-    PIXI.Filter.call(this,
-        // vertex shader
-        glslify('../fragments/default.vert'),
-        // fragment shader
-        glslify('./ascii.frag')
-    );
+export default class AsciiFilter extends PIXI.Filter {
+    
+    constructor(size = 8) {
+        super(vertex, fragment);
+        this.size = size;
+    }
 
-    this.size = 8;
-}
-
-AsciiFilter.prototype = Object.create(PIXI.Filter.prototype);
-AsciiFilter.prototype.constructor = AsciiFilter;
-module.exports = AsciiFilter;
-
-Object.defineProperties(AsciiFilter.prototype, {
     /**
      * The pixel size used by the filter.
      *
      * @member {number}
-     * @memberof PIXI.filters.AsciiFilter#
      */
-    size: {
-        get: function ()
-        {
-            return this.uniforms.pixelSize;
-        },
-        set: function (value)
-        {
-            this.uniforms.pixelSize = value;
-        }
+    get size() {
+        return this.uniforms.pixelSize;
     }
-});
+    set size(value) {
+        this.uniforms.pixelSize = value;
+    }
+}

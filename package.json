@@ -7,6 +7,7 @@
     "Matt Karl <matt@mattkarl.com>"
   ],
   "main": "bin/filters.min.js",
+  "module": "bin/filters.es.min.js",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
   "license": "MIT",
@@ -15,80 +16,63 @@
     "url": "https://github.com/pixijs/pixi-filters.git"
   },
   "scripts": {
-    "predeploy": "npm run build",
+    "predeploy": "npm run docs",
     "test": "npm run build",
-    "deploy": "node scripts/deploy.js",
+    "deploy": "node scripts/deploy",
     "docs": "jsdoc -c scripts/jsdoc.conf.json -R README.md",
-    "pregh-pages": "npm run docs",
-    "gh-pages": "node scripts/gh-pages.js",
     "clean": "rimraf bin && mkdirp bin",
-    "lint": "eslint src scripts",
-    "lint:watch": "watch \"eslint src\" src",
-    "build:ascii": "pixify -s src/ascii -n ascii",
-    "build:bloom": "pixify -s src/bloom -n bloom",
-    "build:convolution": "pixify -s src/convolution -n convolution",
-    "build:crosshatch": "pixify -s src/crosshatch -n crosshatch",
-    "build:dot": "pixify -s src/dot -n dot",
-    "build:emboss": "pixify -s src/emboss -n emboss",
-    "build:pixelate": "pixify -s src/pixelate -n pixelate",
-    "build:rgb": "pixify -s src/rgb -n rgb",
-    "build:shockwave": "pixify -s src/shockwave -n shockwave",
-    "build:tiltshift": "pixify -s src/tiltshift -n tiltshift",
-    "build:twist": "pixify -s src/twist -n twist",
-    "build:all": "pixify -s src -n filters",
-    "build:all:watch": "pixify -s src -n filters -w",
-    "prebuild": "npm run clean && npm run lint",
+    "lint": "eslint src scripts --fix",
+    "watch:lint": "watch \"npm run lint\" src scripts",
+    "build:ascii": "rollup -c --environment FILTER:ascii && rollup -c --environment FILTER:ascii,BUILD:prod",
+    "build:bloom": "rollup -c --environment FILTER:bloom && rollup -c --environment FILTER:bloom,BUILD:prod",
+    "build:bulgepinch": "rollup -c --environment FILTER:bulgepinch && rollup -c --environment FILTER:bulgepinch,BUILD:prod",
+    "build:colorreplace": "rollup -c --environment FILTER:colorreplace && rollup -c --environment FILTER:colorreplace,BUILD:prod",
+    "build:convolution": "rollup -c --environment FILTER:convolution && rollup -c --environment FILTER:convolution,BUILD:prod",
+    "build:crosshatch": "rollup -c --environment FILTER:crosshatch && rollup -c --environment FILTER:crosshatch,BUILD:prod",
+    "build:dot": "rollup -c --environment FILTER:dot && rollup -c --environment FILTER:dot,BUILD:prod",
+    "build:dropshadow": "rollup -c --environment FILTER:dropshadow && rollup -c --environment FILTER:dropshadow,BUILD:prod",
+    "build:emboss": "rollup -c --environment FILTER:emboss && rollup -c --environment FILTER:emboss,BUILD:prod",
+    "build:glow": "rollup -c --environment FILTER:glow && rollup -c --environment FILTER:glow,BUILD:prod",
+    "build:outline": "rollup -c --environment FILTER:outline && rollup -c --environment FILTER:outline,BUILD:prod",
+    "build:pixelate": "rollup -c --environment FILTER:pixelate && rollup -c --environment FILTER:pixelate,BUILD:prod",
+    "build:rgb": "rollup -c --environment FILTER:rgb && rollup -c --environment FILTER:rgb,BUILD:prod",
+    "build:simplelightmap": "rollup -c --environment FILTER:simplelightmap && rollup -c --environment FILTER:simplelightmap,BUILD:prod",
+    "build:shockwave": "rollup -c --environment FILTER:shockwave && rollup -c --environment FILTER:shockwave,BUILD:prod",
+    "build:tiltshift": "rollup -c --environment FILTER:tiltshift && rollup -c --environment FILTER:tiltshift,BUILD:prod",
+    "build:twist": "rollup -c --environment FILTER:twist && rollup -c --environment FILTER:twist,BUILD:prod",
     "examples": "open http://localhost:8080/examples/index.html && http-server . -s -c-1",
     "prestart": "npm run clean",
-    "start": "parallelshell \"npm run build:all:watch\" \"npm run lint:watch\"",
-    "build": "npm run build:all && npm run build:ascii && npm run build:bloom && npm run build:convolution && npm run build:crosshatch && npm run build:dot && npm run build:emboss && npm run build:pixelate && npm run build:rgb && npm run build:shockwave && npm run build:tiltshift && npm run build:twist",
-    "publish:patch": "npm version patch --no-git-tag-version && npm publish",
-    "publish:minor": "npm version minor --no-git-tag-version && npm publish",
-    "publish:major": "npm version major --no-git-tag-version && npm publish",
-    "postversion": "node scripts/versions.js",
+    "start": "parallelshell \"npm run watch:all\" \"npm run watch:lint\"",
+    "prebuild": "npm run clean && npm run lint",
+    "build": "npm run build:all && npm run build:all:es && npm run build:ascii && npm run build:bloom && npm run build:bulgepinch && npm run build:colorreplace && npm run build:convolution && npm run build:crosshatch && npm run build:dot && npm run build:dropshadow && npm run build:emboss && npm run build:glow && npm run build:outline && npm run build:pixelate && npm run build:rgb && npm run build:simplelightmap && npm run build:shockwave && npm run build:tiltshift && npm run build:twist",
+    "watch:all": "rollup -c -w",
+    "build:all": "rollup -c && rollup -c --environment BUILD:prod",
+    "build:all:es": "rollup -c --environment FORMAT:es && rollup -c --environment BUILD:prod,FORMAT:es",
+    "publish:patch": "npm version patch && npm publish",
+    "publish:minor": "npm version minor && npm publish",
+    "publish:major": "npm version major && npm publish",
     "prepublish": "npm run build",
-    "clean-gh-pages": "rimraf node_modules/gh-pages/.cache",
-    "postpublish": "npm run clean-gh-pages && node scripts/deploy.js && npm run clean-gh-pages && npm run gh-pages"
+    "postpublish": "npm run deploy"
   },
   "devDependencies": {
     "eslint": "^3.1.1",
     "gh-pages": "^0.11.0",
-    "glslify": "^5.1.0",
     "http-server": "^0.9.0",
     "jaguarjs-jsdoc": "^1.0.0",
     "jsdoc": "^3.4.0",
     "mkdirp": "^0.5.1",
-    "parallelshell": "^2.0.0",
-    "pixify": "^1.4.0",
+    "parallelshell": "^3.0.1",
     "rimraf": "^2.5.3",
-    "watch": "^0.19.1"
-  },
-  "browserify": {
-    "transform": [
-      "glslify"
-    ]
+    "rollup": "^0.45.2",
+    "rollup-plugin-buble": "^0.15.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-string": "^2.0.2",
+    "rollup-plugin-uglify": "^2.0.1",
+    "rollup-watch": "^4.3.1",
+    "uglify-es": "^3.0.25",
+    "watch": "^1.0.2"
   },
   "files": [
     "bin"
-  ],
-  "eslintConfig": {
-    "extends": "eslint:recommended",
-    "rules": {
-      "no-console": 0,
-      "no-debugger": 1
-    },
-    "parserOptions": {
-      "ecmaVersion": 6,
-      "sourceType": "module"
-    },
-    "env": {
-      "browser": true,
-      "node": true
-    },
-    "globals": {
-      "jibo": true,
-      "PIXI": true,
-      "Float32Array": true
-    }
-  }
+  ]
 }

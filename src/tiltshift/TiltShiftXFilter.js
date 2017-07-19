@@ -1,4 +1,4 @@
-var TiltShiftAxisFilter = require('./TiltShiftAxisFilter');
+import TiltShiftAxisFilter from './TiltShiftAxisFilter';
 
 /**
  * @author Vico @vicocotea
@@ -11,26 +11,17 @@ var TiltShiftAxisFilter = require('./TiltShiftAxisFilter');
  * @class
  * @extends PIXI.TiltShiftAxisFilter
  * @memberof PIXI.filters
+ * @private
  */
-function TiltShiftXFilter()
-{
-    TiltShiftAxisFilter.call(this);
+export default class TiltShiftXFilter extends TiltShiftAxisFilter {
+    /**
+     * Updates the filter delta values.
+     */
+    updateDelta() {
+        const dx = this.uniforms.end.x - this.uniforms.start.x;
+        const dy = this.uniforms.end.y - this.uniforms.start.y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        this.uniforms.delta.x = dx / d;
+        this.uniforms.delta.y = dy / d;
+    }
 }
-
-TiltShiftXFilter.prototype = Object.create(TiltShiftAxisFilter.prototype);
-TiltShiftXFilter.prototype.constructor = TiltShiftXFilter;
-module.exports = TiltShiftXFilter;
-
-/**
- * Updates the filter delta values.
- *
- */
-TiltShiftXFilter.prototype.updateDelta = function ()
-{
-    var dx = this.uniforms.end.x - this.uniforms.start.x;
-    var dy = this.uniforms.end.y - this.uniforms.start.y;
-    var d = Math.sqrt(dx * dx + dy * dy);
-
-    this.uniforms.delta.x = dx / d;
-    this.uniforms.delta.y = dy / d;
-};
