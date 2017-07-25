@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/pixijs/pixi-filters.svg?branch=master)](https://travis-ci.org/pixijs/pixi-filters) [![CDNJS](https://img.shields.io/cdnjs/v/pixi-filters.svg)](https://cdnjs.com/libraries/pixi-filters)
 
-Include optional filters that work with PixiJS v4.
+Optional filters that work with PixiJS v4.
 
 Filters include:
 
@@ -26,7 +26,7 @@ Filters include:
 
 ## Examples
 
-Click [here](http://pixijs.github.io/pixi-filters/examples) for filter demos.
+Click [here](https://pixijs.github.io/pixi-filters/examples) for filter demos.
 
 ## Installation
 
