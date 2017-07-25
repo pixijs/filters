@@ -29,16 +29,12 @@ export default class DropShadowFilter extends PIXI.Filter {
 
     apply(filterManager, input, output) {
         const target = filterManager.getRenderTarget();
-        target.clear();
-        if (!output.root) {
-            output.clear();
-        }
         target.transform = new PIXI.Matrix();
         target.transform.translate(
             this.distance * Math.cos(this.angle), 
             this.distance * Math.sin(this.angle)
         );
-        this.tintFilter.apply(filterManager, input, target);
+        this.tintFilter.apply(filterManager, input, target, true);
         this.blurFilter.apply(filterManager, target, output);
         super.apply(filterManager, input, output);
         target.transform = null;
@@ -46,7 +42,7 @@ export default class DropShadowFilter extends PIXI.Filter {
     }
 
     updatePadding() {
-        this.padding = Math.max(this.distance, 10) * this.blur * 2;
+        this.padding = this.distance + (this.blur * 2);
     }
 
     /**

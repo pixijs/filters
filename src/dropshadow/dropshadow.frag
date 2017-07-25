@@ -4,5 +4,17 @@ uniform float alpha;
 uniform vec3 color;
 void main(void){
     vec4 sample = texture2D(uSampler, vTextureCoord);
-    gl_FragColor = vec4(color, sample.a > 0.0 ? alpha : 0.0);
+
+    // Un-premultiply alpha before applying the color
+    if (sample.a > 0.0) {
+        sample.rgb /= sample.a;
+    }
+
+    // Premultiply alpha again
+    sample.rgb = color.rgb * sample.a;
+
+    // alpha user alpha
+    sample *= alpha;
+
+    gl_FragColor = sample;
 }
