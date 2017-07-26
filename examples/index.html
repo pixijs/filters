@@ -324,7 +324,9 @@
                 folder.add(colorReplaceFilter, 'epsilon', 0, 1);
 
                 // Apply filters
-                pond.filterArea = app.screen;
+                var filterAreaPadding = 4;
+                var filterArea = new PIXI.Rectangle();
+                pond.filterArea = filterArea;
                 pond.filters = [
                     displacementFilter,
                     blurFilter,
@@ -361,6 +363,11 @@
                     bounds.y = -padding;
                     bounds.width = width + padding * 2;
                     bounds.height = height + padding * 2;
+
+                    filterArea.x = filterAreaPadding;
+                    filterArea.y = filterAreaPadding;
+                    filterArea.width = width - filterAreaPadding * 2;
+                    filterArea.height = height - filterAreaPadding * 2;
 
                     displacementSprite.width = width;
                     displacementSprite.height = height;
