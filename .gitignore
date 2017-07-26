@@ -1,6 +1,6 @@
 .idea
 .vscode
 node_modules
-bin
-npm-debug.log
+lib
+*.log
 docs

@@ -1,0 +1,34 @@
+{
+  "name": "@pixi/filter-simple-lightmap",
+  "version": "2.0.0",
+  "main": "lib/filter-simple-lightmap.min.js",
+  "description": "Display filter render as simple-lightmap text",
+  "author": "Mat Groves",
+  "contributors": [
+    "Matt Karl <matt@mattkarl.com>"
+  ],
+  "module": "lib/filter-simple-lightmap.es.min.js",
+  "homepage": "http://pixijs.com/",
+  "bugs": "https://github.com/pixijs/pixi-filters/issues",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pixijs/pixi-filters.git"
+  },
+  "scripts": {
+    "build:umd": "rollup -c -f umd && rollup -cp -f umd",
+    "build:es": "rollup -c && rollup -cp",
+    "build": "npm run build:umd && npm run build:es"
+  },
+  "files": [
+    "lib"
+  ],
+  "peerDependencies": {
+    "pixi.js": "^4.0.0"
+  },
+  "devDependencies": {
+    "rollup": "^0.45.2",
+    "@tools/build": "^2.0.0",
+    "@tools/fragments": "^2.0.0"
+  }
+}

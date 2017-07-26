@@ -3,14 +3,14 @@ node_js:
   - "6"
 
 install:
-  - npm install
+  - npm run bootstrap
 
 cache:
   directories:
     - node_modules
 
 script:
-  - npm run build
+  - npm test
 
 deploy:
   - provider: s3
@@ -19,7 +19,7 @@ deploy:
     bucket: "pixi-filters"
     skip_cleanup: true
     acl: public_read
-    local_dir: bin
+    local_dir: filters/all/lib
     upload-dir: "$TRAVIS_BRANCH"
     cache_control: "max-age=60"
     region: eu-west-1
@@ -32,7 +32,7 @@ deploy:
     bucket: "pixi-filters"
     skip_cleanup: true
     acl: public_read
-    local_dir: bin
+    local_dir: filters/all/lib
     upload-dir: "$TRAVIS_BRANCH"
     cache_control: "max-age=2592000"
     region: eu-west-1

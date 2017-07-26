@@ -1,0 +1,6 @@
+{
+    "name": "@tools/fragments",
+    "private": true,
+    "version": "2.0.0",
+    "module": "index.js"
+}

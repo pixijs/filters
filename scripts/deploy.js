@@ -5,8 +5,8 @@ const path = require('path');
 const packageInfo = require(path.join(__dirname, '..', 'package.json'));
 const options = {
     src: [
-        'bin/filters.js',
-        'bin/filters.js.map',
+        'filters/all/lib/pixi-filters.umd.js',
+        'filters/all/lib/pixi-filters.umd.js.map',
         'examples/**/*',
         'docs/**/*'
     ],

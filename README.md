@@ -6,23 +6,23 @@ Optional filters that work with PixiJS v4.
 
 Filters include:
 
-* **AsciiFilter** _pixi-filters/bin/ascii_
-* **BloomFilter** _pixi-filters/bin/bloom_
-* **BulgePinchFilter** _pixi-filters/bin/bulgepinch_
-* **ColorReplaceFilter** _pixi-filters/bin/colorreplace_
-* **ConvolutionFilter** _pixi-filters/bin/convolution_
-* **CrossHatchFilter** _pixi-filters/bin/crosshatch_
-* **DotFilter** _pixi-filters/bin/dot_
-* **DropShadowFilter** _pixi-filters/bin/dropshadow_
-* **GlowFilter** _pixi-filters/bin/glow_
-* **EmbossFilter** _pixi-filters/bin/emboss_
-* **PixelateFilter** _pixi-filters/bin/pixelate_
-* **OutlineFilter** _pixi-filters/bin/outline_
-* **RGBSplitFilter** _pixi-filters/bin/rgb_
-* **ShockwaveFilter** _pixi-filters/bin/shockwave_
-* **SimpleLightmapFilter** _pixi-filters/bin/simplelightmap_
-* **TiltShiftFilter** _pixi-filters/bin/tiltshift_
-* **TwistFilter** _pixi-filters/bin/twist_
+* **AsciiFilter** _@pixi/filter-ascii_
+* **BloomFilter** _@pixi/filter-bloom_
+* **BulgePinchFilter** _@pixi/filter-bulge-pinch_
+* **ColorReplaceFilter** _@pixi/filter-color-replace_
+* **ConvolutionFilter** _@pixi/filter-convolution_
+* **CrossHatchFilter** _@pixi/filter-cross-hatch_
+* **DotFilter** _@pixi/filter-dot_
+* **DropShadowFilter** _@pixi/filter-drop-shadow_
+* **GlowFilter** _@pixi/filter-glow_
+* **EmbossFilter** _@pixi/filter-emboss_
+* **PixelateFilter** _@pixi/filter-pixelate_
+* **OutlineFilter** _@pixi/filter-outline_
+* **RGBSplitFilter** _@pixi/filter-rgb_
+* **ShockwaveFilter** _@pixi/filter-shockwave_
+* **SimpleLightmapFilter** _@pixi/filter-simple-lightmap_
+* **TiltShiftFilter** _@pixi/filter-tilt-shift_
+* **TwistFilter** _@pixi/filter-twist_
 
 ## Examples
 
@@ -36,61 +36,6 @@ Using NPM:
 npm install pixi-filters
 ```
 
-## Usage 
-
-### Browser
-
-```html
-<script src="pixi.js/dist/pixi.js"></script>
-<script src="pixi-filters/bin/filters.js"></script>
-```
-```js
-var filter = new PIXI.filters.AsciiFilter();
-```
-
-#### Individual Filter
-
-```html
-<script src="pixi.js/dist/pixi.js"></script>
-<script src="pixi-filters/bin/dot.js"></script>
-```
-```js
-var filter = new PIXI.filters.DotFilter();
-```
-
-### NodeJS
-
-```js
-// Include library by requiring pixi-filters module
-var filters = require('pixi-filters');
-var filter = new filters.DotFilter();
-
-// Alternatively, using PIXI.filters global object
-require('pixi-filters');
-var filter = new PIXI.filters.DotFilter();
-```
-
-#### Individual Filter
-
-```js
-// Using a single filter
-var AsciiFilter = require('pixi-filters/bin/ascii');
-var filter = new AsciiFilter();
-```
-
-## Rebuilding
-
-Make sure you run NPM install to get the build dependencies.
-
-```bash
-npm install
-```
-
-Run the `build` command to build all filters.
-
-```bash
-npm run build
-```
 ## Documentation
 
 API documention can be found [here](http://pixijs.github.io/pixi-filters/docs/).

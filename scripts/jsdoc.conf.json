@@ -4,7 +4,23 @@
     },
     "source": {
         "include": [
-            "./src/"
+            "filters/ascii/src/",
+            "filters/bloom/src/",
+            "filters/bulge-pinch/src/",
+            "filters/color-replace/src/",
+            "filters/convolution/src/",
+            "filters/cross-hatch/src/",
+            "filters/dot/src/",
+            "filters/drop-shadow/src/",
+            "filters/emboss/src/",
+            "filters/glow/src/",
+            "filters/outline/src/",
+            "filters/pixelate/src/",
+            "filters/rgb-split/src/",
+            "filters/shockwave/src/",
+            "filters/simple-lightmap/src/",
+            "filters/tilt-shift/src/",
+            "filters/twist/src/"
         ],
         "includePattern": ".+\\.js(doc)?$",
         "excludePattern": "(^|\\/|\\\\)_"
@@ -21,7 +37,7 @@
         },
         "applicationName": "PixiJS Filters",
         "footer": "Made with ♥ by Goodboy Digital (goodboydigital.com)",
-        "copyright": "PixiJS Copyright © 2013-2016 Mat Groves.",
+        "copyright": "PixiJS Copyright © 2013-2017 Mat Groves.",
         "meta": {
             "title": "PixiJS Filters Documentation",
             "description": "API Documentation for PixiJS filters",
