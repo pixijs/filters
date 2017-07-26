@@ -46,7 +46,7 @@
     "@pixi/filter-simple-lightmap": "^2.0.0",
     "@pixi/filter-tilt-shift": "^2.0.0",
     "@pixi/filter-twist": "^2.0.0",
-    "rollup": "^0.45.2",
-    "@tools/build": "^2.0.0"
+    "@tools/build": "^2.0.0",
+    "rollup": "^0.45.2"
   }
 }

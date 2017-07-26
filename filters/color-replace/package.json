@@ -27,8 +27,8 @@
     "pixi.js": "^4.0.0"
   },
   "devDependencies": {
-    "rollup": "^0.45.2",
     "@tools/build": "^2.0.0",
-    "@tools/fragments": "^2.0.0"
+    "@tools/fragments": "^2.0.0",
+    "rollup": "^0.45.2"
   }
 }
