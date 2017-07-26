@@ -1,7 +1,7 @@
 {
   "name": "@pixi/filter-tilt-shift",
   "version": "2.0.0",
-  "main": "lib/filter-tilt-shift.umd.min.js",
+  "main": "lib/filter-tilt-shift.min.js",
   "description": "Display filter render as tilt-shift text",
   "author": "Mat Groves",
   "contributors": [

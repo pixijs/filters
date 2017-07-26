@@ -1,7 +1,7 @@
 {
   "name": "@pixi/filter-rgb-split",
   "version": "2.0.0",
-  "main": "lib/filter-rgb-split.umd.min.js",
+  "main": "lib/filter-rgb-split.min.js",
   "description": "Display filter render as rgb-split text",
   "author": "Mat Groves",
   "contributors": [

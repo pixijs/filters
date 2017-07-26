@@ -1,7 +1,7 @@
 {
   "name": "@pixi/filter-simple-lightmap",
   "version": "2.0.0",
-  "main": "lib/filter-simple-lightmap.umd.min.js",
+  "main": "lib/filter-simple-lightmap.min.js",
   "description": "Display filter render as simple-lightmap text",
   "author": "Mat Groves",
   "contributors": [

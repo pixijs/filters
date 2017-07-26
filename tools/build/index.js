@@ -24,7 +24,8 @@ const {prod, format} = minimist(process.argv.slice(2), {
 });
 
 const suffix = prod ? `.min` : '';
-const dest = `lib/${name}.${format}${suffix}.js`;
+const formatSuffix = format === 'es' ? `.${format}` : '';
+const dest = `lib/${name}${formatSuffix}${suffix}.js`;
 
 const plugins = [
     resolve(),

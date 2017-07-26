@@ -1,7 +1,7 @@
 {
   "name": "@pixi/filter-ascii",
   "version": "2.0.0",
-  "main": "lib/filter-ascii.umd.min.js",
+  "main": "lib/filter-ascii.min.js",
   "description": "Display filter render as ASCII text",
   "author": "Mat Groves",
   "contributors": [

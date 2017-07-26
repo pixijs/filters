@@ -42,7 +42,7 @@ npm install pixi-filters
 
 ```html
 <script src="https://pixijs.download/release/pixi.min.js"></script>
-<script src="pixi-filters/lib/pixi-filters.umd.min.js"></script>
+<script src="pixi-filters/lib/pixi-filters.min.js"></script>
 ```
 ```js
 var filter = new PIXI.filters.AsciiFilter();

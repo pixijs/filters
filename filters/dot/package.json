@@ -1,7 +1,7 @@
 {
   "name": "@pixi/filter-dot",
   "version": "2.0.0",
-  "main": "lib/filter-dot.umd.min.js",
+  "main": "lib/filter-dot.min.js",
   "description": "Display filter render as ASCII text",
   "author": "Mat Groves",
   "contributors": [

@@ -1,7 +1,7 @@
 {
   "name": "@pixi/filter-outline",
   "version": "2.0.0",
-  "main": "lib/filter-outline.umd.min.js",
+  "main": "lib/filter-outline.min.js",
   "description": "Display filter render as ASCII text",
   "author": "Mat Groves",
   "contributors": [

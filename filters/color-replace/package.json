@@ -1,7 +1,7 @@
 {
   "name": "@pixi/filter-color-replace",
   "version": "2.0.0",
-  "main": "lib/filter-color-replace.umd.min.js",
+  "main": "lib/filter-color-replace.min.js",
   "description": "Display filter render as ASCII text",
   "author": "Mat Groves",
   "contributors": [

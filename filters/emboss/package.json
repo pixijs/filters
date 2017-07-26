@@ -1,7 +1,7 @@
 {
   "name": "@pixi/filter-emboss",
   "version": "2.0.0",
-  "main": "lib/filter-emboss.umd.min.js",
+  "main": "lib/filter-emboss.min.js",
   "description": "Display filter render as ASCII text",
   "author": "Mat Groves",
   "contributors": [

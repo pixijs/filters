@@ -1,7 +1,7 @@
 {
   "name": "@pixi/filter-cross-hatch",
   "version": "2.0.0",
-  "main": "lib/filter-cross-hatch.umd.min.js",
+  "main": "lib/filter-cross-hatch.min.js",
   "description": "Display filter render as ASCII text",
   "author": "Mat Groves",
   "contributors": [
