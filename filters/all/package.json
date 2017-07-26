@@ -1,7 +1,7 @@
 {
   "name": "pixi-filters",
   "version": "2.0.0",
-  "main": "lib/pixi-filters.min.js",
+  "main": "lib/pixi-filters.js",
   "description": "Optional display filters to work with PixiJS",
   "author": "Mat Groves <mat@goodboydigital.com>",
   "contributors": [
@@ -9,7 +9,7 @@
     "Matt Karl <matt@mattkarl.com>",
     "Chad Engler <chad@pantherdev.com>"
   ],
-  "module": "lib/pixi-filters.es.min.js",
+  "module": "lib/pixi-filters.es.js",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
   "license": "MIT",
@@ -21,8 +21,8 @@
     "lib"
   ],
   "scripts": {
-    "build:umd": "rollup -c -f umd && rollup -cp -f umd",
-    "build:es": "rollup -c && rollup -cp",
+    "build:umd": "rollup -c -f umd",
+    "build:es": "rollup -c",
     "build": "npm run build:umd && npm run build:es"
   },
   "peerDependencies": {
