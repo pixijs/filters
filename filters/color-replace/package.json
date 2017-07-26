@@ -15,6 +15,9 @@
     "type": "git",
     "url": "https://github.com/pixijs/pixi-filters.git"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build:umd": "rollup -c -f umd && rollup -cp -f umd",
     "build:es": "rollup -c && rollup -cp",
