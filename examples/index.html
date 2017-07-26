@@ -88,10 +88,6 @@
                 });
 
             function init(resources) {
-
-                var filterArea = new PIXI.Rectangle(
-                    0, 0, stageWidth, stageHeight
-                );
                 var padding = 100;
                 var bounds = new PIXI.Rectangle(
                     -padding,
@@ -330,7 +326,7 @@
                 folder.add(colorReplaceFilter, 'epsilon', 0, 1);
 
                 // Apply filters
-                pond.filterArea = filterArea;
+                pond.filterArea = app.screen;
                 pond.filters = [
                     displacementFilter,
                     blurFilter,
@@ -367,9 +363,6 @@
                     bounds.y = -padding;
                     bounds.width = width + padding * 2;
                     bounds.height = height + padding * 2;
-
-                    filterArea.width = width;
-                    filterArea.height = height;
 
                     displacementSprite.width = width;
                     displacementSprite.height = height;
