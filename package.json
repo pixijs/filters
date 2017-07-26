@@ -10,7 +10,8 @@
     "docs": "jsdoc -c scripts/jsdoc.conf.json -R README.md",
     "lint": "eslint scripts **/src **/rollup.config.js --fix",
     "prebuild": "npm run lint",
-    "build": "lerna run build"
+    "build": "lerna run build",
+    "lerna": "lerna"
   },
   "devDependencies": {
     "gh-pages": "^0.11.0",

@@ -28,7 +28,7 @@
   "peerDependencies": {
     "pixi.js": "^4.0.0"
   },
-  "dependencies": {
+  "devDependencies": {
     "@pixi/filter-ascii": "^2.0.0",
     "@pixi/filter-bloom": "^2.0.0",
     "@pixi/filter-bulge-pinch": "^2.0.0",
@@ -45,9 +45,7 @@
     "@pixi/filter-shockwave": "^2.0.0",
     "@pixi/filter-simple-lightmap": "^2.0.0",
     "@pixi/filter-tilt-shift": "^2.0.0",
-    "@pixi/filter-twist": "^2.0.0"
-  },
-  "devDependencies": {
+    "@pixi/filter-twist": "^2.0.0",
     "rollup": "^0.45.2",
     "@tools/build": "^2.0.0"
   }
