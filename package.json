@@ -9,6 +9,7 @@
     "deploy": "node scripts/deploy",
     "docs": "jsdoc -c scripts/jsdoc.conf.json -R README.md",
     "lint": "eslint scripts **/src **/rollup.config.js --fix",
+    "examples": "open http://localhost:8080/examples/index.html && http-server . -s -c-1",
     "prebuild": "npm run lint",
     "build": "lerna run build",
     "lerna": "lerna"
