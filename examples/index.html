@@ -7,7 +7,7 @@
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.5/dat.gui.min.js"></script>
         <script src="https://pixijs.download/dev/pixi.min.js"></script>
-        <script src="../bin/filters.js"></script>
+        <script src="../filters/all/lib/pixi-filters.umd.js"></script>
         <style>
 
             body {
@@ -118,6 +118,54 @@
 
                 var folder;
 
+                // Create wave displacement
+                resources.map.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
+                var displacementSprite = new PIXI.Sprite(resources.map.texture);
+                var displacementFilter = new PIXI.filters.DisplacementFilter(
+                    displacementSprite,
+                    stageWidth,
+                    stageHeight
+                );
+                displacementFilter.scale.x = 50;
+                displacementFilter.scale.y = 50;
+                folder = gui.addFolder('DisplacementFilter (pixi.js)');
+                folder.add(displacementFilter, 'enabled');
+                folder.add(displacementFilter.scale, 'x', 1, 200).name('scale.x');
+                folder.add(displacementFilter.scale, 'y', 1, 200).name('scale.y');
+
+                // Setup gui for displacement
+                var blurFilter = new PIXI.filters.BlurFilter();
+                blurFilter.enabled = false;
+                folder = gui.addFolder('BlurFilter (pixi.js)');
+                folder.add(blurFilter, 'enabled');
+                folder.add(blurFilter, 'blur', 0, 100);
+                folder.add(blurFilter, 'quality', 1, 10);
+
+                // Setup gui for displacement
+                var noiseFilter = new PIXI.filters.NoiseFilter();
+                noiseFilter.enabled = false;
+                folder = gui.addFolder('NoiseFilter (pixi.js)');
+                folder.add(noiseFilter, 'enabled');
+                folder.add(noiseFilter, 'noise', 0, 1);
+                folder.add(noiseFilter, 'seed', 0.01, 0.99);
+
+                // Setup gui for displacement
+                var colorFilter = new PIXI.filters.ColorMatrixFilter();
+                colorFilter.enabled = false;
+                folder = gui.addFolder('ColorMatrixFilter (pixi.js)');
+                folder.add(colorFilter, 'enabled');
+                folder.add(colorFilter, 'reset');
+                folder.add(colorFilter, 'sepia');
+                folder.add(colorFilter, 'negative');
+                folder.add({kodachrome: colorFilter.kodachrome.bind(colorFilter, true)}, 'kodachrome');
+                folder.add({lsd: colorFilter.lsd.bind(colorFilter, true)}, 'lsd');
+                folder.add(colorFilter, 'polaroid');
+                folder.add(colorFilter, 'desaturate');
+                folder.add({contrast: colorFilter.contrast.bind(colorFilter, 1)}, 'contrast');
+                folder.add({greyscale: colorFilter.greyscale.bind(colorFilter, 1)}, 'greyscale');
+                folder.add({predator: colorFilter.predator.bind(colorFilter, 1)}, 'predator');
+                folder.add({saturate: colorFilter.saturate.bind(colorFilter, 1)}, 'saturate');
+
                 var outlineFilter = new PIXI.filters.OutlineFilter();
                 outlineFilter.enabled = false;
                 folder = gui.addFolder('OutlineFilter');
@@ -170,56 +218,6 @@
 
                 // Add the overlay
                 pond.addChild(overlay);
-
-                var folder;
-
-                // Create wave displacement
-                resources.map.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
-                var displacementSprite = new PIXI.Sprite(resources.map.texture);
-                var displacementFilter = new PIXI.filters.DisplacementFilter(
-                    displacementSprite,
-                    stageWidth,
-                    stageHeight
-                );
-                displacementFilter.scale.x = 50;
-                displacementFilter.scale.y = 50;
-                folder = gui.addFolder('DisplacementFilter (pixi.js)');
-                folder.add(displacementFilter, 'enabled');
-                folder.add(displacementFilter.scale, 'x', 1, 200).name('scale.x');
-                folder.add(displacementFilter.scale, 'y', 1, 200).name('scale.y');
-
-                // Setup gui for displacement
-                var blurFilter = new PIXI.filters.BlurFilter();
-                blurFilter.enabled = false;
-                folder = gui.addFolder('BlurFilter (pixi.js)');
-                folder.add(blurFilter, 'enabled');
-                folder.add(blurFilter, 'blur', 0, 100);
-                folder.add(blurFilter, 'quality', 1, 10);
-
-                // Setup gui for displacement
-                var noiseFilter = new PIXI.filters.NoiseFilter();
-                noiseFilter.enabled = false;
-                folder = gui.addFolder('NoiseFilter (pixi.js)');
-                folder.add(noiseFilter, 'enabled');
-                folder.add(noiseFilter, 'noise', 0, 1);
-                folder.add(noiseFilter, 'seed', 0.01, 0.99);
-
-                // Setup gui for displacement
-                var colorFilter = new PIXI.filters.ColorMatrixFilter();
-                colorFilter.enabled = false;
-                folder = gui.addFolder('ColorMatrixFilter (pixi.js)');
-                folder.add(colorFilter, 'enabled');
-                folder.add(colorFilter, 'reset');
-                folder.add(colorFilter, 'sepia');
-                folder.add(colorFilter, 'negative');
-                folder.add({kodachrome: colorFilter.kodachrome.bind(colorFilter, true)}, 'kodachrome');
-                folder.add({lsd: colorFilter.lsd.bind(colorFilter, true)}, 'lsd');
-                folder.add(colorFilter, 'polaroid');
-                folder.add(colorFilter, 'desaturate');
-                folder.add({contrast: colorFilter.contrast.bind(colorFilter, 1)}, 'contrast');
-                folder.add({greyscale: colorFilter.greyscale.bind(colorFilter, 1)}, 'greyscale');
-                folder.add({predator: colorFilter.predator.bind(colorFilter, 1)}, 'predator');
-                folder.add({saturate: colorFilter.saturate.bind(colorFilter, 1)}, 'saturate');
 
                 // Create twist filter
                 var twistFilter = new PIXI.filters.TwistFilter();

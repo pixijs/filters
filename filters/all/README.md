@@ -36,6 +36,30 @@ Using NPM:
 npm install pixi-filters
 ```
 
+## Usage 
+
+### Browser
+
+```html
+<script src="https://pixijs.download/release/pixi.min.js"></script>
+<script src="pixi-filters/lib/pixi-filters.umd.min.js"></script>
+```
+```js
+var filter = new PIXI.filters.AsciiFilter();
+```
+
+### Rollup or Webpack
+
+```js
+// Include library by requiring pixi-filters module
+import * as filters from 'pixi-filters';
+const filter = new filters.DotFilter();
+
+// Alternatively, using PIXI.filters global object
+import 'pixi-filters';
+const filter = new PIXI.filters.DotFilter();
+```
+
 ## Documentation
 
 API documention can be found [here](http://pixijs.github.io/pixi-filters/docs/).

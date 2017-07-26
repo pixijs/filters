@@ -11,8 +11,10 @@ const grossReplace = 'export default $2;\n\n$1\nclass $2';
 // this is another terrible hack to address this issue.
 // See: https://github.com/jsdoc3/jsdoc/issues/1301
 
+// eslint-disable-next-line no-useless-escape
 const rgxMember = /(\@member \{[^\}]+\})(\n[^\/]+\/[\b\s]+)(this\.([^\s]+))/g;
 const rgxClassName = /export (default )?class (.+?)\s/;
+// eslint-disable-next-line no-useless-escape
 const rgxNamespace = /\@memberof ([\.a-zA-Z0-9]+)\s/;
 
 exports.handlers = {
