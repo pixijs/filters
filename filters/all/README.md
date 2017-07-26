@@ -6,23 +6,23 @@ Optional filters that work with PixiJS v4.
 
 Filters include:
 
-* **AsciiFilter** _@pixi/filters-ascii_
-* **BloomFilter** _@pixi/filters-bloom_
-* **BulgePinchFilter** _@pixi/filters-bulge-pinch_
-* **ColorReplaceFilter** _@pixi/filters-color-replace_
-* **ConvolutionFilter** _@pixi/filters-convolution_
-* **CrossHatchFilter** _@pixi/filters-cross-hatch_
-* **DotFilter** _@pixi/filters-dot_
-* **DropShadowFilter** _@pixi/filters-drop-shadow_
-* **GlowFilter** _@pixi/filters-glow_
-* **EmbossFilter** _@pixi/filters-emboss_
-* **PixelateFilter** _@pixi/filters-pixelate_
-* **OutlineFilter** _@pixi/filters-outline_
-* **RGBSplitFilter** _@pixi/filters-rgb_
-* **ShockwaveFilter** _@pixi/filters-shockwave_
-* **SimpleLightmapFilter** _@pixi/filters-simple-lightmap_
-* **TiltShiftFilter** _@pixi/filters-tilt-shift_
-* **TwistFilter** _@pixi/filters-twist_
+* **AsciiFilter** _@pixi/filter-ascii_
+* **BloomFilter** _@pixi/filter-bloom_
+* **BulgePinchFilter** _@pixi/filter-bulge-pinch_
+* **ColorReplaceFilter** _@pixi/filter-color-replace_
+* **ConvolutionFilter** _@pixi/filter-convolution_
+* **CrossHatchFilter** _@pixi/filter-cross-hatch_
+* **DotFilter** _@pixi/filter-dot_
+* **DropShadowFilter** _@pixi/filter-drop-shadow_
+* **GlowFilter** _@pixi/filter-glow_
+* **EmbossFilter** _@pixi/filter-emboss_
+* **PixelateFilter** _@pixi/filter-pixelate_
+* **OutlineFilter** _@pixi/filter-outline_
+* **RGBSplitFilter** _@pixi/filter-rgb_
+* **ShockwaveFilter** _@pixi/filter-shockwave_
+* **SimpleLightmapFilter** _@pixi/filter-simple-lightmap_
+* **TiltShiftFilter** _@pixi/filter-tilt-shift_
+* **TwistFilter** _@pixi/filter-twist_
 
 ## Examples
 
