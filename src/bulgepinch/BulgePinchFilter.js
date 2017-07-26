@@ -25,6 +25,12 @@ export default class BulgePinchFilter extends PIXI.Filter {
         this.strength = strength || 1;
     }
 
+    apply(filterManager, input, output) {
+        this.uniforms.dimensions[0] = input.sourceFrame.width;
+        this.uniforms.dimensions[1] = input.sourceFrame.height;
+        filterManager.applyFilter(this, input, output);
+    }
+
     /**
      * The radius of the circle of effect.
      *

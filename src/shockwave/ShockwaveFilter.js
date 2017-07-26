@@ -19,12 +19,19 @@ export default class ShockwaveFilter extends PIXI.Filter {
         super(vertex, fragment, {
             center: { type: 'v2', value: { x: 0.5, y: 0.5 } },
             params: { type: 'v3', value: { x: 10, y: 0.8, z: 0.1 } },
-            time: { type: '1f', value: 0 }
+            time: { type: '1f', value: 0 },
+            dimensions: { type: '2f', value: [0, 0] }
         });
 
         this.center = center;
         this.params = params;
         this.time = time;
+    }
+
+    apply(filterManager, input, output) {
+        this.uniforms.dimensions[0] = input.sourceFrame.width;
+        this.uniforms.dimensions[1] = input.sourceFrame.height;
+        filterManager.applyFilter(this, input, output);
     }
 
     /**
