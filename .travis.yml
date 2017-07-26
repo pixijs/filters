@@ -3,14 +3,14 @@ node_js:
   - "6"
 
 install:
-  - npm install
+  - npm run bootstrap
 
 cache:
   directories:
     - node_modules
 
 script:
-  - npm run build
+  - npm test
 
 deploy:
   - provider: s3
