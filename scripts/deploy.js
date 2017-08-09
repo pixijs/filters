@@ -2,7 +2,7 @@
 
 const ghpages = require('gh-pages');
 const path = require('path');
-const packageInfo = require(path.join(__dirname, '..', 'package.json'));
+const packageInfo = require('../lerna.json');
 const options = {
     src: [
         'filters/all/lib/pixi-filters.js',

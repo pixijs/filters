@@ -38,6 +38,7 @@
         "applicationName": "PixiJS Filters",
         "footer": "Made with ♥ by Goodboy Digital (goodboydigital.com)",
         "copyright": "PixiJS Copyright © 2013-2017 Mat Groves.",
+        "googleAnalytics": "UA-103772589-3",
         "meta": {
             "title": "PixiJS Filters Documentation",
             "description": "API Documentation for PixiJS filters",
