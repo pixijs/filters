@@ -55,6 +55,20 @@
             <a id="logo" href="http://www.pixijs.com"><img src="images/pixijs-v4-logo.png"></a>
         </div>
         <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+            ga('create', 'UA-103772589-3', 'auto');
+            ga('send', 'pageview');
+            function trackEvent(enabled) {
+                ga('send', 'event', 
+                    this.name.replace(' (pixi.js)', ''),
+                    enabled ? 'enabled' : 'disabled'
+                );
+            }
+        </script>
+        <script>
 
             var gui = new dat.GUI();
             gui.useLocalStorage = false;
@@ -129,7 +143,7 @@
                 displacementFilter.scale.x = 50;
                 displacementFilter.scale.y = 50;
                 folder = gui.addFolder('DisplacementFilter (pixi.js)');
-                folder.add(displacementFilter, 'enabled');
+                folder.add(displacementFilter, 'enabled').onChange(trackEvent.bind(folder));
                 folder.add(displacementFilter.scale, 'x', 1, 200).name('scale.x');
                 folder.add(displacementFilter.scale, 'y', 1, 200).name('scale.y');
 
@@ -137,7 +151,7 @@
                 var blurFilter = new PIXI.filters.BlurFilter();
                 blurFilter.enabled = false;
                 folder = gui.addFolder('BlurFilter (pixi.js)');
-                folder.add(blurFilter, 'enabled');
+                folder.add(blurFilter, 'enabled').onChange(trackEvent.bind(folder));
                 folder.add(blurFilter, 'blur', 0, 100);
                 folder.add(blurFilter, 'quality', 1, 10);
 
@@ -145,7 +159,7 @@
                 var noiseFilter = new PIXI.filters.NoiseFilter();
                 noiseFilter.enabled = false;
                 folder = gui.addFolder('NoiseFilter (pixi.js)');
-                folder.add(noiseFilter, 'enabled');
+                folder.add(noiseFilter, 'enabled').onChange(trackEvent.bind(folder));
                 folder.add(noiseFilter, 'noise', 0, 1);
                 folder.add(noiseFilter, 'seed', 0.01, 0.99);
 
@@ -153,7 +167,7 @@
                 var colorFilter = new PIXI.filters.ColorMatrixFilter();
                 colorFilter.enabled = false;
                 folder = gui.addFolder('ColorMatrixFilter (pixi.js)');
-                folder.add(colorFilter, 'enabled');
+                folder.add(colorFilter, 'enabled').onChange(trackEvent.bind(folder));
                 folder.add(colorFilter, 'reset');
                 folder.add(colorFilter, 'sepia');
                 folder.add(colorFilter, 'negative');
@@ -169,14 +183,14 @@
                 var outlineFilter = new PIXI.filters.OutlineFilter();
                 outlineFilter.enabled = false;
                 folder = gui.addFolder('OutlineFilter');
-                folder.add(outlineFilter, 'enabled');
+                folder.add(outlineFilter, 'enabled').onChange(trackEvent.bind(folder));
                 folder.add(outlineFilter, 'thickness', 0, 20);
                 folder.addColor(outlineFilter, 'color');
 
                 var glowFilter = new PIXI.filters.GlowFilter(15, 2, 1, 0xffffff, 0.1);
                 glowFilter.enabled = false;
                 folder = gui.addFolder('GlowFilter');
-                folder.add(glowFilter, 'enabled');
+                folder.add(glowFilter, 'enabled').onChange(trackEvent.bind(folder));
                 folder.add(glowFilter, 'innerStrength', 0, 20);
                 folder.add(glowFilter, 'outerStrength', 0, 20);
                 folder.add(glowFilter, 'distance', 10, 20);
@@ -185,7 +199,7 @@
                 var dropFilter = new PIXI.filters.DropShadowFilter();
                 dropFilter.enabled = false;
                 folder = gui.addFolder('DropShadowFilter');
-                folder.add(dropFilter, 'enabled');
+                folder.add(dropFilter, 'enabled').onChange(trackEvent.bind(folder));
                 folder.add(dropFilter, 'blur', 0, 40);
                 folder.add(dropFilter, 'alpha', 0, 1);
                 folder.add(dropFilter, 'distance', 0, 50);
@@ -224,7 +238,7 @@
                 twistFilter.enabled = false;
                 twistFilter.offset = new PIXI.Point(stageWidth / 2, stageHeight / 2);
                 folder = gui.addFolder('TwistFilter');
-                folder.add(twistFilter, 'enabled');
+                folder.add(twistFilter, 'enabled').onChange(trackEvent.bind(folder));
                 folder.add(twistFilter, 'angle', -10, 10);
                 folder.add(twistFilter, 'radius', 0, stageWidth);
                 folder.add(twistFilter.offset, 'x', 0, stageWidth);
@@ -234,14 +248,14 @@
                 var asciiFilter = new PIXI.filters.AsciiFilter();
                 asciiFilter.enabled = false;
                 folder = gui.addFolder('AsciiFilter');
-                folder.add(asciiFilter, 'enabled');
+                folder.add(asciiFilter, 'enabled').onChange(trackEvent.bind(folder));
                 folder.add(asciiFilter, 'size', 2, 20);
 
                 // Create ascii filter
                 var dotFilter = new PIXI.filters.DotFilter();
                 dotFilter.enabled = false;
                 folder = gui.addFolder('DotFilter');
-                folder.add(dotFilter, 'enabled');
+                folder.add(dotFilter, 'enabled').onChange(trackEvent.bind(folder));
                 folder.add(dotFilter, 'scale', 0.3, 1);
                 folder.add(dotFilter, 'angle', 0, 5);
 
@@ -249,21 +263,21 @@
                 var embossFilter = new PIXI.filters.EmbossFilter();
                 embossFilter.enabled = false;
                 folder = gui.addFolder('EmbossFilter');
-                folder.add(embossFilter, 'enabled');
+                folder.add(embossFilter, 'enabled').onChange(trackEvent.bind(folder));
                 folder.add(embossFilter, 'strength', 0, 20);
 
                 // Create ascii filter
                 var pixelateFilter = new PIXI.filters.PixelateFilter();
                 pixelateFilter.enabled = false;
                 folder = gui.addFolder('PixelateFilter');
-                folder.add(pixelateFilter, 'enabled');
+                folder.add(pixelateFilter, 'enabled').onChange(trackEvent.bind(folder));
                 folder.add(pixelateFilter.size, '0', 4, 40).name('size.x');
                 folder.add(pixelateFilter.size, '1', 4, 40).name('size.y');
 
                 var rgbFilter = new PIXI.filters.RGBSplitFilter();
                 rgbFilter.enabled = false;
                 folder = gui.addFolder('RGBSplitFilter');
-                folder.add(rgbFilter, 'enabled');
+                folder.add(rgbFilter, 'enabled').onChange(trackEvent.bind(folder));
                 folder.add(rgbFilter.red, '0', -20, 20).name('red.x');
                 folder.add(rgbFilter.red, '1', -20, 20).name('red.y');
                 folder.add(rgbFilter.blue, '0', -20, 20).name('blue.x');
@@ -274,19 +288,19 @@
                 var crossFilter = new PIXI.filters.CrossHatchFilter();
                 crossFilter.enabled = false;
                 folder = gui.addFolder('CrossHatchFilter');
-                folder.add(crossFilter, 'enabled');
+                folder.add(crossFilter, 'enabled').onChange(trackEvent.bind(folder));
 
                 var convolutionFilter = new PIXI.filters.ConvolutionFilter([0,0,0,1,1,1,0,0,0], 300, 300);
                 convolutionFilter.enabled = false;
                 folder = gui.addFolder('ConvolutionFilter');
-                folder.add(convolutionFilter, 'enabled');
+                folder.add(convolutionFilter, 'enabled').onChange(trackEvent.bind(folder));
                 folder.add(convolutionFilter, 'width', 0, 500);
                 folder.add(convolutionFilter, 'height', 0, 500);
 
                 var bloomFilter = new PIXI.filters.BloomFilter();
                 bloomFilter.enabled = false;
                 folder = gui.addFolder('BloomFilter');
-                folder.add(bloomFilter, 'enabled');
+                folder.add(bloomFilter, 'enabled').onChange(trackEvent.bind(folder));
                 folder.add(bloomFilter, 'blur', 0, 20);
                 folder.add(bloomFilter, 'blurX', 0, 20);
                 folder.add(bloomFilter, 'blurY', 0, 20);
@@ -294,14 +308,14 @@
                 var tiltshiftFilter = new PIXI.filters.TiltShiftFilter();
                 tiltshiftFilter.enabled = false;
                 folder = gui.addFolder('TiltShiftFilter');
-                folder.add(tiltshiftFilter, 'enabled');
+                folder.add(tiltshiftFilter, 'enabled').onChange(trackEvent.bind(folder));
                 folder.add(tiltshiftFilter, 'blur', 0, 200);
                 folder.add(tiltshiftFilter, 'gradientBlur', 0, 1000);
 
                 var shockwaveFilter = new PIXI.filters.ShockwaveFilter();
                 shockwaveFilter.enabled = false;
                 folder = gui.addFolder('ShockwaveFilter');
-                folder.add(shockwaveFilter, 'enabled');
+                folder.add(shockwaveFilter, 'enabled').onChange(trackEvent.bind(folder));
                 folder.add(shockwaveFilter, 'time', 0, 1);
                 folder.add(shockwaveFilter.center, '0', 0, 1).name('center.x');
                 folder.add(shockwaveFilter.center, '1', 0, 1).name('center.y');
@@ -309,7 +323,7 @@
                 var bulgepinchFilter = new PIXI.filters.BulgePinchFilter();
                 bulgepinchFilter.enabled = false;
                 folder = gui.addFolder('BulgePinchFilter');
-                folder.add(bulgepinchFilter, 'enabled');
+                folder.add(bulgepinchFilter, 'enabled').onChange(trackEvent.bind(folder));
                 folder.add(bulgepinchFilter, 'radius', 0, 1000);
                 folder.add(bulgepinchFilter, 'strength', -1, 1);
                 folder.add(bulgepinchFilter.center, '0', 0, 1).name('center.x');
@@ -318,7 +332,7 @@
                 var colorReplaceFilter = new PIXI.filters.ColorReplaceFilter();
                 colorReplaceFilter.enabled = false;
                 folder = gui.addFolder('ColorReplaceFilter');
-                folder.add(colorReplaceFilter, 'enabled');
+                folder.add(colorReplaceFilter, 'enabled').onChange(trackEvent.bind(folder));
                 folder.addColor(colorReplaceFilter, 'originalColor');
                 folder.addColor(colorReplaceFilter, 'newColor');
                 folder.add(colorReplaceFilter, 'epsilon', 0, 1);
@@ -418,14 +432,6 @@
                 });
             }
 
-        </script>
-        <script>
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-            ga('create', 'UA-103772589-3', 'auto');
-            ga('send', 'pageview');
         </script>
     </body>
 </html>
