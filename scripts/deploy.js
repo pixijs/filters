@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 const ghpages = require('gh-pages');
-const path = require('path');
 const packageInfo = require('../lerna.json');
 const options = {
     src: [
