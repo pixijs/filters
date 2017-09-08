@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-simple-lightmap",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "lib/filter-simple-lightmap.min.js",
   "description": "Display filter render as simple-lightmap text",
   "author": "Mat Groves",
@@ -30,7 +30,7 @@
     "pixi.js": "^4.0.0"
   },
   "devDependencies": {
-    "@tools/build": "^2.0.0",
+    "@tools/build": "^2.0.1",
     "@tools/fragments": "^2.0.0",
     "rollup": "^0.45.2"
   }

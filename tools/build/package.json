@@ -1,6 +1,6 @@
 {
   "name": "@tools/build",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": true,
   "module": "index.js",
   "devDependencies": {
