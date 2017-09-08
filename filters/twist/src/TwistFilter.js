@@ -56,3 +56,6 @@ export default class TwistFilter extends PIXI.Filter {
         this.uniforms.angle = value;
     }
 }
+
+// Export to PixiJS namespace
+PIXI.filters.TwistFilter = TwistFilter;

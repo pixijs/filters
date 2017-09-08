@@ -78,3 +78,7 @@ export default class BloomFilter extends PIXI.Filter {
         this.blurYFilter.blur = value;
     }
 }
+
+// Export to PixiJS namespace
+PIXI.filters.BloomFilter = BloomFilter;
+

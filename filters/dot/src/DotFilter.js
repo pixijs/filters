@@ -48,3 +48,6 @@ export default class DotFilter extends PIXI.Filter {
         this.uniforms.angle = value;
     }
 }
+
+// Export to PixiJS namespace
+PIXI.filters.DotFilter = DotFilter;

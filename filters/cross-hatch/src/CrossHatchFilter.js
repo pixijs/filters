@@ -13,3 +13,6 @@ export default class CrossHatchFilter extends PIXI.Filter {
         super(vertex, fragment);
     }
 }
+
+// Export to PixiJS namespace
+PIXI.filters.CrossHatchFilter = CrossHatchFilter;

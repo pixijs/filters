@@ -83,3 +83,6 @@ export default class GlowFilter extends PIXI.Filter {
         this.uniforms.innerStrength = value;
     }
 }
+
+// Export to PixiJS namespace
+PIXI.filters.GlowFilter = GlowFilter;

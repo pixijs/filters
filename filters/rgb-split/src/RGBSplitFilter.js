@@ -55,3 +55,6 @@ export default class RGBSplitFilter extends PIXI.Filter {
         this.uniforms.blue = value;
     }
 }
+
+// Export to PixiJS namespace
+PIXI.filters.RGBSplitFilter = RGBSplitFilter;

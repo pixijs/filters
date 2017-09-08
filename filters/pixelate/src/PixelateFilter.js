@@ -33,3 +33,6 @@ export default class PixelateFilter extends PIXI.Filter {
         this.uniforms.size = value;
     }
 }
+
+// Export to PixiJS namespace
+PIXI.filters.PixelateFilter = PixelateFilter;

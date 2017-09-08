@@ -67,3 +67,7 @@ export default class BulgePinchFilter extends PIXI.Filter {
         this.uniforms.center = value;
     }
 }
+
+// Export to PixiJS namespace
+PIXI.filters.BulgePinchFilter = BulgePinchFilter;
+

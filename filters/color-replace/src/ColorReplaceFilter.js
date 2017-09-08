@@ -94,3 +94,7 @@ export default class ColorReplaceFilter extends PIXI.Filter {
         return this.uniforms.epsilon;
     }
 }
+
+// Export to PixiJS namespace
+PIXI.filters.ColorReplaceFilter = ColorReplaceFilter;
+

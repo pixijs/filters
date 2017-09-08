@@ -67,12 +67,9 @@ const banner = `/*!
 const moduleName = `__${name.replace(/-/g, '_')}`;
 
 let intro = '';
-let outro = '';
 
-// UMD use module name
-if (format !== 'es') {
-    intro =`if (typeof PIXI.Filter === 'undefined') { throw 'PixiJS is required'; }`;
-    outro = `Object.assign(PIXI.filters, exports);`;
+if (!prod) {
+    intro = `if (typeof PIXI === 'undefined' || typeof PIXI.filters === 'undefined') { throw 'PixiJS is required'; }`;
 }
 
 module.exports = {
@@ -80,7 +77,6 @@ module.exports = {
     format,
     moduleName,
     intro,
-    outro,
     entry,
     dest,
     sourceMap: true,

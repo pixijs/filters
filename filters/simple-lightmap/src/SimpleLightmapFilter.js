@@ -65,3 +65,7 @@ export default class SimpleLightmapFilter extends PIXI.Filter {
         this.uniforms.resolution = new Float32Array(value);
     }
 }
+
+// Export to PixiJS namespace
+PIXI.filters.SimpleLightmapFilter = SimpleLightmapFilter;
+
