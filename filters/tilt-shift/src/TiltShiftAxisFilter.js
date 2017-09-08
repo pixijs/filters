@@ -91,3 +91,7 @@ export default class TiltShiftAxisFilter extends PIXI.Filter {
         this.updateDelta();
     }
 }
+
+// Export to PixiJS namespace
+PIXI.filters.TiltShiftAxisFilter = TiltShiftAxisFilter;
+

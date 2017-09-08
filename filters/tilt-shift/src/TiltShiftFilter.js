@@ -80,3 +80,6 @@ export default class TiltShiftFilter extends PIXI.Filter {
         this.tiltShiftXFilter.end = this.tiltShiftYFilter.end = value;
     }
 }
+
+// Export to PixiJS namespace
+PIXI.filters.TiltShiftFilter = TiltShiftFilter;

@@ -108,3 +108,6 @@ export default class DropShadowFilter extends PIXI.Filter {
     }
 }
 
+// Export to PixiJS namespace
+PIXI.filters.DropShadowFilter = DropShadowFilter;
+

@@ -27,3 +27,6 @@ export default class EmbossFilter extends PIXI.Filter {
         this.uniforms.strength = value;
     }
 }
+
+// Export to PixiJS namespace
+PIXI.filters.EmbossFilter = EmbossFilter;

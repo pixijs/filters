@@ -60,3 +60,7 @@ export default class ConvolutionFilter extends PIXI.Filter {
         this.uniforms.texelSize[1] = 1/value;
     }
 }
+
+// Export to PixiJS namespace
+PIXI.filters.ConvolutionFilter = ConvolutionFilter;
+

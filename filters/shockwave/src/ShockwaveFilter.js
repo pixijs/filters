@@ -73,3 +73,7 @@ export default class ShockwaveFilter extends PIXI.Filter {
         this.uniforms.time = value;
     }
 }
+
+// Export to PixiJS namespace
+PIXI.filters.ShockwaveFilter = ShockwaveFilter;
+

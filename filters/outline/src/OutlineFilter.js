@@ -48,3 +48,7 @@ export default class OutlineFilter extends PIXI.Filter {
         this.uniforms.thickness = value;
     }
 }
+
+// Export to PixiJS namespace
+PIXI.filters.OutlineFilter = OutlineFilter;
+
