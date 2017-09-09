@@ -1,0 +1,15 @@
+{
+  "name": "@tools/screenshots",
+  "private": true,
+  "version": "2.0.0",
+  "scripts": {
+    "build": "electron main.js"
+  },
+  "devDependencies": {
+    "base64-to-image": "^1.0.2",
+    "electron": "^1.7.6",
+    "fs-extra": "^4.0.1",
+    "pixi-filters": "^2.0.1",
+    "pixi.js": "^4.5.5"
+  }
+}

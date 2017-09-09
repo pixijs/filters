@@ -1,0 +1,171 @@
+[
+    {
+        "name": "BlurFilter",
+        "filename": "blur"
+    },
+    {
+        "name": "NoiseFilter",
+        "filename": "noise"
+    },
+    {
+        "name": "AsciiFilter",
+        "filename": "ascii"
+    },
+    {
+        "name": "BloomFilter",
+        "filename": "bloom"
+    },
+    {
+        "name": "BulgePinchFilter",
+        "filename": "bulge-pinch",
+        "options": {
+            "radius": 100,
+            "strength": 1
+        }
+    },
+    {
+        "name": "TwistFilter",
+        "filename": "twist",
+        "options": {
+            "angle": 8,
+            "radius": 70,
+            "offset": {
+                "x": 125,
+                "y": 70
+            }
+        }
+    },
+    {
+        "name": "DotFilter",
+        "filename": "dot",
+        "options": {
+            "angle": 1,
+            "scale": 5
+        }
+    },
+    {
+        "name": "EmbossFilter",
+        "filename": "emboss",
+        "options": {
+            "strength": 5
+        }
+    },
+    {
+        "name": "PixelateFilter",
+        "filename": "pixelate",
+        "options": {
+            "size": {
+                "x": 16,
+                "y": 16
+            }
+        }
+    },
+    {
+        "name": "TiltShiftFilter",
+        "filename": "tilt-shift",
+        "options": {
+            "blur": 50,
+            "gradientBlur": 100
+        }
+    },
+    {
+        "name": "ConvolutionFilter",
+        "filename": "convolution",
+        "options": {
+            "width": 100,
+            "height": 100,
+            "matrix": [0,0,0,1,1,1,0,0,0]
+        }
+    },
+    {
+        "name": "CrossHatchFilter",
+        "filename": "cross-hatch"
+    },
+    {
+        "name": "RGBSplitFilter",
+        "filename": "rgb"
+    },
+    {
+        "name": "ShockwaveFilter",
+        "filename": "shockwave",
+        "options": {
+            "time": 0.3
+        }
+    },
+    {
+        "name": "OutlineFilter",
+        "filename": "outline",
+        "options": {
+            "thickness": 4,
+            "color": 0
+        }
+    },
+    {
+        "name": "DropShadowFilter",
+        "filename": "drop-shadow"
+    },
+    {
+        "name": "GlowFilter",
+        "filename": "glow",
+        "options": {
+            "distance": 20,
+            "outerStrength": 1,
+            "innerStrength": 1,
+            "color": 0
+        }
+    },
+    {
+        "name": "ColorReplaceFilter",
+        "filename": "color-replace",
+        "options": {
+            "originalColor": 16777215,
+            "newColor": 0,
+            "epsilon": 0.2
+        }
+    },
+    {
+        "name": "ColorMatrixFilter",
+        "filename": "color-matrix-desaturate",
+        "func": "desaturate"
+    },
+    {
+        "name": "ColorMatrixFilter",
+        "filename": "color-matrix-sepia",
+        "func": "sepia"
+    },
+    {
+        "name": "ColorMatrixFilter",
+        "filename": "color-matrix-negative",
+        "func": "negative"
+    },
+    {
+        "name": "ColorMatrixFilter",
+        "filename": "color-matrix-kodachrome",
+        "func": "kodachrome"
+    },
+    {
+        "name": "ColorMatrixFilter",
+        "filename": "color-matrix-lsd",
+        "func": "lsd"
+    },
+    {
+        "name": "ColorMatrixFilter",
+        "filename": "color-matrix-polaroid",
+        "func": "polaroid"
+    },
+    {
+        "name": "ColorMatrixFilter",
+        "filename": "color-matrix-contrast",
+        "func": "contrast"
+    },
+    {
+        "name": "ColorMatrixFilter",
+        "filename": "color-matrix-predator",
+        "func": "predator"
+    },
+    {
+        "name": "ColorMatrixFilter",
+        "filename": "color-matrix-saturate",
+        "func": "saturate"
+    }
+]
