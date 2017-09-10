@@ -6,6 +6,7 @@ const base64ToImage = require('base64-to-image');
 const {remote} = require('electron');
 const fs = require('fs-extra');
 const path = require('path');
+const GIFEncoder = require('gifencoder');
 
 const app = new PIXI.Application({
     width: 270,
@@ -15,6 +16,7 @@ const app = new PIXI.Application({
 });
 
 const outputPath = path.join(__dirname, 'dist');
+const frames = {};
 
 // Make sure directory exists
 fs.ensureDirSync(outputPath);
@@ -30,7 +32,8 @@ app.loader.add('bars', path.join(__dirname, 'assets', 'bars.png'))
     .load((loader, resources) => {
         sprite = new PIXI.Sprite(resources.bars.texture);
         sprite.scale.set(0.5);
-        sprite.position.set(10);
+        sprite.anchor.set(0.5);
+        sprite.position.set(app.view.width / 2, app.view.height / 2);
         app.stage.addChild(sprite);
         document.body.appendChild(app.view);
         next();
@@ -38,8 +41,7 @@ app.loader.add('bars', path.join(__dirname, 'assets', 'bars.png'))
 
 
 function next() {
-    const obj = config[++index];
-
+    const obj = config.images[++index];
     if (obj) {
 
         const FilterClass = PIXI.filters[obj.name];
@@ -57,22 +59,71 @@ function next() {
         }
 
         // Render the filter
+        sprite.rotation = 0;
         sprite.filters = [filter];
-        app.render();
 
-        // Save image
-        base64ToImage(
-            app.renderer.plugins.extract.base64(),
-            outputPath + path.sep, {
-                fileName: obj.filename, 
-                type:'png'
-            }
-        );
+        if (obj.filename) {
+            // Save image
+            app.render();
+            base64ToImage(
+                app.renderer.plugins.extract.base64(),
+                outputPath + path.sep, {
+                    fileName: obj.filename, 
+                    type:'png'
+                }
+            );
+        }
+        else if (obj.frame) {
+            sprite.rotation = PIXI.DEG_TO_RAD * 180;
+            app.render();
+            frames[obj.frame] = app.renderer.plugins.extract.pixels();
+        }
 
         // Wait for next stack to render next filter
         setTimeout(next, 0);
     }
-    else if (document.location.search.indexOf('debug') === -1) {
+    else {
+        index = -1;
+        nextAnim();
+    }
+}
+
+// Combine a bunch of frames
+function nextAnim() {
+    const anim = config.animations[++index];
+    if (anim) {
+
+        const encoder = new GIFEncoder(app.view.width, app.view.height);
+
+        // Stream output
+        encoder.createReadStream().pipe(fs.createWriteStream(
+            path.join(outputPath, anim.filename + '.gif')
+        ));
+
+        encoder.start();
+        encoder.setRepeat(0);   // 0 for repeat, -1 for no-repeat 
+        encoder.setDelay(500);  // frame delay in ms 
+        encoder.setQuality(10); // image quality. 10 is default. 
+
+        // Add the frames
+        anim.frames.forEach((frame) => {
+            encoder.addFrame(frames[frame]);
+            delete frames[frame];
+        });
+
+        encoder.finish();
+
+        // Wait for next stack to render next animation
+        setTimeout(nextAnim, 0);
+    }
+    else {
+        complete();
+    }
+}
+
+function complete() {
+    // Only close if debug is off
+    if (document.location.search.indexOf('debug') === -1) {
         // close window
         const browserWindow = remote.getCurrentWindow();
         browserWindow.close();
