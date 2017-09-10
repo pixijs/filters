@@ -14,7 +14,7 @@ const app = new PIXI.Application({
     autoStart: false
 });
 
-const outputPath = path.join(__dirname, 'lib');
+const outputPath = path.join(__dirname, 'dist');
 
 // Make sure directory exists
 fs.ensureDirSync(outputPath);
@@ -26,7 +26,7 @@ let index = -1;
 let sprite;
 
 // Load image
-app.loader.add('bars', __dirname + '/assets/bars.png')
+app.loader.add('bars', path.join(__dirname, 'assets', 'bars.png'))
     .load((loader, resources) => {
         sprite = new PIXI.Sprite(resources.bars.texture);
         sprite.scale.set(0.5);
@@ -72,7 +72,7 @@ function next() {
         // Wait for next stack to render next filter
         setTimeout(next, 0);
     }
-    else {
+    else if (document.location.search.indexOf('debug') === -1) {
         // close window
         const browserWindow = remote.getCurrentWindow();
         browserWindow.close();
