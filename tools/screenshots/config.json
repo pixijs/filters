@@ -140,13 +140,15 @@
     },
     {
         "name": "ColorMatrixFilter",
-        "filename": "color-matrix-kodachrome",
-        "func": "kodachrome"
+        "filename": "color-matrix-lsd",
+        "func": "lsd",
+        "args": [true]
     },
     {
         "name": "ColorMatrixFilter",
-        "filename": "color-matrix-lsd",
-        "func": "lsd"
+        "filename": "color-matrix-kodachrome",
+        "func": "kodachrome",
+        "args": [true]
     },
     {
         "name": "ColorMatrixFilter",
@@ -156,16 +158,19 @@
     {
         "name": "ColorMatrixFilter",
         "filename": "color-matrix-contrast",
-        "func": "contrast"
+        "func": "contrast",
+        "args": [1]
     },
     {
         "name": "ColorMatrixFilter",
         "filename": "color-matrix-predator",
-        "func": "predator"
+        "func": "predator",
+        "args": [1]
     },
     {
         "name": "ColorMatrixFilter",
         "filename": "color-matrix-saturate",
-        "func": "saturate"
+        "func": "saturate",
+        "args": [1]
     }
 ]

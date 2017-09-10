@@ -53,7 +53,7 @@ function next() {
 
         // Call function
         if (obj.func && filter[obj.func]) {
-            filter[obj.func]();
+            filter[obj.func].apply(filter, obj.args);
         }
 
         // Render the filter
