@@ -8,7 +8,7 @@ const options = {
         'filters/all/lib/pixi-filters.js.map',
         'examples/**/*',
         'docs/**/*',
-        'tools/screenshots/dist/*.png'
+        'tools/screenshots/dist/*'
     ],
     message: packageInfo.version
 };
