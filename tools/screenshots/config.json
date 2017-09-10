@@ -14,6 +14,10 @@
     ],
     "images" : [
         {
+            "name": "VoidFilter",
+            "filename": "original"
+        },
+        {
             "name": "BlurFilter",
             "filename": "blur"
         },

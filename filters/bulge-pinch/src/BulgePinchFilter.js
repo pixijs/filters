@@ -8,6 +8,7 @@ import fragment from './bulgePinch.frag';
  
 /**
  * Bulges or pinches the image in a circle.
+ * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/bulge-pinch.png)
  *
  * @class
  * @extends PIXI.Filter

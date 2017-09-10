@@ -3,6 +3,7 @@ import fragment from './dropshadow.frag';
 
 /**
  * Drop shadow filter.
+ * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/drop-shadow.png)
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters

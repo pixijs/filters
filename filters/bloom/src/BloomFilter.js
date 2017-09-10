@@ -3,6 +3,7 @@ const {BlurXFilter, BlurYFilter, VoidFilter} = PIXI.filters;
 /**
  * The BloomFilter applies a Gaussian blur to an object.
  * The strength of the blur can be set for x- and y-axis separately.
+ * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/bloom.png)
  *
  * @class
  * @extends PIXI.Filter
