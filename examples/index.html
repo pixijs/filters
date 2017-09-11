@@ -96,6 +96,7 @@
                 .add('fish2', 'images/displacement_fish2.png')
                 .add('fish3', 'images/displacement_fish3.png')
                 .add('fish4', 'images/displacement_fish4.png')
+                .add('lightmap', 'images/lightmap.png')
                 .load(function(loader, resources) {
                     init(resources);
                     app.start();
@@ -337,6 +338,12 @@
                 folder.addColor(colorReplaceFilter, 'newColor');
                 folder.add(colorReplaceFilter, 'epsilon', 0, 1);
 
+                var lightmap = resources.lightmap.texture;
+                var simpleLightmapFilter = new PIXI.filters.SimpleLightmapFilter(lightmap, [0.5, 0.5, 0.5, 0.5]);
+                simpleLightmapFilter.enabled = false;
+                folder = gui.addFolder('SimpleLightmapFilter');
+                folder.add(simpleLightmapFilter, 'enabled').onChange(trackEvent.bind(folder));
+
                 // Apply filters
                 var filterAreaPadding = 4;
                 var filterArea = new PIXI.Rectangle();
@@ -358,7 +365,8 @@
                     tiltshiftFilter,
                     shockwaveFilter,
                     bulgepinchFilter,
-                    colorReplaceFilter
+                    colorReplaceFilter,
+                    simpleLightmapFilter
                 ];
 
                 window.addEventListener('resize', resize);
@@ -385,6 +393,9 @@
 
                     displacementSprite.width = width;
                     displacementSprite.height = height;
+
+                    lightmap.width = width;
+                    lightmap.height = height;
 
                     app.renderer.resize(
                         width,
