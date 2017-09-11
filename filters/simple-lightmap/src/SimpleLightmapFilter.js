@@ -13,29 +13,29 @@ import fragment from './simpleLightmap.frag';
 * @class
 * @extends PIXI.Filter
 * @memberof PIXI.filters
-* @param {PIXI.Texture} lightmapTexture a texture where your lightmap is rendered
-* @param {Array<number>} ambientColor An RGBA array of the ambient color
+* @param {PIXI.Texture} texture a texture where your lightmap is rendered
+* @param {Array<number>|number} [color=0x000000] An RGBA array of the ambient color
 *
 * @example
-*  var lightmapTex = new PIXI.RenderTexture(renderer, 400, 300);
-*
-*  // ... render lightmap on lightmapTex
-*
-*  stageContainer.filters = [
-*    new SimpleLightmapFilter(lightmapTex, [0.3, 0.3, 0.7, 0.5], [1.0, 1.0])
+*  container.filters = [
+*    new SimpleLightmapFilter(texture, 0x666666)
 *  ];
 */
 export default class SimpleLightmapFilter extends PIXI.Filter {
 
-    constructor(lightmapTexture, ambientColor) {
+    constructor(texture, color = 0x000000) {
         super(vertex, fragment);
-        this.uniforms.uLightmap = lightmapTexture;
-        this.uniforms.ambientColor =  new Float32Array(ambientColor);
+
+        // Set the default for setting color
+        this.uniforms.ambientColor = new Float32Array([0, 0, 0, 1]);
+
+        this.texture = texture;
+        this.color = color;
     }
 
     /**
      * Applies the filter.
-     *
+     * @private
      * @param {PIXI.FilterManager} filterManager - The manager.
      * @param {PIXI.RenderTarget} input - The input target.
      * @param {PIXI.RenderTarget} output - The output target.
@@ -55,21 +55,43 @@ export default class SimpleLightmapFilter extends PIXI.Filter {
      * @member {PIXI.Texture}
      */
     get texture() {
-        return this.uniforms.u_lightmap;
+        return this.uniforms.uLightmap;
     }
     set texture(value) {
-        this.uniforms.u_lightmap = value;
+        this.uniforms.uLightmap = value;
     }
 
     /**
-     * An RGBA array of the ambient color
-     * @member {Array<number>}
+     * An RGBA array of the ambient color or a hex color without alpha
+     * @member {Array<number>|number}
      */
-    get color() {
-        return this.uniforms.ambientColor;
-    }
     set color(value) {
-        this.uniforms.ambientColor = new Float32Array(value);
+        const arr = this.uniforms.ambientColor;
+        if (typeof value === 'number') {
+            PIXI.utils.hex2rgb(value, arr);
+            this._color = value;
+        }
+        else {
+            arr[0] = value[0];
+            arr[1] = value[1];
+            arr[2] = value[2];
+            arr[3] = value[3];
+            this._color = PIXI.utils.rgb2hex(arr);
+        }
+    }
+    get color() {
+        return this._color;
+    }
+
+    /**
+     * When setting `color` as hex, this can be used to set alpha independently.
+     * @member {number}
+     */
+    get alpha() {
+        return this.uniforms.ambientColor[3];
+    }
+    set alpha(value) {
+        this.uniforms.ambientColor[3] = value;
     }
 }
 
