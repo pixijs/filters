@@ -1,4 +1,4 @@
-import vertex from './simpleLightmap.vert';
+import {vertex} from '@tools/fragments';
 import fragment from './simpleLightmap.frag';
 
 /**
@@ -6,29 +6,47 @@ import fragment from './simpleLightmap.frag';
 * http://www.html5gamedevs.com/topic/20027-pixijs-simple-lightmapping/
 * http://codepen.io/Oza94/pen/EPoRxj
 *
+* You have to specify filterArea, or suffer consequences.
+* You may have to use it with "filter.dontFit=true",
+*  until we rewrite this using same approach as for DisplacementFilter.
+*
 * @class
 * @extends PIXI.Filter
 * @memberof PIXI.filters
-* @param {PIXI.Texture} lightmapTexture a texture where your lightmap is rendered
-* @param {Array<number>} ambientColor An RGBA array of the ambient color
-* @param {Array<number>} [resolution=[1, 1]] An array for X/Y resolution
+* @param {PIXI.Texture} texture a texture where your lightmap is rendered
+* @param {Array<number>|number} [color=0x000000] An RGBA array of the ambient color
 *
 * @example
-*  var lightmapTex = new PIXI.RenderTexture(renderer, 400, 300);
-*
-*  // ... render lightmap on lightmapTex
-*
-*  stageContainer.filters = [
-*    new SimpleLightmapFilter(lightmapTex, [0.3, 0.3, 0.7, 0.5], [1.0, 1.0])
+*  container.filters = [
+*    new SimpleLightmapFilter(texture, 0x666666)
 *  ];
 */
 export default class SimpleLightmapFilter extends PIXI.Filter {
 
-    constructor(lightmapTexture, ambientColor, resolution = [1, 1]) {    
+    constructor(texture, color = 0x000000) {
         super(vertex, fragment);
-        this.uniforms.u_lightmap = lightmapTexture;
-        this.uniforms.resolution = new Float32Array(resolution);
-        this.uniforms.ambientColor =  new Float32Array(ambientColor);
+
+        // Set the default for setting color
+        this.uniforms.ambientColor = new Float32Array([0, 0, 0, 1]);
+
+        this.texture = texture;
+        this.color = color;
+    }
+
+    /**
+     * Applies the filter.
+     * @private
+     * @param {PIXI.FilterManager} filterManager - The manager.
+     * @param {PIXI.RenderTarget} input - The input target.
+     * @param {PIXI.RenderTarget} output - The output target.
+     */
+    apply(filterManager, input, output)
+    {
+        this.uniforms.dimensions[0] = input.sourceFrame.width;
+        this.uniforms.dimensions[1] = input.sourceFrame.height;
+
+        // draw the filter...
+        filterManager.applyFilter(this, input, output);
     }
 
 
@@ -37,32 +55,43 @@ export default class SimpleLightmapFilter extends PIXI.Filter {
      * @member {PIXI.Texture}
      */
     get texture() {
-        return this.uniforms.u_lightmap;
+        return this.uniforms.uLightmap;
     }
     set texture(value) {
-        this.uniforms.u_lightmap = value;
+        this.uniforms.uLightmap = value;
     }
 
     /**
-     * An RGBA array of the ambient color
-     * @member {Array<number>}
+     * An RGBA array of the ambient color or a hex color without alpha
+     * @member {Array<number>|number}
      */
-    get color() {
-        return this.uniforms.ambientColor;
-    }
     set color(value) {
-        this.uniforms.ambientColor = new Float32Array(value);
+        const arr = this.uniforms.ambientColor;
+        if (typeof value === 'number') {
+            PIXI.utils.hex2rgb(value, arr);
+            this._color = value;
+        }
+        else {
+            arr[0] = value[0];
+            arr[1] = value[1];
+            arr[2] = value[2];
+            arr[3] = value[3];
+            this._color = PIXI.utils.rgb2hex(arr);
+        }
+    }
+    get color() {
+        return this._color;
     }
 
     /**
-     * An array for X/Y resolution
-     * @member {Array<number>}
+     * When setting `color` as hex, this can be used to set alpha independently.
+     * @member {number}
      */
-    get resolution() {
-        return this.uniforms.resolution;
+    get alpha() {
+        return this.uniforms.ambientColor[3];
     }
-    set resolution(value) {
-        this.uniforms.resolution = new Float32Array(value);
+    set alpha(value) {
+        this.uniforms.ambientColor[3] = value;
     }
 }
 
