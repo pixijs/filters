@@ -8,7 +8,7 @@ Optional filters that work with PixiJS v4.
 |---|---|---|
 | **AsciiFilter** | _@pixi/filter-ascii_ | ![original](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/ascii.png) |
 | **BloomFilter** | _@pixi/filter-bloom_ | ![original](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/bloom.png) |
-| **BulgePinchFilter** | _@pixi/filter-bulge-pinch_ | ![original](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/bulge-pinch.png) |
+| **BulgePinchFilter** | _@pixi/filter-bulge-pinch_ | ![original](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/bulge-pinch.gif) |
 | **ColorReplaceFilter** | _@pixi/filter-color-replace_ | ![original](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/color-replace.png) |
 | **ConvolutionFilter** | _@pixi/filter-convolution_ | ![original](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/convolution.png) |
 | **CrossHatchFilter** | _@pixi/filter-cross-hatch_ | ![original](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/cross-hatch.png) |
@@ -16,7 +16,7 @@ Optional filters that work with PixiJS v4.
 | **DropShadowFilter** | _@pixi/filter-drop-shadow_| ![original](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/drop-shadow.png) |
 | **GlowFilter** | _@pixi/filter-glow_ | ![original](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/glow.png) |
 | **EmbossFilter** | _@pixi/filter-emboss_ | ![original](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/emboss.png) |
-| **PixelateFilter** | _@pixi/filter-pixelate_ | ![original](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/pixelate.png) |
+| **PixelateFilter** | _@pixi/filter-pixelate_ | ![original](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/pixelate.gif) |
 | **OutlineFilter** | _@pixi/filter-outline_ | ![original](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/outline.png) |
 | **RGBSplitFilter** | _@pixi/filter-rgb_ | ![original](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/rgb.png) |
 | **ShockwaveFilter** | _@pixi/filter-shockwave_ | ![original](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/shockwave.gif) |

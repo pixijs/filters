@@ -40,13 +40,13 @@ export default class SimpleLightmapFilter extends PIXI.Filter {
      * @param {PIXI.RenderTarget} input - The input target.
      * @param {PIXI.RenderTarget} output - The output target.
      */
-    apply(filterManager, input, output)
+    apply(filterManager, input, output, clear)
     {
         this.uniforms.dimensions[0] = input.sourceFrame.width;
         this.uniforms.dimensions[1] = input.sourceFrame.height;
 
         // draw the filter...
-        filterManager.applyFilter(this, input, output);
+        filterManager.applyFilter(this, input, output, clear);
     }
 
 

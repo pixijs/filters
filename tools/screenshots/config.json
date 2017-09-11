@@ -2,6 +2,7 @@
     "animations": [
         {
             "filename": "shockwave",
+            "delay": 200,
             "frames": [
                 "shockwave-0",
                 "shockwave-1",
@@ -9,6 +10,25 @@
                 "shockwave-3",
                 "shockwave-4",
                 "shockwave-5"
+            ]
+        },
+        {
+            "filename": "bulge-pinch",
+            "delay": 500,
+            "frames": [
+                "bulge-pinch-0",
+                "bulge-pinch-1"
+            ]
+        },
+        {
+            "filename": "pixelate",
+            "delay": 500,
+            "frames": [
+                "pixelate-0",
+                "pixelate-1",
+                "pixelate-2",
+                "pixelate-3",
+                "pixelate-4"
             ]
         }
     ],
@@ -35,10 +55,18 @@
         },
         {
             "name": "BulgePinchFilter",
-            "filename": "bulge-pinch",
+            "frame": "bulge-pinch-0",
             "options": {
-                "radius": 100,
+                "radius": 70,
                 "strength": 1
+            }
+        },
+        {
+            "name": "BulgePinchFilter",
+            "frame": "bulge-pinch-1",
+            "options": {
+                "radius": 70,
+                "strength": -1
             }
         },
         {
@@ -70,11 +98,56 @@
         },
         {
             "name": "PixelateFilter",
-            "filename": "pixelate",
+            "frame": "pixelate-0",
+            "rotation": 0.1,
+            "options": {
+                "size": {
+                    "x": 2,
+                    "y": 2
+                }
+            }
+        },
+        {
+            "name": "PixelateFilter",
+            "frame": "pixelate-1",
+            "rotation": 0.1,
+            "options": {
+                "size": {
+                    "x": 4,
+                    "y": 4
+                }
+            }
+        },
+        {
+            "name": "PixelateFilter",
+            "frame": "pixelate-2",
+            "rotation": 0.1,
+            "options": {
+                "size": {
+                    "x": 8,
+                    "y": 8
+                }
+            }
+        },
+        {
+            "name": "PixelateFilter",
+            "frame": "pixelate-3",
+            "rotation": 0.1,
             "options": {
                 "size": {
                     "x": 16,
                     "y": 16
+                }
+            }
+        },
+        {
+            "name": "PixelateFilter",
+            "frame": "pixelate-4",
+            "rotation": 0.1,
+            "options": {
+                "size": {
+                    "x": 32,
+                    "y": 32
                 }
             }
         },
@@ -229,6 +302,14 @@
         {
             "name": "DisplacementFilter",
             "filename": "displacement"
+        },
+        {
+            "name": "SimpleLightmapFilter",
+            "filename": "simple-lightmap",
+            "options": {
+                "alpha": 1,
+                "color": 6710886
+            }
         }
     ]
 }

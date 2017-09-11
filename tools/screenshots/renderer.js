@@ -40,7 +40,9 @@ app.loader
         sprite = new PIXI.Sprite(resources.bars.texture);
         sprite.scale.set(0.5);
         sprite.anchor.set(0.5);
-        sprite.position.set(app.view.width / 2, app.view.height / 2);
+        sprite.x = app.view.width / 2;
+        sprite.y = app.view.height / 2;
+        sprite.filterArea = app.screen;
         app.stage.addChild(sprite);
         document.body.appendChild(app.view);
         next();
@@ -59,9 +61,8 @@ function next() {
                 filter = new FilterClass(displacement, 50);
                 break;
             }
-            case "SimpleLightMap": {
-                console.log(lightmap);
-                filter = new FilterClass(lightmap, [0, 0, 0, 0.5], [1, 1]);
+            case "SimpleLightmapFilter": {
+                filter = new FilterClass(lightmap);
                 break;
             }
             default: {
@@ -81,8 +82,9 @@ function next() {
         }
 
         // Render the filter
-        sprite.rotation = 0;
+        sprite.scale.set(0.5);
         sprite.filters = [filter];
+        sprite.rotation = obj.rotation || 0;
 
         if (obj.filename) {
             // Save image
@@ -96,7 +98,7 @@ function next() {
             );
         }
         else if (obj.frame) {
-            sprite.rotation = PIXI.DEG_TO_RAD * 180;
+            sprite.scale.y *= -1;
             app.render();
             frames[obj.frame] = app.renderer.plugins.extract.pixels();
         }
