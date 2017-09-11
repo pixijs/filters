@@ -26,10 +26,17 @@ fs.emptyDirSync(outputPath);
 
 let index = -1;
 let sprite;
+let displacement;
+let lightmap;
 
 // Load image
-app.loader.add('bars', path.join(__dirname, 'assets', 'bars.png'))
+app.loader
+    .add('bars', path.join(__dirname, 'assets', 'bars.png'))
+    .add('lightmap', path.join(__dirname, 'assets', 'lightmap.png'))
+    .add('displacement', path.join(__dirname, 'assets', 'displacement.png'))
     .load((loader, resources) => {
+        lightmap = resources.bars.texture;
+        displacement = new PIXI.Sprite(resources.displacement.texture);
         sprite = new PIXI.Sprite(resources.bars.texture);
         sprite.scale.set(0.5);
         sprite.anchor.set(0.5);
@@ -46,7 +53,22 @@ function next() {
 
         const FilterClass = PIXI.filters[obj.name];
         assert(!!FilterClass, `Filter ${obj.name} does not exist`);
-        const filter = new FilterClass();
+        let filter;
+        switch(obj.name) {
+            case "DisplacementFilter": {
+                filter = new FilterClass(displacement, 50);
+                break;
+            }
+            case "SimpleLightMap": {
+                console.log(lightmap);
+                filter = new FilterClass(lightmap, [0, 0, 0, 0.5], [1, 1]);
+                break;
+            }
+            default: {
+                filter = new FilterClass();
+            }
+        }
+
         if (obj.options) {
             for (const i in obj.options) {
                 filter[i] = obj.options[i];

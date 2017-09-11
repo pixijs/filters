@@ -225,6 +225,10 @@
             "filename": "color-matrix-saturate",
             "func": "saturate",
             "args": [1]
+        },
+        {
+            "name": "DisplacementFilter",
+            "filename": "displacement"
         }
     ]
 }
