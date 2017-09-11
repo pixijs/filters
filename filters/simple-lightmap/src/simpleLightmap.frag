@@ -6,10 +6,10 @@ uniform vec2 dimensions;
 uniform vec4 ambientColor; //ambient RGB, alpha channel is intensity
 void main() {
     vec4 diffuseColor = texture2D(u_texture, vTextureCoord);
-    vec2 lighCoord = (gl_FragCoord.xy * filterArea.xy) / dimensions;
-    vec4 light = texture2D(u_lightmap, vTextureCoord);
+    vec2 lightCoord = (vTextureCoord * filterArea.xy) / dimensions;
+    vec4 light = texture2D(u_lightmap, lightCoord);
     vec3 ambient = ambientColor.rgb * ambientColor.a;
     vec3 intensity = ambient + light.rgb;
     vec3 finalColor = diffuseColor.rgb * intensity;
-    gl_FragColor = vec4(finalColor * diffuseColor.a, diffuseColor.a);
+    gl_FragColor = vec4(finalColor, diffuseColor.a);
 }
