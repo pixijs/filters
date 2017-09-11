@@ -29,7 +29,7 @@ export default class SimpleLightmapFilter extends PIXI.Filter {
 
     constructor(lightmapTexture, ambientColor) {
         super(vertex, fragment);
-        this.uniforms.u_lightmap = lightmapTexture;
+        this.uniforms.uLightmap = lightmapTexture;
         this.uniforms.ambientColor =  new Float32Array(ambientColor);
     }
 
