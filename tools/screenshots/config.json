@@ -19,17 +19,6 @@
                 "bulge-pinch-0",
                 "bulge-pinch-1"
             ]
-        },
-        {
-            "filename": "pixelate",
-            "delay": 500,
-            "frames": [
-                "pixelate-0",
-                "pixelate-1",
-                "pixelate-2",
-                "pixelate-3",
-                "pixelate-4"
-            ]
         }
     ],
     "images" : [
@@ -76,8 +65,8 @@
                 "angle": 8,
                 "radius": 70,
                 "offset": {
-                    "x": 125,
-                    "y": 70
+                    "x": 135,
+                    "y": 80
                 }
             }
         },
@@ -98,30 +87,7 @@
         },
         {
             "name": "PixelateFilter",
-            "frame": "pixelate-0",
-            "rotation": 0.1,
-            "options": {
-                "size": {
-                    "x": 2,
-                    "y": 2
-                }
-            }
-        },
-        {
-            "name": "PixelateFilter",
-            "frame": "pixelate-1",
-            "rotation": 0.1,
-            "options": {
-                "size": {
-                    "x": 4,
-                    "y": 4
-                }
-            }
-        },
-        {
-            "name": "PixelateFilter",
-            "frame": "pixelate-2",
-            "rotation": 0.1,
+            "filename": "pixelate",
             "options": {
                 "size": {
                     "x": 8,
@@ -130,41 +96,20 @@
             }
         },
         {
-            "name": "PixelateFilter",
-            "frame": "pixelate-3",
-            "rotation": 0.1,
-            "options": {
-                "size": {
-                    "x": 16,
-                    "y": 16
-                }
-            }
-        },
-        {
-            "name": "PixelateFilter",
-            "frame": "pixelate-4",
-            "rotation": 0.1,
-            "options": {
-                "size": {
-                    "x": 32,
-                    "y": 32
-                }
-            }
-        },
-        {
             "name": "TiltShiftFilter",
             "filename": "tilt-shift",
             "options": {
                 "blur": 50,
-                "gradientBlur": 100
+                "gradientBlur": 200
+
             }
         },
         {
             "name": "ConvolutionFilter",
             "filename": "convolution",
             "options": {
-                "width": 100,
-                "height": 100,
+                "width": 200,
+                "height": 200,
                 "matrix": [0,0,0,1,1,1,0,0,0]
             }
         },
@@ -222,13 +167,16 @@
             "name": "OutlineFilter",
             "filename": "outline",
             "options": {
-                "thickness": 4,
-                "color": 0
+                "thickness": 2,
+                "color": 16711680
             }
         },
         {
             "name": "DropShadowFilter",
-            "filename": "drop-shadow"
+            "filename": "drop-shadow",
+            "options": {
+                "distance": 3
+            }
         },
         {
             "name": "GlowFilter",
@@ -237,16 +185,16 @@
                 "distance": 20,
                 "outerStrength": 1,
                 "innerStrength": 1,
-                "color": 0
+                "color": 16711680
             }
         },
         {
             "name": "ColorReplaceFilter",
             "filename": "color-replace",
             "options": {
-                "originalColor": 16777215,
+                "originalColor": 405551,
                 "newColor": 0,
-                "epsilon": 0.2
+                "epsilon": 0.5
             }
         },
         {

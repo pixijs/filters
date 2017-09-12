@@ -31,13 +31,13 @@ let lightmap;
 
 // Load image
 app.loader
-    .add('bars', path.join(__dirname, 'assets', 'bars.png'))
+    .add('preview', path.join(__dirname, 'assets', 'preview.png'))
     .add('lightmap', path.join(__dirname, 'assets', 'lightmap.png'))
     .add('displacement', path.join(__dirname, 'assets', 'displacement.png'))
     .load((loader, resources) => {
-        lightmap = resources.bars.texture;
+        lightmap = resources.lightmap.texture;
         displacement = new PIXI.Sprite(resources.displacement.texture);
-        sprite = new PIXI.Sprite(resources.bars.texture);
+        sprite = new PIXI.Sprite(resources.preview.texture);
         sprite.scale.set(0.5);
         sprite.anchor.set(0.5);
         sprite.x = app.view.width / 2;
@@ -84,7 +84,6 @@ function next() {
         // Render the filter
         sprite.scale.set(0.5);
         sprite.filters = [filter];
-        sprite.rotation = obj.rotation || 0;
 
         if (obj.filename) {
             // Save image
