@@ -9,6 +9,7 @@ import fragment from './dot.frag';
 /**
  * This filter applies a dotscreen effect making display objects appear to be made out of
  * black and white halftone dots like an old printer.
+ * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/dot.png)
  *
  * @class
  * @extends PIXI.Filter

@@ -3,6 +3,7 @@ import fragment from './rgb-split.frag';
 
 /**
  * An RGB Split Filter.
+ * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/rgb.png)
  *
  * @class
  * @extends PIXI.Filter

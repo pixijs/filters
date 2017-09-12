@@ -3,6 +3,7 @@ import fragment from './twist.frag';
 
 /**
  * This filter applies a twist effect making display objects appear twisted in the given direction.
+ * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/twist.png)
  *
  * @class
  * @extends PIXI.Filter

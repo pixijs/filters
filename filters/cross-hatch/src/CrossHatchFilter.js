@@ -3,6 +3,7 @@ import fragment from './crosshatch.frag';
 
 /**
  * A Cross Hatch effect filter.
+ * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/cross-hatch.png)
  *
  * @class
  * @extends PIXI.Filter

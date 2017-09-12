@@ -7,9 +7,10 @@ import fragment from './simpleLightmap.frag';
 * http://codepen.io/Oza94/pen/EPoRxj
 *
 * You have to specify filterArea, or suffer consequences.
-* You may have to use it with "filter.dontFit=true",
+* You may have to use it with `filter.dontFit = true`,
 *  until we rewrite this using same approach as for DisplacementFilter.
 *
+* ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/simple-lightmap.png)
 * @class
 * @extends PIXI.Filter
 * @memberof PIXI.filters
@@ -17,9 +18,7 @@ import fragment from './simpleLightmap.frag';
 * @param {Array<number>|number} [color=0x000000] An RGBA array of the ambient color
 *
 * @example
-*  container.filters = [
-*    new SimpleLightmapFilter(texture, 0x666666)
-*  ];
+*  displayObject.filters = [new SimpleLightmapFilter(texture, 0x666666)];
 */
 export default class SimpleLightmapFilter extends PIXI.Filter {
 
@@ -40,13 +39,13 @@ export default class SimpleLightmapFilter extends PIXI.Filter {
      * @param {PIXI.RenderTarget} input - The input target.
      * @param {PIXI.RenderTarget} output - The output target.
      */
-    apply(filterManager, input, output)
+    apply(filterManager, input, output, clear)
     {
         this.uniforms.dimensions[0] = input.sourceFrame.width;
         this.uniforms.dimensions[1] = input.sourceFrame.height;
 
         // draw the filter...
-        filterManager.applyFilter(this, input, output);
+        filterManager.applyFilter(this, input, output, clear);
     }
 
 

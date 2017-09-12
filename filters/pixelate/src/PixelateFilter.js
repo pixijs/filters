@@ -3,6 +3,7 @@ import fragment from './pixelate.frag';
 
 /**
  * This filter applies a pixelate effect making display objects appear 'blocky'.
+ * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/pixelate.png)
  *
  * @class
  * @extends PIXI.Filter

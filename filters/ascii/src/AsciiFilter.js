@@ -10,6 +10,7 @@ import fragment from './ascii.frag';
 
 /**
  * An ASCII filter.
+ * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/ascii.png)
  *
  * @class
  * @extends PIXI.Filter

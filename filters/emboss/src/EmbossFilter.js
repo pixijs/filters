@@ -3,6 +3,7 @@ import fragment from './emboss.frag';
 
 /**
  * An RGB Split Filter.
+ * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/emboss.png)
  *
  * @class
  * @extends PIXI.Filter

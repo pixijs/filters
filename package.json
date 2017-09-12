@@ -5,7 +5,7 @@
     "bootstrap": "lerna bootstrap --hoist",
     "clean": "lerna clean",
     "predeploy": "npm run docs",
-    "test": "npm run build",
+    "test": "npm run build -- --ignore @tools/screenshots",
     "deploy": "node scripts/deploy",
     "docs": "jsdoc -c scripts/jsdoc.conf.json -R README.md",
     "lint": "eslint scripts **/src **/rollup.config.js --fix",
