@@ -2,6 +2,10 @@
 
 [![Build Status](https://travis-ci.org/pixijs/pixi-filters.svg?branch=master)](https://travis-ci.org/pixijs/pixi-filters)
 
+## Demo
+
+Click [here](https://pixijs.github.io/pixi-filters/examples) to interactively play with filters to see how they work.
+
 ## Filters
 
 All filters work with PixiJS v4.
@@ -44,10 +48,6 @@ PixiJS has a handful of core filters that are built-in to the PixiJS library.
 | **ColorMatrixFilter** (predator) | ![color-matrix-predator](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/color-matrix-predator.png?v=2) |
 | **ColorMatrixFilter** (saturate) | ![color-matrix-saturate](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/color-matrix-saturate.png?v=2) |
 | **ColorMatrixFilter** (sepia) | ![color-matrix-sepia](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/color-matrix-sepia.png?v=2) |
-
-## Examples
-
-Click [here](https://pixijs.github.io/pixi-filters/examples) for filter demos.
 
 ## Installation
 
