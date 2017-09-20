@@ -346,11 +346,11 @@
                 folder.addColor(simpleLightmapFilter, 'color');
                 folder.add(simpleLightmapFilter, 'alpha', 0, 1);
 
-				// Create godray filter
-				var godrayFilter = new PIXI.filters.GodrayFilter();
-				godrayFilter.enabled = false;
-				folder = gui.addFolder('GodrayFilter');
-				folder.add(godrayFilter, 'enabled').onChange(trackEvent.bind(folder));
+                // Create godray filter
+                var godrayFilter = new PIXI.filters.GodrayFilter();
+                godrayFilter.enabled = false;
+                folder = gui.addFolder('GodrayFilter');
+                folder.add(godrayFilter, 'enabled').onChange(trackEvent.bind(folder));
 
 				// Apply filters
                 var filterAreaPadding = 4;
@@ -375,7 +375,7 @@
                     bulgepinchFilter,
                     colorReplaceFilter,
                     simpleLightmapFilter,
-					godrayFilter
+                    godrayFilter
                 ];
 
                 window.addEventListener('resize', resize);
