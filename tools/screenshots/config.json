@@ -258,6 +258,10 @@
                 "alpha": 1,
                 "color": 6710886
             }
+        },
+        {
+            "name": "GodrayFilter",
+            "filename": "godray"
         }
     ]
 }

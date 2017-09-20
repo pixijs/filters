@@ -340,14 +340,19 @@
 
                 var lightmap = resources.lightmap.texture;
                 var simpleLightmapFilter = new PIXI.filters.SimpleLightmapFilter(lightmap, 0x666666);
-                debugger;
                 simpleLightmapFilter.enabled = false;
                 folder = gui.addFolder('SimpleLightmapFilter');
                 folder.add(simpleLightmapFilter, 'enabled').onChange(trackEvent.bind(folder));
                 folder.addColor(simpleLightmapFilter, 'color');
                 folder.add(simpleLightmapFilter, 'alpha', 0, 1);
 
-                // Apply filters
+				// Create godray filter
+				var godrayFilter = new PIXI.filters.GodrayFilter();
+				godrayFilter.enabled = false;
+				folder = gui.addFolder('GodrayFilter');
+				folder.add(godrayFilter, 'enabled').onChange(trackEvent.bind(folder));
+
+				// Apply filters
                 var filterAreaPadding = 4;
                 var filterArea = new PIXI.Rectangle();
                 pond.filterArea = filterArea;
@@ -369,7 +374,8 @@
                     shockwaveFilter,
                     bulgepinchFilter,
                     colorReplaceFilter,
-                    simpleLightmapFilter
+                    simpleLightmapFilter,
+					godrayFilter
                 ];
 
                 window.addEventListener('resize', resize);

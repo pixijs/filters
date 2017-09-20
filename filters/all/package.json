@@ -39,6 +39,7 @@
     "@pixi/filter-drop-shadow": "^2.0.2",
     "@pixi/filter-emboss": "^2.0.2",
     "@pixi/filter-glow": "^2.0.2",
+    "@pixi/filter-godray": "^2.0.2",
     "@pixi/filter-outline": "^2.0.2",
     "@pixi/filter-pixelate": "^2.0.2",
     "@pixi/filter-rgb-split": "^2.0.2",
