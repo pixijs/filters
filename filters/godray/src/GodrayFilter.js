@@ -21,8 +21,8 @@ export default class GodrayFilter extends PIXI.Filter {
 
     constructor() {
         super(vertex, main
-            .replace(/\/*$perlin*\//gi, perlin)
-            .replace(/\/*$godray*\//gi, godray)
+            .replace(/$perlin/gi, perlin)
+            .replace(/$godray/gi, godray)
         );
     }
 

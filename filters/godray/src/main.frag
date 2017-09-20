@@ -6,8 +6,8 @@ uniform sampler2D uSampler;
 uniform vec4 filterArea;
 uniform vec2 dimensions;
 
-/*$perlin*/
-/*$godray*/
+$perlin
+$godray
 
 void main(void) {
     gl_FragColor = texture2D(uSampler, vTextureCoord);
