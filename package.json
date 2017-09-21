@@ -15,10 +15,10 @@
     "lerna": "lerna"
   },
   "devDependencies": {
+    "@pixi/jsdoc-template": "^2.0.0",
     "eslint": "^4.6.1",
     "gh-pages": "^0.11.0",
     "http-server": "^0.9.0",
-    "jaguarjs-jsdoc": "^1.0.0",
     "jsdoc": "^3.4.0",
     "lerna": "^2.0.0"
   }

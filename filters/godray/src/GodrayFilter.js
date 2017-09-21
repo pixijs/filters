@@ -9,7 +9,7 @@ import main from './main.frag';
 *
 * TODO: This filter requires more work on extracting parameters from shader into constructor
 *
-* ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/godray.png)
+* ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/godray.gif)
 * @class
 * @extends PIXI.Filter
 * @memberof PIXI.filters
@@ -21,9 +21,11 @@ export default class GodrayFilter extends PIXI.Filter {
 
     constructor() {
         super(vertex, main
-            .replace(/$perlin/gi, perlin)
-            .replace(/$godray/gi, godray)
+            .replace("$perlin", perlin)
+            .replace("$godray", godray)
         );
+
+        this.time = 0;
     }
 
     /**
@@ -39,6 +41,18 @@ export default class GodrayFilter extends PIXI.Filter {
 
         // draw the filter...
         filterManager.applyFilter(this, input, output, clear);
+    }
+
+    /**
+     * The current time.
+     *
+     * @member {number}
+     */
+    get time() {
+        return this.uniforms.time;
+    }
+    set time(value) {
+        this.uniforms.time = value;
     }
 }
 

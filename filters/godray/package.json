@@ -32,7 +32,6 @@
   },
   "devDependencies": {
     "@tools/build": "^2.0.1",
-    "@tools/fragments": "^2.0.0",
-    "rollup": "^0.45.2"
+    "@tools/fragments": "^2.0.0"
   }
 }

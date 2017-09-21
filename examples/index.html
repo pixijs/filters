@@ -351,6 +351,7 @@
                 godrayFilter.enabled = false;
                 folder = gui.addFolder('GodrayFilter');
                 folder.add(godrayFilter, 'enabled').onChange(trackEvent.bind(folder));
+                folder.add(godrayFilter, 'time', 0, 1);
 
 				// Apply filters
                 var filterAreaPadding = 4;
