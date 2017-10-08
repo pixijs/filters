@@ -258,6 +258,13 @@
                 "alpha": 1,
                 "color": 6710886
             }
+        },
+        {
+            "name": "AlphaFilter",
+            "filename": "alpha",
+            "options": {
+                "alpha": 0.5
+            }
         }
     ]
 }

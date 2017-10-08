@@ -181,6 +181,12 @@
                 folder.add({predator: colorFilter.predator.bind(colorFilter, 1)}, 'predator');
                 folder.add({saturate: colorFilter.saturate.bind(colorFilter, 1)}, 'saturate');
 
+                var alphaFilter = new PIXI.filters.AlphaFilter();
+                alphaFilter.enabled = false;
+                folder = gui.addFolder('AlphaFilter (pixi.js)');
+                folder.add(alphaFilter, 'enabled').onChange(trackEvent.bind(folder));
+                folder.add(alphaFilter, 'alpha', 0, 1);
+
                 var outlineFilter = new PIXI.filters.OutlineFilter();
                 outlineFilter.enabled = false;
                 folder = gui.addFolder('OutlineFilter');
@@ -369,7 +375,8 @@
                     shockwaveFilter,
                     bulgepinchFilter,
                     colorReplaceFilter,
-                    simpleLightmapFilter
+                    simpleLightmapFilter,
+                    alphaFilter
                 ];
 
                 window.addEventListener('resize', resize);

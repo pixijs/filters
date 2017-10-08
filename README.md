@@ -36,6 +36,7 @@ PixiJS has a handful of core filters that are built-in to the PixiJS library.
 
 | Filter | Preview |
 |---|---|
+| **AlphaFilter** | ![alpha](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/alpha.png?v=2) |
 | **DisplacementFilter** | ![displacement](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/displacement.png?v=2) |
 | **BlurFilter** | ![blur](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/blur.png?v=2) |
 | **NoiseFilter** | ![noise](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/noise.png?v=2) |
