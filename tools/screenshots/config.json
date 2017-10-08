@@ -23,7 +23,7 @@
     ],
     "images" : [
         {
-            "name": "VoidFilter",
+            "name": "AlphaFilter",
             "filename": "original"
         },
         {
