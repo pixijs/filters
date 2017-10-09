@@ -60,10 +60,10 @@ npm install pixi-filters
 
 ## Building
 
-PixiJS Filter uses [Lerna](https://github.com/lerna/lerna) to build all of the filter separately. Install all dependencies by running the following. Note, it's not required to `npm install`.
+PixiJS Filters uses [Lerna](https://github.com/lerna/lerna) under-the-hood to build all of the filters separately. Install all dependencies by simply running the following.
 
 ```bash
-npm run bootstrap
+npm install
 ```
 
 Build all filters by running the following:
