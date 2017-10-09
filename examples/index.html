@@ -340,7 +340,6 @@
 
                 var lightmap = resources.lightmap.texture;
                 var simpleLightmapFilter = new PIXI.filters.SimpleLightmapFilter(lightmap, 0x666666);
-                debugger;
                 simpleLightmapFilter.enabled = false;
                 folder = gui.addFolder('SimpleLightmapFilter');
                 folder.add(simpleLightmapFilter, 'enabled').onChange(trackEvent.bind(folder));
