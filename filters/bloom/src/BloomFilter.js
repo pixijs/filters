@@ -9,17 +9,17 @@ const {BlurXFilter, BlurYFilter, VoidFilter} = PIXI.filters;
  * @extends PIXI.Filter
  * @memberof PIXI.filters
  * @param {number|PIXI.Point} [blur=2] Sets the strength of both the blurX and blurY properties simultaneously
- * @param {number} quality - The quality of the blurX & blurY filter.
- * @param {number} resolution - The resolution of the blurX & blurY filter.
- * @param {number} [kernelSize=5] - The kernelSize of the blurX & blurY filter.Options: 5, 7, 9, 11, 13, 15.
+ * @param {number} [quality=4] The quality of the blurX & blurY filter.
+ * @param {number} [resolution=PIXI.settings.RESOLUTION] The resolution of the blurX & blurY filter.
+ * @param {number} [kernelSize=5] The kernelSize of the blurX & blurY filter.Options: 5, 7, 9, 11, 13, 15.
  */
 export default class BloomFilter extends PIXI.Filter {
 
-    constructor(blur = 2, quality, resolution, kernelSize) {
+    constructor(blur = 2, quality = 4, resolution = PIXI.settings.RESOLUTION, kernelSize = 5) {
         super();
 
-        let blurX = 2;
-        let blurY = 2;
+        let blurX;
+        let blurY;
 
         if (typeof blur === 'number') {
             blurX = blur;
@@ -29,10 +29,6 @@ export default class BloomFilter extends PIXI.Filter {
             blurX = blur.x;
             blurY = blur.y;
         }
-
-        quality = quality || 4;
-        resolution = resolution || PIXI.settings.RESOLUTION;
-        kernelSize = kernelSize || 5;
 
         this.blurXFilter = new BlurXFilter(blurX, quality, resolution, kernelSize);
         this.blurYFilter = new BlurYFilter(blurY, quality, resolution, kernelSize);
