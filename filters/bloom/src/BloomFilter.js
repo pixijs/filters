@@ -30,6 +30,10 @@ export default class BloomFilter extends PIXI.Filter {
             blurY = blur.y;
         }
 
+        quality = quality || 4;
+        resolution = resolution || PIXI.settings.RESOLUTION;
+        kernelSize = kernelSize || 5;
+
         this.blurXFilter = new BlurXFilter(blurX, quality, resolution, kernelSize);
         this.blurYFilter = new BlurYFilter(blurY, quality, resolution, kernelSize);
         this.blurYFilter.blendMode = PIXI.BLEND_MODES.SCREEN;
