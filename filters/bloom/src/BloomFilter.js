@@ -18,17 +18,20 @@ export default class BloomFilter extends PIXI.Filter {
     constructor(blur = 2, quality, resolution, kernelSize) {
         super();
 
+        let blurX = 2;
+        let blurY = 2;
+
         if (typeof blur === 'number') {
-            this.blurX = blur;
-            this.blurY = blur;
+            blurX = blur;
+            blurY = blur;
         }
         else if (blur instanceof PIXI.Point) {
-            this.blurX = blur.x;
-            this.blurY = blur.y;
+            blurX = blur.x;
+            blurY = blur.y;
         }
 
-        this.blurXFilter = new BlurXFilter(this.blurX, quality, resolution, kernelSize);
-        this.blurYFilter = new BlurYFilter(this.blurY, quality, resolution, kernelSize);
+        this.blurXFilter = new BlurXFilter(blurX, quality, resolution, kernelSize);
+        this.blurYFilter = new BlurYFilter(blurY, quality, resolution, kernelSize);
         this.blurYFilter.blendMode = PIXI.BLEND_MODES.SCREEN;
         this.defaultFilter = new VoidFilter();
     }
