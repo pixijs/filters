@@ -25,6 +25,8 @@ export default class GodrayFilter extends PIXI.Filter {
             .replace("$godray", godray)
         );
 
+        this.lacunarity = 2.0;
+        this.gain = 0.5;
         this.angle = 30;
         this.time = 0;
     }
@@ -68,6 +70,34 @@ export default class GodrayFilter extends PIXI.Filter {
     }
     set angle(value) {
         this.uniforms.angle = value;
+    }
+
+    /**
+     * Generally intense the effect is. A value closer to 1 will produce a more intense effect,
+     * where a value closer to 0 will produce a subtler effect.
+     *
+     * @member {number}
+     * @default 0.5
+     */
+    get gain() {
+        return this.uniforms.gain;
+    }
+    set gain(value) {
+        this.uniforms.gain = value;
+    }
+
+    /**
+     * The density of the fractal noise. A higher amount produces more rays and a smaller amound
+     * produces fewer waves.
+     *
+     * @member {number}
+     * @default 2.0
+     */
+    get lacunarity() {
+        return this.uniforms.lacunarity;
+    }
+    set lacunarity(value) {
+        this.uniforms.lacunarity = value;
     }
 }
 

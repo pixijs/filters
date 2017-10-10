@@ -273,28 +273,40 @@
             "name": "GodrayFilter",
             "frame": "godray-0",
             "options": {
-                "time": 0
+                "time": 0,
+                "gain": 0.8,
+                "lacunarity": 2.5,
+                "angle": -30
             }
         },
         {
             "name": "GodrayFilter",
             "frame": "godray-1",
             "options": {
-                "time": 0.1
+                "time": 0.1,
+                "gain": 0.8,
+                "lacunarity": 2.5,
+                "angle": -30
             }
         },
         {
             "name": "GodrayFilter",
             "frame": "godray-2",
             "options": {
-                "time": 0.2
+                "time": 0.2,
+                "gain": 0.8,
+                "lacunarity": 2.5,
+                "angle": -30
             }
         },
         {
             "name": "GodrayFilter",
             "frame": "godray-3",
             "options": {
-                "time": 0.3
+                "time": 0.3,
+                "gain": 0.8,
+                "lacunarity": 2.5,
+                "angle": -30
             }
         }
     ]
