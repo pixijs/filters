@@ -8,6 +8,7 @@
     "Matt Karl <matt@mattkarl.com>"
   ],
   "module": "lib/filter-bloom.es.min.js",
+  "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
   "license": "MIT",
