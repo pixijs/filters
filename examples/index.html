@@ -352,6 +352,7 @@
                 folder = gui.addFolder('GodrayFilter');
                 folder.add(godrayFilter, 'enabled').onChange(trackEvent.bind(folder));
                 folder.add(godrayFilter, 'time', 0, 1);
+                folder.add(godrayFilter, 'angle', -60, 60);
 
 				// Apply filters
                 var filterAreaPadding = 4;

@@ -25,6 +25,7 @@ export default class GodrayFilter extends PIXI.Filter {
             .replace("$godray", godray)
         );
 
+        this.angle = 30;
         this.time = 0;
     }
 
@@ -53,6 +54,20 @@ export default class GodrayFilter extends PIXI.Filter {
     }
     set time(value) {
         this.uniforms.time = value;
+    }
+
+    /**
+     * The angle of the rays in degrees. For instance, a value of 0 is vertical rays, 
+     * values of 90 or -90 produce horizontal rays. 
+     *
+     * @member {number}
+     * @default 30
+     */
+    get angle() {
+        return this.uniforms.angle;
+    }
+    set angle(value) {
+        this.uniforms.angle = value;
     }
 }
 

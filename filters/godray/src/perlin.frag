@@ -79,17 +79,17 @@ float pnoise(vec3 P, vec3 rep)
     vec2 n_yz = mix(n_z.xy, n_z.zw, fade_xyz.y);
     float n_xyz = mix(n_yz.x, n_yz.y, fade_xyz.x);
     return 2.2 * n_xyz;
-    }
-    float turb(vec3 P, vec3 rep, float lacunarity, float gain)
-    {
+}
+float turb(vec3 P, vec3 rep, float lacunarity, float gain)
+{
     float sum = 0.0;
     float sc = 1.0;
     float totalgain = 1.0;
     for (float i = 0.0; i < 6.0; i++)
     {
-    sum += totalgain * pnoise(P * sc, rep);
-    sc *= lacunarity;
-    totalgain *= gain;
+        sum += totalgain * pnoise(P * sc, rep);
+        sc *= lacunarity;
+        totalgain *= gain;
     }
     return abs(sum);
 }

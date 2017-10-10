@@ -1,6 +1,5 @@
-vec4 godray(float time, vec2 coord)
+vec4 godray(float time, vec2 coord, float angle)
 {
-    float angle = 30.0;
     float xx = cos(radians(angle));
     float yy = sin(radians(angle));
     vec3 dir = vec3((xx * coord.x) + (yy * coord.y), (xx * coord.x) + (yy * coord.y), 0.0);
