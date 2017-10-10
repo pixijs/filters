@@ -1,5 +1,4 @@
 import {vertex} from '@tools/fragments';
-import godray from './godray.frag';
 import perlin from './perlin.frag';
 import main from './main.frag';
 
@@ -20,10 +19,7 @@ import main from './main.frag';
 export default class GodrayFilter extends PIXI.Filter {
 
     constructor() {
-        super(vertex, main
-            .replace("$perlin", perlin)
-            .replace("$godray", godray)
-        );
+        super(vertex, main.replace("$perlin", perlin));
 
         this.lacunarity = 2.0;
         this.gain = 0.5;
