@@ -10,6 +10,7 @@
     "Chad Engler <chad@pantherdev.com>"
   ],
   "module": "lib/pixi-filters.es.js",
+  "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
   "license": "MIT",
@@ -18,7 +19,8 @@
     "url": "https://github.com/pixijs/pixi-filters.git"
   },
   "files": [
-    "lib"
+    "lib",
+    "types.d.ts"
   ],
   "scripts": {
     "build:umd": "rollup -c -f umd",
