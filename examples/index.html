@@ -348,14 +348,12 @@
 
                 var zoomBlurFilter = new PIXI.filters.ZoomBlurFilter(0.2, stageWidth / 2, stageHeight / 2, 80);
                 zoomBlurFilter.enabled = false;
-                // zoomBlurFilter.radius = 1E9;
                 folder = gui.addFolder('ZoomBlurFilter');
                 folder.add(zoomBlurFilter, 'enabled').onChange(trackEvent.bind(folder));
                 folder.add(zoomBlurFilter, 'strength', 0.01, 2);
                 folder.add(zoomBlurFilter, 'centerX', 0, stageWidth);
                 folder.add(zoomBlurFilter, 'centerY', 0, stageHeight);
                 folder.add(zoomBlurFilter, 'innerRadius', 0, stageWidth/2);
-                // folder.add(zoomBlurFilter, 'radius', 0, stageWidth);
 
                 // Apply filters
                 var filterAreaPadding = 4;
