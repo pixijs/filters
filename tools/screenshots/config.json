@@ -263,9 +263,9 @@
             "name": "ZoomBlurFilter",
             "filename": "zoom-blur",
             "options": {
-                "strength": 0.2,
-                "centerX": 150,
-                "centerY": 150,
+                "strength": 0.12,
+                "centerX": 130,
+                "centerY": 80,
                 "innerRadius": 40
             }
         }
