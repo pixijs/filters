@@ -62,7 +62,7 @@
             ga('create', 'UA-103772589-3', 'auto');
             ga('send', 'pageview');
             function trackEvent(enabled) {
-                ga('send', 'event', 
+                ga('send', 'event',
                     this.name.replace(' (pixi.js)', ''),
                     enabled ? 'enabled' : 'disabled'
                 );
@@ -124,7 +124,7 @@
                 // Setup the tiling sprite
                 var overlay = new PIXI.extras.TilingSprite(
                     resources.overlay.texture,
-                    stageWidth, 
+                    stageWidth,
                     stageHeight
                 );
 
@@ -346,6 +346,15 @@
                 folder.addColor(simpleLightmapFilter, 'color');
                 folder.add(simpleLightmapFilter, 'alpha', 0, 1);
 
+                var zoomBlurFilter = new PIXI.filters.ZoomBlurFilter(0.1, [stageWidth / 2, stageHeight / 2], 100);
+                zoomBlurFilter.enabled = false;
+                folder = gui.addFolder('ZoomBlurFilter');
+                folder.add(zoomBlurFilter, 'enabled').onChange(trackEvent.bind(folder));
+                folder.add(zoomBlurFilter, 'strength', 0.01, 0.3);
+                folder.add(zoomBlurFilter.center, '0', 0, stageWidth).name('center.x');
+                folder.add(zoomBlurFilter.center, '1', 0, stageHeight).name('center.y');
+                folder.add(zoomBlurFilter, 'innerRadius', 0, stageWidth / 2);
+
                 // Apply filters
                 var filterAreaPadding = 4;
                 var filterArea = new PIXI.Rectangle();
@@ -368,7 +377,8 @@
                     shockwaveFilter,
                     bulgepinchFilter,
                     colorReplaceFilter,
-                    simpleLightmapFilter
+                    simpleLightmapFilter,
+                    zoomBlurFilter,
                 ];
 
                 window.addEventListener('resize', resize);

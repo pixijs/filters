@@ -29,6 +29,7 @@ All filters work with PixiJS v4.
 | **SimpleLightmapFilter**<br>_@pixi/filter-simple-lightmap_ | ![simple-lightmap](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/simple-lightmap.png?v=2) |
 | **TiltShiftFilter**<br>_@pixi/filter-tilt-shift_ | ![tilt-shift](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/tilt-shift.png?v=2) |
 | **TwistFilter**<br>_@pixi/filter-twist_ | ![twist](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/twist.png?v=2) |
+| **ZoomBlurFilter**<br>_@pixi/filter-zoom-blur_ | ![zoom-blur](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/zoom-blur.png?v=2) |
 
 ## Build-In Filters
 

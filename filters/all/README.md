@@ -23,6 +23,7 @@ Filters include:
 * **SimpleLightmapFilter** _@pixi/filter-simple-lightmap_
 * **TiltShiftFilter** _@pixi/filter-tilt-shift_
 * **TwistFilter** _@pixi/filter-twist_
+* **ZoomBlurFilter** _@pixi/filter-zoom-blur_
 
 ## Examples
 
@@ -36,7 +37,7 @@ Using NPM:
 npm install pixi-filters
 ```
 
-## Usage 
+## Usage
 
 ### Browser
 
