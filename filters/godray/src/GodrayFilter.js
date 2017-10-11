@@ -3,10 +3,9 @@ import perlin from './perlin.frag';
 import main from './main.frag';
 
 /**
-* GordayFilter, originally by Alain Galvan
-* https://codepen.io/alaingalvan
+* GordayFilter, {@link https://codepen.io/alaingalvan originally} by Alain Galvan
+* 
 *
-* TODO: This filter requires more work on extracting parameters from shader into constructor
 *
 * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/godray.gif)
 * @class
@@ -15,16 +14,20 @@ import main from './main.frag';
 *
 * @example
 *  displayObject.filters = [new GodrayFilter()];
+* @param {number} [angle=30] Angle of the rays.
+* @param {number} [gain=0.5] General intensity of the effect.
+* @param {number} [lacunrity=2] The density of the fractal noise.
+* @param {number} [time=0] The current time position.
 */
 export default class GodrayFilter extends PIXI.Filter {
 
-    constructor() {
+    constructor(angle = 30, gain = 0.5, lacunarity = 2, time = 0) {
         super(vertex, main.replace("$perlin", perlin));
 
-        this.lacunarity = 2.0;
-        this.gain = 0.5;
-        this.angle = 30;
-        this.time = 0;
+        this.angle = angle;
+        this.gain = gain;
+        this.lacunarity = lacunarity;
+        this.time = time;
     }
 
     /**
@@ -69,7 +72,7 @@ export default class GodrayFilter extends PIXI.Filter {
     }
 
     /**
-     * Generally intense the effect is. A value closer to 1 will produce a more intense effect,
+     * General intensity of the effect. A value closer to 1 will produce a more intense effect,
      * where a value closer to 0 will produce a subtler effect.
      *
      * @member {number}

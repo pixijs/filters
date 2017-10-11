@@ -3,12 +3,13 @@
   "version": "2.0.2",
   "main": "lib/filter-godray.min.js",
   "description": "Display filter gorday",
-  "author": "Mat Groves",
+  "author": "Alain Galvan",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>",
     "Ivan Popelyshevl <ivan.popelyshev@gmail.com>"
   ],
   "module": "lib/filter-godray.es.min.js",
+  "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
   "license": "MIT",
@@ -25,7 +26,8 @@
     "build": "npm run build:umd && npm run build:es"
   },
   "files": [
-    "lib"
+    "lib",
+    "types.d.ts"
   ],
   "peerDependencies": {
     "pixi.js": "^4.0.0"
