@@ -3,7 +3,7 @@ import fragment from './zoom-blur.frag';
 
 /**
  * The ZoomFilter applies a Zoom blur to an object.
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/zoom-filter.png)
+ * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/zoom-blur.png)
  *
  * @class
  * @extends PIXI.Filter
