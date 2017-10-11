@@ -5,6 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>PixiJS Filters Demo</title>
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.5/dat.gui.min.js"></script>
         <script src="https://pixijs.download/dev/pixi.min.js"></script>
         <script src="../filters/all/lib/pixi-filters.js"></script>
@@ -46,7 +47,9 @@
             #logo img {
                 display: block;
             }
-
+            .property-name .fa {
+                margin: 0 5px;
+            }
         </style>
     </head>
     <body>
@@ -98,6 +101,8 @@
                 .add('fish4', 'images/displacement_fish4.png')
                 .add('lightmap', 'images/lightmap.png')
                 .load(function(loader, resources) {
+                    gui.add(app, 'stop').name('<i class="fa fa-pause"></i> Pause');
+                    gui.add(app, 'start').name('<i class="fa fa-play"></i> Resume');
                     init(resources);
                     app.start();
                 });
