@@ -264,8 +264,7 @@
             "filename": "zoom-blur",
             "options": {
                 "strength": 0.12,
-                "centerX": 130,
-                "centerY": 80,
+                "center": [130, 80],
                 "innerRadius": 40
             }
         }
