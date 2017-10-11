@@ -15,13 +15,13 @@ import fragment from './zoom-blur.frag';
  */
 export default class ZoomBlurFilter extends PIXI.Filter
 {
-    constructor(strength = 0.1, center = [0, 0], innerRadius = 0, radius = null) {
+    constructor(strength = 0.1, center = [0, 0], innerRadius = 0, radius = 1E9) {
         super(vertex, fragment);
 
         this.center = center;
         this.strength = strength;
         this.innerRadius = innerRadius;
-        this.radius = radius || 1E9;
+        this.radius = radius;
 
         this._defaultSize = new Float32Array([0, 0]);
         this._size = new Float32Array([0, 0]);
@@ -32,7 +32,7 @@ export default class ZoomBlurFilter extends PIXI.Filter
      * Apply the filter
      * @override
      * @private
-     */
+     */ 
     apply(filterManager, input, output, clear)
     {
         // Apply the input source if view is not set
