@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-shockwave",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "main": "lib/filter-shockwave.min.js",
   "description": "Display filter render as ASCII text",
   "author": "Mat Groves",
@@ -8,6 +8,7 @@
     "Matt Karl <matt@mattkarl.com>"
   ],
   "module": "lib/filter-shockwave.es.min.js",
+  "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
   "license": "MIT",
@@ -24,7 +25,8 @@
     "build": "npm run build:umd && npm run build:es"
   },
   "files": [
-    "lib"
+    "lib",
+    "types.d.ts"
   ],
   "peerDependencies": {
     "pixi.js": "^4.0.0"

@@ -1,6 +1,6 @@
 {
   "name": "pixi-filters",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "main": "lib/pixi-filters.js",
   "description": "Optional display filters to work with PixiJS",
   "author": "Mat Groves <mat@goodboydigital.com>",
@@ -10,6 +10,7 @@
     "Chad Engler <chad@pantherdev.com>"
   ],
   "module": "lib/pixi-filters.es.js",
+  "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
   "license": "MIT",
@@ -18,7 +19,8 @@
     "url": "https://github.com/pixijs/pixi-filters.git"
   },
   "files": [
-    "lib"
+    "lib",
+    "types.d.ts"
   ],
   "scripts": {
     "build:umd": "rollup -c -f umd",
@@ -29,24 +31,24 @@
     "pixi.js": "^4.0.0"
   },
   "devDependencies": {
-    "@pixi/filter-ascii": "^2.0.2",
-    "@pixi/filter-bloom": "^2.0.2",
-    "@pixi/filter-bulge-pinch": "^2.0.2",
-    "@pixi/filter-color-replace": "^2.0.2",
-    "@pixi/filter-convolution": "^2.0.2",
-    "@pixi/filter-cross-hatch": "^2.0.2",
-    "@pixi/filter-dot": "^2.0.2",
-    "@pixi/filter-drop-shadow": "^2.0.2",
-    "@pixi/filter-emboss": "^2.0.2",
-    "@pixi/filter-glow": "^2.0.2",
-    "@pixi/filter-outline": "^2.0.2",
-    "@pixi/filter-pixelate": "^2.0.2",
-    "@pixi/filter-rgb-split": "^2.0.2",
-    "@pixi/filter-shockwave": "^2.0.2",
-    "@pixi/filter-simple-lightmap": "^2.0.2",
-    "@pixi/filter-tilt-shift": "^2.0.2",
-    "@pixi/filter-twist": "^2.0.2",
-    "@pixi/filter-zoom-blur": "^2.0.2",
+    "@pixi/filter-ascii": "^2.1.0",
+    "@pixi/filter-bloom": "^2.1.0",
+    "@pixi/filter-bulge-pinch": "^2.1.0",
+    "@pixi/filter-color-replace": "^2.1.0",
+    "@pixi/filter-convolution": "^2.1.0",
+    "@pixi/filter-cross-hatch": "^2.1.0",
+    "@pixi/filter-dot": "^2.1.0",
+    "@pixi/filter-drop-shadow": "^2.1.0",
+    "@pixi/filter-emboss": "^2.1.0",
+    "@pixi/filter-glow": "^2.1.0",
+    "@pixi/filter-outline": "^2.1.0",
+    "@pixi/filter-pixelate": "^2.1.0",
+    "@pixi/filter-rgb-split": "^2.1.0",
+    "@pixi/filter-shockwave": "^2.1.0",
+    "@pixi/filter-simple-lightmap": "^2.1.0",
+    "@pixi/filter-tilt-shift": "^2.1.0",
+    "@pixi/filter-twist": "^2.1.0",
+    "@pixi/filter-zoom-blur": "^2.1.0",
     "@tools/build": "^2.0.1",
     "rollup": "^0.45.2"
   }
