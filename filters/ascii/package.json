@@ -8,6 +8,7 @@
     "Matt Karl <matt@mattkarl.com>"
   ],
   "module": "lib/filter-ascii.es.min.js",
+  "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
   "license": "MIT",
@@ -24,7 +25,8 @@
     "build": "npm run build:umd && npm run build:es"
   },
   "files": [
-    "lib"
+    "lib",
+    "types.d.ts"
   ],
   "peerDependencies": {
     "pixi.js": "^4.0.0"
