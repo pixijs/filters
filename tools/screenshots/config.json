@@ -258,6 +258,16 @@
                 "alpha": 1,
                 "color": 6710886
             }
+        },
+        {
+            "name": "ZoomBlurFilter",
+            "filename": "zoom-blur",
+            "options": {
+                "strength": 0.2,
+                "centerX": 150,
+                "centerY": 150,
+                "innerRadius": 40
+            }
         }
     ]
 }
