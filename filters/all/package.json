@@ -20,7 +20,7 @@
   },
   "files": [
     "lib",
-    "pixi-filters.d.ts"
+    "types.d.ts"
   ],
   "scripts": {
     "build:umd": "rollup -c -f umd",

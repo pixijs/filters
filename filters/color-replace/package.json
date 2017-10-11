@@ -25,7 +25,8 @@
     "build": "npm run build:umd && npm run build:es"
   },
   "files": [
-    "lib"
+    "lib",
+    "types.d.ts"
   ],
   "peerDependencies": {
     "pixi.js": "^4.0.0"
