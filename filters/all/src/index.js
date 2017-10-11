@@ -16,3 +16,4 @@ export {ShockwaveFilter} from '@pixi/filter-shockwave';
 export {SimpleLightmapFilter} from '@pixi/filter-simple-lightmap';
 export {TiltShiftFilter, TiltShiftAxisFilter, TiltShiftXFilter, TiltShiftYFilter} from '@pixi/filter-tilt-shift';
 export {TwistFilter} from '@pixi/filter-twist';
+export {ZoomBlurFilter} from '@pixi/filter-zoom-blur';

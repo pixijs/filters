@@ -308,6 +308,16 @@
                 "lacunarity": 2.5,
                 "angle": -30
             }
+        },
+        {
+            "name": "ZoomBlurFilter",
+            "filename": "zoom-blur",
+            "options": {
+                "strength": 0.12,
+                "centerX": 130,
+                "centerY": 80,
+                "innerRadius": 40
+            }
         }
     ]
 }
