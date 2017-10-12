@@ -146,6 +146,7 @@
                     stageWidth,
                     stageHeight
                 );
+                displacementFilter.enabled = true;
                 displacementFilter.scale.x = 50;
                 displacementFilter.scale.y = 50;
                 folder = gui.addFolder('DisplacementFilter (pixi.js)');
@@ -351,11 +352,11 @@
                 folder.addColor(simpleLightmapFilter, 'color');
                 folder.add(simpleLightmapFilter, 'alpha', 0, 1);
 
-                var zoomBlurFilter = new PIXI.filters.ZoomBlurFilter(0.1, [stageWidth / 2, stageHeight / 2], 100);
+                var zoomBlurFilter = new PIXI.filters.ZoomBlurFilter(0.1, [stageWidth / 2, stageHeight / 2], 80);
                 zoomBlurFilter.enabled = false;
                 folder = gui.addFolder('ZoomBlurFilter');
                 folder.add(zoomBlurFilter, 'enabled').onChange(trackEvent.bind(folder));
-                folder.add(zoomBlurFilter, 'strength', 0.01, 0.3);
+                folder.add(zoomBlurFilter, 'strength', 0.01, 0.5);
                 folder.add(zoomBlurFilter.center, '0', 0, stageWidth).name('center.x');
                 folder.add(zoomBlurFilter.center, '1', 0, stageHeight).name('center.y');
                 folder.add(zoomBlurFilter, 'innerRadius', 0, stageWidth / 2);
