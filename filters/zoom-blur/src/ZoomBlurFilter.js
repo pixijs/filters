@@ -25,16 +25,6 @@ export default class ZoomBlurFilter extends PIXI.Filter
     }
 
     /**
-     * Apply the filter
-     * @override
-     * @private
-     */
-    apply(filterManager, input, output, clear)
-    {
-        filterManager.applyFilter(this, input, output, clear);
-    }
-
-    /**
      * Center of the effect.
      *
      * @member {PIXI.Point|number[]}
