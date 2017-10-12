@@ -1,13 +1,11 @@
 varying vec2 vTextureCoord;
 uniform sampler2D uSampler;
+uniform vec4 filterArea;
 
 uniform vec2 uCenter;
 uniform float uStrength;
 uniform float uInnerRadius;
 uniform float uRadius;
-
-uniform vec4 filterArea;
-
 
 float random(vec3 scale, float seed) {
     // use the fragment position for a different seed per-pixel
