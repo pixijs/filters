@@ -8,7 +8,7 @@ import fragment from './zoom-blur.frag';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
- * @param {number} [strength=2] Sets the strength of the zoom blur effect
+ * @param {number} [strength=0.1] Sets the strength of the zoom blur effect
  * @param {PIXI.Point|number[]} [center=[0,0]] The center of the zoom.
  * @param {number} [innerRadius=0] The inner radius of zoom. The part in inner circle won't apply zoom blur effect.
  * @param {number} [radius=1E8] Outer radius of the zoom, The default value is very very large.
@@ -67,7 +67,7 @@ export default class ZoomBlurFilter extends PIXI.Filter
      * Outer radius of the effect. The default value is very very big.
      *
      * @member {number}
-     * @default 1E9
+     * @default 1E8
      */
     get radius() {
         return this.uniforms.uRadius;
