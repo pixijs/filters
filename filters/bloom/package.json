@@ -22,7 +22,8 @@
   "scripts": {
     "build:umd": "rollup -c -f umd && rollup -cp -f umd",
     "build:es": "rollup -c && rollup -cp",
-    "build": "npm run build:umd && npm run build:es"
+    "build": "npm run build:umd && npm run build:es",
+    "postversion": "npm run build"
   },
   "files": [
     "lib",
