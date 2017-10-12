@@ -1,6 +1,6 @@
 {
   "name": "pixi-filters",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "main": "lib/pixi-filters.js",
   "description": "Optional display filters to work with PixiJS",
   "author": "Mat Groves <mat@goodboydigital.com>",
@@ -48,7 +48,7 @@
     "@pixi/filter-simple-lightmap": "^2.1.0",
     "@pixi/filter-tilt-shift": "^2.1.0",
     "@pixi/filter-twist": "^2.1.0",
-    "@pixi/filter-zoom-blur": "^2.1.0",
+    "@pixi/filter-zoom-blur": "^2.1.1",
     "@tools/build": "^2.0.1",
     "rollup": "^0.45.2"
   }
