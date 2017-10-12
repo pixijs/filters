@@ -1,12 +1,11 @@
 varying vec2 vTextureCoord;
 uniform sampler2D uSampler;
+uniform vec4 filterArea;
 
-uniform vec2 uViewSize;
 uniform vec2 uCenter;
 uniform float uStrength;
 uniform float uInnerRadius;
 uniform float uRadius;
-
 
 float random(vec3 scale, float seed) {
     // use the fragment position for a different seed per-pixel
@@ -15,20 +14,11 @@ float random(vec3 scale, float seed) {
 
 void main() {
 
-    vec2 texCoord = gl_FragCoord.xy / uViewSize.xy;
-    texCoord.y = 1.0 - texCoord.y;
-
-    vec2 center = uCenter.xy / uViewSize.xy;
-    vec2 dir = vec2(center - texCoord);
-
-    dir.x *= uViewSize.x / uViewSize.y;
-
-    float dist = length(dir);
+    vec2 center = uCenter.xy / filterArea.xy;
+    vec2 dir = vec2(center - vTextureCoord);
+    float dist = length(vec2(dir.x, dir.y * filterArea.y / filterArea.x));
 
     float strength = uStrength;
-
-    // randomize the lookup values to hide the fixed number of samples
-    float offset = random(vec3(12.9898, 78.233, 151.7182), 0.0);
 
     const float count = 32.0;
     float countLimit = count;
@@ -36,8 +26,8 @@ void main() {
     float minGradient = uInnerRadius * 0.3;
     float gradient = uRadius * 0.3;
 
-    float innerRadius = (uInnerRadius + minGradient * 0.5) / uViewSize.y;
-    float radius = (uRadius - gradient * 0.5) / uViewSize.y;
+    float innerRadius = (uInnerRadius + minGradient * 0.5) / filterArea.x;
+    float radius = (uRadius - gradient * 0.5) / filterArea.x;
 
     float delta = 0.0;
     float gap;
@@ -50,7 +40,7 @@ void main() {
     }
 
     if (delta > 0.0) {
-        float normalCount = gap / uViewSize.y;
+        float normalCount = gap / filterArea.x;
         delta = (normalCount - delta) / normalCount;
         countLimit *= delta;
         strength *= delta;
@@ -61,10 +51,13 @@ void main() {
         }
     }
 
-    dir *= strength;
+    // randomize the lookup values to hide the fixed number of samples
+    float offset = random(vec3(12.9898, 78.233, 151.7182), 0.0);
 
-    vec4 color = vec4(0.0);
     float total = 0.0;
+    vec4 color = vec4(0.0);
+
+    dir *= strength;
 
     for (float t = 0.0; t < count; t++) {
         float percent = (t + offset) / count;

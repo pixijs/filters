@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-godray",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "main": "lib/filter-godray.min.js",
   "description": "Display filter gorday",
   "author": "Alain Galvan",

@@ -108,8 +108,6 @@ declare namespace PIXI.filters {
         center:PIXI.Point|number[];
         innerRadius:number;
         radius:number;
-        setSize(width:number, height:number):void;
-        clearSize():void;
     }
 }
 
