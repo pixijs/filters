@@ -97,9 +97,12 @@ function next() {
             );
         }
         else if (obj.frame) {
-            sprite.scale.y *= -1;
             app.render();
-            frames[obj.frame] = app.renderer.plugins.extract.pixels();
+            const canvas = app.renderer.plugins.extract.canvas();
+            const context = canvas.getContext('2d');
+            context.scale(1, -1);
+            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+            frames[obj.frame] = imageData.data;
         }
 
         // Wait for next stack to render next filter

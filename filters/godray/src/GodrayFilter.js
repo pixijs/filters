@@ -48,15 +48,13 @@ export default class GodrayFilter extends PIXI.Filter {
     apply(filterManager, input, output, clear) {
         this.uniforms.dimensions[0] = input.sourceFrame.width;
         this.uniforms.dimensions[1] = input.sourceFrame.height;
-        let ang = this.angle * PIXI.DEG_TO_RAD;
+        const radians = this.angle * PIXI.DEG_TO_RAD;
 
-        // let currentState = filterManager.filterData.stack[filterManager.filterData.index]
-        // let filterArea = currentState.renderTarget.size;
         //compensate angle, divide by wh or multiply by hw
-        let cos = Math.cos(ang) * input.sourceFrame.width;
-        let sin = Math.sin(ang) * input.sourceFrame.height;
-        let d = Math.sqrt(cos * cos + sin * sin);
-        let dir = this.uniforms.angleDir;
+        const cos = Math.cos(radians) * input.sourceFrame.width;
+        const sin = Math.sin(radians) * input.sourceFrame.height;
+        const d = Math.sqrt(cos * cos + sin * sin);
+        const dir = this.uniforms.angleDir;
         dir[0] = cos / d;
         dir[1] = sin / d;
 
