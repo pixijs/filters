@@ -25,7 +25,8 @@
   "scripts": {
     "build:umd": "rollup -c -f umd",
     "build:es": "rollup -c",
-    "build": "npm run build:umd && npm run build:es"
+    "build": "npm run build:umd && npm run build:es",
+    "postversion": "npm run build"
   },
   "peerDependencies": {
     "pixi.js": "^4.0.0"
