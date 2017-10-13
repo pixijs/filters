@@ -8,6 +8,7 @@ export {DotFilter} from '@pixi/filter-dot';
 export {DropShadowFilter} from '@pixi/filter-drop-shadow';
 export {EmbossFilter} from '@pixi/filter-emboss';
 export {GlowFilter} from '@pixi/filter-glow';
+export {GodrayFilter} from '@pixi/filter-godray';
 export {OutlineFilter} from '@pixi/filter-outline';
 export {PixelateFilter} from '@pixi/filter-pixelate';
 export {RGBSplitFilter} from '@pixi/filter-rgb-split';

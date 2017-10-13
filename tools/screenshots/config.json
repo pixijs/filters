@@ -19,6 +19,16 @@
                 "bulge-pinch-0",
                 "bulge-pinch-1"
             ]
+        },
+        {
+            "filename": "godray",
+            "delay": 500,
+            "frames": [
+                "godray-0",
+                "godray-1",
+                "godray-2",
+                "godray-3"
+            ]
         }
     ],
     "images" : [
@@ -257,6 +267,42 @@
             "options": {
                 "alpha": 1,
                 "color": 6710886
+            }
+        },
+        {
+            "name": "GodrayFilter",
+            "frame": "godray-0",
+            "options": {
+                "time": 0,
+                "gain": 0.6,
+                "lacunarity": 2
+            }
+        },
+        {
+            "name": "GodrayFilter",
+            "frame": "godray-1",
+            "options": {
+                "time": 0.1,
+                "gain": 0.6,
+                "lacunarity": 2
+            }
+        },
+        {
+            "name": "GodrayFilter",
+            "frame": "godray-2",
+            "options": {
+                "time": 0.2,
+                "gain": 0.6,
+                "lacunarity": 2
+            }
+        },
+        {
+            "name": "GodrayFilter",
+            "frame": "godray-3",
+            "options": {
+                "time": 0.3,
+                "gain": 0.6,
+                "lacunarity": 2
             }
         },
         {
