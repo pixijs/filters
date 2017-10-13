@@ -16,12 +16,12 @@ import main from './main.frag';
 *  displayObject.filters = [new GodrayFilter()];
 * @param {number} [angle=30] Angle of the rays.
 * @param {number} [gain=0.5] General intensity of the effect.
-* @param {number} [lacunrity=2] The density of the fractal noise.
+* @param {number} [lacunrity=2.5] The density of the fractal noise.
 * @param {number} [time=0] The current time position.
 */
 export default class GodrayFilter extends PIXI.Filter {
 
-    constructor(angle = 30, gain = 0.5, lacunarity = 2, time = 0) {
+    constructor(angle = 30, gain = 0.5, lacunarity = 2.5, time = 0) {
         super(vertex, main.replace("$perlin", perlin));
 
         /**
@@ -93,7 +93,7 @@ export default class GodrayFilter extends PIXI.Filter {
      * produces fewer waves.
      *
      * @member {number}
-     * @default 2.0
+     * @default 2.5
      */
     get lacunarity() {
         return this.uniforms.lacunarity;
