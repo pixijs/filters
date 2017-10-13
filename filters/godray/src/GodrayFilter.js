@@ -4,7 +4,7 @@ import main from './main.frag';
 
 /**
 * GordayFilter, {@link https://codepen.io/alaingalvan originally} by Alain Galvan
-* 
+*
 *
 *
 * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/godray.gif)
@@ -24,7 +24,15 @@ export default class GodrayFilter extends PIXI.Filter {
     constructor(angle = 30, gain = 0.5, lacunarity = 2, time = 0) {
         super(vertex, main.replace("$perlin", perlin));
 
+        /**
+         * The angle of the rays in degrees. For instance, a value of 0 is vertical rays,
+         * values of 90 or -90 produce horizontal rays.
+         *
+         * @member {number}
+         * @default 30
+         */
         this.angle = angle;
+
         this.gain = gain;
         this.lacunarity = lacunarity;
         this.time = time;
@@ -40,6 +48,17 @@ export default class GodrayFilter extends PIXI.Filter {
     apply(filterManager, input, output, clear) {
         this.uniforms.dimensions[0] = input.sourceFrame.width;
         this.uniforms.dimensions[1] = input.sourceFrame.height;
+        let ang = this.angle * PIXI.DEG_TO_RAD;
+
+        // let currentState = filterManager.filterData.stack[filterManager.filterData.index]
+        // let filterArea = currentState.renderTarget.size;
+        //compensate angle, divide by wh or multiply by hw
+        let cos = Math.cos(ang) * input.sourceFrame.width;
+        let sin = Math.sin(ang) * input.sourceFrame.height;
+        let d = Math.sqrt(cos * cos + sin * sin);
+        let dir = this.uniforms.angleDir;
+        dir[0] = cos / d;
+        dir[1] = sin / d;
 
         // draw the filter...
         filterManager.applyFilter(this, input, output, clear);
@@ -55,20 +74,6 @@ export default class GodrayFilter extends PIXI.Filter {
     }
     set time(value) {
         this.uniforms.time = value;
-    }
-
-    /**
-     * The angle of the rays in degrees. For instance, a value of 0 is vertical rays, 
-     * values of 90 or -90 produce horizontal rays. 
-     *
-     * @member {number}
-     * @default 30
-     */
-    get angle() {
-        return this.uniforms.angle;
-    }
-    set angle(value) {
-        this.uniforms.angle = value;
     }
 
     /**
