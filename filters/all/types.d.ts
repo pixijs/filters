@@ -55,6 +55,13 @@ declare namespace PIXI.filters {
         innerStrength:number;
         outerStrength:number;
     }
+    class GodrayFilter extends PIXI.Filter {
+        constructor(angle?:number, gain?:number, lacunarity?:number, time?:number);
+        angle:number;
+        gain:number;
+        lacunarity:number;
+        time:number;
+    }
     class OutlineFilter extends PIXI.Filter {
         constructor(thickness?:number, color?:number);
         color:number;

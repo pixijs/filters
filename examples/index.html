@@ -352,6 +352,17 @@
                 folder.addColor(simpleLightmapFilter, 'color');
                 folder.add(simpleLightmapFilter, 'alpha', 0, 1);
 
+                // Create godray filter
+                var godrayFilter = new PIXI.filters.GodrayFilter();
+                godrayFilter.enabled = false;
+                folder = gui.addFolder('GodrayFilter');
+                folder.add(godrayFilter, 'enabled').onChange(trackEvent.bind(folder));
+                folder.add(godrayFilter, 'time', 0, 1);
+                folder.add(godrayFilter, 'angle', -60, 60);
+                folder.add(godrayFilter, 'gain', 0, 1);
+                folder.add(godrayFilter, 'lacunarity', 0, 5);
+
+				// Apply filters
                 var zoomBlurFilter = new PIXI.filters.ZoomBlurFilter(0.1, [stageWidth / 2, stageHeight / 2], 80);
                 zoomBlurFilter.enabled = false;
                 folder = gui.addFolder('ZoomBlurFilter');
@@ -384,7 +395,8 @@
                     bulgepinchFilter,
                     colorReplaceFilter,
                     simpleLightmapFilter,
-                    zoomBlurFilter,
+                    godrayFilter,
+                    zoomBlurFilter
                 ];
 
                 window.addEventListener('resize', resize);
