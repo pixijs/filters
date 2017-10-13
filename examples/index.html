@@ -344,6 +344,46 @@
                 folder.addColor(colorReplaceFilter, 'newColor');
                 folder.add(colorReplaceFilter, 'epsilon', 0, 1);
 
+                var originalColors = [3238359, 938417, 1464209];
+                var targetColors = [16711680, 65280, 16776960];
+                var multiColorReplaceFilter = new PIXI.filters.MultiColorReplaceFilter(
+                    originalColors,targetColors, 0.2
+                );
+                multiColorReplaceFilter.enabled = false;
+                folder = gui.addFolder('MultiColorReplaceFilter');
+                folder.add(multiColorReplaceFilter, 'enabled').onChange(trackEvent.bind(folder));
+                folder.addColor(originalColors, '0').name('original.0').onChange(
+                    function(){
+                        multiColorReplaceFilter.originalColors = originalColors;
+                    }
+                );
+                folder.addColor(targetColors, '0').name('target.0').onChange(
+                    function(){
+                        multiColorReplaceFilter.targetColors = targetColors;
+                    }
+                );
+                folder.addColor(originalColors, '1').name('original.1').onChange(
+                    function(){
+                        multiColorReplaceFilter.originalColors = originalColors;
+                    }
+                );
+                folder.addColor(targetColors, '1').name('target.1').onChange(
+                    function(){
+                        multiColorReplaceFilter.targetColors = targetColors;
+                    }
+                );
+                folder.addColor(originalColors, '2').name('original.2').onChange(
+                    function(){
+                        multiColorReplaceFilter.originalColors = originalColors;
+                    }
+                );
+                folder.addColor(targetColors, '2').name('target.2').onChange(
+                    function(){
+                        multiColorReplaceFilter.targetColors = targetColors;
+                    }
+                );
+                folder.add(multiColorReplaceFilter, 'epsilon', 0, 1);
+
                 var lightmap = resources.lightmap.texture;
                 var simpleLightmapFilter = new PIXI.filters.SimpleLightmapFilter(lightmap, 0x666666);
                 simpleLightmapFilter.enabled = false;
@@ -394,6 +434,7 @@
                     shockwaveFilter,
                     bulgepinchFilter,
                     colorReplaceFilter,
+                    multiColorReplaceFilter,
                     simpleLightmapFilter,
                     godrayFilter,
                     zoomBlurFilter

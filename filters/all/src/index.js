@@ -10,6 +10,7 @@ export {EmbossFilter} from '@pixi/filter-emboss';
 export {GlowFilter} from '@pixi/filter-glow';
 export {GodrayFilter} from '@pixi/filter-godray';
 export {OutlineFilter} from '@pixi/filter-outline';
+export {MultiColorReplaceFilter} from '@pixi/filter-multi-color-replace';
 export {PixelateFilter} from '@pixi/filter-pixelate';
 export {RGBSplitFilter} from '@pixi/filter-rgb-split';
 export {ShockwaveFilter} from '@pixi/filter-shockwave';
