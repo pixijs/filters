@@ -4,6 +4,13 @@ declare namespace PIXI.filters {
         constructor(size?:number);
         size:number;
     }
+    class AdvancedBloomFilter extends PIXI.Filter {
+        constructor(minBright?:number, brightScale?:number, toneScale?:number, blur?:number, quality?:number, resolution?:number, kernelSize?:number);
+        minBright:number;
+        brightScale:number;
+        toneScale:number;
+        blur:number;
+    }
     class BloomFilter extends PIXI.Filter {
         constructor(blur?:number|PIXI.Point, quality?:number, resolution?:number, kernelSize?:number);
         blur:number;

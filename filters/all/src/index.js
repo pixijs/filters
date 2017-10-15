@@ -1,4 +1,5 @@
 export {AsciiFilter} from '@pixi/filter-ascii';
+export {AdvancedBloomFilter} from '@pixi/filter-advanced-bloom';
 export {BloomFilter} from '@pixi/filter-bloom';
 export {BulgePinchFilter} from '@pixi/filter-bulge-pinch';
 export {ColorReplaceFilter} from '@pixi/filter-color-replace';

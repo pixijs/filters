@@ -304,6 +304,17 @@
                 folder.add(convolutionFilter, 'width', 0, 500);
                 folder.add(convolutionFilter, 'height', 0, 500);
 
+
+                var advancedBloomFilter = new PIXI.filters.AdvancedBloomFilter();
+                advancedBloomFilter.enabled = false;
+                folder = gui.addFolder('AdvancedBloomFilter');
+                folder.add(advancedBloomFilter, 'enabled').onChange(trackEvent.bind(folder));
+                folder.add(advancedBloomFilter, 'minBright', 0.1, 0.9);
+                folder.add(advancedBloomFilter, 'brightScale', 0.5, 1.5);
+                folder.add(advancedBloomFilter, 'toneScale', 0.5, 1.5);
+                folder.add(advancedBloomFilter, 'blur', 0, 20);
+
+
                 var bloomFilter = new PIXI.filters.BloomFilter();
                 bloomFilter.enabled = false;
                 folder = gui.addFolder('BloomFilter');
@@ -388,6 +399,7 @@
                     pixelateFilter,
                     rgbFilter,
                     crossFilter,
+                    advancedBloomFilter,
                     bloomFilter,
                     convolutionFilter,
                     tiltshiftFilter,
