@@ -34,8 +34,8 @@ export default class AdvancedBloomFilter extends PIXI.Filter
         this.toneScale = toneScale;
 
         this.extractBrightnessFilter = new ExtractBrightnessFilter(minBright);
-        this.blurXFilter = new BlurXFilter(blur, this.quality, this.resolution, this.kernelSize);
-        this.blurYFilter = new BlurYFilter(blur, this.quality, this.resolution, this.kernelSize);
+        this.blurXFilter = new BlurXFilter(blur, quality, resolution, kernelSize);
+        this.blurYFilter = new BlurYFilter(blur, quality, resolution, kernelSize);
     }
 
     apply(filterManager, input, output, clear, currentState)
