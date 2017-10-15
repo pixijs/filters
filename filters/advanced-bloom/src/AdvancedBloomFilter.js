@@ -5,6 +5,21 @@ import ExtractBrightnessFilter from './ExtractBrightnessFilter';
 import vertex from './advanced-bloom.vert';
 import fragment from './advanced-bloom.frag';
 
+/**
+ * The AdvancedBloomFilter applies a Bloom Effect to an object.
+ * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/bloom.png)
+ *
+ * @class
+ * @extends PIXI.Filter
+ * @memberof PIXI.filters
+ * @param {number} [minBright=0.5] TODO
+ * @param {number} [brightScale=1.0] TODO
+ * @param {number} [toneScale=1.0] TODO
+ * @param {number} [blur=8] Sets the strength of both the blurX and blurY properties simultaneously
+ * @param {number} [quality=4] The quality of the blurX & blurY filter.
+ * @param {number} [resolution=PIXI.settings.RESOLUTION] The resolution of the blurX & blurY filter.
+ * @param {number} [kernelSize=5] The kernelSize of the blurX & blurY filter.Options: 5, 7, 9, 11, 13, 15.
+ */
 export default class AdvancedBloomFilter extends PIXI.Filter
 {
     constructor(minBright = 0.5, brightScale = 1.0, toneScale = 1.0,
