@@ -50,7 +50,7 @@
         },
         {
             "name": "AdvancedBloomFilter",
-            "filename": "bloom"
+            "filename": "advanced-bloom"
         },
         {
             "name": "BloomFilter",
