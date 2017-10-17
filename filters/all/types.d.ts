@@ -6,16 +6,16 @@ declare namespace PIXI.filters {
     }
     class AdvancedBloomFilter extends PIXI.Filter {
         constructor(options?: AdvancedBloomOptions);
-        constructor(minBright?: number);
-        minBright: number;
-        brightScale: number;
-        toneScale: number;
+        constructor(threshold?: number);
+        threshold: number;
+        brightness: number;
+        contrast: number;
         blur: number;
     }
     interface AdvancedBloomOptions {
-        minBright?: number;
-        brightScale?: number;
-        toneScale?: number;
+        threshold?: number;
+        brightness?: number;
+        contrast?: number;
         blur?: number;
         quality?: number;
         resolution?: number;

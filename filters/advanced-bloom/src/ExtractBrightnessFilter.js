@@ -1,31 +1,31 @@
 import vertex from './extract-brightness.vert';
 import fragment from './extract-brightness.frag';
 
-export default class ExtractBrightnessFilter extends PIXI.Filter
-{
-    constructor(minBright)
-    {
-        super(
-            vertex,
-            fragment
-        );
+/**
+ * Internal filter for AdvancedBloomFilter to get brightness.
+ * @class
+ * @private
+ * @param {number} [threshold=0.5] The minimum amount of brightness considered.
+ */
+export default class ExtractBrightnessFilter extends PIXI.Filter {
 
-        this.minBright = minBright || 0.5;
+    constructor(threshold = 0.5) {
+        super(vertex, fragment);
+
+        this.threshold = threshold;
     }
 
-    get minBright()
-    {
-        return this.uniforms.minBright;
+    /**
+     * The minimum amount of brightness considered.
+     *
+     * @member {number}
+     * @default 0.5
+     */
+    get threshold() {
+        return this.uniforms.threshold;
     }
-
-    set minBright(value)
-    {
-        this.uniforms.minBright = value;
+    set threshold(value) {
+        this.uniforms.threshold = value;
     }
 }
-
-// Export to PixiJS namespace
-// Internal filter, don't export
-// PIXI.filters.ExtractBrightnessFilter = ExtractBrightnessFilter;
-
 
