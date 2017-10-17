@@ -212,6 +212,18 @@
             }
         },
         {
+            "name": "MultiColorReplaceFilter",
+            "filename": "multi-color-replace",
+            "arguments": [
+                [
+                    [3238359, 16711680],
+                    [938417, 65280],
+                    [1464209, 16776960]
+                ],
+                0.2
+            ]
+        },
+        {
             "name": "ColorMatrixFilter",
             "filename": "color-matrix-desaturate",
             "func": "desaturate"

@@ -84,6 +84,11 @@ declare namespace PIXI.filters {
         color:number;
         thickness:number;
     }
+    class MultiColorReplaceFilter extends PIXI.Filter {
+        constructor(colorPairs:Array[], epsilon?:number);
+        colorPairs:Array[];
+        epsilon:number;
+    }
     class PixelateFilter extends PIXI.Filter {
         constructor(size?:PIXI.Point|number[]|number);
         size:PIXI.Point|number[]|number;
