@@ -66,7 +66,12 @@ function next() {
                 break;
             }
             default: {
-                filter = new FilterClass();
+                const args = obj.arguments;
+                if (args) {
+                    filter = new FilterClass(...args);
+                } else {
+                    filter = new FilterClass();
+                }
             }
         }
 
