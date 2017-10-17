@@ -19,7 +19,7 @@ import TiltShiftYFilter from './TiltShiftYFilter';
  * @param {PIXI.Point} [end=null] The Y value to end the effect at.
  */
 export default class TiltShiftFilter extends PIXI.Filter {
-    
+
     constructor(blur = 100, gradientBlur = 600, start = null, end = null) {
         super();
         this.tiltShiftXFilter = new TiltShiftXFilter(blur, gradientBlur, start, end);

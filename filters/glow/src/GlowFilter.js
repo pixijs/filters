@@ -8,7 +8,7 @@ import fragment from './glow.frag';
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/glow.png)
  *
  * @class
- * 
+ *
  * @extends PIXI.Filter
  * @memberof PIXI.filters
  * @param {number} [distance=10] The distance of the glow. Make it 2 times more for resolution=2. It cant be changed after filter creation
