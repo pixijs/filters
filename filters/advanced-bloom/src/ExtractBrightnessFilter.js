@@ -16,7 +16,7 @@ export default class ExtractBrightnessFilter extends PIXI.Filter {
     }
 
     /**
-     * efines how bright a color needs to be extracted.
+     * Defines how bright a color needs to be extracted.
      *
      * @member {number}
      * @default 0.5
