@@ -9,7 +9,8 @@ import fragment from './multi-color-replace.frag';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
- * @param {Array<Array>} colorPairs - The colors that will be changed.
+ * @param {Array<Array>} replacements - The colors that will be changed.
+ *                       The item of `replacements` is color-pair (an array length is 2).
  *                       In the pair, the first one is original color , the second one is target color.
  * @param {number} [epsilon=0.05] - Tolerance/sensitivity of the floating-point comparison between colors
  *                                  (lower = more exact, higher = more inclusive)
@@ -36,9 +37,9 @@ import fragment from './multi-color-replace.frag';
  */
 export default class MultiColorReplaceFilter extends PIXI.Filter
 {
-    constructor(colorPairs, epsilon = 0.05)
+    constructor(replacements, epsilon = 0.05)
     {
-        const colorCount = colorPairs.length;
+        const colorCount = replacements.length;
 
         super(
             vertex,
@@ -48,18 +49,18 @@ export default class MultiColorReplaceFilter extends PIXI.Filter
         this.epsilon = epsilon;
         this.colorCount = colorCount;
 
-        this._colorPairs = null;
+        this._replacements = null;
         this.uniforms.originalColors = new Float32Array(colorCount * 3);
         this.uniforms.targetColors = new Float32Array(colorCount * 3);
 
-        this.colorPairs = colorPairs;
+        this.replacements = replacements;
     }
 
     /**
      * The colors that will be changed
      * @param {Array<Array>} value - new original colors
      */
-    set colorPairs(value)
+    set replacements(value)
     {
         const arr = this.uniforms.originalColors;
         const targetArr = this.uniforms.targetColors;
@@ -99,12 +100,12 @@ export default class MultiColorReplaceFilter extends PIXI.Filter
             targetArr[(i * 3) + 2] = targetColor[2];
         }
 
-        this._colorPairs = value;
+        this._replacements = value;
     }
 
-    get colorPairs()
+    get replacements()
     {
-        return this._colorPairs;
+        return this._replacements;
     }
 
     /**
