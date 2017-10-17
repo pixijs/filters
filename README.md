@@ -13,6 +13,7 @@ All filters work with PixiJS v4.
 | Filter | Preview |
 |---|---|
 | **AsciiFilter**<br>_@pixi/filter-ascii_ | ![ascii](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/ascii.png?v=2) |
+| **AdvancedBloomFilter**<br>_@pixi/filter-advanced-bloom_ | ![advanced-bloom](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/advanced-bloom.png?v=2) |
 | **BloomFilter**<br>_@pixi/filter-bloom_ | ![bloom](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/bloom.png?v=2) |
 | **BulgePinchFilter**<br>_@pixi/filter-bulge-pinch_ | ![bulge-pinch](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/bulge-pinch.gif?v=2) |
 | **ColorReplaceFilter**<br>_@pixi/filter-color-replace_ | ![color-replace](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/color-replace.png?v=2) |

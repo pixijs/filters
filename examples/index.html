@@ -75,6 +75,7 @@
 
             var gui = new dat.GUI();
             gui.useLocalStorage = false;
+            // gui.close();
 
             var $ = document.querySelector.bind(document);
             var view = $('#stage');
@@ -86,7 +87,8 @@
             var app = new PIXI.Application({
                 view: view,
                 width: stageWidth,
-                height: stageHeight
+                height: stageHeight,
+                backgroundColor:0x000000,
             });
 
             // Preload the assets needed
@@ -312,6 +314,15 @@
                 folder.add(bloomFilter, 'blurX', 0, 20);
                 folder.add(bloomFilter, 'blurY', 0, 20);
 
+                var advancedBloomFilter = new PIXI.filters.AdvancedBloomFilter();
+                advancedBloomFilter.enabled = false;
+                folder = gui.addFolder('AdvancedBloomFilter');
+                folder.add(advancedBloomFilter, 'enabled').onChange(trackEvent.bind(folder));
+                folder.add(advancedBloomFilter, 'threshold', 0.1, 0.9);
+                folder.add(advancedBloomFilter, 'brightness', 0.5, 1.5);
+                folder.add(advancedBloomFilter, 'contrast', 0.5, 1.5);
+                folder.add(advancedBloomFilter, 'blur', 0, 20);
+
                 var tiltshiftFilter = new PIXI.filters.TiltShiftFilter();
                 tiltshiftFilter.enabled = false;
                 folder = gui.addFolder('TiltShiftFilter');
@@ -388,6 +399,7 @@
                     pixelateFilter,
                     rgbFilter,
                     crossFilter,
+                    advancedBloomFilter,
                     bloomFilter,
                     convolutionFilter,
                     tiltshiftFilter,

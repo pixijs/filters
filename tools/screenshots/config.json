@@ -49,6 +49,10 @@
             "filename": "ascii"
         },
         {
+            "name": "AdvancedBloomFilter",
+            "filename": "advanced-bloom"
+        },
+        {
             "name": "BloomFilter",
             "filename": "bloom"
         },

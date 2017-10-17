@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@pixi/filter-ascii": "^2.1.0",
+    "@pixi/filter-advanced-bloom": "^2.1.0",
     "@pixi/filter-bloom": "^2.1.0",
     "@pixi/filter-bulge-pinch": "^2.1.0",
     "@pixi/filter-color-replace": "^2.1.0",
