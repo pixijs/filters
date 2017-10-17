@@ -5,7 +5,7 @@ import fragment from './extract-brightness.frag';
  * Internal filter for AdvancedBloomFilter to get brightness.
  * @class
  * @private
- * @param {number} [threshold=0.5] The minimum amount of brightness considered.
+ * @param {number} [threshold=0.5] Defines how bright a color needs to be extracted.
  */
 export default class ExtractBrightnessFilter extends PIXI.Filter {
 
@@ -16,7 +16,7 @@ export default class ExtractBrightnessFilter extends PIXI.Filter {
     }
 
     /**
-     * The minimum amount of brightness considered.
+     * Defines how bright a color needs to be extracted.
      *
      * @member {number}
      * @default 0.5

@@ -14,9 +14,9 @@ import fragment from './advanced-bloom.frag';
  *
  * @param {object|number} [options] - The optional parameters of advanced bloom filter.
  *                        When options is a number , it will be `options.threshold`.
- * @param {number} [options.threshold=0.5] - The minimum amount of brightness considered when applying bloom. 
- * @param {number} [options.brightness=1.0] - The strength of the brightness, higher values is more intense brightness.
- * @param {number} [options.contrast=1.0] - The contrast, lower value is more subtle brightness, higher value is blown-out.
+ * @param {number} [options.threshold=0.5] - Defines how bright a color needs to be to affect bloom.
+ * @param {number} [options.bloomScale=1.0] - To adjust the strength of the bloom. Higher values is more intense brightness.
+ * @param {number} [options.brightness=1.0] - The brightness, lower value is more subtle brightness, higher value is blown-out.
  * @param {number} [options.blur=8] - Sets the strength of both the blurX and blurY properties simultaneously
  * @param {number} [options.quality=4] - The quality of the blurX & blurY filter.
  * @param {number} [options.resolution=PIXI.settings.RESOLUTION] - The resolution of the blurX & blurY filter.
@@ -34,8 +34,8 @@ export default class AdvancedBloomFilter extends PIXI.Filter {
 
         options = Object.assign({
             threshold: 0.5,
+            bloomScale: 1.0,
             brightness: 1.0,
-            contrast: 1.0,
             blur: 8,
             quality: 4,
             resolution: PIXI.settings.RESOLUTION,
@@ -44,20 +44,20 @@ export default class AdvancedBloomFilter extends PIXI.Filter {
 
 
         /**
-         * The strength of the brightness, higher values is more intense brightness.
+         * To adjust the strength of the bloom. Higher values is more intense brightness.
+         *
+         * @member {number}
+         * @default 1.0
+         */
+        this.bloomScale = options.bloomScale;
+
+        /**
+         * The brightness, lower value is more subtle brightness, higher value is blown-out.
          *
          * @member {number}
          * @default 1.0
          */
         this.brightness = options.brightness;
-
-        /**
-         * The contrast, lower value is more subtle brightness, higher value is blown-out.
-         *
-         * @member {number}
-         * @default 1.0
-         */
-        this.contrast = options.contrast;
 
         const { blur, quality, resolution, kernelSize } = options;
         const { BlurXFilter, BlurYFilter } = PIXI.filters;
@@ -79,8 +79,8 @@ export default class AdvancedBloomFilter extends PIXI.Filter {
         this._blurX.apply(filterManager, brightTarget, brightTarget, true, currentState);
         this._blurY.apply(filterManager, brightTarget, brightTarget, true, currentState);
 
+        this.uniforms.bloomScale = this.bloomScale;
         this.uniforms.brightness = this.brightness;
-        this.uniforms.contrast = this.contrast;
         this.uniforms.bloomTexture = brightTarget;
 
         filterManager.applyFilter(this, input, output, clear);
@@ -89,7 +89,7 @@ export default class AdvancedBloomFilter extends PIXI.Filter {
     }
 
     /**
-     * The threshold brightness for applying bloom, lower value is more brightness.
+     * Defines how bright a color needs to be to affect bloom.
      *
      * @member {number}
      * @default 0.5
@@ -117,4 +117,3 @@ export default class AdvancedBloomFilter extends PIXI.Filter {
 
 // Export to PixiJS namespace
 PIXI.filters.AdvancedBloomFilter = AdvancedBloomFilter;
-
