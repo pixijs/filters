@@ -13,9 +13,9 @@ void main() {
     float _min = min(min(color.r, color.g), color.b);
     float brightness = (_max + _min) * 0.5;
 
-    if(brightness < threshold) {
-        gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);
-    } else {
+    if(brightness > threshold) {
         gl_FragColor = color;
+    } else {
+        gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);
     }
 }

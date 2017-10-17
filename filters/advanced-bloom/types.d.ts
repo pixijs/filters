@@ -4,14 +4,14 @@ declare namespace PIXI.filters {
         constructor(options?: AdvancedBloomOptions);
         constructor(threshold?: number);
         threshold: number;
+        bloomScale: number;
         brightness: number;
-        contrast: number;
         blur: number;
     }
     interface AdvancedBloomOptions {
         threshold?: number;
+        bloomScale?: number;
         brightness?: number;
-        contrast?: number;
         blur?: number;
         quality?: number;
         resolution?: number;
