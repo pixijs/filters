@@ -14,7 +14,7 @@ export default class PixelateFilter extends PIXI.Filter {
 
     constructor(size = 10) {
         super(vertex, fragment);
-        this.size = size; 
+        this.size = size;
     }
 
     /**

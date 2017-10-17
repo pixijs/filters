@@ -32,7 +32,7 @@ export default class DropShadowFilter extends PIXI.Filter {
         const target = filterManager.getRenderTarget();
         target.transform = new PIXI.Matrix();
         target.transform.translate(
-            this.distance * Math.cos(this.angle), 
+            this.distance * Math.cos(this.angle),
             this.distance * Math.sin(this.angle)
         );
         this.tintFilter.apply(filterManager, input, target, true);

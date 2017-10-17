@@ -5,7 +5,7 @@ import fragment from './bulgePinch.frag';
  * @author Julien CLEREL @JuloxRox
  * original filter https://github.com/evanw/glfx.js/blob/master/src/filters/warp/bulgepinch.js by Evan Wallace : http://madebyevan.com/
  */
- 
+
 /**
  * Bulges or pinches the image in a circle.
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/bulge-pinch.gif)
