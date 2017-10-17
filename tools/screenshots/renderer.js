@@ -96,7 +96,7 @@ function next() {
             base64ToImage(
                 app.renderer.plugins.extract.base64(),
                 outputPath + path.sep, {
-                    fileName: obj.filename, 
+                    fileName: obj.filename,
                     type:'png'
                 }
             );
@@ -132,9 +132,9 @@ function nextAnim() {
         ));
 
         encoder.start();
-        encoder.setRepeat(0);   // 0 for repeat, -1 for no-repeat 
-        encoder.setDelay(anim.delay || 500);  // frame delay in ms 
-        encoder.setQuality(10); // image quality. 10 is default. 
+        encoder.setRepeat(0);   // 0 for repeat, -1 for no-repeat
+        encoder.setDelay(anim.delay || 500);  // frame delay in ms
+        encoder.setQuality(10); // image quality. 10 is default.
 
         // Add the frames
         anim.frames.forEach((frame) => {

@@ -18,7 +18,7 @@ import fragment from './ascii.frag';
  * @param {number} [size=8] Size of the font
  */
 export default class AsciiFilter extends PIXI.Filter {
-    
+
     constructor(size = 8) {
         super(vertex, fragment);
         this.size = size;
