@@ -2,8 +2,12 @@ varying vec2 vTextureCoord;
 uniform sampler2D uSampler;
 
 uniform float epsilon;
-uniform vec3 originalColors[%colorCount%];
-uniform vec3 targetColors[%colorCount%];
+uniform int colorCount;
+
+const int MAX_COLORCOUNT = %maxColorCount%;
+
+uniform vec3 originalColors[MAX_COLORCOUNT];
+uniform vec3 targetColors[MAX_COLORCOUNT];
 
 void main(void)
 {
@@ -17,11 +21,16 @@ void main(void)
 
     vec3 color = gl_FragColor.rgb / alpha;
 
-    for(int i = 0; i < %colorCount%; i++)
+    for(int i = 0; i < MAX_COLORCOUNT; i++)
     {
       vec3 origColor = originalColors[i];
+      if (origColor.r < 0.0)
+      {
+        break;
+      }
       vec3 colorDiff = origColor - color;
-      if (length(colorDiff) < epsilon) {
+      if (length(colorDiff) < epsilon)
+      {
         vec3 targetColor = targetColors[i];
         gl_FragColor = vec4((targetColor + colorDiff) * alpha, alpha);
         return;

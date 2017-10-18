@@ -360,7 +360,7 @@
                     [938417, 65280],
                     [1464209, 16776960],
                 ];
-                var multiColorReplaceFilter = new PIXI.filters.MultiColorReplaceFilter(replacements, 0.2);
+                var multiColorReplaceFilter = new PIXI.filters.MultiColorReplaceFilter(replacements, 0.2, 8);
                 multiColorReplaceFilter.enabled = false;
                 folder = gui.addFolder('MultiColorReplaceFilter');
                 folder.add(multiColorReplaceFilter, 'enabled').onChange(trackEvent.bind(folder));
@@ -395,6 +395,7 @@
                     }
                 );
                 folder.add(multiColorReplaceFilter, 'epsilon', 0, 1);
+
 
                 var lightmap = resources.lightmap.texture;
                 var simpleLightmapFilter = new PIXI.filters.SimpleLightmapFilter(lightmap, 0x666666);
