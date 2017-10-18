@@ -1,10 +1,11 @@
 /// <reference types="pixi.js" />
 declare namespace PIXI.filters {
     class MultiColorReplaceFilter extends PIXI.Filter {
-        constructor(replacements:Array[], epsilon?:number, maxColorCount?:number);
-        replacements:Array[];
+        constructor(replacements:Array<number[]|number[][]>, epsilon?:number, maxColors?:number);
+        replacements:Array<number[]|number[][]>;
         epsilon:number;
-        maxColorCount:number;
+        readonly maxColors:number;
+        refresh():void;
     }
 }
 

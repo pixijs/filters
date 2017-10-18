@@ -2,101 +2,78 @@ import vertex from './multi-color-replace.vert';
 import fragment from './multi-color-replace.frag';
 
 /**
- * MultiColorReplaceFilter
- *
- * It's similar to ColorReplaceFilter , but support multi-color.
- *
+ * Filter for replacing a color with another color. Similar to ColorReplaceFilter, but support multiple
+ * colors.
+ * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/multi-color-replace.png)
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
- * @param {Array<Array>} replacements - The colors that will be changed.
- *                       The item of `replacements` is color-pair (an array length is 2).
- *                       In the pair, the first one is original color , the second one is target color.
- * @param {number} [epsilon=0.05] - Tolerance/sensitivity of the floating-point comparison between colors
+ * @param {Array<Array>} replacements - The collection of replacement items. Each item is color-pair (an array length is 2).
+ *                       In the pair, the first value is original color , the second value is target color.
+ * @param {number} [epsilon=0.05] - Tolerance of the floating-point comparison between colors
  *                                  (lower = more exact, higher = more inclusive)
- * @param {number} [maxColorCount] - TODO
- *
- * Notice: If arguments.length == 2 , the 2nd one will be dynamic.
- *         If it is [0, 1], it's `epsilon`, If `>1` ,it's `maxColorCount`.
+ * @param {number} [maxColors] - The maximum number of replacements filter is able to use. Because the
+ *                               fragment is only compiled once, this cannot be changed after construction.
+ *                               If omitted, the default value is the length of `replacements`.     
  *
  * @example
  *  // replaces pure red with pure blue, and replaces pure green with pure white
  *  someSprite.filters = [new MultiColorReplaceFilter(
- *   [
- *     [0xFF0000, 0x0000FF],
- *     [0x00FF00, 0xFFFFFF]
- *   ],
- *   0.001
- *   )];
+ *    [
+ *      [0xFF0000, 0x0000FF],
+ *      [0x00FF00, 0xFFFFFF]
+ *    ],
+ *    0.001
+ *  )];
  *
  *  You also could use [R, G, B] as the color
  *  someOtherSprite.filters = [new MultiColorReplaceFilter(
- *   [
- *     [ [1,0,0], [0,0,1] ],
- *     [ [0,1,0], [1,1,1] ],
- *   ],
- *   0.001
- *   )];
+ *    [
+ *      [ [1,0,0], [0,0,1] ],
+ *      [ [0,1,0], [1,1,1] ]
+ *    ],
+ *    0.001
+ *  )];
  *
  */
 export default class MultiColorReplaceFilter extends PIXI.Filter
 {
-    constructor(replacements, epsilon = 0.05, maxColorCount)
+    constructor(replacements, epsilon = 0.05, maxColors = null)
     {
-        const colorCount = replacements.length;
+        maxColors = maxColors || replacements.length;
 
-        if (!maxColorCount)
-        {
-            if (epsilon > 1.0)
-            {
-                maxColorCount = epsilon;
-                epsilon = 0.05;
-            }
-            else
-            {
-                maxColorCount = colorCount;
-            }
-        }
-
-        super(
-            vertex,
-            fragment.replace(/%maxColorCount%/g, maxColorCount)
-        );
+        super(vertex, fragment.replace(/%maxColors%/g, maxColors));
 
         this.epsilon = epsilon;
-        this.maxColorCount = maxColorCount;
-
+        this._maxColors = maxColors;
         this._replacements = null;
-        this.uniforms.originalColors = new Float32Array(maxColorCount * 3);
-        this.uniforms.targetColors = new Float32Array(maxColorCount * 3);
-
+        this.uniforms.originalColors = new Float32Array(maxColors * 3);
+        this.uniforms.targetColors = new Float32Array(maxColors * 3);
         this.replacements = replacements;
     }
 
     /**
-     * The colors that will be changed
-     * @param {Array<Array>} value - new original colors
+     * The source and target colors for replacement. See constructor for information on the format.
+     *
+     * @member {Array<Array>}
      */
-    set replacements(value)
+    set replacements(replacements)
     {
-        const arr = this.uniforms.originalColors;
-        const targetArr = this.uniforms.targetColors;
+        const originals = this.uniforms.originalColors;
+        const targets = this.uniforms.targetColors;
+        const colorCount = replacements.length;
 
-        let colorCount = value.length;
-
-        if (colorCount > this.maxColorCount)
+        if (colorCount > this._maxColors)
         {
-            colorCount = this.maxColorCount;
-            // TODO: Give a warning if value.length > this.maxColorCount ???
+            throw `Length of replacements (${colorCount}) exceeds the maximum colors length (${this._maxColors})`;
         }
-        else
-        {
-            arr[colorCount * 3] = -0.1;
-        }
+        
+        // Fill with negative values
+        originals[colorCount * 3] = -1;
 
         for (let i = 0; i < colorCount; i++)
         {
-            const pair = value[i];
+            const pair = replacements[i];
 
             // for original colors
             let color = pair[0];
@@ -109,9 +86,9 @@ export default class MultiColorReplaceFilter extends PIXI.Filter
                 pair[0] = PIXI.utils.rgb2hex(color);
             }
 
-            arr[i * 3] = color[0];
-            arr[(i * 3) + 1] = color[1];
-            arr[(i * 3) + 2] = color[2];
+            originals[i * 3] = color[0];
+            originals[(i * 3) + 1] = color[1];
+            originals[(i * 3) + 2] = color[2];
 
             // for target colors
             let targetColor = pair[1];
@@ -124,23 +101,41 @@ export default class MultiColorReplaceFilter extends PIXI.Filter
                 pair[1] = PIXI.utils.rgb2hex(targetColor);
             }
 
-            targetArr[i * 3] = targetColor[0];
-            targetArr[(i * 3) + 1] = targetColor[1];
-            targetArr[(i * 3) + 2] = targetColor[2];
+            targets[i * 3] = targetColor[0];
+            targets[(i * 3) + 1] = targetColor[1];
+            targets[(i * 3) + 2] = targetColor[2];
         }
 
-        this._replacements = value;
-        this.uniforms.colorCount = colorCount;
+        this._replacements = replacements;
     }
-
     get replacements()
     {
         return this._replacements;
     }
 
     /**
-     * Tolerance/sensitivity of the floating-point comparison between colors (lower = more exact, higher = more inclusive)
-     * @param {number} value - new epsilon value.
+     * Should be called after changing any of the contents of the replacements.
+     * This is a convenience method for resetting the `replacements`.
+     */
+    refresh() {
+        this.replacements = this._replacements;
+    }
+
+    /**
+     * The maximum number of color replacements supported by this filter. Can be changed
+     * _only_ during construction.
+     *
+     * @member {number}
+     * @readonly
+     */
+    get maxColors() {
+        return this._maxColors;
+    }
+
+    /**
+     * Tolerance of the floating-point comparison between colors (lower = more exact, higher = more inclusive)
+     *
+     * @member {number}
      * @default 0.05
      */
     set epsilon(value)
