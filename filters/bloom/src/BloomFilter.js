@@ -8,7 +8,7 @@ const {BlurXFilter, BlurYFilter, VoidFilter} = PIXI.filters;
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
- * @param {number|PIXI.Point|Array} [blur=2] Sets the strength of both the blurX and blurY properties simultaneously
+ * @param {number|PIXI.Point|number[]} [blur=2] Sets the strength of both the blurX and blurY properties simultaneously
  * @param {number} [quality=4] The quality of the blurX & blurY filter.
  * @param {number} [resolution=PIXI.settings.RESOLUTION] The resolution of the blurX & blurY filter.
  * @param {number} [kernelSize=5] The kernelSize of the blurX & blurY filter.Options: 5, 7, 9, 11, 13, 15.
