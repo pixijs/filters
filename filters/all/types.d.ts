@@ -22,7 +22,7 @@ declare namespace PIXI.filters {
         kernelSize?: number;
     }
     class BloomFilter extends PIXI.Filter {
-        constructor(blur?:number|PIXI.Point, quality?:number, resolution?:number, kernelSize?:number);
+        constructor(blur?:number|PIXI.Point|Array, quality?:number, resolution?:number, kernelSize?:number);
         blur:number;
         blurX:number;
         blurY:number;
