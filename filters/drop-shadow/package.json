@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-drop-shadow",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "main": "lib/filter-drop-shadow.min.js",
   "description": "Display filter render as ASCII text",
   "author": "Mat Groves",

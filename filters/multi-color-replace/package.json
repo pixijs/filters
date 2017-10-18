@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-multi-color-replace",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "main": "lib/filter-multi-color-replace.min.js",
   "description": "Multi Color Replace filter",
   "author": "finscn",
