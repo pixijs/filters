@@ -171,13 +171,36 @@
                 folder.add(displacementFilter.scale, 'y', 1, 200).name('scale.y');
                 folder.domElement.className += ' enabled';
 
-                // Setup gui for displacement
+                // Setup gui for blurFilter
                 var blurFilter = new PIXI.filters.BlurFilter();
                 blurFilter.enabled = false;
                 folder = gui.addFolder('BlurFilter (pixi.js)');
                 folder.add(blurFilter, 'enabled').onChange(trackEvent.bind(folder));
                 folder.add(blurFilter, 'blur', 0, 100);
                 folder.add(blurFilter, 'quality', 1, 10);
+
+                var velocity = [50, 50];
+                var motionBlurFilter = new PIXI.filters.MotionBlurFilter(velocity, 25);
+                motionBlurFilter.enabled = !false;
+                folder = gui.addFolder('MotionBlurFilter');
+                folder.add(motionBlurFilter, 'enabled').onChange(trackEvent.bind(folder));
+                folder.add(velocity, '0', -90, 90).name('velocity.x').onChange(function(){
+                        motionBlurFilter.velocity = velocity;
+                    });
+                folder.add(velocity, '1', -90, 90).name('velocity.y').onChange(function(){
+                        motionBlurFilter.velocity = velocity;
+                    });
+                folder.add(motionBlurFilter, 'kernelSize',
+                    [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25]).name('kernelSize');
+
+                var zoomBlurFilter = new PIXI.filters.ZoomBlurFilter(0.1, [stageWidth / 2, stageHeight / 2], 80);
+                zoomBlurFilter.enabled = false;
+                folder = gui.addFolder('ZoomBlurFilter');
+                folder.add(zoomBlurFilter, 'enabled').onChange(trackEvent.bind(folder));
+                folder.add(zoomBlurFilter, 'strength', 0.01, 0.5);
+                folder.add(zoomBlurFilter.center, '0', 0, stageWidth).name('center.x');
+                folder.add(zoomBlurFilter.center, '1', 0, stageHeight).name('center.y');
+                folder.add(zoomBlurFilter, 'innerRadius', 0, stageWidth / 2);
 
                 // Setup gui for displacement
                 var noiseFilter = new PIXI.filters.NoiseFilter();
@@ -407,15 +430,6 @@
                 folder.add(godrayFilter, 'gain', 0, 1);
                 folder.add(godrayFilter, 'lacunarity', 0, 5);
 
-				// Apply filters
-                var zoomBlurFilter = new PIXI.filters.ZoomBlurFilter(0.1, [stageWidth / 2, stageHeight / 2], 80);
-                zoomBlurFilter.enabled = false;
-                folder = gui.addFolder('ZoomBlurFilter');
-                folder.add(zoomBlurFilter, 'enabled').onChange(trackEvent.bind(folder));
-                folder.add(zoomBlurFilter, 'strength', 0.01, 0.5);
-                folder.add(zoomBlurFilter.center, '0', 0, stageWidth).name('center.x');
-                folder.add(zoomBlurFilter.center, '1', 0, stageHeight).name('center.y');
-                folder.add(zoomBlurFilter, 'innerRadius', 0, stageWidth / 2);
 
                 // Apply filters
                 var filterAreaPadding = 4;
@@ -424,6 +438,8 @@
                 pond.filters = [
                     displacementFilter,
                     blurFilter,
+                    motionBlurFilter,
+                    zoomBlurFilter,
                     noiseFilter,
                     colorFilter,
                     twistFilter,
@@ -442,8 +458,7 @@
                     colorReplaceFilter,
                     multiColorReplaceFilter,
                     simpleLightmapFilter,
-                    godrayFilter,
-                    zoomBlurFilter
+                    godrayFilter
                 ];
 
                 window.addEventListener('resize', resize);

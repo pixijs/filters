@@ -212,6 +212,14 @@
             }
         },
         {
+            "name": "MotionBlurFilter",
+            "filename": "motion-blur",
+            "arguments": [
+                [50, 50],
+                25
+            ]
+        },
+        {
             "name": "MultiColorReplaceFilter",
             "filename": "multi-color-replace",
             "arguments": [

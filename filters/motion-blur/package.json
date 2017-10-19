@@ -1,0 +1,40 @@
+{
+  "name": "@pixi/filter-motion-blur",
+  "version": "2.2.0",
+  "main": "lib/filter-motion-blur.min.js",
+  "description": "Multi Color Replace filter",
+  "author": "finscn",
+  "contributors": [
+    "finscn <finscn@gmail.com>"
+  ],
+  "module": "lib/filter-motion-blur.es.min.js",
+  "types": "types.d.ts",
+  "homepage": "http://pixijs.com/",
+  "bugs": "https://github.com/pixijs/pixi-filters/issues",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pixijs/pixi-filters.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build:umd": "rollup -c -f umd && rollup -cp -f umd",
+    "build:es": "rollup -c && rollup -cp",
+    "build": "npm run build:umd && npm run build:es",
+    "postversion": "npm run build"
+  },
+  "files": [
+    "lib",
+    "types.d.ts"
+  ],
+  "peerDependencies": {
+    "pixi.js": "^4.5.0"
+  },
+  "devDependencies": {
+    "@tools/build": "^2.0.1",
+    "@tools/fragments": "^2.0.0",
+    "rollup": "^0.45.2"
+  }
+}
