@@ -4,7 +4,8 @@ uniform sampler2D uSampler;
 uniform vec2 uVelocity;
 uniform int uKernelSize;
 
-const int MAX_ITERATION = 2048;
+const int MAX_KERNEL_SIZE = 2048;
+const int ITERATION = MAX_KERNEL_SIZE - 1;
 
 void main(void)
 {
@@ -15,13 +16,20 @@ void main(void)
         return;
     }
 
-    float k = float(uKernelSize - 1);
-    for(int i = 0; i < MAX_ITERATION; i++) {
+    // float kernelSize = min(float(uKernelSize), float(MAX_KERNELSIZE));
+
+    // In real use-case , uKernelSize < MAX_KERNELSIZE almost always.
+    // So use uKernelSize directly.
+    float kernelSize = float(uKernelSize);
+
+    float k = kernelSize - 1.0;
+
+    for(int i = 0; i < ITERATION; i++) {
         if (i == uKernelSize) {
             break;
         }
         vec2 offset = uVelocity * (float(i) / k - 0.5);
         gl_FragColor += texture2D(uSampler, vTextureCoord + offset);
     }
-    gl_FragColor /= float(uKernelSize);
+    gl_FragColor /= kernelSize;
 }

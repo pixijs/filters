@@ -1,9 +1,19 @@
 import vertex from './motion-blur.vert';
 import fragment from './motion-blur.frag';
 
+/**
+ * The MotionBlurFilter applies a Motion blur to an object.
+ * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/motion-blur.png)
+ *
+ * @class
+ * @extends PIXI.Filter
+ * @memberof PIXI.filters
+ * @param {PIXI.Point|number[]} [velocity=[0, 0]] Sets the velocity of the motion for blur effect.
+ * @param {number} [kernelSize=5] - The kernelSize of the blur filter. Options: the `odd number` >= 5.
+ */
 export default class MotionBlurFilter extends PIXI.Filter
 {
-    constructor(velocity = [0, 0], kernelSize = 0)
+    constructor(velocity = [0, 0], kernelSize = 5)
     {
         super(vertex, fragment);
 
@@ -40,6 +50,12 @@ export default class MotionBlurFilter extends PIXI.Filter
         filterManager.applyFilter(this, input, output, clear);
     }
 
+    /**
+     * Sets the velocity of the motion for blur effect.
+     *
+     * @member {PIXI.Point|number[]}
+     * @default [0, 0]
+     */
     set velocity(value)
     {
         if (Array.isArray(value))
