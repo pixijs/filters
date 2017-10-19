@@ -14,7 +14,7 @@ import fragment from './multi-color-replace.frag';
  *                                  (lower = more exact, higher = more inclusive)
  * @param {number} [maxColors] - The maximum number of replacements filter is able to use. Because the
  *                               fragment is only compiled once, this cannot be changed after construction.
- *                               If omitted, the default value is the length of `replacements`.     
+ *                               If omitted, the default value is the length of `replacements`.
  *
  * @example
  *  // replaces pure red with pure blue, and replaces pure green with pure white
@@ -67,7 +67,7 @@ export default class MultiColorReplaceFilter extends PIXI.Filter
         {
             throw `Length of replacements (${colorCount}) exceeds the maximum colors length (${this._maxColors})`;
         }
-        
+
         // Fill with negative values
         originals[colorCount * 3] = -1;
 
