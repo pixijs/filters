@@ -216,7 +216,8 @@
             "filename": "motion-blur",
             "arguments": [
                 [40, 40],
-                15
+                15,
+		0
             ]
         },
         {

@@ -10,10 +10,11 @@ import fragment from './motion-blur.frag';
  * @memberof PIXI.filters
  * @param {PIXI.Point|number[]} [velocity=[0, 0]] Sets the velocity of the motion for blur effect.
  * @param {number} [kernelSize=5] - The kernelSize of the blur filter. Options: the `odd number` >= 5.
+ * @param {number} [offset=0] - The offset of the blur filter.
  */
 export default class MotionBlurFilter extends PIXI.Filter
 {
-    constructor(velocity = [0, 0], kernelSize = 5)
+    constructor(velocity = [0, 0], kernelSize = 5, offset = 0)
     {
         super(vertex, fragment);
 
@@ -21,6 +22,7 @@ export default class MotionBlurFilter extends PIXI.Filter
         this.velocity = velocity;
 
         this.kernelSize = kernelSize;
+        this.offset = offset;
 
         this._uVelocity = new Float32Array(2);
         this.uniforms.uVelocity = this._uVelocity;
@@ -69,10 +71,24 @@ export default class MotionBlurFilter extends PIXI.Filter
             this._velocity.y = value.y;
         }
     }
-
     get velocity()
     {
         return this._velocity;
+    }
+
+    /**
+     * The offset of the blur filter.
+     *
+     * @member {number}
+     * @default 0
+     */
+    set offset(value)
+    {
+        this.uniforms.uOffset = value;
+    }
+    get offset()
+    {
+        return this.uniforms.uOffset;
     }
 }
 
