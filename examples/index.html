@@ -44,6 +44,12 @@
             .dg.ac {
                 top:89px !important;
             }
+            .dg .title {
+                color: #999;
+            }
+            .dg.enabled .title {
+                color: #fff;
+            }
             #logo img {
                 display: block;
             }
@@ -91,6 +97,12 @@
                     enabled ? 'enabled' : 'disabled'
                 );
                 app.render();
+                if (enabled) {
+                    this.domElement.className += ' enabled';
+                }
+                else {
+                    this.domElement.className = this.domElement.className.replace(' enabled', '');
+                }
             }
 
             // Preload the assets needed
@@ -157,6 +169,7 @@
                 folder.add(displacementFilter, 'enabled').onChange(trackEvent.bind(folder));
                 folder.add(displacementFilter.scale, 'x', 1, 200).name('scale.x');
                 folder.add(displacementFilter.scale, 'y', 1, 200).name('scale.y');
+                folder.domElement.className += ' enabled';
 
                 // Setup gui for displacement
                 var blurFilter = new PIXI.filters.BlurFilter();
