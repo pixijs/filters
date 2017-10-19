@@ -215,8 +215,8 @@
             "name": "MotionBlurFilter",
             "filename": "motion-blur",
             "arguments": [
-                [50, 50],
-                25
+                [40, 40],
+                15
             ]
         },
         {

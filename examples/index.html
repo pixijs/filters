@@ -179,9 +179,9 @@
                 folder.add(blurFilter, 'blur', 0, 100);
                 folder.add(blurFilter, 'quality', 1, 10);
 
-                var velocity = [50, 50];
-                var motionBlurFilter = new PIXI.filters.MotionBlurFilter(velocity, 25);
-                motionBlurFilter.enabled = !false;
+                var velocity = [40, 40];
+                var motionBlurFilter = new PIXI.filters.MotionBlurFilter(velocity, 15);
+                motionBlurFilter.enabled = false;
                 folder = gui.addFolder('MotionBlurFilter');
                 folder.add(motionBlurFilter, 'enabled').onChange(trackEvent.bind(folder));
                 folder.add(velocity, '0', -90, 90).name('velocity.x').onChange(function(){
