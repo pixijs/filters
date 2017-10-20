@@ -14,7 +14,7 @@ npm install @pixi/filter-motion-blur
 import { MotionBlurFilter } from '@pixi/filter-motion-blur';
 
 const container = new PIXI.Container();
-container.filters = [new MotionBlurFilter([1,2], 9];
+container.filters = [new MotionBlurFilter([1,2], 9)];
 ```
 
 ## Documentation
