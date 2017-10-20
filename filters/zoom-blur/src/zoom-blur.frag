@@ -67,7 +67,7 @@ void main() {
         vec4 sample = texture2D(uSampler, p);
 
         // switch to pre-multiplied alpha to correctly blur transparent images
-        sample.rgb *= sample.a;
+        // sample.rgb *= sample.a;
 
         color += sample * weight;
         total += weight;
