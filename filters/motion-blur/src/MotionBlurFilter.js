@@ -23,8 +23,6 @@ export default class MotionBlurFilter extends PIXI.Filter
 
         this.kernelSize = kernelSize;
         this.offset = offset;
-
-        this.uniforms.uVelocity = new Float32Array(2);
     }
 
     /**
