@@ -85,6 +85,8 @@ function init(_resources) {
 
     // Setup the background image
     bg = new PIXI.Sprite(resources.background.texture);
+    bg.width = window.screen.availWidth;
+    bg.height = window.screen.availHeight;
     // Add the background
     pond.addChild(bg);
 
@@ -118,9 +120,7 @@ function init(_resources) {
     // Add the overlay
     pond.addChild(overlay);
 
-
     window.addEventListener('resize', resize);
-
 
     resize();
 
@@ -162,15 +162,14 @@ function init(_resources) {
         }
     });
 
-    initFilters();
+    setTimeout(function() {
+        initFilters();
+    }, 100);
 }
 
 function resize() {
     var width = container.offsetWidth;
     var height = container.offsetHeight;
-
-    bg.width = width;
-    bg.height = height;
 
     overlay.width = width;
     overlay.height = height;
@@ -191,6 +190,9 @@ function resize() {
         width,
         height
     );
+
+    stageWidth = width;
+    stageHeight = height;
 }
 
 function initFilters() {
