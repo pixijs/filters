@@ -79,10 +79,10 @@ declare namespace PIXI.filters {
         lacunarity:number;
         time:number;
     }
-    class OutlineFilter extends PIXI.Filter {
-        constructor(thickness?:number, color?:number);
-        color:number;
-        thickness:number;
+    class MotionBlurFilter extends PIXI.Filter {
+        constructor(velocity:PIXI.Point|number[], kernelSize?:number);
+        velocity:PIXI.Point|number[];
+        kernelSize:number;
     }
     class MultiColorReplaceFilter extends PIXI.Filter {
         constructor(replacements:Array<number[]|number[][]>, epsilon?:number, maxColors?:number);
@@ -90,6 +90,11 @@ declare namespace PIXI.filters {
         epsilon:number;
         readonly maxColors:number;
         refresh():void;
+    }
+    class OutlineFilter extends PIXI.Filter {
+        constructor(thickness?:number, color?:number);
+        color:number;
+        thickness:number;
     }
     class PixelateFilter extends PIXI.Filter {
         constructor(size?:PIXI.Point|number[]|number);
