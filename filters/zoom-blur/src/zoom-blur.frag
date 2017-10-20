@@ -13,9 +13,9 @@ const float count = 32.0;
 float countLimit = count;
 
 float minGradient = uInnerRadius * 0.3;
-float gradient = uRadius * 0.3;
-
 float innerRadius = (uInnerRadius + minGradient * 0.5) / filterArea.x;
+
+float gradient = uRadius * 0.3;
 float radius = (uRadius - gradient * 0.5) / filterArea.x;
 
 float random(vec3 scale, float seed) {
