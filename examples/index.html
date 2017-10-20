@@ -56,6 +56,12 @@
             .property-name .fa {
                 margin: 0 5px;
             }
+            .dg .property-name {
+                width: 45%;
+            }
+            .dg .c {
+                width: 55%;
+            }
         </style>
     </head>
     <body>
@@ -105,6 +111,8 @@
                 }
             }
 
+            window.paused = false;
+
             // Preload the assets needed
             app.stop();
             app.loader
@@ -117,8 +125,7 @@
                 .add('fish4', 'images/displacement_fish4.png')
                 .add('lightmap', 'images/lightmap.png')
                 .load(function(loader, resources) {
-                    gui.add(app, 'stop').name('<i class="fa fa-pause"></i> Pause');
-                    gui.add(app, 'start').name('<i class="fa fa-play"></i> Resume');
+                    gui.add(window, 'paused').name('<i class="fa fa-pause"></i> Pause stage');
                     init(resources);
                     app.start();
                 });
@@ -485,33 +492,35 @@
                     count += 0.1 * delta;
 
                     // Animate the overlay
-                    overlay.tilePosition.x = count * -10;
-                    overlay.tilePosition.y = count * -10;
+                    if (!window.paused) {
+                        overlay.tilePosition.x = count * -10;
+                        overlay.tilePosition.y = count * -10;
 
-                    displacementFilter.x = count * 10;
-                    displacementFilter.y = count * 10;
+                        displacementFilter.x = count * 10;
+                        displacementFilter.y = count * 10;
 
-                    for (var i = 0; i < fishes.length; i++) {
-                        var fish = fishes[i];
+                        for (var i = 0; i < fishes.length; i++) {
+                            var fish = fishes[i];
 
-                        fish.direction += fish.turnSpeed * 0.01;
+                            fish.direction += fish.turnSpeed * 0.01;
 
-                        fish.x += Math.sin(fish.direction) * fish.speed;
-                        fish.y += Math.cos(fish.direction) * fish.speed;
+                            fish.x += Math.sin(fish.direction) * fish.speed;
+                            fish.y += Math.cos(fish.direction) * fish.speed;
 
-                        fish.rotation = -fish.direction - Math.PI/2;
+                            fish.rotation = -fish.direction - Math.PI/2;
 
-                        if (fish.x < bounds.x) {
-                            fish.x += bounds.width;
-                        }
-                        if (fish.x > bounds.x + bounds.width) {
-                            fish.x -= bounds.width
-                        }
-                        if (fish.y < bounds.y) {
-                            fish.y += bounds.height;
-                        }
-                        if (fish.y > bounds.y + bounds.height) {
-                            fish.y -= bounds.height
+                            if (fish.x < bounds.x) {
+                                fish.x += bounds.width;
+                            }
+                            if (fish.x > bounds.x + bounds.width) {
+                                fish.x -= bounds.width
+                            }
+                            if (fish.y < bounds.y) {
+                                fish.y += bounds.height;
+                            }
+                            if (fish.y > bounds.y + bounds.height) {
+                                fish.y -= bounds.height
+                            }
                         }
                     }
                 });
