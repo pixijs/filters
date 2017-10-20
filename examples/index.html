@@ -91,6 +91,8 @@
                 backgroundColor:0x000000,
             });
 
+            window.freezed = false;
+
             function trackEvent(enabled) {
                 ga('send', 'event',
                     this.name.replace(' (pixi.js)', ''),
@@ -119,6 +121,8 @@
                 .load(function(loader, resources) {
                     gui.add(app, 'stop').name('<i class="fa fa-pause"></i> Pause');
                     gui.add(app, 'start').name('<i class="fa fa-play"></i> Resume');
+
+                    gui.add(window, 'freezed').name(' -- Freeze ');
                     init(resources);
                     app.start();
                 });
@@ -192,7 +196,7 @@
                     });
                 folder.add(motionBlurFilter, 'kernelSize',
                     [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25]).name('kernelSize');
-                folder.add(motionBlurFilter, 'offset', -1, 1).name('offset');
+                folder.add(motionBlurFilter, 'offset', -150, 150).name('offset');
 
                 var zoomBlurFilter = new PIXI.filters.ZoomBlurFilter(0.1, [stageWidth / 2, stageHeight / 2], 80);
                 zoomBlurFilter.enabled = false;
@@ -501,21 +505,26 @@
                     count += 0.1 * delta;
 
                     // Animate the overlay
-                    overlay.tilePosition.x = count * -10;
-                    overlay.tilePosition.y = count * -10;
+                    if (!window.freezed) {
+                        overlay.tilePosition.x = count * -10;
+                        overlay.tilePosition.y = count * -10;
 
-                    displacementFilter.x = count * 10;
-                    displacementFilter.y = count * 10;
+                        displacementFilter.x = count * 10;
+                        displacementFilter.y = count * 10;
+                    }
+
 
                     for (var i = 0; i < fishes.length; i++) {
                         var fish = fishes[i];
 
-                        fish.direction += fish.turnSpeed * 0.01;
+                        if (!window.freezed) {
+                            fish.direction += fish.turnSpeed * 0.01;
 
-                        fish.x += Math.sin(fish.direction) * fish.speed;
-                        fish.y += Math.cos(fish.direction) * fish.speed;
+                            fish.x += Math.sin(fish.direction) * fish.speed;
+                            fish.y += Math.cos(fish.direction) * fish.speed;
 
-                        fish.rotation = -fish.direction - Math.PI/2;
+                            fish.rotation = -fish.direction - Math.PI/2;
+                        }
 
                         if (fish.x < bounds.x) {
                             fish.x += bounds.width;

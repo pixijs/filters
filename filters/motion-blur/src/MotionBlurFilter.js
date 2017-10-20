@@ -24,8 +24,7 @@ export default class MotionBlurFilter extends PIXI.Filter
         this.kernelSize = kernelSize;
         this.offset = offset;
 
-        this._uVelocity = new Float32Array(2);
-        this.uniforms.uVelocity = this._uVelocity;
+        this.uniforms.uVelocity = new Float32Array(2);
     }
 
     /**
@@ -39,9 +38,6 @@ export default class MotionBlurFilter extends PIXI.Filter
 
         if (velX !== 0 || velY !== 0)
         {
-            this._uVelocity[0] = velX / input.size.width;
-            this._uVelocity[1] = velY / input.size.height;
-
             this.uniforms.uKernelSize = this.kernelSize;
         }
         else
@@ -70,7 +66,11 @@ export default class MotionBlurFilter extends PIXI.Filter
             this._velocity.x = value.x;
             this._velocity.y = value.y;
         }
+
+        this.uniforms.uVelocity[0] = this._velocity.x;
+        this.uniforms.uVelocity[1] = this._velocity.y;
     }
+
     get velocity()
     {
         return this._velocity;
@@ -86,6 +86,7 @@ export default class MotionBlurFilter extends PIXI.Filter
     {
         this.uniforms.uOffset = value;
     }
+
     get offset()
     {
         return this.uniforms.uOffset;
