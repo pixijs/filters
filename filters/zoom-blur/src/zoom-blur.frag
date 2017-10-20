@@ -7,6 +7,17 @@ uniform float uStrength;
 uniform float uInnerRadius;
 uniform float uRadius;
 
+vec2 center = uCenter.xy / filterArea.xy;
+
+const float count = 32.0;
+float countLimit = count;
+
+float minGradient = uInnerRadius * 0.3;
+float gradient = uRadius * 0.3;
+
+float innerRadius = (uInnerRadius + minGradient * 0.5) / filterArea.x;
+float radius = (uRadius - gradient * 0.5) / filterArea.x;
+
 float random(vec3 scale, float seed) {
     // use the fragment position for a different seed per-pixel
     return fract(sin(dot(gl_FragCoord.xyz + seed, scale)) * 43758.5453 + seed);
@@ -14,20 +25,10 @@ float random(vec3 scale, float seed) {
 
 void main() {
 
-    vec2 center = uCenter.xy / filterArea.xy;
     vec2 dir = vec2(center - vTextureCoord);
     float dist = length(vec2(dir.x, dir.y * filterArea.y / filterArea.x));
 
     float strength = uStrength;
-
-    const float count = 32.0;
-    float countLimit = count;
-
-    float minGradient = uInnerRadius * 0.3;
-    float gradient = uRadius * 0.3;
-
-    float innerRadius = (uInnerRadius + minGradient * 0.5) / filterArea.x;
-    float radius = (uRadius - gradient * 0.5) / filterArea.x;
 
     float delta = 0.0;
     float gap;
