@@ -11,11 +11,11 @@ import fragment from './zoom-blur.frag';
  * @param {number} [strength=0.1] Sets the strength of the zoom blur effect
  * @param {PIXI.Point|number[]} [center=[0,0]] The center of the zoom.
  * @param {number} [innerRadius=0] The inner radius of zoom. The part in inner circle won't apply zoom blur effect.
- * @param {number} [radius=1E8] Outer radius of the zoom, The default value is very very large.
+ * @param {number} [radius=-1] See `radius` property.
  */
 export default class ZoomBlurFilter extends PIXI.Filter
 {
-    constructor(strength = 0.1, center = [0, 0], innerRadius = 0, radius = 1E8) {
+    constructor(strength = 0.1, center = [0, 0], innerRadius = 0, radius = -1) {
         super(vertex, fragment);
 
         this.center = center;
@@ -64,19 +64,22 @@ export default class ZoomBlurFilter extends PIXI.Filter
     }
 
     /**
-     * Outer radius of the effect. The default value is very very big.
+     * Outer radius of the effect. The default value is `-1`.
+     * `< 0.0` means it's infinity.
      *
      * @member {number}
-     * @default 1E8
+     * @default -1
      */
     get radius() {
         return this.uniforms.uRadius;
     }
     set radius(value) {
+        if (value < 0 || value === Infinity) {
+            value = -1;
+        }
         this.uniforms.uRadius = value;
     }
 }
 
 // Export to PixiJS namespace
 PIXI.filters.ZoomBlurFilter = ZoomBlurFilter;
-
