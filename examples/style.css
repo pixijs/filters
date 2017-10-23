@@ -1,0 +1,51 @@
+body {
+    margin:0;
+    padding:0;
+    font-family: Helvetica, sans-serif;
+    background:#333;
+}
+#container {
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    position:absolute;
+}
+#stage {
+    width:100%;
+    height:100%;
+    position:absolute;
+    display:block;
+    z-index: 0;
+}
+#logo {
+    position: absolute;
+    z-index:1;
+    width:245px;
+    height:69px;
+    top:0;
+    right: 15px;
+    background:#000;
+    padding:10px 0;
+}
+.dg.ac {
+    top:89px !important;
+}
+.dg .title {
+    color: #999;
+}
+.dg.enabled .title {
+    color: #fff;
+}
+#logo img {
+    display: block;
+}
+.property-name .fa {
+    margin: 0 5px;
+}
+.dg .property-name {
+    width: 45%;
+}
+.dg .c {
+    width: 55%;
+}
