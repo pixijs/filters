@@ -22,7 +22,7 @@ import main from './main.frag';
 export default class GodrayFilter extends PIXI.Filter {
 
     constructor(angle = 30, gain = 0.5, lacunarity = 2.5, time = 0) {
-        super(vertex, main.replace("$perlin", perlin));
+        super(vertex, main.replace('$perlin', perlin));
 
         /**
          * The angle of the rays in degrees. For instance, a value of 0 is vertical rays,

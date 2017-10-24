@@ -8,7 +8,7 @@ const minimist = require('minimist');
 
 const pkg = require(path.resolve('./package'));
 const name = path.basename(pkg.name);
-const entry = `src/index.js`;
+const entry = 'src/index.js';
 
 const {prod, format} = minimist(process.argv.slice(2), {
     string: ['format'],
@@ -23,9 +23,8 @@ const {prod, format} = minimist(process.argv.slice(2), {
     }
 });
 
-const suffix = prod ? `.min` : '';
 const formatSuffix = format === 'es' ? `.${format}` : '';
-const dest = `lib/${name}${formatSuffix}${suffix}.js`;
+const dest = `lib/${name}${formatSuffix}.js`;
 
 const plugins = [
     resolve(),
@@ -69,7 +68,7 @@ const moduleName = `__${name.replace(/-/g, '_')}`;
 let intro = '';
 
 if (!prod) {
-    intro = `if (typeof PIXI === 'undefined' || typeof PIXI.filters === 'undefined') { throw 'PixiJS is required'; }`;
+    intro = 'if (typeof PIXI === \'undefined\' || typeof PIXI.filters === \'undefined\') { throw \'PixiJS is required\'; }';
 }
 
 module.exports = {

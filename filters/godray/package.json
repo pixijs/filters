@@ -1,14 +1,14 @@
 {
   "name": "@pixi/filter-godray",
   "version": "2.2.0",
-  "main": "lib/filter-godray.min.js",
+  "main": "lib/filter-godray.js",
   "description": "Display filter gorday",
   "author": "Alain Galvan",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>",
     "Ivan Popelyshevl <ivan.popelyshev@gmail.com>"
   ],
-  "module": "lib/filter-godray.es.min.js",
+  "module": "lib/filter-godray.es.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
@@ -21,9 +21,9 @@
     "access": "public"
   },
   "scripts": {
-    "build:umd": "rollup -c -f umd && rollup -cp -f umd",
-    "build:es": "rollup -c && rollup -cp",
-    "build": "npm run build:umd && npm run build:es",
+    "build:dev": "rollup -c && rollup -c -f umd",
+    "build": "rollup -cp && rollup -cp -f umd",
+    "watch": "rollup -cw",
     "postversion": "npm run build"
   },
   "files": [
@@ -36,6 +36,7 @@
   "devDependencies": {
     "@tools/build": "^2.0.1",
     "@tools/fragments": "^2.0.0",
-    "rollup": "^0.45.2"
+    "rollup": "^0.45.2",
+    "rollup-watch": "^4.3.1"
   }
 }

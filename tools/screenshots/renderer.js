@@ -57,11 +57,11 @@ function next() {
         assert(!!FilterClass, `Filter ${obj.name} does not exist`);
         let filter;
         switch(obj.name) {
-            case "DisplacementFilter": {
+            case 'DisplacementFilter': {
                 filter = new FilterClass(displacement, 50);
                 break;
             }
-            case "SimpleLightmapFilter": {
+            case 'SimpleLightmapFilter': {
                 filter = new FilterClass(lightmap);
                 break;
             }
@@ -69,7 +69,8 @@ function next() {
                 const args = obj.arguments;
                 if (args) {
                     filter = new FilterClass(...args);
-                } else {
+                }
+                else {
                     filter = new FilterClass();
                 }
             }
