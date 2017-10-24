@@ -13,8 +13,7 @@ import fragment from './zoom-blur.frag';
  * @param {number} [innerRadius=0] The inner radius of zoom. The part in inner circle won't apply zoom blur effect.
  * @param {number} [radius=-1] See `radius` property.
  */
-export default class ZoomBlurFilter extends PIXI.Filter
-{
+export default class ZoomBlurFilter extends PIXI.Filter {
     constructor(strength = 0.1, center = [0, 0], innerRadius = 0, radius = -1) {
         super(vertex, fragment);
 

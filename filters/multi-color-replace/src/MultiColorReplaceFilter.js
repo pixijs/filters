@@ -36,10 +36,8 @@ import fragment from './multi-color-replace.frag';
  *  )];
  *
  */
-export default class MultiColorReplaceFilter extends PIXI.Filter
-{
-    constructor(replacements, epsilon = 0.05, maxColors = null)
-    {
+export default class MultiColorReplaceFilter extends PIXI.Filter {
+    constructor(replacements, epsilon = 0.05, maxColors = null) {
         maxColors = maxColors || replacements.length;
 
         super(vertex, fragment.replace(/%maxColors%/g, maxColors));
@@ -57,32 +55,27 @@ export default class MultiColorReplaceFilter extends PIXI.Filter
      *
      * @member {Array<Array>}
      */
-    set replacements(replacements)
-    {
+    set replacements(replacements) {
         const originals = this.uniforms.originalColors;
         const targets = this.uniforms.targetColors;
         const colorCount = replacements.length;
 
-        if (colorCount > this._maxColors)
-        {
+        if (colorCount > this._maxColors) {
             throw `Length of replacements (${colorCount}) exceeds the maximum colors length (${this._maxColors})`;
         }
 
         // Fill with negative values
         originals[colorCount * 3] = -1;
 
-        for (let i = 0; i < colorCount; i++)
-        {
+        for (let i = 0; i < colorCount; i++) {
             const pair = replacements[i];
 
             // for original colors
             let color = pair[0];
-            if (typeof color === 'number')
-            {
+            if (typeof color === 'number') {
                 color = PIXI.utils.hex2rgb(color);
             }
-            else
-            {
+            else {
                 pair[0] = PIXI.utils.rgb2hex(color);
             }
 
@@ -92,12 +85,10 @@ export default class MultiColorReplaceFilter extends PIXI.Filter
 
             // for target colors
             let targetColor = pair[1];
-            if (typeof targetColor === 'number')
-            {
+            if (typeof targetColor === 'number') {
                 targetColor = PIXI.utils.hex2rgb(targetColor);
             }
-            else
-            {
+            else {
                 pair[1] = PIXI.utils.rgb2hex(targetColor);
             }
 
@@ -108,8 +99,7 @@ export default class MultiColorReplaceFilter extends PIXI.Filter
 
         this._replacements = replacements;
     }
-    get replacements()
-    {
+    get replacements() {
         return this._replacements;
     }
 
@@ -138,12 +128,10 @@ export default class MultiColorReplaceFilter extends PIXI.Filter
      * @member {number}
      * @default 0.05
      */
-    set epsilon(value)
-    {
+    set epsilon(value) {
         this.uniforms.epsilon = value;
     }
-    get epsilon()
-    {
+    get epsilon() {
         return this.uniforms.epsilon;
     }
 }

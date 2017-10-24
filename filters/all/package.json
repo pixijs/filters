@@ -23,9 +23,9 @@
     "types.d.ts"
   ],
   "scripts": {
-    "build:umd": "rollup -c -f umd",
-    "build:es": "rollup -c",
-    "build": "npm run build:umd && npm run build:es",
+    "build:dev": "npm run build",
+    "build": "rollup -c && rollup -c -f umd",
+    "watch": "rollup -cw -f umd",
     "postversion": "npm run build"
   },
   "peerDependencies": {
@@ -54,6 +54,7 @@
     "@pixi/filter-twist": "^2.2.0",
     "@pixi/filter-zoom-blur": "^2.2.0",
     "@tools/build": "^2.0.1",
-    "rollup": "^0.45.2"
+    "rollup": "^0.45.2",
+    "rollup-watch": "^4.3.1"
   }
 }
