@@ -1,5 +1,5 @@
 export default function() {
-	this.addFilter('BlurFilter', {
+    this.addFilter('BlurFilter', {
         global: true,
         oncreate(folder) {
             folder.add(this, 'blur', 0, 100);

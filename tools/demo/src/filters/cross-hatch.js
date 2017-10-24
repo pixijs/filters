@@ -1,3 +1,3 @@
 export default function() {
-	this.addFilter('CrossHatchFilter');
+    this.addFilter('CrossHatchFilter');
 }

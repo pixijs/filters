@@ -1,5 +1,5 @@
 export default function() {
-	this.addFilter('NoiseFilter', {
+    this.addFilter('NoiseFilter', {
         global: true,
         oncreate(folder) {
             folder.add(this, 'noise', 0, 1);

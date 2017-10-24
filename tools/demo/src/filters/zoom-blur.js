@@ -1,6 +1,6 @@
 export default function() {
-	const app = this;
-	this.addFilter('ZoomBlurFilter', {
+    const app = this;
+    this.addFilter('ZoomBlurFilter', {
         args: [0.1, [app.initWidth / 2, app.initHeight / 2], 80],
         oncreate(folder) {
             folder.add(this, 'strength', 0.01, 0.5);

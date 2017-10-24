@@ -1,5 +1,5 @@
 export default function() {
-	this.addFilter('DropShadowFilter', {
+    this.addFilter('DropShadowFilter', {
         fishOnly: true,
         oncreate(folder) {
             folder.add(this, 'blur', 0, 40);

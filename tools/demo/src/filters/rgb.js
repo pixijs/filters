@@ -1,5 +1,5 @@
 export default function() {
-	this.addFilter('RGBSplitFilter', function(folder) {
+    this.addFilter('RGBSplitFilter', function(folder) {
         folder.add(this.red, '0', -20, 20).name('red.x');
         folder.add(this.red, '1', -20, 20).name('red.y');
         folder.add(this.blue, '0', -20, 20).name('blue.x');

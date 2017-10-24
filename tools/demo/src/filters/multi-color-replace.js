@@ -1,5 +1,5 @@
 export default function() {
-	const replacements = [
+    const replacements = [
         [3238359, 16711680],
         [938417, 65280],
         [1464209, 16776960],

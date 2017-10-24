@@ -1,5 +1,5 @@
 export default function() {
-	this.addFilter('SimpleLightmapFilter', {
+    this.addFilter('SimpleLightmapFilter', {
         args: [this.resources.lightmap.texture, 0x666666],
         oncreate(folder) {
             folder.addColor(this, 'color');
