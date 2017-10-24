@@ -7,7 +7,7 @@ const options = {
         'examples/*',
         'docs/**/*',
         'tools/screenshots/dist/*',
-        'tools/demo/images/**',
+        'tools/demo/images/*',
         'tools/demo/index.*'
     ],
     message: packageInfo.version
