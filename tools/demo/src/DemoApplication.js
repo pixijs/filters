@@ -143,8 +143,22 @@ export default class DemoApplication extends PIXI.Application {
         const height = this.domElement.offsetHeight;
         const filterAreaPadding = 4;
 
-        bg.width = width;
-        bg.height = height;
+        // Use equivalent of CSS's contain for the background
+        // so that it scales proportionally
+        const bgAspect = bg.texture.width / bg.texture.height;
+        const winAspect = width / height;
+
+        if (winAspect > bgAspect) {
+            bg.width = width;
+            bg.height = width / bgAspect;
+        }
+        else {
+            bg.height = height;
+            bg.width = height * bgAspect;
+        }
+
+        bg.x = (width - bg.width) / 2;
+        bg.y = (height - bg.height) / 2;
 
         overlay.width = width;
         overlay.height = height;
@@ -162,6 +176,8 @@ export default class DemoApplication extends PIXI.Application {
         this.events.emit('resize', width, height);
 
         this.renderer.resize(width, height);
+
+        this.render();
     }
 
     /**
