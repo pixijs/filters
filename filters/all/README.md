@@ -30,7 +30,7 @@ Filters include:
 
 ## Examples
 
-Click [here](https://pixijs.github.io/pixi-filters/examples) for filter demos.
+Click [here](https://pixijs.github.io/pixi-filters/tools/demo) for filter demos.
 
 ## Installation
 

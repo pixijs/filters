@@ -1,6 +1,6 @@
-import "pixi-filters";
-import "./ga";
-import DemoApplication from "./DemoApplication";
+import 'pixi-filters';
+import './ga';
+import DemoApplication from './DemoApplication';
 import * as filters from './filters';
 
 const app = new DemoApplication();

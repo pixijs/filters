@@ -6,6 +6,7 @@
   "scripts": {
     "prebuild": "rimraf index.js.map index.js",
     "build": "rollup -c --prod",
+    "build:dev": "rollup -cm",
     "watch": "rollup -cwm"
   },
   "devDependencies": {

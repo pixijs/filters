@@ -1,3 +1,4 @@
+/*global dat,ga*/
 /**
  * Demo show a bunch of fish and a dat.gui controls
  * @class
@@ -196,15 +197,15 @@ export default class DemoApplication extends PIXI.Application {
                 fish.x += bounds.width;
             }
             if (fish.x > bounds.x + bounds.width) {
-                fish.x -= bounds.width
+                fish.x -= bounds.width;
             }
             if (fish.y < bounds.y) {
                 fish.y += bounds.height;
             }
             if (fish.y > bounds.y + bounds.height) {
-                fish.y -= bounds.height
+                fish.y -= bounds.height;
             }
-        
+
         }
     }
 
@@ -233,12 +234,11 @@ export default class DemoApplication extends PIXI.Application {
             args: null,
             fishOnly: false,
             global: false,
-            oncreate: null,
-            args: null
+            oncreate: null
         }, options);
 
         if (options.global) {
-            options.name += ` (pixi.js)`;
+            options.name += ' (pixi.js)';
         }
 
         const folder = this.gui.addFolder(options.name);
@@ -250,9 +250,9 @@ export default class DemoApplication extends PIXI.Application {
 
         let filter;
         if (options.args) {
-            function ClassRefArgs(a) {
+            const ClassRefArgs = function(a) {
                 ClassRef.apply(this, a);
-            }
+            };
             ClassRefArgs.prototype = ClassRef.prototype;
             filter = new ClassRefArgs(options.args);
         }
