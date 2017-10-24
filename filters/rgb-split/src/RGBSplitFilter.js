@@ -2,7 +2,7 @@ import {vertex} from '@tools/fragments';
 import fragment from './rgb-split.frag';
 
 /**
- * An RGB Split Filter.
+ * An RGB Split Filter.<br>
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/rgb.png)
  *
  * @class

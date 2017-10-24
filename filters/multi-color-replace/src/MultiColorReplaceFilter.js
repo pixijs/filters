@@ -3,7 +3,7 @@ import fragment from './multi-color-replace.frag';
 
 /**
  * Filter for replacing a color with another color. Similar to ColorReplaceFilter, but support multiple
- * colors.
+ * colors.<br>
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/multi-color-replace.png)
  * @class
  * @extends PIXI.Filter

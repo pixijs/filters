@@ -7,7 +7,7 @@ import fragment from './bulgePinch.frag';
  */
 
 /**
- * Bulges or pinches the image in a circle.
+ * Bulges or pinches the image in a circle.<br>
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/bulge-pinch.gif)
  *
  * @class

@@ -2,7 +2,7 @@ import {vertex} from '@tools/fragments';
 import fragment from './dropshadow.frag';
 
 /**
- * Drop shadow filter.
+ * Drop shadow filter.<br>
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/drop-shadow.png)
  * @class
  * @extends PIXI.Filter

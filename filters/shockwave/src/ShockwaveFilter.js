@@ -4,7 +4,7 @@ import fragment from './shockwave.frag';
 /**
  * The ColorMatrixFilter class lets you apply a 4x4 matrix transformation on the RGBA
  * color and alpha values of every pixel on your displayObject to produce a result
- * with a new set of RGBA color and alpha values. It's pretty powerful!
+ * with a new set of RGBA color and alpha values. It's pretty powerful!<br>
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/shockwave.gif)
  *
  * @class

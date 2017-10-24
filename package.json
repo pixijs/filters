@@ -22,7 +22,7 @@
     "postpub": "npm run deploy"
   },
   "devDependencies": {
-    "@pixi/jsdoc-template": "^2.0.0",
+    "@pixi/jsdoc-template": "^2.2.0",
     "eslint": "^4.6.1",
     "gh-pages": "^0.11.0",
     "http-server": "^0.9.0",

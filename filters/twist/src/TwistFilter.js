@@ -2,7 +2,7 @@ import {vertex} from '@tools/fragments';
 import fragment from './twist.frag';
 
 /**
- * This filter applies a twist effect making display objects appear twisted in the given direction.
+ * This filter applies a twist effect making display objects appear twisted in the given direction.<br>
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/twist.png)
  *
  * @class

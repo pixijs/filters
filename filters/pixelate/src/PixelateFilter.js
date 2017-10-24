@@ -2,7 +2,7 @@ import {vertex} from '@tools/fragments';
 import fragment from './pixelate.frag';
 
 /**
- * This filter applies a pixelate effect making display objects appear 'blocky'.
+ * This filter applies a pixelate effect making display objects appear 'blocky'.<br>
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/pixelate.png)
  *
  * @class

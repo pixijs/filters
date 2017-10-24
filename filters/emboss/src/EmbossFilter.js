@@ -2,7 +2,7 @@ import {vertex} from '@tools/fragments';
 import fragment from './emboss.frag';
 
 /**
- * An RGB Split Filter.
+ * An RGB Split Filter.<br>
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/emboss.png)
  *
  * @class

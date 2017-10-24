@@ -9,7 +9,7 @@ import fragment from './ascii.frag';
  */
 
 /**
- * An ASCII filter.
+ * An ASCII filter.<br>
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/ascii.png)
  *
  * @class

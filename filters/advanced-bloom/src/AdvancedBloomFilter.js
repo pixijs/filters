@@ -5,7 +5,7 @@ import fragment from './advanced-bloom.frag';
 /**
  * The AdvancedBloomFilter applies a Bloom Effect to an object. Unlike the normal BloomFilter
  * this had some advanced controls for adjusting the look of the bloom. Note: this filter
- * is slower than normal BloomFilter.
+ * is slower than normal BloomFilter.<br>
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/advanced-bloom.png)
  *
  * @class

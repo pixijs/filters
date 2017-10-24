@@ -4,7 +4,7 @@ import fragment from './glow.frag';
 /**
  * GlowFilter, originally by mishaa
  * http://www.html5gamedevs.com/topic/12756-glow-filter/?hl=mishaa#entry73578
- * http://codepen.io/mishaa/pen/raKzrm
+ * http://codepen.io/mishaa/pen/raKzrm<br>
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/glow.png)
  *
  * @class

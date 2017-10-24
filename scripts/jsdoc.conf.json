@@ -10,7 +10,7 @@
     },
     "plugins": [
         "plugins/markdown",
-        "./scripts/jsdoc-fix"
+        "./node_modules/@pixi/jsdoc-template/plugins/es6-fix"
     ],
     "templates": {
         "cleverLinks": false,

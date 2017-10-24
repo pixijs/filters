@@ -2,7 +2,7 @@ import vertex from './zoom-blur.vert';
 import fragment from './zoom-blur.frag';
 
 /**
- * The ZoomFilter applies a Zoom blur to an object.
+ * The ZoomFilter applies a Zoom blur to an object.<br>
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/zoom-blur.png)
  *
  * @class
