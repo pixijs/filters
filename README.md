@@ -87,6 +87,18 @@ Build multiple filters where scope is a glob expression:
 npm run build -- --scope "{@pixi/filter-emboss,@pixi/filter-glow}"
 ```
 
+Watch all filters (auto-rebuild upon src changes):
+
+```bash
+npm run watch
+```
+
+Build all filters in dev-mode (un-minified):
+
+```bash
+npm run build:dev
+```
+
 ## Documentation
 
 API documention can be found [here](http://pixijs.github.io/pixi-filters/docs/).

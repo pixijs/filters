@@ -1,13 +1,13 @@
 {
   "name": "@pixi/filter-advanced-bloom",
   "version": "2.2.0",
-  "main": "lib/filter-advanced-bloom.min.js",
+  "main": "lib/filter-advanced-bloom.js",
   "description": "Display filter render as ASCII text",
   "author": "finscn",
   "contributors": [
     "finscn <finscn@gmail.com>"
   ],
-  "module": "lib/filter-advanced-bloom.es.min.js",
+  "module": "lib/filter-advanced-bloom.es.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
@@ -20,9 +20,9 @@
     "access": "public"
   },
   "scripts": {
-    "build:umd": "rollup -c -f umd && rollup -cp -f umd",
-    "build:es": "rollup -c && rollup -cp",
-    "build": "npm run build:umd && npm run build:es",
+    "build:dev": "rollup -c && rollup -c -f umd",
+    "build": "rollup -cp && rollup -cp -f umd",
+    "watch": "rollup -cw",
     "postversion": "npm run build"
   },
   "files": [
@@ -35,6 +35,7 @@
   "devDependencies": {
     "@tools/build": "^2.0.1",
     "@tools/fragments": "^2.0.0",
-    "rollup": "^0.45.2"
+    "rollup": "^0.45.2",
+    "rollup-watch": "^4.3.1"
   }
 }
