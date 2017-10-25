@@ -223,6 +223,8 @@ export default class DemoApplication extends PIXI.Application {
             }
 
         }
+
+        this.events.emit('animate', delta, animateTimer);
     }
 
     /**
