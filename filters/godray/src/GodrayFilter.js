@@ -64,14 +64,13 @@ export default class GodrayFilter extends PIXI.Filter {
         return this._angle;
     }
     set angle(value) {
-        const radians = this.angle * PIXI.DEG_TO_RAD;
+        const radians = value * PIXI.DEG_TO_RAD;
 
         const cos = Math.cos(radians);
         const sin = Math.sin(radians);
-        const d = Math.sqrt(cos * cos + sin * sin);
         const dir = this.uniforms.angleDir;
-        dir[0] = cos / d;
-        dir[1] = sin / d;
+        dir[0] = cos;
+        dir[1] = sin;
 
         this._angle = value;
     }
