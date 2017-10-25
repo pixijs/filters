@@ -49,7 +49,7 @@ export default class DemoApplication extends PIXI.Application {
         const app = this;
 
         this.gui = gui;
-        this.gui.add(this, 'renderPaused').name('<i class="fa fa-pause"></i> Pause Render')
+        this.gui.add(this, 'renderPaused').name('<b>*</b> Pause Render')
             .onChange(function(value){
                 if (value) {
                     app.stop();
@@ -58,7 +58,7 @@ export default class DemoApplication extends PIXI.Application {
                     app.start();
                 }
             });
-        this.gui.add(this, 'paused').name('<i>*</i> Pause animate');
+        this.gui.add(this, 'paused').name('<b>*</b> Pause animate');
     }
 
     /**
