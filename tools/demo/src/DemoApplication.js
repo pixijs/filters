@@ -34,6 +34,7 @@ export default class DemoApplication extends PIXI.Application {
         this.animateTimer = 0;
         this.bg = null;
         this.pond = null;
+        this.fishCount = 20;
         this.fishes = [];
         this.fishFilters = [];
         this.pondFilters = [];
@@ -100,7 +101,7 @@ export default class DemoApplication extends PIXI.Application {
         this.pond.addChild(this.bg);
 
         // Create and add the fish
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < this.fishCount; i++) {
             const id = 'fish' + ((i % 4) + 1);
             const fish = new PIXI.Sprite(resources[id].texture);
             fish.anchor.set(0.5);
