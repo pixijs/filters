@@ -54,9 +54,9 @@ export default class GodrayFilter extends PIXI.Filter {
 
         this.uniforms.time = this.time;
 
+        // compensate angle
         this.uniforms.angleDir[1] = this._angleSin * height / width;
 
-         // * dimensions.y / dimensions.x
         // draw the filter...
         filterManager.applyFilter(this, input, output, clear);
     }
