@@ -58,7 +58,7 @@ export default class DemoApplication extends PIXI.Application {
                     app.start();
                 }
             });
-        this.gui.add(this, 'paused').name('<i>*</i> Pause animation');
+        this.gui.add(this, 'paused').name('<i>*</i> Pause animate');
     }
 
     /**
