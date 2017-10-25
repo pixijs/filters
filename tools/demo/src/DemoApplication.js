@@ -26,13 +26,10 @@ export default class DemoApplication extends PIXI.Application {
 
         this.domElement = domElement;
 
-        this.gui = gui;
-        this.gui.add(this, 'stop').name('<i class="fa fa-pause"></i> Pause Render');
-        this.gui.add(this, 'start').name('<i class="fa fa-play"></i> Resume Render');
-
         this.initWidth = initWidth;
         this.initHeight = initHeight;
         this.paused = false;
+        this.renderPaused = false;
         this.events = new PIXI.utils.EventEmitter();
         this.animateTimer = 0;
         this.bg = null;
@@ -48,6 +45,20 @@ export default class DemoApplication extends PIXI.Application {
             initWidth + this.padding * 2,
             initHeight + this.padding * 2
         );
+
+        const app = this;
+
+        this.gui = gui;
+        this.gui.add(this, 'renderPaused').name('<i class="fa fa-pause"></i> Pause Render')
+            .onChange(function(value){
+                if (value) {
+                    app.stop();
+                }
+                else {
+                    app.start();
+                }
+            });
+        this.gui.add(this, 'paused').name('<i>*</i> Pause animation');
     }
 
     /**
@@ -186,13 +197,15 @@ export default class DemoApplication extends PIXI.Application {
      */
     animate(delta) {
 
-        if (this.paused) {
-            return;
-        }
-
         this.animateTimer += 0.1 * delta;
 
         const {bounds, animateTimer, overlay} = this;
+
+        this.events.emit('animate', delta, animateTimer);
+
+        if (this.paused) {
+            return;
+        }
 
         // Animate the overlay
         overlay.tilePosition.x = animateTimer * -10;
@@ -223,8 +236,6 @@ export default class DemoApplication extends PIXI.Application {
             }
 
         }
-
-        this.events.emit('animate', delta, animateTimer);
     }
 
     /**
