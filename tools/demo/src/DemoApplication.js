@@ -50,7 +50,7 @@ export default class DemoApplication extends PIXI.Application {
         const app = this;
 
         this.gui = gui;
-        this.gui.add(this, 'renderPaused').name('<b>*</b> Pause Render')
+        this.gui.add(this, 'renderPaused').name('<b>*</b> Pause render')
             .onChange(function(value){
                 if (value) {
                     app.stop();
