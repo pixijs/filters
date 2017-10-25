@@ -22,19 +22,19 @@ import main from './main.frag';
 export default class GodrayFilter extends PIXI.Filter {
 
     constructor(angle = 30, gain = 0.5, lacunarity = 2.5, time = 0) {
-        super(vertex, main.replace('$perlin', perlin));
+        super(vertex, main.replace('${perlin}', perlin));
 
-        /**
-         * The angle of the rays in degrees. For instance, a value of 0 is vertical rays,
-         * values of 90 or -90 produce horizontal rays.
-         *
-         * @member {number}
-         * @default 30
-         */
         this.angle = angle;
 
         this.gain = gain;
+
         this.lacunarity = lacunarity;
+
+        /**
+         * The current time.
+         *
+         * @member {number}
+         */
         this.time = time;
     }
 
@@ -46,32 +46,34 @@ export default class GodrayFilter extends PIXI.Filter {
      * @param {PIXI.RenderTarget} output - The output target.
      */
     apply(filterManager, input, output, clear) {
-        this.uniforms.dimensions[0] = input.sourceFrame.width;
-        this.uniforms.dimensions[1] = input.sourceFrame.height;
-        const radians = this.angle * PIXI.DEG_TO_RAD;
 
-        //compensate angle, divide by wh or multiply by hw
-        const cos = Math.cos(radians) * input.sourceFrame.width;
-        const sin = Math.sin(radians) * input.sourceFrame.height;
-        const d = Math.sqrt(cos * cos + sin * sin);
-        const dir = this.uniforms.angleDir;
-        dir[0] = cos / d;
-        dir[1] = sin / d;
+        this.uniforms.time = this.time;
 
         // draw the filter...
         filterManager.applyFilter(this, input, output, clear);
     }
 
     /**
-     * The current time.
+     * The angle of the rays in degrees. For instance, a value of 0 is vertical rays,
+     * values of 90 or -90 produce horizontal rays.
      *
      * @member {number}
+     * @default 30
      */
-    get time() {
-        return this.uniforms.time;
+    get angle() {
+        return this._angle;
     }
-    set time(value) {
-        this.uniforms.time = value;
+    set angle(value) {
+        const radians = this.angle * PIXI.DEG_TO_RAD;
+
+        const cos = Math.cos(radians);
+        const sin = Math.sin(radians);
+        const d = Math.sqrt(cos * cos + sin * sin);
+        const dir = this.uniforms.angleDir;
+        dir[0] = cos / d;
+        dir[1] = sin / d;
+
+        this._angle = value;
     }
 
     /**
