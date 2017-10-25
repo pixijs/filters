@@ -1,7 +1,7 @@
 {
   "lerna": "2.0.0",
   "packages": [
-    "pixi-filters",
+    "bundle",
     "filters/*",
     "tools/*"
   ],
