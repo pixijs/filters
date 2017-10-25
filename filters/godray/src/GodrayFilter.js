@@ -46,9 +46,17 @@ export default class GodrayFilter extends PIXI.Filter {
      * @param {PIXI.RenderTarget} output - The output target.
      */
     apply(filterManager, input, output, clear) {
+        const width = input.sourceFrame.width;
+        const height = input.sourceFrame.height;
+
+        this.uniforms.dimensions[0] = width;
+        this.uniforms.dimensions[1] = height;
 
         this.uniforms.time = this.time;
 
+        this.uniforms.angleDir[1] = this._angleSin * height / width;
+
+         // * dimensions.y / dimensions.x
         // draw the filter...
         filterManager.applyFilter(this, input, output, clear);
     }
@@ -66,11 +74,10 @@ export default class GodrayFilter extends PIXI.Filter {
     set angle(value) {
         const radians = value * PIXI.DEG_TO_RAD;
 
-        const cos = Math.cos(radians);
-        const sin = Math.sin(radians);
-        const dir = this.uniforms.angleDir;
-        dir[0] = cos;
-        dir[1] = sin;
+        this._angleCos = Math.cos(radians);
+        this._angleSin = Math.sin(radians);
+
+        this.uniforms.angleDir[0] = this._angleCos;
 
         this._angle = value;
     }
