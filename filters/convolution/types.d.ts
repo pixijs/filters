@@ -1,6 +1,6 @@
 /// <reference types="pixi.js" />
 declare namespace PIXI.filters {
-    class ConvolutionFilter extends PIXI.Filter {
+    class ConvolutionFilter extends PIXI.Filter<{}> {
         constructor(matrix:number[], width:number, height:number);
         height:number;
         width:number;

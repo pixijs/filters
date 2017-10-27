@@ -1,6 +1,6 @@
 /// <reference types="pixi.js" />
 declare namespace PIXI.filters {
-    class CrossHatchFilter extends PIXI.Filter {
+    class CrossHatchFilter extends PIXI.Filter<{}> {
         constructor();
     }
 }

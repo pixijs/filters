@@ -1,6 +1,6 @@
 /// <reference types="pixi.js" />
 declare namespace PIXI.filters {
-    class TwistFilter extends PIXI.Filter {
+    class TwistFilter extends PIXI.Filter<{}> {
         constructor(radius?:number, angle?:number, padding?:number);
         angle:number;
         offset:PIXI.Point;
