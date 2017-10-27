@@ -26,17 +26,15 @@ export default class DemoApplication extends PIXI.Application {
 
         this.domElement = domElement;
 
-        this.gui = gui;
-        this.gui.add(this, 'stop').name('<i class="fa fa-pause"></i> Pause Render');
-        this.gui.add(this, 'start').name('<i class="fa fa-play"></i> Resume Render');
-
         this.initWidth = initWidth;
         this.initHeight = initHeight;
         this.paused = false;
+        this.renderPaused = false;
         this.events = new PIXI.utils.EventEmitter();
         this.animateTimer = 0;
         this.bg = null;
         this.pond = null;
+        this.fishCount = 20;
         this.fishes = [];
         this.fishFilters = [];
         this.pondFilters = [];
@@ -48,6 +46,20 @@ export default class DemoApplication extends PIXI.Application {
             initWidth + this.padding * 2,
             initHeight + this.padding * 2
         );
+
+        const app = this;
+
+        this.gui = gui;
+        this.gui.add(this, 'renderPaused').name('<b>*</b> Pause render')
+            .onChange(function(value){
+                if (value) {
+                    app.stop();
+                }
+                else {
+                    app.start();
+                }
+            });
+        this.gui.add(this, 'paused').name('<b>*</b> Pause animate');
     }
 
     /**
@@ -89,7 +101,7 @@ export default class DemoApplication extends PIXI.Application {
         this.pond.addChild(this.bg);
 
         // Create and add the fish
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < this.fishCount; i++) {
             const id = 'fish' + ((i % 4) + 1);
             const fish = new PIXI.Sprite(resources[id].texture);
             fish.anchor.set(0.5);
@@ -186,13 +198,15 @@ export default class DemoApplication extends PIXI.Application {
      */
     animate(delta) {
 
-        if (this.paused) {
-            return;
-        }
-
         this.animateTimer += 0.1 * delta;
 
         const {bounds, animateTimer, overlay} = this;
+
+        this.events.emit('animate', delta, animateTimer);
+
+        if (this.paused) {
+            return;
+        }
 
         // Animate the overlay
         overlay.tilePosition.x = animateTimer * -10;
@@ -234,6 +248,7 @@ export default class DemoApplication extends PIXI.Application {
      * @param {array} [options.args] Constructor arguments
      * @param {boolean} [options.fishOnly=false] Apply to fish only, not whole scene
      * @param {boolean} [options.enabled=false] Filter is enabled by default
+     * @param {boolean} [options.opened=false] Filter Folder is opened by default
      * @param {function} [oncreate] Function takes filter and gui folder as
      *        arguments and is scoped to the Demo application.
      * @return {PIXI.Filter} Instance of new filter
@@ -247,6 +262,7 @@ export default class DemoApplication extends PIXI.Application {
         options = Object.assign({
             name: id,
             enabled: false,
+            opened: false,
             args: null,
             fishOnly: false,
             global: false,
@@ -257,6 +273,7 @@ export default class DemoApplication extends PIXI.Application {
             options.name += ' (pixi.js)';
         }
 
+        const app = this;
         const folder = this.gui.addFolder(options.name);
         const ClassRef = PIXI.filters[id];
 
@@ -282,6 +299,9 @@ export default class DemoApplication extends PIXI.Application {
         // Track enabled change with analytics
         folder.add(filter, 'enabled').onChange((enabled) => {
             ga('send', 'event', id, enabled ? 'enabled' : 'disabled');
+
+            app.events.emit('toggle', enabled);
+
             this.render();
             if (enabled) {
                 folder.domElement.className += ' enabled';
@@ -290,6 +310,10 @@ export default class DemoApplication extends PIXI.Application {
                 folder.domElement.className = folder.domElement.className.replace(' enabled', '');
             }
         });
+
+        if (options.opened) {
+            folder.open();
+        }
 
         if (options.enabled) {
             folder.domElement.className += ' enabled';
