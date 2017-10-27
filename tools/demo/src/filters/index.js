@@ -3,6 +3,7 @@ export {default as displacement} from './displacement';
 export {default as blur} from './blur';
 export {default as noise} from './noise';
 export {default as colorMatrix} from './color-matrix';
+export {default as alpha} from './alpha';
 export {default as outline} from './outline';
 export {default as glow} from './glow';
 export {default as dropShadow} from './drop-shadow';

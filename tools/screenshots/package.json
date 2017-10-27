@@ -11,6 +11,6 @@
     "fs-extra": "^4.0.1",
     "gifencoder": "^1.1.0",
     "pixi-filters": "^2.2.0",
-    "pixi.js": "^4.5.5"
+    "pixi.js": "^4.6.0"
   }
 }

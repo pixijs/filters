@@ -48,3 +48,9 @@ body {
 .dg .function .property-name {
     width: 100%;
 }
+.dg .property-name {
+    width: 46%;
+}
+.dg .c {
+    width: 54%;
+}
