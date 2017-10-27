@@ -30,7 +30,7 @@
     "types.d.ts"
   ],
   "peerDependencies": {
-    "pixi.js": "^4.0.0"
+    "pixi.js": "^4.6.0"
   },
   "devDependencies": {
     "@tools/build": "^2.0.1",

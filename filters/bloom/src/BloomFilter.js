@@ -1,4 +1,4 @@
-const {BlurXFilter, BlurYFilter, VoidFilter} = PIXI.filters;
+const {BlurXFilter, BlurYFilter, AlphaFilter} = PIXI.filters;
 
 /**
  * The BloomFilter applies a Gaussian blur to an object.
@@ -37,7 +37,7 @@ export default class BloomFilter extends PIXI.Filter {
         this.blurXFilter = new BlurXFilter(blurX, quality, resolution, kernelSize);
         this.blurYFilter = new BlurYFilter(blurY, quality, resolution, kernelSize);
         this.blurYFilter.blendMode = PIXI.BLEND_MODES.SCREEN;
-        this.defaultFilter = new VoidFilter();
+        this.defaultFilter = new AlphaFilter();
     }
 
     apply(filterManager, input, output) {
