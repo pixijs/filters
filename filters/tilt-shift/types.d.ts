@@ -1,6 +1,6 @@
 /// <reference types="pixi.js" />
 declare namespace PIXI.filters {
-    class TiltShiftFilter extends PIXI.Filter {
+    class TiltShiftFilter extends PIXI.Filter<{}> {
         constructor(blur?:number, gradientBlur?:number, start?:PIXI.Point, end?:PIXI.Point);
         blur:number;
         end:PIXI.Point;

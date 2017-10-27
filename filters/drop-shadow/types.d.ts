@@ -1,6 +1,6 @@
 /// <reference types="pixi.js" />
 declare namespace PIXI.filters {
-    class DropShadowFilter extends PIXI.Filter {
+    class DropShadowFilter extends PIXI.Filter<{}> {
         constructor(rotation?:number, distance?:number, blur?:number, color?:number, alpha?:number);
         alpha:number;
         blur:number;

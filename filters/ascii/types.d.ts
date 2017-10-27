@@ -1,6 +1,6 @@
 /// <reference types="pixi.js" />
 declare namespace PIXI.filters {
-    class AsciiFilter extends PIXI.Filter {
+    class AsciiFilter extends PIXI.Filter<{}> {
         constructor(size?:number);
         size:number;
     }

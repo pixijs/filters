@@ -1,6 +1,6 @@
 /// <reference types="pixi.js" />
 declare namespace PIXI.filters {
-    class AdvancedBloomFilter extends PIXI.Filter {
+    class AdvancedBloomFilter extends PIXI.Filter<{}> {
         constructor(options?: AdvancedBloomOptions);
         constructor(threshold?: number);
         threshold: number;
