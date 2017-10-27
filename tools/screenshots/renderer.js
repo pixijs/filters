@@ -57,16 +57,22 @@ function next() {
         assert(!!FilterClass, `Filter ${obj.name} does not exist`);
         let filter;
         switch(obj.name) {
-            case "DisplacementFilter": {
+            case 'DisplacementFilter': {
                 filter = new FilterClass(displacement, 50);
                 break;
             }
-            case "SimpleLightmapFilter": {
+            case 'SimpleLightmapFilter': {
                 filter = new FilterClass(lightmap);
                 break;
             }
             default: {
-                filter = new FilterClass();
+                const args = obj.arguments;
+                if (args) {
+                    filter = new FilterClass(...args);
+                }
+                else {
+                    filter = new FilterClass();
+                }
             }
         }
 
@@ -91,15 +97,18 @@ function next() {
             base64ToImage(
                 app.renderer.plugins.extract.base64(),
                 outputPath + path.sep, {
-                    fileName: obj.filename, 
+                    fileName: obj.filename,
                     type:'png'
                 }
             );
         }
         else if (obj.frame) {
-            sprite.scale.y *= -1;
             app.render();
-            frames[obj.frame] = app.renderer.plugins.extract.pixels();
+            const canvas = app.renderer.plugins.extract.canvas();
+            const context = canvas.getContext('2d');
+            context.scale(1, -1);
+            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+            frames[obj.frame] = imageData.data;
         }
 
         // Wait for next stack to render next filter
@@ -124,9 +133,9 @@ function nextAnim() {
         ));
 
         encoder.start();
-        encoder.setRepeat(0);   // 0 for repeat, -1 for no-repeat 
-        encoder.setDelay(anim.delay || 500);  // frame delay in ms 
-        encoder.setQuality(10); // image quality. 10 is default. 
+        encoder.setRepeat(0);   // 0 for repeat, -1 for no-repeat
+        encoder.setDelay(anim.delay || 500);  // frame delay in ms
+        encoder.setQuality(10); // image quality. 10 is default.
 
         // Add the frames
         anim.frames.forEach((frame) => {

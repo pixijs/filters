@@ -6,7 +6,7 @@ import fragment from './convolution.frag';
  * A convolution combines pixels in the input image with neighboring pixels to produce a new image.
  * A wide variety of image effects can be achieved through convolutions, including blurring, edge
  * detection, sharpening, embossing, and beveling. The matrix should be specified as a 9 point Array.
- * See http://docs.gimp.org/en/plug-in-convmatrix.html for more info.
+ * See http://docs.gimp.org/en/plug-in-convmatrix.html for more info.<br>
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/convolution.png)
  *
  * @class

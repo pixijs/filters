@@ -16,17 +16,18 @@ import fragment from './simpleLightmap.frag';
 * @memberof PIXI.filters
 * @param {PIXI.Texture} texture a texture where your lightmap is rendered
 * @param {Array<number>|number} [color=0x000000] An RGBA array of the ambient color
+* @param {number} [alpha=1] Default alpha set independent of color (if it's a number, not array).
 *
 * @example
 *  displayObject.filters = [new SimpleLightmapFilter(texture, 0x666666)];
 */
 export default class SimpleLightmapFilter extends PIXI.Filter {
 
-    constructor(texture, color = 0x000000) {
+    constructor(texture, color = 0x000000, alpha = 1) {
         super(vertex, fragment);
 
         // Set the default for setting color
-        this.uniforms.ambientColor = new Float32Array([0, 0, 0, 1]);
+        this.uniforms.ambientColor = new Float32Array([0, 0, 0, alpha]);
 
         this.texture = texture;
         this.color = color;
@@ -39,8 +40,7 @@ export default class SimpleLightmapFilter extends PIXI.Filter {
      * @param {PIXI.RenderTarget} input - The input target.
      * @param {PIXI.RenderTarget} output - The output target.
      */
-    apply(filterManager, input, output, clear)
-    {
+    apply(filterManager, input, output, clear) {
         this.uniforms.dimensions[0] = input.sourceFrame.width;
         this.uniforms.dimensions[1] = input.sourceFrame.height;
 

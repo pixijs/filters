@@ -2,7 +2,7 @@ import {vertex} from '@tools/fragments';
 import fragment from './dropshadow.frag';
 
 /**
- * Drop shadow filter.
+ * Drop shadow filter.<br>
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/drop-shadow.png)
  * @class
  * @extends PIXI.Filter
@@ -32,7 +32,7 @@ export default class DropShadowFilter extends PIXI.Filter {
         const target = filterManager.getRenderTarget();
         target.transform = new PIXI.Matrix();
         target.transform.translate(
-            this.distance * Math.cos(this.angle), 
+            this.distance * Math.cos(this.angle),
             this.distance * Math.sin(this.angle)
         );
         this.tintFilter.apply(filterManager, input, target, true);

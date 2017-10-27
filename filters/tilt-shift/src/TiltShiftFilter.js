@@ -7,7 +7,7 @@ import TiltShiftYFilter from './TiltShiftYFilter';
  */
 
 /**
- * A TiltShift Filter. Manages the pass of both a TiltShiftXFilter and TiltShiftYFilter.
+ * A TiltShift Filter. Manages the pass of both a TiltShiftXFilter and TiltShiftYFilter.<br>
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/tilt-shift.png)
  *
  * @class
@@ -19,7 +19,7 @@ import TiltShiftYFilter from './TiltShiftYFilter';
  * @param {PIXI.Point} [end=null] The Y value to end the effect at.
  */
 export default class TiltShiftFilter extends PIXI.Filter {
-    
+
     constructor(blur = 100, gradientBlur = 600, start = null, end = null) {
         super();
         this.tiltShiftXFilter = new TiltShiftXFilter(blur, gradientBlur, start, end);

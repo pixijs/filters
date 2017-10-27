@@ -4,11 +4,11 @@ import fragment from './glow.frag';
 /**
  * GlowFilter, originally by mishaa
  * http://www.html5gamedevs.com/topic/12756-glow-filter/?hl=mishaa#entry73578
- * http://codepen.io/mishaa/pen/raKzrm
+ * http://codepen.io/mishaa/pen/raKzrm<br>
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/glow.png)
  *
  * @class
- * 
+ *
  * @extends PIXI.Filter
  * @memberof PIXI.filters
  * @param {number} [distance=10] The distance of the glow. Make it 2 times more for resolution=2. It cant be changed after filter creation

@@ -3,7 +3,7 @@ import fragment from './colorReplace.frag';
 
 /**
  * ColorReplaceFilter, originally by mishaa, updated by timetocode
- * http://www.html5gamedevs.com/topic/10640-outline-a-sprite-change-certain-colors/?p=69966
+ * http://www.html5gamedevs.com/topic/10640-outline-a-sprite-change-certain-colors/?p=69966<br>
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/color-replace.png)
  *
  * @class

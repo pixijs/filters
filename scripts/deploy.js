@@ -4,11 +4,11 @@ const ghpages = require('gh-pages');
 const packageInfo = require('../lerna.json');
 const options = {
     src: [
-        'filters/all/lib/pixi-filters.js',
-        'filters/all/lib/pixi-filters.js.map',
-        'examples/**/*',
+        'examples/*',
         'docs/**/*',
-        'tools/screenshots/dist/*'
+        'tools/screenshots/dist/*',
+        'tools/demo/images/*',
+        'tools/demo/index.*'
     ],
     message: packageInfo.version
 };

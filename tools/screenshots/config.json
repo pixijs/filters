@@ -19,6 +19,16 @@
                 "bulge-pinch-0",
                 "bulge-pinch-1"
             ]
+        },
+        {
+            "filename": "godray",
+            "delay": 500,
+            "frames": [
+                "godray-0",
+                "godray-1",
+                "godray-2",
+                "godray-3"
+            ]
         }
     ],
     "images" : [
@@ -37,6 +47,10 @@
         {
             "name": "AsciiFilter",
             "filename": "ascii"
+        },
+        {
+            "name": "AdvancedBloomFilter",
+            "filename": "advanced-bloom"
         },
         {
             "name": "BloomFilter",
@@ -198,6 +212,18 @@
             }
         },
         {
+            "name": "MultiColorReplaceFilter",
+            "filename": "multi-color-replace",
+            "arguments": [
+                [
+                    [405551, 0],
+                    [7563943, 65280],
+                    [16737851, 16711680]
+                ],
+                0.4
+            ]
+        },
+        {
             "name": "ColorMatrixFilter",
             "filename": "color-matrix-desaturate",
             "func": "desaturate"
@@ -264,6 +290,52 @@
             "filename": "alpha",
             "options": {
                 "alpha": 0.5
+            }
+        },
+        {
+            "name": "GodrayFilter",
+            "frame": "godray-0",
+            "options": {
+                "time": 0,
+                "gain": 0.6,
+                "lacunarity": 2
+            }
+        },
+        {
+            "name": "GodrayFilter",
+            "frame": "godray-1",
+            "options": {
+                "time": 0.1,
+                "gain": 0.6,
+                "lacunarity": 2
+            }
+        },
+        {
+            "name": "GodrayFilter",
+            "frame": "godray-2",
+            "options": {
+                "time": 0.2,
+                "gain": 0.6,
+                "lacunarity": 2
+            }
+        },
+        {
+            "name": "GodrayFilter",
+            "frame": "godray-3",
+            "options": {
+                "time": 0.3,
+                "gain": 0.6,
+                "lacunarity": 2
+            }
+        },
+        {
+            "name": "ZoomBlurFilter",
+            "filename": "zoom-blur",
+            "options": {
+                "strength": 0.3,
+                "center": [130, 80],
+                "innerRadius": 40
+>>>>>>> master
             }
         }
     ]

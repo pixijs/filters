@@ -7,6 +7,7 @@ Optional filters that work with PixiJS v4.
 Filters include:
 
 * **AsciiFilter** _@pixi/filter-ascii_
+* **AdvancedBloomFilter** _@pixi/filter-advanced-bloom_
 * **BloomFilter** _@pixi/filter-bloom_
 * **BulgePinchFilter** _@pixi/filter-bulge-pinch_
 * **ColorReplaceFilter** _@pixi/filter-color-replace_
@@ -15,7 +16,9 @@ Filters include:
 * **DotFilter** _@pixi/filter-dot_
 * **DropShadowFilter** _@pixi/filter-drop-shadow_
 * **GlowFilter** _@pixi/filter-glow_
+* **GodrayFilter** _@pixi/filter-godray_
 * **EmbossFilter** _@pixi/filter-emboss_
+* **MultiColorFilter** _@pixi/filter-multi-color-replace_
 * **PixelateFilter** _@pixi/filter-pixelate_
 * **OutlineFilter** _@pixi/filter-outline_
 * **RGBSplitFilter** _@pixi/filter-rgb_
@@ -23,10 +26,11 @@ Filters include:
 * **SimpleLightmapFilter** _@pixi/filter-simple-lightmap_
 * **TiltShiftFilter** _@pixi/filter-tilt-shift_
 * **TwistFilter** _@pixi/filter-twist_
+* **ZoomBlurFilter** _@pixi/filter-zoom-blur_
 
 ## Examples
 
-Click [here](https://pixijs.github.io/pixi-filters/examples) for filter demos.
+Click [here](https://pixijs.github.io/pixi-filters/tools/demo) for filter demos.
 
 ## Installation
 
@@ -36,7 +40,7 @@ Using NPM:
 npm install pixi-filters
 ```
 
-## Usage 
+## Usage
 
 ### Browser
 
