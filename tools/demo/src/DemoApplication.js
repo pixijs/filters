@@ -273,6 +273,7 @@ export default class DemoApplication extends PIXI.Application {
             options.name += ' (pixi.js)';
         }
 
+        const app = this;
         const folder = this.gui.addFolder(options.name);
         const ClassRef = PIXI.filters[id];
 
@@ -298,6 +299,9 @@ export default class DemoApplication extends PIXI.Application {
         // Track enabled change with analytics
         folder.add(filter, 'enabled').onChange((enabled) => {
             ga('send', 'event', id, enabled ? 'enabled' : 'disabled');
+
+            app.events.emit('toggle', enabled);
+
             this.render();
             if (enabled) {
                 folder.domElement.className += ' enabled';
