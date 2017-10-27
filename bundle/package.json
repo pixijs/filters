@@ -29,7 +29,7 @@
     "postversion": "npm run build"
   },
   "peerDependencies": {
-    "pixi.js": "^4.0.0"
+    "pixi.js": "^4.6.0"
   },
   "devDependencies": {
     "@pixi/filter-advanced-bloom": "^2.2.0",
