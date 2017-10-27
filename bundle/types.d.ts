@@ -102,10 +102,17 @@ declare namespace PIXI.filters {
         blue:PIXI.Point;
     }
     class ShockwaveFilter extends PIXI.Filter {
-        constructor(center?:PIXI.Point, params?:number[], time?:number);
-        center:PIXI.Point;
-        params:number[];
-        time:number;
+        constructor(center?:PIXI.Point|number[], options?:ShockwaveOptions, time?:number);
+        center: PIXI.Point|number[];
+        options: ShockwaveOptions;
+        time: number;
+    }
+    interface ShockwaveOptions {
+        amplitude?: number;
+        wavelength?: number;
+        brightness?: number;
+        speed?: number;
+        radius?: number;
     }
     class SimpleLightmapFilter extends PIXI.Filter {
         constructor(texture:PIXI.Texture, color?:number[]|number);
