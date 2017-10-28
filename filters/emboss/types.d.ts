@@ -1,6 +1,6 @@
 /// <reference types="pixi.js" />
 declare namespace PIXI.filters {
-    class EmbossFilter extends PIXI.Filter {
+    class EmbossFilter extends PIXI.Filter<{}> {
         constructor(strength?:number);
         strength:number;
     }

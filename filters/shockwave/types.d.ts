@@ -1,6 +1,6 @@
 /// <reference types="pixi.js" />
 declare namespace PIXI.filters {
-    class ShockwaveFilter extends PIXI.Filter {
+    class ShockwaveFilter extends PIXI.Filter<{}> {
         constructor(center?:PIXI.Point|number[], options?:ShockwaveOptions, time?:number);
         center: PIXI.Point|number[];
         options: ShockwaveOptions;

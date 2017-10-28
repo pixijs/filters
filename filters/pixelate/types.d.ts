@@ -1,6 +1,6 @@
 /// <reference types="pixi.js" />
 declare namespace PIXI.filters {
-    class PixelateFilter extends PIXI.Filter {
+    class PixelateFilter extends PIXI.Filter<{}> {
         constructor(size?:PIXI.Point|number[]|number);
         size:PIXI.Point|number[]|number;
     }
