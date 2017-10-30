@@ -193,15 +193,15 @@ export default class DemoApplication extends PIXI.Application {
      */
     animate(delta) {
 
-        if (!this.animating) {
-            return;
-        }
-
         this.animateTimer += 0.1 * delta;
 
         const {bounds, animateTimer, overlay} = this;
 
         this.events.emit('animate', delta, animateTimer);
+
+        if (!this.animating) {
+            return;
+        }
 
         // Animate the overlay
         overlay.tilePosition.x = animateTimer * -10;
