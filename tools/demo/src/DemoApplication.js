@@ -295,7 +295,7 @@ export default class DemoApplication extends PIXI.Application {
         folder.add(filter, 'enabled').onChange((enabled) => {
             ga('send', 'event', id, enabled ? 'enabled' : 'disabled');
 
-            app.events.emit('toggle', enabled);
+            app.events.emit('enable', enabled);
 
             this.render();
             if (enabled) {

@@ -11,22 +11,21 @@ export default function() {
             this.gain = 0.5;
             this.lacunarity = 2.5;
 
-            filter.manually = false;
+            filter.animating = true;
 
-            app.events.on('toggle', function(enabled) {
-                filter.disabled = !enabled;
-                if (enabled && !filter.manually) {
+            app.events.on('enable', function(enabled) {
+                if (enabled && filter.animating) {
                     filter.time = 0;
                 }
             });
 
             app.events.on('animate', function() {
-                if (!filter.manually){
+                if (filter.animating){
                     filter.time += app.ticker.elapsedMS / 1000;
                 }
             });
 
-            folder.add(this, 'manually').name(' * play manually');
+            folder.add(this, 'animating').name('(animating)');
             folder.add(this, 'time', 0, 1);
             folder.add(this, 'angle', -60, 60);
             folder.add(this, 'gain', 0, 1);

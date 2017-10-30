@@ -10,23 +10,22 @@ export default function() {
             const filter = this;
             const maxTime = 2.5;
 
-            filter.manually = false;
+            filter.animating = true;
 
-            app.events.on('toggle', function(enabled) {
-                filter.disabled = !enabled;
-                if (enabled && !filter.manually) {
+            app.events.on('enable', function(enabled) {
+                if (enabled && filter.animating) {
                     filter.time = 0;
                 }
             });
 
             app.events.on('animate', function() {
-                if (!filter.manually){
+                if (filter.animating) {
                     filter.time += app.ticker.elapsedMS / 1000;
                     filter.time %= maxTime;
                 }
             });
 
-            folder.add(this, 'manually').name(' * play manually');
+            folder.add(this, 'animating').name('(animating)');
             folder.add(this, 'time', 0, maxTime);
             folder.add(this, 'amplitude', 1, 100);
             folder.add(this, 'wavelength', 2, 400);
