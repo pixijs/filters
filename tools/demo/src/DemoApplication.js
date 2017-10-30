@@ -193,7 +193,7 @@ export default class DemoApplication extends PIXI.Application {
      */
     animate(delta) {
 
-        this.animateTimer += 0.1 * delta;
+        this.animateTimer += delta;
 
         const {bounds, animateTimer, overlay} = this;
 
@@ -204,8 +204,8 @@ export default class DemoApplication extends PIXI.Application {
         }
 
         // Animate the overlay
-        overlay.tilePosition.x = animateTimer * -10;
-        overlay.tilePosition.y = animateTimer * -10;
+        overlay.tilePosition.x = animateTimer * -1;
+        overlay.tilePosition.y = animateTimer * -1;
 
         for (let i = 0; i < this.fishes.length; i++) {
 
