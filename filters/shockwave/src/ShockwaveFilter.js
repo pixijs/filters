@@ -20,10 +20,16 @@ import fragment from './shockwave.frag';
  */
 export default class ShockwaveFilter extends PIXI.Filter {
 
-    constructor(center = [0.0, 0.0], options, time = 0) {
+    constructor(center = [0.0, 0.0], options = {}, time = 0) {
         super(vertex, fragment);
 
         this.center = center;
+
+        if (Array.isArray(options)) {
+            // eslint-disable-next-line no-console
+            console.warn('Deprecated Warning: ShockwaveFilter params Array has been changed to options Object.');
+            options = {};
+        }
 
         options = Object.assign({
             amplitude: 30.0,
