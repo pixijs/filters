@@ -28,8 +28,8 @@ export default class DemoApplication extends PIXI.Application {
 
         this.initWidth = initWidth;
         this.initHeight = initHeight;
-        this.paused = false;
-        this.renderPaused = false;
+        this.animating = true;
+        this.rendering = true;
         this.events = new PIXI.utils.EventEmitter();
         this.animateTimer = 0;
         this.bg = null;
@@ -50,16 +50,18 @@ export default class DemoApplication extends PIXI.Application {
         const app = this;
 
         this.gui = gui;
-        this.gui.add(this, 'renderPaused').name('<b>*</b> Pause render')
-            .onChange(function(value){
-                if (value) {
+        this.gui.add(this, 'rendering')
+            .name('&bull; Rendering')
+            .onChange((value) => {
+                if (!value) {
                     app.stop();
                 }
                 else {
                     app.start();
                 }
             });
-        this.gui.add(this, 'paused').name('<b>*</b> Pause animate');
+        this.gui.add(this, 'animating')
+            .name('&bull; Animating');
     }
 
     /**
@@ -138,13 +140,6 @@ export default class DemoApplication extends PIXI.Application {
     }
 
     /**
-     * Toggle fish moving
-     */
-    togglePause() {
-        this.paused = !this.paused;
-    }
-
-    /**
      * Resize the demo when the window resizes
      */
     resize() {
@@ -198,15 +193,15 @@ export default class DemoApplication extends PIXI.Application {
      */
     animate(delta) {
 
+        if (!this.animating) {
+            return;
+        }
+
         this.animateTimer += 0.1 * delta;
 
         const {bounds, animateTimer, overlay} = this;
 
         this.events.emit('animate', delta, animateTimer);
-
-        if (this.paused) {
-            return;
-        }
 
         // Animate the overlay
         overlay.tilePosition.x = animateTimer * -10;
