@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-advanced-bloom",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "main": "lib/filter-advanced-bloom.js",
   "description": "Display filter render as ASCII text",
   "author": "finscn",
@@ -33,7 +33,7 @@
     "pixi.js": "^4.5.0"
   },
   "devDependencies": {
-    "@tools/build": "^2.0.1",
+    "@tools/build": "^2.3.0",
     "@tools/fragments": "^2.0.0",
     "rollup": "^0.45.2",
     "rollup-watch": "^4.3.1"
