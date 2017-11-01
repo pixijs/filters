@@ -25,3 +25,4 @@ export {default as multiColorReplace} from './multi-color-replace';
 export {default as lightmap} from './lightmap';
 export {default as godray} from './godray';
 export {default as zoomBlur} from './zoom-blur';
+export {default as motionBlur} from './motion-blur';

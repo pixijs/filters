@@ -18,9 +18,10 @@ Filters include:
 * **GlowFilter** _@pixi/filter-glow_
 * **GodrayFilter** _@pixi/filter-godray_
 * **EmbossFilter** _@pixi/filter-emboss_
+* **MotionBlurFilter** _@pixi/filter-motion-blur_
 * **MultiColorFilter** _@pixi/filter-multi-color-replace_
-* **PixelateFilter** _@pixi/filter-pixelate_
 * **OutlineFilter** _@pixi/filter-outline_
+* **PixelateFilter** _@pixi/filter-pixelate_
 * **RGBSplitFilter** _@pixi/filter-rgb_
 * **ShockwaveFilter** _@pixi/filter-shockwave_
 * **SimpleLightmapFilter** _@pixi/filter-simple-lightmap_
