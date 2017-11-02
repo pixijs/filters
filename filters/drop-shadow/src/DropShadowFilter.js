@@ -21,6 +21,8 @@ export default class DropShadowFilter extends PIXI.Filter {
         this.blurFilter = new PIXI.filters.BlurFilter();
         this.blurFilter.blur = blur;
 
+        this.targetTransform = new PIXI.Matrix();
+
         this.rotation = rotation;
         this.padding = distance;
         this.distance = distance;
@@ -30,20 +32,22 @@ export default class DropShadowFilter extends PIXI.Filter {
 
     apply(filterManager, input, output) {
         const target = filterManager.getRenderTarget();
-        target.transform = new PIXI.Matrix();
-        target.transform.translate(
-            this.distance * Math.cos(this.angle),
-            this.distance * Math.sin(this.angle)
-        );
+
+        target.transform = this.targetTransform;
         this.tintFilter.apply(filterManager, input, target, true);
         this.blurFilter.apply(filterManager, target, output);
-        super.apply(filterManager, input, output);
+        filterManager.applyFilter(this, input, output);
         target.transform = null;
         filterManager.returnRenderTarget(target);
     }
 
     updatePadding() {
         this.padding = this.distance + (this.blur * 2);
+    }
+
+    updateTargetTransform() {
+        this.targetTransform.tx = this.distance * Math.cos(this.angle);
+        this.targetTransform.ty = this.distance * Math.sin(this.angle);
     }
 
     /**
@@ -57,6 +61,7 @@ export default class DropShadowFilter extends PIXI.Filter {
     set distance(value) {
         this._distance = value;
         this.updatePadding();
+        this.updateTargetTransform();
     }
 
     /**
@@ -69,6 +74,7 @@ export default class DropShadowFilter extends PIXI.Filter {
     }
     set rotation(value) {
         this.angle = value * PIXI.DEG_TO_RAD;
+        this.updateTargetTransform();
     }
 
     /**
@@ -111,4 +117,3 @@ export default class DropShadowFilter extends PIXI.Filter {
 
 // Export to PixiJS namespace
 PIXI.filters.DropShadowFilter = DropShadowFilter;
-
