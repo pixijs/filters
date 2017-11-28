@@ -1,4 +1,4 @@
-import vertex from './bulgePinch.vert';
+import {vertex} from '@tools/fragments';
 import fragment from './bulgePinch.frag';
 
 /**
