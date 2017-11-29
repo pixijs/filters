@@ -1,4 +1,4 @@
-import vertex from './outline.vert';
+import {vertex} from '@tools/fragments';
 import fragment from './outline.frag';
 
 /**

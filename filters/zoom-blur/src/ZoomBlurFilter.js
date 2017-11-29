@@ -1,4 +1,4 @@
-import vertex from './zoom-blur.vert';
+import {vertex} from '@tools/fragments';
 import fragment from './zoom-blur.frag';
 
 /**
