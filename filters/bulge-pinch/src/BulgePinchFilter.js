@@ -1,4 +1,4 @@
-import vertex from './bulgePinch.vert';
+import {vertex} from '@tools/fragments';
 import fragment from './bulgePinch.frag';
 
 /**
@@ -26,10 +26,10 @@ export default class BulgePinchFilter extends PIXI.Filter {
         this.strength = strength || 1;
     }
 
-    apply(filterManager, input, output) {
+    apply(filterManager, input, output, clear) {
         this.uniforms.dimensions[0] = input.sourceFrame.width;
         this.uniforms.dimensions[1] = input.sourceFrame.height;
-        filterManager.applyFilter(this, input, output);
+        filterManager.applyFilter(this, input, output, clear);
     }
 
     /**
