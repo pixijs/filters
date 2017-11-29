@@ -41,11 +41,19 @@ export default class DropShadowFilter extends PIXI.Filter {
         filterManager.returnRenderTarget(target);
     }
 
-    updatePadding() {
+    /**
+     * Recalculate the proper padding amount.
+     * @private
+     */
+    _updatePadding() {
         this.padding = this.distance + (this.blur * 2);
     }
 
-    updateTargetTransform() {
+    /**
+     * Update the transform matrix of offset angle.
+     * @private
+     */
+    _updateTargetTransform() {
         this.targetTransform.tx = this.distance * Math.cos(this.angle);
         this.targetTransform.ty = this.distance * Math.sin(this.angle);
     }
@@ -60,8 +68,8 @@ export default class DropShadowFilter extends PIXI.Filter {
     }
     set distance(value) {
         this._distance = value;
-        this.updatePadding();
-        this.updateTargetTransform();
+        this._updatePadding();
+        this._updateTargetTransform();
     }
 
     /**
@@ -74,7 +82,7 @@ export default class DropShadowFilter extends PIXI.Filter {
     }
     set rotation(value) {
         this.angle = value * PIXI.DEG_TO_RAD;
-        this.updateTargetTransform();
+        this._updateTargetTransform();
     }
 
     /**
@@ -87,7 +95,7 @@ export default class DropShadowFilter extends PIXI.Filter {
     }
     set blur(value) {
         this.blurFilter.blur = value;
-        this.updatePadding();
+        this._updatePadding();
     }
 
     /**
