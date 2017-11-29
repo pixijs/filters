@@ -1,7 +1,7 @@
 {
   "name": "@tools/demo",
   "private": true,
-  "version": "2.3.0",
+  "version": "2.3.1",
   "license": "MIT",
   "scripts": {
     "prebuild": "rimraf index.js.map index.js",
@@ -10,7 +10,7 @@
     "watch": "rollup -cwm"
   },
   "devDependencies": {
-    "pixi-filters": "^2.3.0",
+    "pixi-filters": "^2.3.1",
     "rimraf": "^2.6.2",
     "rollup": "^0.45.2",
     "rollup-plugin-buble": "^0.16.0",
