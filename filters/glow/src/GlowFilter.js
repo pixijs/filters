@@ -1,4 +1,4 @@
-import vertex from './glow.vert';
+import {vertex} from '@tools/fragments';
 import fragment from './glow.frag';
 
 /**

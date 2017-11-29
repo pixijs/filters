@@ -1,4 +1,4 @@
-import vertex from './multi-color-replace.vert';
+import {vertex} from '@tools/fragments';
 import fragment from './multi-color-replace.frag';
 
 /**

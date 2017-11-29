@@ -58,7 +58,7 @@ export default class ShockwaveFilter extends PIXI.Filter {
         this.time = time;
     }
 
-    apply(filterManager, input, output) {
+    apply(filterManager, input, output, clear) {
         /**
          * There is no set/get of `time`, for performance.
          * Because in the most real cases, `time` will be changed in ever game tick.
@@ -66,7 +66,7 @@ export default class ShockwaveFilter extends PIXI.Filter {
          */
         this.uniforms.time = this.time;
 
-        filterManager.applyFilter(this, input, output);
+        filterManager.applyFilter(this, input, output, clear);
     }
 
     /**
