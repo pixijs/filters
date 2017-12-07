@@ -24,14 +24,10 @@ All filters work with PixiJS v4.
 | **EmbossFilter**<br>_@pixi/filter-emboss_ | ![emboss](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/emboss.png?v=2) |
 | **GlowFilter**<br>_@pixi/filter-glow_ | ![glow](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/glow.png?v=2) |
 | **Godray**<br>_@pixi/filter-godray_ | ![godray](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/godray.gif?v=2) |
-| **KawaseBlurFilter**<br>_@pixi/filter-kawase-blur_ | ![kawase-blur](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/kawase-blur.png?v=1) |
-| **MotionBlurFilter**<br>_@pixi/filter-motion-blur_ | ![motion-blur](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/motion-blur.png?v=1) |
 | **MultiColorReplaceFilter**<br>_@pixi/filter-multi-color-replace_ | ![multi-color-replace](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/multi-color-replace.png?v=1) |
-| **OldFilmFilter**<br>_@pixi/filter-old-film_ | ![old-film](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/old-film.png?v=2) |
 | **OutlineFilter**<br>_@pixi/filter-outline_ | ![outline](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/outline.png?v=2) |
 | **PixelateFilter**<br>_@pixi/filter-pixelate_ | ![pixelate](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/pixelate.png?v=2) |
 | **RGBSplitFilter**<br>_@pixi/filter-rgb_ | ![rgb split](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/rgb.png?v=2) |
-| **RadialBlurFilter**<br>_@pixi/filter-radial-blur_ | ![radial-blur](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/radial-blur.png?v=2) |
 | **ShockwaveFilter**<br>_@pixi/filter-shockwave_ | ![shockwave](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/shockwave.gif?v=3) |
 | **SimpleLightmapFilter**<br>_@pixi/filter-simple-lightmap_ | ![simple-lightmap](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/simple-lightmap.png?v=2) |
 | **TiltShiftFilter**<br>_@pixi/filter-tilt-shift_ | ![tilt-shift](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/tilt-shift.png?v=2) |
