@@ -47,8 +47,6 @@
     "@pixi/filter-motion-blur": "^2.3.1",
     "@pixi/filter-multi-color-replace": "^2.3.1",
     "@pixi/filter-outline": "^2.3.1",
-    "@pixi/filter-multi-color-replace": "^2.3.1",
-    "@pixi/filter-outline": "^2.3.1",
     "@pixi/filter-pixelate": "^2.3.0",
     "@pixi/filter-rgb-split": "^2.3.0",
     "@pixi/filter-shockwave": "^2.3.1",
