@@ -1,6 +1,6 @@
-# AsciiFilter
+# DropShadowFilter
 
-PixiJS v4 filter to render DisplayObject as ASCII text.
+PixiJS v4 filter to generate & render the drop shadow of DisplayObject.
 
 ## Installation
 
@@ -11,10 +11,10 @@ npm install @pixi/filter-drop-shadow
 ## Usage
 
 ```js
-import {AsciiFilter} from '@pixi/filter-drop-shadow';
+import {DropShadowFilter} from '@pixi/filter-drop-shadow';
 
 const container = new PIXI.Container();
-container.filters = [new AsciiFilter()];
+container.filters = [new DropShadowFilter()];
 ```
 
 ## Documentation
