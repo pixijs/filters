@@ -12,8 +12,8 @@ All filters work with PixiJS v4.
 
 | Filter | Preview |
 |---|---|
-| **AsciiFilter**<br>_@pixi/filter-ascii_ | ![ascii](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/ascii.png?v=2) |
 | **AdvancedBloomFilter**<br>_@pixi/filter-advanced-bloom_ | ![advanced-bloom](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/advanced-bloom.png?v=2) |
+| **AsciiFilter**<br>_@pixi/filter-ascii_ | ![ascii](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/ascii.png?v=2) |
 | **BloomFilter**<br>_@pixi/filter-bloom_ | ![bloom](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/bloom.png?v=2) |
 | **BulgePinchFilter**<br>_@pixi/filter-bulge-pinch_ | ![bulge-pinch](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/bulge-pinch.gif?v=2) |
 | **ColorReplaceFilter**<br>_@pixi/filter-color-replace_ | ![color-replace](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/color-replace.png?v=2) |
@@ -21,9 +21,9 @@ All filters work with PixiJS v4.
 | **CrossHatchFilter**<br>_@pixi/filter-cross-hatch_ | ![cross-hatch](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/cross-hatch.png?v=2) |
 | **DotFilter**<br>_@pixi/filter-dot_ | ![dot](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/dot.png?v=2) |
 | **DropShadowFilter**<br>_@pixi/filter-drop-shadow_| ![drop-shadow](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/drop-shadow.png?v=2) |
+| **EmbossFilter**<br>_@pixi/filter-emboss_ | ![emboss](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/emboss.png?v=2) |
 | **GlowFilter**<br>_@pixi/filter-glow_ | ![glow](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/glow.png?v=2) |
 | **Godray**<br>_@pixi/filter-godray_ | ![godray](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/godray.gif?v=2) |
-| **EmbossFilter**<br>_@pixi/filter-emboss_ | ![emboss](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/emboss.png?v=2) |
 | **MotionBlurFilter**<br>_@pixi/filter-motion-blur_ | ![motion-blur](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/motion-blur.png?v=1) |
 | **MultiColorReplaceFilter**<br>_@pixi/filter-multi-color-replace_ | ![multi-color-replace](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/multi-color-replace.png?v=1) |
 | **OutlineFilter**<br>_@pixi/filter-outline_ | ![outline](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/outline.png?v=2) |
@@ -42,9 +42,7 @@ PixiJS has a handful of core filters that are built-in to the PixiJS library.
 | Filter | Preview |
 |---|---|
 | **AlphaFilter** | ![alpha](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/alpha.png?v=2) |
-| **DisplacementFilter** | ![displacement](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/displacement.png?v=2) |
 | **BlurFilter** | ![blur](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/blur.png?v=2) |
-| **NoiseFilter** | ![noise](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/noise.png?v=2) |
 | **ColorMatrixFilter** (contrast) | ![color-matrix-contrast](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/color-matrix-contrast.png?v=2) |
 | **ColorMatrixFilter** (desaturate) | ![color-matrix-desaturate](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/color-matrix-desaturate.png?v=2) |
 | **ColorMatrixFilter** (kodachrome) | ![color-matrix-kodachrome](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/color-matrix-kodachrome.png?v=2) |
@@ -54,6 +52,8 @@ PixiJS has a handful of core filters that are built-in to the PixiJS library.
 | **ColorMatrixFilter** (predator) | ![color-matrix-predator](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/color-matrix-predator.png?v=2) |
 | **ColorMatrixFilter** (saturate) | ![color-matrix-saturate](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/color-matrix-saturate.png?v=2) |
 | **ColorMatrixFilter** (sepia) | ![color-matrix-sepia](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/color-matrix-sepia.png?v=2) |
+| **DisplacementFilter** | ![displacement](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/displacement.png?v=2) |
+| **NoiseFilter** | ![noise](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/noise.png?v=2) |
 
 ## Installation
 

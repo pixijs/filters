@@ -6,8 +6,8 @@ Optional filters that work with PixiJS v4.
 
 Filters include:
 
-* **AsciiFilter** _@pixi/filter-ascii_
 * **AdvancedBloomFilter** _@pixi/filter-advanced-bloom_
+* **AsciiFilter** _@pixi/filter-ascii_
 * **BloomFilter** _@pixi/filter-bloom_
 * **BulgePinchFilter** _@pixi/filter-bulge-pinch_
 * **ColorReplaceFilter** _@pixi/filter-color-replace_
@@ -15,9 +15,9 @@ Filters include:
 * **CrossHatchFilter** _@pixi/filter-cross-hatch_
 * **DotFilter** _@pixi/filter-dot_
 * **DropShadowFilter** _@pixi/filter-drop-shadow_
+* **EmbossFilter** _@pixi/filter-emboss_
 * **GlowFilter** _@pixi/filter-glow_
 * **GodrayFilter** _@pixi/filter-godray_
-* **EmbossFilter** _@pixi/filter-emboss_
 * **MotionBlurFilter** _@pixi/filter-motion-blur_
 * **MultiColorFilter** _@pixi/filter-multi-color-replace_
 * **OutlineFilter** _@pixi/filter-outline_

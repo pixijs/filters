@@ -1,5 +1,5 @@
-export {AsciiFilter} from '@pixi/filter-ascii';
 export {AdvancedBloomFilter} from '@pixi/filter-advanced-bloom';
+export {AsciiFilter} from '@pixi/filter-ascii';
 export {BloomFilter} from '@pixi/filter-bloom';
 export {BulgePinchFilter} from '@pixi/filter-bulge-pinch';
 export {ColorReplaceFilter} from '@pixi/filter-color-replace';
@@ -20,4 +20,3 @@ export {SimpleLightmapFilter} from '@pixi/filter-simple-lightmap';
 export {TiltShiftFilter, TiltShiftAxisFilter, TiltShiftXFilter, TiltShiftYFilter} from '@pixi/filter-tilt-shift';
 export {TwistFilter} from '@pixi/filter-twist';
 export {ZoomBlurFilter} from '@pixi/filter-zoom-blur';
-
