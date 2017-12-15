@@ -12,7 +12,7 @@
   "devDependencies": {
     "pixi-filters": "^2.3.1",
     "rimraf": "^2.6.2",
-    "rollup": "^0.45.2",
+    "rollup": "^0.52.0",
     "rollup-plugin-buble": "^0.16.0",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^2.0.1",

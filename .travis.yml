@@ -19,7 +19,7 @@ deploy:
     bucket: "pixi-filters"
     skip_cleanup: true
     acl: public_read
-    local_dir: bundle/lib
+    local_dir: bundle/dist
     upload-dir: "$TRAVIS_BRANCH"
     cache_control: "max-age=60"
     region: eu-west-1
@@ -32,7 +32,7 @@ deploy:
     bucket: "pixi-filters"
     skip_cleanup: true
     acl: public_read
-    local_dir: bundle/lib
+    local_dir: bundle/dist
     upload-dir: "$TRAVIS_BRANCH"
     cache_control: "max-age=2592000"
     region: eu-west-1
