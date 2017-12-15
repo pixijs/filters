@@ -70,7 +70,7 @@ PixiJS Filters uses [Lerna](https://github.com/lerna/lerna) under-the-hood to bu
 npm install
 ```
 
-Build all filters by running the following:
+Build all filters, demo and screenshots by running the following:
 
 ```bash
 npm run build
@@ -79,13 +79,13 @@ npm run build
 Build single filter by running the following:
 
 ```bash
-npm run build -- --scope "@pixi/filter-emboss"
+npm run build:prod -- --scope "@pixi/filter-emboss"
 ```
 
 Build multiple filters where scope is a glob expression:
 
 ```bash
-npm run build -- --scope "{@pixi/filter-emboss,@pixi/filter-glow}"
+npm run build:prod -- --scope "{@pixi/filter-emboss,@pixi/filter-glow}"
 ```
 
 Watch all filters (auto-rebuild upon src changes):
