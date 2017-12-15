@@ -60,13 +60,13 @@ sorted.forEach((group) => {
             return;
         }
         const banner = [
-            `/*!`,
+            '/*!',
             ` * ${pkg.name} - v${pkg.version}`,
             ` * Compiled ${compiled}`,
-            ` *`,
+            ' *',
             ` * ${pkg.name} is licensed under the MIT License.`,
-            ` * http://www.opensource.org/licenses/mit-license`,
-            ` */`,
+            ' * http://www.opensource.org/licenses/mit-license',
+            ' */',
         ].join('\n');
 
         // Check for bundle folder
@@ -75,6 +75,7 @@ sorted.forEach((group) => {
         const input = path.join(basePath, 'src/index.js');
         const { main, module, bundle } = pkg._package;
         const freeze = false;
+        const name = '__pixiFilters';
         let intro = '';
 
         if (!args.prod && bundle) {
@@ -89,13 +90,14 @@ sorted.forEach((group) => {
             output: [
                 {
                     file: path.join(basePath, main),
-                    format: 'cjs',
+                    format: bundle ? 'cjs' : 'umd',
                 },
                 {
                     file: path.join(basePath, module),
                     format: 'es',
                 },
             ],
+            name,
             external,
             sourcemap,
             plugins,
@@ -104,8 +106,7 @@ sorted.forEach((group) => {
         // The package.json file has a bundle field
         // we'll use this to generate the bundle file
         // this will package all dependencies
-        if (args.bundles && bundle)
-        {
+        if (args.bundles && bundle) {
             results.push({
                 intro,
                 banner,
@@ -115,7 +116,7 @@ sorted.forEach((group) => {
                     file: path.join(basePath, bundle),
                     format: 'umd',
                 },
-                name: `__${pkg.name.replace(/-/g, '_')}`,
+                name,
                 treeshake: false,
                 sourcemap,
                 plugins,

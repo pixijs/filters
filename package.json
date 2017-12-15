@@ -10,7 +10,7 @@
     "test": "npm run build:prod",
     "deploy": "node deploy",
     "docs": "jsdoc -c jsdoc.conf.json -R README.md",
-    "lint": "eslint scripts filters tools --ignore-path .gitignore --fix",
+    "lint": "eslint *.js filters tools --ignore-path .gitignore --fix",
     "demo": "open http://localhost:8080/tools/demo/index.html && http-server . -s -c-1",
     "examples": "npm run demo",
     "prebuild": "npm run lint",
