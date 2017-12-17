@@ -1,4 +1,4 @@
-import vertex from './extract-brightness.vert';
+import {vertex} from '@tools/fragments';
 import fragment from './extract-brightness.frag';
 
 /**
