@@ -44,6 +44,7 @@
     "@pixi/filter-emboss": "^2.3.0",
     "@pixi/filter-glow": "^2.3.1",
     "@pixi/filter-godray": "^2.3.0",
+    "@pixi/filter-motion-blur": "^2.3.1",
     "@pixi/filter-multi-color-replace": "^2.3.1",
     "@pixi/filter-outline": "^2.3.1",
     "@pixi/filter-pixelate": "^2.3.0",
