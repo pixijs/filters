@@ -1,4 +1,4 @@
-import vertex from './radial-blur.vert';
+import {vertex} from '@tools/fragments';
 import fragment from './radial-blur.frag';
 
 /**
@@ -10,8 +10,8 @@ import fragment from './radial-blur.frag';
  * @memberof PIXI.filters
  * @param {number} [angle=0] Sets the angle of the motion for blur effect.
  * @param {PIXI.Point|number[]} [center=[0,0]] The center of the radial.
- * @param {number} [kernelSize=5] - The kernelSize of the blur filter. Options: the `odd number` >= 5.
- * @param {number} [offset=0] - The offset of the blur filter.
+ * @param {number} [kernelSize=5] - The kernelSize of the blur filter. But be odd number >= 3
+ * @param {number} [radius=-1] - The maximum size of the blur radius, `-1` is infinite
  */
 export default class RadialBlurFilter extends PIXI.Filter {
     constructor(angle = 0, center = [0, 0], kernelSize = 5, radius = -1) {
@@ -19,11 +19,8 @@ export default class RadialBlurFilter extends PIXI.Filter {
 
         this._angle = 0;
         this.angle = angle;
-
         this.center = center;
-
         this.kernelSize = kernelSize;
-
         this.radius = radius;
     }
 
@@ -32,29 +29,19 @@ export default class RadialBlurFilter extends PIXI.Filter {
      * @private
      */
     apply(filterManager, input, output, clear) {
-        const angle = this._angle;
-
-        if (angle !== 0) {
-            this.uniforms.uKernelSize = this.kernelSize;
-        }
-        else {
-            this.uniforms.uKernelSize = 0;
-        }
-
+        this.uniforms.uKernelSize = this._angle !== 0 ? this.kernelSize : 0;
         filterManager.applyFilter(this, input, output, clear);
     }
 
     /**
-     * Sets the angle of the motion for blur effect.
+     * Sets the angle in degrees of the motion for blur effect.
      *
      * @member {PIXI.Point|number[]}
      * @default [0, 0]
      */
     set angle(value) {
         this._angle = value;
-        this.radian = value * Math.PI / 180;
-
-        this.uniforms.uRadian = this.radian;
+        this.uniforms.uRadian = value * Math.PI / 180;
     }
 
     get angle() {
@@ -76,7 +63,7 @@ export default class RadialBlurFilter extends PIXI.Filter {
     }
 
     /**
-     * Outer radius of the effect. The default value is very very big.
+     * Outer radius of the effect. The default value of `-1` is infinite.
      *
      * @member {number}
      * @default -1
