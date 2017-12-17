@@ -1,5 +1,5 @@
 import ExtractBrightnessFilter from './ExtractBrightnessFilter';
-import vertex from './advanced-bloom.vert';
+import {vertex} from '@tools/fragments';
 import fragment from './advanced-bloom.frag';
 
 /**

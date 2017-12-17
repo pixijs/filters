@@ -15,8 +15,10 @@ if (process.argv.indexOf('--prod') > -1) {
 }
 
 export default {
-    format: 'umd',
-    entry: 'src/index.js',
-    dest: 'index.js',
+    input: 'src/index.js',
+    output: {
+        format: 'umd',
+        file: 'index.js'
+    },
     plugins
 };
