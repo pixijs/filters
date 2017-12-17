@@ -95,6 +95,13 @@ declare namespace PIXI.filters {
         constructor(size?:PIXI.Point|number[]|number);
         size:PIXI.Point|number[]|number;
     }
+    class RadialBlurFilter extends PIXI.Filter<{}> {
+        constructor(angle?:number, center?:number[]|PIXI.Point, kernelSize?:number, radius?:number);
+        angle:number;
+        center:number[]|PIXI.Point;
+        kernelSize:number;
+        radius:number;
+    }
     class RGBSplitFilter extends PIXI.Filter<{}> {
         constructor(red?:PIXI.Point, green?:PIXI.Point, blue?:PIXI.Point);
         red:PIXI.Point;
