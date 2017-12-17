@@ -1,4 +1,4 @@
-import vertex from './motion-blur.vert';
+import {vertex} from '@tools/fragments';
 import fragment from './motion-blur.frag';
 
 /**
@@ -9,7 +9,7 @@ import fragment from './motion-blur.frag';
  * @extends PIXI.Filter
  * @memberof PIXI.filters
  * @param {PIXI.Point|number[]} [velocity=[0, 0]] Sets the velocity of the motion for blur effect.
- * @param {number} [kernelSize=5] - The kernelSize of the blur filter. Options: the `odd number` >= 5.
+ * @param {number} [kernelSize=5] - The kernelSize of the blur filter. Must be odd number >= 5
  * @param {number} [offset=0] - The offset of the blur filter.
  */
 export default class MotionBlurFilter extends PIXI.Filter {
@@ -19,6 +19,12 @@ export default class MotionBlurFilter extends PIXI.Filter {
         this._velocity = new PIXI.Point(0,0);
         this.velocity = velocity;
 
+        /**
+         * The kernelSize of the blur, higher values are slower but look better.
+         * Use odd value greater than 5.
+         * @member {number}
+         * @default 5
+         */
         this.kernelSize = kernelSize;
         this.offset = offset;
     }
@@ -28,16 +34,9 @@ export default class MotionBlurFilter extends PIXI.Filter {
      * @private
      */
     apply(filterManager, input, output, clear) {
-        const velX = this.velocity.x;
-        const velY = this.velocity.y;
+        const {x, y} = this.velocity;
 
-        if (velX !== 0 || velY !== 0) {
-            this.uniforms.uKernelSize = this.kernelSize;
-        }
-        else {
-            this.uniforms.uKernelSize = 0;
-        }
-
+        this.uniforms.uKernelSize = (x !== 0 || y !== 0) ? this.kernelSize : 0;
         filterManager.applyFilter(this, input, output, clear);
     }
 

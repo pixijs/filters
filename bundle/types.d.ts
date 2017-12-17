@@ -80,9 +80,10 @@ declare namespace PIXI.filters {
         time:number;
     }
     class MotionBlurFilter extends PIXI.Filter<{}> {
-        constructor(velocity:PIXI.Point|number[], kernelSize?:number);
+        constructor(velocity:PIXI.Point|number[], kernelSize?:number, offset?:number);
         velocity:PIXI.Point|number[];
         kernelSize:number;
+        offset:number;
     }
     class MultiColorReplaceFilter extends PIXI.Filter<{}> {
         constructor(replacements:Array<number[]|number[][]>, epsilon?:number, maxColors?:number);
