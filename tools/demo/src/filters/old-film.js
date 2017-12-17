@@ -9,7 +9,7 @@ export default function() {
             const filter = this;
 
             app.events.on('animate', function() {
-                filter.randomValue = Math.random();
+                filter.seed = Math.random();
             });
 
             folder.add(this, 'sepia', 0, 1);

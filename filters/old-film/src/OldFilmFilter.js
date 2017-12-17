@@ -10,7 +10,7 @@ import fragment from './old-film.frag';
  * @memberof PIXI.filters
  *
  * @param {object|number} [options] - The optional parameters of old film effect.
- *                        When options is a number , it will be `randomValue`.
+ *                        When options is a number , it will be `seed`.
  * @param {number} [options.sepia=0.3] - TODO
  * @param {number} [options.noise=0.3] - TODO
  * @param {number} [options.noiseSize=1.0] - TODO
@@ -20,18 +20,18 @@ import fragment from './old-film.frag';
  * @param {number} [options.vignetting=0.3] - TODO
  * @param {number} [options.vignettingAlpha=1.0] - TODO
  * @param {number} [options.vignettingBlur=0.3] - TODO
- * @param {number} [randomValue=0.3] - TODO
+ * @param {number} [seed=0.3] - TODO
  */
 export default class OldFilmFilter extends PIXI.Filter {
-    constructor(options, randomValue = 0.0) {
+    constructor(options, seed = 0.0) {
         super(vertex, fragment);
 
         if (typeof options === 'number') {
-            this.randomValue = options;
+            this.seed = options;
             options = null;
         }
         else {
-            this.randomValue = randomValue;
+            this.seed = seed;
         }
 
         options = Object.assign({
@@ -65,9 +65,9 @@ export default class OldFilmFilter extends PIXI.Filter {
         this.uniforms.dimensions[0] = input.sourceFrame.width;
         this.uniforms.dimensions[1] = input.sourceFrame.height;
 
-        // named `randomValue` because in the most programming languages,
+        // named `seed` because in the most programming languages,
         // `random` used for "the function for generating random value".
-        this.uniforms.randomValue = this.randomValue;
+        this.uniforms.seed = this.seed;
 
         filterManager.applyFilter(this, input, output, clear);
     }

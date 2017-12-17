@@ -222,7 +222,7 @@
             "frame": "old-film-0",
             "options": {
                 "scratchWidth": 0.8,
-                "randomValue": 0.0001
+                "seed": 0.0001
             }
         },
         {
@@ -230,7 +230,7 @@
             "frame": "old-film-1",
             "options": {
                 "scratchWidth": 0.8,
-                "randomValue": 0.011234
+                "seed": 0.011234
             }
         },
         {
@@ -238,7 +238,7 @@
             "frame": "old-film-2",
             "options": {
                 "scratchWidth": 0.8,
-                "randomValue": 0.941723
+                "seed": 0.941723
             }
         },
         {
@@ -246,7 +246,7 @@
             "frame": "old-film-3",
             "options": {
                 "scratchWidth": 0.8,
-                "randomValue": 0.23512
+                "seed": 0.23512
             }
         },
         {
@@ -254,7 +254,7 @@
             "frame": "old-film-4",
             "options": {
                 "scratchWidth": 0.8,
-                "randomValue": 0.612311
+                "seed": 0.612311
             }
         },
         {
@@ -262,7 +262,7 @@
             "frame": "old-film-5",
             "options": {
                 "scratchWidth": 0.8,
-                "randomValue": 0.112351
+                "seed": 0.112351
             }
         },
         {
@@ -270,7 +270,7 @@
             "frame": "old-film-6",
             "options": {
                 "scratchWidth": 0.8,
-                "randomValue": 0.5017123
+                "seed": 0.5017123
             }
         },
         {
@@ -278,7 +278,7 @@
             "frame": "old-film-7",
             "options": {
                 "scratchWidth": 0.8,
-                "randomValue": 0.312301
+                "seed": 0.312301
             }
         },
         {
@@ -286,7 +286,7 @@
             "frame": "old-film-8",
             "options": {
                 "scratchWidth": 0.8,
-                "randomValue": 0.123411
+                "seed": 0.123411
             }
         },
         {
@@ -294,7 +294,7 @@
             "frame": "old-film-9",
             "options": {
                 "scratchWidth": 0.8,
-                "randomValue": 0.02132
+                "seed": 0.02132
             }
         },
         {

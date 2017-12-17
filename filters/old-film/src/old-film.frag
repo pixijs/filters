@@ -12,7 +12,7 @@ uniform float scratchWidth;
 uniform float vignetting;
 uniform float vignettingAlpha;
 uniform float vignettingBlur;
-uniform float randomValue;
+uniform float seed;
 
 const float SQRT_2 = 1.414213;
 const vec3 SEPIA_RGB = vec3(112.0 / 255.0, 66.0 / 255.0, 20.0 / 255.0);
@@ -57,13 +57,13 @@ void main()
         color.rgb *= darker + (1.0 - darker) * (1.0 - vignettingAlpha);
     }
 
-    if (scratchDensity > randomValue && scratch != 0.0)
+    if (scratchDensity > seed && scratch != 0.0)
     {
-        float phase = randomValue * 256.0;
+        float phase = seed * 256.0;
         float s = mod(floor(phase), 2.0);
         float dist = 1.0 / scratchDensity;
-        float d = distance(coord, vec2(randomValue * dist, abs(s - randomValue * dist)));
-        if (d < randomValue * 0.6 + 0.4)
+        float d = distance(coord, vec2(seed * dist, abs(s - seed * dist)));
+        if (d < seed * 0.6 + 0.4)
         {
             highp float period = scratchDensity * 10.0;
 
@@ -73,7 +73,7 @@ void main()
             float yy = (1.0 - bb) * aa + bb * (2.0 - aa);
 
             float kk = 2.0 * period;
-            float dw = scratchWidth / dimensions.x * (0.75 + randomValue);
+            float dw = scratchWidth / dimensions.x * (0.75 + seed);
             float dh = dw * kk;
 
             float tine = (yy - (2.0 - dh));
@@ -94,9 +94,9 @@ void main()
         vec2 pixelCoord = vTextureCoord.xy * filterArea.xy;
         pixelCoord.x = floor(pixelCoord.x / noiseSize);
         pixelCoord.y = floor(pixelCoord.y / noiseSize);
-        // vec2 d = pixelCoord * noiseSize * vec2(1024.0 + randomValue * 512.0, 1024.0 - randomValue * 512.0);
+        // vec2 d = pixelCoord * noiseSize * vec2(1024.0 + seed * 512.0, 1024.0 - seed * 512.0);
         // float _noise = snoise(d) * 0.5;
-        float _noise = rand(pixelCoord * noiseSize * randomValue) - 0.5;
+        float _noise = rand(pixelCoord * noiseSize * seed) - 0.5;
         color += _noise * noise;
     }
 

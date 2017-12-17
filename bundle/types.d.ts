@@ -93,8 +93,8 @@ declare namespace PIXI.filters {
         refresh():void;
     }
     class OldFilmFilter extends PIXI.Filter<{}> {
-        constructor(options?: OldFilmOptions, randomValue?: number);
-        constructor(randomValue?: number);
+        constructor(options?: OldFilmOptions, seed?: number);
+        constructor(seed?: number);
         sepia: number;
         noise: number;
         noiseSize: number;
@@ -104,7 +104,7 @@ declare namespace PIXI.filters {
         vignetting: number;
         vignettingAlpha: number;
         vignettingBlur: number;
-        randomValue: number;
+        seed: number;
     }
     interface OldFilmOptions {
         sepia?: number;
