@@ -12,6 +12,7 @@ export {GlowFilter} from '@pixi/filter-glow';
 export {GodrayFilter} from '@pixi/filter-godray';
 export {MotionBlurFilter} from '@pixi/filter-motion-blur';
 export {MultiColorReplaceFilter} from '@pixi/filter-multi-color-replace';
+export {OldFilmFilter} from '@pixi/filter-old-film';
 export {OutlineFilter} from '@pixi/filter-outline';
 export {PixelateFilter} from '@pixi/filter-pixelate';
 export {RGBSplitFilter} from '@pixi/filter-rgb-split';

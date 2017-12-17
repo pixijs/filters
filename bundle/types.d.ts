@@ -92,6 +92,31 @@ declare namespace PIXI.filters {
         readonly maxColors:number;
         refresh():void;
     }
+    class OldFilmFilter extends PIXI.Filter<{}> {
+        constructor(options?: OldFilmOptions, seed?: number);
+        constructor(seed?: number);
+        sepia: number;
+        noise: number;
+        noiseSize: number;
+        scratch: number;
+        scratchDensity: number;
+        scratchWidth: number;
+        vignetting: number;
+        vignettingAlpha: number;
+        vignettingBlur: number;
+        seed: number;
+    }
+    interface OldFilmOptions {
+        sepia?: number;
+        noise?: number;
+        noiseSize?: number;
+        scratch?: number;
+        scratchDensity?: number;
+        scratchWidth?: number;
+        vignetting?: number;
+        vignettingAlpha?: number;
+        vignettingBlur?: number;
+    }
     class OutlineFilter extends PIXI.Filter<{}> {
         constructor(thickness?:number, color?:number);
         color:number;

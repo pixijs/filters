@@ -29,6 +29,22 @@
                 "godray-2",
                 "godray-3"
             ]
+        },
+        {
+            "filename": "old-film",
+            "delay": 200,
+            "frames": [
+                "old-film-0",
+                "old-film-1",
+                "old-film-2",
+                "old-film-3",
+                "old-film-4",
+                "old-film-5",
+                "old-film-6",
+                "old-film-7",
+                "old-film-8",
+                "old-film-9"
+            ]
         }
     ],
     "images" : [
@@ -199,6 +215,86 @@
                 "wavelength": 20,
                 "brightness": 1.3,
                 "time": 0.25
+            }
+        },
+        {
+            "name": "OldFilmFilter",
+            "frame": "old-film-0",
+            "options": {
+                "scratchWidth": 0.8,
+                "seed": 0.0001
+            }
+        },
+        {
+            "name": "OldFilmFilter",
+            "frame": "old-film-1",
+            "options": {
+                "scratchWidth": 0.8,
+                "seed": 0.011234
+            }
+        },
+        {
+            "name": "OldFilmFilter",
+            "frame": "old-film-2",
+            "options": {
+                "scratchWidth": 0.8,
+                "seed": 0.941723
+            }
+        },
+        {
+            "name": "OldFilmFilter",
+            "frame": "old-film-3",
+            "options": {
+                "scratchWidth": 0.8,
+                "seed": 0.23512
+            }
+        },
+        {
+            "name": "OldFilmFilter",
+            "frame": "old-film-4",
+            "options": {
+                "scratchWidth": 0.8,
+                "seed": 0.612311
+            }
+        },
+        {
+            "name": "OldFilmFilter",
+            "frame": "old-film-5",
+            "options": {
+                "scratchWidth": 0.8,
+                "seed": 0.112351
+            }
+        },
+        {
+            "name": "OldFilmFilter",
+            "frame": "old-film-6",
+            "options": {
+                "scratchWidth": 0.8,
+                "seed": 0.5017123
+            }
+        },
+        {
+            "name": "OldFilmFilter",
+            "frame": "old-film-7",
+            "options": {
+                "scratchWidth": 0.8,
+                "seed": 0.312301
+            }
+        },
+        {
+            "name": "OldFilmFilter",
+            "frame": "old-film-8",
+            "options": {
+                "scratchWidth": 0.8,
+                "seed": 0.123411
+            }
+        },
+        {
+            "name": "OldFilmFilter",
+            "frame": "old-film-9",
+            "options": {
+                "scratchWidth": 0.8,
+                "seed": 0.02132
             }
         },
         {
