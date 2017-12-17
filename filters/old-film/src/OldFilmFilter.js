@@ -3,27 +3,30 @@ import fragment from './old-film.frag';
 
 /**
  * The OldFilmFilter applies a Old film effect to an object.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/old-film.png)
+ * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/old-film.gif)
  *
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
  *
  * @param {object|number} [options] - The optional parameters of old film effect.
- *                        When options is a number , it will be `seed`.
- * @param {number} [options.sepia=0.3] - TODO
- * @param {number} [options.noise=0.3] - TODO
- * @param {number} [options.noiseSize=1.0] - TODO
- * @param {number} [options.scratch=0.5] - TODO
- * @param {number} [options.scratchDensity=0.3] - TODO
- * @param {number} [options.scratchWidth=1.0] - TODO
- * @param {number} [options.vignetting=0.3] - TODO
- * @param {number} [options.vignettingAlpha=1.0] - TODO
- * @param {number} [options.vignettingBlur=0.3] - TODO
- * @param {number} [seed=0.3] - TODO
+ *                        When options is a number , it will be `seed`
+ * @param {number} [options.sepia=0.3] - The amount of saturation of sepia effect,
+ *        a value of `1` is more saturation and closer to `0` is less, and a value of
+ *        `0` produces no sepia effect
+ * @param {number} [options.noise=0.3] - Opacity/intensity of the noise effect between `0` and `1`
+ * @param {number} [options.noiseSize=1.0] - The size of the noise particles
+ * @param {number} [options.scratch=0.5] - How often scratches appear
+ * @param {number} [options.scratchDensity=0.3] - The density of the number of scratches
+ * @param {number} [options.scratchWidth=1.0] - The width of the scratches
+ * @param {number} [options.vignetting=0.3] - The radius of the vignette effect, smaller
+ *        values produces a smaller vignette
+ * @param {number} [options.vignettingAlpha=1.0] - Amount of opacity of vignette
+ * @param {number} [options.vignettingBlur=0.3] - Blur intensity of the vignette
+ * @param {number} [seed=0] - A see value to apply to the random noise generation
  */
 export default class OldFilmFilter extends PIXI.Filter {
-    constructor(options, seed = 0.0) {
+    constructor(options, seed = 0) {
         super(vertex, fragment);
 
         if (typeof options === 'number') {
@@ -31,10 +34,14 @@ export default class OldFilmFilter extends PIXI.Filter {
             options = null;
         }
         else {
+            /**
+             * A see value to apply to the random noise generation
+             * @member {number}
+             */
             this.seed = seed;
         }
 
-        options = Object.assign({
+        Object.assign(this, {
             sepia: 0.3,
             noise: 0.3,
             noiseSize: 1.0,
@@ -45,16 +52,6 @@ export default class OldFilmFilter extends PIXI.Filter {
             vignettingAlpha: 1.0,
             vignettingBlur: 0.3,
         }, options);
-
-        this.sepia = options.sepia;
-        this.noise = options.noise;
-        this.noiseSize = options.noiseSize;
-        this.scratch = options.scratch;
-        this.scratchDensity = options.scratchDensity;
-        this.scratchWidth = options.scratchWidth;
-        this.vignetting = options.vignetting;
-        this.vignettingAlpha = options.vignettingAlpha;
-        this.vignettingBlur = options.vignettingBlur;
     }
 
     /**
@@ -74,7 +71,9 @@ export default class OldFilmFilter extends PIXI.Filter {
 
 
     /**
-     * The sepia of the filter.
+     * The amount of saturation of sepia effect,
+     * a value of `1` is more saturation and closer to `0` is less,
+     * and a value of `0` produces no sepia effect
      *
      * @member {number}
      * @default 0
@@ -88,7 +87,7 @@ export default class OldFilmFilter extends PIXI.Filter {
     }
 
     /**
-     * The noise of the filter.
+     * Opacity/intensity of the noise effect between `0` and `1`
      *
      * @member {number}
      * @default 0
@@ -102,7 +101,7 @@ export default class OldFilmFilter extends PIXI.Filter {
     }
 
     /**
-     * The noiseSize of the filter.
+     * The size of the noise particles
      *
      * @member {number}
      * @default 0
@@ -116,7 +115,7 @@ export default class OldFilmFilter extends PIXI.Filter {
     }
 
     /**
-     * The scratch of the filter.
+     * How often scratches appear
      *
      * @member {number}
      * @default 0
@@ -130,7 +129,7 @@ export default class OldFilmFilter extends PIXI.Filter {
     }
 
     /**
-     * The scratchDensity of the filter.
+     * The density of the number of scratches
      *
      * @member {number}
      * @default 0
@@ -144,7 +143,7 @@ export default class OldFilmFilter extends PIXI.Filter {
     }
 
     /**
-     * The scratchWidth of the filter.
+     * The width of the scratches
      *
      * @member {number}
      * @default 0
@@ -158,7 +157,8 @@ export default class OldFilmFilter extends PIXI.Filter {
     }
 
     /**
-     * The vignetting of the filter.
+     * The radius of the vignette effect, smaller
+     * values produces a smaller vignette
      *
      * @member {number}
      * @default 0
@@ -172,7 +172,7 @@ export default class OldFilmFilter extends PIXI.Filter {
     }
 
     /**
-     * The vignettingAlpha of the filter.
+     * Amount of opacity of vignette
      *
      * @member {number}
      * @default 0
@@ -186,7 +186,7 @@ export default class OldFilmFilter extends PIXI.Filter {
     }
 
     /**
-     * The vignettingBlur of the filter.
+     * Blur intensity of the vignette
      *
      * @member {number}
      * @default 0
