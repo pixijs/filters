@@ -369,6 +369,16 @@
                 15,
                 0
             ]
+        },
+        {
+            "name": "RadialBlurFilter",
+            "filename": "radial-blur",
+            "arguments": [
+                30,
+                [130, 80],
+                15,
+                60
+            ]
         }
     ]
 }

@@ -20,6 +20,7 @@ export {default as multiColorReplace} from './multi-color-replace';
 export {default as noise} from './noise';
 export {default as outline} from './outline';
 export {default as pixelate} from './pixelate';
+export {default as radialBlur} from './radial-blur';
 export {default as rgb} from './rgb';
 export {default as shockwave} from './shockwave';
 export {default as simpleLightmap} from './lightmap';
