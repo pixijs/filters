@@ -360,6 +360,25 @@
                 "center": [130, 80],
                 "innerRadius": 40
             }
+        },
+        {
+            "name": "MotionBlurFilter",
+            "filename": "motion-blur",
+            "arguments": [
+                [40, 40],
+                15,
+                0
+            ]
+        },
+        {
+            "name": "RadialBlurFilter",
+            "filename": "radial-blur",
+            "arguments": [
+                30,
+                [130, 80],
+                15,
+                60
+            ]
         }
     ]
 }
