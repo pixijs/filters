@@ -19,12 +19,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "scripts": {
-    "build:dev": "rollup -c && rollup -c -f umd",
-    "build": "rollup -cp && rollup -cp -f umd",
-    "watch": "rollup -cw",
-    "postversion": "npm run build"
-  },
   "files": [
     "lib",
     "types.d.ts"
@@ -33,9 +27,6 @@
     "pixi.js": "^4.0.0"
   },
   "devDependencies": {
-    "@tools/build": "^2.3.0",
-    "@tools/fragments": "^2.0.0",
-    "rollup": "^0.45.2",
-    "rollup-watch": "^4.3.1"
+    "@tools/fragments": "^2.0.0"
   }
 }
