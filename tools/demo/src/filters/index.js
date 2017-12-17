@@ -18,6 +18,7 @@ export {default as godray} from './godray';
 export {default as motionBlur} from './motion-blur';
 export {default as multiColorReplace} from './multi-color-replace';
 export {default as noise} from './noise';
+export {default as oldFilm} from './old-film';
 export {default as outline} from './outline';
 export {default as pixelate} from './pixelate';
 export {default as radialBlur} from './radial-blur';

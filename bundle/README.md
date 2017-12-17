@@ -20,6 +20,7 @@ Filters include:
 * **GodrayFilter** _@pixi/filter-godray_
 * **MotionBlurFilter** _@pixi/filter-motion-blur_
 * **MultiColorFilter** _@pixi/filter-multi-color-replace_
+* **OldFilmFilter** _@pixi/filter-old-film_
 * **OutlineFilter** _@pixi/filter-outline_
 * **PixelateFilter** _@pixi/filter-pixelate_
 * **RGBSplitFilter** _@pixi/filter-rgb_
