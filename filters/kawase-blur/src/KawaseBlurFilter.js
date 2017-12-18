@@ -2,7 +2,7 @@ import {vertex} from '@tools/fragments';
 import fragment from './kawase-blur.frag';
 
 export default class KawaseBlurFilter extends PIXI.Filter {
-    constructor(kernels = [0], pixelSize = [1.0, 1.0]) {
+    constructor(kernels = [0], pixelSize = [1, 1]) {
         super(
             vertex,
             fragment
@@ -60,8 +60,15 @@ export default class KawaseBlurFilter extends PIXI.Filter {
     }
 
     set kernels(value) { // eslint-disable-line require-jsdoc
-        this._kernels = value;
-        this._passes = value.length;
+        if (Array.isArray(value) && value.length > 0) {
+            this._kernels = value;
+            this._passes = value.length;
+        }
+        else {
+            // if value is invalid , set default value
+            this._kernels = [0];
+            this._passes = 1;
+        }
     }
 
     /**
@@ -82,6 +89,11 @@ export default class KawaseBlurFilter extends PIXI.Filter {
         else if (value instanceof PIXI.Point) {
             this._pixelSize.x = value.x;
             this._pixelSize.y = value.y;
+        }
+        else {
+            // if value is invalid , set default value
+            this._pixelSize.x = 1;
+            this._pixelSize.y = 1;
         }
     }
 
