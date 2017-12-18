@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-radial-blur",
-  "version": "2.3.1",
+  "version": "2.4.0",
   "main": "lib/filter-radial-blur.js",
   "description": "Multi Color Replace filter",
   "author": "finscn <finscn@gmail.com>",

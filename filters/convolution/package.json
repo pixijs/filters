@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-convolution",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "main": "lib/filter-convolution.js",
   "description": "Display filter render as ASCII text",
   "author": "Mat Groves",

@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-zoom-blur",
-  "version": "2.3.1",
+  "version": "2.4.0",
   "main": "lib/filter-zoom-blur.js",
   "description": "Zoom Blur filter",
   "author": "finscn",

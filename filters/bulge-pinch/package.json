@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-bulge-pinch",
-  "version": "2.3.1",
+  "version": "2.4.0",
   "main": "lib/filter-bulge-pinch.js",
   "description": "Display filter render as ASCII text",
   "author": "Mat Groves",

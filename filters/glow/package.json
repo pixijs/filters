@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-glow",
-  "version": "2.3.1",
+  "version": "2.4.0",
   "main": "lib/filter-glow.js",
   "description": "Display filter render as ASCII text",
   "author": "Mat Groves",

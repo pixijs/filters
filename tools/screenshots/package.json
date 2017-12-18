@@ -1,7 +1,7 @@
 {
   "name": "@tools/screenshots",
   "private": true,
-  "version": "2.3.1",
+  "version": "2.4.0",
   "scripts": {
     "build": "electron main.js"
   },
@@ -10,7 +10,7 @@
     "electron": "^1.7.6",
     "fs-extra": "^4.0.1",
     "gifencoder": "^1.1.0",
-    "pixi-filters": "^2.3.1",
+    "pixi-filters": "^2.4.0",
     "pixi.js": "^4.6.0"
   }
 }

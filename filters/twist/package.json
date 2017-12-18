@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-twist",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "main": "lib/filter-twist.js",
   "description": "Display filter render as twist text",
   "author": "Mat Groves",

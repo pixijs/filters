@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-motion-blur",
-  "version": "2.3.1",
+  "version": "2.4.0",
   "main": "lib/filter-motion-blur.js",
   "description": "Multi Color Replace filter",
   "author": "finscn <finscn@gmail.com>",

@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-pixelate",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "main": "lib/filter-pixelate.js",
   "description": "Display filter render as ASCII text",
   "author": "Mat Groves",

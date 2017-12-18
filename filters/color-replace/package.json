@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-color-replace",
-  "version": "2.3.1",
+  "version": "2.4.0",
   "main": "lib/filter-color-replace.js",
   "description": "Display filter render as ASCII text",
   "author": "Mat Groves",
