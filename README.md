@@ -24,6 +24,7 @@ All filters work with PixiJS v4.
 | **EmbossFilter**<br>_@pixi/filter-emboss_ | ![emboss](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/emboss.png?v=2) |
 | **GlowFilter**<br>_@pixi/filter-glow_ | ![glow](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/glow.png?v=2) |
 | **Godray**<br>_@pixi/filter-godray_ | ![godray](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/godray.gif?v=2) |
+| **KawaseBlurFilter**<br>_@pixi/filter-kawase-blur_ | ![kawase-blur](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/kawase-blur.png?v=1) |
 | **MotionBlurFilter**<br>_@pixi/filter-motion-blur_ | ![motion-blur](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/motion-blur.png?v=1) |
 | **MultiColorReplaceFilter**<br>_@pixi/filter-multi-color-replace_ | ![multi-color-replace](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/multi-color-replace.png?v=1) |
 | **OldFilmFilter**<br>_@pixi/filter-old-film_ | ![old-film](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/old-film.gif?v=2) |
