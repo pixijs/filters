@@ -17,14 +17,18 @@ import fragment from './outline.frag';
  * @example
  *  someSprite.shader = new OutlineFilter(9, 0xFF0000);
  */
+
+const MIN_SAMPLE = 1;
+const MAX_SAMPLE = 100;
+
 export default class OutlineFilter extends PIXI.Filter {
 
     constructor(thickness = 1, color = 0x000000, quality = 0.1) {
+        const sample =  Math.max(quality * MAX_SAMPLE, MIN_SAMPLE);
 
-        // SAMPLE must be `> 2PI / 4`, otherwise the outline can't be closed.
-        const sample = (Math.PI * 2 / Math.max(quality * 100, 4)).toFixed(7);
-
-        super(vertex, fragment.replace(/%SAMPLE%/gi, sample));
+        super(vertex,
+            fragment.replace(/%ANGLE_STEP%/gi, (Math.PI * 2 / sample).toFixed(7))
+        );
 
         this.uniforms.thickness = new Float32Array([0, 0]);
         this.thickness = thickness;
