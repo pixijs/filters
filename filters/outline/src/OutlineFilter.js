@@ -12,17 +12,34 @@ import fragment from './outline.frag';
  * @memberof PIXI.filters
  * @param {number} [thickness=1] The tickness of the outline. Make it 2 times more for resolution 2
  * @param {number} [color=0x000000] The color of the glow.
+ * @param {number} [quality=0.1] The quality of the outline. It's from 0.0 to 1.0
  *
  * @example
  *  someSprite.shader = new OutlineFilter(9, 0xFF0000);
  */
 export default class OutlineFilter extends PIXI.Filter {
 
-    constructor(thickness = 1, color = 0x000000) {
-        super(vertex, fragment.replace(/%THICKNESS%/gi, (1.0 / thickness).toFixed(7)));
+    constructor(thickness = 1, color = 0x000000, quality = 0.1) {
+
+        // SAMPLE must be `> 2PI / 4`, otherwise the outline can't be closed.
+        const sample = (Math.PI * 2 / Math.max(quality * 100, 4)).toFixed(7);
+
+        super(vertex, fragment.replace(/%SAMPLE%/gi, sample));
+
+        this.uniforms.thickness = new Float32Array([0, 0]);
         this.thickness = thickness;
+
         this.uniforms.outlineColor = new Float32Array([0, 0, 0, 1]);
         this.color = color;
+
+        this.quality = quality;
+    }
+
+    apply(filterManager, input, output, clear) {
+        this.uniforms.thickness[0] = this.thickness / input.size.width;
+        this.uniforms.thickness[1] = this.thickness / input.size.height;
+
+        filterManager.applyFilter(this, input, output, clear);
     }
 
     /**
@@ -36,20 +53,7 @@ export default class OutlineFilter extends PIXI.Filter {
     set color(value) {
         PIXI.utils.hex2rgb(value, this.uniforms.outlineColor);
     }
-
-    /**
-     * The tickness of the outline. Make it 2 times more for resolution 2
-     * @member {number}
-     * @default 1
-     */
-    get thickness() {
-        return this.uniforms.thickness;
-    }
-    set thickness(value) {
-        this.uniforms.thickness = value;
-    }
 }
 
 // Export to PixiJS namespace
 PIXI.filters.OutlineFilter = OutlineFilter;
-
