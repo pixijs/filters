@@ -3,7 +3,6 @@ uniform sampler2D uSampler;
 
 uniform vec2 thickness;
 uniform vec4 outlineColor;
-uniform vec4 filterArea;
 uniform vec4 filterClamp;
 
 #define DOUBLE_PI 3.14159265359 * 2.
