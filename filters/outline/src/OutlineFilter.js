@@ -11,26 +11,31 @@ import fragment from './outline.frag';
  * @extends PIXI.Filter
  * @memberof PIXI.filters
  * @param {number} [thickness=1] The tickness of the outline. Make it 2 times more for resolution 2
- * @param {number} [color=0x000000] The color of the glow.
- * @param {number} [quality=0.1] The quality of the outline. It's from 0.0 to 1.0
+ * @param {number} [color=0x000000] The color of the outline.
+ * @param {number} [quality=0.1] The quality of the outline from `0` to `1`, using a higher quality
+ *        setting will result in slower performance and more accuracy.
  *
  * @example
  *  someSprite.shader = new OutlineFilter(9, 0xFF0000);
  */
-
-const MIN_SAMPLE = 1;
-const MAX_SAMPLE = 100;
-
 export default class OutlineFilter extends PIXI.Filter {
 
     constructor(thickness = 1, color = 0x000000, quality = 0.1) {
-        const sample =  Math.max(quality * MAX_SAMPLE, MIN_SAMPLE);
-
-        super(vertex,
-            fragment.replace(/%ANGLE_STEP%/gi, (Math.PI * 2 / sample).toFixed(7))
+        const samples =  Math.max(
+            quality * OutlineFilter.MAX_SAMPLES,
+            OutlineFilter.MIN_SAMPLES
         );
+        const angleStep = (Math.PI * 2 / samples).toFixed(7);
+
+        super(vertex, fragment.replace(/\$\{angleStep\}/, angleStep));
 
         this.uniforms.thickness = new Float32Array([0, 0]);
+
+        /** 
+         * The thickness of the outline.
+         * @member {number}
+         * @default 1
+         */
         this.thickness = thickness;
 
         this.uniforms.outlineColor = new Float32Array([0, 0, 0, 1]);
@@ -58,6 +63,24 @@ export default class OutlineFilter extends PIXI.Filter {
         PIXI.utils.hex2rgb(value, this.uniforms.outlineColor);
     }
 }
+
+/**
+ * The minimum number of samples for rendering outline.
+ * @static
+ * @member {number} MIN_SAMPLES
+ * @memberof PIXI.filters.OutlineFilter
+ * @default 1
+ */
+OutlineFilter.MIN_SAMPLES = 1;
+
+/**
+ * The maximum number of samples for rendering outline.
+ * @static
+ * @member {number} MAX_SAMPLES
+ * @memberof PIXI.filters.OutlineFilter
+ * @default 100
+ */
+OutlineFilter.MAX_SAMPLES = 100;
 
 // Export to PixiJS namespace
 PIXI.filters.OutlineFilter = OutlineFilter;
