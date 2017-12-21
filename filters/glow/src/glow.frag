@@ -9,10 +9,10 @@ uniform float innerStrength;
 uniform vec4 glowColor;
 uniform vec4 filterArea;
 uniform vec4 filterClamp;
-vec2 px = vec2(1.0 / filterArea.x, 1.0 / filterArea.y);
+const float PI = 3.14159265358979323846264;
 
 void main(void) {
-    const float PI = 3.14159265358979323846264;
+    vec2 px = vec2(1.0 / filterArea.x, 1.0 / filterArea.y);
     vec4 ownColor = texture2D(uSampler, vTextureCoord);
     vec4 curColor;
     float totalAlpha = 0.0;
