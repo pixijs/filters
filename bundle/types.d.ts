@@ -121,7 +121,7 @@ declare namespace PIXI.filters {
         constructor(thickness?:number, color?:number, quality?:number);
         color:number;
         thickness:number;
-        quality:number;
+        readonly quality:number;
     }
     class PixelateFilter extends PIXI.Filter<{}> {
         constructor(size?:PIXI.Point|number[]|number);
