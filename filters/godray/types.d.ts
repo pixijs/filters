@@ -1,8 +1,8 @@
 /// <reference types="pixi.js" />
 declare namespace PIXI.filters {
     class GodrayFilter extends PIXI.Filter<{}> {
-        constructor(angle?:number, gain?:number, lacunarity?:number, time?:number);
-        angle:number;
+        constructor(light?:number|PIXI.Point|Array<number>, gain?:number, lacunarity?:number, time?:number);
+        light:number|PIXI.Point|Array<number>;
         gain:number;
         lacunarity:number;
         time:number;

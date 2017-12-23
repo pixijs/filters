@@ -1,6 +1,6 @@
 import {vertex} from '@tools/fragments';
 import perlin from './perlin.frag';
-import main from './main.frag';
+import fragment from './gorday.frag';
 
 /**
 * GordayFilter, {@link https://codepen.io/alaingalvan originally} by Alain Galvan
@@ -14,17 +14,17 @@ import main from './main.frag';
 *
 * @example
 *  displayObject.filters = [new GodrayFilter()];
-* @param {number} [angle=30] Angle of the rays.
+* @param {number|PIXI.Point|Array<number>} [light=30] Angle/Light-source of the rays.
 * @param {number} [gain=0.5] General intensity of the effect.
 * @param {number} [lacunrity=2.5] The density of the fractal noise.
 * @param {number} [time=0] The current time position.
 */
 export default class GodrayFilter extends PIXI.Filter {
 
-    constructor(angle = 30, gain = 0.5, lacunarity = 2.5, time = 0) {
-        super(vertex, main.replace('${perlin}', perlin));
+    constructor(light = 30, gain = 0.5, lacunarity = 2.5, time = 0) {
+        super(vertex, fragment.replace('${perlin}', perlin));
 
-        this.angle = angle;
+        this.light = light;
 
         this.gain = gain;
 
@@ -51,35 +51,48 @@ export default class GodrayFilter extends PIXI.Filter {
 
         this.uniforms.dimensions[0] = width;
         this.uniforms.dimensions[1] = height;
+        this.uniforms.aspect = height / width;
 
         this.uniforms.time = this.time;
-
-        // compensate angle
-        this.uniforms.angleDir[1] = this._angleSin * height / width;
 
         // draw the filter...
         filterManager.applyFilter(this, input, output, clear);
     }
 
     /**
-     * The angle of the rays in degrees. For instance, a value of 0 is vertical rays,
-     * values of 90 or -90 produce horizontal rays.
-     *
-     * @member {number}
+     * The angle/light-source of the rays.
+     * If value is number, it means angle in degrees, For instance, a value of 0 is vertical rays,
+     *     values of 90 or -90 produce horizontal rays.
+     * If value is PIXI.Point/Array, it means light source of rays.
+     * @member {number|PIXI.Point|Array<number>}
      * @default 30
      */
-    get angle() {
-        return this._angle;
+    get light() {
+        return this._light;
     }
-    set angle(value) {
-        const radians = value * PIXI.DEG_TO_RAD;
+    set light(value) {
+        if (typeof value === 'number') {
+            this._light = value;
 
-        this._angleCos = Math.cos(radians);
-        this._angleSin = Math.sin(radians);
+            const radians = value * PIXI.DEG_TO_RAD;
 
-        this.uniforms.angleDir[0] = this._angleCos;
+            this._angleCos = Math.cos(radians);
+            this._angleSin = Math.sin(radians);
 
-        this._angle = value;
+            this.uniforms.light[0] = this._angleCos;
+            this.uniforms.light[1] = this._angleSin;
+            this.uniforms.parallel = true;
+        }
+        else if (value instanceof PIXI.Point) {
+            this.uniforms.light[0] = value.x;
+            this.uniforms.light[1] = value.y;
+            this.uniforms.parallel = false;
+        }
+        else {
+            this.uniforms.light[0] = value[0];
+            this.uniforms.light[1] = value[1];
+            this.uniforms.parallel = false;
+        }
     }
 
     /**
