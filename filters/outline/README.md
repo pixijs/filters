@@ -1,6 +1,6 @@
 # OutlineFilter
 
-PixiJS v4 filter to render DisplayObject as ASCII text.
+PixiJS v4 filter to generate & render the outline of DisplayObject.
 
 ## Installation
 

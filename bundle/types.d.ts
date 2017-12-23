@@ -118,9 +118,10 @@ declare namespace PIXI.filters {
         vignettingBlur?: number;
     }
     class OutlineFilter extends PIXI.Filter<{}> {
-        constructor(thickness?:number, color?:number);
+        constructor(thickness?:number, color?:number, quality?:number);
         color:number;
         thickness:number;
+        readonly quality:number;
     }
     class PixelateFilter extends PIXI.Filter<{}> {
         constructor(size?:PIXI.Point|number[]|number);
