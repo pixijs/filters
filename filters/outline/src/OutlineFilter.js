@@ -31,7 +31,7 @@ export default class OutlineFilter extends PIXI.Filter {
 
         this.uniforms.thickness = new Float32Array([0, 0]);
 
-        /** 
+        /**
          * The thickness of the outline.
          * @member {number}
          * @default 1
