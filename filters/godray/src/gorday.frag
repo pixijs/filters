@@ -26,7 +26,7 @@ void main(void) {
     } else {
         float dx = coord.x - light.x / dimensions.x;
         float dy = (coord.y - light.y / dimensions.y) * aspect;
-        float dis = sqrt(dx * dx + dy * dy + 0.00001);
+        float dis = sqrt(dx * dx + dy * dy) + 0.00001;
         d = dy / dis;
     }
 
