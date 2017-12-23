@@ -31,7 +31,7 @@ export default function() {
             folder.add(this, 'time', 0, 1);
             folder.add(this, 'light', -60, 60).name('light(angle)');
 
-            folder.add(lightSource, '0', 10, app.initWidth).name('light(source).x').onChange(function(value) {
+            folder.add(lightSource, '0', -100, app.initWidth + 100).name('light(source).x').onChange(function(value) {
                 lightSource[0] = value;
                 filter.light = lightSource;
             });
