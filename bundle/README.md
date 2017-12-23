@@ -16,6 +16,7 @@ Filters include:
 * **DotFilter** _@pixi/filter-dot_
 * **DropShadowFilter** _@pixi/filter-drop-shadow_
 * **EmbossFilter** _@pixi/filter-emboss_
+* **GlitchFilter** _@pixi/filter-glitch_
 * **GlowFilter** _@pixi/filter-glow_
 * **GodrayFilter** _@pixi/filter-godray_
 * **MotionBlurFilter** _@pixi/filter-motion-blur_

@@ -475,6 +475,11 @@
                 15,
                 60
             ]
+        },
+        {
+            "name": "GlitchFilter",
+            "filename": "glitch",
+            "arguments": [5, 50, 0]
         }
     ]
 }

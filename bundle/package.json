@@ -41,6 +41,7 @@
     "@pixi/filter-dot": "^2.4.0",
     "@pixi/filter-drop-shadow": "^2.4.0",
     "@pixi/filter-emboss": "^2.4.0",
+    "@pixi/filter-glitch": "^2.4.0",
     "@pixi/filter-glow": "^2.4.1",
     "@pixi/filter-godray": "^2.4.0",
     "@pixi/filter-motion-blur": "^2.4.0",
