@@ -10,7 +10,7 @@ export default function() {
             this.gain = 0.6;
             this.lacunarity = 2.75;
             this.animating = true;
-            this.focal = new PIXI.Point(100, -100);
+            this.center = new PIXI.Point(100, -100);
 
             app.events.on('enable', (enabled) => {
                 if (enabled && this.animating) {
@@ -30,8 +30,8 @@ export default function() {
             folder.add(this, 'lacunarity', 0, 5);
             folder.add(this, 'parallel');
             folder.add(this, 'angle', -60, 60);
-            folder.add(this.focal, 'x', -100, app.initWidth + 100).name('focal.x');
-            folder.add(this.focal, 'y', -1000, -100).name('focal.y');
+            folder.add(this.center, 'x', -100, app.initWidth + 100).name('center.x');
+            folder.add(this.center, 'y', -1000, -100).name('center.y');
         }
     });
 }

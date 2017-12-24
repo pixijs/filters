@@ -18,9 +18,9 @@ import fragment from './gorday.frag';
 * @param {number} [options.angle=30] Angle/Light-source of the rays.
 * @param {number} [options.gain=0.5] General intensity of the effect.
 * @param {number} [options.lacunrity=2.5] The density of the fractal noise.
-* @param {boolean} [options.parallel=true] `true` to use `angle`, `false` to use `focal`
+* @param {boolean} [options.parallel=true] `true` to use `angle`, `false` to use `center`
 * @param {number} [options.time=0] The current time position.
-* @param {PIXI.Point|number[]} [options.focal=[0,0]] Focal point for non-parallel rays,
+* @param {PIXI.Point|number[]} [options.center=[0,0]] Focal point for non-parallel rays,
 *        to use this `parallel` must be set to `false`.
 */
 export default class GodrayFilter extends PIXI.Filter {
@@ -46,7 +46,7 @@ export default class GodrayFilter extends PIXI.Filter {
             lacunarity: 2.5,
             time: 0,
             parallel: true,
-            focal: [0, 0],
+            center: [0, 0],
         }, options);
 
         this._angleLight = new PIXI.Point();
@@ -56,7 +56,7 @@ export default class GodrayFilter extends PIXI.Filter {
 
         /**
          * `true` if light rays are parallel (uses angle),
-         * `false` to use the focal point
+         * `false` to use the focal `center` point
          *
          * @member {boolean}
          * @default true
@@ -70,7 +70,7 @@ export default class GodrayFilter extends PIXI.Filter {
          * @member {PIXI.Point|number[]}
          * @default [0, 0]
          */
-        this.focal = options.focal;
+        this.center = options.center;
 
         /**
          * The current time.
@@ -91,7 +91,7 @@ export default class GodrayFilter extends PIXI.Filter {
     apply(filterManager, input, output, clear) {
         const {width, height} = input.sourceFrame;
 
-        this.uniforms.light = this.parallel ? this._angleLight : this.focal;
+        this.uniforms.light = this.parallel ? this._angleLight : this.center;
 
         this.uniforms.parallel = this.parallel;
         this.uniforms.dimensions[0] = width;

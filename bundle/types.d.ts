@@ -75,7 +75,7 @@ declare namespace PIXI.filters {
     class GodrayFilter extends PIXI.Filter<{}> {
         constructor(options?:GodrayFilterOptions);
         angle:number;
-        focal:PIXI.Point|Array<number>;
+        center:PIXI.Point|Array<number>;
         parallel:boolean;
         gain:number;
         lacunarity:number;
@@ -83,7 +83,7 @@ declare namespace PIXI.filters {
     }
     interface GodrayFilterOptions {
         angle:number;
-        focal:PIXI.Point|Array<number>;
+        center:PIXI.Point|Array<number>;
         parallel:boolean;
         gain:number;
         lacunarity:number;
