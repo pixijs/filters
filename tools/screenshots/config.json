@@ -479,7 +479,11 @@
         {
             "name": "GlitchFilter",
             "filename": "glitch",
-            "arguments": [5, 50, 0]
+            "arguments": [{
+                "slices": 5,
+                "offset": 50,
+                "direction": 0
+            }]
         }
     ]
 }

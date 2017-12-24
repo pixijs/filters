@@ -4,7 +4,10 @@ export default function() {
         enabled: false,
         global: false,
         opened: false,
-        args: [10, 200, 0, {
+        args: [{
+            slices: 10,
+            offset: 100,
+            direction: 0,
             fillMode: 2,
             average: false,
             red: [2, 2],

@@ -66,7 +66,7 @@ declare namespace PIXI.filters {
         strength:number;
     }
     class GlitchFilter extends PIXI.Filter<{}> {
-        constructor(slices?:number, offset?:number, direction?:number, options?:GlitchOptions);
+        constructor(options?:GlitchOptions);
         slices:number,
         offset:number,
         direction:number,
@@ -77,6 +77,9 @@ declare namespace PIXI.filters {
         blue:PIXI.Point
     }
     interface GlitchOptions {
+        slices:number,
+        offset:number,
+        direction:number,
         fillMode:number,
         average:boolean,
         seed:number,

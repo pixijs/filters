@@ -8,10 +8,10 @@ import fragment from './glitch.frag';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
- * @param {number} slices - The count of slices.
- * @param {number} offset - The max-offset of slices.
- * @param {number} direction - The angle in degree of the offset of slices.
  * @param {object} options - The more optional parameters of the filter.
+ * @param {number} [options.slices=5] - The count of slices.
+ * @param {number} [options.offset=100] - The max-offset of slices.
+ * @param {number} [options.direction=0] - The angle in degree of the offset of slices.
  * @param {number} [options.fillMode=0] - The fill mode of the space after the offset.
  *                 0: TRANSPARENT; 1: ORIGINAL; 2: LOOP; 3: MIRROR.
  * @param {number} [options.red=[0,0]] - Red channel offset
@@ -19,11 +19,14 @@ import fragment from './glitch.frag';
  * @param {number} [options.blue=[0,0]] - Blue channel offset.
  */
 export default class GlitchFilter extends PIXI.Filter {
-    constructor(slices = 5, offset = 100, direction = 0, options = {}) {
+    constructor(options = {}) {
 
         super(vertex, fragment);
 
-        Object.assign(this, {
+        const _options = {
+            slices: 5,
+            offset: 100,
+            direction: 0,
             fillMode: 0,
             average: false,
             seed: 0.5,
@@ -33,10 +36,22 @@ export default class GlitchFilter extends PIXI.Filter {
             minSliceWidth: 8,
             displacementMapSize: 512,
             displacementMap: null,
-        }, options);
+        };
 
-        this.offset = offset;
-        this.direction = direction;
+        Object.assign(_options, options);
+
+        this.offset = _options.offset;
+        this.direction = _options.direction;
+
+        this.fillMode = _options.fillMode;
+        this.average = _options.average;
+        this.seed = _options.seed;
+        this.red = _options.red;
+        this.green = _options.green;
+        this.blue = _options.blue;
+        this.minSliceWidth = _options.minSliceWidth;
+        this.displacementMapSize = _options.displacementMapSize;
+        this.displacementMap = _options.displacementMap;
 
         if (!this.displacementMap) {
             this.displacementMapCanvas = document.createElement('canvas');
@@ -45,7 +60,7 @@ export default class GlitchFilter extends PIXI.Filter {
             this.displacementMap = PIXI.Texture.fromCanvas(this.displacementMapCanvas, PIXI.SCALE_MODES.NEAREST);
 
             this._slices = 0;
-            this.slices = slices;
+            this.slices = _options.slices;
         }
     }
 
