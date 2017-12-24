@@ -14,28 +14,71 @@ import fragment from './gorday.frag';
 *
 * @example
 *  displayObject.filters = [new GodrayFilter()];
-* @param {number|PIXI.Point|Array<number>} [light=30] Angle/Light-source of the rays.
-* @param {number} [gain=0.5] General intensity of the effect.
-* @param {number} [lacunrity=2.5] The density of the fractal noise.
-* @param {number} [time=0] The current time position.
+* @param {object} [options] Filter options
+* @param {number} [options.angle=30] Angle/Light-source of the rays.
+* @param {number} [options.gain=0.5] General intensity of the effect.
+* @param {number} [options.lacunrity=2.5] The density of the fractal noise.
+* @param {boolean} [options.parallel=true] `true` to use `angle`, `false` to use `focal`
+* @param {number} [options.time=0] The current time position.
+* @param {PIXI.Point|number[]} [options.focal=[0,0]] Focal point for non-parallel rays,
+*        to use this `parallel` must be set to `false`.
 */
 export default class GodrayFilter extends PIXI.Filter {
 
-    constructor(light = 30, gain = 0.5, lacunarity = 2.5, time = 0) {
+    constructor(options) {
         super(vertex, fragment.replace('${perlin}', perlin));
 
-        this.light = light;
+        // Fallback support for ctor: (angle, gain, lacunarity, time)
+        if (typeof options === 'number') {
+            // eslint-disable-next-line no-console
+            console.warn('GodrayFilter now uses options instead of (angle, gain, lacunarity, time)');
+            options = {
+                angle: arguments[0],
+                gain: arguments[1],
+                lacunarity: arguments[2],
+                time: arguments[3],
+            };
+        }
 
-        this.gain = gain;
+        options = Object.assign({
+            angle: 30,
+            gain: 0.5,
+            lacunarity: 2.5,
+            time: 0,
+            parallel: true,
+            focal: [0, 0],
+        }, options);
 
-        this.lacunarity = lacunarity;
+        this._angleLight = new PIXI.Point();
+        this.angle = options.angle;
+        this.gain = options.gain;
+        this.lacunarity = options.lacunarity;
+
+        /**
+         * `true` if light rays are parallel (uses angle),
+         * `false` to use the focal point
+         *
+         * @member {boolean}
+         * @default true
+         */
+        this.parallel = options.parallel;
+
+        /**
+         * The position of the emitting point for light rays
+         * only used if `parallel` is set to `false`.
+         *
+         * @member {PIXI.Point|number[]}
+         * @default [0, 0]
+         */
+        this.focal = options.focal;
 
         /**
          * The current time.
          *
          * @member {number}
+         * @default 0
          */
-        this.time = time;
+        this.time = options.time;
     }
 
     /**
@@ -46,13 +89,14 @@ export default class GodrayFilter extends PIXI.Filter {
      * @param {PIXI.RenderTarget} output - The output target.
      */
     apply(filterManager, input, output, clear) {
-        const width = input.sourceFrame.width;
-        const height = input.sourceFrame.height;
+        const {width, height} = input.sourceFrame;
 
+        this.uniforms.light = this.parallel ? this._angleLight : this.focal;
+
+        this.uniforms.parallel = this.parallel;
         this.uniforms.dimensions[0] = width;
         this.uniforms.dimensions[1] = height;
         this.uniforms.aspect = height / width;
-
         this.uniforms.time = this.time;
 
         // draw the filter...
@@ -60,39 +104,21 @@ export default class GodrayFilter extends PIXI.Filter {
     }
 
     /**
-     * The angle/light-source of the rays.
-     * If value is number, it means angle in degrees, For instance, a value of 0 is vertical rays,
+     * The angle/light-source of the rays in degrees. For instance, a value of 0 is vertical rays,
      *     values of 90 or -90 produce horizontal rays.
-     * If value is PIXI.Point/Array, it means light source of rays.
-     * @member {number|PIXI.Point|Array<number>}
+     * @member {number}
      * @default 30
      */
-    get light() {
-        return this._light;
+    get angle() {
+        return this._angle;
     }
-    set light(value) {
-        if (typeof value === 'number') {
-            this._light = value;
+    set angle(value) {
+        this._angle = value;
 
-            const radians = value * PIXI.DEG_TO_RAD;
+        const radians = value * PIXI.DEG_TO_RAD;
 
-            this._angleCos = Math.cos(radians);
-            this._angleSin = Math.sin(radians);
-
-            this.uniforms.light[0] = this._angleCos;
-            this.uniforms.light[1] = this._angleSin;
-            this.uniforms.parallel = true;
-        }
-        else if (value instanceof PIXI.Point) {
-            this.uniforms.light[0] = value.x;
-            this.uniforms.light[1] = value.y;
-            this.uniforms.parallel = false;
-        }
-        else {
-            this.uniforms.light[0] = value[0];
-            this.uniforms.light[1] = value[1];
-            this.uniforms.parallel = false;
-        }
+        this._angleLight.x = Math.cos(radians);
+        this._angleLight.y = Math.sin(radians);
     }
 
     /**
