@@ -32,12 +32,16 @@ export default class GodrayFilter extends PIXI.Filter {
         if (typeof options === 'number') {
             // eslint-disable-next-line no-console
             console.warn('GodrayFilter now uses options instead of (angle, gain, lacunarity, time)');
-            options = {
-                angle: arguments[0],
-                gain: arguments[1],
-                lacunarity: arguments[2],
-                time: arguments[3],
-            };
+            options = { angle: options };
+            if (arguments[1] !== undefined) {
+                options.gain = arguments[1];
+            }
+            if (arguments[2] !== undefined) {
+                options.lacunarity = arguments[2];
+            }
+            if (arguments[3] !== undefined) {
+                options.time = arguments[3];
+            }
         }
 
         options = Object.assign({
