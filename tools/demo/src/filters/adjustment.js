@@ -4,7 +4,7 @@ export default function() {
         enabled: false,
         global: false,
         opened: false,
-        fishOnly: true,
+        fishOnly: false,
         // args: [[app.initWidth / 2, app.initHeight / 2]],
         oncreate(folder) {
             folder.add(this, 'gamma', 0, 10);
