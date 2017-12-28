@@ -38,6 +38,7 @@
     "@pixi/filter-color-replace": "^2.4.0",
     "@pixi/filter-convolution": "^2.4.0",
     "@pixi/filter-cross-hatch": "^2.4.0",
+    "@pixi/filter-crt": "^2.4.0",
     "@pixi/filter-dot": "^2.4.0",
     "@pixi/filter-drop-shadow": "^2.4.0",
     "@pixi/filter-emboss": "^2.4.0",

@@ -48,6 +48,33 @@ declare namespace PIXI.filters {
     class CrossHatchFilter extends PIXI.Filter<{}> {
         constructor();
     }
+    class CRTFilter extends PIXI.Filter<{}> {
+        constructor(options?: CRTOptions);
+        curvature: number;
+        lineWidth: number;
+        lineContrast: number;
+        verticalLine: number;
+        noise: number;
+        noiseSize: number;
+        seed: number;
+        vignetting: number;
+        vignettingAlpha: number;
+        vignettingBlur: number;
+        time: number;
+    }
+    interface CRTOptions {
+        curvature?: number;
+        lineWidth?: number;
+        lineContrast?: number;
+        verticalLine?: number;
+        noise?: number;
+        noiseSize?: number;
+        seed?: number;
+        vignetting?: number;
+        vignettingAlpha?: number;
+        vignettingBlur?: number;
+        time?: number;
+    }
     class DotFilter extends PIXI.Filter<{}> {
         constructor(scale?:number, angle?:number);
         angle:number;

@@ -14,6 +14,7 @@ Filters include:
 * **ConvolutionFilter** _@pixi/filter-convolution_
 * **CrossHatchFilter** _@pixi/filter-cross-hatch_
 * **DotFilter** _@pixi/filter-dot_
+* **CRTFilter** _@pixi/filter-crt_
 * **DropShadowFilter** _@pixi/filter-drop-shadow_
 * **EmbossFilter** _@pixi/filter-emboss_
 * **GlowFilter** _@pixi/filter-glow_
