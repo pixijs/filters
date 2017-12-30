@@ -13,11 +13,22 @@ export default function() {
         oncreate(folder) {
             const filter = this;
 
-            app.events.on('animate', function() {
-                filter.seed = Math.random();
-                filter.time += 0.5;
+            filter.animating = true;
+
+            app.events.on('enable', function(enabled) {
+                if (enabled && filter.animating) {
+                    filter.time = 0;
+                }
             });
 
+            app.events.on('animate', function() {
+                if (filter.animating) {
+                    filter.seed = Math.random();
+                    filter.time += 0.5;
+                }
+            });
+
+            folder.add(this, 'animating').name('(animating)');
             folder.add(this, 'curvature', 0, 10);
             folder.add(this, 'lineWidth', 0, 5);
             folder.add(this, 'lineContrast', 0, 1);
