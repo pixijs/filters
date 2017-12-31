@@ -11,7 +11,7 @@ import fragment from './reflection.frag';
  *
  * @param {object} [options] - The optional parameters of Reflection effect.
  * @param {number} [options.boundary=0.5] - TODO
- * @param {number} [options.offset=[0, 20]] - TODO
+ * @param {number} [options.amplitude=[0, 20]] - TODO
  * @param {number} [options.waveLength=[30, 100]] - TODO
  * @param {number} [options.alpha=[1, 1]] - TODO
  * @param {number} [time=0] - TODO
@@ -22,7 +22,7 @@ export default class ReflectionFilter extends PIXI.Filter {
 
         Object.assign(this, {
             boundary: 0.5,
-            offset: [0, 20],
+            amplitude: [0, 20],
             waveLength: [30, 100],
             alpha: [1, 1],
             time: 0,
@@ -50,13 +50,13 @@ export default class ReflectionFilter extends PIXI.Filter {
         return this.uniforms.boundary;
     }
 
-    set offset(value) {
-        this.uniforms.offset[0] = value[0];
-        this.uniforms.offset[1] = value[1];
+    set amplitude(value) {
+        this.uniforms.amplitude[0] = value[0];
+        this.uniforms.amplitude[1] = value[1];
     }
 
-    get offset() {
-        return this.uniforms.offset;
+    get amplitude() {
+        return this.uniforms.amplitude;
     }
 
     set waveLength(value) {

@@ -6,7 +6,7 @@ uniform vec4 filterClamp;
 uniform vec2 dimensions;
 
 uniform float boundary;
-uniform vec2 offset;
+uniform vec2 amplitude;
 uniform vec2 waveLength;
 uniform vec2 alpha;
 uniform float time;
@@ -30,11 +30,11 @@ void main(void)
 
     float k = (coord.y - boundary)/(1. - boundary + 0.0001);
 
-    float _offset = ((offset.y - offset.x) * k + offset.x ) / filterArea.x;
+    float _amplitude = ((amplitude.y - amplitude.x) * k + amplitude.x ) / filterArea.x;
     float _waveLength = ((waveLength.y - waveLength.x) * k + waveLength.x) / filterArea.y;
     float _alpha = (alpha.y - alpha.x) * k + alpha.x;
 
-    float x = vTextureCoord.x + cos(y * 6.28 / _waveLength - time) * _offset;
+    float x = vTextureCoord.x + cos(y * 6.28 / _waveLength - time) * _amplitude;
     x = clamp(x, filterClamp.x, filterClamp.z);
 
     vec4 color = texture2D(uSampler, vec2(x, y));

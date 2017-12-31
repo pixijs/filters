@@ -2,7 +2,7 @@
   "name": "@pixi/filter-reflection",
   "version": "2.4.0",
   "main": "lib/filter-reflection.js",
-  "description": "CRT effect filter",
+  "description": "Reflection effect filter",
   "author": "finscn <finscn@gmail.com>",
   "module": "lib/filter-reflection.es.js",
   "types": "types.d.ts",

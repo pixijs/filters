@@ -1,20 +1,20 @@
 # AdjustBasicFilter
 
-PixiJS v4 filter to render CRT effect.
+PixiJS v4 filter to render Reflection effect.
 
 ## Installation
 
 ```bash
-npm install @pixi/filter-crt
+npm install @pixi/filter-reflection
 ```
 
 ## Usage
 
 ```js
-import { CRTFilter } from '@pixi/filter-crt';
+import { Reflection } from '@pixi/filter-reflection';
 
 const container = new PIXI.Container();
-container.filters = [new CRTFilter()];
+container.filters = [new Reflection()];
 ```
 
 ## Documentation

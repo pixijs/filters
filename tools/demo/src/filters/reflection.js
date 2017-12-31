@@ -18,7 +18,6 @@ export default function() {
 
             app.events.on('animate', function() {
                 if (filter.animating) {
-                    filter.seed = Math.random();
                     filter.time += 0.1;
                 }
             });
@@ -26,8 +25,8 @@ export default function() {
             folder.add(this, 'animating').name('(animating)');
 
             folder.add(this, 'boundary', 0, 1);
-            folder.add(this.offset, '0', 0, 50).name('offset.start');
-            folder.add(this.offset, '1', 0, 50).name('offset.end');
+            folder.add(this.amplitude, '0', 0, 50).name('amplitude.start');
+            folder.add(this.amplitude, '1', 0, 50).name('amplitude.end');
             folder.add(this.waveLength, '0', 10, 200).name('waveLength.start');
             folder.add(this.waveLength, '1', 10, 200).name('waveLength.end');
             folder.add(this.alpha, '0', 0, 1).name('alpha.start');
