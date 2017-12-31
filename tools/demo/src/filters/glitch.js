@@ -35,7 +35,7 @@ export default function() {
             });
             folder.add(this, 'offset', -400, 400);
             folder.add(this, 'direction', -180, 180);
-            folder.add(this, 'fillMode',[0, 1, 2, 3]);
+            folder.add(this, 'fillMode',[0, 1, 2, 3, 4]);
             folder.add(this.red, '0', -50, 50).name('red.x');
             folder.add(this.red, '1', -50, 50).name('red.y');
             folder.add(this.blue, '0', -50, 50).name('blue.x');

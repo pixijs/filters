@@ -13,7 +13,7 @@ import fragment from './glitch.frag';
  * @param {number} [options.offset=100] - The max-offset of slices.
  * @param {number} [options.direction=0] - The angle in degree of the offset of slices.
  * @param {number} [options.fillMode=0] - The fill mode of the space after the offset.
- *                 0: TRANSPARENT; 1: ORIGINAL; 2: LOOP; 3: MIRROR.
+ *                 0: TRANSPARENT; 1: ORIGINAL; 2: LOOP; 3: CLAMP; 4: MIRROR.
  * @param {number} [options.red=[0,0]] - Red channel offset
  * @param {number} [options.green=[0,0]] - Green channel offset.
  * @param {number} [options.blue=[0,0]] - Blue channel offset.
