@@ -48,7 +48,7 @@ void main(void)
         rgb *= 0.99 + ceil(segment) * 0.015;
     }
 
-    if (noise > 0.0)
+    if (noise > 0.0 && noiseSize > 0.0)
     {
         pixelCoord.x = floor(pixelCoord.x / noiseSize);
         pixelCoord.y = floor(pixelCoord.y / noiseSize);
