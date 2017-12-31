@@ -475,6 +475,10 @@
                 15,
                 60
             ]
+        },
+        {
+            "name": "ReflectionFilter",
+            "filename": "reflection"
         }
     ]
 }

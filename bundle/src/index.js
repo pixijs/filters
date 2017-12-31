@@ -15,6 +15,7 @@ export {MultiColorReplaceFilter} from '@pixi/filter-multi-color-replace';
 export {OldFilmFilter} from '@pixi/filter-old-film';
 export {OutlineFilter} from '@pixi/filter-outline';
 export {PixelateFilter} from '@pixi/filter-pixelate';
+export {ReflectionFilter} from '@pixi/filter-reflection';
 export {RGBSplitFilter} from '@pixi/filter-rgb-split';
 export {RadialBlurFilter} from '@pixi/filter-radial-blur';
 export {ShockwaveFilter} from '@pixi/filter-shockwave';

@@ -22,6 +22,7 @@ export {default as oldFilm} from './old-film';
 export {default as outline} from './outline';
 export {default as pixelate} from './pixelate';
 export {default as radialBlur} from './radial-blur';
+export {default as reflection} from './reflection';
 export {default as rgb} from './rgb';
 export {default as shockwave} from './shockwave';
 export {default as simpleLightmap} from './lightmap';
