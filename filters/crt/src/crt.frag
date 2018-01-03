@@ -65,8 +65,4 @@ void main(void)
     }
 
     gl_FragColor.rgb = rgb;
-
-    // float m = max(0.0, 1.0 - 2. * max(abs(uv.x), abs(uv.y)) / _c);
-    // float alpha = min(m * 200., 1.);
-    // gl_FragColor = vec4(rgb / gl_FragColor.a * alpha, alpha);
 }
