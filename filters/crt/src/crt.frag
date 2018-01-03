@@ -40,13 +40,6 @@ void main(void)
     gl_FragColor = texture2D(uSampler, vTextureCoord);
     vec3 rgb = gl_FragColor.rgb;
 
-    if (lineWidth > 0.0) {
-        float v = (verticalLine ? uv.x * dimensions.x : uv.y * dimensions.y) * min(1.0, 2.0 / lineWidth ) / _c;
-        float j = 1. + cos(v * 1.2 - time) * 0.5 * lineContrast;
-        rgb *= j;
-        float segment = verticalLine ? mod((dir.x + .5) * dimensions.x, 4.) : mod((dir.y + .5) * dimensions.y, 4.);
-        rgb *= 0.99 + ceil(segment) * 0.015;
-    }
 
     if (noise > 0.0 && noiseSize > 0.0)
     {
@@ -54,6 +47,14 @@ void main(void)
         pixelCoord.y = floor(pixelCoord.y / noiseSize);
         float _noise = rand(pixelCoord * noiseSize * seed) - 0.5;
         rgb += _noise * noise;
+    }
+
+    if (lineWidth > 0.0) {
+        float v = (verticalLine ? uv.x * dimensions.x : uv.y * dimensions.y) * min(1.0, 2.0 / lineWidth ) / _c;
+        float j = 1. + cos(v * 1.2 - time) * 0.5 * lineContrast;
+        rgb *= j;
+        float segment = verticalLine ? mod((dir.x + .5) * dimensions.x, 4.) : mod((dir.y + .5) * dimensions.y, 4.);
+        rgb *= 0.99 + ceil(segment) * 0.015;
     }
 
     if (vignetting > 0.0)
