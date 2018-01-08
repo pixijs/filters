@@ -1,3 +1,4 @@
+export {AdjustmentFilter} from '@pixi/filter-adjustment';
 export {AdvancedBloomFilter} from '@pixi/filter-advanced-bloom';
 export {AsciiFilter} from '@pixi/filter-ascii';
 export {BloomFilter} from '@pixi/filter-bloom';

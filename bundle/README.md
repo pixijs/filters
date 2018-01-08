@@ -6,6 +6,7 @@ Optional filters that work with PixiJS v4.
 
 Filters include:
 
+* **AdjustmentFilter** _@pixi/filter-adjustment_
 * **AdvancedBloomFilter** _@pixi/filter-advanced-bloom_
 * **AsciiFilter** _@pixi/filter-ascii_
 * **BloomFilter** _@pixi/filter-bloom_
