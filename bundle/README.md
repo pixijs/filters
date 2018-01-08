@@ -26,8 +26,9 @@ Filters include:
 * **OldFilmFilter** _@pixi/filter-old-film_
 * **OutlineFilter** _@pixi/filter-outline_
 * **PixelateFilter** _@pixi/filter-pixelate_
-* **RGBSplitFilter** _@pixi/filter-rgb_
 * **RadialBlurFilter** _@pixi/filter-radial-blur_
+* **ReflectionFilter** _@pixi/filter-reflection_
+* **RGBSplitFilter** _@pixi/filter-rgb_
 * **ShockwaveFilter** _@pixi/filter-shockwave_
 * **SimpleLightmapFilter** _@pixi/filter-simple-lightmap_
 * **TiltShiftFilter** _@pixi/filter-tilt-shift_
