@@ -1,8 +1,25 @@
 /// <reference types="pixi.js" />
 declare namespace PIXI.filters {
-    class AsciiFilter extends PIXI.Filter<{}> {
-        constructor(size?:number);
-        size:number;
+    class AdjustmentFilter extends PIXI.Filter<{}> {
+        constructor(options?: AdjustmentOptions);
+        gamma: number;
+        contrast: number;
+        saturation: number;
+        brightness: number;
+        red: number;
+        green: number;
+        blue: number;
+        alpha: number;
+    }
+    interface AdjustmentOptions {
+        gamma?: number;
+        contrast?: number;
+        saturation?: number;
+        brightness?: number;
+        red?: number;
+        green?: number;
+        blue?: number;
+        alpha?: number;
     }
     class AdvancedBloomFilter extends PIXI.Filter<{}> {
         constructor(options?: AdvancedBloomOptions);
@@ -20,6 +37,10 @@ declare namespace PIXI.filters {
         quality?: number;
         resolution?: number;
         kernelSize?: number;
+    }
+    class AsciiFilter extends PIXI.Filter<{}> {
+        constructor(size?:number);
+        size:number;
     }
     class BloomFilter extends PIXI.Filter<{}> {
         constructor(blur?:number|PIXI.Point|number[], quality?:number, resolution?:number, kernelSize?:number);
@@ -48,6 +69,33 @@ declare namespace PIXI.filters {
     class CrossHatchFilter extends PIXI.Filter<{}> {
         constructor();
     }
+    class CRTFilter extends PIXI.Filter<{}> {
+        constructor(options?: CRTOptions);
+        curvature: number;
+        lineWidth: number;
+        lineContrast: number;
+        verticalLine: number;
+        noise: number;
+        noiseSize: number;
+        seed: number;
+        vignetting: number;
+        vignettingAlpha: number;
+        vignettingBlur: number;
+        time: number;
+    }
+    interface CRTOptions {
+        curvature?: number;
+        lineWidth?: number;
+        lineContrast?: number;
+        verticalLine?: number;
+        noise?: number;
+        noiseSize?: number;
+        seed?: number;
+        vignetting?: number;
+        vignettingAlpha?: number;
+        vignettingBlur?: number;
+        time?: number;
+    }
     class DotFilter extends PIXI.Filter<{}> {
         constructor(scale?:number, angle?:number);
         angle:number;
@@ -73,8 +121,18 @@ declare namespace PIXI.filters {
         outerStrength:number;
     }
     class GodrayFilter extends PIXI.Filter<{}> {
-        constructor(angle?:number, gain?:number, lacunarity?:number, time?:number);
+        constructor(options?:GodrayFilterOptions);
         angle:number;
+        center:PIXI.Point|Array<number>;
+        parallel:boolean;
+        gain:number;
+        lacunarity:number;
+        time:number;
+    }
+    interface GodrayFilterOptions {
+        angle:number;
+        center:PIXI.Point|Array<number>;
+        parallel:boolean;
         gain:number;
         lacunarity:number;
         time:number;
@@ -138,6 +196,23 @@ declare namespace PIXI.filters {
         center:number[]|PIXI.Point;
         kernelSize:number;
         radius:number;
+    }
+    class ReflectionFilter extends PIXI.Filter<{}> {
+        constructor(options?: ReflectionOptions);
+        mirror: boolean;
+        boundary: number;
+        amplitude: number[];
+        waveLength: number[];
+        alpha: number[];
+        time: number;
+    }
+    interface ReflectionOptions {
+        mirror?: boolean;
+        boundary?: number;
+        amplitude?: number[];
+        waveLength?: number[];
+        alpha?: number[];
+        time?: number;
     }
     class RGBSplitFilter extends PIXI.Filter<{}> {
         constructor(red?:PIXI.Point, green?:PIXI.Point, blue?:PIXI.Point);

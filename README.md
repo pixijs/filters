@@ -12,6 +12,7 @@ All filters work with PixiJS v4.
 
 | Filter | Preview |
 |---|---|
+| **AdjustmentFilter**<br>_@pixi/filter-adjustment_ | ![adjustment](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/adjustment.png?v=2) |
 | **AdvancedBloomFilter**<br>_@pixi/filter-advanced-bloom_ | ![advanced-bloom](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/advanced-bloom.png?v=2) |
 | **AsciiFilter**<br>_@pixi/filter-ascii_ | ![ascii](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/ascii.png?v=2) |
 | **BloomFilter**<br>_@pixi/filter-bloom_ | ![bloom](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/bloom.png?v=2) |
@@ -19,6 +20,7 @@ All filters work with PixiJS v4.
 | **ColorReplaceFilter**<br>_@pixi/filter-color-replace_ | ![color-replace](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/color-replace.png?v=2) |
 | **ConvolutionFilter**<br>_@pixi/filter-convolution_ | ![convolution](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/convolution.png?v=2) |
 | **CrossHatchFilter**<br>_@pixi/filter-cross-hatch_ | ![cross-hatch](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/cross-hatch.png?v=2) |
+| **CRTFilter**<br>_@pixi/filter-crt_ | ![crt](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/crt.gif?v=2) |
 | **DotFilter**<br>_@pixi/filter-dot_ | ![dot](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/dot.png?v=2) |
 | **DropShadowFilter**<br>_@pixi/filter-drop-shadow_| ![drop-shadow](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/drop-shadow.png?v=2) |
 | **EmbossFilter**<br>_@pixi/filter-emboss_ | ![emboss](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/emboss.png?v=2) |
@@ -30,8 +32,9 @@ All filters work with PixiJS v4.
 | **OldFilmFilter**<br>_@pixi/filter-old-film_ | ![old-film](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/old-film.gif?v=2) |
 | **OutlineFilter**<br>_@pixi/filter-outline_ | ![outline](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/outline.png?v=2) |
 | **PixelateFilter**<br>_@pixi/filter-pixelate_ | ![pixelate](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/pixelate.png?v=2) |
-| **RGBSplitFilter**<br>_@pixi/filter-rgb_ | ![rgb split](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/rgb.png?v=2) |
 | **RadialBlurFilter**<br>_@pixi/filter-radial-blur_ | ![radial-blur](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/radial-blur.png?v=2) |
+| **ReflectionFilter**<br>_@pixi/filter-reflection_ | ![reflection](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/reflection.png?v=2) |
+| **RGBSplitFilter**<br>_@pixi/filter-rgb_ | ![rgb split](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/rgb.png?v=2) |
 | **ShockwaveFilter**<br>_@pixi/filter-shockwave_ | ![shockwave](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/shockwave.gif?v=3) |
 | **SimpleLightmapFilter**<br>_@pixi/filter-simple-lightmap_ | ![simple-lightmap](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/simple-lightmap.png?v=2) |
 | **TiltShiftFilter**<br>_@pixi/filter-tilt-shift_ | ![tilt-shift](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/tilt-shift.png?v=2) |
