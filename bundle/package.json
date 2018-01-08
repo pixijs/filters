@@ -51,6 +51,7 @@
     "@pixi/filter-outline": "^2.4.1",
     "@pixi/filter-pixelate": "^2.4.0",
     "@pixi/filter-radial-blur": "^2.4.0",
+    "@pixi/filter-reflection": "^2.4.0",
     "@pixi/filter-rgb-split": "^2.4.0",
     "@pixi/filter-shockwave": "^2.4.0",
     "@pixi/filter-simple-lightmap": "^2.4.0",

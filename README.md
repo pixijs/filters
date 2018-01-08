@@ -31,8 +31,9 @@ All filters work with PixiJS v4.
 | **OldFilmFilter**<br>_@pixi/filter-old-film_ | ![old-film](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/old-film.gif?v=2) |
 | **OutlineFilter**<br>_@pixi/filter-outline_ | ![outline](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/outline.png?v=2) |
 | **PixelateFilter**<br>_@pixi/filter-pixelate_ | ![pixelate](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/pixelate.png?v=2) |
-| **RGBSplitFilter**<br>_@pixi/filter-rgb_ | ![rgb split](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/rgb.png?v=2) |
 | **RadialBlurFilter**<br>_@pixi/filter-radial-blur_ | ![radial-blur](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/radial-blur.png?v=2) |
+| **ReflectionFilter**<br>_@pixi/filter-reflection_ | ![reflection](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/reflection.png?v=2) |
+| **RGBSplitFilter**<br>_@pixi/filter-rgb_ | ![rgb split](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/rgb.png?v=2) |
 | **ShockwaveFilter**<br>_@pixi/filter-shockwave_ | ![shockwave](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/shockwave.gif?v=3) |
 | **SimpleLightmapFilter**<br>_@pixi/filter-simple-lightmap_ | ![simple-lightmap](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/simple-lightmap.png?v=2) |
 | **TiltShiftFilter**<br>_@pixi/filter-tilt-shift_ | ![tilt-shift](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/tilt-shift.png?v=2) |
