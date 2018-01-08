@@ -8,18 +8,23 @@ import fragment from './glitch.frag';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
- * @param {object} options - The more optional parameters of the filter.
- * @param {number} [options.slices=5] - The count of slices.
- * @param {number} [options.offset=100] - The max-offset of slices.
+ * @param {object} [options] - The more optional parameters of the filter.
+ * @param {number} [options.slices=5] - The maximum number of slices.
+ * @param {number} [options.offset=100] - The maximum offset amount of slices.
  * @param {number} [options.direction=0] - The angle in degree of the offset of slices.
- * @param {number} [options.fillMode=0] - The fill mode of the space after the offset.
- *                 0: TRANSPARENT; 1: ORIGINAL; 2: LOOP; 3: CLAMP; 4: MIRROR.
+ * @param {number} [options.fillMode=0] - The fill mode of the space after the offset. Acceptable values:
+ *  - `0` {@link PIXI.filters.GlitchFilter.TRANSPARENT TRANSPARENT}
+ *  - `1` {@link PIXI.filters.GlitchFilter.ORIGINAL ORIGINAL}
+ *  - `2` {@link PIXI.filters.GlitchFilter.LOOP LOOP}
+ *  - `3` {@link PIXI.filters.GlitchFilter.CLAMP CLAMP}
+ *  - `4` {@link PIXI.filters.GlitchFilter.MIRROR MIRROR}
+ * @param {number} [options.seed=0] - A seed value for randomizing glitch effect.
  * @param {number} [options.average=false] - TODO
- * @param {number} [options.minSliceWidth=8] - TODO
+ * @param {number} [options.minSize=8] - Minimum size of individual slice. Segment of total `sampleSize`
+ * @param {number} [options.sampleSize=512] - The resolution of the displacement map texture.
  * @param {number} [options.red=[0,0]] - Red channel offset
  * @param {number} [options.green=[0,0]] - Green channel offset.
- * @param {number} [options.displacementMapSize=512] - TODO.
- * @param {number} [options.displacementMap=null] - TODO.
+ * @param {number} [options.blue=[0,0]] - Blue channel offset.
  */
 export default class GlitchFilter extends PIXI.Filter {
 
@@ -33,37 +38,91 @@ export default class GlitchFilter extends PIXI.Filter {
             direction: 0,
             fillMode: 0,
             average: false,
-            seed: 0.5,
+            seed: 0,
             red: [0, 0],
             green: [0, 0],
             blue: [0, 0],
-            minSliceWidth: 8,
-            displacementMapSize: 512,
-            displacementMap: null,
+            minSize: 8,
+            sampleSize: 512,
         }, options);
 
-        this.offset = options.offset;
         this.direction = options.direction;
-
-        this.fillMode = options.fillMode;
-        this.average = options.average;
-        this.seed = options.seed;
         this.red = options.red;
         this.green = options.green;
         this.blue = options.blue;
-        this.minSliceWidth = options.minSliceWidth;
-        this.displacementMapSize = options.displacementMapSize;
-        this.displacementMap = options.displacementMap;
 
-        if (!this.displacementMap) {
-            this.displacementMapCanvas = document.createElement('canvas');
-            this.displacementMapCanvas.width = 8;
-            this.displacementMapCanvas.height = this.displacementMapSize;
-            this.displacementMap = PIXI.Texture.fromCanvas(this.displacementMapCanvas, PIXI.SCALE_MODES.NEAREST);
+        /**
+         * The maximum offset value for each of the slices.
+         *
+         * @member {number}
+         */
+        this.offset = options.offset;
 
-            this._slices = 0;
-            this.slices = options.slices;
-        }
+        /**
+         * The fill mode of the space after the offset.
+         *
+         * @member {number}
+         */
+        this.fillMode = options.fillMode;
+
+        /**
+         * average
+         *
+         * @member {boolean}
+         */
+        this.average = options.average;
+
+        /**
+         * A seed value for randomizing color offset. Animating
+         * this value to `Math.random()` produces a twitching effect.
+         *
+         * @member {number}
+         */
+        this.seed = options.seed;
+
+        /**
+         * Minimum size of slices as a portion of the `sampleSize`
+         *
+         * @member {number}
+         */
+        this.minSize = options.minSize;
+
+        /**
+         * Height of the displacement map canvas.
+         *
+         * @member {number}
+         * @readonly
+         */
+        this.sampleSize = options.sampleSize;
+
+        /**
+         * Internally generated canvas.
+         *
+         * @member {HTMLCanvasElement} _canvas
+         * @private
+         */
+        this._canvas = document.createElement('canvas');
+        this._canvas.width = 8;
+        this._canvas.height = this.sampleSize;
+
+        /**
+         * The displacement map is used to generate the bands.
+         * If using your own texture, `slices` will be ignored.
+         *
+         * @member {PIXI.Texture}
+         * @readonly
+         */
+        this.texture = PIXI.Texture.fromCanvas(this._canvas, PIXI.SCALE_MODES.NEAREST);
+
+        /**
+         * Internal number of slices
+         * @member {number}
+         * @private
+         */
+        this._slices = 0;
+
+        // Set slices
+        this.slices = options.slices;
     }
 
     /**
@@ -87,13 +146,15 @@ export default class GlitchFilter extends PIXI.Filter {
     }
 
     /**
+     * Randomize the slices size (heights).
+     *
      * @private
      */
-    initSlicesWidth() {
-        const arr = this.slicesWidth;
+    _randomizeSizes() {
+        const arr = this._sizes;
         const last = this._slices - 1;
-        const size = this.displacementMapSize;
-        const min = Math.min(this.minSliceWidth / size, 0.9 / this._slices);
+        const size = this.sampleSize;
+        const min = Math.min(this.minSize / size, 0.9 / this._slices);
 
         if (this.average) {
             const count = this._slices;
@@ -119,40 +180,8 @@ export default class GlitchFilter extends PIXI.Filter {
             arr[last] = rest;
         }
 
-        this.shuffle();
-    }
-
-    /**
-     * @private
-     */
-    initSlicesOffset() {
-        for (let i = 0 ; i < this._slices; i++) {
-            this.slicesOffset[i] = Math.random() * (Math.random() < 0.5 ? -1 : 1);
-        }
-    }
-
-    /**
-     *  regenerating slicesWidth , slicesOffset & displacement bitmap by random
-     */
-    refresh() {
-        this.slicesWidth = new Float32Array(this._slices);
-        this.initSlicesWidth();
-        this.uniforms.slicesWidth = this.slicesWidth;
-
-        this.slicesOffset = new Float32Array(this._slices);
-        this.initSlicesOffset();
-        this.uniforms.slicesOffset = this.slicesOffset;
-
-        this.updateDisplacementMap();
-    }
-
-    /**
-     *   shuffle the slices-width array
-     */
-    shuffle() {
-        const arr = this.slicesWidth;
-
-        for (let i = this._slices - 1; i > 0; i--) {
+        // shuffle
+        for (let i = last; i > 0; i--) {
             const rand = (Math.random() * i) >> 0;
             const temp = arr[i];
 
@@ -162,21 +191,41 @@ export default class GlitchFilter extends PIXI.Filter {
     }
 
     /**
-     *   regenerating displacement bitmap
+     * Randomize the values for offset from -1 to 1
+     *
+     * @private
      */
-    updateDisplacementMap() {
-        let canvas = this.displacementMapCanvas;
-        let size = this.displacementMapSize;
+    _randomizeOffsets() {
+        for (let i = 0 ; i < this._slices; i++) {
+            this._offsets[i] = Math.random() * (Math.random() < 0.5 ? -1 : 1);
+        }
+    }
 
-        let ctx = canvas.getContext('2d');
+    /**
+     * Regenerating random size, offsets for slices
+     */
+    refresh() {
+        this._randomizeSizes();
+        this._randomizeOffsets();
+        this._redrawTexture();
+    }
+
+    /**
+     * Redraw internal displacement bitmap texture
+     * @private
+     */
+    _redrawTexture() {
+        const size = this.sampleSize;
+        const texture = this.texture;
+        const ctx = this._canvas.getContext('2d');
         ctx.clearRect(0, 0, 8, size);
 
         let offset;
         let y = 0;
 
         for (let i = 0 ; i < this._slices; i++) {
-            offset = Math.floor(this.slicesOffset[i] * 256);
-            const height = this.slicesWidth[i] * size;
+            offset = Math.floor(this._offsets[i] * 256);
+            const height = this._sizes[i] * size;
             const red = offset > 0 ? offset : 0;
             const green = offset < 0 ? -offset : 0;
             ctx.fillStyle = 'rgba(' + red + ', ' + green + ', 0, 1)';
@@ -184,32 +233,43 @@ export default class GlitchFilter extends PIXI.Filter {
             y += height;
         }
 
-        this.displacementMap._updateID++;
-        this.displacementMap.baseTexture.emit('update', this.displacementMap.baseTexture);
-        // this.displacementMap.update();
-        this.uniforms.displacementMap = this.displacementMap;
+        texture._updateID++;
+        texture.baseTexture.emit('update', texture.baseTexture);
+        this.uniforms.displacementMap = texture;
     }
 
     /**
-     *   set custom slices width of displacement bitmap
+     * Manually custom slices size (height) of displacement bitmap
+     *
+     * @member {number[]}
      */
-    setSlicesWidth(slicesWidth) {
-        const len = Math.min(this._slices, slicesWidth.length);
+    set sizes(sizes) {
+        const len = Math.min(this._slices, sizes.length);
 
         for (let i = 0; i < len; i++){
-            this.slicesWidth[i] = slicesWidth[i];
+            this._sizes[i] = sizes[i];
         }
+    }
+    get sizes() {
+        return this._sizes;
     }
 
     /**
-     *   set custom slices offset of displacement bitmap
+     * Manually set custom slices offset of displacement bitmap, this is
+     * a collection of values from -1 to 1. To change the max offset value
+     * set `offset`.
+     *
+     * @member {number[]}
      */
-    setSlicesOffset(slicesOffset) {
-        const len = Math.min(this._slices, slicesOffset.length);
+    set offsets(offsets) {
+        const len = Math.min(this._slices, offsets.length);
 
         for (let i = 0; i < len; i++){
-            this.slicesOffset[i] = slicesOffset[i];
+            this._offsets[i] = offsets[i];
         }
+    }
+    get offsets() {
+        return this._offsets;
     }
 
     /**
@@ -226,7 +286,8 @@ export default class GlitchFilter extends PIXI.Filter {
         }
         this._slices = value;
         this.uniforms.slices = value;
-
+        this._sizes = this.uniforms.slicesWidth = new Float32Array(value);
+        this._offsets = this.uniforms.slicesOffset = new Float32Array(value);
         this.refresh();
     }
 
@@ -285,12 +346,75 @@ export default class GlitchFilter extends PIXI.Filter {
     set blue(value) {
         this.uniforms.blue = value;
     }
+
+    /**
+     * Removes all references
+     */
+    destroy() {
+        this.texture.destroy(true);
+        this.texture = null;
+        this._canvas = null;
+        this.red = null;
+        this.green = null;
+        this.blue = null;
+        this._sizes = null;
+        this._offsets = null;
+    }
 }
 
+/**
+ * Fill mode as transparent
+ *
+ * @constant
+ * @static
+ * @member {int} TRANSPARENT
+ * @memberof PIXI.filters.GlitchFilter
+ * @readonly
+ */
 GlitchFilter.TRANSPARENT = 0;
+
+/**
+ * Fill mode as original
+ *
+ * @constant
+ * @static
+ * @member {int} ORIGINAL
+ * @memberof PIXI.filters.GlitchFilter
+ * @readonly
+ */
 GlitchFilter.ORIGINAL = 1;
+
+/**
+ * Fill mode as loop
+ *
+ * @constant
+ * @static
+ * @member {int} LOOP
+ * @memberof PIXI.filters.GlitchFilter
+ * @readonly
+ */
 GlitchFilter.LOOP = 2;
+
+/**
+ * Fill mode as clamp
+ *
+ * @constant
+ * @static
+ * @member {int} CLAMP
+ * @memberof PIXI.filters.GlitchFilter
+ * @readonly
+ */
 GlitchFilter.CLAMP = 3;
+
+/**
+ * Fill mode as mirror
+ *
+ * @constant
+ * @static
+ * @member {int} MIRROR
+ * @memberof PIXI.filters.GlitchFilter
+ * @readonly
+ */
 GlitchFilter.MIRROR = 4;
 
 // Export to PixiJS namespace

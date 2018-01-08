@@ -2,28 +2,31 @@
 declare namespace PIXI.filters {
     class GlitchFilter extends PIXI.Filter<{}> {
         constructor(options?:GlitchOptions);
-        slices:number,
-        offset:number,
-        direction:number,
-        fillMode:number,
-        seed:number,
-        red:PIXI.Point,
-        green:PIXI.Point,
-        blue:PIXI.Point
+        slices:number;
+        offset:number;
+        direction:number;
+        fillMode:number;
+        seed:number;
+        red:PIXI.Point;
+        green:PIXI.Point;
+        blue:PIXI.Point;
+        sizes:Float32Array|number[];
+        offsets:Float32Array|number[];
+        refresh(): void;
+        readonly texture:PIXI.Texture;
     }
     interface GlitchOptions {
-        slices:number,
-        offset:number,
-        direction:number,
-        fillMode:number,
-        average:boolean,
-        seed:number,
-        red:PIXI.Point,
-        green:PIXI.Point,
-        blue:PIXI.Point,
-        minSliceWidth:number,
-        displacementMapSize:number,
-        displacementMap:PIXI.Texture,
+        slices:number;
+        offset:number;
+        direction:number;
+        fillMode:number;
+        average:boolean;
+        seed:number;
+        red:PIXI.Point;
+        green:PIXI.Point;
+        blue:PIXI.Point;
+        minSize:number;
+        sampleSize:number;
     }
 }
 

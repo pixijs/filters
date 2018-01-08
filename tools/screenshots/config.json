@@ -480,9 +480,10 @@
             "name": "GlitchFilter",
             "filename": "glitch",
             "arguments": [{
-                "slices": 5,
+                "slices": 6,
                 "offset": 50,
                 "direction": 0
+            }]
         },
         {
             "name": "CRTFilter",
