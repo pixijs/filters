@@ -478,7 +478,12 @@
         },
         {
             "name": "ReflectionFilter",
-            "filename": "reflection"
+            "filename": "reflection",
+            "arguments": [{
+                "alpha": [0.7, 1],
+                "amplitude": [0, 10],
+                "waveLength": [10, 50]
+            }]
         },
         {
             "name": "AdjustmentFilter",
