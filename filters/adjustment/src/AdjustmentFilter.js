@@ -2,10 +2,9 @@ import {vertex} from '@tools/fragments';
 import fragment from './adjustment.frag';
 
 /**
- * The AdjustmentFilter to adjust gamma/contrast/saturation/brightness. This is a faster
- * and much simpler to use than PIXI.filters.ColorMatrixFilter because it does not use
- * a color matrix.
-.<br>
+ * The ability to adjust gamma, contrast, saturation, brightness, alpha or color-channel shift. This is a faster
+ * and much simpler to use than {@link http://pixijs.download/release/docs/PIXI.filters.ColorMatrixFilter.html ColorMatrixFilter}
+ * because it does not use a matrix.<br>
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/adjustment.png)
  *
  * @class
@@ -29,7 +28,7 @@ export default class AdjustmentFilter extends PIXI.Filter {
         Object.assign(this, {
             /**
              * The amount of luminance
-             * @member {number} gamma
+             * @member {number}
              * @memberof PIXI.filters.AdjustmentFilter#
              * @default 1
              */
@@ -37,7 +36,7 @@ export default class AdjustmentFilter extends PIXI.Filter {
 
             /**
              * The amount of saturation
-             * @member {number} saturation
+             * @member {number}
              * @memberof PIXI.filters.AdjustmentFilter#
              * @default 1
              */
@@ -45,7 +44,7 @@ export default class AdjustmentFilter extends PIXI.Filter {
 
             /**
              * The amount of contrast
-             * @member {number} contrast
+             * @member {number}
              * @memberof PIXI.filters.AdjustmentFilter#
              * @default 1
              */
@@ -53,7 +52,7 @@ export default class AdjustmentFilter extends PIXI.Filter {
 
             /**
              * The amount of brightness
-             * @member {number} brightness
+             * @member {number}
              * @memberof PIXI.filters.AdjustmentFilter#
              * @default 1
              */
@@ -61,7 +60,7 @@ export default class AdjustmentFilter extends PIXI.Filter {
 
             /**
              * The amount of red channel
-             * @member {number} red
+             * @member {number}
              * @memberof PIXI.filters.AdjustmentFilter#
              * @default 1
              */
@@ -69,7 +68,7 @@ export default class AdjustmentFilter extends PIXI.Filter {
 
             /**
              * The amount of green channel
-             * @member {number} green
+             * @member {number}
              * @memberof PIXI.filters.AdjustmentFilter#
              * @default 1
              */
@@ -77,7 +76,7 @@ export default class AdjustmentFilter extends PIXI.Filter {
 
             /**
              * The amount of blue channel
-             * @member {number} blue
+             * @member {number}
              * @memberof PIXI.filters.AdjustmentFilter#
              * @default 1
              */
@@ -85,7 +84,7 @@ export default class AdjustmentFilter extends PIXI.Filter {
 
             /**
              * The amount of alpha channel
-             * @member {number} alpha
+             * @member {number}
              * @memberof PIXI.filters.AdjustmentFilter#
              * @default 1
              */
