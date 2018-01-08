@@ -9,23 +9,39 @@ import fragment from './crt.frag';
  * @extends PIXI.Filter
  * @memberof PIXI.filters
  *
- * @param {object} [options] - The optional parameters of CRT effect.
- * @param {number} [options.curvature=1.0] - TODO
- * @param {number} [options.lineWidth=1.0] - TODO
- * @param {number} [options.lineContrast=0.25] - TODO
- * @param {number} [options.verticalLine=false] - TODO
+ * @param {object} [options] - The optional parameters of CRT effect
+ * @param {number} [options.curvature=1.0] - Bent of interlaced lines, higher value means more bend
+ * @param {number} [options.lineWidth=1.0] - Width of the interlaced lines
+ * @param {number} [options.lineContrast=0.25] - Contrast of interlaced lines
+ * @param {number} [options.verticalLine=false] - `true` is vertical lines, `false` is horizontal
  * @param {number} [options.noise=0.3] - Opacity/intensity of the noise effect between `0` and `1`
  * @param {number} [options.noiseSize=1.0] - The size of the noise particles
- * @param {number} [seed=0] - A see value to apply to the random noise generation
+ * @param {number} [options.seed=0] - A seed value to apply to the random noise generation
  * @param {number} [options.vignetting=0.3] - The radius of the vignette effect, smaller
  *        values produces a smaller vignette
  * @param {number} [options.vignettingAlpha=1.0] - Amount of opacity of vignette
  * @param {number} [options.vignettingBlur=0.3] - Blur intensity of the vignette
- * @param {number} [time=0] - TODO
+ * @param {number} [options.time=0] - For animating interlaced lines
  */
 export default class CRTFilter extends PIXI.Filter {
     constructor(options) {
         super(vertex, fragment);
+
+        /**
+         * For animating interlaced lines
+         *
+         * @member {number}
+         * @default 0
+         */
+        this.time = 0;
+
+        /**
+         * A seed value to apply to the random noise generation
+         *
+         * @member {number}
+         * @default 0
+         */
+        this.seed = 0;
 
         Object.assign(this, {
             curvature: 1.0,
@@ -56,34 +72,54 @@ export default class CRTFilter extends PIXI.Filter {
         filterManager.applyFilter(this, input, output, clear);
     }
 
+    /**
+     * Bent of interlaced lines, higher value means more bend
+     *
+     * @member {number}
+     * @default 1
+     */
     set curvature(value) {
         this.uniforms.curvature = value;
     }
-
     get curvature() {
         return this.uniforms.curvature;
     }
 
+    /**
+     * Width of interlaced lines
+     *
+     * @member {number}
+     * @default 1
+     */
     set lineWidth(value) {
         this.uniforms.lineWidth = value;
     }
-
     get lineWidth() {
         return this.uniforms.lineWidth;
     }
 
+    /**
+     * Contrast of interlaced lines
+     *
+     * @member {number}
+     * @default 0.25
+     */
     set lineContrast(value) {
         this.uniforms.lineContrast = value;
     }
-
     get lineContrast() {
         return this.uniforms.lineContrast;
     }
 
+    /**
+     * `true` for vertical lines, `false` for horizontal lines
+     *
+     * @member {boolean}
+     * @default false
+     */
     set verticalLine(value) {
         this.uniforms.verticalLine = value;
     }
-
     get verticalLine() {
         return this.uniforms.verticalLine;
     }
@@ -97,7 +133,6 @@ export default class CRTFilter extends PIXI.Filter {
     set noise(value) {
         this.uniforms.noise = value;
     }
-
     get noise() {
         return this.uniforms.noise;
     }
@@ -111,7 +146,6 @@ export default class CRTFilter extends PIXI.Filter {
     set noiseSize(value) {
         this.uniforms.noiseSize = value;
     }
-
     get noiseSize() {
         return this.uniforms.noiseSize;
     }
@@ -126,7 +160,6 @@ export default class CRTFilter extends PIXI.Filter {
     set vignetting(value) {
         this.uniforms.vignetting = value;
     }
-
     get vignetting() {
         return this.uniforms.vignetting;
     }
@@ -140,7 +173,6 @@ export default class CRTFilter extends PIXI.Filter {
     set vignettingAlpha(value) {
         this.uniforms.vignettingAlpha = value;
     }
-
     get vignettingAlpha() {
         return this.uniforms.vignettingAlpha;
     }
@@ -154,7 +186,6 @@ export default class CRTFilter extends PIXI.Filter {
     set vignettingBlur(value) {
         this.uniforms.vignettingBlur = value;
     }
-
     get vignettingBlur() {
         return this.uniforms.vignettingBlur;
     }

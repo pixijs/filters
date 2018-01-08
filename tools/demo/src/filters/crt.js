@@ -1,9 +1,6 @@
 export default function() {
     const app = this;
     app.addFilter('CRTFilter', {
-        enabled: true,
-        global: false,
-        opened: false,
         args: [{
             lineWidth: 3,
             lineContrast: 0.3,
