@@ -1,14 +1,12 @@
 export default function() {
     const app = this;
     app.addFilter('GlitchFilter', {
-        enabled: true,
-        opened: true,
         args: [{
             slices: 10,
             offset: 100,
             direction: 0,
             fillMode: 2,
-            average: true,
+            average: false,
             red: [2, 2],
             green: [-10, 4],
             blue: [10, -4],
