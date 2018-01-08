@@ -26,16 +26,16 @@ void main(void)
         return;
     }
 
+    float k = (coord.y - boundary) / (1. - boundary + 0.0001);
     float areaY = boundary * dimensions.y / filterArea.y;
-    float y = mirror ? areaY + areaY - vTextureCoord.y : vTextureCoord.y;
-
-    float k = (coord.y - boundary)/(1. - boundary + 0.0001);
+    float v = areaY + areaY - vTextureCoord.y;
+    float y = mirror ? v : vTextureCoord.y;
 
     float _amplitude = ((amplitude.y - amplitude.x) * k + amplitude.x ) / filterArea.x;
     float _waveLength = ((waveLength.y - waveLength.x) * k + waveLength.x) / filterArea.y;
     float _alpha = (alpha.y - alpha.x) * k + alpha.x;
 
-    float x = vTextureCoord.x + cos(y * 6.28 / _waveLength - time) * _amplitude;
+    float x = vTextureCoord.x + cos(v * 6.28 / _waveLength - time) * _amplitude;
     x = clamp(x, filterClamp.x, filterClamp.z);
 
     vec4 color = texture2D(uSampler, vec2(x, y));
