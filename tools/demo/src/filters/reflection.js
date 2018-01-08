@@ -24,6 +24,7 @@ export default function() {
 
             folder.add(this, 'animating').name('(animating)');
 
+            folder.add(this, 'mirror');
             folder.add(this, 'boundary', 0, 1);
             folder.add(this.amplitude, '0', 0, 50).name('amplitude.start');
             folder.add(this.amplitude, '1', 0, 50).name('amplitude.end');

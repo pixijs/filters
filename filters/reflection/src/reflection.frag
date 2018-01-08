@@ -5,6 +5,7 @@ uniform vec4 filterArea;
 uniform vec4 filterClamp;
 uniform vec2 dimensions;
 
+uniform bool mirror;
 uniform float boundary;
 uniform vec2 amplitude;
 uniform vec2 waveLength;
@@ -26,7 +27,7 @@ void main(void)
     }
 
     float areaY = boundary * dimensions.y / filterArea.y;
-    float y = areaY + areaY - vTextureCoord.y;
+    float y = mirror ? areaY + areaY - vTextureCoord.y : vTextureCoord.y;
 
     float k = (coord.y - boundary)/(1. - boundary + 0.0001);
 
