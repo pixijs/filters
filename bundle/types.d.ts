@@ -136,15 +136,17 @@ declare namespace PIXI.filters {
     }
     class ReflectionFilter extends PIXI.Filter<{}> {
         constructor(options?: ReflectionOptions);
+        mirror: boolean;
         boundary: number;
-        offset: number[];
+        amplitude: number[];
         waveLength: number[];
         alpha: number[];
         time: number;
     }
     interface ReflectionOptions {
+        mirror?: boolean;
         boundary?: number;
-        offset?: number[];
+        amplitude?: number[];
         waveLength?: number[];
         alpha?: number[];
         time?: number;
