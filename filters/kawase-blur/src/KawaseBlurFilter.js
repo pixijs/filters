@@ -9,7 +9,7 @@ import fragment from './kawase-blur.frag';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
- * @param {number[]} [kernels=[0]] - The kernel size of the blur filter. Length must be odd number
+ * @param {number[]} [kernels=[0]] - The kernel size of the blur filter
  * @param {number|number[]|PIXI.Point} [pixelSize=1] - The offset of the blur filter.
  */
 export default class KawaseBlurFilter extends PIXI.Filter {
@@ -68,7 +68,7 @@ export default class KawaseBlurFilter extends PIXI.Filter {
     }
 
     /**
-     * The kernel size of the blur filter. Length must be odd number.
+     * The kernel size of the blur filter
      *
      * @member {number[]}
      * @default [0]
