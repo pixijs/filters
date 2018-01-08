@@ -483,6 +483,15 @@
                 "slices": 5,
                 "offset": 50,
                 "direction": 0
+        },
+        {
+            "name": "CRTFilter",
+            "filename": "crt",
+            "arguments": [{
+                "lineWidth": 1.5,
+                "lineContrast": 0.3,
+                "noise": 0.3,
+                "noiseSize": 1.0
             }]
         }
     ]

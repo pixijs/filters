@@ -9,6 +9,7 @@ export {default as colorMatrix} from './color-matrix';
 export {default as colorReplace} from './color-replace';
 export {default as convolution} from './convolution';
 export {default as crossHatch} from './cross-hatch';
+export {default as crt} from './crt';
 export {default as displacement} from './displacement';
 export {default as dot} from './dot';
 export {default as dropShadow} from './drop-shadow';

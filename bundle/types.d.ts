@@ -48,6 +48,33 @@ declare namespace PIXI.filters {
     class CrossHatchFilter extends PIXI.Filter<{}> {
         constructor();
     }
+    class CRTFilter extends PIXI.Filter<{}> {
+        constructor(options?: CRTOptions);
+        curvature: number;
+        lineWidth: number;
+        lineContrast: number;
+        verticalLine: number;
+        noise: number;
+        noiseSize: number;
+        seed: number;
+        vignetting: number;
+        vignettingAlpha: number;
+        vignettingBlur: number;
+        time: number;
+    }
+    interface CRTOptions {
+        curvature?: number;
+        lineWidth?: number;
+        lineContrast?: number;
+        verticalLine?: number;
+        noise?: number;
+        noiseSize?: number;
+        seed?: number;
+        vignetting?: number;
+        vignettingAlpha?: number;
+        vignettingBlur?: number;
+        time?: number;
+    }
     class DotFilter extends PIXI.Filter<{}> {
         constructor(scale?:number, angle?:number);
         angle:number;
@@ -98,8 +125,18 @@ declare namespace PIXI.filters {
         outerStrength:number;
     }
     class GodrayFilter extends PIXI.Filter<{}> {
-        constructor(angle?:number, gain?:number, lacunarity?:number, time?:number);
+        constructor(options?:GodrayFilterOptions);
         angle:number;
+        center:PIXI.Point|Array<number>;
+        parallel:boolean;
+        gain:number;
+        lacunarity:number;
+        time:number;
+    }
+    interface GodrayFilterOptions {
+        angle:number;
+        center:PIXI.Point|Array<number>;
+        parallel:boolean;
         gain:number;
         lacunarity:number;
         time:number;
