@@ -19,7 +19,8 @@ import fragment from './glitch.frag';
  *  - `3` {@link PIXI.filters.GlitchFilter.CLAMP CLAMP}
  *  - `4` {@link PIXI.filters.GlitchFilter.MIRROR MIRROR}
  * @param {number} [options.seed=0] - A seed value for randomizing glitch effect.
- * @param {number} [options.average=false] - TODO
+ * @param {number} [options.average=false] - `true` will divide the bands roughly based on equal amounts
+ *                 where as setting to `false` will vary the band sizes dramatically (more random looking).
  * @param {number} [options.minSize=8] - Minimum size of individual slice. Segment of total `sampleSize`
  * @param {number} [options.sampleSize=512] - The resolution of the displacement map texture.
  * @param {number} [options.red=[0,0]] - Red channel offset
@@ -66,9 +67,11 @@ export default class GlitchFilter extends PIXI.Filter {
         this.fillMode = options.fillMode;
 
         /**
-         * average
+         * `true` will divide the bands roughly based on equal amounts
+         * where as setting to `false` will vary the band sizes dramatically (more random looking).
          *
          * @member {boolean}
+         * @default false
          */
         this.average = options.average;
 
@@ -102,7 +105,7 @@ export default class GlitchFilter extends PIXI.Filter {
          * @private
          */
         this._canvas = document.createElement('canvas');
-        this._canvas.width = 8;
+        this._canvas.width = 4;
         this._canvas.height = this.sampleSize;
 
         /**
@@ -180,6 +183,16 @@ export default class GlitchFilter extends PIXI.Filter {
             arr[last] = rest;
         }
 
+        this.shuffle();
+    }
+
+    /**
+     * Shuffle the sizes of the slices
+     */
+    shuffle() {
+        const arr = this._sizes;
+        const last = this._slices - 1;
+
         // shuffle
         for (let i = last; i > 0; i--) {
             const rand = (Math.random() * i) >> 0;
@@ -207,14 +220,13 @@ export default class GlitchFilter extends PIXI.Filter {
     refresh() {
         this._randomizeSizes();
         this._randomizeOffsets();
-        this._redrawTexture();
+        this.redrawTexture();
     }
 
     /**
-     * Redraw internal displacement bitmap texture
-     * @private
+     * Redraw displacement bitmap texture
      */
-    _redrawTexture() {
+    redrawTexture() {
         const size = this.sampleSize;
         const texture = this.texture;
         const ctx = this._canvas.getContext('2d');
