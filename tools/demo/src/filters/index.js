@@ -1,4 +1,5 @@
 // Order here is the dat-gui order
+export {default as adjustment} from './adjustment';
 export {default as advancedBloom} from './advanced-bloom';
 export {default as alpha} from './alpha';
 export {default as ascii} from './ascii';

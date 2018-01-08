@@ -1,8 +1,25 @@
 /// <reference types="pixi.js" />
 declare namespace PIXI.filters {
-    class AsciiFilter extends PIXI.Filter<{}> {
-        constructor(size?:number);
-        size:number;
+    class AdjustmentFilter extends PIXI.Filter<{}> {
+        constructor(options?: AdjustmentOptions);
+        gamma: number;
+        contrast: number;
+        saturation: number;
+        brightness: number;
+        red: number;
+        green: number;
+        blue: number;
+        alpha: number;
+    }
+    interface AdjustmentOptions {
+        gamma?: number;
+        contrast?: number;
+        saturation?: number;
+        brightness?: number;
+        red?: number;
+        green?: number;
+        blue?: number;
+        alpha?: number;
     }
     class AdvancedBloomFilter extends PIXI.Filter<{}> {
         constructor(options?: AdvancedBloomOptions);
@@ -20,6 +37,10 @@ declare namespace PIXI.filters {
         quality?: number;
         resolution?: number;
         kernelSize?: number;
+    }
+    class AsciiFilter extends PIXI.Filter<{}> {
+        constructor(size?:number);
+        size:number;
     }
     class BloomFilter extends PIXI.Filter<{}> {
         constructor(blur?:number|PIXI.Point|number[], quality?:number, resolution?:number, kernelSize?:number);
