@@ -1,3 +1,4 @@
+export {AdjustmentFilter} from '@pixi/filter-adjustment';
 export {AdvancedBloomFilter} from '@pixi/filter-advanced-bloom';
 export {AsciiFilter} from '@pixi/filter-ascii';
 export {BloomFilter} from '@pixi/filter-bloom';
@@ -5,6 +6,7 @@ export {BulgePinchFilter} from '@pixi/filter-bulge-pinch';
 export {ColorReplaceFilter} from '@pixi/filter-color-replace';
 export {ConvolutionFilter} from '@pixi/filter-convolution';
 export {CrossHatchFilter} from '@pixi/filter-cross-hatch';
+export {CRTFilter} from '@pixi/filter-crt';
 export {DotFilter} from '@pixi/filter-dot';
 export {DropShadowFilter} from '@pixi/filter-drop-shadow';
 export {EmbossFilter} from '@pixi/filter-emboss';

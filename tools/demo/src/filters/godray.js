@@ -5,31 +5,33 @@ export default function() {
         enabled: false,
         opened: false,
         oncreate: function(folder) {
-            const filter = this;
 
-            this.angle = 30;
-            this.gain = 0.5;
-            this.lacunarity = 2.5;
+            this.light = 30;
+            this.gain = 0.6;
+            this.lacunarity = 2.75;
+            this.animating = true;
+            this.center = new PIXI.Point(100, -100);
 
-            filter.animating = true;
-
-            app.events.on('enable', function(enabled) {
-                if (enabled && filter.animating) {
-                    filter.time = 0;
+            app.events.on('enable', (enabled) => {
+                if (enabled && this.animating) {
+                    this.time = 0;
                 }
             });
 
-            app.events.on('animate', function() {
-                if (filter.animating){
-                    filter.time += app.ticker.elapsedMS / 1000;
+            app.events.on('animate', () => {
+                if (this.animating){
+                    this.time += app.ticker.elapsedMS / 1000;
                 }
             });
 
             folder.add(this, 'animating').name('(animating)');
             folder.add(this, 'time', 0, 1);
-            folder.add(this, 'angle', -60, 60);
             folder.add(this, 'gain', 0, 1);
             folder.add(this, 'lacunarity', 0, 5);
+            folder.add(this, 'parallel');
+            folder.add(this, 'angle', -60, 60);
+            folder.add(this.center, 'x', -100, app.initWidth + 100).name('center.x');
+            folder.add(this.center, 'y', -1000, -100).name('center.y');
         }
     });
 }
