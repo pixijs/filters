@@ -1,10 +1,6 @@
 export default function() {
     const app = this;
     app.addFilter('ReflectionFilter', {
-        enabled: true,
-        global: false,
-        opened: false,
-        args: [],
         oncreate(folder) {
             const filter = this;
 
