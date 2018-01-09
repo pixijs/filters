@@ -1,21 +1,33 @@
 import {vertex} from '@tools/fragments';
 import fragment from './kawase-blur.frag';
 
+/**
+ * A much faster blur than Gaussian blur, but more complicated to use.<br>
+ * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/kawase-blur.png)
+ *
+ * @see https://software.intel.com/en-us/blogs/2014/07/15/an-investigation-of-fast-real-time-gpu-based-image-blur-algorithms
+ * @class
+ * @extends PIXI.Filter
+ * @memberof PIXI.filters
+ * @param {number[]} [kernels=[0]] - The kernel size of the blur filter
+ * @param {number|number[]|PIXI.Point} [pixelSize=1] - The offset of the blur filter.
+ */
 export default class KawaseBlurFilter extends PIXI.Filter {
-    constructor(kernels = [0], pixelSize = [1, 1]) {
-        super(
-            vertex,
-            fragment
-        );
+    constructor(kernels = [0], pixelSize = 1) {
+        super(vertex, fragment);
 
         this._passes = 0;
         this._kernels = null;
         this.kernels = kernels;
 
-        this._pixelSize = new PIXI.Point(0, 0);
+        this._pixelSize = new PIXI.Point();
         this.pixelSize = pixelSize;
     }
 
+    /**
+     * Overrides apply
+     * @private
+     */
     apply(filterManager, input, output, clear) {
         const uvX = this.pixelSize.x / input.size.width;
         const uvY = this.pixelSize.y / input.size.height;
@@ -55,11 +67,16 @@ export default class KawaseBlurFilter extends PIXI.Filter {
         }
     }
 
-    get kernels() { // eslint-disable-line require-jsdoc
+    /**
+     * The kernel size of the blur filter
+     *
+     * @member {number[]}
+     * @default [0]
+     */
+    get kernels() {
         return this._kernels;
     }
-
-    set kernels(value) { // eslint-disable-line require-jsdoc
+    set kernels(value) {
         if (Array.isArray(value) && value.length > 0) {
             this._kernels = value;
             this._passes = value.length;
@@ -72,10 +89,10 @@ export default class KawaseBlurFilter extends PIXI.Filter {
     }
 
     /**
-     * Sets the pixelSize of the filter.
+     * Sets the pixel size of the filter. Large size is blurrier
      *
      * @member {PIXI.Point|number[]}
-     * @default [0, 0]
+     * @default [1, 1]
      */
     set pixelSize(value) {
         if (typeof value === 'number') {
@@ -96,7 +113,6 @@ export default class KawaseBlurFilter extends PIXI.Filter {
             this._pixelSize.y = 1;
         }
     }
-
     get pixelSize() {
         return this._pixelSize;
     }
