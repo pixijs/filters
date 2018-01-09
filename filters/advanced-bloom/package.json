@@ -28,6 +28,6 @@
   },
   "devDependencies": {
     "@tools/fragments": "^2.0.0",
-    "@pixi/filter-advanced-bloom": "^2.5.0"
+    "@pixi/filter-kawase-blur": "^2.5.0"
   }
 }
