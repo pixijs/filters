@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-kawase-blur",
-  "version": "2.5.0",
+  "version": "2.4.0",
   "main": "lib/filter-kawase-blur.js",
   "description": "Kawase Blur filter",
   "author": "finscn <finscn@gmail.com>",
