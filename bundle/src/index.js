@@ -13,6 +13,7 @@ export {EmbossFilter} from '@pixi/filter-emboss';
 export {GlitchFilter} from '@pixi/filter-glitch';
 export {GlowFilter} from '@pixi/filter-glow';
 export {GodrayFilter} from '@pixi/filter-godray';
+export {KawaseBlurFilter} from '@pixi/filter-kawase-blur';
 export {MotionBlurFilter} from '@pixi/filter-motion-blur';
 export {MultiColorReplaceFilter} from '@pixi/filter-multi-color-replace';
 export {OldFilmFilter} from '@pixi/filter-old-film';

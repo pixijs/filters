@@ -18,6 +18,7 @@ export {default as emboss} from './emboss';
 export {default as glitch} from './glitch';
 export {default as glow} from './glow';
 export {default as godray} from './godray';
+export {default as kawaseBlur} from './kawase-blur';
 export {default as motionBlur} from './motion-blur';
 export {default as multiColorReplace} from './multi-color-replace';
 export {default as noise} from './noise';
