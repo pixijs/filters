@@ -72,8 +72,8 @@ export default class AdvancedBloomFilter extends PIXI.Filter {
             this._blurFilter = new PIXI.filters.KawaseBlurFilter(blur, quality);
         }
 
-        this._blurFilter.pixelSize = pixelSize;
-        this._blurFilter.resolution = resolution;
+        this.pixelSize = pixelSize;
+        this.resolution = resolution;
     }
 
     /**
