@@ -458,6 +458,14 @@
             }
         },
         {
+            "name": "KawaseBlurFilter",
+            "filename": "kawase-blur",
+            "options": {
+                "blur": 2,
+                "quality": 3
+            }
+        },
+        {
             "name": "MotionBlurFilter",
             "filename": "motion-blur",
             "arguments": [
