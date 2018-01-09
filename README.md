@@ -24,6 +24,7 @@ All filters work with PixiJS v4.
 | **DotFilter**<br>_@pixi/filter-dot_ | ![dot](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/dot.png?v=2) |
 | **DropShadowFilter**<br>_@pixi/filter-drop-shadow_| ![drop-shadow](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/drop-shadow.png?v=2) |
 | **EmbossFilter**<br>_@pixi/filter-emboss_ | ![emboss](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/emboss.png?v=2) |
+| **GlitchFilter**<br>_@pixi/filter-glitch_ | ![glitch](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/glitch.png?v=1) |
 | **GlowFilter**<br>_@pixi/filter-glow_ | ![glow](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/glow.png?v=2) |
 | **Godray**<br>_@pixi/filter-godray_ | ![godray](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/godray.gif?v=2) |
 | **KawaseBlurFilter**<br>_@pixi/filter-kawase-blur_ | ![kawase-blur](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/kawase-blur.png?v=1) |

@@ -15,6 +15,7 @@ export {default as displacement} from './displacement';
 export {default as dot} from './dot';
 export {default as dropShadow} from './drop-shadow';
 export {default as emboss} from './emboss';
+export {default as glitch} from './glitch';
 export {default as glow} from './glow';
 export {default as godray} from './godray';
 export {default as kawaseBlur} from './kawase-blur';

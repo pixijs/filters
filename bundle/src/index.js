@@ -10,6 +10,7 @@ export {CRTFilter} from '@pixi/filter-crt';
 export {DotFilter} from '@pixi/filter-dot';
 export {DropShadowFilter} from '@pixi/filter-drop-shadow';
 export {EmbossFilter} from '@pixi/filter-emboss';
+export {GlitchFilter} from '@pixi/filter-glitch';
 export {GlowFilter} from '@pixi/filter-glow';
 export {GodrayFilter} from '@pixi/filter-godray';
 export {KawaseBlurFilter} from '@pixi/filter-kawase-blur';
