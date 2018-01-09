@@ -9,11 +9,12 @@ import fragment from './kawase-blur.frag';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
- * @param {number|number[]} [blur=4] - The blur of the filter. Should be > 0.
- * @param {number} [quality=4] - The quality of the filter. Should be `int` , > 1.
+ * @param {number|number[]} [blur=4] - The blur of the filter. Should be greater than `0`. If
+ *        value is an Array, setting kernels.
+ * @param {number} [quality=3] - The quality of the filter. Should be an integer greater than `1`.
  */
 export default class KawaseBlurFilter extends PIXI.Filter {
-    constructor(blur = 3, quality = 3) {
+    constructor(blur = 4, quality = 3) {
         super(vertex, fragment);
 
         this._pixelSize = new PIXI.Point();
@@ -41,7 +42,7 @@ export default class KawaseBlurFilter extends PIXI.Filter {
         const uvY = this.pixelSize.y / input.size.height;
         let offset;
 
-        if (this._quality === 1) {
+        if (this._quality === 1 || this._blur === 0) {
             offset = this._kernels[0] + 0.5;
             this.uniforms.uOffset[0] = offset * uvX;
             this.uniforms.uOffset[1] = offset * uvY;
@@ -84,25 +85,21 @@ export default class KawaseBlurFilter extends PIXI.Filter {
         const quality = this._quality;
         const kernels = [ blur ];
 
-        if (quality === 1 || blur === 0) {
-            this._quality = 1;
-            this._kernels = kernels;
-            return;
-        }
+        if (blur > 0) {
+            let k = blur;
+            const step = blur / quality;
 
-        let k = blur;
-        const step = blur / quality;
-
-        for (let i = 1; i < quality; i++) {
-            k -= step;
-            kernels.push(k);
+            for (let i = 1; i < quality; i++) {
+                k -= step;
+                kernels.push(k);
+            }
         }
 
         this._kernels = kernels;
     }
 
     /**
-     * The kernel size of the blur filter
+     * The kernel size of the blur filter, for advanced usage.
      *
      * @member {number[]}
      * @default [0]
@@ -124,7 +121,7 @@ export default class KawaseBlurFilter extends PIXI.Filter {
     }
 
     /**
-     * Sets the pixel size of the filter. Large size is blurrier
+     * Sets the pixel size of the filter. Large size is blurrier. For advanced usage.
      *
      * @member {PIXI.Point|number[]}
      * @default [1, 1]
@@ -152,6 +149,12 @@ export default class KawaseBlurFilter extends PIXI.Filter {
         return this._pixelSize;
     }
 
+    /**
+     * The quality of the filter, integer greater than `1`.
+     *
+     * @member {number}
+     * @default 3
+     */
     get quality() {
         return this._quality;
     }
@@ -160,6 +163,12 @@ export default class KawaseBlurFilter extends PIXI.Filter {
         this._generateKernels();
     }
 
+    /**
+     * The amount of blur, value greater than `0`.
+     *
+     * @member {number}
+     * @default 4
+     */
     get blur() {
         return this._blur;
     }
