@@ -1,5 +1,6 @@
 import TiltShiftXFilter from './TiltShiftXFilter';
 import TiltShiftYFilter from './TiltShiftYFilter';
+import * as PIXI from 'pixi.js';
 
 /**
  * @author Vico @vicocotea
@@ -81,6 +82,3 @@ export default class TiltShiftFilter extends PIXI.Filter {
         this.tiltShiftXFilter.end = this.tiltShiftYFilter.end = value;
     }
 }
-
-// Export to PixiJS namespace
-PIXI.filters.TiltShiftFilter = TiltShiftFilter;

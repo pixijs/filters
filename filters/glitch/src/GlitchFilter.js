@@ -1,5 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './glitch.frag';
+import * as PIXI from 'pixi.js';
 
 /**
  * The GlitchFilter applies a glitch effect to an object.<br>
@@ -428,6 +429,3 @@ GlitchFilter.CLAMP = 3;
  * @readonly
  */
 GlitchFilter.MIRROR = 4;
-
-// Export to PixiJS namespace
-PIXI.filters.GlitchFilter = GlitchFilter;

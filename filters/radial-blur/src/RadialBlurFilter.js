@@ -1,5 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './radial-blur.frag';
+import * as PIXI from 'pixi.js';
 
 /**
  * The RadialBlurFilter applies a Motion blur to an object.<br>
@@ -79,6 +80,3 @@ export default class RadialBlurFilter extends PIXI.Filter {
         this.uniforms.uRadius = value;
     }
 }
-
-// Export to PixiJS namespace
-PIXI.filters.RadialBlurFilter = RadialBlurFilter;

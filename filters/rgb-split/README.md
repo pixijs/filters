@@ -12,8 +12,9 @@ npm install @pixi/filter-rgb-split
 
 ```js
 import {RGBSplitFilter} from '@pixi/filter-rgb-split';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new RGBSplitFilter()];
 ```
 

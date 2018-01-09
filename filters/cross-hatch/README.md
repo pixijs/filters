@@ -12,8 +12,9 @@ npm install @pixi/filter-cross-hatch
 
 ```js
 import {CrossHatchFilter} from '@pixi/filter-cross-hatch';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new CrossHatchFilter()];
 ```
 

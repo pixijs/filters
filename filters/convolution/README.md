@@ -12,8 +12,9 @@ npm install @pixi/filter-convolution
 
 ```js
 import {ConvolutionFilter} from '@pixi/filter-convolution';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new ConvolutionFilter()];
 ```
 

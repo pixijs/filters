@@ -16,8 +16,12 @@ if (process.argv.indexOf('--prod') > -1) {
 
 export default {
     input: 'src/index.js',
+    external: ['pixi.js'],
+    globals: {
+        'pixi.js': 'PIXI',
+    },
     output: {
-        format: 'umd',
+        format: 'iife',
         file: 'index.js'
     },
     plugins

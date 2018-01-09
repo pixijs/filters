@@ -1,13 +1,14 @@
 {
   "name": "@pixi/filter-bulge-pinch",
   "version": "2.4.0",
-  "main": "lib/filter-bulge-pinch.js",
+  "main": "lib/filter-bulge-pinch.cjs.js",
   "description": "Display filter render as ASCII text",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
   "module": "lib/filter-bulge-pinch.es.js",
+  "browser": "dist/filter-bulge-pinch.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
@@ -21,6 +22,7 @@
   },
   "files": [
     "lib",
+    "dist",
     "types.d.ts"
   ],
   "peerDependencies": {

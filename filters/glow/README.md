@@ -12,8 +12,9 @@ npm install @pixi/filter-glow
 
 ```js
 import {GlowFilter} from '@pixi/filter-glow';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new GlowFilter()];
 ```
 

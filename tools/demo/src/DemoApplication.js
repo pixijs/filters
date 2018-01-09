@@ -1,3 +1,6 @@
+import * as filters from 'pixi-filters';
+import * as PIXI from 'pixi.js';
+
 /*global dat,ga*/
 /**
  * Demo show a bunch of fish and a dat.gui controls
@@ -270,7 +273,7 @@ export default class DemoApplication extends PIXI.Application {
 
         const app = this;
         const folder = this.gui.addFolder(options.name);
-        const ClassRef = PIXI.filters[id];
+        const ClassRef = filters[id] || PIXI.filters[id];
 
         if (!ClassRef) {
             throw `Unable to find class name with "${id}"`;

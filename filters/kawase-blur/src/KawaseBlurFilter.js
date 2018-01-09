@@ -1,5 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './kawase-blur.frag';
+import * as PIXI from 'pixi.js';
 
 /**
  * A much faster blur than Gaussian blur, but more complicated to use.<br>
@@ -177,6 +178,3 @@ export default class KawaseBlurFilter extends PIXI.Filter {
         this._generateKernels();
     }
 }
-
-// Export to PixiJS namespace
-PIXI.filters.KawaseBlurFilter = KawaseBlurFilter;

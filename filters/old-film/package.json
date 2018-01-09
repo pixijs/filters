@@ -1,10 +1,11 @@
 {
   "name": "@pixi/filter-old-film",
   "version": "2.4.0",
-  "main": "lib/filter-old-film.js",
+  "main": "lib/filter-old-film.cjs.js",
   "description": "Old Film effect filter",
   "author": "finscn <finscn@gmail.com>",
   "module": "lib/filter-old-film.es.js",
+  "browser": "dist/filter-old-film.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
@@ -18,6 +19,7 @@
   },
   "files": [
     "lib",
+    "dist",
     "types.d.ts"
   ],
   "peerDependencies": {

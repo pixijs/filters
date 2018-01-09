@@ -12,8 +12,9 @@ npm install @pixi/filter-outline
 
 ```js
 import {OutlineFilter} from '@pixi/filter-outline';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new OutlineFilter()];
 ```
 

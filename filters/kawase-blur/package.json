@@ -1,10 +1,11 @@
 {
   "name": "@pixi/filter-kawase-blur",
   "version": "2.4.0",
-  "main": "lib/filter-kawase-blur.js",
+  "main": "lib/filter-kawase-blur.cjs.js",
   "description": "Kawase Blur filter",
   "author": "finscn <finscn@gmail.com>",
   "module": "lib/filter-kawase-blur.es.js",
+  "browser": "dist/filter-kawase-blur.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
@@ -18,6 +19,7 @@
   },
   "files": [
     "lib",
+    "dist",
     "types.d.ts"
   ],
   "peerDependencies": {

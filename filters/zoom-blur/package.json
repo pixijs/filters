@@ -1,13 +1,14 @@
 {
   "name": "@pixi/filter-zoom-blur",
   "version": "2.4.0",
-  "main": "lib/filter-zoom-blur.js",
+  "main": "lib/filter-zoom-blur.cjs.js",
   "description": "Zoom Blur filter",
   "author": "finscn",
   "contributors": [
     "finscn <finscn@gmail.com>"
   ],
   "module": "lib/filter-zoom-blur.es.js",
+  "browser": "dist/filter-zoom-blur.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
@@ -21,6 +22,7 @@
   },
   "files": [
     "lib",
+    "dist",
     "types.d.ts"
   ],
   "peerDependencies": {

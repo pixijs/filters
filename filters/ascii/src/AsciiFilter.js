@@ -1,5 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './ascii.frag';
+import * as PIXI from 'pixi.js';
 
 // TODO (cengler) - The Y is flipped in this shader for some reason.
 
@@ -36,6 +37,3 @@ export default class AsciiFilter extends PIXI.Filter {
         this.uniforms.pixelSize = value;
     }
 }
-
-// Export to PixiJS namespace
-PIXI.filters.AsciiFilter = AsciiFilter;

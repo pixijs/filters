@@ -1,5 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './dot.frag';
+import * as PIXI from 'pixi.js';
 
 /**
  * @author Mat Groves http://matgroves.com/ @Doormat23
@@ -49,6 +50,3 @@ export default class DotFilter extends PIXI.Filter {
         this.uniforms.angle = value;
     }
 }
-
-// Export to PixiJS namespace
-PIXI.filters.DotFilter = DotFilter;

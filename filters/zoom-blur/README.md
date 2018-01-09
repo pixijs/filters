@@ -12,8 +12,9 @@ npm install @pixi/filter-zoom-blur
 
 ```js
 import { ZoomFilter } from '@pixi/filter-zoom-blur';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new ZoomFilter()];
 ```
 

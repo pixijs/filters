@@ -1,7 +1,7 @@
 {
   "name": "pixi-filters",
   "version": "2.4.1",
-  "main": "lib/pixi-filters.js",
+  "main": "lib/pixi-filters.cjs.js",
   "description": "Optional display filters to work with PixiJS",
   "author": "Mat Groves <mat@goodboydigital.com>",
   "contributors": [
@@ -10,7 +10,7 @@
     "Chad Engler <chad@pantherdev.com>"
   ],
   "module": "lib/pixi-filters.es.js",
-  "bundle": "dist/pixi-filters.js",
+  "browser": "dist/pixi-filters.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",

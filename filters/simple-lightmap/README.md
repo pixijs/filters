@@ -12,8 +12,9 @@ npm install @pixi/filter-simple-lightmap
 
 ```js
 import {SimpleLightmapFilter} from '@pixi/filter-simple-lightmap';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new SimpleLightmapFilter(texture, [0, 0, 0, 0.5])];
 ```
 

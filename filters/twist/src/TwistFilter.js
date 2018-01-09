@@ -1,5 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './twist.frag';
+import * as PIXI from 'pixi.js';
 
 /**
  * This filter applies a twist effect making display objects appear twisted in the given direction.<br>
@@ -57,6 +58,3 @@ export default class TwistFilter extends PIXI.Filter {
         this.uniforms.angle = value;
     }
 }
-
-// Export to PixiJS namespace
-PIXI.filters.TwistFilter = TwistFilter;

@@ -1,3 +1,5 @@
+import * as PIXI from 'pixi.js';
+
 const {BlurXFilter, BlurYFilter, AlphaFilter} = PIXI.filters;
 
 /**
@@ -91,7 +93,4 @@ export default class BloomFilter extends PIXI.Filter {
         this.blurYFilter.blur = value;
     }
 }
-
-// Export to PixiJS namespace
-PIXI.filters.BloomFilter = BloomFilter;
 

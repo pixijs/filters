@@ -1,10 +1,11 @@
 {
   "name": "@pixi/filter-crt",
   "version": "2.4.0",
-  "main": "lib/filter-crt.js",
+  "main": "lib/filter-crt.cjs.js",
   "description": "CRT effect filter",
   "author": "finscn <finscn@gmail.com>",
   "module": "lib/filter-crt.es.js",
+  "browser": "dist/filter-crt.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
@@ -18,6 +19,7 @@
   },
   "files": [
     "lib",
+    "dist",
     "types.d.ts"
   ],
   "peerDependencies": {

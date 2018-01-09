@@ -1,5 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './glow.frag';
+import * as PIXI from 'pixi.js';
 
 /**
  * GlowFilter, originally by mishaa
@@ -84,6 +85,3 @@ export default class GlowFilter extends PIXI.Filter {
         this.uniforms.innerStrength = value;
     }
 }
-
-// Export to PixiJS namespace
-PIXI.filters.GlowFilter = GlowFilter;

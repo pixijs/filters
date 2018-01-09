@@ -12,8 +12,9 @@ npm install @pixi/filter-tilt-shift
 
 ```js
 import {tilt-shiftFilter} from '@pixi/filter-tilt-shift';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new tilt-shiftFilter()];
 ```
 

@@ -1,5 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './crt.frag';
+import * as PIXI from 'pixi.js';
 
 /**
  * The CRTFilter applies a CRT effect to an object.<br>
@@ -190,6 +191,3 @@ export default class CRTFilter extends PIXI.Filter {
         return this.uniforms.vignettingBlur;
     }
 }
-
-// Export to PixiJS namespace
-PIXI.filters.CRTFilter = CRTFilter;

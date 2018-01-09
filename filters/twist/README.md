@@ -12,8 +12,9 @@ npm install @pixi/filter-twist
 
 ```js
 import {twistFilter} from '@pixi/filter-twist';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new twistFilter()];
 ```
 

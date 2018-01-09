@@ -12,8 +12,9 @@ npm install @pixi/filter-color-replace
 
 ```js
 import {ColorReplaceFilter} from '@pixi/filter-color-replace';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new ColorReplaceFilter()];
 ```
 

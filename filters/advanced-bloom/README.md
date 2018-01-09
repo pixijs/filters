@@ -12,8 +12,9 @@ npm install @pixi/filter-advanced-bloom
 
 ```js
 import {AdvancedBloomFilter} from '@pixi/filter-advanced-bloom';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new AdvancedBloomFilter()];
 ```
 

@@ -12,8 +12,9 @@ npm install @pixi/filter-reflection
 
 ```js
 import { Reflection } from '@pixi/filter-reflection';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new Reflection()];
 ```
 

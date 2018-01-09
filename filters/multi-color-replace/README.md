@@ -11,9 +11,10 @@ npm install @pixi/filter-multi-color-replace
 ## Usage
 
 ```js
-import { MultiColorReplaceFilter } from '@pixi/filter-multi-color-replace';
+import {MultiColorReplaceFilter} from '@pixi/filter-multi-color-replace';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new MultiColorReplaceFilter([0x0000FF, 0x00FF00], [0xFF0000, 0xFFFF00], 0.2)];
 ```
 

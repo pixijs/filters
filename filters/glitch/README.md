@@ -11,9 +11,10 @@ npm install @pixi/filter-glitch
 ## Usage
 
 ```js
-import { GlitchFilter } from '@pixi/filter-glitch';
+import {GlitchFilter} from '@pixi/filter-glitch';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new GlitchFilter()];
 ```
 

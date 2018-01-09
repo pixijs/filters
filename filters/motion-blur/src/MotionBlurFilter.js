@@ -1,5 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './motion-blur.frag';
+import * as PIXI from 'pixi.js';
 
 /**
  * The MotionBlurFilter applies a Motion blur to an object.<br>
@@ -78,6 +79,3 @@ export default class MotionBlurFilter extends PIXI.Filter {
         return this.uniforms.uOffset;
     }
 }
-
-// Export to PixiJS namespace
-PIXI.filters.MotionBlurFilter = MotionBlurFilter;

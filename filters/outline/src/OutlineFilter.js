@@ -1,5 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './outline.frag';
+import * as PIXI from 'pixi.js';
 
 /**
  * OutlineFilter, originally by mishaa
@@ -81,6 +82,3 @@ OutlineFilter.MIN_SAMPLES = 1;
  * @default 100
  */
 OutlineFilter.MAX_SAMPLES = 100;
-
-// Export to PixiJS namespace
-PIXI.filters.OutlineFilter = OutlineFilter;

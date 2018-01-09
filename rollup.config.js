@@ -4,6 +4,7 @@ import path from 'path';
 import fs from 'fs';
 import buble from 'rollup-plugin-buble';
 import resolve from 'rollup-plugin-node-resolve';
+import commonjs from 'rollup-plugin-commonjs';
 import string from 'rollup-plugin-string';
 import uglify from 'rollup-plugin-uglify';
 import { minify } from 'uglify-es';
@@ -82,6 +83,11 @@ const filtered = PackageUtilities.filterPackages(packages, args);
 const sorted = PackageUtilities.topologicallyBatchPackages(filtered);
 
 const plugins = [
+    commonjs({
+        namedExports: {
+            'pixi.js': ['settings', 'Filter']
+        }
+    }),
     resolve(),
     string({
         include: [
@@ -125,34 +131,26 @@ sorted.forEach((group) => {
         ].join('\n');
 
         // Check for bundle folder
-        const external = Object.keys(pkg.dependencies || []);
+        const external = ['pixi.js'].concat(Object.keys(pkg.dependencies || []));
         const basePath = path.relative(__dirname, pkg.location);
         const input = path.join(basePath, 'src/index.js');
-        const { main, module, bundle } = pkg._package;
+        const { main, module, browser } = pkg._package;
         const freeze = false;
-        const name = '__pixiFilters';
-        let intro = '';
-
-        if (!args.prod && bundle) {
-            intro = 'if (typeof PIXI === \'undefined\' || typeof PIXI.filters === \'undefined\') { throw \'PixiJS is required\'; }';
-        }
 
         results.push({
-            intro,
             banner,
             input,
             freeze,
             output: [
                 {
                     file: path.join(basePath, main),
-                    format: bundle ? 'cjs' : 'umd',
+                    format: 'cjs',
                 },
                 {
                     file: path.join(basePath, module),
                     format: 'es',
                 },
             ],
-            name,
             external,
             sourcemap,
             plugins,
@@ -161,15 +159,21 @@ sorted.forEach((group) => {
         // The package.json file has a bundle field
         // we'll use this to generate the bundle file
         // this will package all dependencies
-        if (args.bundles && bundle) {
+        if (args.bundles && browser) {
+            const name = '__filters';
+
             results.push({
-                intro,
                 banner,
+                footer: `Object.assign(PIXI.filters, ${name});`,
                 input,
                 freeze,
+                external: ['pixi.js'],
+                globals: {
+                    'pixi.js': 'PIXI',
+                },
                 output: {
-                    file: path.join(basePath, bundle),
-                    format: 'umd',
+                    file: path.join(basePath, browser),
+                    format: 'iife',
                 },
                 name,
                 treeshake: false,

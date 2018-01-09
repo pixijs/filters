@@ -12,8 +12,9 @@ npm install @pixi/filter-bloom
 
 ```js
 import {BloomFilter} from '@pixi/filter-bloom';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new BloomFilter()];
 ```
 

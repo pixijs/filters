@@ -1,5 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './dropshadow.frag';
+import * as PIXI from 'pixi.js';
 
 /**
  * Drop shadow filter.<br>
@@ -122,6 +123,3 @@ export default class DropShadowFilter extends PIXI.Filter {
         PIXI.utils.hex2rgb(value, this.tintFilter.uniforms.color);
     }
 }
-
-// Export to PixiJS namespace
-PIXI.filters.DropShadowFilter = DropShadowFilter;

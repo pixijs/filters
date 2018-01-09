@@ -12,8 +12,9 @@ npm install @pixi/filter-bulge-pinch
 
 ```js
 import {BulgePinchFilter} from '@pixi/filter-bulge-pinch';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new BulgePinchFilter()];
 ```
 

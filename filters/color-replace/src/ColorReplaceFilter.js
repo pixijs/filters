@@ -1,5 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './colorReplace.frag';
+import * as PIXI from 'pixi.js';
 
 /**
  * ColorReplaceFilter, originally by mishaa, updated by timetocode
@@ -95,7 +96,4 @@ export default class ColorReplaceFilter extends PIXI.Filter {
         return this.uniforms.epsilon;
     }
 }
-
-// Export to PixiJS namespace
-PIXI.filters.ColorReplaceFilter = ColorReplaceFilter;
 

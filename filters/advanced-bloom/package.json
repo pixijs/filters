@@ -1,13 +1,14 @@
 {
   "name": "@pixi/filter-advanced-bloom",
   "version": "2.4.0",
-  "main": "lib/filter-advanced-bloom.js",
+  "main": "lib/filter-advanced-bloom.cjs.js",
   "description": "Display filter render as ASCII text",
   "author": "finscn",
   "contributors": [
     "finscn <finscn@gmail.com>"
   ],
   "module": "lib/filter-advanced-bloom.es.js",
+  "browser": "dist/filter-advanced-bloom.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
@@ -21,6 +22,7 @@
   },
   "files": [
     "lib",
+    "dist",
     "types.d.ts"
   ],
   "peerDependencies": {

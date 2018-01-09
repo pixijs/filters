@@ -12,8 +12,9 @@ npm install @pixi/filter-pixelate
 
 ```js
 import {PixelateFilter} from '@pixi/filter-pixelate';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new PixelateFilter()];
 ```
 

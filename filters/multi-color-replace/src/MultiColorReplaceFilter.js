@@ -1,5 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './multi-color-replace.frag';
+import * as PIXI from 'pixi.js';
 
 /**
  * Filter for replacing a color with another color. Similar to ColorReplaceFilter, but support multiple
@@ -135,6 +136,3 @@ export default class MultiColorReplaceFilter extends PIXI.Filter {
         return this.uniforms.epsilon;
     }
 }
-
-// Export to PixiJS namespace
-PIXI.filters.MultiColorReplaceFilter = MultiColorReplaceFilter;

@@ -1,5 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './reflection.frag';
+import * as PIXI from 'pixi.js';
 
 /**
  * Applies a reflection effect to simulate the reflection on water with waves.<br>
@@ -119,6 +120,3 @@ export default class ReflectionFilter extends PIXI.Filter {
         return this.uniforms.alpha;
     }
 }
-
-// Export to PixiJS namespace
-PIXI.filters.ReflectionFilter = ReflectionFilter;

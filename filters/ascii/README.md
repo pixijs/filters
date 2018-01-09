@@ -12,8 +12,9 @@ npm install @pixi/filter-ascii
 
 ```js
 import {AsciiFilter} from '@pixi/filter-ascii';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new AsciiFilter()];
 ```
 

@@ -1,13 +1,14 @@
 {
   "name": "@pixi/filter-emboss",
   "version": "2.4.0",
-  "main": "lib/filter-emboss.js",
+  "main": "lib/filter-emboss.cjs.js",
   "description": "Display filter render as ASCII text",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
   "module": "lib/filter-emboss.es.js",
+  "browser": "dist/filter-emboss.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
@@ -21,6 +22,7 @@
   },
   "files": [
     "lib",
+    "dist",
     "types.d.ts"
   ],
   "peerDependencies": {

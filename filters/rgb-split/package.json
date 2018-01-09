@@ -1,13 +1,14 @@
 {
   "name": "@pixi/filter-rgb-split",
   "version": "2.4.0",
-  "main": "lib/filter-rgb-split.js",
+  "main": "lib/filter-rgb-split.cjs.js",
   "description": "Display filter render as rgb-split text",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
   "module": "lib/filter-rgb-split.es.js",
+  "browser": "dist/filter-rgb-split.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
@@ -21,6 +22,7 @@
   },
   "files": [
     "lib",
+    "dist",
     "types.d.ts"
   ],
   "peerDependencies": {

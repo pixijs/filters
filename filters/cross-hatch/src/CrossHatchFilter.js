@@ -1,5 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './crosshatch.frag';
+import * as PIXI from 'pixi.js';
 
 /**
  * A Cross Hatch effect filter.<br>
@@ -14,6 +15,3 @@ export default class CrossHatchFilter extends PIXI.Filter {
         super(vertex, fragment);
     }
 }
-
-// Export to PixiJS namespace
-PIXI.filters.CrossHatchFilter = CrossHatchFilter;

@@ -1,6 +1,7 @@
 import {vertex} from '@tools/fragments';
 import perlin from './perlin.frag';
 import fragment from './gorday.frag';
+import * as PIXI from 'pixi.js';
 
 /**
 * GordayFilter, {@link https://codepen.io/alaingalvan originally} by Alain Galvan
@@ -153,7 +154,4 @@ export default class GodrayFilter extends PIXI.Filter {
         this.uniforms.lacunarity = value;
     }
 }
-
-// Export to PixiJS namespace
-PIXI.filters.GodrayFilter = GodrayFilter;
 

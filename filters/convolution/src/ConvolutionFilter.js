@@ -1,5 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './convolution.frag';
+import * as PIXI from 'pixi.js';
 
 /**
  * The ConvolutionFilter class applies a matrix convolution filter effect.
@@ -61,7 +62,4 @@ export default class ConvolutionFilter extends PIXI.Filter {
         this.uniforms.texelSize[1] = 1/value;
     }
 }
-
-// Export to PixiJS namespace
-PIXI.filters.ConvolutionFilter = ConvolutionFilter;
 

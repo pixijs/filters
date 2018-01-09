@@ -12,8 +12,9 @@ npm install @pixi/filter-emboss
 
 ```js
 import {EmbossFilter} from '@pixi/filter-emboss';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new EmbossFilter()];
 ```
 
