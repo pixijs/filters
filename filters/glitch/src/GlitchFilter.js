@@ -187,7 +187,7 @@ export default class GlitchFilter extends PIXI.Filter {
     }
 
     /**
-     * Shuffle the sizes of the slices
+     * Shuffle the sizes of the slices, advanced usage.
      */
     shuffle() {
         const arr = this._sizes;
@@ -215,18 +215,18 @@ export default class GlitchFilter extends PIXI.Filter {
     }
 
     /**
-     * Regenerating random size, offsets for slices
+     * Regenerating random size, offsets for slices.
      */
     refresh() {
         this._randomizeSizes();
         this._randomizeOffsets();
-        this.redrawTexture();
+        this.redraw();
     }
 
     /**
-     * Redraw displacement bitmap texture
+     * Redraw displacement bitmap texture, advanced usage.
      */
-    redrawTexture() {
+    redraw() {
         const size = this.sampleSize;
         const texture = this.texture;
         const ctx = this._canvas.getContext('2d');

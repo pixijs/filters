@@ -14,7 +14,7 @@ declare namespace PIXI.filters {
         offsets:Float32Array|number[];
         refresh(): void;
         shuffle(): void;
-        redrawTexture(): void;
+        redraw(): void;
         readonly texture:PIXI.Texture;
     }
     interface GlitchOptions {
