@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@pixi/filter-adjustment": "^2.4.0",
-    "@pixi/filter-advanced-bloom": "^2.5.0",
+    "@pixi/filter-advanced-bloom": "^2.4.0",
     "@pixi/filter-ascii": "^2.4.0",
     "@pixi/filter-bloom": "^2.4.0",
     "@pixi/filter-bulge-pinch": "^2.4.0",
@@ -46,7 +46,7 @@
     "@pixi/filter-glitch": "^2.4.0",
     "@pixi/filter-glow": "^2.4.1",
     "@pixi/filter-godray": "^2.4.0",
-    "@pixi/filter-kawase-blur": "^2.5.0",
+    "@pixi/filter-kawase-blur": "^2.4.0",
     "@pixi/filter-motion-blur": "^2.4.0",
     "@pixi/filter-multi-color-replace": "^2.4.0",
     "@pixi/filter-old-film": "^2.4.0",
