@@ -9,19 +9,27 @@ import fragment from './kawase-blur.frag';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
- * @param {number[]} [kernels=[0]] - The kernel size of the blur filter
- * @param {number|number[]|PIXI.Point} [pixelSize=1] - The offset of the blur filter.
+ * @param {number|number[]} [blur=4] - The blur of the filter. Should be > 0.
+ * @param {number} [quality=4] - The quality of the filter. Should be `int` , > 1.
  */
 export default class KawaseBlurFilter extends PIXI.Filter {
-    constructor(kernels = [0], pixelSize = 1) {
+    constructor(blur = 3, quality = 3) {
         super(vertex, fragment);
 
-        this._passes = 0;
-        this._kernels = null;
-        this.kernels = kernels;
-
         this._pixelSize = new PIXI.Point();
-        this.pixelSize = pixelSize;
+        this.pixelSize = 1;
+
+        this._kernels = null;
+
+        // if `blur` is array , as kernels
+        if (Array.isArray(blur)) {
+            this.kernels = blur;
+        }
+        else {
+            this._blur = blur;
+            this.quality = quality;
+        }
+
     }
 
     /**
@@ -33,7 +41,7 @@ export default class KawaseBlurFilter extends PIXI.Filter {
         const uvY = this.pixelSize.y / input.size.height;
         let offset;
 
-        if (this._passes === 1) {
+        if (this._quality === 1) {
             offset = this._kernels[0] + 0.5;
             this.uniforms.uOffset[0] = offset * uvX;
             this.uniforms.uOffset[1] = offset * uvY;
@@ -46,7 +54,7 @@ export default class KawaseBlurFilter extends PIXI.Filter {
             let target = renderTarget;
             let tmp;
 
-            const last = this._passes - 1;
+            const last = this._quality - 1;
 
             for (let i = 0; i < last; i++) {
                 offset = this._kernels[i] + 0.5;
@@ -68,6 +76,32 @@ export default class KawaseBlurFilter extends PIXI.Filter {
     }
 
     /**
+     * Auto generate kernels by blur & quality
+     * @private
+     */
+    _generateKernels() {
+        const blur = this._blur;
+        const quality = this._quality;
+        const kernels = [ blur ];
+
+        if (quality === 1 || blur === 0) {
+            this._quality = 1;
+            this._kernels = kernels;
+            return;
+        }
+
+        let k = blur;
+        const step = blur / quality;
+
+        for (let i = 1; i < quality; i++) {
+            k -= step;
+            kernels.push(k);
+        }
+
+        this._kernels = kernels;
+    }
+
+    /**
      * The kernel size of the blur filter
      *
      * @member {number[]}
@@ -79,12 +113,13 @@ export default class KawaseBlurFilter extends PIXI.Filter {
     set kernels(value) {
         if (Array.isArray(value) && value.length > 0) {
             this._kernels = value;
-            this._passes = value.length;
+            this._quality = value.length;
+            this._blur = Math.max.apply(Math, value);
         }
         else {
             // if value is invalid , set default value
             this._kernels = [0];
-            this._passes = 1;
+            this._quality = 1;
         }
     }
 
@@ -115,6 +150,22 @@ export default class KawaseBlurFilter extends PIXI.Filter {
     }
     get pixelSize() {
         return this._pixelSize;
+    }
+
+    get quality() {
+        return this._quality;
+    }
+    set quality(value) {
+        this._quality = Math.max(1, Math.round(value));
+        this._generateKernels();
+    }
+
+    get blur() {
+        return this._blur;
+    }
+    set blur(value) {
+        this._blur = value;
+        this._generateKernels();
     }
 }
 
