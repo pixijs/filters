@@ -6,16 +6,21 @@ declare namespace PIXI.filters {
         threshold: number;
         bloomScale: number;
         brightness: number;
+        kernels: number[];
         blur: number;
+        quality: number;
+        pixelSize:number|PIXI.Point|number[];
+        resolution: number;
     }
     interface AdvancedBloomOptions {
         threshold?: number;
         bloomScale?: number;
         brightness?: number;
+        kernels?: number[];
         blur?: number;
         quality?: number;
+        pixelSize?: number|PIXI.Point|number[];
         resolution?: number;
-        kernelSize?: number;
     }
 }
 
