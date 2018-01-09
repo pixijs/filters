@@ -26,6 +26,9 @@
   "peerDependencies": {
     "pixi.js": "^4.5.0"
   },
+  "dependencies": {
+    "@pixi/filter-kawase-blur": "^2.4.0"
+  },
   "devDependencies": {
     "@tools/fragments": "^2.0.0"
   }
