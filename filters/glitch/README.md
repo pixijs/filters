@@ -1,6 +1,6 @@
 # GlitchFilter
 
-PixiJS v4 filter to render glitch effect.
+PixiJS v4 filter to apply a glitch effect.
 
 ## Installation
 
@@ -11,9 +11,10 @@ npm install @pixi/filter-glitch
 ## Usage
 
 ```js
-import { GlitchFilter } from '@pixi/filter-glitch';
+import {GlitchFilter} from '@pixi/filter-glitch';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new GlitchFilter()];
 ```
 

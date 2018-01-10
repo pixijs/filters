@@ -1,6 +1,6 @@
 # DropShadowFilter
 
-PixiJS v4 filter to generate & render the drop shadow of DisplayObject.
+PixiJS v4 filter to apply a drop shadow effect.
 
 ## Installation
 
@@ -12,8 +12,9 @@ npm install @pixi/filter-drop-shadow
 
 ```js
 import {DropShadowFilter} from '@pixi/filter-drop-shadow';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new DropShadowFilter()];
 ```
 

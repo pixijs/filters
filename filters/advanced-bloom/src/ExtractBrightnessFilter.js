@@ -1,5 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './extract-brightness.frag';
+import * as PIXI from 'pixi.js';
 
 /**
  * Internal filter for AdvancedBloomFilter to get brightness.

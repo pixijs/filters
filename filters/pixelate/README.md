@@ -1,6 +1,6 @@
 # PixelateFilter
 
-PixiJS v4 filter to render DisplayObject as ASCII text.
+PixiJS v4 filter to apply a pixelation effect.
 
 ## Installation
 
@@ -12,8 +12,9 @@ npm install @pixi/filter-pixelate
 
 ```js
 import {PixelateFilter} from '@pixi/filter-pixelate';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new PixelateFilter()];
 ```
 

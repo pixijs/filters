@@ -1,6 +1,6 @@
 # OutlineFilter
 
-PixiJS v4 filter to generate & render the outline of DisplayObject.
+PixiJS v4 filter to apply an outline/stroke effect.
 
 ## Installation
 
@@ -12,8 +12,9 @@ npm install @pixi/filter-outline
 
 ```js
 import {OutlineFilter} from '@pixi/filter-outline';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new OutlineFilter()];
 ```
 

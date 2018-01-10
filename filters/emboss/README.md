@@ -1,6 +1,6 @@
 # EmbossFilter
 
-PixiJS v4 filter to render DisplayObject as ASCII text.
+PixiJS v4 filter to apply an emboss effect.
 
 ## Installation
 
@@ -12,8 +12,9 @@ npm install @pixi/filter-emboss
 
 ```js
 import {EmbossFilter} from '@pixi/filter-emboss';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new EmbossFilter()];
 ```
 

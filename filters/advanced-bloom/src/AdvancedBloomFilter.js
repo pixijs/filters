@@ -1,6 +1,8 @@
 import ExtractBrightnessFilter from './ExtractBrightnessFilter';
+import {KawaseBlurFilter} from '@pixi/filter-kawase-blur';
 import {vertex} from '@tools/fragments';
 import fragment from './advanced-bloom.frag';
+import * as PIXI from 'pixi.js';
 
 /**
  * The AdvancedBloomFilter applies a Bloom Effect to an object. Unlike the normal BloomFilter
@@ -64,13 +66,9 @@ export default class AdvancedBloomFilter extends PIXI.Filter {
 
         this._extractFilter = new ExtractBrightnessFilter(options.threshold);
         this._extractFilter.resolution = resolution;
-
-        const { KawaseBlurFilter } = PIXI.filters;
-
         this._blurFilter = kernels ?
             new KawaseBlurFilter(kernels) :
             new KawaseBlurFilter(blur, quality);
-
         this.pixelSize = pixelSize;
         this.resolution = resolution;
     }
@@ -179,6 +177,3 @@ export default class AdvancedBloomFilter extends PIXI.Filter {
         this._blurFilter.pixelSize = value;
     }
 }
-
-// Export to PixiJS namespace
-PIXI.filters.AdvancedBloomFilter = AdvancedBloomFilter;

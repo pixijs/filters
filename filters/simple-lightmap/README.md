@@ -1,6 +1,6 @@
-# simple-lightmapFilter
+# SimpleLightmapFilter
 
-PixiJS v4 filter to render DisplayObject as simple-lightmap text.
+PixiJS v4 filter to create a light-map from a texture.
 
 ## Installation
 
@@ -12,8 +12,9 @@ npm install @pixi/filter-simple-lightmap
 
 ```js
 import {SimpleLightmapFilter} from '@pixi/filter-simple-lightmap';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new SimpleLightmapFilter(texture, [0, 0, 0, 0.5])];
 ```
 

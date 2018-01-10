@@ -1,5 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './bulgePinch.frag';
+import * as PIXI from 'pixi.js';
 
 /**
  * @author Julien CLEREL @JuloxRox
@@ -68,7 +69,4 @@ export default class BulgePinchFilter extends PIXI.Filter {
         this.uniforms.center = value;
     }
 }
-
-// Export to PixiJS namespace
-PIXI.filters.BulgePinchFilter = BulgePinchFilter;
 

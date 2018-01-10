@@ -1,6 +1,6 @@
 # CrossHatchFilter
 
-PixiJS v4 filter to render DisplayObject as ASCII text.
+PixiJS v4 filter to apply a cross-hatch black and white effect.
 
 ## Installation
 
@@ -12,8 +12,9 @@ npm install @pixi/filter-cross-hatch
 
 ```js
 import {CrossHatchFilter} from '@pixi/filter-cross-hatch';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new CrossHatchFilter()];
 ```
 

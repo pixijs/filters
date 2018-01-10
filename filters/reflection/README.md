@@ -1,6 +1,6 @@
 # AdjustBasicFilter
 
-PixiJS v4 filter to render Reflection effect.
+PixiJS v4 filter to apply reflection and wave effect.
 
 ## Installation
 
@@ -11,10 +11,11 @@ npm install @pixi/filter-reflection
 ## Usage
 
 ```js
-import { Reflection } from '@pixi/filter-reflection';
+import {ReflectionFilter} from '@pixi/filter-reflection';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
-container.filters = [new Reflection()];
+const container = new Container();
+container.filters = [new ReflectionFilter()];
 ```
 
 ## Documentation

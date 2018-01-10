@@ -1,5 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './rgb-split.frag';
+import * as PIXI from 'pixi.js';
 
 /**
  * An RGB Split Filter.<br>
@@ -56,6 +57,3 @@ export default class RGBSplitFilter extends PIXI.Filter {
         this.uniforms.blue = value;
     }
 }
-
-// Export to PixiJS namespace
-PIXI.filters.RGBSplitFilter = RGBSplitFilter;

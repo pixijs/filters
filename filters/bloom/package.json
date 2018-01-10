@@ -2,7 +2,7 @@
   "name": "@pixi/filter-bloom",
   "version": "2.4.0",
   "main": "lib/filter-bloom.js",
-  "description": "Display filter render as ASCII text",
+  "description": "PixiJS v4 filter to apply a simple bloom effect",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"

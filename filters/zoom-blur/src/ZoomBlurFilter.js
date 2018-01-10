@@ -1,5 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './zoom-blur.frag';
+import * as PIXI from 'pixi.js';
 
 /**
  * The ZoomFilter applies a Zoom blur to an object.<br>
@@ -79,6 +80,3 @@ export default class ZoomBlurFilter extends PIXI.Filter {
         this.uniforms.uRadius = value;
     }
 }
-
-// Export to PixiJS namespace
-PIXI.filters.ZoomBlurFilter = ZoomBlurFilter;

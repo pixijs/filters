@@ -1,6 +1,6 @@
 # ColorReplaceFilter
 
-PixiJS v4 filter to render DisplayObject as ASCII text.
+PixiJS v4 filter to replace a single color.
 
 ## Installation
 
@@ -12,8 +12,9 @@ npm install @pixi/filter-color-replace
 
 ```js
 import {ColorReplaceFilter} from '@pixi/filter-color-replace';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new ColorReplaceFilter()];
 ```
 

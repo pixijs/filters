@@ -1,5 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './old-film.frag';
+import * as PIXI from 'pixi.js';
 
 /**
  * The OldFilmFilter applies a Old film effect to an object.<br>
@@ -199,6 +200,3 @@ export default class OldFilmFilter extends PIXI.Filter {
         return this.uniforms.vignettingBlur;
     }
 }
-
-// Export to PixiJS namespace
-PIXI.filters.OldFilmFilter = OldFilmFilter;

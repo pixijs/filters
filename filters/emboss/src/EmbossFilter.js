@@ -1,5 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './emboss.frag';
+import * as PIXI from 'pixi.js';
 
 /**
  * An RGB Split Filter.<br>
@@ -28,6 +29,3 @@ export default class EmbossFilter extends PIXI.Filter {
         this.uniforms.strength = value;
     }
 }
-
-// Export to PixiJS namespace
-PIXI.filters.EmbossFilter = EmbossFilter;

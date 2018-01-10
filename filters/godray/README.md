@@ -1,6 +1,6 @@
 # GodrayFilter
 
-PixiJS v4 filter for godray effect
+PixiJS v4 filter to apply and animate atmospheric light rays.
 
 ## Installation
 
@@ -12,8 +12,9 @@ npm install @pixi/filter-godray
 
 ```js
 import {GodrayFilter} from '@pixi/filter-godray';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new GodrayFilter()];
 ```
 

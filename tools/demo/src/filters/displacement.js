@@ -1,3 +1,5 @@
+import * as PIXI from 'pixi.js';
+
 export default function() {
     const app = this;
     this.resources.map.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;

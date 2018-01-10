@@ -1,6 +1,6 @@
 # RGBSplitFilter
 
-PixiJS v4 filter to render DisplayObject as rgb-split text.
+PixiJS v4 filter to split and shift red, green or blue channels.
 
 ## Installation
 
@@ -12,8 +12,9 @@ npm install @pixi/filter-rgb-split
 
 ```js
 import {RGBSplitFilter} from '@pixi/filter-rgb-split';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new RGBSplitFilter()];
 ```
 

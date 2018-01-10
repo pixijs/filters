@@ -1,6 +1,6 @@
-# twistFilter
+# TwistFilter
 
-PixiJS v4 filter to render DisplayObject as twist text.
+PixiJS v4 filter to apply a twist effect to a DisplayObject.
 
 ## Installation
 
@@ -11,10 +11,11 @@ npm install @pixi/filter-twist
 ## Usage
 
 ```js
-import {twistFilter} from '@pixi/filter-twist';
+import {TwistFilter} from '@pixi/filter-twist';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
-container.filters = [new twistFilter()];
+const container = new Container();
+container.filters = [new TwistFilter()];
 ```
 
 ## Documentation

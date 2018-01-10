@@ -1,6 +1,6 @@
 # GlowFilter
 
-PixiJS v4 filter to render DisplayObject as ASCII text.
+PixiJS v4 filter to apply a glow effect.
 
 ## Installation
 
@@ -12,8 +12,9 @@ npm install @pixi/filter-glow
 
 ```js
 import {GlowFilter} from '@pixi/filter-glow';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new GlowFilter()];
 ```
 

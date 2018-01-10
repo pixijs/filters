@@ -1,5 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './tilt-shift.frag';
+import * as PIXI from 'pixi.js';
 
 /**
  * @author Vico @vicocotea
@@ -91,7 +92,4 @@ export default class TiltShiftAxisFilter extends PIXI.Filter {
         this.updateDelta();
     }
 }
-
-// Export to PixiJS namespace
-PIXI.filters.TiltShiftAxisFilter = TiltShiftAxisFilter;
 

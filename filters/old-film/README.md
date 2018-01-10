@@ -1,6 +1,6 @@
 # OldFilmFilter
 
-PixiJS v4 filter to render Old Film effect.
+PixiJS v4 filter to apply an old film effect with grain and scratches.
 
 ## Installation
 
@@ -11,9 +11,10 @@ npm install @pixi/filter-old-film
 ## Usage
 
 ```js
-import { OldFilmFilter } from '@pixi/filter-old-film';
+import {OldFilmFilter} from '@pixi/filter-old-film';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new OldFilmFilter()];
 ```
 

@@ -1,6 +1,6 @@
 # AdjustBasicFilter
 
-PixiJS v4 filter to render CRT effect.
+PixiJS v4 filter to apply an effect resembling old CRT monitors.
 
 ## Installation
 
@@ -11,9 +11,10 @@ npm install @pixi/filter-crt
 ## Usage
 
 ```js
-import { CRTFilter } from '@pixi/filter-crt';
+import {CRTFilter} from '@pixi/filter-crt';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new CRTFilter()];
 ```
 

@@ -25,6 +25,3 @@ export default class TiltShiftXFilter extends TiltShiftAxisFilter {
         this.uniforms.delta.y = dy / d;
     }
 }
-
-// Export to PixiJS namespace
-PIXI.filters.TiltShiftXFilter = TiltShiftXFilter;

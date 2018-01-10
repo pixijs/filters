@@ -1,5 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './simpleLightmap.frag';
+import * as PIXI from 'pixi.js';
 
 /**
 * SimpleLightmap, originally by Oza94
@@ -93,7 +94,4 @@ export default class SimpleLightmapFilter extends PIXI.Filter {
         this.uniforms.ambientColor[3] = value;
     }
 }
-
-// Export to PixiJS namespace
-PIXI.filters.SimpleLightmapFilter = SimpleLightmapFilter;
 

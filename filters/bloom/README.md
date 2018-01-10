@@ -1,6 +1,6 @@
 # BloomFilter
 
-PixiJS v4 filter to render DisplayObject as ASCII text.
+PixiJS v4 filter to apply a simple bloom effect.
 
 ## Installation
 
@@ -12,8 +12,9 @@ npm install @pixi/filter-bloom
 
 ```js
 import {BloomFilter} from '@pixi/filter-bloom';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new BloomFilter()];
 ```
 

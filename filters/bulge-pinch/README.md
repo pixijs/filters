@@ -1,6 +1,6 @@
 # BulgePinchFilter
 
-PixiJS v4 filter to render DisplayObject as ASCII text.
+PixiJS v4 filter to apply a bulge or a pinch effect.
 
 ## Installation
 
@@ -12,8 +12,9 @@ npm install @pixi/filter-bulge-pinch
 
 ```js
 import {BulgePinchFilter} from '@pixi/filter-bulge-pinch';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new BulgePinchFilter()];
 ```
 

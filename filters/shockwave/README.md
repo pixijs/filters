@@ -1,6 +1,6 @@
 # ShockwaveFilter
 
-PixiJS v4 filter to render DisplayObject as ASCII text.
+PixiJS v4 filter to apply a shockwave-type effect.
 
 ## Installation
 
@@ -12,8 +12,9 @@ npm install @pixi/filter-ascii
 
 ```js
 import {ShockwaveFilter} from '@pixi/filter-ascii';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new ShockwaveFilter()];
 ```
 

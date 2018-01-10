@@ -4,6 +4,7 @@ import path from 'path';
 import fs from 'fs';
 import buble from 'rollup-plugin-buble';
 import resolve from 'rollup-plugin-node-resolve';
+import commonjs from 'rollup-plugin-commonjs';
 import string from 'rollup-plugin-string';
 import uglify from 'rollup-plugin-uglify';
 import { minify } from 'uglify-es';
@@ -82,6 +83,11 @@ const filtered = PackageUtilities.filterPackages(packages, args);
 const sorted = PackageUtilities.topologicallyBatchPackages(filtered);
 
 const plugins = [
+    commonjs({
+        namedExports: {
+            'pixi.js': ['settings', 'Filter']
+        }
+    }),
     resolve(),
     string({
         include: [
@@ -124,35 +130,54 @@ sorted.forEach((group) => {
             ' */',
         ].join('\n');
 
-        // Check for bundle folder
-        const external = Object.keys(pkg.dependencies || []);
+        // Get settings from package JSON
+        let { main, module, bundle, globals } = pkg._package;
         const basePath = path.relative(__dirname, pkg.location);
         const input = path.join(basePath, 'src/index.js');
-        const { main, module, bundle } = pkg._package;
         const freeze = false;
-        const name = '__pixiFilters';
-        let intro = '';
+        const name = '__filters';
 
-        if (!args.prod && bundle) {
-            intro = 'if (typeof PIXI === \'undefined\' || typeof PIXI.filters === \'undefined\') { throw \'PixiJS is required\'; }';
+        // Generate the externals to use, by default don't include dependencies
+        const baseExternal = ['pixi.js'];
+        const external = [].concat(baseExternal, Object.keys(pkg.dependencies || []));
+
+        // pixi.js is a global, peer dependency included by user, add that
+        // to the list of user-defined globals
+        globals = Object.assign({ 'pixi.js': 'PIXI' }, globals);
+
+        // For UMD formatted, this adds class exports to PIXI.filters
+        const footer = `Object.assign(PIXI.filters, this.${name});`;
+
+        // UMD format output
+        const mainOutput = {
+            file: path.join(basePath, main),
+            format: 'umd',
+            footer,
+        };
+
+        // ES format output
+        const moduleOutput = {
+            file: path.join(basePath, module),
+            format: 'es',
+        };
+
+        // For bundle, override and keep as vanilla-CommonJS
+        // basically just a list of require statements
+        if (bundle) {
+            mainOutput.footer = '';
+            mainOutput.format = 'cjs';
         }
 
         results.push({
-            intro,
             banner,
             input,
             freeze,
             output: [
-                {
-                    file: path.join(basePath, main),
-                    format: bundle ? 'cjs' : 'umd',
-                },
-                {
-                    file: path.join(basePath, module),
-                    format: 'es',
-                },
+                mainOutput,
+                moduleOutput,
             ],
             name,
+            globals,
             external,
             sourcemap,
             plugins,
@@ -163,13 +188,15 @@ sorted.forEach((group) => {
         // this will package all dependencies
         if (args.bundles && bundle) {
             results.push({
-                intro,
                 banner,
                 input,
                 freeze,
+                external: baseExternal,
+                globals,
                 output: {
                     file: path.join(basePath, bundle),
-                    format: 'umd',
+                    format: 'iife',
+                    footer,
                 },
                 name,
                 treeshake: false,

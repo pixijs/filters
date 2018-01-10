@@ -1,6 +1,6 @@
 # AdjustmentFilter
 
-PixiJS v4 filter to adjust gamma/contrast/saturation/brightness.
+PixiJS v4 filter to adjust gamma, contrast, saturation, brightness or color channels.
 
 ## Installation
 
@@ -11,9 +11,10 @@ npm install @pixi/filter-adjustment
 ## Usage
 
 ```js
-import { AdjustmentFilter } from '@pixi/filter-adjustment';
+import {AdjustmentFilter} from '@pixi/filter-adjustment';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
+const container = new Container();
 container.filters = [new AdjustmentFilter()];
 ```
 

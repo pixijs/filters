@@ -9,7 +9,6 @@
         "browser": true
     },
     "globals": {
-        "PIXI": true,
         "Float32Array": true
     },
     "rules": {

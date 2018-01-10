@@ -2,7 +2,7 @@
   "name": "@pixi/filter-godray",
   "version": "2.4.0",
   "main": "lib/filter-godray.js",
-  "description": "Display filter gorday",
+  "description": "PixiJS v4 filter to apply and animate atmospheric light rays",
   "author": "Alain Galvan",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>",

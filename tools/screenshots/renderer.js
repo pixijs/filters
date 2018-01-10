@@ -1,5 +1,5 @@
-require('pixi.js');
-require('pixi-filters');
+const PIXI = require('pixi.js');
+const filters = require('pixi-filters');
 const assert = require('assert');
 const config = require('./config.json');
 const base64ToImage = require('base64-to-image');
@@ -53,7 +53,7 @@ function next() {
     const obj = config.images[++index];
     if (obj) {
 
-        const FilterClass = PIXI.filters[obj.name];
+        const FilterClass = filters[obj.name] || PIXI.filters[obj.name];
         assert(!!FilterClass, `Filter ${obj.name} does not exist`);
         let filter;
         switch(obj.name) {

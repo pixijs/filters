@@ -1,20 +1,21 @@
-# DropShadowFilter
+# DotFilter
 
-PixiJS v4 filter to render DisplayObject as ASCII text.
+PixiJS v4 filter to apply a black and white dot effect.
 
 ## Installation
 
 ```bash
-npm install @pixi/filter-ascii
+npm install @pixi/filter-dot
 ```
 
 ## Usage
 
 ```js
-import {DropShadowFilter} from '@pixi/filter-ascii';
+import {DotFilter} from '@pixi/filter-dot';
+import {Container} from 'pixi.js';
 
-const container = new PIXI.Container();
-container.filters = [new DropShadowFilter()];
+const container = new Container();
+container.filters = [new DotFilter()];
 ```
 
 ## Documentation

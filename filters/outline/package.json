@@ -2,7 +2,7 @@
   "name": "@pixi/filter-outline",
   "version": "2.4.1",
   "main": "lib/filter-outline.js",
-  "description": "Display filter render as ASCII text",
+  "description": "PixiJS v4 filter to apply an outline/stroke effect",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"

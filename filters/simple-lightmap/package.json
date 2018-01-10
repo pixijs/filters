@@ -2,7 +2,7 @@
   "name": "@pixi/filter-simple-lightmap",
   "version": "2.4.0",
   "main": "lib/filter-simple-lightmap.js",
-  "description": "Display filter render as simple-lightmap text",
+  "description": "PixiJS v4 filter to create a light-map from a texture",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
