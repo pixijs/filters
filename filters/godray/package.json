@@ -1,7 +1,7 @@
 {
   "name": "@pixi/filter-godray",
   "version": "2.4.0",
-  "main": "lib/filter-godray.cjs.js",
+  "main": "lib/filter-godray.js",
   "description": "Display filter gorday",
   "author": "Alain Galvan",
   "contributors": [
@@ -9,7 +9,6 @@
     "Ivan Popelyshevl <ivan.popelyshev@gmail.com>"
   ],
   "module": "lib/filter-godray.es.js",
-  "browser": "dist/filter-godray.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
@@ -23,7 +22,6 @@
   },
   "files": [
     "lib",
-    "dist",
     "types.d.ts"
   ],
   "peerDependencies": {

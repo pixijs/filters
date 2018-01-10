@@ -1,14 +1,13 @@
 {
   "name": "@pixi/filter-ascii",
   "version": "2.4.0",
-  "main": "lib/filter-ascii.cjs.js",
+  "main": "lib/filter-ascii.js",
   "description": "Display filter render as ASCII text",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
   "module": "lib/filter-ascii.es.js",
-  "browser": "dist/filter-ascii.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
@@ -22,7 +21,6 @@
   },
   "files": [
     "lib",
-    "dist",
     "types.d.ts"
   ],
   "peerDependencies": {

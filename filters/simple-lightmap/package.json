@@ -1,14 +1,13 @@
 {
   "name": "@pixi/filter-simple-lightmap",
   "version": "2.4.0",
-  "main": "lib/filter-simple-lightmap.cjs.js",
+  "main": "lib/filter-simple-lightmap.js",
   "description": "Display filter render as simple-lightmap text",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
   "module": "lib/filter-simple-lightmap.es.js",
-  "browser": "dist/filter-simple-lightmap.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
@@ -22,7 +21,6 @@
   },
   "files": [
     "lib",
-    "dist",
     "types.d.ts"
   ],
   "peerDependencies": {

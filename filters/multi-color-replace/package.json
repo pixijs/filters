@@ -1,14 +1,13 @@
 {
   "name": "@pixi/filter-multi-color-replace",
   "version": "2.4.0",
-  "main": "lib/filter-multi-color-replace.cjs.js",
+  "main": "lib/filter-multi-color-replace.js",
   "description": "Multi Color Replace filter",
   "author": "finscn",
   "contributors": [
     "finscn <finscn@gmail.com>"
   ],
   "module": "lib/filter-multi-color-replace.es.js",
-  "browser": "dist/filter-multi-color-replace.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
@@ -22,7 +21,6 @@
   },
   "files": [
     "lib",
-    "dist",
     "types.d.ts"
   ],
   "peerDependencies": {

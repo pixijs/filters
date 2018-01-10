@@ -1,14 +1,13 @@
 {
   "name": "@pixi/filter-convolution",
   "version": "2.4.0",
-  "main": "lib/filter-convolution.cjs.js",
+  "main": "lib/filter-convolution.js",
   "description": "Display filter render as ASCII text",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
   "module": "lib/filter-convolution.es.js",
-  "browser": "dist/filter-convolution.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
@@ -22,7 +21,6 @@
   },
   "files": [
     "lib",
-    "dist",
     "types.d.ts"
   ],
   "peerDependencies": {

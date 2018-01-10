@@ -10,7 +10,7 @@
     "Chad Engler <chad@pantherdev.com>"
   ],
   "module": "lib/pixi-filters.es.js",
-  "browser": "dist/pixi-filters.js",
+  "bundle": "dist/pixi-filters.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",

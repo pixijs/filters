@@ -130,27 +130,54 @@ sorted.forEach((group) => {
             ' */',
         ].join('\n');
 
-        // Check for bundle folder
-        const external = ['pixi.js'].concat(Object.keys(pkg.dependencies || []));
+        // Get settings from package JSON
+        let { main, module, bundle, globals } = pkg._package;
         const basePath = path.relative(__dirname, pkg.location);
         const input = path.join(basePath, 'src/index.js');
-        const { main, module, browser } = pkg._package;
         const freeze = false;
+        const name = '__filters';
+
+        // Generate the externals to use, by default don't include dependencies
+        const baseExternal = ['pixi.js'];
+        const external = [].concat(baseExternal, Object.keys(pkg.dependencies || []));
+
+        // pixi.js is a global, peer dependency included by user, add that
+        // to the list of user-defined globals
+        globals = Object.assign({ 'pixi.js': 'PIXI' }, globals);
+
+        // For UMD formatted, this adds class exports to PIXI.filters
+        const footer = `Object.assign(PIXI.filters, this.${name});`;
+
+        // UMD format output
+        const mainOutput = {
+            file: path.join(basePath, main),
+            format: 'umd',
+            footer,
+        };
+
+        // ES format output
+        const moduleOutput = {
+            file: path.join(basePath, module),
+            format: 'es',
+        };
+
+        // For bundle, override and keep as vanilla-CommonJS
+        // basically just a list of require statements
+        if (bundle) {
+            mainOutput.footer = '';
+            mainOutput.format = 'cjs';
+        }
 
         results.push({
             banner,
             input,
             freeze,
             output: [
-                {
-                    file: path.join(basePath, main),
-                    format: 'cjs',
-                },
-                {
-                    file: path.join(basePath, module),
-                    format: 'es',
-                },
+                mainOutput,
+                moduleOutput,
             ],
+            name,
+            globals,
             external,
             sourcemap,
             plugins,
@@ -159,21 +186,17 @@ sorted.forEach((group) => {
         // The package.json file has a bundle field
         // we'll use this to generate the bundle file
         // this will package all dependencies
-        if (args.bundles && browser) {
-            const name = '__filters';
-
+        if (args.bundles && bundle) {
             results.push({
                 banner,
-                footer: `Object.assign(PIXI.filters, ${name});`,
                 input,
                 freeze,
-                external: ['pixi.js'],
-                globals: {
-                    'pixi.js': 'PIXI',
-                },
+                external: baseExternal,
+                globals,
                 output: {
-                    file: path.join(basePath, browser),
+                    file: path.join(basePath, bundle),
                     format: 'iife',
+                    footer,
                 },
                 name,
                 treeshake: false,

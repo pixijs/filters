@@ -1,11 +1,10 @@
 {
   "name": "@pixi/filter-radial-blur",
   "version": "2.4.0",
-  "main": "lib/filter-radial-blur.cjs.js",
+  "main": "lib/filter-radial-blur.js",
   "description": "Multi Color Replace filter",
   "author": "finscn <finscn@gmail.com>",
   "module": "lib/filter-radial-blur.es.js",
-  "browser": "dist/filter-radial-blur.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
@@ -19,7 +18,6 @@
   },
   "files": [
     "lib",
-    "dist",
     "types.d.ts"
   ],
   "peerDependencies": {
