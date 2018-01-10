@@ -38,7 +38,7 @@ Filters include:
 
 ## Examples
 
-Click [here](https://pixijs.github.io/pixi-filters/tools/demo) for filter demos.
+Click [here](http://pixijs.io/pixi-filters/tools/demo/) for filter demos.
 
 ## Installation
 
