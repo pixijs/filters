@@ -1,6 +1,6 @@
 # EmbossFilter
 
-PixiJS v4 filter to render DisplayObject as ASCII text.
+PixiJS v4 filter to apply an emboss effect.
 
 ## Installation
 

@@ -1,6 +1,6 @@
 # ColorReplaceFilter
 
-PixiJS v4 filter to render DisplayObject as ASCII text.
+PixiJS v4 filter to replace a single color.
 
 ## Installation
 

@@ -2,7 +2,7 @@
   "name": "@pixi/filter-old-film",
   "version": "2.4.0",
   "main": "lib/filter-old-film.js",
-  "description": "Old Film effect filter",
+  "description": "PixiJS v4 filter to apply an old film effect with grain and scratches",
   "author": "finscn <finscn@gmail.com>",
   "module": "lib/filter-old-film.es.js",
   "types": "types.d.ts",

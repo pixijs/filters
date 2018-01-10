@@ -1,6 +1,6 @@
 # AdjustBasicFilter
 
-PixiJS v4 filter to render CRT effect.
+PixiJS v4 filter to apply an effect resembling old CRT monitors.
 
 ## Installation
 

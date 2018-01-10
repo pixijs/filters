@@ -1,6 +1,6 @@
 # MotionBlurFilter
 
-PixiJS v4 filter to render Motion Blur effect.
+PixiJS v4 filter to apply a directional blur effect.
 
 ## Installation
 

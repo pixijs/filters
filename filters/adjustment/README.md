@@ -1,6 +1,6 @@
 # AdjustmentFilter
 
-PixiJS v4 filter to adjust gamma/contrast/saturation/brightness.
+PixiJS v4 filter to adjust gamma, contrast, saturation, brightness or color channels.
 
 ## Installation
 

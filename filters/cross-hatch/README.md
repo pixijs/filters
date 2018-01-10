@@ -1,6 +1,6 @@
 # CrossHatchFilter
 
-PixiJS v4 filter to render DisplayObject as ASCII text.
+PixiJS v4 filter to apply a cross-hatch black and white effect.
 
 ## Installation
 

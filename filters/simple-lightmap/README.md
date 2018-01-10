@@ -1,6 +1,6 @@
-# simple-lightmapFilter
+# SimpleLightmapFilter
 
-PixiJS v4 filter to render DisplayObject as simple-lightmap text.
+PixiJS v4 filter to create a light-map from a texture.
 
 ## Installation
 

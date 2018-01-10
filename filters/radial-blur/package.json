@@ -2,7 +2,7 @@
   "name": "@pixi/filter-radial-blur",
   "version": "2.4.0",
   "main": "lib/filter-radial-blur.js",
-  "description": "Multi Color Replace filter",
+  "description": "PixiJS v4 filter to apply a radial blur effect",
   "author": "finscn <finscn@gmail.com>",
   "module": "lib/filter-radial-blur.es.js",
   "types": "types.d.ts",

@@ -2,12 +2,13 @@
   "name": "pixi-filters",
   "version": "2.4.1",
   "main": "lib/pixi-filters.cjs.js",
-  "description": "Optional display filters to work with PixiJS",
+  "description": "PixiJS v4 optional display filters",
   "author": "Mat Groves <mat@goodboydigital.com>",
   "contributors": [
     "Ivan Popelyshev <ivan.popelyshev@gmail.com>",
     "Matt Karl <matt@mattkarl.com>",
-    "Chad Engler <chad@pantherdev.com>"
+    "Chad Engler <chad@pantherdev.com>",
+    "finscn <finscn@gmail.com>"
   ],
   "module": "lib/pixi-filters.es.js",
   "bundle": "dist/pixi-filters.js",

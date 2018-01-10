@@ -1,6 +1,6 @@
 # OutlineFilter
 
-PixiJS v4 filter to generate & render the outline of DisplayObject.
+PixiJS v4 filter to apply an outline/stroke effect.
 
 ## Installation
 

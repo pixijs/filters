@@ -2,7 +2,7 @@
   "name": "@pixi/filter-twist",
   "version": "2.4.0",
   "main": "lib/filter-twist.js",
-  "description": "Display filter render as twist text",
+  "description": "PixiJS v4 filter to apply a twist effect to a DisplayObject",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"

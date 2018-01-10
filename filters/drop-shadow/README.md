@@ -1,6 +1,6 @@
 # DropShadowFilter
 
-PixiJS v4 filter to generate & render the drop shadow of DisplayObject.
+PixiJS v4 filter to apply a drop shadow effect.
 
 ## Installation
 

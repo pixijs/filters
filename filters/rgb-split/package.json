@@ -2,7 +2,7 @@
   "name": "@pixi/filter-rgb-split",
   "version": "2.4.0",
   "main": "lib/filter-rgb-split.js",
-  "description": "Display filter render as rgb-split text",
+  "description": "PixiJS v4 filter to split and shift red, green or blue channels",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"

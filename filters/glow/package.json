@@ -2,7 +2,7 @@
   "name": "@pixi/filter-glow",
   "version": "2.4.1",
   "main": "lib/filter-glow.js",
-  "description": "Display filter render as ASCII text",
+  "description": "PixiJS v4 filter to apply a glow effect",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"

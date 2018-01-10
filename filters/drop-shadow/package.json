@@ -2,7 +2,7 @@
   "name": "@pixi/filter-drop-shadow",
   "version": "2.4.0",
   "main": "lib/filter-drop-shadow.js",
-  "description": "Display filter render as ASCII text",
+  "description": "PixiJS v4 filter to apply a drop shadow effect",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"

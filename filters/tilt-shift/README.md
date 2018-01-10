@@ -1,6 +1,6 @@
-# tilt-shiftFilter
+# TiltShiftFilter
 
-PixiJS v4 filter to render DisplayObject as tilt-shift text.
+PixiJS v4 filter to render a tilt-shift-like camera effect.
 
 ## Installation
 
@@ -11,11 +11,11 @@ npm install @pixi/filter-tilt-shift
 ## Usage
 
 ```js
-import {tilt-shiftFilter} from '@pixi/filter-tilt-shift';
+import {TiltShiftFilter} from '@pixi/filter-tilt-shift';
 import {Container} from 'pixi.js';
 
 const container = new Container();
-container.filters = [new tilt-shiftFilter()];
+container.filters = [new TiltShiftFilter()];
 ```
 
 ## Documentation

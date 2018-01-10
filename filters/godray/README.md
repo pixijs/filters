@@ -1,6 +1,6 @@
 # GodrayFilter
 
-PixiJS v4 filter for godray effect
+PixiJS v4 filter to apply and animate atmospheric light rays.
 
 ## Installation
 

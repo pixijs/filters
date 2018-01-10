@@ -1,6 +1,6 @@
 # MultiColorReplaceFilter
 
-PixiJS v4 filter to render Multi Color Replace effect.
+PixiJS v4 filter to dynamically replace multiple colors.
 
 ## Installation
 

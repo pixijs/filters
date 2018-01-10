@@ -1,6 +1,6 @@
 # RadialBlurFilter
 
-PixiJS v4 filter to render Radial Blur effect.
+PixiJS v4 filter to apply a radial blur effect.
 
 ## Installation
 
