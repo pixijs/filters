@@ -1,11 +1,13 @@
 export default function() {
     const app = this;
+    const fillMode = 2; // LOOP
+
     app.addFilter('GlitchFilter', {
         args: [{
             slices: 10,
             offset: 100,
             direction: 0,
-            fillMode: 2,
+            fillMode: fillMode,
             average: false,
             red: [2, 2],
             green: [-10, 4],
@@ -29,7 +31,16 @@ export default function() {
             });
             folder.add(this, 'offset', -400, 400);
             folder.add(this, 'direction', -180, 180);
-            folder.add(this, 'fillMode',[0, 1, 2, 3, 4]);
+
+            const fillModeOptions = {
+                TRANSPARENT: 0,
+                ORIGINAL: 1,
+                LOOP: 2,
+                CLAMP: 3,
+                MIRROR: 4
+            };
+            folder.add(this, 'fillMode', fillModeOptions);
+
             folder.add(this.red, '0', -50, 50).name('red.x');
             folder.add(this.red, '1', -50, 50).name('red.y');
             folder.add(this.blue, '0', -50, 50).name('blue.x');
