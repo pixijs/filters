@@ -1,6 +1,6 @@
 {
   "name": "pixi-filters",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "main": "lib/pixi-filters.cjs.js",
   "description": "PixiJS v4 optional display filters",
   "author": "Mat Groves <mat@goodboydigital.com>",
@@ -60,6 +60,6 @@
     "@pixi/filter-simple-lightmap": "^2.5.0",
     "@pixi/filter-tilt-shift": "^2.5.0",
     "@pixi/filter-twist": "^2.5.0",
-    "@pixi/filter-zoom-blur": "^2.5.0"
+    "@pixi/filter-zoom-blur": "^2.5.1"
   }
 }
