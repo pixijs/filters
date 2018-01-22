@@ -23,8 +23,14 @@
     "lib",
     "types.d.ts"
   ],
+  "globals": {
+    "@pixi/filter-kawase-blur": "PIXI.filters"
+  },
   "peerDependencies": {
-    "pixi.js": "^4.0.0"
+    "pixi.js": "^4.5.0"
+  },
+  "dependencies": {
+    "@pixi/filter-kawase-blur": "^2.5.0"
   },
   "devDependencies": {
     "@tools/fragments": "^2.0.0"

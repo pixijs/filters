@@ -1,3 +1,4 @@
+import {KawaseBlurFilter} from '@pixi/filter-kawase-blur';
 import {vertex} from '@tools/fragments';
 import fragment from './dropshadow.frag';
 import * as PIXI from 'pixi.js';
@@ -8,35 +9,82 @@ import * as PIXI from 'pixi.js';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
- * @param {number} [rotation=45] The angle of the shadow in degrees.
- * @param {number} [distance=5] Distance of shadow
- * @param {number} [blur=2] Blur of the shadow
- * @param {number} [color=0x000000] Color of the shadow
- * @param {number} [alpha=0.5] Alpha of the shadow
+ * @param {object} [options] Filter options
+ * @param {number} [options.rotation=45] The angle of the shadow in degrees.
+ * @param {number} [options.distance=5] Distance of shadow
+ * @param {number} [options.color=0x000000] Color of the shadow
+ * @param {number} [options.alpha=0.5] Alpha of the shadow
+ * @param {number} [options.blur=2] - Sets the strength of the Blur properties simultaneously
+ * @param {number} [options.quality=4] - The quality of the Blur filter.
+ * @param {number[]} [options.kernels=null] - The kernels of the Blur filter.
+ * @param {number|number[]|PIXI.Point} [options.pixelSize=1] - the pixelSize of the Blur filter.
+ * @param {number} [options.resolution=PIXI.settings.RESOLUTION] - The resolution of the Blur filter.
  */
 export default class DropShadowFilter extends PIXI.Filter {
-    constructor(rotation = 45, distance = 5, blur = 2, color = 0x000000, alpha = 0.5) {
+    constructor(options) {
+
+        // Fallback support for ctor: (rotation, distance, blur, color, alpha)
+        if (options && options.constructor !== Object) {
+            // eslint-disable-next-line no-console
+            console.warn('DropShadowFilter now uses options instead of (rotation, distance, blur, color, alpha)');
+            options = { rotation: options };
+            if (arguments[1] !== undefined) {
+                options.distance = arguments[1];
+            }
+            if (arguments[2] !== undefined) {
+                options.blur = arguments[2];
+            }
+            if (arguments[3] !== undefined) {
+                options.color = arguments[3];
+            }
+            if (arguments[4] !== undefined) {
+                options.alpha = arguments[4];
+            }
+        }
+
+        options = Object.assign({
+            rotation: 45,
+            distance: 5,
+            color: 0x000000,
+            alpha: 0.5,
+            kernels: null,
+            blur: 2,
+            quality: 4,
+            pixelSize: 1,
+            resolution: PIXI.settings.RESOLUTION,
+        }, options);
+
         super();
 
-        this.tintFilter = new PIXI.Filter(vertex, fragment);
-        this.blurFilter = new PIXI.filters.BlurFilter();
-        this.blurFilter.blur = blur;
+        const { kernels, blur, quality, pixelSize, resolution } = options;
+
+        this._tintFilter = new PIXI.Filter(vertex, fragment);
+        this._tintFilter.resolution = resolution;
+        this._blurFilter = kernels ?
+            new KawaseBlurFilter(kernels) :
+            new KawaseBlurFilter(blur, quality);
+
+        this.pixelSize = pixelSize;
+        this.resolution = resolution;
 
         this.targetTransform = new PIXI.Matrix();
 
+        const { rotation, distance, alpha, color } = options;
+
         this.rotation = rotation;
-        this.padding = distance;
         this.distance = distance;
         this.alpha = alpha;
         this.color = color;
+
+        this._updatePadding();
     }
 
     apply(filterManager, input, output, clear) {
         const target = filterManager.getRenderTarget();
 
         target.transform = this.targetTransform;
-        this.tintFilter.apply(filterManager, input, target, true);
-        this.blurFilter.apply(filterManager, target, output);
+        this._tintFilter.apply(filterManager, input, target, true);
+        this._blurFilter.apply(filterManager, target, output);
         filterManager.applyFilter(this, input, output, clear);
         target.transform = null;
         filterManager.returnRenderTarget(target);
@@ -57,6 +105,25 @@ export default class DropShadowFilter extends PIXI.Filter {
     _updateTargetTransform() {
         this.targetTransform.tx = this.distance * Math.cos(this.angle);
         this.targetTransform.ty = this.distance * Math.sin(this.angle);
+    }
+
+    /**
+     * The resolution of the filter.
+     *
+     * @member {number}
+     */
+    get resolution() {
+        return this._resolution;
+    }
+    set resolution(value) {
+        this._resolution = value;
+
+        if (this._tintFilter) {
+            this._tintFilter.resolution = value;
+        }
+        if (this._blurFilter) {
+            this._blurFilter.resolution = value;
+        }
     }
 
     /**
@@ -87,28 +154,15 @@ export default class DropShadowFilter extends PIXI.Filter {
     }
 
     /**
-     * The blur of the shadow
-     * @member {number}
-     * @default 2
-     */
-    get blur() {
-        return this.blurFilter.blur;
-    }
-    set blur(value) {
-        this.blurFilter.blur = value;
-        this._updatePadding();
-    }
-
-    /**
      * The alpha of the shadow
      * @member {number}
      * @default 1
      */
     get alpha() {
-        return this.tintFilter.uniforms.alpha;
+        return this._tintFilter.uniforms.alpha;
     }
     set alpha(value) {
-        this.tintFilter.uniforms.alpha = value;
+        this._tintFilter.uniforms.alpha = value;
     }
 
     /**
@@ -117,9 +171,61 @@ export default class DropShadowFilter extends PIXI.Filter {
      * @default 0x000000
      */
     get color() {
-        return PIXI.utils.rgb2hex(this.tintFilter.uniforms.color);
+        return PIXI.utils.rgb2hex(this._tintFilter.uniforms.color);
     }
     set color(value) {
-        PIXI.utils.hex2rgb(value, this.tintFilter.uniforms.color);
+        PIXI.utils.hex2rgb(value, this._tintFilter.uniforms.color);
+    }
+
+    /**
+     * Sets the kernels of the Blur Filter
+     *
+     * @member {number}
+     * @default 4
+     */
+    get kernels() {
+        return this._blurFilter.kernels;
+    }
+    set kernels(value) {
+        this._blurFilter.kernels = value;
+    }
+
+    /**
+     * The blur of the shadow
+     * @member {number}
+     * @default 2
+     */
+    get blur() {
+        return this._blurFilter.blur;
+    }
+    set blur(value) {
+        this._blurFilter.blur = value;
+        this._updatePadding();
+    }
+
+    /**
+     * Sets the quality of the Blur Filter
+     *
+     * @member {number}
+     * @default 4
+     */
+    get quality() {
+        return this._blurFilter.quality;
+    }
+    set quality(value) {
+        this._blurFilter.quality = value;
+    }
+
+    /**
+     * Sets the pixelSize of the Kawase Blur filter
+     *
+     * @member {number|number[]|PIXI.Point}
+     * @default 1
+     */
+    get pixelSize() {
+        return this._blurFilter.pixelSize;
+    }
+    set pixelSize(value) {
+        this._blurFilter.pixelSize = value;
     }
 }
