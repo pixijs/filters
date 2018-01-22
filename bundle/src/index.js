@@ -3,6 +3,7 @@ export {AdvancedBloomFilter} from '@pixi/filter-advanced-bloom';
 export {AsciiFilter} from '@pixi/filter-ascii';
 export {BloomFilter} from '@pixi/filter-bloom';
 export {BulgePinchFilter} from '@pixi/filter-bulge-pinch';
+export {ColorAdjustFilter} from '@pixi/filter-color-adjust';
 export {ColorReplaceFilter} from '@pixi/filter-color-replace';
 export {ConvolutionFilter} from '@pixi/filter-convolution';
 export {CrossHatchFilter} from '@pixi/filter-cross-hatch';

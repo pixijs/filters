@@ -525,6 +525,10 @@
                 "noise": 0.3,
                 "noiseSize": 1.0
             }]
+        },
+        {
+            "name": "ColorAdjustFilter",
+            "filename": "color-adjust"
         }
     ]
 }

@@ -28,14 +28,17 @@ let index = -1;
 let sprite;
 let displacement;
 let lightmap;
+let colormap;
 
 // Load image
 app.loader
     .add('preview', path.join(__dirname, 'assets', 'preview.png'))
     .add('lightmap', path.join(__dirname, 'assets', 'lightmap.png'))
     .add('displacement', path.join(__dirname, 'assets', 'displacement.png'))
+    .add('colormap', path.join(__dirname, 'assets', 'colormap.png'))
     .load((loader, resources) => {
         lightmap = resources.lightmap.texture;
+        colormap = resources.colormap.texture;
         displacement = new PIXI.Sprite(resources.displacement.texture);
         sprite = new PIXI.Sprite(resources.preview.texture);
         sprite.scale.set(0.5);
@@ -63,6 +66,10 @@ function next() {
             }
             case 'SimpleLightmapFilter': {
                 filter = new FilterClass(lightmap);
+                break;
+            }
+            case 'ColorAdjustFilter': {
+                filter = new FilterClass(colormap, false);
                 break;
             }
             default: {

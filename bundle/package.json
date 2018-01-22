@@ -37,6 +37,7 @@
     "@pixi/filter-ascii": "^2.5.0",
     "@pixi/filter-bloom": "^2.5.0",
     "@pixi/filter-bulge-pinch": "^2.5.0",
+    "@pixi/filter-color-adjust": "^2.5.0",
     "@pixi/filter-color-replace": "^2.5.0",
     "@pixi/filter-convolution": "^2.5.0",
     "@pixi/filter-cross-hatch": "^2.5.0",
