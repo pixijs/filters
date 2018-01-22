@@ -14,6 +14,7 @@ import * as PIXI from 'pixi.js';
  * @param {number} [options.distance=5] Distance of shadow
  * @param {number} [options.color=0x000000] Color of the shadow
  * @param {number} [options.alpha=0.5] Alpha of the shadow
+ * @param {number} [options.shadowOnly=false] Whether render shadow only
  * @param {number} [options.blur=2] - Sets the strength of the Blur properties simultaneously
  * @param {number} [options.quality=4] - The quality of the Blur filter.
  * @param {number[]} [options.kernels=null] - The kernels of the Blur filter.
@@ -47,6 +48,7 @@ export default class DropShadowFilter extends PIXI.Filter {
             distance: 5,
             color: 0x000000,
             alpha: 0.5,
+            shadowOnly: false,
             kernels: null,
             blur: 2,
             quality: 4,
@@ -69,8 +71,9 @@ export default class DropShadowFilter extends PIXI.Filter {
 
         this.targetTransform = new PIXI.Matrix();
 
-        const { rotation, distance, alpha, color } = options;
+        const { shadowOnly, rotation, distance, alpha, color } = options;
 
+        this.shadowOnly = shadowOnly;
         this.rotation = rotation;
         this.distance = distance;
         this.alpha = alpha;
@@ -84,9 +87,14 @@ export default class DropShadowFilter extends PIXI.Filter {
 
         target.transform = this.targetTransform;
         this._tintFilter.apply(filterManager, input, target, true);
-        this._blurFilter.apply(filterManager, target, output);
-        filterManager.applyFilter(this, input, output, clear);
         target.transform = null;
+
+        this._blurFilter.apply(filterManager, target, output);
+
+        if (!this.shadowOnly) {
+            filterManager.applyFilter(this, input, output, clear);
+        }
+
         filterManager.returnRenderTarget(target);
     }
 
@@ -125,6 +133,22 @@ export default class DropShadowFilter extends PIXI.Filter {
             this._blurFilter.resolution = value;
         }
     }
+
+    // /**
+    //  * The padding of the filter.
+    //  *
+    //  * @member {number}
+    //  */
+    // get padding() {
+    //     return this._padding;
+    // }
+    // set padding(value) {
+    //     this._padding = value;
+
+    //     if (this._tintFilter) {
+    //         this._tintFilter.padding = value;
+    //     }
+    // }
 
     /**
      * Distance offset of the shadow
