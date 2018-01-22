@@ -16,7 +16,7 @@ import * as PIXI from 'pixi.js';
  * @param {number} [options.alpha=0.5] Alpha of the shadow
  * @param {number} [options.shadowOnly=false] Whether render shadow only
  * @param {number} [options.blur=2] - Sets the strength of the Blur properties simultaneously
- * @param {number} [options.quality=4] - The quality of the Blur filter.
+ * @param {number} [options.quality=3] - The quality of the Blur filter.
  * @param {number[]} [options.kernels=null] - The kernels of the Blur filter.
  * @param {number|number[]|PIXI.Point} [options.pixelSize=1] - the pixelSize of the Blur filter.
  * @param {number} [options.resolution=PIXI.settings.RESOLUTION] - The resolution of the Blur filter.
@@ -51,7 +51,7 @@ export default class DropShadowFilter extends PIXI.Filter {
             shadowOnly: false,
             kernels: null,
             blur: 2,
-            quality: 4,
+            quality: 3,
             pixelSize: 1,
             resolution: PIXI.settings.RESOLUTION,
         }, options);
@@ -133,22 +133,6 @@ export default class DropShadowFilter extends PIXI.Filter {
             this._blurFilter.resolution = value;
         }
     }
-
-    // /**
-    //  * The padding of the filter.
-    //  *
-    //  * @member {number}
-    //  */
-    // get padding() {
-    //     return this._padding;
-    // }
-    // set padding(value) {
-    //     this._padding = value;
-
-    //     if (this._tintFilter) {
-    //         this._tintFilter.padding = value;
-    //     }
-    // }
 
     /**
      * Distance offset of the shadow
