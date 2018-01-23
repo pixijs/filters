@@ -26,7 +26,22 @@ export default class ColorAdjustFilter extends PIXI.Filter {
         this._nearest = false;
         this.nearest = nearest;
 
+        /**
+         * mix
+         */
+        this.mix = 1;
+
         this.colorMap = colorMap;
+    }
+
+    /**
+     * Override existing apply method in PIXI.Filter
+     * @private
+     */
+    apply(filterManager, input, output, clear) {
+        this.uniforms._mix = this.mix;
+
+        filterManager.applyFilter(this, input, output, clear);
     }
 
     /**

@@ -4,6 +4,7 @@ declare namespace PIXI.filters {
         constructor(colorMap?:HTMLImageElement|HTMLCanvasElement|PIXI.BaseTexture|PIXI.Texture, nearest?:boolean);
         colorMap:PIXI.Texture;
         nearest:boolean;
+        mix:number;
         readonly colorSize:number;
     }
 }

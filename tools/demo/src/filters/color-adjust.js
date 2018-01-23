@@ -6,6 +6,7 @@ export default function() {
         enabled: false,
         args: [colorMap, false],
         oncreate(folder) {
+            folder.add(this, 'mix', 0, 1);
             folder.add(this, 'nearest');
 
             this._noop = function(){};

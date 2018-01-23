@@ -4,6 +4,7 @@ uniform sampler2D uSampler;
 
 uniform sampler2D colorMap;
 
+uniform float _mix;
 uniform float _size;
 uniform float _sliceSize;
 uniform float _slicePixelSize;
@@ -21,6 +22,7 @@ void main() {
     float s1 = xOffset + zSlice1 * _sliceSize;
     vec4 slice0Color = texture2D(colorMap, vec2(s0, color.g));
     vec4 slice1Color = texture2D(colorMap, vec2(s1, color.g));
-    gl_FragColor = mix(slice0Color, slice1Color, fract(sliceIndex));
+    vec4 adjusted = mix(slice0Color, slice1Color, fract(sliceIndex));
 
+    gl_FragColor = mix(color, adjusted, _mix);
 }
