@@ -107,6 +107,10 @@ export default class AdvancedBloomFilter extends PIXI.Filter {
     }
     set resolution(value) {
         this._resolution = value;
+
+        if (this._extractFilter) {
+            this._extractFilter.resolution = value;
+        }
         if (this._blurFilter) {
             this._blurFilter.resolution = value;
         }
@@ -126,19 +130,6 @@ export default class AdvancedBloomFilter extends PIXI.Filter {
     }
 
     /**
-     * Sets the strength of the Blur properties simultaneously
-     *
-     * @member {number}
-     * @default 2
-     */
-    get blur() {
-        return this._blurFilter.blur;
-    }
-    set blur(value) {
-        this._blurFilter.blur = value;
-    }
-
-    /**
      * Sets the kernels of the Blur Filter
      *
      * @member {number}
@@ -149,6 +140,19 @@ export default class AdvancedBloomFilter extends PIXI.Filter {
     }
     set kernels(value) {
         this._blurFilter.kernels = value;
+    }
+
+    /**
+     * Sets the strength of the Blur properties simultaneously
+     *
+     * @member {number}
+     * @default 2
+     */
+    get blur() {
+        return this._blurFilter.blur;
+    }
+    set blur(value) {
+        this._blurFilter.blur = value;
     }
 
     /**
