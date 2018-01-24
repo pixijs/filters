@@ -76,9 +76,9 @@ void main() {
         }
     }
 
-    gl_FragColor = color / total;
-
+    color /= total;
     // switch back from pre-multiplied alpha
-    gl_FragColor.rgb /= gl_FragColor.a + 0.00001;
+    color.rgb /= color.a + 0.00001;
 
+    gl_FragColor = color;
 }

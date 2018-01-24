@@ -32,6 +32,8 @@ void main(void)
         total += weight;
     }
 
-    gl_FragColor = color / total;
-    gl_FragColor.rgb /= gl_FragColor.a + 0.00001;
+    color /= total;
+    color.rgb /= color.a + 0.00001;
+
+    gl_FragColor = color;
 }

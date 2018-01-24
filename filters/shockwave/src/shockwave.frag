@@ -55,13 +55,15 @@ void main()
     // Do clamp :
     vec2 coord = vTextureCoord + offset;
     vec2 clampedCoord = clamp(coord, filterClamp.xy, filterClamp.zw);
-    gl_FragColor = texture2D(uSampler, clampedCoord);
+    vec4 color = texture2D(uSampler, clampedCoord);
     if (coord != clampedCoord) {
-        gl_FragColor *= max(0.0, 1.0 - length(coord - clampedCoord));
+        color *= max(0.0, 1.0 - length(coord - clampedCoord));
     }
 
     // No clamp :
     // gl_FragColor = texture2D(uSampler, vTextureCoord + offset);
 
-    gl_FragColor.rgb *= 1.0 + (brightness - 1.0) * p * fade;
+    color.rgb *= 1.0 + (brightness - 1.0) * p * fade;
+
+    gl_FragColor = color;
 }
