@@ -14,7 +14,6 @@ uniform float time;
 ${perlin}
 
 void main(void) {
-    gl_FragColor = texture2D(uSampler, vTextureCoord);
     vec2 coord = vTextureCoord * filterArea.xy / dimensions.xy;
 
     float d;
@@ -37,5 +36,6 @@ void main(void) {
     //fade vertically.
     vec4 mist = vec4(noise, noise, noise, 1.0) * (1.0 - coord.y);
     mist.a = 1.0;
-    gl_FragColor += mist;
+
+    gl_FragColor = texture2D(uSampler, vTextureCoord) + mist;
 }
