@@ -26,10 +26,11 @@ float radius = uRadius / filterArea.x - gradient * 0.5;
 
 void main(void)
 {
-    gl_FragColor = texture2D(uSampler, vTextureCoord);
+    vec4 color = texture2D(uSampler, vTextureCoord);
 
     if (uKernelSize == 0)
     {
+        gl_FragColor = color;
         return;
     }
 
@@ -45,6 +46,7 @@ void main(void)
         float gap = gradient;
         float scale = 1.0 - abs(delta / gap);
         if (scale <= 0.0) {
+            gl_FragColor = color;
             return;
         }
         radianStep = uRadian * scale / k;
@@ -72,7 +74,8 @@ void main(void)
         // switch to pre-multiplied alpha to correctly blur transparent images
         // sample.rgb *= sample.a;
 
-        gl_FragColor += sample;
+        color += sample;
     }
-    gl_FragColor /= kernelSize;
+
+    gl_FragColor = color / kernelSize;
 }

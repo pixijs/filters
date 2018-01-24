@@ -21,10 +21,11 @@ float offset = -uOffset / length(uVelocity) - 0.5;
 
 void main(void)
 {
-    gl_FragColor = texture2D(uSampler, vTextureCoord);
+    vec4 color = texture2D(uSampler, vTextureCoord);
 
     if (uKernelSize == 0)
     {
+        gl_FragColor = color;
         return;
     }
 
@@ -33,7 +34,7 @@ void main(void)
             break;
         }
         vec2 bias = velocity * (float(i) / k + offset);
-        gl_FragColor += texture2D(uSampler, vTextureCoord + bias);
+        color += texture2D(uSampler, vTextureCoord + bias);
     }
-    gl_FragColor /= kernelSize;
+    gl_FragColor = color / kernelSize;
 }
