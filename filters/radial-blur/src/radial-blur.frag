@@ -8,21 +8,6 @@ uniform float uRadius;
 uniform int uKernelSize;
 
 const int MAX_KERNEL_SIZE = 2048;
-const int ITERATION = MAX_KERNEL_SIZE - 1;
-
-// float kernelSize = min(float(uKernelSize), float(MAX_KERNELSIZE));
-
-// In real use-case , uKernelSize < MAX_KERNELSIZE almost always.
-// So use uKernelSize directly.
-float kernelSize = float(uKernelSize);
-float k = kernelSize - 1.0;
-
-
-vec2 center = uCenter.xy / filterArea.xy;
-float aspect = filterArea.y / filterArea.x;
-
-float gradient = uRadius / filterArea.x * 0.3;
-float radius = uRadius / filterArea.x - gradient * 0.5;
 
 void main(void)
 {
@@ -34,13 +19,17 @@ void main(void)
         return;
     }
 
-    vec2 coord = vTextureCoord;
+    float aspect = filterArea.y / filterArea.x;
+    vec2 center = uCenter.xy / filterArea.xy;
+    float gradient = uRadius / filterArea.x * 0.3;
+    float radius = uRadius / filterArea.x - gradient * 0.5;
+    int k = uKernelSize - 1;
 
+    vec2 coord = vTextureCoord;
     vec2 dir = vec2(center - coord);
     float dist = length(vec2(dir.x, dir.y * aspect));
 
-    float radianStep;
-
+    float radianStep = uRadian;
     if (radius >= 0.0 && dist > radius) {
         float delta = dist - radius;
         float gap = gradient;
@@ -49,17 +38,16 @@ void main(void)
             gl_FragColor = color;
             return;
         }
-        radianStep = uRadian * scale / k;
-    } else {
-        radianStep = uRadian / k;
+        radianStep *= scale;
     }
+    radianStep /= float(k);
 
     float s = sin(radianStep);
     float c = cos(radianStep);
     mat2 rotationMatrix = mat2(vec2(c, -s), vec2(s, c));
 
-    for(int i = 0; i < ITERATION; i++) {
-        if (i == int(k)) {
+    for(int i = 0; i < MAX_KERNEL_SIZE - 1; i++) {
+        if (i == k) {
             break;
         }
 
@@ -77,5 +65,5 @@ void main(void)
         color += sample;
     }
 
-    gl_FragColor = color / kernelSize;
+    gl_FragColor = color / float(uKernelSize);
 }
