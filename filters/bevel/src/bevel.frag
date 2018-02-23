@@ -17,7 +17,7 @@ void main(void) {
     float light = texture2D(uSampler, vTextureCoord - transform).a;
     float shadow = texture2D(uSampler, vTextureCoord + transform).a;
 
-    color.rgb = mix(color.rgb, lightColor, clamp(color.a - light, 0.0, 1.0) * lightAlpha);
-    color.rgb = mix(color.rgb, shadowColor, clamp(color.a - shadow, 0.0, 1.0) * shadowAlpha);
+    color.rgb = mix(color.rgb, lightColor, clamp((color.a - light) * lightAlpha, 0.0, 1.0));
+    color.rgb = mix(color.rgb, shadowColor, clamp((color.a - shadow) * shadowAlpha, 0.0, 1.0));
     gl_FragColor = vec4(color.rgb * color.a, color.a);
 }

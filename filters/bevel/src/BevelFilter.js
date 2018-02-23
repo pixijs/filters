@@ -9,23 +9,69 @@ import * as PIXI from 'pixi.js';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
- * @param {number} [rotation = 45] The angle of the light in degrees.
- * @param {number} [thickness = 2] The tickness of the bevel.
- * @param {number} [lightColor = 0xffffff] Color of the light.
- * @param {number} [lightAlpha = 0.7] Alpha of the light.
- * @param {number} [shadowColor = 0x000000] Color of the shadow.
- * @param {number} [shadowAlpha = 0.7] Alpha of the shadow.
+ * @param {object} [options] - The optional parameters of the filter.
+ * @param {number} [options.rotation = 45] - The angle of the light in degrees.
+ * @param {number} [options.thickness = 2] - The tickness of the bevel.
+ * @param {number} [options.lightColor = 0xffffff] - Color of the light.
+ * @param {number} [options.lightAlpha = 0.7] - Alpha of the light.
+ * @param {number} [options.shadowColor = 0x000000] - Color of the shadow.
+ * @param {number} [options.shadowAlpha = 0.7] - Alpha of the shadow.
  */
 export default class BevelFilter extends PIXI.Filter {
-    constructor(rotation = 45, thickness = 2, lightColor = 0xffffff, lightAlpha = 0.7, shadowColor = 0x000000, shadowAlpha = 0.7){
+    constructor(options = {}) {
         super(vertex, fragment);
 
-        this.rotation = rotation;
-        this.thickness = thickness;
-        this.lightColor = lightColor;
-        this.lightAlpha = lightAlpha;
-        this.shadowColor = shadowColor;
-        this.shadowAlpha = shadowAlpha;
+        options = Object.assign({
+            rotation: 45,
+            thickness: 2,
+            lightColor: 0xffffff,
+            lightAlpha: 0.7,
+            shadowColor: 0x000000,
+            shadowAlpha: 0.7,
+        }, options);
+
+        /**
+         * The angle of the light in degrees.
+         * @member {number}
+         * @default 45
+         */
+        this.rotation = options.rotation;
+
+        /**
+         * The tickness of the bevel.
+         * @member {number}
+         * @default 2
+         */
+        this.thickness = options.thickness;
+
+        /**
+         * Color of the light.
+         * @member {number}
+         * @default 0xffffff
+         */
+        this.lightColor = options.lightColor;
+
+        /**
+         * Alpha of the light.
+         * @member {number}
+         * @default 0.7
+         */
+        this.lightAlpha = options.lightAlpha;
+
+        /**
+         * Color of the shadow.
+         * @member {number}
+         * @default 0x000000
+         */
+        this.shadowColor = options.shadowColor;
+
+        /**
+         * Alpha of the shadow.
+         * @member {number}
+         * @default 0.7
+         */
+        this.shadowAlpha = options.shadowAlpha;
+
     }
 
     /**

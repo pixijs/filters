@@ -1,7 +1,15 @@
 /// <reference types="pixi.js" />
 declare namespace PIXI.filters {
     class BevelFilter extends PIXI.Filter<{}> {
-        constructor(rotation?:number, thickness?:number, lightColor?:number, lightAlpha?:number, shadowColor?:number, shadowAlpha?:number);
+        constructor(options?:BevelOptions);
+        rotation:number;
+        thickness:number;
+        lightColor:number;
+        lightAlpha:number;
+        shadowColor:number;
+        shadowAlpha:number;
+    }
+    interface BevelOptions {
         rotation:number;
         thickness:number;
         lightColor:number;
