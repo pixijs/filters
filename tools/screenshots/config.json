@@ -69,6 +69,10 @@
             "filename": "advanced-bloom"
         },
         {
+            "name": "BevelFilter",
+            "filename": "bevel"
+        },
+        {
             "name": "BloomFilter",
             "filename": "bloom"
         },
