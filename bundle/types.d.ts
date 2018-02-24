@@ -47,6 +47,23 @@ declare namespace PIXI.filters {
         constructor(size?:number);
         size:number;
     }
+    class BevelFilter extends PIXI.Filter<{}> {
+        constructor(options?:BevelOptions);
+        rotation:number;
+        thickness:number;
+        lightColor:number;
+        lightAlpha:number;
+        shadowColor:number;
+        shadowAlpha:number;
+    }
+    interface BevelOptions {
+        rotation:number;
+        thickness:number;
+        lightColor:number;
+        lightAlpha:number;
+        shadowColor:number;
+        shadowAlpha:number;
+    }
     class BloomFilter extends PIXI.Filter<{}> {
         constructor(blur?:number|PIXI.Point|number[], quality?:number, resolution?:number, kernelSize?:number);
         blur:number;
