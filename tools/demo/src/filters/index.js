@@ -3,6 +3,7 @@ export {default as adjustment} from './adjustment';
 export {default as advancedBloom} from './advanced-bloom';
 export {default as alpha} from './alpha';
 export {default as ascii} from './ascii';
+export {default as bevel} from './bevel';
 export {default as bloom} from './bloom';
 export {default as blur} from './blur';
 export {default as bulgePinch} from './bulge-pinch';
