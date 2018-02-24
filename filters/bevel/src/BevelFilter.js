@@ -83,11 +83,6 @@ export default class BevelFilter extends PIXI.Filter {
         this.uniforms.transformY = this._thickness * Math.sin(this._angle);
     }
 
-    /**
-     * The angle of the light in degrees.
-     * @member {number}
-     * @default 45
-     */
     get rotation() {
         return this._angle / PIXI.DEG_TO_RAD;
     }
@@ -96,11 +91,6 @@ export default class BevelFilter extends PIXI.Filter {
         this._updateTransform();
     }
 
-    /**
-     * The tickness of the bevel.
-     * @member {number}
-     * @default 2
-     */
     get thickness() {
         return this._thickness;
     }
@@ -109,11 +99,6 @@ export default class BevelFilter extends PIXI.Filter {
         this._updateTransform();
     }
 
-    /**
-     * The color of the light.
-     * @member {number}
-     * @default 0xffffff
-     */
     get lightColor() {
         return PIXI.utils.rgb2hex(this.uniforms.lightColor);
     }
@@ -121,11 +106,6 @@ export default class BevelFilter extends PIXI.Filter {
         PIXI.utils.hex2rgb(value, this.uniforms.lightColor);
     }
 
-    /**
-     * The alpha of the light.
-     * @member {number}
-     * @default 0.7
-     */
     get lightAlpha() {
         return this.uniforms.lightAlpha;
     }
@@ -133,11 +113,6 @@ export default class BevelFilter extends PIXI.Filter {
         this.uniforms.lightAlpha = value;
     }
 
-    /**
-     * The color of the shadow.
-     * @member {number}
-     * @default 0x000000
-     */
     get shadowColor() {
         return PIXI.utils.rgb2hex(this.uniforms.shadowColor);
     }
@@ -145,11 +120,6 @@ export default class BevelFilter extends PIXI.Filter {
         PIXI.utils.hex2rgb(value, this.uniforms.shadowColor);
     }
 
-    /**
-     * The alpha of the shadow.
-     * @member {number}
-     * @default 0.7
-     */
     get shadowAlpha() {
         return this.uniforms.shadowAlpha;
     }
