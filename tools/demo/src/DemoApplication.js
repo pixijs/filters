@@ -125,11 +125,11 @@ export default class DemoApplication extends PIXI.Application {
         }
 
         // Setup the tiling sprite
-        this.overlay = new PIXI.Container();/*new PIXI.extras.TilingSprite(
+        this.overlay = new PIXI.extras.TilingSprite(
             resources.overlay.texture,
             initWidth,
             initHeight
-        );*/
+        );
 
         // Add the overlay
         this.pond.addChild(this.overlay);
@@ -207,8 +207,8 @@ export default class DemoApplication extends PIXI.Application {
         }
 
         // Animate the overlay
-        // overlay.tilePosition.x = animateTimer * -1;
-        // overlay.tilePosition.y = animateTimer * -1;
+        overlay.tilePosition.x = animateTimer * -1;
+        overlay.tilePosition.y = animateTimer * -1;
 
         for (let i = 0; i < this.fishes.length; i++) {
 
