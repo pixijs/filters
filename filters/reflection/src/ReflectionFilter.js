@@ -24,7 +24,8 @@ export default class ReflectionFilter extends PIXI.Filter {
         super(vertex, fragment, {
             amplitude: new Float32Array(2),
             waveLength: new Float32Array(2),
-            alpha: new Float32Array(2)
+            alpha: new Float32Array(2),
+            dimensions: new Float32Array(2)
         });
 
         Object.assign(this, {

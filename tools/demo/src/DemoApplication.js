@@ -27,6 +27,8 @@ export default class DemoApplication extends PIXI.Application {
             backgroundColor:0x000000,
         });
 
+        PIXI.settings.PRECISION_FRAGMENT = 'highp';
+
         this.domElement = domElement;
 
         this.initWidth = initWidth;

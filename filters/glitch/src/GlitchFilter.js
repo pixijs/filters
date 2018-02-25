@@ -32,7 +32,9 @@ export default class GlitchFilter extends PIXI.Filter {
 
     constructor(options = {}) {
 
-        super(vertex, fragment);
+        super(vertex, fragment, {
+            dimensions: new Float32Array(2)
+        });
 
         options = Object.assign({
             slices: 5,
