@@ -20,7 +20,9 @@ import * as PIXI from 'pixi.js';
 export default class ConvolutionFilter extends PIXI.Filter {
 
     constructor(matrix, width, height) {
-        super(vertex, fragment);
+        super(vertex, fragment, {
+            texelSize: new Float32Array(9)
+        });
         this.matrix = matrix;
         this.width = width;
         this.height = height;

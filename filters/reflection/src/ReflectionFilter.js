@@ -21,7 +21,11 @@ import * as PIXI from 'pixi.js';
  */
 export default class ReflectionFilter extends PIXI.Filter {
     constructor(options) {
-        super(vertex, fragment);
+        super(vertex, fragment, {
+            amplitude: new Float32Array(2),
+            waveLength: new Float32Array(2),
+            alpha: new Float32Array(2)
+        });
 
         Object.assign(this, {
             mirror: true,
