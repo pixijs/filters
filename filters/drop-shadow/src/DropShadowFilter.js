@@ -119,6 +119,7 @@ export default class DropShadowFilter extends PIXI.Filter {
      * The resolution of the filter.
      *
      * @member {number}
+     * @default PIXI.settings.RESOLUTION
      */
     get resolution() {
         return this._resolution;
@@ -188,8 +189,7 @@ export default class DropShadowFilter extends PIXI.Filter {
     /**
      * Sets the kernels of the Blur Filter
      *
-     * @member {number}
-     * @default 4
+     * @member {number[]}
      */
     get kernels() {
         return this._blurFilter.kernels;
