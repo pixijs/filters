@@ -26,9 +26,8 @@ import * as PIXI from 'pixi.js';
  */
 export default class CRTFilter extends PIXI.Filter {
     constructor(options) {
-        super(vertex, fragment, {
-            dimensions: new Float32Array(2)
-        });
+        super(vertex, fragment);
+        this.uniforms.dimensions = new Float32Array(2);
 
         /**
          * For animating interlaced lines

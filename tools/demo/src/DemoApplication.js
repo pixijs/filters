@@ -27,6 +27,8 @@ export default class DemoApplication extends PIXI.Application {
             backgroundColor:0x000000,
         });
 
+        this.legacy = parseInt(PIXI.VERSION.split('.')[0]) < 5;
+
         PIXI.settings.PRECISION_FRAGMENT = 'highp';
 
         this.domElement = domElement;
@@ -153,7 +155,7 @@ export default class DemoApplication extends PIXI.Application {
 
         const width = this.domElement.offsetWidth;
         const height = this.domElement.offsetHeight;
-        const filterAreaPadding = 0;
+        const filterAreaPadding = this.legacy ? 4 : 0;
 
         // Use equivalent of CSS's contain for the background
         // so that it scales proportionally

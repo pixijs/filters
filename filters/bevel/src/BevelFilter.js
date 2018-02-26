@@ -19,10 +19,10 @@ import * as PIXI from 'pixi.js';
  */
 export default class BevelFilter extends PIXI.Filter {
     constructor(options = {}) {
-        super(vertex, fragment, {
-            lightColor: new Float32Array(3),
-            shadowColor: new Float32Array(3)
-        });
+        super(vertex, fragment);
+
+        this.uniforms.lightColor = new Float32Array(3);
+        this.uniforms.shadowColor = new Float32Array(3);
 
         options = Object.assign({
             rotation: 45,

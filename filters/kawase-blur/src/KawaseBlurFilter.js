@@ -16,9 +16,8 @@ import * as PIXI from 'pixi.js';
  */
 export default class KawaseBlurFilter extends PIXI.Filter {
     constructor(blur = 4, quality = 3) {
-        super(vertex, fragment, {
-            uOffset: new Float32Array(2)
-        });
+        super(vertex, fragment);
+        this.uniforms.uOffset = new Float32Array(2);
 
         this._pixelSize = new PIXI.Point();
         this.pixelSize = 1;

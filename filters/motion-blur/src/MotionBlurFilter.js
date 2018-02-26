@@ -15,10 +15,8 @@ import * as PIXI from 'pixi.js';
  */
 export default class MotionBlurFilter extends PIXI.Filter {
     constructor(velocity = [0, 0], kernelSize = 5, offset = 0) {
-        super(vertex, fragment, {
-            uVelocity: new Float32Array(2)
-        });
-
+        super(vertex, fragment);
+        this.uniforms.uVelocity = new Float32Array(2);
         this._velocity = new PIXI.Point(0,0);
         this.velocity = velocity;
 
