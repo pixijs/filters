@@ -34,7 +34,11 @@ import * as PIXI from 'pixi.js';
 export default class ColorReplaceFilter extends PIXI.Filter {
 
     constructor(originalColor = 0xFF0000, newColor = 0x000000, epsilon = 0.4) {
-        super(vertex, fragment);
+        super(vertex, fragment, {
+            originalColor: new Float32Array(3),
+            newColor: new Float32Array(3),
+            epsilon: 0.4
+        });
         this.originalColor = originalColor;
         this.newColor = newColor;
         this.epsilon = epsilon;
