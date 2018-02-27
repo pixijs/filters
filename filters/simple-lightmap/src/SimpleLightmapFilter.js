@@ -26,10 +26,8 @@ export default class SimpleLightmapFilter extends PIXI.Filter {
 
     constructor(texture, color = 0x000000, alpha = 1) {
         super(vertex, fragment);
-
-        // Set the default for setting color
+        this.uniforms.dimensions = new Float32Array(2);
         this.uniforms.ambientColor = new Float32Array([0, 0, 0, alpha]);
-
         this.texture = texture;
         this.color = color;
     }

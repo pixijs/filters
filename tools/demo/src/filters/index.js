@@ -7,6 +7,7 @@ export {default as bevel} from './bevel';
 export {default as bloom} from './bloom';
 export {default as blur} from './blur';
 export {default as bulgePinch} from './bulge-pinch';
+export {default as colorMap} from './color-map';
 export {default as colorMatrix} from './color-matrix';
 export {default as colorReplace} from './color-replace';
 export {default as convolution} from './convolution';

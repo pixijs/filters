@@ -61,6 +61,7 @@ export default class DropShadowFilter extends PIXI.Filter {
         const { kernels, blur, quality, pixelSize, resolution } = options;
 
         this._tintFilter = new PIXI.Filter(vertex, fragment);
+        this._tintFilter.uniforms.color = new Float32Array(4);
         this._tintFilter.resolution = resolution;
         this._blurFilter = kernels ?
             new KawaseBlurFilter(kernels) :

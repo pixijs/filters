@@ -529,6 +529,10 @@
                 "noise": 0.3,
                 "noiseSize": 1.0
             }]
+        },
+        {
+            "name": "ColorMapFilter",
+            "filename": "color-map"
         }
     ]
 }

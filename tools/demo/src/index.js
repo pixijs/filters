@@ -11,7 +11,8 @@ const manifest = [
     { name: 'fish2', url: 'images/displacement_fish2.png' },
     { name: 'fish3', url: 'images/displacement_fish3.png' },
     { name: 'fish4', url: 'images/displacement_fish4.png' },
-    { name: 'lightmap', url: 'images/lightmap.png' }
+    { name: 'lightmap', url: 'images/lightmap.png' },
+    { name: 'colormap', url: 'images/colormap.png' }
 ];
 
 // Load resources then add filters
