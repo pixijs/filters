@@ -35,6 +35,8 @@ export default class ColorReplaceFilter extends PIXI.Filter {
 
     constructor(originalColor = 0xFF0000, newColor = 0x000000, epsilon = 0.4) {
         super(vertex, fragment);
+        this.uniforms.originalColor = new Float32Array(3);
+        this.uniforms.newColor = new Float32Array(3);
         this.originalColor = originalColor;
         this.newColor = newColor;
         this.epsilon = epsilon;

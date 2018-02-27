@@ -29,6 +29,8 @@ export default class GodrayFilter extends PIXI.Filter {
     constructor(options) {
         super(vertex, fragment.replace('${perlin}', perlin));
 
+        this.uniforms.dimensions = new Float32Array(2);
+
         // Fallback support for ctor: (angle, gain, lacunarity, time)
         if (typeof options === 'number') {
             // eslint-disable-next-line no-console
