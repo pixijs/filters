@@ -76,6 +76,13 @@ declare namespace PIXI.filters {
         radius:number;
         strength:number;
     }
+    class ColorMapFilter extends PIXI.Filter<{}> {
+        constructor(colorMap?:HTMLImageElement|HTMLCanvasElement|PIXI.BaseTexture|PIXI.Texture, nearest?:boolean);
+        colorMap:PIXI.Texture;
+        nearest:boolean;
+        mix:number;
+        readonly colorSize:number;
+    }
     class ColorReplaceFilter extends PIXI.Filter<{}> {
         constructor(originalColor?:number|number[], newColor?:number|number[], epsilon?:number);
         epsilon:number;

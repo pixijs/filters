@@ -4,6 +4,7 @@ export {AsciiFilter} from '@pixi/filter-ascii';
 export {BevelFilter} from '@pixi/filter-bevel';
 export {BloomFilter} from '@pixi/filter-bloom';
 export {BulgePinchFilter} from '@pixi/filter-bulge-pinch';
+export {ColorMapFilter} from '@pixi/filter-color-map';
 export {ColorReplaceFilter} from '@pixi/filter-color-replace';
 export {ConvolutionFilter} from '@pixi/filter-convolution';
 export {CrossHatchFilter} from '@pixi/filter-cross-hatch';
