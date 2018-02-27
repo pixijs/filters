@@ -68,7 +68,7 @@ function next() {
                 filter = new FilterClass(lightmap);
                 break;
             }
-            case 'ColorAdjustFilter': {
+            case 'ColorMapFilter': {
                 filter = new FilterClass(colormap, false);
                 break;
             }

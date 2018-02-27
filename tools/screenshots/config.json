@@ -69,6 +69,10 @@
             "filename": "advanced-bloom"
         },
         {
+            "name": "BevelFilter",
+            "filename": "bevel"
+        },
+        {
             "name": "BloomFilter",
             "filename": "bloom"
         },
@@ -527,8 +531,8 @@
             }]
         },
         {
-            "name": "ColorAdjustFilter",
-            "filename": "color-adjust"
+            "name": "ColorMapFilter",
+            "filename": "color-map"
         }
     ]
 }

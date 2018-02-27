@@ -1,6 +1,6 @@
 /// <reference types="pixi.js" />
 declare namespace PIXI.filters {
-    class ColorAdjustFilter extends PIXI.Filter<{}> {
+    class ColorMapFilter extends PIXI.Filter<{}> {
         constructor(colorMap?:HTMLImageElement|HTMLCanvasElement|PIXI.BaseTexture|PIXI.Texture, nearest?:boolean);
         colorMap:PIXI.Texture;
         nearest:boolean;
@@ -9,6 +9,6 @@ declare namespace PIXI.filters {
     }
 }
 
-declare module "@pixi/filter-color-adjust" {
+declare module "@pixi/filter-color-map" {
     export = PIXI.filters;
 }

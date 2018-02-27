@@ -47,6 +47,23 @@ declare namespace PIXI.filters {
         constructor(size?:number);
         size:number;
     }
+    class BevelFilter extends PIXI.Filter<{}> {
+        constructor(options?:BevelOptions);
+        rotation:number;
+        thickness:number;
+        lightColor:number;
+        lightAlpha:number;
+        shadowColor:number;
+        shadowAlpha:number;
+    }
+    interface BevelOptions {
+        rotation:number;
+        thickness:number;
+        lightColor:number;
+        lightAlpha:number;
+        shadowColor:number;
+        shadowAlpha:number;
+    }
     class BloomFilter extends PIXI.Filter<{}> {
         constructor(blur?:number|PIXI.Point|number[], quality?:number, resolution?:number, kernelSize?:number);
         blur:number;
@@ -59,7 +76,7 @@ declare namespace PIXI.filters {
         radius:number;
         strength:number;
     }
-    class ColorAdjustFilter extends PIXI.Filter<{}> {
+    class ColorMapFilter extends PIXI.Filter<{}> {
         constructor(colorMap?:HTMLImageElement|HTMLCanvasElement|PIXI.BaseTexture|PIXI.Texture, nearest?:boolean);
         colorMap:PIXI.Texture;
         nearest:boolean;
@@ -114,12 +131,29 @@ declare namespace PIXI.filters {
         scale:number;
     }
     class DropShadowFilter extends PIXI.Filter<{}> {
-        constructor(rotation?:number, distance?:number, blur?:number, color?:number, alpha?:number);
+        constructor(options?:DropShadowFilterOptions);
         alpha:number;
         blur:number;
         color:number;
         distance:number;
+        kernels:number[];
+        pixelSize:number|number[]|PIXI.Point;
+        quality:number;
+        resolution:number;
         rotation:number;
+        shadowOnly:boolean;
+    }
+    interface DropShadowFilterOptions {
+        alpha:number;
+        blur:number;
+        color:number;
+        distance:number;
+        kernels:number[];
+        pixelSize:number|number[]|PIXI.Point;
+        quality:number;
+        resolution:number;
+        rotation:number;
+        shadowOnly:boolean;
     }
     class EmbossFilter extends PIXI.Filter<{}> {
         constructor(strength?:number);

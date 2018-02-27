@@ -1,17 +1,17 @@
-# ColorAdjustFilter
+# ColorMapFilter
 
-PixiJS v4 filter to apply a color-adjust effect.
+PixiJS v4 filter to apply a color-map effect.
 
 ## Installation
 
 ```bash
-npm install @pixi/filter-color-adjust
+npm install @pixi/filter-color-map
 ```
 
 ## Usage
 
 ```js
-import {ColorAdjustFilter} from '@pixi/filter-color-adjust';
+import {ColorMapFilter} from '@pixi/filter-color-map';
 import {Container} from 'pixi.js';
 
 const container = new Container();
@@ -19,7 +19,7 @@ const container = new Container();
 const colorMap = new Image();
 colorMap.src='foo/bar/colorMap.png';
 
-container.filters = [new ColorAdjustFilter(colorMap)];
+container.filters = [new ColorMapFilter(colorMap)];
 ```
 
 ## Documentation

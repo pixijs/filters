@@ -24,8 +24,10 @@ void main()
     coord += center * dimensions.xy;
     coord /= filterArea.xy;
     vec2 clampedCoord = clamp(coord, filterClamp.xy, filterClamp.zw);
-    gl_FragColor = texture2D(uSampler, clampedCoord);
+    vec4 color = texture2D(uSampler, clampedCoord);
     if (coord != clampedCoord) {
-        gl_FragColor *= max(0.0, 1.0 - length(coord - clampedCoord));
+        color *= max(0.0, 1.0 - length(coord - clampedCoord));
     }
+
+    gl_FragColor = color;
 }

@@ -2,7 +2,7 @@ export default function() {
 
     const colorMap = this.resources.colormap.texture;
 
-    this.addFilter('ColorAdjustFilter', {
+    this.addFilter('ColorMapFilter', {
         enabled: false,
         args: [colorMap, false],
         oncreate(folder) {

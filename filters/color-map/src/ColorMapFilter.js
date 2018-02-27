@@ -1,10 +1,10 @@
 import {vertex} from '@tools/fragments';
-import fragment from './color-adjust.frag';
+import fragment from './color-map.frag';
 import * as PIXI from 'pixi.js';
 
 /**
- * The ColorAdjustFilter applies a color-adjust effect to an object.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/color-adjust.png)
+ * The ColorMapFilter applies a color-map effect to an object.<br>
+ * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/color-map.png)
  *
  * @class
  * @extends PIXI.Filter
@@ -12,7 +12,7 @@ import * as PIXI from 'pixi.js';
  * @param {HTMLImageElement|HTMLCanvasElement|PIXI.BaseTexture|PIXI.Texture} [colorMap] - The colorMap texture of the filter.
  * @param {booleane} [nearest=false] - Whether use NEAREST for colorMap texture.
  */
-export default class ColorAdjustFilter extends PIXI.Filter {
+export default class ColorMapFilter extends PIXI.Filter {
 
     constructor(colorMap, nearest = false) {
         super(vertex, fragment);

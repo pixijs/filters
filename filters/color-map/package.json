@@ -1,10 +1,10 @@
 {
-  "name": "@pixi/filter-color-adjust",
+  "name": "@pixi/filter-color-map",
   "version": "2.5.0",
-  "main": "lib/filter-color-adjust.js",
+  "main": "lib/filter-color-map.js",
   "description": "PixiJS v4 filter to apply a color adjust effect",
   "author": "finscn <finscn@gmail.com>",
-  "module": "lib/filter-color-adjust.es.js",
+  "module": "lib/filter-color-map.es.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
