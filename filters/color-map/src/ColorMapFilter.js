@@ -10,11 +10,12 @@ import * as PIXI from 'pixi.js';
  * @extends PIXI.Filter
  * @memberof PIXI.filters
  * @param {HTMLImageElement|HTMLCanvasElement|PIXI.BaseTexture|PIXI.Texture} [colorMap] - The colorMap texture of the filter.
- * @param {booleane} [nearest=false] - Whether use NEAREST for colorMap texture.
+ * @param {boolean} [nearest=false] - Whether use NEAREST for colorMap texture.
+ * @param {number} [mix=1] - The mix from 0 to 1, where 0 is the original image and 1 is the color mapped image.
  */
 export default class ColorMapFilter extends PIXI.Filter {
 
-    constructor(colorMap, nearest = false) {
+    constructor(colorMap, nearest = false, mix = 1) {
         super(vertex, fragment);
 
         this._size = 0;
@@ -27,9 +28,10 @@ export default class ColorMapFilter extends PIXI.Filter {
         this.nearest = nearest;
 
         /**
-         * mix
+         * The mix from 0 to 1, where 0 is the original image and 1 is the color mapped image.
+         * @member {number}
          */
-        this.mix = 1;
+        this.mix = mix;
 
         this.colorMap = colorMap;
     }
@@ -46,6 +48,7 @@ export default class ColorMapFilter extends PIXI.Filter {
 
     /**
      * the size of one color slice
+     * @member {number}
      * @readonly
      */
     get colorSize() {
@@ -54,6 +57,7 @@ export default class ColorMapFilter extends PIXI.Filter {
 
     /**
      * the colorMap texture
+     * @member {PIXI.Texture}
      */
     get colorMap() {
         return this._colorMap;
@@ -83,6 +87,7 @@ export default class ColorMapFilter extends PIXI.Filter {
 
     /**
      * Whether use NEAREST for colorMap texture.
+     * @member {boolean}
      */
     get nearest() {
         return this._nearest;

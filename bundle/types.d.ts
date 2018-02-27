@@ -77,7 +77,7 @@ declare namespace PIXI.filters {
         strength:number;
     }
     class ColorMapFilter extends PIXI.Filter<{}> {
-        constructor(colorMap?:HTMLImageElement|HTMLCanvasElement|PIXI.BaseTexture|PIXI.Texture, nearest?:boolean);
+        constructor(colorMap?:HTMLImageElement|HTMLCanvasElement|PIXI.BaseTexture|PIXI.Texture, nearest?:boolean, mix?:number);
         colorMap:PIXI.Texture;
         nearest:boolean;
         mix:number;
