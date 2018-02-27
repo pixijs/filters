@@ -29,7 +29,6 @@ export default class OutlineFilter extends PIXI.Filter {
         const angleStep = (Math.PI * 2 / samples).toFixed(7);
 
         super(vertex, fragment.replace(/\$\{angleStep\}/, angleStep));
-
         this.uniforms.thickness = new Float32Array([0, 0]);
 
         /**

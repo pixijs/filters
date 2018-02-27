@@ -29,6 +29,7 @@ import * as PIXI from 'pixi.js';
 export default class OldFilmFilter extends PIXI.Filter {
     constructor(options, seed = 0) {
         super(vertex, fragment);
+        this.uniforms.dimensions = new Float32Array(2);
 
         if (typeof options === 'number') {
             this.seed = options;

@@ -22,6 +22,7 @@ export default class BulgePinchFilter extends PIXI.Filter {
 
     constructor(center, radius, strength) {
         super(vertex, fragment);
+        this.uniforms.dimensions = new Float32Array(2);
         this.center = center || [0.5, 0.5];
         this.radius = radius || 100;
         this.strength = strength || 1;
