@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-color-map",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "main": "lib/filter-color-map.js",
   "description": "PixiJS v4 filter to apply a color adjust effect",
   "author": "finscn <finscn@gmail.com>",

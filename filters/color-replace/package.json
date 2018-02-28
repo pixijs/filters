@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-color-replace",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "main": "lib/filter-color-replace.js",
   "description": "PixiJS v4 filter to replace a single color",
   "author": "Mat Groves",

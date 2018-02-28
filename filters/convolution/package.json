@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-convolution",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "main": "lib/filter-convolution.js",
   "description": "PixiJS v4 filter to apply a convolution effect",
   "author": "Mat Groves",

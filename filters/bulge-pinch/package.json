@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-bulge-pinch",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "main": "lib/filter-bulge-pinch.js",
   "description": "PixiJS v4 filter to apply a bulge or a pinch effect",
   "author": "Mat Groves",
