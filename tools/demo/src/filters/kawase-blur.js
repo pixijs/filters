@@ -1,6 +1,7 @@
 export default function() {
     const app = this;
     app.addFilter('KawaseBlurFilter', {
+        args: [4, 3, true],
         oncreate(folder) {
             folder.add(this, 'blur', 0, 20);
             folder.add(this, 'quality', 1, 20);

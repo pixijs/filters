@@ -1,5 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './kawase-blur.frag';
+import fragmentClamp from './kawase-blur-clamp.frag';
 import * as PIXI from 'pixi.js';
 
 /**
@@ -13,15 +14,17 @@ import * as PIXI from 'pixi.js';
  * @param {number|number[]} [blur=4] - The blur of the filter. Should be greater than `0`. If
  *        value is an Array, setting kernels.
  * @param {number} [quality=3] - The quality of the filter. Should be an integer greater than `1`.
+ * @param {boolean} [clamp=false] - Clamp edges, useful for removing dark edges 
+ *        from fullscreen filters or bleeding to the edge of filterArea.
  */
 export default class KawaseBlurFilter extends PIXI.Filter {
-    constructor(blur = 4, quality = 3) {
-        super(vertex, fragment);
+    constructor(blur = 4, quality = 3, clamp = false) {
+        super(vertex, clamp ? fragmentClamp : fragment);
         this.uniforms.uOffset = new Float32Array(2);
 
         this._pixelSize = new PIXI.Point();
         this.pixelSize = 1;
-
+        this._clamp = clamp;
         this._kernels = null;
 
         // if `blur` is array , as kernels
@@ -32,7 +35,6 @@ export default class KawaseBlurFilter extends PIXI.Filter {
             this._blur = blur;
             this.quality = quality;
         }
-
     }
 
     /**
@@ -120,6 +122,17 @@ export default class KawaseBlurFilter extends PIXI.Filter {
             this._kernels = [0];
             this._quality = 1;
         }
+    }
+
+    /**
+     * Get the if the filter is clampped.
+     *
+     * @readonly
+     * @member {boolean}
+     * @default false
+     */
+    get clamp() {
+        return this._clamp;
     }
 
     /**

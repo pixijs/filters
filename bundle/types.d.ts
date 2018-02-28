@@ -214,11 +214,12 @@ declare namespace PIXI.filters {
         time:number;
     }
     class KawaseBlurFilter extends PIXI.Filter<{}> {
-        constructor(blur?:number|number[], quality?:number);
+        constructor(blur?:number|number[], quality?:number, clamp?:boolean);
         kernels:number[];
         pixelSize:number|PIXI.Point|number[];
         quality:number;
         blur:number;
+        readonly clamp:boolean;
     }
     class MotionBlurFilter extends PIXI.Filter<{}> {
         constructor(velocity:PIXI.Point|number[], kernelSize?:number, offset?:number);
