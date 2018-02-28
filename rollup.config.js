@@ -150,15 +150,23 @@ sorted.forEach((group) => {
 
         // UMD format output
         const mainOutput = {
+            name,
             file: path.join(basePath, main),
             format: 'umd',
             footer,
+            sourcemap,
+            banner,
+            globals,
         };
 
         // ES format output
         const moduleOutput = {
+            name,
             file: path.join(basePath, module),
             format: 'es',
+            sourcemap,
+            banner,
+            globals,
         };
 
         // For bundle, override and keep as vanilla-CommonJS
@@ -169,17 +177,13 @@ sorted.forEach((group) => {
         }
 
         results.push({
-            banner,
             input,
             freeze,
             output: [
                 mainOutput,
                 moduleOutput,
             ],
-            name,
-            globals,
             external,
-            sourcemap,
             plugins,
         });
 
@@ -188,19 +192,19 @@ sorted.forEach((group) => {
         // this will package all dependencies
         if (args.bundles && bundle) {
             results.push({
-                banner,
                 input,
                 freeze,
                 external: baseExternal,
-                globals,
                 output: {
+                    name,
+                    banner,
+                    globals,
                     file: path.join(basePath, bundle),
                     format: 'iife',
                     footer,
+                    sourcemap,
                 },
-                name,
                 treeshake: false,
-                sourcemap,
                 plugins,
             });
         }

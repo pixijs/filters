@@ -25,9 +25,6 @@
     "dist",
     "types.d.ts"
   ],
-  "scripts": {
-    "postversion": "cd .. && npm run build"
-  },
   "peerDependencies": {
     "pixi.js": "^4.6.0"
   },
