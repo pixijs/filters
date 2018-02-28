@@ -63,13 +63,14 @@ export default class ColorMapFilter extends PIXI.Filter {
         return this._colorMap;
     }
     set colorMap(colorMap) {
-        const texture = PIXI.Texture.from(colorMap);
+        if (!(colorMap instanceof PIXI.Texture)) {
+            colorMap = PIXI.Texture.from(colorMap);
+        }
+        if (colorMap && colorMap.baseTexture) {
+            colorMap.baseTexture.scaleMode = this._scaleMode;
+            colorMap.baseTexture.mipmap = false;
 
-        if (texture && texture.baseTexture) {
-            texture.baseTexture.scaleMode = this._scaleMode;
-            texture.baseTexture.mipmap = false;
-
-            this._size = texture.height;
+            this._size = colorMap.height;
             this._sliceSize = 1 / this._size;
             this._slicePixelSize = this._sliceSize / this._size;
             this._sliceInnerSize = this._slicePixelSize * (this._size - 1);
@@ -79,10 +80,10 @@ export default class ColorMapFilter extends PIXI.Filter {
             this.uniforms._slicePixelSize = this._slicePixelSize;
             this.uniforms._sliceInnerSize = this._sliceInnerSize;
 
-            this.uniforms.colorMap = texture;
+            this.uniforms.colorMap = colorMap;
         }
 
-        this._colorMap = texture;
+        this._colorMap = colorMap;
     }
 
     /**
