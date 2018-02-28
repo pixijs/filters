@@ -17,10 +17,10 @@ if (process.argv.indexOf('--prod') > -1) {
 export default {
     input: 'src/index.js',
     external: ['pixi.js'],
-    globals: {
-        'pixi.js': 'PIXI',
-    },
     output: {
+        globals: {
+            'pixi.js': 'PIXI',
+        },
         format: 'iife',
         file: 'index.js'
     },
