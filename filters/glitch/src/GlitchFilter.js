@@ -247,7 +247,6 @@ export default class GlitchFilter extends PIXI.Filter {
             y += height;
         }
 
-        texture._updateID++;
         texture.baseTexture.emit('update', texture.baseTexture);
         this.uniforms.displacementMap = texture;
     }
