@@ -44,7 +44,7 @@ All filters work with PixiJS v4.
 | **TwistFilter**<br>_@pixi/filter-twist_ | ![twist](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/twist.png?v=2) |
 | **ZoomBlurFilter**<br>_@pixi/filter-zoom-blur_ | ![zoom-blur](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/zoom-blur.png?v=4) |
 
-## Build-In Filters
+## Built-In Filters
 
 PixiJS has a handful of core filters that are built-in to the PixiJS library.
 
