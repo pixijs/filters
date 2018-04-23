@@ -146,7 +146,7 @@ sorted.forEach((group) => {
         globals = Object.assign({ 'pixi.js': 'PIXI' }, globals);
 
         // For UMD formatted, this adds class exports to PIXI.filters
-        const footer = `Object.assign(PIXI.filters, this.${name});`;
+        const footer = `Object.assign(PIXI.filters, ${name});`;
 
         // UMD format output
         const mainOutput = {
