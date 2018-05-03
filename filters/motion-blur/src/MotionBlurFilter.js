@@ -9,7 +9,7 @@ import * as PIXI from 'pixi.js';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
- * @param {PIXI.Point|number[]} [velocity=[0, 0]] Sets the velocity of the motion for blur effect.
+ * @param {PIXI.ObservablePoint|PIXI.Point|number[]} [velocity=[0, 0]] Sets the velocity of the motion for blur effect.
  * @param {number} [kernelSize=5] - The kernelSize of the blur filter. Must be odd number >= 5
  * @param {number} [offset=0] - The offset of the blur filter.
  */
@@ -17,7 +17,7 @@ export default class MotionBlurFilter extends PIXI.Filter {
     constructor(velocity = [0, 0], kernelSize = 5, offset = 0) {
         super(vertex, fragment);
         this.uniforms.uVelocity = new Float32Array(2);
-        this._velocity = new PIXI.Point(0,0);
+        this._velocity = new PIXI.ObservablePoint(this.velocityChanged, this);
         this.velocity = velocity;
 
         /**
@@ -44,25 +44,28 @@ export default class MotionBlurFilter extends PIXI.Filter {
     /**
      * Sets the velocity of the motion for blur effect.
      *
-     * @member {PIXI.Point|number[]}
-     * @default [0, 0]
+     * @member {PIXI.ObservablePoint}
      */
     set velocity(value) {
         if (Array.isArray(value)) {
-            this._velocity.x = value[0];
-            this._velocity.y = value[1];
+            this._velocity.set(value[0], value[1]);
         }
-        else if (value instanceof PIXI.Point) {
-            this._velocity.x = value.x;
-            this._velocity.y = value.y;
+        else if (value instanceof PIXI.Point || value instanceof PIXI.ObservablePoint) {
+            this._velocity.copy(value);
         }
-
-        this.uniforms.uVelocity[0] = this._velocity.x;
-        this.uniforms.uVelocity[1] = this._velocity.y;
     }
 
     get velocity() {
         return this._velocity;
+    }
+
+    /**
+     * Handle velocity changed
+     * @private
+     */
+    velocityChanged() {
+        this.uniforms.uVelocity[0] = this._velocity.x;
+        this.uniforms.uVelocity[1] = this._velocity.y;
     }
 
     /**
