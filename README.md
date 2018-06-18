@@ -66,11 +66,19 @@ PixiJS has a handful of core filters that are built-in to the PixiJS library.
 
 ## Installation
 
-Using NPM:
+Installation is available using NPM:
 
 ```bash
 npm install pixi-filters
 ```
+
+Alternatively, you can use a CDN such as JSDelivr:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/pixi-filters@2.6.1/dist/pixi-filters.js"></script>
+```
+
+If all else failes, you can manually download the bundled file from the [releases](https://github.com/pixijs/pixi-filters/releases) section and include it in your project.
 
 ## Building
 
