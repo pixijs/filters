@@ -139,8 +139,8 @@ export default class DemoApplication extends PIXI.Application {
         this.pond.addChild(this.overlay);
 
         // Handle window resize event
-        window.addEventListener('resize', this.resize.bind(this));
-        this.resize();
+        window.addEventListener('resize', this.handleResize.bind(this));
+        this.handleResize();
 
         // Handle fish animation
         this.ticker.add(this.animate, this);
@@ -149,7 +149,7 @@ export default class DemoApplication extends PIXI.Application {
     /**
      * Resize the demo when the window resizes
      */
-    resize() {
+    handleResize() {
 
         const {padding, bg, overlay, filterArea, bounds} = this;
 
