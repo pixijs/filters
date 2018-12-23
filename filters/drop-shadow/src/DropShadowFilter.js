@@ -90,10 +90,10 @@ export default class DropShadowFilter extends PIXI.Filter {
         this._tintFilter.apply(filterManager, input, target, true);
         target.transform = null;
 
-        this._blurFilter.apply(filterManager, target, output);
+        this._blurFilter.apply(filterManager, target, output, clear);
 
         if (this.shadowOnly !== true) {
-            filterManager.applyFilter(this, input, output, clear);
+            filterManager.applyFilter(this, input, output, false);
         }
 
         filterManager.returnRenderTarget(target);
