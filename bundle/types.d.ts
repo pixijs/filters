@@ -144,16 +144,16 @@ declare namespace PIXI.filters {
         shadowOnly:boolean;
     }
     interface DropShadowFilterOptions {
-        alpha:number;
-        blur:number;
-        color:number;
-        distance:number;
-        kernels:number[];
-        pixelSize:number|number[]|PIXI.Point;
-        quality:number;
-        resolution:number;
-        rotation:number;
-        shadowOnly:boolean;
+        alpha?:number;
+        blur?:number;
+        color?:number;
+        distance?:number;
+        kernels?:number[];
+        pixelSize?:number|number[]|PIXI.Point;
+        quality?:number;
+        resolution?:number;
+        rotation?:number;
+        shadowOnly?:boolean;
     }
     class EmbossFilter extends PIXI.Filter<{}> {
         constructor(strength?:number);
