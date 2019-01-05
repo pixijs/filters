@@ -6,8 +6,7 @@ import buble from 'rollup-plugin-buble';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import string from 'rollup-plugin-string';
-import uglify from 'rollup-plugin-uglify';
-import { minify } from 'uglify-es';
+import { terser } from 'rollup-plugin-terser';
 import minimist from 'minimist';
 import MagicString from 'magic-string';
 
@@ -28,7 +27,7 @@ function dedupeDefaultVert() {
 
     return {
         name: 'dedupeDefaultVert',
-        transformBundle(code) {
+        renderChunk(code) {
             const matches = [];
             let match;
 
@@ -64,17 +63,7 @@ function dedupeDefaultVert() {
 
 
 // Support --scope and --ignore globs
-const args = minimist(process.argv.slice(2), {
-    boolean: ['prod', 'bundles'],
-    default: {
-        prod: false,
-        bundles: true,
-    },
-    alias: {
-        p: 'prod',
-        b: 'bundles',
-    },
-});
+const args = minimist(process.argv.slice(2));
 
 // Standard Lerna plumbing getting packages
 const repo = new Repository(__dirname);
@@ -99,16 +88,14 @@ const plugins = [
     buble()
 ];
 
-if (args.prod) {
-    plugins.push(uglify({
-        mangle: true,
-        compress: true,
+if (process.env.NODE_ENV === 'production') {
+    plugins.push(terser({
         output: {
             comments: function(node, comment) {
                 return comment.line === 1;
             }
         }
-    }, minify));
+    }));
 }
 
 const compiled = (new Date()).toUTCString().replace(/GMT/g, 'UTC');
@@ -154,6 +141,7 @@ sorted.forEach((group) => {
             file: path.join(basePath, main),
             format: 'umd',
             footer,
+            freeze,
             sourcemap,
             banner,
             globals,
@@ -164,6 +152,7 @@ sorted.forEach((group) => {
             name,
             file: path.join(basePath, module),
             format: 'es',
+            freeze,
             sourcemap,
             banner,
             globals,
@@ -178,7 +167,6 @@ sorted.forEach((group) => {
 
         results.push({
             input,
-            freeze,
             output: [
                 mainOutput,
                 moduleOutput,
@@ -190,10 +178,9 @@ sorted.forEach((group) => {
         // The package.json file has a bundle field
         // we'll use this to generate the bundle file
         // this will package all dependencies
-        if (args.bundles && bundle) {
+        if (bundle) {
             results.push({
                 input,
-                freeze,
                 external: baseExternal,
                 output: {
                     name,
@@ -202,6 +189,7 @@ sorted.forEach((group) => {
                     file: path.join(basePath, bundle),
                     format: 'iife',
                     footer,
+                    freeze,
                     sourcemap,
                 },
                 treeshake: false,
