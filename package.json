@@ -27,6 +27,9 @@
     "postversion": "npm run build"
   },
   "devDependencies": {
+    "@lerna/batch-packages": "^3.6.0",
+    "@lerna/filter-packages": "^3.6.0",
+    "@lerna/project": "^3.8.5",
     "@pixi/jsdoc-template": "^2.4.2",
     "acorn": "^6.0.5",
     "cross-env": "^5.2.0",
@@ -34,11 +37,11 @@
     "gh-pages": "^2.0.1",
     "http-server": "^0.11.1",
     "jsdoc": "^3.4.0",
-    "lerna": "^2.11.0",
+    "lerna": "^3.8.5",
     "magic-string": "^0.25.1",
     "minimist": "^1.2.0",
     "rimraf": "^2.6.3",
-    "rollup": "^1.0.1",
+    "rollup": "^1.0.2",
     "rollup-plugin-buble": "^0.19.6",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-node-resolve": "^4.0.0",

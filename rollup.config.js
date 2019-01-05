@@ -1,5 +1,6 @@
-import PackageUtilities from 'lerna/lib/PackageUtilities';
-import Repository from 'lerna/lib/Repository';
+import batchPackages from '@lerna/batch-packages';
+import filterPackages from '@lerna/filter-packages';
+import { getPackages } from '@lerna/project';
 import path from 'path';
 import fs from 'fs';
 import buble from 'rollup-plugin-buble';
@@ -61,52 +62,62 @@ function dedupeDefaultVert() {
     };
 }
 
+/**
+ * Get a list of the non-private sorted packages with Lerna v3
+ * @see https://github.com/lerna/lerna/issues/1848
+ * @return {Promise<Package[]>} List of packages
+ */
+async function getSortedPackages() {
+    // Support --scope and --ignore globs
+    const {scope, ignore} = minimist(process.argv.slice(2));
 
-// Support --scope and --ignore globs
-const args = minimist(process.argv.slice(2));
+    // Standard Lerna plumbing getting packages
+    const packages = await getPackages(__dirname);
+    const filtered = filterPackages(
+        packages,
+        scope,
+        ignore,
+        false
+    );
 
-// Standard Lerna plumbing getting packages
-const repo = new Repository(__dirname);
-const packages = PackageUtilities.getPackages(repo);
-const filtered = PackageUtilities.filterPackages(packages, args);
-const sorted = PackageUtilities.topologicallyBatchPackages(filtered);
-
-const plugins = [
-    commonjs({
-        namedExports: {
-            'pixi.js': ['settings', 'Filter']
-        }
-    }),
-    resolve(),
-    string({
-        include: [
-            '**/*.frag',
-            '**/*.vert'
-        ]
-    }),
-    dedupeDefaultVert(),
-    buble()
-];
-
-if (process.env.NODE_ENV === 'production') {
-    plugins.push(terser({
-        output: {
-            comments: function(node, comment) {
-                return comment.line === 1;
-            }
-        }
-    }));
+    return batchPackages(filtered)
+        .reduce((arr, batch) => arr.concat(batch), []);
 }
 
-const compiled = (new Date()).toUTCString().replace(/GMT/g, 'UTC');
-const sourcemap = true;
-const results = [];
+async function main() {
+    const plugins = [
+        commonjs({
+            namedExports: {
+                'pixi.js': ['settings', 'Filter']
+            }
+        }),
+        resolve(),
+        string({
+            include: [
+                '**/*.frag',
+                '**/*.vert'
+            ]
+        }),
+        dedupeDefaultVert(),
+        buble()
+    ];
 
-sorted.forEach((group) => {
-    group.forEach((pkg) => {
-        if (pkg.isPrivate()) {
-            return;
-        }
+    if (process.env.NODE_ENV === 'production') {
+        plugins.push(terser({
+            output: {
+                comments: function(node, comment) {
+                    return comment.line === 1;
+                }
+            }
+        }));
+    }
+
+    const compiled = (new Date()).toUTCString().replace(/GMT/g, 'UTC');
+    const sourcemap = true;
+    const packages = await getSortedPackages();
+    const results = [];
+
+    packages.forEach((pkg) => {
         const banner = [
             '/*!',
             ` * ${pkg.name} - v${pkg.version}`,
@@ -118,7 +129,7 @@ sorted.forEach((group) => {
         ].join('\n');
 
         // Get settings from package JSON
-        let { main, module, bundle, globals } = pkg._package;
+        let { main, module, bundle, globals } = pkg.toJSON();
         const basePath = path.relative(__dirname, pkg.location);
         const input = path.join(basePath, 'src/index.js');
         const freeze = false;
@@ -197,6 +208,9 @@ sorted.forEach((group) => {
             });
         }
     });
-});
 
-export default results;
+    return results;
+}
+
+export default main();
+
