@@ -9,9 +9,11 @@ uniform float uRadius;
 
 const float MAX_KERNEL_SIZE = 32.0;
 
-float random(vec3 scale, float seed) {
-    // use the fragment position for a different seed per-pixel
-    return fract(sin(dot(gl_FragCoord.xyz + seed, scale)) * 43758.5453 + seed);
+// author: http://byteblacksmith.com/improvements-to-the-canonical-one-liner-glsl-rand-for-opengl-es-2-0/
+highp float rand(vec2 co, float seed) {
+    const highp float a = 12.9898, b = 78.233, c = 43758.5453;
+    highp float dt = dot(co + seed, vec2(a, b)), sn = mod(dt, 3.14159);
+    return fract(sin(sn) * c + seed);
 }
 
 void main() {
@@ -52,7 +54,7 @@ void main() {
     }
 
     // randomize the lookup values to hide the fixed number of samples
-    float offset = random(vec3(12.9898, 78.233, 151.7182), 0.0);
+    float offset = rand(vTextureCoord, 0.0);
 
     float total = 0.0;
     vec4 color = vec4(0.0);
@@ -78,7 +80,7 @@ void main() {
 
     color /= total;
     // switch back from pre-multiplied alpha
-    color.rgb /= color.a + 0.00001;
+    // color.rgb /= color.a + 0.00001;
 
     gl_FragColor = color;
 }
