@@ -7,9 +7,9 @@
   },
   "devDependencies": {
     "base64-to-image": "^1.0.2",
-    "electron": "^1.7.6",
-    "fs-extra": "^4.0.1",
-    "gifencoder": "^1.1.0",
+    "electron": "^4.0.1",
+    "fs-extra": "^7.0.1",
+    "gifencoder": "^2.0.1",
     "pixi-filters": "^2.6.2",
     "pixi.js": "^4.6.0"
   }

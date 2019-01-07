@@ -1,13 +1,13 @@
-import PackageUtilities from 'lerna/lib/PackageUtilities';
-import Repository from 'lerna/lib/Repository';
+import batchPackages from '@lerna/batch-packages';
+import filterPackages from '@lerna/filter-packages';
+import { getPackages } from '@lerna/project';
 import path from 'path';
 import fs from 'fs';
 import buble from 'rollup-plugin-buble';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import string from 'rollup-plugin-string';
-import uglify from 'rollup-plugin-uglify';
-import { minify } from 'uglify-es';
+import { terser } from 'rollup-plugin-terser';
 import minimist from 'minimist';
 import MagicString from 'magic-string';
 
@@ -28,7 +28,7 @@ function dedupeDefaultVert() {
 
     return {
         name: 'dedupeDefaultVert',
-        transformBundle(code) {
+        renderChunk(code) {
             const matches = [];
             let match;
 
@@ -62,64 +62,62 @@ function dedupeDefaultVert() {
     };
 }
 
+/**
+ * Get a list of the non-private sorted packages with Lerna v3
+ * @see https://github.com/lerna/lerna/issues/1848
+ * @return {Promise<Package[]>} List of packages
+ */
+async function getSortedPackages() {
+    // Support --scope and --ignore globs
+    const {scope, ignore} = minimist(process.argv.slice(2));
 
-// Support --scope and --ignore globs
-const args = minimist(process.argv.slice(2), {
-    boolean: ['prod', 'bundles'],
-    default: {
-        prod: false,
-        bundles: true,
-    },
-    alias: {
-        p: 'prod',
-        b: 'bundles',
-    },
-});
+    // Standard Lerna plumbing getting packages
+    const packages = await getPackages(__dirname);
+    const filtered = filterPackages(
+        packages,
+        scope,
+        ignore,
+        false
+    );
 
-// Standard Lerna plumbing getting packages
-const repo = new Repository(__dirname);
-const packages = PackageUtilities.getPackages(repo);
-const filtered = PackageUtilities.filterPackages(packages, args);
-const sorted = PackageUtilities.topologicallyBatchPackages(filtered);
-
-const plugins = [
-    commonjs({
-        namedExports: {
-            'pixi.js': ['settings', 'Filter']
-        }
-    }),
-    resolve(),
-    string({
-        include: [
-            '**/*.frag',
-            '**/*.vert'
-        ]
-    }),
-    dedupeDefaultVert(),
-    buble()
-];
-
-if (args.prod) {
-    plugins.push(uglify({
-        mangle: true,
-        compress: true,
-        output: {
-            comments: function(node, comment) {
-                return comment.line === 1;
-            }
-        }
-    }, minify));
+    return batchPackages(filtered)
+        .reduce((arr, batch) => arr.concat(batch), []);
 }
 
-const compiled = (new Date()).toUTCString().replace(/GMT/g, 'UTC');
-const sourcemap = true;
-const results = [];
+async function main() {
+    const plugins = [
+        commonjs({
+            namedExports: {
+                'pixi.js': ['settings', 'Filter']
+            }
+        }),
+        resolve(),
+        string({
+            include: [
+                '**/*.frag',
+                '**/*.vert'
+            ]
+        }),
+        dedupeDefaultVert(),
+        buble()
+    ];
 
-sorted.forEach((group) => {
-    group.forEach((pkg) => {
-        if (pkg.isPrivate()) {
-            return;
-        }
+    if (process.env.NODE_ENV === 'production') {
+        plugins.push(terser({
+            output: {
+                comments: function(node, comment) {
+                    return comment.line === 1;
+                }
+            }
+        }));
+    }
+
+    const compiled = (new Date()).toUTCString().replace(/GMT/g, 'UTC');
+    const sourcemap = true;
+    const packages = await getSortedPackages();
+    const results = [];
+
+    packages.forEach((pkg) => {
         const banner = [
             '/*!',
             ` * ${pkg.name} - v${pkg.version}`,
@@ -131,7 +129,7 @@ sorted.forEach((group) => {
         ].join('\n');
 
         // Get settings from package JSON
-        let { main, module, bundle, globals } = pkg._package;
+        let { main, module, bundle, globals } = pkg.toJSON();
         const basePath = path.relative(__dirname, pkg.location);
         const input = path.join(basePath, 'src/index.js');
         const freeze = false;
@@ -154,6 +152,7 @@ sorted.forEach((group) => {
             file: path.join(basePath, main),
             format: 'umd',
             footer,
+            freeze,
             sourcemap,
             banner,
             globals,
@@ -163,7 +162,8 @@ sorted.forEach((group) => {
         const moduleOutput = {
             name,
             file: path.join(basePath, module),
-            format: 'es',
+            format: 'esm',
+            freeze,
             sourcemap,
             banner,
             globals,
@@ -178,7 +178,6 @@ sorted.forEach((group) => {
 
         results.push({
             input,
-            freeze,
             output: [
                 mainOutput,
                 moduleOutput,
@@ -190,10 +189,9 @@ sorted.forEach((group) => {
         // The package.json file has a bundle field
         // we'll use this to generate the bundle file
         // this will package all dependencies
-        if (args.bundles && bundle) {
+        if (bundle) {
             results.push({
                 input,
-                freeze,
                 external: baseExternal,
                 output: {
                     name,
@@ -202,6 +200,7 @@ sorted.forEach((group) => {
                     file: path.join(basePath, bundle),
                     format: 'iife',
                     footer,
+                    freeze,
                     sourcemap,
                 },
                 treeshake: false,
@@ -209,6 +208,9 @@ sorted.forEach((group) => {
             });
         }
     });
-});
 
-export default results;
+    return results;
+}
+
+export default main();
+

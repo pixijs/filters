@@ -4,7 +4,7 @@
   "main": "lib/filter-glitch.js",
   "description": "PixiJS v4 filter to apply a glitch effect",
   "author": "finscn <finscn@gmail.com>",
-  "module": "lib/filter-glitch.es.js",
+  "module": "lib/filter-glitch.esm.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
@@ -21,7 +21,7 @@
     "types.d.ts"
   ],
   "peerDependencies": {
-    "pixi.js": "^4.5.0"
+    "pixi.js": ">=4.5.0"
   },
   "devDependencies": {
     "@tools/fragments": "^2.0.0"

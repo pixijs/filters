@@ -5,17 +5,18 @@
   "license": "MIT",
   "scripts": {
     "prebuild": "rimraf index.js.map index.js",
-    "build": "rollup -c --prod",
+    "build": "cross-env NODE_ENV=production rollup -c",
     "build:dev": "rollup -cm",
     "watch": "rollup -cwm"
   },
   "devDependencies": {
+    "cross-env": "^5.2.0",
     "pixi-filters": "^2.6.2",
-    "rimraf": "^2.6.2",
-    "rollup": "^0.56.3",
-    "rollup-plugin-buble": "^0.19.2",
-    "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-uglify": "^3.0.0",
+    "rimraf": "^2.6.3",
+    "rollup": "^1.0.2",
+    "rollup-plugin-buble": "^0.19.6",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-terser": "^4.0.1",
     "rollup-watch": "^4.3.1"
   }
 }

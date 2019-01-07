@@ -10,7 +10,7 @@
     "Chad Engler <chad@pantherdev.com>",
     "finscn <finscn@gmail.com>"
   ],
-  "module": "lib/pixi-filters.es.js",
+  "module": "lib/pixi-filters.esm.js",
   "bundle": "dist/pixi-filters.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
@@ -26,7 +26,7 @@
     "types.d.ts"
   ],
   "peerDependencies": {
-    "pixi.js": "^4.6.0"
+    "pixi.js": ">=4.6.0"
   },
   "dependencies": {
     "@pixi/filter-adjustment": "^2.5.0",

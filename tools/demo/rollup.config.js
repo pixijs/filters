@@ -1,17 +1,14 @@
 const buble = require('rollup-plugin-buble');
 const resolve = require('rollup-plugin-node-resolve');
-const uglify = require('rollup-plugin-uglify');
+const {terser} = require('rollup-plugin-terser');
 
 const plugins = [
     resolve(),
     buble()
 ];
 
-if (process.argv.indexOf('--prod') > -1) {
-    plugins.push(uglify({
-        mangle: true,
-        compress: true
-    }));
+if (process.env.NODE_ENV === 'production') {
+    plugins.push(terser());
 }
 
 export default {
@@ -20,6 +17,7 @@ export default {
     output: {
         globals: {
             'pixi.js': 'PIXI',
+            'pixi-filters': 'PIXI.filters'
         },
         format: 'iife',
         file: 'index.js'
