@@ -33,9 +33,10 @@ body {
 }
 .dg .title {
     color: #999;
+    user-select: none;
 }
 .dg.enabled .title {
-    color: #fff;
+    color: #ea4080;
 }
 #logo img {
     display: block;
