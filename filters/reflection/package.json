@@ -4,7 +4,7 @@
   "main": "lib/filter-reflection.js",
   "description": "PixiJS v4 filter to apply reflection and wave effect",
   "author": "finscn <finscn@gmail.com>",
-  "module": "lib/filter-reflection.es.js",
+  "module": "lib/filter-reflection.esm.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
@@ -21,7 +21,7 @@
     "types.d.ts"
   ],
   "peerDependencies": {
-    "pixi.js": "^4.5.0"
+    "pixi.js": ">=4.5.0"
   },
   "devDependencies": {
     "@tools/fragments": "^2.0.0"

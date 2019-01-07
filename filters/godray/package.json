@@ -8,7 +8,7 @@
     "Matt Karl <matt@mattkarl.com>",
     "Ivan Popelyshevl <ivan.popelyshev@gmail.com>"
   ],
-  "module": "lib/filter-godray.es.js",
+  "module": "lib/filter-godray.esm.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
@@ -25,7 +25,7 @@
     "types.d.ts"
   ],
   "peerDependencies": {
-    "pixi.js": "^4.0.0"
+    "pixi.js": ">=4.0.0"
   },
   "devDependencies": {
     "@tools/fragments": "^2.0.0"

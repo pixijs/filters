@@ -162,7 +162,7 @@ async function main() {
         const moduleOutput = {
             name,
             file: path.join(basePath, module),
-            format: 'es',
+            format: 'esm',
             freeze,
             sourcemap,
             banner,

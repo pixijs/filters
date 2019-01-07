@@ -7,7 +7,7 @@
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
-  "module": "lib/filter-drop-shadow.es.js",
+  "module": "lib/filter-drop-shadow.esm.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
@@ -27,7 +27,7 @@
     "@pixi/filter-kawase-blur": "PIXI.filters"
   },
   "peerDependencies": {
-    "pixi.js": "^4.5.0"
+    "pixi.js": ">=4.5.0"
   },
   "dependencies": {
     "@pixi/filter-kawase-blur": "^2.6.0"

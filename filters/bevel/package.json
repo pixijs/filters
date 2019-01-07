@@ -7,7 +7,7 @@
   "contributors": [
     "Evgeny Shestakov <ewanse@gmail.com>"
   ],
-  "module": "lib/filter-bevel.es.js",
+  "module": "lib/filter-bevel.esm.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
@@ -24,7 +24,7 @@
     "types.d.ts"
   ],
   "peerDependencies": {
-    "pixi.js": "^4.0.0"
+    "pixi.js": ">=4.0.0"
   },
   "devDependencies": {
     "@tools/fragments": "^2.0.0"
