@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-twist",
-  "version": "2.5.0",
+  "version": "2.7.0",
   "main": "lib/filter-twist.js",
   "description": "PixiJS v4 filter to apply a twist effect to a DisplayObject",
   "author": "Mat Groves",
