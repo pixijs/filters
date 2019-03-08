@@ -33,9 +33,13 @@ vec2 getMod(vec2 coord, vec2 size)
 float character(float n, vec2 p)
 {
     p = floor(p*vec2(4.0, -4.0) + 2.5);
-    if (clamp(p.x, 0.0, 4.0) == p.x && clamp(p.y, 0.0, 4.0) == p.y)
+
+    if (clamp(p.x, 0.0, 4.0) == p.x)
     {
-        if (int(mod(n/exp2(p.x + 5.0*p.y), 2.0)) == 1) return 1.0;
+        if (clamp(p.y, 0.0, 4.0) == p.y)
+        {
+            if (int(mod(n/exp2(p.x + 5.0*p.y), 2.0)) == 1) return 1.0;
+        }
     }
     return 0.0;
 }
