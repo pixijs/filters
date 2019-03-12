@@ -1,6 +1,6 @@
 {
   "name": "pixi-filters",
-  "version": "2.7.0",
+  "version": "2.7.1",
   "main": "lib/pixi-filters.cjs.js",
   "description": "PixiJS v4 optional display filters",
   "author": "Mat Groves <mat@goodboydigital.com>",
@@ -31,7 +31,7 @@
   "dependencies": {
     "@pixi/filter-adjustment": "^2.7.0",
     "@pixi/filter-advanced-bloom": "^2.7.0",
-    "@pixi/filter-ascii": "^2.7.0",
+    "@pixi/filter-ascii": "^2.7.1",
     "@pixi/filter-bevel": "^2.7.0",
     "@pixi/filter-bloom": "^2.7.0",
     "@pixi/filter-bulge-pinch": "^2.7.0",
