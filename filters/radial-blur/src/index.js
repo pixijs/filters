@@ -1,1 +1,1 @@
-export { default as RadialBlurFilter } from './RadialBlurFilter.js';
+export * from './RadialBlurFilter.js';

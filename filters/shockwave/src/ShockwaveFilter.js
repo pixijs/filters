@@ -1,6 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './shockwave.frag';
-import * as PIXI from 'pixi.js';
+import {Filter} from '@pixi/core';
 
 /**
  * The ShockwaveFilter class lets you apply a shockwave effect.<br>
@@ -19,7 +19,7 @@ import * as PIXI from 'pixi.js';
  * @param {number} [options.radius=4] - See `radius` property.
  * @param {number} [time=0] - See `time` property.
  */
-export default class ShockwaveFilter extends PIXI.Filter {
+export class ShockwaveFilter extends Filter {
 
     constructor(center = [0.0, 0.0], options = {}, time = 0) {
         super(vertex, fragment);

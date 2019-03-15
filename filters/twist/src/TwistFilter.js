@@ -1,6 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './twist.frag';
-import * as PIXI from 'pixi.js';
+import {Filter} from '@pixi/core';
 
 /**
  * This filter applies a twist effect making display objects appear twisted in the given direction.<br>
@@ -13,7 +13,7 @@ import * as PIXI from 'pixi.js';
  * @param {number} [angle=4] The angle of the twist.
  * @param {number} [padding=20] Padding for filter area.
  */
-export default class TwistFilter extends PIXI.Filter {
+export class TwistFilter extends Filter {
     constructor(radius = 200, angle = 4, padding = 20) {
         super(vertex, fragment);
 

@@ -1,1 +1,1 @@
-export {default as PixelateFilter} from './PixelateFilter';
+export * from './PixelateFilter';

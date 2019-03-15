@@ -1,1 +1,1 @@
-export {default as ConvolutionFilter} from './ConvolutionFilter';
+export * from './ConvolutionFilter';

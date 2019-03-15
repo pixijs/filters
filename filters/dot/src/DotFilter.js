@@ -1,6 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './dot.frag';
-import * as PIXI from 'pixi.js';
+import {Filter} from '@pixi/core';
 
 /**
  * @author Mat Groves http://matgroves.com/ @Doormat23
@@ -18,7 +18,7 @@ import * as PIXI from 'pixi.js';
  * @param {number} [scale=1] The scale of the effect.
  * @param {number} [angle=5] The radius of the effect.
  */
-export default class DotFilter extends PIXI.Filter {
+export class DotFilter extends Filter {
 
     constructor(scale = 1, angle = 5) {
         super(vertex, fragment);

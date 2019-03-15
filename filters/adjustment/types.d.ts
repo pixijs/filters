@@ -1,6 +1,6 @@
 /// <reference types="pixi.js" />
-declare namespace PIXI.filters {
-    class AdjustmentFilter extends PIXI.Filter<{}> {
+declare module "@pixi/filter-adjustment" {
+    export class AdjustmentFilter extends PIXI.Filter {
         constructor(options?: AdjustmentOptions);
         gamma: number;
         contrast: number;
@@ -11,7 +11,7 @@ declare namespace PIXI.filters {
         blue: number;
         alpha: number;
     }
-    interface AdjustmentOptions {
+    export interface AdjustmentOptions {
         gamma?: number;
         contrast?: number;
         saturation?: number;
@@ -21,8 +21,4 @@ declare namespace PIXI.filters {
         blue?: number;
         alpha?: number;
     }
-}
-
-declare module "@pixi/filter-adjustment" {
-    export = PIXI.filters;
 }

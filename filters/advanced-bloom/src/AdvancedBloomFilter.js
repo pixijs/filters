@@ -1,8 +1,9 @@
-import ExtractBrightnessFilter from './ExtractBrightnessFilter';
+import {ExtractBrightnessFilter} from './ExtractBrightnessFilter';
 import {KawaseBlurFilter} from '@pixi/filter-kawase-blur';
 import {vertex} from '@tools/fragments';
 import fragment from './advanced-bloom.frag';
-import * as PIXI from 'pixi.js';
+import {Filter} from '@pixi/core';
+import {settings} from '@pixi/settings';
 
 /**
  * The AdvancedBloomFilter applies a Bloom Effect to an object. Unlike the normal BloomFilter
@@ -25,7 +26,7 @@ import * as PIXI from 'pixi.js';
  * @param {number|number[]|PIXI.Point} [options.pixelSize=1] - the pixelSize of the Blur filter.
  * @param {number} [options.resolution=PIXI.settings.RESOLUTION] - The resolution of the Blur filter.
  */
-export default class AdvancedBloomFilter extends PIXI.Filter {
+export class AdvancedBloomFilter extends Filter {
 
     constructor(options) {
 
@@ -43,7 +44,7 @@ export default class AdvancedBloomFilter extends PIXI.Filter {
             blur: 8,
             quality: 4,
             pixelSize: 1,
-            resolution: PIXI.settings.RESOLUTION,
+            resolution: settings.RESOLUTION,
         }, options);
 
         /**
@@ -79,11 +80,11 @@ export default class AdvancedBloomFilter extends PIXI.Filter {
      */
     apply(filterManager, input, output, clear, currentState) {
 
-        const brightTarget = filterManager.getRenderTarget(true);
+        const brightTarget = filterManager.getFilterTexture();
 
         this._extractFilter.apply(filterManager, input, brightTarget, true, currentState);
 
-        const bloomTarget = filterManager.getRenderTarget(true);
+        const bloomTarget = filterManager.getFilterTexture();
 
         this._blurFilter.apply(filterManager, brightTarget, bloomTarget, true, currentState);
 
@@ -93,8 +94,8 @@ export default class AdvancedBloomFilter extends PIXI.Filter {
 
         filterManager.applyFilter(this, input, output, clear);
 
-        filterManager.returnRenderTarget(bloomTarget);
-        filterManager.returnRenderTarget(brightTarget);
+        filterManager.returnFilterTexture(bloomTarget);
+        filterManager.returnFilterTexture(brightTarget);
     }
 
     /**

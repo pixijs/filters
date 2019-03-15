@@ -1,6 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './crt.frag';
-import * as PIXI from 'pixi.js';
+import {Filter} from '@pixi/core';
 
 /**
  * The CRTFilter applies a CRT effect to an object.<br>
@@ -24,7 +24,7 @@ import * as PIXI from 'pixi.js';
  * @param {number} [options.vignettingBlur=0.3] - Blur intensity of the vignette
  * @param {number} [options.time=0] - For animating interlaced lines
  */
-export default class CRTFilter extends PIXI.Filter {
+export class CRTFilter extends Filter {
     constructor(options) {
         super(vertex, fragment);
         this.uniforms.dimensions = new Float32Array(2);
@@ -65,8 +65,8 @@ export default class CRTFilter extends PIXI.Filter {
      * @private
      */
     apply(filterManager, input, output, clear) {
-        this.uniforms.dimensions[0] = input.sourceFrame.width;
-        this.uniforms.dimensions[1] = input.sourceFrame.height;
+        this.uniforms.dimensions[0] = input.filterFrame.width;
+        this.uniforms.dimensions[1] = input.filterFrame.height;
 
         this.uniforms.seed = this.seed;
         this.uniforms.time = this.time;

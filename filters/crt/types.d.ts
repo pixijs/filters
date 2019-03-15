@@ -1,6 +1,6 @@
 /// <reference types="pixi.js" />
-declare namespace PIXI.filters {
-    class CRTFilter extends PIXI.Filter<{}> {
+declare module "@pixi/filter-crt" {
+    export class CRTFilter extends PIXI.Filter {
         constructor(options?: CRTOptions);
         curvature: number;
         lineWidth: number;
@@ -14,7 +14,7 @@ declare namespace PIXI.filters {
         vignettingBlur: number;
         time: number;
     }
-    interface CRTOptions {
+    export interface CRTOptions {
         curvature?: number;
         lineWidth?: number;
         lineContrast?: number;
@@ -27,8 +27,4 @@ declare namespace PIXI.filters {
         vignettingBlur?: number;
         time?: number;
     }
-}
-
-declare module "@pixi/filter-crt" {
-    export = PIXI.filters;
 }

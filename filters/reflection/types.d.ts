@@ -1,6 +1,6 @@
 /// <reference types="pixi.js" />
-declare namespace PIXI.filters {
-    class ReflectionFilter extends PIXI.Filter<{}> {
+declare module "@pixi/filter-reflection" {
+    export class ReflectionFilter extends PIXI.Filter {
         constructor(options?: ReflectionOptions);
         mirror: boolean;
         boundary: number;
@@ -17,8 +17,4 @@ declare namespace PIXI.filters {
         alpha?: number[];
         time?: number;
     }
-}
-
-declare module "@pixi/filter-reflection" {
-    export = PIXI.filters;
 }

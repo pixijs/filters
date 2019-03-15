@@ -1,1 +1,1 @@
-export {default as BloomFilter} from './BloomFilter';
+export * from './BloomFilter';

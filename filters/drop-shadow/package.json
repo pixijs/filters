@@ -26,10 +26,11 @@
   "globals": {
     "@pixi/filter-kawase-blur": "PIXI.filters"
   },
-  "peerDependencies": {
-    "pixi.js": ">=4.5.0"
-  },
   "dependencies": {
+    "@pixi/core": "^5.0.0-X",
+    "@pixi/settings": "^5.0.0-X",
+    "@pixi/math": "^5.0.0-X",
+    "@pixi/utils": "^5.0.0-X",
     "@pixi/filter-kawase-blur": "^2.7.0"
   },
   "devDependencies": {

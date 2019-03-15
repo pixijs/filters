@@ -1,6 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './bulgePinch.frag';
-import * as PIXI from 'pixi.js';
+import {Filter} from '@pixi/core';
 
 /**
  * @author Julien CLEREL @JuloxRox
@@ -18,7 +18,7 @@ import * as PIXI from 'pixi.js';
  * @param {number} [radius=100] The radius of the circle of effect.
  * @param {number} [strength=1] -1 to 1 (-1 is strong pinch, 0 is no effect, 1 is strong bulge)
  */
-export default class BulgePinchFilter extends PIXI.Filter {
+export class BulgePinchFilter extends Filter {
 
     constructor(center, radius, strength) {
         super(vertex, fragment);
@@ -29,8 +29,8 @@ export default class BulgePinchFilter extends PIXI.Filter {
     }
 
     apply(filterManager, input, output, clear) {
-        this.uniforms.dimensions[0] = input.sourceFrame.width;
-        this.uniforms.dimensions[1] = input.sourceFrame.height;
+        this.uniforms.dimensions[0] = input.filterFrame.width;
+        this.uniforms.dimensions[1] = input.filterFrame.height;
         filterManager.applyFilter(this, input, output, clear);
     }
 

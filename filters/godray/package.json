@@ -24,8 +24,9 @@
     "lib",
     "types.d.ts"
   ],
-  "peerDependencies": {
-    "pixi.js": ">=4.0.0"
+  "dependencies": {
+    "@pixi/core": "^5.0.0-X",
+    "@pixi/math": "^5.0.0-X"
   },
   "devDependencies": {
     "@tools/fragments": "^2.0.0"

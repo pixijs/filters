@@ -1,6 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './rgb-split.frag';
-import * as PIXI from 'pixi.js';
+import {Filter} from '@pixi/core';
 
 /**
  * An RGB Split Filter.<br>
@@ -13,7 +13,7 @@ import * as PIXI from 'pixi.js';
  * @param {PIXI.Point} [green=[0, 10]] Green channel offset
  * @param {PIXI.Point} [blue=[0, 0]] Blue channel offset
  */
-export default class RGBSplitFilter extends PIXI.Filter {
+export class RGBSplitFilter extends Filter {
     constructor(red = [-10, 0], green = [0, 10], blue = [0, 0]) {
         super(vertex, fragment);
         this.red = red;

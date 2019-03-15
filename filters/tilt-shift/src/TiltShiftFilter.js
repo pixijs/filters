@@ -1,6 +1,6 @@
-import TiltShiftXFilter from './TiltShiftXFilter';
-import TiltShiftYFilter from './TiltShiftYFilter';
-import * as PIXI from 'pixi.js';
+import {TiltShiftXFilter} from './TiltShiftXFilter';
+import {TiltShiftYFilter} from './TiltShiftYFilter';
+import {Filter} from '@pixi/core';
 
 /**
  * @author Vico @vicocotea
@@ -19,7 +19,7 @@ import * as PIXI from 'pixi.js';
  * @param {PIXI.Point} [start=null] The Y value to start the effect at.
  * @param {PIXI.Point} [end=null] The Y value to end the effect at.
  */
-export default class TiltShiftFilter extends PIXI.Filter {
+export class TiltShiftFilter extends Filter {
 
     constructor(blur = 100, gradientBlur = 600, start = null, end = null) {
         super();
@@ -28,10 +28,10 @@ export default class TiltShiftFilter extends PIXI.Filter {
     }
 
     apply(filterManager, input, output) {
-        let renderTarget = filterManager.getRenderTarget(true);
+        let renderTarget = filterManager.getFilterTexture();
         this.tiltShiftXFilter.apply(filterManager, input, renderTarget);
         this.tiltShiftYFilter.apply(filterManager, renderTarget, output);
-        filterManager.returnRenderTarget(renderTarget);
+        filterManager.returnFilterTexture(renderTarget);
     }
 
     /**

@@ -1,1 +1,1 @@
-export { default as ColorMapFilter } from './ColorMapFilter.js';
+export * from './ColorMapFilter.js';

@@ -1,6 +1,7 @@
 import {vertex} from '@tools/fragments';
 import fragment from './color-map.frag';
-import * as PIXI from 'pixi.js';
+import {Filter, Texture} from '@pixi/core';
+import {SCALE_MODES} from '@pixi/constants';
 
 /**
  * The ColorMapFilter applies a color-map effect to an object.<br>
@@ -13,7 +14,7 @@ import * as PIXI from 'pixi.js';
  * @param {boolean} [nearest=false] - Whether use NEAREST for colorMap texture.
  * @param {number} [mix=1] - The mix from 0 to 1, where 0 is the original image and 1 is the color mapped image.
  */
-export default class ColorMapFilter extends PIXI.Filter {
+export class ColorMapFilter extends Filter {
 
     constructor(colorMap, nearest = false, mix = 1) {
         super(vertex, fragment);
@@ -63,8 +64,8 @@ export default class ColorMapFilter extends PIXI.Filter {
         return this._colorMap;
     }
     set colorMap(colorMap) {
-        if (!(colorMap instanceof PIXI.Texture)) {
-            colorMap = PIXI.Texture.from(colorMap);
+        if (!(colorMap instanceof Texture)) {
+            colorMap = Texture.from(colorMap);
         }
         if (colorMap && colorMap.baseTexture) {
             colorMap.baseTexture.scaleMode = this._scaleMode;
@@ -95,7 +96,7 @@ export default class ColorMapFilter extends PIXI.Filter {
     }
     set nearest(nearest) {
         this._nearest = nearest;
-        this._scaleMode = nearest ? PIXI.SCALE_MODES.NEAREST : PIXI.SCALE_MODES.LINEAR;
+        this._scaleMode = nearest ? SCALE_MODES.NEAREST : SCALE_MODES.LINEAR;
 
         const texture = this._colorMap;
 

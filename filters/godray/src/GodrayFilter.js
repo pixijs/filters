@@ -1,7 +1,8 @@
 import {vertex} from '@tools/fragments';
 import perlin from './perlin.frag';
 import fragment from './gorday.frag';
-import * as PIXI from 'pixi.js';
+import {Filter} from '@pixi/core';
+import {Point, DEG_TO_RAD} from '@pixi/math';
 
 /**
 * GordayFilter, {@link https://codepen.io/alaingalvan originally} by Alain Galvan
@@ -24,7 +25,7 @@ import * as PIXI from 'pixi.js';
 * @param {PIXI.Point|number[]} [options.center=[0,0]] Focal point for non-parallel rays,
 *        to use this `parallel` must be set to `false`.
 */
-export default class GodrayFilter extends PIXI.Filter {
+export class GodrayFilter extends Filter {
 
     constructor(options) {
         super(vertex, fragment.replace('${perlin}', perlin));
@@ -56,7 +57,7 @@ export default class GodrayFilter extends PIXI.Filter {
             center: [0, 0],
         }, options);
 
-        this._angleLight = new PIXI.Point();
+        this._angleLight = new Point();
         this.angle = options.angle;
         this.gain = options.gain;
         this.lacunarity = options.lacunarity;
@@ -96,7 +97,7 @@ export default class GodrayFilter extends PIXI.Filter {
      * @param {PIXI.RenderTarget} output - The output target.
      */
     apply(filterManager, input, output, clear) {
-        const {width, height} = input.sourceFrame;
+        const {width, height} = input.filterFrame;
 
         this.uniforms.light = this.parallel ? this._angleLight : this.center;
 
@@ -122,7 +123,7 @@ export default class GodrayFilter extends PIXI.Filter {
     set angle(value) {
         this._angle = value;
 
-        const radians = value * PIXI.DEG_TO_RAD;
+        const radians = value * DEG_TO_RAD;
 
         this._angleLight.x = Math.cos(radians);
         this._angleLight.y = Math.sin(radians);

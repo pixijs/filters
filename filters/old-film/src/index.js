@@ -1,1 +1,1 @@
-export { default as OldFilmFilter } from './OldFilmFilter.js';
+export * from './OldFilmFilter.js';

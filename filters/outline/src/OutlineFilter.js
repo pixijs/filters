@@ -1,6 +1,7 @@
 import {vertex} from '@tools/fragments';
 import fragment from './outline.frag';
-import * as PIXI from 'pixi.js';
+import {Filter} from '@pixi/core';
+import {rgb2hex, hex2rgb} from '@pixi/utils';
 
 /**
  * OutlineFilter, originally by mishaa
@@ -19,7 +20,7 @@ import * as PIXI from 'pixi.js';
  * @example
  *  someSprite.shader = new OutlineFilter(9, 0xFF0000);
  */
-export default class OutlineFilter extends PIXI.Filter {
+export class OutlineFilter extends Filter {
 
     constructor(thickness = 1, color = 0x000000, quality = 0.1) {
         const samples =  Math.max(
@@ -45,8 +46,8 @@ export default class OutlineFilter extends PIXI.Filter {
     }
 
     apply(filterManager, input, output, clear) {
-        this.uniforms.thickness[0] = this.thickness / input.size.width;
-        this.uniforms.thickness[1] = this.thickness / input.size.height;
+        this.uniforms.thickness[0] = this.thickness / input._frame.width;
+        this.uniforms.thickness[1] = this.thickness / input._frame.height;
 
         filterManager.applyFilter(this, input, output, clear);
     }
@@ -57,10 +58,10 @@ export default class OutlineFilter extends PIXI.Filter {
      * @default 0x000000
      */
     get color() {
-        return PIXI.utils.rgb2hex(this.uniforms.outlineColor);
+        return rgb2hex(this.uniforms.outlineColor);
     }
     set color(value) {
-        PIXI.utils.hex2rgb(value, this.uniforms.outlineColor);
+        hex2rgb(value, this.uniforms.outlineColor);
     }
 }
 

@@ -1,1 +1,1 @@
-export { default as CRTFilter } from './CRTFilter.js';
+export * from './CRTFilter.js';

@@ -1,6 +1,9 @@
-import * as PIXI from 'pixi.js';
-
-const {BlurXFilter, BlurYFilter, AlphaFilter} = PIXI.filters;
+import {Filter} from '@pixi/core';
+import {BLEND_MODES} from '@pixi/constants';
+import {AlphaFilter} from '@pixi/filter-alpha';
+import {BlurFilterPass} from '@pixi/filter-blur';
+import {settings} from '@pixi/settings';
+import {Point} from '@pixi/math';
 
 /**
  * The BloomFilter applies a Gaussian blur to an object.
@@ -15,9 +18,9 @@ const {BlurXFilter, BlurYFilter, AlphaFilter} = PIXI.filters;
  * @param {number} [resolution=PIXI.settings.RESOLUTION] The resolution of the blurX & blurY filter.
  * @param {number} [kernelSize=5] The kernelSize of the blurX & blurY filter.Options: 5, 7, 9, 11, 13, 15.
  */
-export default class BloomFilter extends PIXI.Filter {
+export class BloomFilter extends Filter {
 
-    constructor(blur = 2, quality = 4, resolution = PIXI.settings.RESOLUTION, kernelSize = 5) {
+    constructor(blur = 2, quality = 4, resolution = settings.RESOLUTION, kernelSize = 5) {
         super();
 
         let blurX;
@@ -27,7 +30,7 @@ export default class BloomFilter extends PIXI.Filter {
             blurX = blur;
             blurY = blur;
         }
-        else if (blur instanceof PIXI.Point) {
+        else if (blur instanceof Point) {
             blurX = blur.x;
             blurY = blur.y;
         }
@@ -36,14 +39,14 @@ export default class BloomFilter extends PIXI.Filter {
             blurY = blur[1];
         }
 
-        this.blurXFilter = new BlurXFilter(blurX, quality, resolution, kernelSize);
-        this.blurYFilter = new BlurYFilter(blurY, quality, resolution, kernelSize);
-        this.blurYFilter.blendMode = PIXI.BLEND_MODES.SCREEN;
+        this.blurXFilter = new BlurFilterPass(true, blurX, quality, resolution, kernelSize);
+        this.blurYFilter = new BlurFilterPass(false, blurY, quality, resolution, kernelSize);
+        this.blurYFilter.blendMode = BLEND_MODES.SCREEN;
         this.defaultFilter = new AlphaFilter();
     }
 
     apply(filterManager, input, output) {
-        const renderTarget = filterManager.getRenderTarget(true);
+        const renderTarget = filterManager.getFilterTexture(true);
 
         //TODO - copyTexSubImage2D could be used here?
         this.defaultFilter.apply(filterManager, input, output);
@@ -51,7 +54,7 @@ export default class BloomFilter extends PIXI.Filter {
         this.blurXFilter.apply(filterManager, input, renderTarget);
         this.blurYFilter.apply(filterManager, renderTarget, output);
 
-        filterManager.returnRenderTarget(renderTarget);
+        filterManager.returnFilterTexture(renderTarget);
     }
 
     /**

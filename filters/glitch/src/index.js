@@ -1,1 +1,1 @@
-export { default as GlitchFilter } from './GlitchFilter.js';
+export * from './GlitchFilter.js';

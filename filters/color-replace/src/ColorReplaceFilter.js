@@ -1,6 +1,7 @@
 import {vertex} from '@tools/fragments';
 import fragment from './colorReplace.frag';
-import * as PIXI from 'pixi.js';
+import {Filter} from '@pixi/core';
+import {hex2rgb, rgb2hex} from '@pixi/utils';
 
 /**
  * ColorReplaceFilter, originally by mishaa, updated by timetocode
@@ -31,7 +32,7 @@ import * as PIXI from 'pixi.js';
  *  someOtherSprite.filters = [new ColorReplaceFilter(0xdcdcdc, 0xe1c8d7, 0.001)];
  *
  */
-export default class ColorReplaceFilter extends PIXI.Filter {
+export class ColorReplaceFilter extends Filter {
 
     constructor(originalColor = 0xFF0000, newColor = 0x000000, epsilon = 0.4) {
         super(vertex, fragment);
@@ -50,14 +51,14 @@ export default class ColorReplaceFilter extends PIXI.Filter {
     set originalColor(value) {
         let arr = this.uniforms.originalColor;
         if (typeof value === 'number') {
-            PIXI.utils.hex2rgb(value, arr);
+            hex2rgb(value, arr);
             this._originalColor = value;
         }
         else {
             arr[0] = value[0];
             arr[1] = value[1];
             arr[2] = value[2];
-            this._originalColor = PIXI.utils.rgb2hex(arr);
+            this._originalColor = rgb2hex(arr);
         }
     }
     get originalColor() {
@@ -72,14 +73,14 @@ export default class ColorReplaceFilter extends PIXI.Filter {
     set newColor(value) {
         let arr = this.uniforms.newColor;
         if (typeof value === 'number') {
-            PIXI.utils.hex2rgb(value, arr);
+            hex2rgb(value, arr);
             this._newColor = value;
         }
         else {
             arr[0] = value[0];
             arr[1] = value[1];
             arr[2] = value[2];
-            this._newColor = PIXI.utils.rgb2hex(arr);
+            this._newColor = rgb2hex(arr);
         }
     }
     get newColor() {

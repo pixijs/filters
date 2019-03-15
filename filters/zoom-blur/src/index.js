@@ -1,1 +1,1 @@
-export { default as ZoomBlurFilter } from './ZoomBlurFilter.js';
+export * from './ZoomBlurFilter.js';
