@@ -3,7 +3,7 @@
   "version": "2.7.0",
   "main": "lib/filter-crt.js",
   "bundle": "dist/filter-crt.js",
-  "description": "PixiJS v4 filter to apply an effect resembling old CRT monitors",
+  "description": "PixiJS filter to apply an effect resembling old CRT monitors",
   "author": "finscn <finscn@gmail.com>",
   "module": "lib/filter-crt.esm.js",
   "types": "types.d.ts",

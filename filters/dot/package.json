@@ -3,7 +3,7 @@
   "version": "2.7.0",
   "main": "lib/filter-dot.js",
   "bundle": "dist/filter-dot.js",
-  "description": "PixiJS v4 filter to apply a black and white dot effect",
+  "description": "PixiJS filter to apply a black and white dot effect",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"

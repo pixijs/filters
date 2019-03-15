@@ -3,7 +3,7 @@
   "version": "2.7.0",
   "main": "lib/filter-rgb-split.js",
   "bundle": "dist/filter-rgb-split.js",
-  "description": "PixiJS v4 filter to split and shift red, green or blue channels",
+  "description": "PixiJS filter to split and shift red, green or blue channels",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"

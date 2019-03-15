@@ -3,7 +3,7 @@
   "version": "2.7.0",
   "main": "lib/filter-radial-blur.js",
   "bundle": "dist/filter-radial-blur.js",
-  "description": "PixiJS v4 filter to apply a radial blur effect",
+  "description": "PixiJS filter to apply a radial blur effect",
   "author": "finscn <finscn@gmail.com>",
   "module": "lib/filter-radial-blur.esm.js",
   "types": "types.d.ts",

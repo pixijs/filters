@@ -3,7 +3,7 @@
   "version": "2.7.1",
   "main": "lib/filter-ascii.js",
   "bundle": "dist/filter-ascii.js",
-  "description": "PixiJS v4 filter to render DisplayObject as ASCII text",
+  "description": "PixiJS filter to render DisplayObject as ASCII text",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"

@@ -1,6 +1,6 @@
 # DotFilter
 
-PixiJS v4 filter to apply a black and white dot effect.
+PixiJS filter to apply a black and white dot effect.
 
 ## Installation
 

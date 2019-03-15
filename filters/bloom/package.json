@@ -3,7 +3,7 @@
   "version": "2.7.0",
   "main": "lib/filter-bloom.js",
   "bundle": "dist/filter-bloom.js",
-  "description": "PixiJS v4 filter to apply a simple bloom effect",
+  "description": "PixiJS filter to apply a simple bloom effect",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"

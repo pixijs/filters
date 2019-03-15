@@ -1,6 +1,6 @@
 # EmbossFilter
 
-PixiJS v4 filter to apply an emboss effect.
+PixiJS filter to apply an emboss effect.
 
 ## Installation
 

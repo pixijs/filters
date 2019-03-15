@@ -1,6 +1,6 @@
 # GlowFilter
 
-PixiJS v4 filter to apply a glow effect.
+PixiJS filter to apply a glow effect.
 
 ## Installation
 

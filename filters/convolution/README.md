@@ -1,6 +1,6 @@
 # ConvolutionFilter
 
-PixiJS v4 filter to apply a convolution effect.
+PixiJS filter to apply a convolution effect.
 
 ## Installation
 

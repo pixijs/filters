@@ -1,6 +1,6 @@
 # GlitchFilter
 
-PixiJS v4 filter to apply a glitch effect.
+PixiJS filter to apply a glitch effect.
 
 ## Installation
 

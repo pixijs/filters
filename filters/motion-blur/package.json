@@ -3,7 +3,7 @@
   "version": "2.7.0",
   "main": "lib/filter-motion-blur.js",
   "bundle": "dist/filter-motion-blur.js",
-  "description": "PixiJS v4 filter to apply a directional blur effect",
+  "description": "PixiJS filter to apply a directional blur effect",
   "author": "finscn <finscn@gmail.com>",
   "module": "lib/filter-motion-blur.esm.js",
   "types": "types.d.ts",

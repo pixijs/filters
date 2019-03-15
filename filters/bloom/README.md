@@ -1,6 +1,6 @@
 # BloomFilter
 
-PixiJS v4 filter to apply a simple bloom effect.
+PixiJS filter to apply a simple bloom effect.
 
 ## Installation
 

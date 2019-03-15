@@ -3,7 +3,7 @@
   "version": "2.7.0",
   "main": "lib/filter-twist.js",
   "bundle": "dist/filter-twist.js",
-  "description": "PixiJS v4 filter to apply a twist effect to a DisplayObject",
+  "description": "PixiJS filter to apply a twist effect to a DisplayObject",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"

@@ -3,7 +3,7 @@
   "version": "2.7.0",
   "main": "lib/filter-adjustment.js",
   "bundle": "dist/filter-adjustment.js",
-  "description": "PixiJS v4 filter to adjust gamma, contrast, saturation, brightness or color channels",
+  "description": "PixiJS filter to adjust gamma, contrast, saturation, brightness or color channels",
   "author": "finscn <finscn@gmail.com>",
   "module": "lib/filter-adjustment.esm.js",
   "types": "types.d.ts",

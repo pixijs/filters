@@ -1,6 +1,6 @@
 # ColorReplaceFilter
 
-PixiJS v4 filter to replace a single color.
+PixiJS filter to replace a single color.
 
 ## Installation
 

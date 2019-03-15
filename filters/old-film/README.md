@@ -1,6 +1,6 @@
 # OldFilmFilter
 
-PixiJS v4 filter to apply an old film effect with grain and scratches.
+PixiJS filter to apply an old film effect with grain and scratches.
 
 ## Installation
 

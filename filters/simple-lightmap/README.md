@@ -1,6 +1,6 @@
 # SimpleLightmapFilter
 
-PixiJS v4 filter to create a light-map from a texture.
+PixiJS filter to create a light-map from a texture.
 
 ## Installation
 

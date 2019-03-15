@@ -1,6 +1,6 @@
 # AdjustBasicFilter
 
-PixiJS v4 filter to apply reflection and wave effect.
+PixiJS filter to apply reflection and wave effect.
 
 ## Installation
 

@@ -3,7 +3,7 @@
   "version": "2.7.0",
   "main": "lib/filter-convolution.js",
   "bundle": "dist/filter-convolution.js",
-  "description": "PixiJS v4 filter to apply a convolution effect",
+  "description": "PixiJS filter to apply a convolution effect",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
