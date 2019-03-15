@@ -2,6 +2,7 @@
   "name": "@pixi/filter-color-replace",
   "version": "2.7.0",
   "main": "lib/filter-color-replace.js",
+  "bundle": "dist/filter-color-replace.js",
   "description": "PixiJS v4 filter to replace a single color",
   "author": "Mat Groves",
   "contributors": [
@@ -21,6 +22,7 @@
   },
   "files": [
     "lib",
+    "dist",
     "types.d.ts"
   ],
   "dependencies": {

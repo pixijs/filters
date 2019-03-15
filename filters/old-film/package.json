@@ -2,6 +2,7 @@
   "name": "@pixi/filter-old-film",
   "version": "2.7.0",
   "main": "lib/filter-old-film.js",
+  "bundle": "dist/filter-old-film.js",
   "description": "PixiJS v4 filter to apply an old film effect with grain and scratches",
   "author": "finscn <finscn@gmail.com>",
   "module": "lib/filter-old-film.esm.js",
@@ -18,6 +19,7 @@
   },
   "files": [
     "lib",
+    "dist",
     "types.d.ts"
   ],
   "dependencies": {

@@ -2,6 +2,7 @@
   "name": "@pixi/filter-shockwave",
   "version": "2.7.0",
   "main": "lib/filter-shockwave.js",
+  "bundle": "dist/filter-shockwave.js",
   "description": "PixiJS v4 filter to apply a shockwave-type effect",
   "author": "Mat Groves",
   "contributors": [
@@ -21,6 +22,7 @@
   },
   "files": [
     "lib",
+    "dist",
     "types.d.ts"
   ],
   "dependencies": {

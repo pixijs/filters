@@ -134,7 +134,7 @@ async function main() {
         ].join('\n');
 
         // Get settings from package JSON
-        let { main, module, bundle } = pkg.toJSON();
+        let { main, module, bundle, globals } = pkg.toJSON();
         const basePath = path.relative(__dirname, pkg.location);
         const input = path.join(basePath, 'src/index.js');
         const freeze = false;
@@ -169,8 +169,8 @@ async function main() {
         // this will package all dependencies
         if (bundle) {
             const name = '__filters';
-            const footer = `Object.assign(PIXI.filters, this ? this.${name} : ${name});`;
-            const globals = {
+            const footer = `Object.assign(PIXI.filters, ${name});`;
+            globals = Object.assign({
                 '@pixi/core': 'PIXI',
                 '@pixi/math': 'PIXI',
                 '@pixi/settings': 'PIXI',
@@ -178,7 +178,7 @@ async function main() {
                 '@pixi/utils': 'PIXI',
                 '@pixi/filter-alpha': 'PIXI.filters',
                 '@pixi/filter-blur': 'PIXI.filters'
-            };
+            }, globals);
             results.push({
                 input,
                 external: Object.keys(globals),

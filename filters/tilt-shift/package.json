@@ -2,6 +2,7 @@
   "name": "@pixi/filter-tilt-shift",
   "version": "2.7.0",
   "main": "lib/filter-tilt-shift.js",
+  "bundle": "dist/filter-tilt-shift.js",
   "description": "PixiJS v4 filter to render a tilt-shift-like camera effect",
   "author": "Mat Groves",
   "contributors": [
@@ -21,6 +22,7 @@
   },
   "files": [
     "lib",
+    "dist",
     "types.d.ts"
   ],
   "dependencies": {

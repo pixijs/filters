@@ -2,6 +2,7 @@
   "name": "@pixi/filter-adjustment",
   "version": "2.7.0",
   "main": "lib/filter-adjustment.js",
+  "bundle": "dist/filter-adjustment.js",
   "description": "PixiJS v4 filter to adjust gamma, contrast, saturation, brightness or color channels",
   "author": "finscn <finscn@gmail.com>",
   "module": "lib/filter-adjustment.esm.js",
@@ -18,6 +19,7 @@
   },
   "files": [
     "lib",
+    "dist",
     "types.d.ts"
   ],
   "dependencies": {
