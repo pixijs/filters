@@ -1,7 +1,7 @@
 {
   "name": "@pixi/filter-crt",
   "version": "2.7.0",
-  "main": "lib/filter-crt.js",
+  "main": "lib/filter-crt.cjs.js",
   "bundle": "dist/filter-crt.js",
   "description": "PixiJS filter to apply an effect resembling old CRT monitors",
   "author": "finscn <finscn@gmail.com>",

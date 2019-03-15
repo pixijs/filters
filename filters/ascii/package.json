@@ -1,7 +1,7 @@
 {
   "name": "@pixi/filter-ascii",
   "version": "2.7.1",
-  "main": "lib/filter-ascii.js",
+  "main": "lib/filter-ascii.cjs.js",
   "bundle": "dist/filter-ascii.js",
   "description": "PixiJS filter to render DisplayObject as ASCII text",
   "author": "Mat Groves",

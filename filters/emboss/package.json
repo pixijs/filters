@@ -1,7 +1,7 @@
 {
   "name": "@pixi/filter-emboss",
   "version": "2.7.0",
-  "main": "lib/filter-emboss.js",
+  "main": "lib/filter-emboss.cjs.js",
   "bundle": "dist/filter-emboss.js",
   "description": "PixiJS filter to apply an emboss effect",
   "author": "Mat Groves",

@@ -1,7 +1,7 @@
 {
   "name": "@pixi/filter-kawase-blur",
   "version": "2.7.0",
-  "main": "lib/filter-kawase-blur.js",
+  "main": "lib/filter-kawase-blur.cjs.js",
   "bundle": "dist/filter-kawase-blur.js",
   "description": "PixiJS filter to apply an alternative, fast blur effect to Gaussian",
   "author": "finscn <finscn@gmail.com>",

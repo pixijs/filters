@@ -1,7 +1,7 @@
 {
   "name": "@pixi/filter-advanced-bloom",
   "version": "2.7.0",
-  "main": "lib/filter-advanced-bloom.js",
+  "main": "lib/filter-advanced-bloom.cjs.js",
   "bundle": "dist/filter-advanced-bloom.js",
   "description": "PixiJS filter to render Bloom Filter (with highlight) effect",
   "author": "finscn",

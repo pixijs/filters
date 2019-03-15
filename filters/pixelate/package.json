@@ -1,7 +1,7 @@
 {
   "name": "@pixi/filter-pixelate",
   "version": "2.7.0",
-  "main": "lib/filter-pixelate.js",
+  "main": "lib/filter-pixelate.cjs.js",
   "bundle": "dist/filter-pixelate.js",
   "description": "PixiJS filter to apply a pixelation effect",
   "author": "Mat Groves",

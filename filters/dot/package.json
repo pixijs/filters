@@ -1,7 +1,7 @@
 {
   "name": "@pixi/filter-dot",
   "version": "2.7.0",
-  "main": "lib/filter-dot.js",
+  "main": "lib/filter-dot.cjs.js",
   "bundle": "dist/filter-dot.js",
   "description": "PixiJS filter to apply a black and white dot effect",
   "author": "Mat Groves",

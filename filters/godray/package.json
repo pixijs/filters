@@ -1,7 +1,7 @@
 {
   "name": "@pixi/filter-godray",
   "version": "2.7.0",
-  "main": "lib/filter-godray.js",
+  "main": "lib/filter-godray.cjs.js",
   "bundle": "dist/filter-godray.js",
   "description": "PixiJS filter to apply and animate atmospheric light rays",
   "author": "Alain Galvan",

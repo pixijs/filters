@@ -1,7 +1,7 @@
 {
   "name": "@pixi/filter-bloom",
   "version": "2.7.0",
-  "main": "lib/filter-bloom.js",
+  "main": "lib/filter-bloom.cjs.js",
   "bundle": "dist/filter-bloom.js",
   "description": "PixiJS filter to apply a simple bloom effect",
   "author": "Mat Groves",

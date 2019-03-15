@@ -1,7 +1,7 @@
 {
   "name": "@pixi/filter-color-map",
   "version": "2.7.0",
-  "main": "lib/filter-color-map.js",
+  "main": "lib/filter-color-map.cjs.js",
   "bundle": "dist/filter-color-map.js",
   "description": "PixiJS filter to apply a color adjust effect",
   "author": "finscn <finscn@gmail.com>",

@@ -1,7 +1,7 @@
 {
   "name": "@pixi/filter-bevel",
   "version": "2.7.0",
-  "main": "lib/filter-bevel.js",
+  "main": "lib/filter-bevel.cjs.js",
   "bundle": "dist/filter-bevel.js",
   "description": "PixiJS filter to apply a bevel effect",
   "author": "Evgeny Shestakov",
