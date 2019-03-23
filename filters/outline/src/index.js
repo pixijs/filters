@@ -1,1 +1,1 @@
-export {default as OutlineFilter} from './OutlineFilter';
+export * from './OutlineFilter';

@@ -1,6 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './extract-brightness.frag';
-import * as PIXI from 'pixi.js';
+import {Filter} from '@pixi/core';
 
 /**
  * Internal filter for AdvancedBloomFilter to get brightness.
@@ -8,7 +8,7 @@ import * as PIXI from 'pixi.js';
  * @private
  * @param {number} [threshold=0.5] Defines how bright a color needs to be extracted.
  */
-export default class ExtractBrightnessFilter extends PIXI.Filter {
+export class ExtractBrightnessFilter extends Filter {
 
     constructor(threshold = 0.5) {
         super(vertex, fragment);

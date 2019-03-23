@@ -1,1 +1,1 @@
-export {default as DotFilter} from './DotFilter';
+export * from './DotFilter';

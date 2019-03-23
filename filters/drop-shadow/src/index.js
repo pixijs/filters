@@ -1,1 +1,1 @@
-export {default as DropShadowFilter} from './DropShadowFilter';
+export * from './DropShadowFilter';

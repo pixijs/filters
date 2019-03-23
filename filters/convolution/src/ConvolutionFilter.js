@@ -1,6 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './convolution.frag';
-import * as PIXI from 'pixi.js';
+import {Filter} from '@pixi/core';
 
 /**
  * The ConvolutionFilter class applies a matrix convolution filter effect.
@@ -17,7 +17,7 @@ import * as PIXI from 'pixi.js';
  * @param [width=200] {number} Width of the object you are transforming
  * @param [height=200] {number} Height of the object you are transforming
  */
-export default class ConvolutionFilter extends PIXI.Filter {
+export class ConvolutionFilter extends Filter {
 
     constructor(matrix, width = 200, height = 200) {
         super(vertex, fragment);

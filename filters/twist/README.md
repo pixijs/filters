@@ -1,6 +1,6 @@
 # TwistFilter
 
-PixiJS v4 filter to apply a twist effect to a DisplayObject.
+PixiJS filter to apply a twist effect to a DisplayObject.
 
 ## Installation
 

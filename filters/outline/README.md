@@ -1,6 +1,6 @@
 # OutlineFilter
 
-PixiJS v4 filter to apply an outline/stroke effect.
+PixiJS filter to apply an outline/stroke effect.
 
 ## Installation
 

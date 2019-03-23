@@ -1,6 +1,7 @@
 import {vertex} from '@tools/fragments';
 import fragment from './glow.frag';
-import * as PIXI from 'pixi.js';
+import {Filter} from '@pixi/core';
+import {rgb2hex, hex2rgb} from '@pixi/utils';
 
 /**
  * GlowFilter, originally by mishaa
@@ -23,7 +24,7 @@ import * as PIXI from 'pixi.js';
  *      new GlowFilter(15, 2, 1, 0xFF0000, 0.5)
  *  ];
  */
-export default class GlowFilter extends PIXI.Filter {
+export class GlowFilter extends Filter {
 
     constructor(distance = 10, outerStrength = 4, innerStrength = 0, color = 0xffffff, quality = 0.1) {
         super(vertex, fragment
@@ -43,10 +44,10 @@ export default class GlowFilter extends PIXI.Filter {
      * @default 0xFFFFFF
      */
     get color() {
-        return PIXI.utils.rgb2hex(this.uniforms.glowColor);
+        return rgb2hex(this.uniforms.glowColor);
     }
     set color(value) {
-        PIXI.utils.hex2rgb(value, this.uniforms.glowColor);
+        hex2rgb(value, this.uniforms.glowColor);
     }
 
     /**

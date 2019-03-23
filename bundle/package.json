@@ -2,7 +2,7 @@
   "name": "pixi-filters",
   "version": "2.7.1",
   "main": "lib/pixi-filters.cjs.js",
-  "description": "PixiJS v4 optional display filters",
+  "description": "PixiJS v5 optional display filters",
   "author": "Mat Groves <mat@goodboydigital.com>",
   "contributors": [
     "Ivan Popelyshev <ivan.popelyshev@gmail.com>",
@@ -25,9 +25,6 @@
     "dist",
     "types.d.ts"
   ],
-  "peerDependencies": {
-    "pixi.js": ">=4.6.0"
-  },
   "dependencies": {
     "@pixi/filter-adjustment": "^2.7.0",
     "@pixi/filter-advanced-bloom": "^2.7.0",

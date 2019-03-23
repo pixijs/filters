@@ -1,1 +1,1 @@
-export {default as SimpleLightmapFilter} from './SimpleLightmapFilter';
+export * from './SimpleLightmapFilter';

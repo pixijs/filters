@@ -1,6 +1,7 @@
 import {vertex} from '@tools/fragments';
 import fragment from './multi-color-replace.frag';
-import * as PIXI from 'pixi.js';
+import {Filter} from '@pixi/core';
+import {hex2rgb, rgb2hex} from '@pixi/utils';
 
 /**
  * Filter for replacing a color with another color. Similar to ColorReplaceFilter, but support multiple
@@ -37,7 +38,7 @@ import * as PIXI from 'pixi.js';
  *  )];
  *
  */
-export default class MultiColorReplaceFilter extends PIXI.Filter {
+export class MultiColorReplaceFilter extends Filter {
     constructor(replacements, epsilon = 0.05, maxColors = null) {
         maxColors = maxColors || replacements.length;
 
@@ -74,10 +75,10 @@ export default class MultiColorReplaceFilter extends PIXI.Filter {
             // for original colors
             let color = pair[0];
             if (typeof color === 'number') {
-                color = PIXI.utils.hex2rgb(color);
+                color = hex2rgb(color);
             }
             else {
-                pair[0] = PIXI.utils.rgb2hex(color);
+                pair[0] = rgb2hex(color);
             }
 
             originals[i * 3] = color[0];
@@ -87,10 +88,10 @@ export default class MultiColorReplaceFilter extends PIXI.Filter {
             // for target colors
             let targetColor = pair[1];
             if (typeof targetColor === 'number') {
-                targetColor = PIXI.utils.hex2rgb(targetColor);
+                targetColor = hex2rgb(targetColor);
             }
             else {
-                pair[1] = PIXI.utils.rgb2hex(targetColor);
+                pair[1] = rgb2hex(targetColor);
             }
 
             targets[i * 3] = targetColor[0];

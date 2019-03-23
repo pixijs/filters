@@ -1,1 +1,1 @@
-export {default as EmbossFilter} from './EmbossFilter';
+export * from './EmbossFilter';

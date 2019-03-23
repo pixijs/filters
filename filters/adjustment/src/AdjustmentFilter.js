@@ -1,6 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './adjustment.frag';
-import * as PIXI from 'pixi.js';
+import {Filter} from '@pixi/core';
 
 /**
  * The ability to adjust gamma, contrast, saturation, brightness, alpha or color-channel shift. This is a faster
@@ -22,7 +22,7 @@ import * as PIXI from 'pixi.js';
  * @param {number} [options.blue=1] - The multipled blue channel
  * @param {number} [options.alpha=1] - The overall alpha amount
  */
-export default class AdjustmentFilter extends PIXI.Filter {
+export class AdjustmentFilter extends Filter {
     constructor(options) {
         super(vertex, fragment);
 

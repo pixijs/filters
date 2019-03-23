@@ -1,1 +1,1 @@
-export {default as RGBSplitFilter} from './RGBSplitFilter';
+export * from './RGBSplitFilter';

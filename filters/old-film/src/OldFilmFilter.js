@@ -1,6 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './old-film.frag';
-import * as PIXI from 'pixi.js';
+import {Filter} from '@pixi/core';
 
 /**
  * The OldFilmFilter applies a Old film effect to an object.<br>
@@ -26,7 +26,7 @@ import * as PIXI from 'pixi.js';
  * @param {number} [options.vignettingBlur=0.3] - Blur intensity of the vignette
  * @param {number} [seed=0] - A see value to apply to the random noise generation
  */
-export default class OldFilmFilter extends PIXI.Filter {
+export class OldFilmFilter extends Filter {
     constructor(options, seed = 0) {
         super(vertex, fragment);
         this.uniforms.dimensions = new Float32Array(2);
@@ -61,8 +61,8 @@ export default class OldFilmFilter extends PIXI.Filter {
      * @private
      */
     apply(filterManager, input, output, clear) {
-        this.uniforms.dimensions[0] = input.sourceFrame.width;
-        this.uniforms.dimensions[1] = input.sourceFrame.height;
+        this.uniforms.dimensions[0] = input.filterFrame.width;
+        this.uniforms.dimensions[1] = input.filterFrame.height;
 
         // named `seed` because in the most programming languages,
         // `random` used for "the function for generating random value".

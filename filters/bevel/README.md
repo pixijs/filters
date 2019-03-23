@@ -1,6 +1,6 @@
 # BevelFilter
 
-PixiJS v4 filter to apply a bevel effect.
+PixiJS filter to apply a bevel effect.
 
 ## Installation
 

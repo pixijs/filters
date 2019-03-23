@@ -1,1 +1,1 @@
-export {default as BevelFilter} from './BevelFilter';
+export * from './BevelFilter';

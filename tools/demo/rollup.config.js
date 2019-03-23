@@ -1,9 +1,19 @@
-const buble = require('rollup-plugin-buble');
-const resolve = require('rollup-plugin-node-resolve');
-const {terser} = require('rollup-plugin-terser');
+import buble from 'rollup-plugin-buble';
+import resolve from 'rollup-plugin-node-resolve';
+import {terser} from 'rollup-plugin-terser';
+import commonjs from 'rollup-plugin-commonjs';
+import builtins from 'rollup-plugin-node-builtins';
+import globals from 'rollup-plugin-node-globals';
 
 const plugins = [
+    globals(),
+    builtins(),
     resolve(),
+    commonjs({
+        namedExports: {
+            'resource-loader': ['Resource']
+        }
+    }),
     buble()
 ];
 
@@ -13,12 +23,7 @@ if (process.env.NODE_ENV === 'production') {
 
 export default {
     input: 'src/index.js',
-    external: ['pixi.js'],
     output: {
-        globals: {
-            'pixi.js': 'PIXI',
-            'pixi-filters': 'PIXI.filters'
-        },
         format: 'iife',
         file: 'index.js'
     },

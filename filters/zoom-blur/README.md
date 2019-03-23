@@ -1,6 +1,6 @@
 # ZoomBlurFilter
 
-PixiJS v4 filter to apply zoom blur effect.
+PixiJS filter to apply zoom blur effect.
 
 ## Installation
 

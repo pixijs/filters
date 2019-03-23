@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/pixijs/pixi-filters.svg?branch=master)](https://travis-ci.org/pixijs/pixi-filters) [![CDNJS](https://img.shields.io/cdnjs/v/pixi-filters.svg)](https://cdnjs.com/libraries/pixi-filters)
 
-PixiJS v4 optional display filters.
+PixiJS v5 optional display filters.
 
 Filters include:
 
@@ -50,28 +50,30 @@ Using NPM:
 npm install pixi-filters
 ```
 
+Using Yarn:
+```bash
+yarn add pixi-filters
+```
+
 ## Usage
 
 ### Browser
 
 ```html
 <script src="https://pixijs.download/release/pixi.min.js"></script>
-<script src="pixi-filters/lib/pixi-filters.min.js"></script>
+<script src="pixi-filters/dist/pixi-filters.js"></script>
 ```
 ```js
 var filter = new PIXI.filters.AsciiFilter();
 ```
 
-### Rollup or Webpack
+### Bundler (Rollup, Webpack, etc)
+
+Use ES6+ imports to import the specific filter. _Note: `PIXI` global is not accessible when building with bundlers._
 
 ```js
-// Include library by requiring pixi-filters module
-import * as filters from 'pixi-filters';
-const filter = new filters.DotFilter();
-
-// Alternatively, using PIXI.filters global object
-import 'pixi-filters';
-const filter = new PIXI.filters.DotFilter();
+import { DotFilter } from 'pixi-filters';
+const filter = new DotFilter();
 ```
 
 ## Documentation

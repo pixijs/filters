@@ -1,6 +1,6 @@
 # AdvancedBloomFilter
 
-PixiJS v4 filter to render Bloom Filter (with highlight) effect.
+PixiJS filter to render Bloom Filter (with highlight) effect.
 
 ## Installation
 

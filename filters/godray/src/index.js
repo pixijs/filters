@@ -1,1 +1,1 @@
-export {default as GodrayFilter} from './GodrayFilter';
+export * from './GodrayFilter';

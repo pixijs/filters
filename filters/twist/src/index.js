@@ -1,1 +1,1 @@
-export {default as TwistFilter} from './TwistFilter';
+export * from './TwistFilter';

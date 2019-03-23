@@ -1,5 +1,27 @@
 import * as filters from 'pixi-filters';
-import * as PIXI from 'pixi.js';
+import { Application } from '@pixi/app';
+import { settings } from '@pixi/settings';
+import { Container } from '@pixi/display';
+import { Rectangle } from '@pixi/math';
+import { Sprite } from '@pixi/sprite';
+import { TilingSprite } from '@pixi/sprite-tiling';
+import { EventEmitter } from '@pixi/utils';
+import { AlphaFilter } from '@pixi/filter-alpha';
+import { BlurFilter, BlurFilterPass } from '@pixi/filter-blur';
+import { ColorMatrixFilter } from '@pixi/filter-color-matrix';
+import { DisplacementFilter } from '@pixi/filter-displacement';
+import { FXAAFilter } from '@pixi/filter-fxaa';
+import { NoiseFilter } from '@pixi/filter-noise';
+
+const externalFilters = {
+    AlphaFilter,
+    BlurFilter,
+    BlurFilterPass,
+    ColorMatrixFilter,
+    DisplacementFilter,
+    FXAAFilter,
+    NoiseFilter,
+};
 
 /*global dat,ga*/
 /**
@@ -7,7 +29,7 @@ import * as PIXI from 'pixi.js';
  * @class
  * @extends PIXI.Application
  */
-export default class DemoApplication extends PIXI.Application {
+export default class DemoApplication extends Application {
 
     constructor() {
 
@@ -27,9 +49,7 @@ export default class DemoApplication extends PIXI.Application {
             backgroundColor:0x000000,
         });
 
-        this.legacy = parseInt(PIXI.VERSION.split('.')[0]) < 5;
-
-        PIXI.settings.PRECISION_FRAGMENT = 'highp';
+        settings.PRECISION_FRAGMENT = 'highp';
 
         this.domElement = domElement;
 
@@ -37,7 +57,7 @@ export default class DemoApplication extends PIXI.Application {
         this.initHeight = initHeight;
         this.animating = true;
         this.rendering = true;
-        this.events = new PIXI.utils.EventEmitter();
+        this.events = new EventEmitter();
         this.animateTimer = 0;
         this.bg = null;
         this.pond = null;
@@ -45,9 +65,9 @@ export default class DemoApplication extends PIXI.Application {
         this.fishes = [];
         this.fishFilters = [];
         this.pondFilters = [];
-        this.filterArea = new PIXI.Rectangle();
+        this.filterArea = new Rectangle();
         this.padding = 100;
-        this.bounds = new PIXI.Rectangle(
+        this.bounds = new Rectangle(
             -this.padding,
             -this.padding,
             initWidth + this.padding * 2,
@@ -100,19 +120,19 @@ export default class DemoApplication extends PIXI.Application {
         const {bounds, initWidth, initHeight} = this;
 
         // Setup the container
-        this.pond = new PIXI.Container();
+        this.pond = new Container();
         this.pond.filterArea = this.filterArea;
         this.pond.filters = this.pondFilters;
         this.stage.addChild(this.pond);
 
         // Setup the background image
-        this.bg = new PIXI.Sprite(resources.background.texture);
+        this.bg = new Sprite(resources.background.texture);
         this.pond.addChild(this.bg);
 
         // Create and add the fish
         for (let i = 0; i < this.fishCount; i++) {
             const id = 'fish' + ((i % 4) + 1);
-            const fish = new PIXI.Sprite(resources[id].texture);
+            const fish = new Sprite(resources[id].texture);
             fish.anchor.set(0.5);
             fish.filters = this.fishFilters;
 
@@ -129,7 +149,7 @@ export default class DemoApplication extends PIXI.Application {
         }
 
         // Setup the tiling sprite
-        this.overlay = new PIXI.extras.TilingSprite(
+        this.overlay = new TilingSprite(
             resources.overlay.texture,
             initWidth,
             initHeight
@@ -155,7 +175,7 @@ export default class DemoApplication extends PIXI.Application {
 
         const width = this.domElement.offsetWidth;
         const height = this.domElement.offsetHeight;
-        const filterAreaPadding = this.legacy ? 4 : 0;
+        const filterAreaPadding = 0;
 
         // Use equivalent of CSS's contain for the background
         // so that it scales proportionally
@@ -277,7 +297,7 @@ export default class DemoApplication extends PIXI.Application {
 
         const app = this;
         const folder = this.gui.addFolder(options.name);
-        const ClassRef = filters[id] || PIXI.filters[id];
+        const ClassRef = filters[id] || externalFilters[id];
 
         if (!ClassRef) {
             throw `Unable to find class name with "${id}"`;

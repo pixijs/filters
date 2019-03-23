@@ -1,6 +1,6 @@
 # RGBSplitFilter
 
-PixiJS v4 filter to split and shift red, green or blue channels.
+PixiJS filter to split and shift red, green or blue channels.
 
 ## Installation
 

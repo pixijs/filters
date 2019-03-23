@@ -1,6 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './ascii.frag';
-import * as PIXI from 'pixi.js';
+import {Filter} from '@pixi/core';
 
 // TODO (cengler) - The Y is flipped in this shader for some reason.
 
@@ -18,7 +18,7 @@ import * as PIXI from 'pixi.js';
  * @memberof PIXI.filters
  * @param {number} [size=8] Size of the font
  */
-export default class AsciiFilter extends PIXI.Filter {
+export class AsciiFilter extends Filter {
 
     constructor(size = 8) {
         super(vertex, fragment);

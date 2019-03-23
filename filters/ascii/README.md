@@ -1,6 +1,6 @@
 # AsciiFilter
 
-PixiJS v4 filter to render DisplayObject as ASCII text.
+PixiJS filter to render DisplayObject as ASCII text.
 
 ## Installation
 

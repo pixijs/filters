@@ -1,6 +1,6 @@
 /// <reference types="pixi.js" />
-declare namespace PIXI.filters {
-    class AdvancedBloomFilter extends PIXI.Filter<{}> {
+declare module "@pixi/filter-advanced-bloom" {
+    export class AdvancedBloomFilter extends PIXI.Filter {
         constructor(options?: AdvancedBloomOptions);
         constructor(threshold?: number);
         threshold: number;
@@ -12,7 +12,7 @@ declare namespace PIXI.filters {
         pixelSize:number|PIXI.Point|number[];
         resolution: number;
     }
-    interface AdvancedBloomOptions {
+    export interface AdvancedBloomOptions {
         threshold?: number;
         bloomScale?: number;
         brightness?: number;
@@ -22,8 +22,4 @@ declare namespace PIXI.filters {
         pixelSize?: number|PIXI.Point|number[];
         resolution?: number;
     }
-}
-
-declare module "@pixi/filter-advanced-bloom" {
-    export = PIXI.filters;
 }

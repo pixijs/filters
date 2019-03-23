@@ -1,6 +1,6 @@
 # KawaseBlurFilter
 
-PixiJS v4 filter to apply an alternative, fast blur effect to Gaussian.
+PixiJS filter to apply an alternative, fast blur effect to Gaussian.
 
 ## Installation
 

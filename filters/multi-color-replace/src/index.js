@@ -1,1 +1,1 @@
-export { default as MultiColorReplaceFilter } from './MultiColorReplaceFilter.js';
+export * from './MultiColorReplaceFilter.js';

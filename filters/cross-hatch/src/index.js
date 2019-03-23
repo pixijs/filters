@@ -1,1 +1,1 @@
-export {default as CrossHatchFilter} from './CrossHatchFilter';
+export * from './CrossHatchFilter';

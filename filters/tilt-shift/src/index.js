@@ -1,4 +1,4 @@
-export {default as TiltShiftFilter} from './TiltShiftFilter';
-export {default as TiltShiftXFilter} from './TiltShiftXFilter';
-export {default as TiltShiftYFilter} from './TiltShiftYFilter';
-export {default as TiltShiftAxisFilter} from './TiltShiftAxisFilter';
+export * from './TiltShiftFilter';
+export * from './TiltShiftXFilter';
+export * from './TiltShiftYFilter';
+export * from './TiltShiftAxisFilter';

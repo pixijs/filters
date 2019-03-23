@@ -1,1 +1,1 @@
-export {default as BulgePinchFilter} from './BulgePinchFilter';
+export * from './BulgePinchFilter';

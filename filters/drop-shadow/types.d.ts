@@ -1,6 +1,6 @@
 /// <reference types="pixi.js" />
-declare namespace PIXI.filters {
-    class DropShadowFilter extends PIXI.Filter<{}> {
+declare module "@pixi/filter-drop-shadow" {
+    export class DropShadowFilter extends PIXI.Filter {
         constructor(options?:DropShadowFilterOptions);
         alpha:number;
         blur:number;
@@ -13,7 +13,7 @@ declare namespace PIXI.filters {
         rotation:number;
         shadowOnly:boolean;
     }
-    interface DropShadowFilterOptions {
+    export interface DropShadowFilterOptions {
         alpha?:number;
         blur?:number;
         color?:number;
@@ -25,8 +25,4 @@ declare namespace PIXI.filters {
         rotation?:number;
         shadowOnly?:boolean;
     }
-}
-
-declare module "@pixi/filter-drop-shadow" {
-    export = PIXI.filters;
 }

@@ -1,1 +1,1 @@
-export {default as AsciiFilter} from './AsciiFilter';
+export * from './AsciiFilter';

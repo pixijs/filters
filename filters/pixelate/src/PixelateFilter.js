@@ -1,6 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './pixelate.frag';
-import * as PIXI from 'pixi.js';
+import {Filter} from '@pixi/core';
 
 /**
  * This filter applies a pixelate effect making display objects appear 'blocky'.<br>
@@ -11,7 +11,7 @@ import * as PIXI from 'pixi.js';
  * @memberof PIXI.filters
  * @param {PIXI.Point|Array<number>|number} [size=10] Either the width/height of the size of the pixels, or square size
  */
-export default class PixelateFilter extends PIXI.Filter {
+export class PixelateFilter extends Filter {
 
     constructor(size = 10) {
         super(vertex, fragment);

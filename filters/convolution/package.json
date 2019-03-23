@@ -1,8 +1,9 @@
 {
   "name": "@pixi/filter-convolution",
   "version": "2.7.0",
-  "main": "lib/filter-convolution.js",
-  "description": "PixiJS v4 filter to apply a convolution effect",
+  "main": "lib/filter-convolution.cjs.js",
+  "bundle": "dist/filter-convolution.js",
+  "description": "PixiJS filter to apply a convolution effect",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
@@ -21,10 +22,11 @@
   },
   "files": [
     "lib",
+    "dist",
     "types.d.ts"
   ],
-  "peerDependencies": {
-    "pixi.js": ">=4.0.0"
+  "dependencies": {
+    "@pixi/core": "^5.0.0-X"
   },
   "devDependencies": {
     "@tools/fragments": "^2.0.0"

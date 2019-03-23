@@ -1,8 +1,9 @@
 {
   "name": "@pixi/filter-outline",
   "version": "2.7.0",
-  "main": "lib/filter-outline.js",
-  "description": "PixiJS v4 filter to apply an outline/stroke effect",
+  "main": "lib/filter-outline.cjs.js",
+  "bundle": "dist/filter-outline.js",
+  "description": "PixiJS filter to apply an outline/stroke effect",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
@@ -21,10 +22,12 @@
   },
   "files": [
     "lib",
+    "dist",
     "types.d.ts"
   ],
-  "peerDependencies": {
-    "pixi.js": ">=4.0.0"
+  "dependencies": {
+    "@pixi/core": "^5.0.0-X",
+    "@pixi/utils": "^5.0.0-X"
   },
   "devDependencies": {
     "@tools/fragments": "^2.0.0"

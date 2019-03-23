@@ -1,6 +1,6 @@
 # ShockwaveFilter
 
-PixiJS v4 filter to apply a shockwave-type effect.
+PixiJS filter to apply a shockwave-type effect.
 
 ## Installation
 

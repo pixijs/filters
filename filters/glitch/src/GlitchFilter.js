@@ -1,6 +1,8 @@
 import {vertex} from '@tools/fragments';
 import fragment from './glitch.frag';
-import * as PIXI from 'pixi.js';
+import {Filter, Texture} from '@pixi/core';
+import {SCALE_MODES} from '@pixi/constants';
+import {DEG_TO_RAD} from '@pixi/math';
 
 /**
  * The GlitchFilter applies a glitch effect to an object.<br>
@@ -28,7 +30,7 @@ import * as PIXI from 'pixi.js';
  * @param {number} [options.green=[0,0]] - Green channel offset.
  * @param {number} [options.blue=[0,0]] - Blue channel offset.
  */
-export default class GlitchFilter extends PIXI.Filter {
+export class GlitchFilter extends Filter {
 
     constructor(options = {}) {
 
@@ -117,7 +119,7 @@ export default class GlitchFilter extends PIXI.Filter {
          * @member {PIXI.Texture}
          * @readonly
          */
-        this.texture = PIXI.Texture.fromCanvas(this._canvas, PIXI.SCALE_MODES.NEAREST);
+        this.texture = Texture.from(this._canvas, { scaleMode: SCALE_MODES.NEAREST });
 
         /**
          * Internal number of slices
@@ -136,8 +138,8 @@ export default class GlitchFilter extends PIXI.Filter {
      */
     apply(filterManager, input, output, clear) {
 
-        const width = input.sourceFrame.width;
-        const height = input.sourceFrame.height;
+        const width = input.filterFrame.width;
+        const height = input.filterFrame.height;
 
         this.uniforms.dimensions[0] = width;
         this.uniforms.dimensions[1] = height;
@@ -318,7 +320,7 @@ export default class GlitchFilter extends PIXI.Filter {
         }
         this._direction = value;
 
-        const radians = value * PIXI.DEG_TO_RAD;
+        const radians = value * DEG_TO_RAD;
 
         this.uniforms.sinDir = Math.sin(radians);
         this.uniforms.cosDir = Math.cos(radians);

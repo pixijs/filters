@@ -1,6 +1,7 @@
 import {vertex} from '@tools/fragments';
 import fragment from './tilt-shift.frag';
-import * as PIXI from 'pixi.js';
+import {Filter} from '@pixi/core';
+import {Point} from '@pixi/math';
 
 /**
  * @author Vico @vicocotea
@@ -15,16 +16,16 @@ import * as PIXI from 'pixi.js';
  * @memberof PIXI.filters
  * @private
  */
-export default class TiltShiftAxisFilter extends PIXI.Filter {
+export class TiltShiftAxisFilter extends Filter {
 
     constructor(blur = 100, gradientBlur = 600, start = null, end = null){
         super(vertex, fragment);
         this.uniforms.blur = blur;
         this.uniforms.gradientBlur = gradientBlur;
-        this.uniforms.start = start || new PIXI.Point(0, window.innerHeight / 2);
-        this.uniforms.end = end || new PIXI.Point(600, window.innerHeight / 2);
-        this.uniforms.delta = new PIXI.Point(30, 30);
-        this.uniforms.texSize = new PIXI.Point(window.innerWidth, window.innerHeight);
+        this.uniforms.start = start || new Point(0, window.innerHeight / 2);
+        this.uniforms.end = end || new Point(600, window.innerHeight / 2);
+        this.uniforms.delta = new Point(30, 30);
+        this.uniforms.texSize = new Point(window.innerWidth, window.innerHeight);
         this.updateDelta();
     }
 

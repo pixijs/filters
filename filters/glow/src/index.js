@@ -1,1 +1,1 @@
-export {default as GlowFilter} from './GlowFilter';
+export * from './GlowFilter';

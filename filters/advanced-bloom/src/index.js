@@ -1,1 +1,1 @@
-export {default as AdvancedBloomFilter} from './AdvancedBloomFilter';
+export * from './AdvancedBloomFilter';

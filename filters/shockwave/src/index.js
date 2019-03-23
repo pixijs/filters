@@ -1,1 +1,1 @@
-export {default as ShockwaveFilter} from './ShockwaveFilter';
+export * from './ShockwaveFilter';

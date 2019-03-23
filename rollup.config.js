@@ -87,11 +87,14 @@ async function getSortedPackages() {
 async function main() {
     const plugins = [
         commonjs({
+            preferBuiltins: true,
             namedExports: {
-                'pixi.js': ['settings', 'Filter']
+                'resource-loader': ['Resource']
             }
         }),
-        resolve(),
+        resolve({
+            preferBuiltins: true
+        }),
         string({
             include: [
                 '**/*.frag',
@@ -102,8 +105,10 @@ async function main() {
         buble()
     ];
 
+    const bundlePlugins = plugins.slice(0);
+
     if (process.env.NODE_ENV === 'production') {
-        plugins.push(terser({
+        bundlePlugins.push(terser({
             output: {
                 comments: function(node, comment) {
                     return comment.line === 1;
@@ -133,54 +138,27 @@ async function main() {
         const basePath = path.relative(__dirname, pkg.location);
         const input = path.join(basePath, 'src/index.js');
         const freeze = false;
-        const name = '__filters';
 
         // Generate the externals to use, by default don't include dependencies
-        const baseExternal = ['pixi.js'];
-        const external = [].concat(baseExternal, Object.keys(pkg.dependencies || []));
-
-        // pixi.js is a global, peer dependency included by user, add that
-        // to the list of user-defined globals
-        globals = Object.assign({ 'pixi.js': 'PIXI' }, globals);
-
-        // For UMD formatted, this adds class exports to PIXI.filters
-        const footer = `Object.assign(PIXI.filters, this ? this.${name} : ${name});`;
-
-        // UMD format output
-        const mainOutput = {
-            name,
-            file: path.join(basePath, main),
-            format: 'umd',
-            footer,
-            freeze,
-            sourcemap,
-            banner,
-            globals,
-        };
-
-        // ES format output
-        const moduleOutput = {
-            name,
-            file: path.join(basePath, module),
-            format: 'esm',
-            freeze,
-            sourcemap,
-            banner,
-            globals,
-        };
-
-        // For bundle, override and keep as vanilla-CommonJS
-        // basically just a list of require statements
-        if (bundle) {
-            mainOutput.footer = '';
-            mainOutput.format = 'cjs';
-        }
+        const external = Object.keys(pkg.dependencies);
 
         results.push({
             input,
             output: [
-                mainOutput,
-                moduleOutput,
+                {
+                    file: path.join(basePath, main),
+                    format: 'cjs',
+                    freeze,
+                    sourcemap,
+                    banner,
+                },
+                {
+                    file: path.join(basePath, module),
+                    format: 'esm',
+                    freeze,
+                    sourcemap,
+                    banner,
+                },
             ],
             external,
             plugins,
@@ -190,9 +168,20 @@ async function main() {
         // we'll use this to generate the bundle file
         // this will package all dependencies
         if (bundle) {
+            const name = '__filters';
+            const footer = `Object.assign(PIXI.filters, ${name});`;
+            globals = Object.assign({
+                '@pixi/core': 'PIXI',
+                '@pixi/math': 'PIXI',
+                '@pixi/settings': 'PIXI',
+                '@pixi/constants': 'PIXI',
+                '@pixi/utils': 'PIXI',
+                '@pixi/filter-alpha': 'PIXI.filters',
+                '@pixi/filter-blur': 'PIXI.filters'
+            }, globals);
             results.push({
                 input,
-                external: baseExternal,
+                external: Object.keys(globals),
                 output: {
                     name,
                     banner,
@@ -204,7 +193,7 @@ async function main() {
                     sourcemap,
                 },
                 treeshake: false,
-                plugins,
+                plugins: bundlePlugins,
             });
         }
     });

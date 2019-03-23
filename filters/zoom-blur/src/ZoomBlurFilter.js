@@ -1,6 +1,6 @@
 import {vertex} from '@tools/fragments';
 import fragment from './zoom-blur.frag';
-import * as PIXI from 'pixi.js';
+import {Filter} from '@pixi/core';
 
 /**
  * The ZoomFilter applies a Zoom blur to an object.<br>
@@ -14,7 +14,7 @@ import * as PIXI from 'pixi.js';
  * @param {number} [innerRadius=0] The inner radius of zoom. The part in inner circle won't apply zoom blur effect.
  * @param {number} [radius=-1] See `radius` property.
  */
-export default class ZoomBlurFilter extends PIXI.Filter {
+export class ZoomBlurFilter extends Filter {
     constructor(strength = 0.1, center = [0, 0], innerRadius = 0, radius = -1) {
         super(vertex, fragment);
 
