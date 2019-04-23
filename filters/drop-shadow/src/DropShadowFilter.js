@@ -3,7 +3,7 @@ import {vertex} from '@tools/fragments';
 import fragment from './dropshadow.frag';
 import {Filter} from '@pixi/core';
 import {settings} from '@pixi/settings';
-import {Matrix, DEG_TO_RAD} from '@pixi/math';
+import {DEG_TO_RAD, Point} from '@pixi/math';
 import {rgb2hex, hex2rgb} from '@pixi/utils';
 
 /**
@@ -65,6 +65,7 @@ export class DropShadowFilter extends Filter {
 
         this._tintFilter = new Filter(vertex, fragment);
         this._tintFilter.uniforms.color = new Float32Array(4);
+        this._tintFilter.uniforms.shift = new Point();
         this._tintFilter.resolution = resolution;
         this._blurFilter = kernels ?
             new KawaseBlurFilter(kernels) :
@@ -72,8 +73,6 @@ export class DropShadowFilter extends Filter {
 
         this.pixelSize = pixelSize;
         this.resolution = resolution;
-
-        this.targetTransform = new Matrix();
 
         const { shadowOnly, rotation, distance, alpha, color } = options;
 
@@ -89,10 +88,7 @@ export class DropShadowFilter extends Filter {
     apply(filterManager, input, output, clear) {
         const target = filterManager.getFilterTexture();
 
-        target.transform = this.targetTransform;
         this._tintFilter.apply(filterManager, input, target, true);
-        target.transform = null;
-
         this._blurFilter.apply(filterManager, target, output, clear);
 
         if (this.shadowOnly !== true) {
@@ -114,9 +110,11 @@ export class DropShadowFilter extends Filter {
      * Update the transform matrix of offset angle.
      * @private
      */
-    _updateTargetTransform() {
-        this.targetTransform.tx = this.distance * Math.cos(this.angle);
-        this.targetTransform.ty = this.distance * Math.sin(this.angle);
+    _updateShift() {
+        this._tintFilter.uniforms.shift.set(
+            this.distance * Math.cos(this.angle),
+            this.distance * Math.sin(this.angle)
+        );
     }
 
     /**
@@ -150,7 +148,7 @@ export class DropShadowFilter extends Filter {
     set distance(value) {
         this._distance = value;
         this._updatePadding();
-        this._updateTargetTransform();
+        this._updateShift();
     }
 
     /**
@@ -163,7 +161,7 @@ export class DropShadowFilter extends Filter {
     }
     set rotation(value) {
         this.angle = value * DEG_TO_RAD;
-        this._updateTargetTransform();
+        this._updateShift();
     }
 
     /**
