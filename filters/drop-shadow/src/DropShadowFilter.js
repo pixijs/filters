@@ -12,6 +12,8 @@ import {rgb2hex, hex2rgb} from '@pixi/utils';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @see {@link https://www.npmjs.com/package/@pixi/filter-drop-shadow|@pixi/filter-drop-shadow}
+ * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  * @param {object} [options] Filter options
  * @param {number} [options.rotation=45] The angle of the shadow in degrees.
  * @param {number} [options.distance=5] Distance of shadow
@@ -24,7 +26,7 @@ import {rgb2hex, hex2rgb} from '@pixi/utils';
  * @param {number|number[]|PIXI.Point} [options.pixelSize=1] - the pixelSize of the Blur filter.
  * @param {number} [options.resolution=PIXI.settings.RESOLUTION] - The resolution of the Blur filter.
  */
-export class DropShadowFilter extends Filter {
+class DropShadowFilter extends Filter {
     constructor(options) {
 
         // Fallback support for ctor: (rotation, distance, blur, color, alpha)
@@ -239,3 +241,5 @@ export class DropShadowFilter extends Filter {
         this._blurFilter.pixelSize = value;
     }
 }
+
+export { DropShadowFilter };

@@ -5,27 +5,29 @@ import {Filter} from '@pixi/core';
 import {Point, DEG_TO_RAD} from '@pixi/math';
 
 /**
-* GordayFilter, {@link https://codepen.io/alaingalvan originally} by Alain Galvan
-*
-*
-*
-* ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/godray.gif)
-* @class
-* @extends PIXI.Filter
-* @memberof PIXI.filters
-*
-* @example
-*  displayObject.filters = [new GodrayFilter()];
-* @param {object} [options] Filter options
-* @param {number} [options.angle=30] Angle/Light-source of the rays.
-* @param {number} [options.gain=0.5] General intensity of the effect.
-* @param {number} [options.lacunrity=2.5] The density of the fractal noise.
-* @param {boolean} [options.parallel=true] `true` to use `angle`, `false` to use `center`
-* @param {number} [options.time=0] The current time position.
-* @param {PIXI.Point|number[]} [options.center=[0,0]] Focal point for non-parallel rays,
-*        to use this `parallel` must be set to `false`.
-*/
-export class GodrayFilter extends Filter {
+ * GordayFilter, {@link https://codepen.io/alaingalvan originally} by Alain Galvan
+ *
+ *
+ *
+ * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/godray.gif)
+ * @class
+ * @extends PIXI.Filter
+ * @memberof PIXI.filters
+ * @see {@link https://www.npmjs.com/package/@pixi/filter-godray|@pixi/filter-godray}
+ * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
+ *
+ * @example
+ *  displayObject.filters = [new GodrayFilter()];
+ * @param {object} [options] Filter options
+ * @param {number} [options.angle=30] Angle/Light-source of the rays.
+ * @param {number} [options.gain=0.5] General intensity of the effect.
+ * @param {number} [options.lacunrity=2.5] The density of the fractal noise.
+ * @param {boolean} [options.parallel=true] `true` to use `angle`, `false` to use `center`
+ * @param {number} [options.time=0] The current time position.
+ * @param {PIXI.Point|number[]} [options.center=[0,0]] Focal point for non-parallel rays,
+ *        to use this `parallel` must be set to `false`.
+ */
+class GodrayFilter extends Filter {
 
     constructor(options) {
         super(vertex, fragment.replace('${perlin}', perlin));
@@ -158,3 +160,4 @@ export class GodrayFilter extends Filter {
     }
 }
 
+export { GodrayFilter };

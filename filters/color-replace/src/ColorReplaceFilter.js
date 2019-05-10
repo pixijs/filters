@@ -11,6 +11,8 @@ import {hex2rgb, rgb2hex} from '@pixi/utils';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @see {@link https://www.npmjs.com/package/@pixi/filter-color-replace|@pixi/filter-color-replace}
+ * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  * @param {number|Array<number>} [originalColor=0xFF0000] The color that will be changed, as a 3 component RGB e.g. [1.0, 1.0, 1.0]
  * @param {number|Array<number>} [newColor=0x000000] The resulting color, as a 3 component RGB e.g. [1.0, 0.5, 1.0]
  * @param {number} [epsilon=0.4] Tolerance/sensitivity of the floating-point comparison between colors (lower = more exact, higher = more inclusive)
@@ -32,7 +34,7 @@ import {hex2rgb, rgb2hex} from '@pixi/utils';
  *  someOtherSprite.filters = [new ColorReplaceFilter(0xdcdcdc, 0xe1c8d7, 0.001)];
  *
  */
-export class ColorReplaceFilter extends Filter {
+class ColorReplaceFilter extends Filter {
 
     constructor(originalColor = 0xFF0000, newColor = 0x000000, epsilon = 0.4) {
         super(vertex, fragment);
@@ -100,3 +102,4 @@ export class ColorReplaceFilter extends Filter {
     }
 }
 
+export { ColorReplaceFilter };

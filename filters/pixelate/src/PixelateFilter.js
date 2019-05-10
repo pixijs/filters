@@ -9,9 +9,11 @@ import {Filter} from '@pixi/core';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @see {@link https://www.npmjs.com/package/@pixi/filter-pixelate|@pixi/filter-pixelate}
+ * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  * @param {PIXI.Point|Array<number>|number} [size=10] Either the width/height of the size of the pixels, or square size
  */
-export class PixelateFilter extends Filter {
+class PixelateFilter extends Filter {
 
     constructor(size = 10) {
         super(vertex, fragment);
@@ -35,3 +37,5 @@ export class PixelateFilter extends Filter {
         this.uniforms.size = value;
     }
 }
+
+export { PixelateFilter };

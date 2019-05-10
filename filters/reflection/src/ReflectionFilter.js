@@ -9,6 +9,8 @@ import {Filter} from '@pixi/core';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @see {@link https://www.npmjs.com/package/@pixi/filter-reflection|@pixi/filter-reflection}
+ * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  *
  * @param {object} [options] - The optional parameters of Reflection effect.
  * @param {number} [options.mirror=true] - `true` to reflect the image, `false` for waves-only
@@ -19,7 +21,7 @@ import {Filter} from '@pixi/core';
  * @param {number} [options.alpha=[1, 1]] - Starting and ending alpha values
  * @param {number} [options.time=0] - Time for animating position of waves
  */
-export class ReflectionFilter extends Filter {
+class ReflectionFilter extends Filter {
     constructor(options) {
         super(vertex, fragment);
         this.uniforms.amplitude = new Float32Array(2);
@@ -124,3 +126,5 @@ export class ReflectionFilter extends Filter {
         return this.uniforms.alpha;
     }
 }
+
+export { ReflectionFilter };

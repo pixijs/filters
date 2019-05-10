@@ -16,7 +16,7 @@ import {Point} from '@pixi/math';
  * @memberof PIXI.filters
  * @private
  */
-export class TiltShiftAxisFilter extends Filter {
+class TiltShiftAxisFilter extends Filter {
 
     constructor(blur = 100, gradientBlur = 600, start = null, end = null){
         super(vertex, fragment);
@@ -94,3 +94,4 @@ export class TiltShiftAxisFilter extends Filter {
     }
 }
 
+export { TiltShiftAxisFilter };

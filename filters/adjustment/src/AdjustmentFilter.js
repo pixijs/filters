@@ -11,6 +11,8 @@ import {Filter} from '@pixi/core';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @see {@link https://www.npmjs.com/package/@pixi/filter-adjustment|@pixi/filter-adjustment}
+ * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  *
  * @param {object|number} [options] - The optional parameters of the filter.
  * @param {number} [options.gamma=1] - The amount of luminance
@@ -22,7 +24,7 @@ import {Filter} from '@pixi/core';
  * @param {number} [options.blue=1] - The multipled blue channel
  * @param {number} [options.alpha=1] - The overall alpha amount
  */
-export class AdjustmentFilter extends Filter {
+class AdjustmentFilter extends Filter {
     constructor(options) {
         super(vertex, fragment);
 
@@ -110,3 +112,5 @@ export class AdjustmentFilter extends Filter {
         filterManager.applyFilter(this, input, output, clear);
     }
 }
+
+export { AdjustmentFilter };

@@ -10,11 +10,13 @@ import {SCALE_MODES} from '@pixi/constants';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @see {@link https://www.npmjs.com/package/@pixi/filter-color-map|@pixi/filter-color-map}
+ * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  * @param {HTMLImageElement|HTMLCanvasElement|PIXI.BaseTexture|PIXI.Texture} [colorMap] - The colorMap texture of the filter.
  * @param {boolean} [nearest=false] - Whether use NEAREST for colorMap texture.
  * @param {number} [mix=1] - The mix from 0 to 1, where 0 is the original image and 1 is the color mapped image.
  */
-export class ColorMapFilter extends Filter {
+class ColorMapFilter extends Filter {
 
     constructor(colorMap, nearest = false, mix = 1) {
         super(vertex, fragment);
@@ -138,3 +140,6 @@ export class ColorMapFilter extends Filter {
         super.destroy();
     }
 }
+
+export { ColorMapFilter };
+

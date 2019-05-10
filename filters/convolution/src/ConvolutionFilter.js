@@ -13,11 +13,13 @@ import {Filter} from '@pixi/core';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @see {@link https://www.npmjs.com/package/@pixi/filter-convolution|@pixi/filter-convolution}
+ * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  * @param [matrix=[0,0,0,0,0,0,0,0,0]] {number[]} An array of values used for matrix transformation. Specified as a 9 point Array.
  * @param [width=200] {number} Width of the object you are transforming
  * @param [height=200] {number} Height of the object you are transforming
  */
-export class ConvolutionFilter extends Filter {
+class ConvolutionFilter extends Filter {
 
     constructor(matrix, width = 200, height = 200) {
         super(vertex, fragment);
@@ -67,3 +69,4 @@ export class ConvolutionFilter extends Filter {
     }
 }
 
+export { ConvolutionFilter };

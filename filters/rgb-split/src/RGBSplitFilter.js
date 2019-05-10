@@ -9,11 +9,13 @@ import {Filter} from '@pixi/core';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @see {@link https://www.npmjs.com/package/@pixi/filter-rgb-split|@pixi/filter-rgb-split}
+ * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  * @param {PIXI.Point} [red=[-10,0]] Red channel offset
  * @param {PIXI.Point} [green=[0, 10]] Green channel offset
  * @param {PIXI.Point} [blue=[0, 0]] Blue channel offset
  */
-export class RGBSplitFilter extends Filter {
+class RGBSplitFilter extends Filter {
     constructor(red = [-10, 0], green = [0, 10], blue = [0, 0]) {
         super(vertex, fragment);
         this.red = red;
@@ -57,3 +59,6 @@ export class RGBSplitFilter extends Filter {
         this.uniforms.blue = value;
     }
 }
+
+export { RGBSplitFilter };
+

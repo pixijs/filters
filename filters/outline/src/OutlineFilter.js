@@ -12,6 +12,8 @@ import {rgb2hex, hex2rgb} from '@pixi/utils';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @see {@link https://www.npmjs.com/package/@pixi/filter-outline|@pixi/filter-outline}
+ * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  * @param {number} [thickness=1] The tickness of the outline. Make it 2 times more for resolution 2
  * @param {number} [color=0x000000] The color of the outline.
  * @param {number} [quality=0.1] The quality of the outline from `0` to `1`, using a higher quality
@@ -20,7 +22,7 @@ import {rgb2hex, hex2rgb} from '@pixi/utils';
  * @example
  *  someSprite.shader = new OutlineFilter(9, 0xFF0000);
  */
-export class OutlineFilter extends Filter {
+class OutlineFilter extends Filter {
 
     constructor(thickness = 1, color = 0x000000, quality = 0.1) {
         const samples =  Math.max(
@@ -82,3 +84,5 @@ OutlineFilter.MIN_SAMPLES = 1;
  * @default 100
  */
 OutlineFilter.MAX_SAMPLES = 100;
+
+export { OutlineFilter };

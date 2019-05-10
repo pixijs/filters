@@ -12,13 +12,15 @@ import {Point} from '@pixi/math';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @see {@link https://www.npmjs.com/package/@pixi/filter-kawase-blur|@pixi/filter-kawase-blur}
+ * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  * @param {number|number[]} [blur=4] - The blur of the filter. Should be greater than `0`. If
  *        value is an Array, setting kernels.
  * @param {number} [quality=3] - The quality of the filter. Should be an integer greater than `1`.
  * @param {boolean} [clamp=false] - Clamp edges, useful for removing dark edges
  *        from fullscreen filters or bleeding to the edge of filterArea.
  */
-export class KawaseBlurFilter extends Filter {
+class KawaseBlurFilter extends Filter {
     constructor(blur = 4, quality = 3, clamp = false) {
         super(vertex, clamp ? fragmentClamp : fragment);
         this.uniforms.uOffset = new Float32Array(2);
@@ -193,3 +195,5 @@ export class KawaseBlurFilter extends Filter {
         this._generateKernels();
     }
 }
+
+export { KawaseBlurFilter };

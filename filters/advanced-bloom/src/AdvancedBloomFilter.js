@@ -14,6 +14,8 @@ import {settings} from '@pixi/settings';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @see {@link https://www.npmjs.com/package/@pixi/filter-advanced-bloom|@pixi/filter-advanced-bloom}
+ * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  *
  * @param {object|number} [options] - The optional parameters of advanced bloom filter.
  *                        When options is a number , it will be `options.threshold`.
@@ -26,7 +28,7 @@ import {settings} from '@pixi/settings';
  * @param {number|number[]|PIXI.Point} [options.pixelSize=1] - the pixelSize of the Blur filter.
  * @param {number} [options.resolution=PIXI.settings.RESOLUTION] - The resolution of the Blur filter.
  */
-export class AdvancedBloomFilter extends Filter {
+class AdvancedBloomFilter extends Filter {
 
     constructor(options) {
 
@@ -182,3 +184,5 @@ export class AdvancedBloomFilter extends Filter {
         this._blurFilter.pixelSize = value;
     }
 }
+
+export { AdvancedBloomFilter };

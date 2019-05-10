@@ -11,6 +11,8 @@ import {DEG_TO_RAD} from '@pixi/math';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @see {@link https://www.npmjs.com/package/@pixi/filter-glitch|@pixi/filter-glitch}
+ * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  * @param {object} [options] - The more optional parameters of the filter.
  * @param {number} [options.slices=5] - The maximum number of slices.
  * @param {number} [options.offset=100] - The maximum offset amount of slices.
@@ -30,7 +32,7 @@ import {DEG_TO_RAD} from '@pixi/math';
  * @param {number} [options.green=[0,0]] - Green channel offset.
  * @param {number} [options.blue=[0,0]] - Blue channel offset.
  */
-export class GlitchFilter extends Filter {
+class GlitchFilter extends Filter {
 
     constructor(options = {}) {
 
@@ -431,3 +433,5 @@ GlitchFilter.CLAMP = 3;
  * @readonly
  */
 GlitchFilter.MIRROR = 4;
+
+export { GlitchFilter };

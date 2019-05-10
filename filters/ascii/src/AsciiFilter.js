@@ -16,9 +16,11 @@ import {Filter} from '@pixi/core';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @see {@link https://www.npmjs.com/package/@pixi/filter-ascii|@pixi/filter-ascii}
+ * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  * @param {number} [size=8] Size of the font
  */
-export class AsciiFilter extends Filter {
+class AsciiFilter extends Filter {
 
     constructor(size = 8) {
         super(vertex, fragment);
@@ -37,3 +39,6 @@ export class AsciiFilter extends Filter {
         this.uniforms.pixelSize = value;
     }
 }
+
+export { AsciiFilter };
+

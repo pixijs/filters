@@ -13,7 +13,7 @@ import {TiltShiftAxisFilter} from './TiltShiftAxisFilter';
  * @memberof PIXI.filters
  * @private
  */
-export class TiltShiftYFilter extends TiltShiftAxisFilter {
+class TiltShiftYFilter extends TiltShiftAxisFilter {
     /**
      * Updates the filter delta values.
      */
@@ -25,3 +25,5 @@ export class TiltShiftYFilter extends TiltShiftAxisFilter {
         this.uniforms.delta.y = dx / d;
     }
 }
+
+export { TiltShiftYFilter };

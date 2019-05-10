@@ -6,11 +6,10 @@
         "include": [
             "filters"
         ],
-        "excludePattern": "(node_modules|lib)"
+        "excludePattern": "(node_modules|lib|dist)"
     },
     "plugins": [
-        "plugins/markdown",
-        "./node_modules/@pixi/jsdoc-template/plugins/es6-fix"
+        "plugins/markdown"
     ],
     "templates": {
         "cleverLinks": false,

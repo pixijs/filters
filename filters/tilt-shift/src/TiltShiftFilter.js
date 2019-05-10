@@ -14,12 +14,14 @@ import {Filter} from '@pixi/core';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @see {@link https://www.npmjs.com/package/@pixi/filter-tilt-shift|@pixi/filter-tilt-shift}
+ * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  * @param {number} [blur=100] The strength of the blur.
  * @param {number} [gradientBlur=600] The strength of the gradient blur.
  * @param {PIXI.Point} [start=null] The Y value to start the effect at.
  * @param {PIXI.Point} [end=null] The Y value to end the effect at.
  */
-export class TiltShiftFilter extends Filter {
+class TiltShiftFilter extends Filter {
 
     constructor(blur = 100, gradientBlur = 600, start = null, end = null) {
         super();
@@ -82,3 +84,6 @@ export class TiltShiftFilter extends Filter {
         this.tiltShiftXFilter.end = this.tiltShiftYFilter.end = value;
     }
 }
+
+export { TiltShiftFilter };
+

@@ -9,9 +9,11 @@ import {Filter} from '@pixi/core';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @see {@link https://www.npmjs.com/package/@pixi/filter-emboss|@pixi/filter-emboss}
+ * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  * @param {number} [strength=5] Strength of the emboss.
  */
-export class EmbossFilter extends Filter {
+class EmbossFilter extends Filter {
     constructor(strength = 5){
         super(vertex, fragment);
         this.strength = strength;
@@ -29,3 +31,5 @@ export class EmbossFilter extends Filter {
         this.uniforms.strength = value;
     }
 }
+
+export { EmbossFilter };

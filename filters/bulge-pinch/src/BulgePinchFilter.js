@@ -14,11 +14,13 @@ import {Filter} from '@pixi/core';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @see {@link https://www.npmjs.com/package/@pixi/filter-bulge-pinch|@pixi/filter-bulge-pinch}
+ * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  * @param {PIXI.Point|Array<number>} [center=[0,0]] The x and y coordinates of the center of the circle of effect.
  * @param {number} [radius=100] The radius of the circle of effect.
  * @param {number} [strength=1] -1 to 1 (-1 is strong pinch, 0 is no effect, 1 is strong bulge)
  */
-export class BulgePinchFilter extends Filter {
+class BulgePinchFilter extends Filter {
 
     constructor(center, radius, strength) {
         super(vertex, fragment);
@@ -70,4 +72,6 @@ export class BulgePinchFilter extends Filter {
         this.uniforms.center = value;
     }
 }
+
+export { BulgePinchFilter };
 

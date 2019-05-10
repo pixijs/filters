@@ -9,11 +9,13 @@ import {Filter} from '@pixi/core';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @see {@link https://www.npmjs.com/package/@pixi/filter-twist|@pixi/filter-twist}
+ * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  * @param {number} [radius=200] The radius of the twist.
  * @param {number} [angle=4] The angle of the twist.
  * @param {number} [padding=20] Padding for filter area.
  */
-export class TwistFilter extends Filter {
+class TwistFilter extends Filter {
     constructor(radius = 200, angle = 4, padding = 20) {
         super(vertex, fragment);
 
@@ -58,3 +60,6 @@ export class TwistFilter extends Filter {
         this.uniforms.angle = value;
     }
 }
+
+export { TwistFilter };
+

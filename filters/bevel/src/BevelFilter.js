@@ -11,6 +11,8 @@ import {rgb2hex, hex2rgb} from '@pixi/utils';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @see {@link https://www.npmjs.com/package/@pixi/filter-bevel|@pixi/filter-bevel}
+ * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  * @param {object} [options] - The optional parameters of the filter.
  * @param {number} [options.rotation = 45] - The angle of the light in degrees.
  * @param {number} [options.thickness = 2] - The tickness of the bevel.
@@ -19,7 +21,7 @@ import {rgb2hex, hex2rgb} from '@pixi/utils';
  * @param {number} [options.shadowColor = 0x000000] - Color of the shadow.
  * @param {number} [options.shadowAlpha = 0.7] - Alpha of the shadow.
  */
-export class BevelFilter extends Filter {
+class BevelFilter extends Filter {
     constructor(options = {}) {
         super(vertex, fragment);
 
@@ -132,3 +134,5 @@ export class BevelFilter extends Filter {
         this.uniforms.shadowAlpha = value;
     }
 }
+
+export { BevelFilter };

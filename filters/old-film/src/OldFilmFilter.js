@@ -9,6 +9,8 @@ import {Filter} from '@pixi/core';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @see {@link https://www.npmjs.com/package/@pixi/filter-old-film|@pixi/filter-old-film}
+ * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  *
  * @param {object|number} [options] - The optional parameters of old film effect.
  *                        When options is a number , it will be `seed`
@@ -26,7 +28,7 @@ import {Filter} from '@pixi/core';
  * @param {number} [options.vignettingBlur=0.3] - Blur intensity of the vignette
  * @param {number} [seed=0] - A see value to apply to the random noise generation
  */
-export class OldFilmFilter extends Filter {
+class OldFilmFilter extends Filter {
     constructor(options, seed = 0) {
         super(vertex, fragment);
         this.uniforms.dimensions = new Float32Array(2);
@@ -201,3 +203,5 @@ export class OldFilmFilter extends Filter {
         return this.uniforms.vignettingBlur;
     }
 }
+
+export { OldFilmFilter };

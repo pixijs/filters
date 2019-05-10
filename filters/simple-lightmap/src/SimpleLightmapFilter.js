@@ -15,6 +15,8 @@ import {hex2rgb, rgb2hex} from '@pixi/utils';
 * @class
 * @extends PIXI.Filter
 * @memberof PIXI.filters
+ * @see {@link https://www.npmjs.com/package/@pixi/filter-simple-lightmap|@pixi/filter-simple-lightmap}
+ * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
 * @param {PIXI.Texture} texture a texture where your lightmap is rendered
 * @param {Array<number>|number} [color=0x000000] An RGBA array of the ambient color
 * @param {number} [alpha=1] Default alpha set independent of color (if it's a number, not array).
@@ -22,7 +24,7 @@ import {hex2rgb, rgb2hex} from '@pixi/utils';
 * @example
 *  displayObject.filters = [new SimpleLightmapFilter(texture, 0x666666)];
 */
-export class SimpleLightmapFilter extends Filter {
+class SimpleLightmapFilter extends Filter {
 
     constructor(texture, color = 0x000000, alpha = 1) {
         super(vertex, fragment);
@@ -93,3 +95,4 @@ export class SimpleLightmapFilter extends Filter {
     }
 }
 
+export { SimpleLightmapFilter };

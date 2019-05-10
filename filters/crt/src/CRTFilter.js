@@ -9,6 +9,8 @@ import {Filter} from '@pixi/core';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @see {@link https://www.npmjs.com/package/@pixi/filter-crt|@pixi/filter-crt}
+ * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  *
  * @param {object} [options] - The optional parameters of CRT effect
  * @param {number} [options.curvature=1.0] - Bent of interlaced lines, higher value means more bend
@@ -24,7 +26,7 @@ import {Filter} from '@pixi/core';
  * @param {number} [options.vignettingBlur=0.3] - Blur intensity of the vignette
  * @param {number} [options.time=0] - For animating interlaced lines
  */
-export class CRTFilter extends Filter {
+class CRTFilter extends Filter {
     constructor(options) {
         super(vertex, fragment);
         this.uniforms.dimensions = new Float32Array(2);
@@ -192,3 +194,6 @@ export class CRTFilter extends Filter {
         return this.uniforms.vignettingBlur;
     }
 }
+
+export { CRTFilter };
+

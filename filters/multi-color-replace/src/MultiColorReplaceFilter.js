@@ -10,6 +10,8 @@ import {hex2rgb, rgb2hex} from '@pixi/utils';
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
+ * @see {@link https://www.npmjs.com/package/@pixi/filter-multi-color-replace|@pixi/filter-multi-color-replace}
+ * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  * @param {Array<Array>} replacements - The collection of replacement items. Each item is color-pair (an array length is 2).
  *                       In the pair, the first value is original color , the second value is target color.
  * @param {number} [epsilon=0.05] - Tolerance of the floating-point comparison between colors
@@ -38,7 +40,7 @@ import {hex2rgb, rgb2hex} from '@pixi/utils';
  *  )];
  *
  */
-export class MultiColorReplaceFilter extends Filter {
+class MultiColorReplaceFilter extends Filter {
     constructor(replacements, epsilon = 0.05, maxColors = null) {
         maxColors = maxColors || replacements.length;
 
@@ -137,3 +139,5 @@ export class MultiColorReplaceFilter extends Filter {
         return this.uniforms.epsilon;
     }
 }
+
+export { MultiColorReplaceFilter };
