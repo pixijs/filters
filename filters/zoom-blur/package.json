@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-zoom-blur",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "main": "lib/filter-zoom-blur.cjs.js",
   "bundle": "dist/filter-zoom-blur.js",
   "description": "PixiJS filter to apply zoom blur effect",
@@ -29,6 +29,6 @@
     "@pixi/core": "^5.0.0-X"
   },
   "devDependencies": {
-    "@tools/fragments": "^3.0.0"
+    "@tools/fragments": "^3.0.1"
   }
 }

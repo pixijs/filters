@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-godray",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "main": "lib/filter-godray.cjs.js",
   "bundle": "dist/filter-godray.js",
   "description": "PixiJS filter to apply and animate atmospheric light rays",
@@ -31,6 +31,6 @@
     "@pixi/math": "^5.0.0-X"
   },
   "devDependencies": {
-    "@tools/fragments": "^3.0.0"
+    "@tools/fragments": "^3.0.1"
   }
 }

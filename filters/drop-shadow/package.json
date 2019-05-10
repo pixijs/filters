@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-drop-shadow",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "main": "lib/filter-drop-shadow.cjs.js",
   "bundle": "dist/filter-drop-shadow.js",
   "description": "PixiJS filter to apply a drop shadow effect",
@@ -30,12 +30,12 @@
   },
   "dependencies": {
     "@pixi/core": "^5.0.0-X",
-    "@pixi/filter-kawase-blur": "^3.0.0",
+    "@pixi/filter-kawase-blur": "^3.0.1",
     "@pixi/math": "^5.0.0-X",
     "@pixi/settings": "^5.0.0-X",
     "@pixi/utils": "^5.0.0-X"
   },
   "devDependencies": {
-    "@tools/fragments": "^3.0.0"
+    "@tools/fragments": "^3.0.1"
   }
 }

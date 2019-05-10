@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-bevel",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "main": "lib/filter-bevel.cjs.js",
   "bundle": "dist/filter-bevel.js",
   "description": "PixiJS filter to apply a bevel effect",
@@ -31,6 +31,6 @@
     "@pixi/utils": "^5.0.0-X"
   },
   "devDependencies": {
-    "@tools/fragments": "^3.0.0"
+    "@tools/fragments": "^3.0.1"
   }
 }
