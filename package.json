@@ -1,4 +1,5 @@
 {
+  "name": "pixi-filters-monorepo",
   "private": true,
   "scripts": {
     "postinstall": "run-s bootstrap",
