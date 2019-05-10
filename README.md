@@ -8,7 +8,7 @@ Click [here](http://pixijs.io/pixi-filters/tools/demo/) to interactively play wi
 
 ## Filters
 
-All filters work with PixiJS v4.
+All filters work with PixiJS v5.
 
 | Filter | Preview |
 |---|---|
