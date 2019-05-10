@@ -32,7 +32,7 @@
     "prerelease": "run-s build",
     "release": "lerna publish",
     "postrelease": "run-s deploy",
-    "postversion": "run-s build"
+    "postversion": "npm run build"
   },
   "devDependencies": {
     "@lerna/batch-packages": "^3.13.0",
