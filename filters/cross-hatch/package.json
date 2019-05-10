@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-cross-hatch",
-  "version": "2.7.0",
+  "version": "3.0.0",
   "main": "lib/filter-cross-hatch.cjs.js",
   "bundle": "dist/filter-cross-hatch.js",
   "description": "PixiJS filter to apply a cross-hatch black and white effect",
@@ -29,6 +29,6 @@
     "@pixi/core": "^5.0.0-X"
   },
   "devDependencies": {
-    "@tools/fragments": "^2.0.0"
+    "@tools/fragments": "^3.0.0"
   }
 }

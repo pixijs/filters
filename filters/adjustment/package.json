@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-adjustment",
-  "version": "2.7.0",
+  "version": "3.0.0",
   "main": "lib/filter-adjustment.cjs.js",
   "bundle": "dist/filter-adjustment.js",
   "description": "PixiJS filter to adjust gamma, contrast, saturation, brightness or color channels",
@@ -26,6 +26,6 @@
     "@pixi/core": "^5.0.0-X"
   },
   "devDependencies": {
-    "@tools/fragments": "^2.0.0"
+    "@tools/fragments": "^3.0.0"
   }
 }
