@@ -1,27 +1,15 @@
 import * as filters from 'pixi-filters';
-import { Application } from '@pixi/app';
-import { settings } from '@pixi/settings';
-import { Container } from '@pixi/display';
-import { Rectangle } from '@pixi/math';
-import { Sprite } from '@pixi/sprite';
-import { TilingSprite } from '@pixi/sprite-tiling';
-import { EventEmitter } from '@pixi/utils';
-import { AlphaFilter } from '@pixi/filter-alpha';
-import { BlurFilter, BlurFilterPass } from '@pixi/filter-blur';
-import { ColorMatrixFilter } from '@pixi/filter-color-matrix';
-import { DisplacementFilter } from '@pixi/filter-displacement';
-import { FXAAFilter } from '@pixi/filter-fxaa';
-import { NoiseFilter } from '@pixi/filter-noise';
+import {
+    Application,
+    settings,
+    Container,
+    Rectangle,
+    Sprite,
+    TilingSprite,
+    utils,
+    filters as externalFilters } from 'pixi.js';
 
-const externalFilters = {
-    AlphaFilter,
-    BlurFilter,
-    BlurFilterPass,
-    ColorMatrixFilter,
-    DisplacementFilter,
-    FXAAFilter,
-    NoiseFilter,
-};
+const { EventEmitter } = utils;
 
 /*global dat,ga*/
 /**

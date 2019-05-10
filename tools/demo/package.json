@@ -10,29 +10,19 @@
     "watch": "rollup -cwm"
   },
   "devDependencies": {
-    "@pixi/app": "^5.0.0-X",
-    "@pixi/settings": "^5.0.0-X",
-    "@pixi/display": "^5.0.0-X",
-    "@pixi/math": "^5.0.0-X",
-    "@pixi/sprite": "^5.0.0-X",
-    "@pixi/sprite-tiling": "^5.0.0-X",
-    "@pixi/utils": "^5.0.0-X",
-    "@pixi/filter-alpha": "^5.0.0-X",
-    "@pixi/filter-blur": "^5.0.0-X",
-    "@pixi/filter-color-matrix": "^5.0.0-X",
-    "@pixi/filter-displacement": "^5.0.0-X",
-    "@pixi/filter-fxaa": "^5.0.0-X",
-    "@pixi/filter-noise": "^5.0.0-X",
     "cross-env": "^5.2.0",
     "pixi-filters": "^2.7.1",
     "rimraf": "^2.6.3",
-    "rollup": "^1.6.0",
+    "rollup": "^1.11.3",
     "rollup-plugin-buble": "^0.19.6",
-    "rollup-plugin-commonjs": "^9.2.1",
-    "rollup-plugin-node-resolve": "^4.0.1",
+    "rollup-plugin-commonjs": "^9.3.4",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-globals": "^1.4.0",
+    "rollup-plugin-node-resolve": "^4.2.3",
     "rollup-plugin-terser": "^4.0.4",
     "rollup-watch": "^4.3.1"
+  },
+  "dependencies": {
+    "pixi.js": "^5.0.0-X"
   }
 }
