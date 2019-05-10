@@ -1,3 +1,21 @@
+/**
+ * The `PIXI` global object is only provided if using the browser-only versions
+ * of [pixi.js](https://www.npmjs.com/pixi.js) or
+ * [pixi.js-legacy](https://www.npmjs.com/pixi.js-legacy).
+ * This is done typically via the `<script>` HTML element.
+ * Bundler like Webpack, Parcel and Rollup do not expose this global object.
+ * @namespace PIXI
+ * @see http://pixijs.com
+ */
+/**
+ * The `PIXI.filters` global object is created by [pixi.js](https://www.npmjs.com/pixi.js)
+ * or [pixi.js-legacy](https://www.npmjs.com/pixi.js-legacy) and is only available
+ * with browser-based build of pixi-filters. If using a bundler like Webpack,
+ * Rollup or Parcel, you can either import
+ * [pixi-filters](https://www.npmjs.com/pixi-filters) or the individual package
+ * (as defined on each filter's class page).
+ * @namespace PIXI.filters
+ */
 export * from "@pixi/filter-adjustment";
 export * from "@pixi/filter-advanced-bloom";
 export * from "@pixi/filter-ascii";

@@ -4,7 +4,8 @@
     },
     "source": {
         "include": [
-            "filters"
+            "filters",
+            "bundle"
         ],
         "excludePattern": "(node_modules|lib|dist)"
     },
