@@ -8,6 +8,7 @@
     "preclean": "run-s clean:build",
     "clean": "lerna clean",
     "predeploy": "run-s docs",
+    "copy:docs": "copyfiles \"docs/**\" dist",
     "copy:bundle": "copyfiles -f bundle/dist/* dist",
     "copy:filters": "copyfiles -f filters/*/dist/* dist/filters",
     "copy:screenshots": "copyfiles tools/screenshots/dist/* dist",
