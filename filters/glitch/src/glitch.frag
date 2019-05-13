@@ -53,54 +53,38 @@ void main(void)
         coord = clamp(coord, filterClamp.xy, filterClamp.zw);
     } else {
         if( coord.x > filterClamp.z ) {
-            if (fillMode == ORIGINAL) {
-                gl_FragColor = texture2D(uSampler, vTextureCoord);
-                return;
+            if (fillMode == TRANSPARENT) {
+                discard;
             } else if (fillMode == LOOP) {
                 coord.x -= filterClamp.z;
             } else if (fillMode == MIRROR) {
                 coord.x = filterClamp.z * 2.0 - coord.x;
-            } else {
-                gl_FragColor = vec4(0., 0., 0., 0.);
-                return;
             }
         } else if( coord.x < filterClamp.x ) {
-            if (fillMode == ORIGINAL) {
-                gl_FragColor = texture2D(uSampler, vTextureCoord);
-                return;
+            if (fillMode == TRANSPARENT) {
+                discard;
             } else if (fillMode == LOOP) {
                 coord.x += filterClamp.z;
             } else if (fillMode == MIRROR) {
                 coord.x *= -filterClamp.z;
-            } else {
-                gl_FragColor = vec4(0., 0., 0., 0.);
-                return;
             }
         }
 
         if( coord.y > filterClamp.w ) {
-            if (fillMode == ORIGINAL) {
-                gl_FragColor = texture2D(uSampler, vTextureCoord);
-                return;
+            if (fillMode == TRANSPARENT) {
+                discard;
             } else if (fillMode == LOOP) {
                 coord.y -= filterClamp.w;
             } else if (fillMode == MIRROR) {
                 coord.y = filterClamp.w * 2.0 - coord.y;
-            } else {
-                gl_FragColor = vec4(0., 0., 0., 0.);
-                return;
             }
         } else if( coord.y < filterClamp.y ) {
-            if (fillMode == ORIGINAL) {
-                gl_FragColor = texture2D(uSampler, vTextureCoord);
-                return;
+            if (fillMode == TRANSPARENT) {
+                discard;
             } else if (fillMode == LOOP) {
                 coord.y += filterClamp.w;
             } else if (fillMode == MIRROR) {
                 coord.y *= -filterClamp.w;
-            } else {
-                gl_FragColor = vec4(0., 0., 0., 0.);
-                return;
             }
         }
     }
