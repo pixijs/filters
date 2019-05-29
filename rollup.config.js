@@ -175,7 +175,7 @@ async function main() {
                 '@pixi/math': 'PIXI',
                 '@pixi/settings': 'PIXI',
                 '@pixi/constants': 'PIXI',
-                '@pixi/utils': 'PIXI',
+                '@pixi/utils': 'PIXI.utils',
                 '@pixi/filter-alpha': 'PIXI.filters',
                 '@pixi/filter-blur': 'PIXI.filters'
             }, globals);
