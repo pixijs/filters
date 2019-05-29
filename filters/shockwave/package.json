@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-shockwave",
-  "version": "3.0.1",
+  "version": "3.0.3",
   "main": "lib/filter-shockwave.cjs.js",
   "bundle": "dist/filter-shockwave.js",
   "description": "PixiJS filter to apply a shockwave-type effect",
@@ -29,6 +29,6 @@
     "@pixi/core": "^5.0.0-X"
   },
   "devDependencies": {
-    "@tools/fragments": "^3.0.1"
+    "@tools/fragments": "^3.0.3"
   }
 }
