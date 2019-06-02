@@ -1,6 +1,5 @@
 import {vertex} from '@tools/fragments';
-import perlin from './perlin.frag';
-import fragment from './gorday.frag';
+import fragment from './godray.frag';
 import {Filter} from '@pixi/core';
 import {Point, DEG_TO_RAD} from '@pixi/math';
 
@@ -30,7 +29,7 @@ import {Point, DEG_TO_RAD} from '@pixi/math';
 class GodrayFilter extends Filter {
 
     constructor(options) {
-        super(vertex, fragment.replace('${perlin}', perlin));
+        super(vertex, fragment);
 
         this.uniforms.dimensions = new Float32Array(2);
 
