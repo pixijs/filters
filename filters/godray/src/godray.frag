@@ -79,6 +79,7 @@ void main(void) {
   }
   vec2 dir = vec2(d, d);
   float noise = turb(vec3(dir, time), lacunarity, gain);
+  noise = mix(noise, 0.0, 0.3);
   // fade vertically
   vec4 mist = vec4(noise, noise, noise, 1.0);
   mist = clamp(mist, 0.0, 1.0);
