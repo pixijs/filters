@@ -1,3 +1,5 @@
+precision mediump float;
+
 varying vec2 vTextureCoord;
 uniform sampler2D uSampler;
 uniform vec4 filterArea;
@@ -60,9 +62,11 @@ float turb(vec3 pos, float lacunarity, float gain ) {
   return clamp(f, 0.0, 1.0);
 }
 
-vec4 godray(vec2 uv, float time, vec2 light, vec2 dimensions, vec4 filterArea, float aspect, bool parallel, float lacunarity, float gain) {
+void main(void) {
+  gl_FragColor = texture2D(uSampler, vTextureCoord);
+
   float d = 0.0;
-  vec2 coord = uv * filterArea.xy / dimensions.xy;
+  vec2 coord = vTextureCoord * filterArea.xy / dimensions.xy;
   if (parallel) {
     float _cos = light.x;
     float _sin = light.y;
@@ -79,11 +83,7 @@ vec4 godray(vec2 uv, float time, vec2 light, vec2 dimensions, vec4 filterArea, f
   vec4 mist = vec4(noise, noise, noise, 1.0);
   mist = clamp(mist, 0.0, 1.0);
   mist *= 1.0 - coord.y;
-  return clamp(mist, 0.0, 1.0);
-}
+  mist = clamp(mist, 0.0, 1.0);
 
-void main(void) {
-  gl_FragColor = texture2D(uSampler, vTextureCoord);
-  vec4 gr = godray(vTextureCoord, time, light, dimensions, filterArea, aspect, parallel, lacunarity, gain);
-  gl_FragColor += gr;
+  gl_FragColor += mist;
 }
