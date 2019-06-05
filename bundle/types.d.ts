@@ -5,6 +5,7 @@
 /// <reference types="@pixi/filter-bloom" />
 /// <reference types="@pixi/filter-bulge-pinch" />
 /// <reference types="@pixi/filter-color-map" />
+/// <reference types="@pixi/filter-color-overlay" />
 /// <reference types="@pixi/filter-color-replace" />
 /// <reference types="@pixi/filter-convolution" />
 /// <reference types="@pixi/filter-cross-hatch" />
@@ -38,6 +39,7 @@ declare module "pixi-filters" {
     export * from "@pixi/filter-bloom";
     export * from "@pixi/filter-bulge-pinch";
     export * from "@pixi/filter-color-map";
+    export * from "@pixi/filter-color-overlay";
     export * from "@pixi/filter-color-replace";
     export * from "@pixi/filter-convolution";
     export * from "@pixi/filter-cross-hatch";
