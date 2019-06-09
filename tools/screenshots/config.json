@@ -330,7 +330,7 @@
             "name": "ColorOverlayFilter",
             "filename": "color-overlay",
             "options": {
-                "color": 405551
+                "color": 16711680
             }
         },
         {
