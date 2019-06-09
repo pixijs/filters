@@ -4,6 +4,9 @@ import {Filter} from '@pixi/core';
 import {hex2rgb, rgb2hex} from '@pixi/utils';
 
 /**
+ * Replace all colors within a source graphic with a single color.<br>
+ * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/color-overlay.png)
+ *
  * @class
  * @extends PIXI.Filter
  * @memberof PIXI.filters
