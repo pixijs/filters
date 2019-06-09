@@ -2,7 +2,6 @@
 declare module "@pixi/filter-color-overlay" {
     export class ColorOverlayFilter extends PIXI.Filter {
         constructor(color?:number|[number, number, number]);
-        epsilon:number;
         color:number|[number, number, number];
     }
 }
