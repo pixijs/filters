@@ -4,6 +4,6 @@ declare module "@pixi/filter-color-overlay" {
         constructor(color?:number|[number, number, number]);
         epsilon:number;
         originalColor:number|number[];
-        newColor:number|number[];
+        color:number|[number, number, number];
     }
 }
