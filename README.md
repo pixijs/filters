@@ -19,6 +19,7 @@ All filters work with PixiJS v5.
 | **BloomFilter**<br>_@pixi/filter-bloom_ | ![bloom](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/bloom.png?v=2) |
 | **BulgePinchFilter**<br>_@pixi/filter-bulge-pinch_ | ![bulge-pinch](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/bulge-pinch.gif?v=2) |
 | **ColorMapFilter**<br>_@pixi/filter-color-map_ | ![color-map](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/color-map.png?v=2) |
+| **ColorOverlayFilter**<br>_@pixi/filter-color-overlay_ | ![color-overlay](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/color-overlay.png?v=2) |
 | **ColorReplaceFilter**<br>_@pixi/filter-color-replace_ | ![color-replace](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/color-replace.png?v=2) |
 | **ConvolutionFilter**<br>_@pixi/filter-convolution_ | ![convolution](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/convolution.png?v=2) |
 | **CrossHatchFilter**<br>_@pixi/filter-cross-hatch_ | ![cross-hatch](https://pixijs.github.io/pixi-filters/tools/screenshots/dist/cross-hatch.png?v=2) |
