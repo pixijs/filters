@@ -1,0 +1,35 @@
+{
+  "name": "@pixi/filter-color-overlay",
+  "version": "3.0.3",
+  "main": "lib/filter-color-overlay.cjs.js",
+  "bundle": "dist/filter-color-overlay.js",
+  "description": "PixiJS filter to overlay all colors with single color",
+  "author": "Michael Deal",
+  "contributors": [
+    "Michael Deal <hello@mudcu.be>"
+  ],
+  "module": "lib/filter-color-overlay.esm.js",
+  "types": "types.d.ts",
+  "homepage": "http://pixijs.com/",
+  "bugs": "https://github.com/pixijs/pixi-filters/issues",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pixijs/pixi-filters.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "lib",
+    "dist",
+    "types.d.ts"
+  ],
+  "dependencies": {
+    "@pixi/core": "^5.0.0-X",
+    "@pixi/utils": "^5.0.0-X"
+  },
+  "devDependencies": {
+    "@tools/fragments": "^3.0.3"
+  }
+}
