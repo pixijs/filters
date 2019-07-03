@@ -23,6 +23,7 @@ export * from "@pixi/filter-bevel";
 export * from "@pixi/filter-bloom";
 export * from "@pixi/filter-bulge-pinch";
 export * from "@pixi/filter-color-map";
+export * from "@pixi/filter-color-overlay";
 export * from "@pixi/filter-color-replace";
 export * from "@pixi/filter-convolution";
 export * from "@pixi/filter-cross-hatch";

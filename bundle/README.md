@@ -13,6 +13,7 @@ Filters include:
 * **BloomFilter** _@pixi/filter-bloom_
 * **BulgePinchFilter** _@pixi/filter-bulge-pinch_
 * **ColorMapFilter** _@pixi/filter-color-map_
+* **ColorOverlayFilter** _@pixi/filter-color-overlay_
 * **ColorReplaceFilter** _@pixi/filter-color-replace_
 * **ConvolutionFilter** _@pixi/filter-convolution_
 * **CrossHatchFilter** _@pixi/filter-cross-hatch_
