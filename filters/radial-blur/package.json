@@ -22,7 +22,7 @@
     "dist",
     "types.d.ts"
   ],
-  "dependencies": {
+  "peerDependencies": {
     "@pixi/core": "^5.0.0-X"
   },
   "devDependencies": {

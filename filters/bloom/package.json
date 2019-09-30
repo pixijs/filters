@@ -26,10 +26,12 @@
     "types.d.ts"
   ],
   "dependencies": {
+    "@pixi/filter-alpha": "^5.0.0-X",
+    "@pixi/filter-blur": "^5.0.0-X"
+  },
+  "peerDependencies": {
     "@pixi/constants": "^5.0.0-X",
     "@pixi/core": "^5.0.0-X",
-    "@pixi/filter-alpha": "^5.0.0-X",
-    "@pixi/filter-blur": "^5.0.0-X",
     "@pixi/math": "^5.0.0-X",
     "@pixi/settings": "^5.0.0-X"
   },

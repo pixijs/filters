@@ -29,8 +29,10 @@
     "@pixi/filter-kawase-blur": "PIXI.filters"
   },
   "dependencies": {
+    "@pixi/filter-kawase-blur": "^3.0.3"
+  },
+  "peerDependencies": {
     "@pixi/core": "^5.0.0-X",
-    "@pixi/filter-kawase-blur": "^3.0.3",
     "@pixi/math": "^5.0.0-X",
     "@pixi/settings": "^5.0.0-X",
     "@pixi/utils": "^5.0.0-X"

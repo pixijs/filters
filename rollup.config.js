@@ -139,9 +139,10 @@ async function main() {
         const input = path.join(basePath, 'src/index.js');
         const freeze = false;
 
-        // Generate the externals to use, by default don't include dependencies
-        const external = Object.keys(pkg.dependencies);
+        // Generate the externals to use, by default don't include peer dependencies
+        const external = Object.keys(pkg.peerDependencies || {});
 
+        console.log(external,basePath,main,path);
         results.push({
             input,
             output: [
