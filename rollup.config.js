@@ -142,7 +142,6 @@ async function main() {
         // Generate the externals to use, by default don't include peer dependencies
         const external = Object.keys(pkg.peerDependencies || {});
 
-        console.log(external,basePath,main,path);
         results.push({
             input,
             output: [
