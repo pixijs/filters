@@ -9,12 +9,7 @@ uniform vec4 inputSize;
 void main(void){
     vec4 sample = texture2D(uSampler, vTextureCoord - shift * inputSize.zw);
 
-    // Un-premultiply alpha before applying the color
-    if (sample.a > 0.0) {
-        sample.rgb /= sample.a;
-    }
-
-    // Premultiply alpha again
+    // Premultiply alpha
     sample.rgb = color.rgb * sample.a;
 
     // alpha user alpha
