@@ -38,6 +38,7 @@ class GlowFilter extends Filter {
         this.color = color;
         this.outerStrength = outerStrength;
         this.innerStrength = innerStrength;
+        this.knockout = false;
     }
 
     /**
@@ -86,6 +87,18 @@ class GlowFilter extends Filter {
     }
     set innerStrength(value) {
         this.uniforms.innerStrength = value;
+    }
+
+    /**
+     * Only draw the glow, not the texture itself
+     * @member {boolean}
+     * @default false
+     */
+    get knockout() {
+        return this.uniforms.knockout;
+    }
+    set knockout(value) {
+        this.uniforms.knockout = value;
     }
 }
 

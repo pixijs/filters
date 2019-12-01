@@ -9,6 +9,7 @@ uniform float innerStrength;
 uniform vec4 glowColor;
 uniform vec4 filterArea;
 uniform vec4 filterClamp;
+uniform bool knockout;
 const float PI = 3.14159265358979323846264;
 
 void main(void) {
@@ -20,6 +21,7 @@ void main(void) {
     float cosAngle;
     float sinAngle;
     vec2 displaced;
+
     for (float angle = 0.0; angle <= PI * 2.0; angle += %QUALITY_DIST%) {
        cosAngle = cos(angle);
        sinAngle = sin(angle);
@@ -35,8 +37,16 @@ void main(void) {
 
     ownColor.a = max(ownColor.a, 0.0001);
     ownColor.rgb = ownColor.rgb / ownColor.a;
+
     float outerGlowAlpha = (totalAlpha / maxTotalAlpha)  * outerStrength * (1. - ownColor.a);
     float innerGlowAlpha = ((maxTotalAlpha - totalAlpha) / maxTotalAlpha) * innerStrength * ownColor.a;
-    float resultAlpha = (ownColor.a + outerGlowAlpha);
-    gl_FragColor = vec4(mix(mix(ownColor.rgb, glowColor.rgb, innerGlowAlpha / ownColor.a), glowColor.rgb, outerGlowAlpha / resultAlpha) * resultAlpha, resultAlpha);
+    float resultAlpha;
+
+    if(knockout){
+      resultAlpha = outerGlowAlpha + innerGlowAlpha;
+      gl_FragColor = vec4(glowColor.rgb * resultAlpha, resultAlpha);
+    }else{
+      resultAlpha = (ownColor.a + outerGlowAlpha);
+      gl_FragColor = vec4(mix(mix(ownColor.rgb, glowColor.rgb, innerGlowAlpha / ownColor.a), glowColor.rgb, outerGlowAlpha / resultAlpha) * resultAlpha, resultAlpha);
+    }
 }
