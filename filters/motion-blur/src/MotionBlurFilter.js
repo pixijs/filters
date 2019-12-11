@@ -47,14 +47,14 @@ class MotionBlurFilter extends Filter {
     /**
      * Sets the velocity of the motion for blur effect.
      *
-     * @member {PIXI.ObservablePoint}
+     * @member {PIXI.ObservablePoint|PIXI.Point|number[]}
      */
     set velocity(value) {
         if (Array.isArray(value)) {
             this._velocity.set(value[0], value[1]);
         }
         else if (value instanceof Point || value instanceof ObservablePoint) {
-            this._velocity.copy(value);
+            this._velocity.copyFrom(value);
         }
     }
 
