@@ -30,14 +30,21 @@ class GlowFilter extends Filter {
 
     constructor(distance = 10, outerStrength = 4, innerStrength = 0, color = 0xffffff, quality = 0.1) {
         super(vertex, fragment
-            .replace(/%QUALITY_DIST%/gi, '' + (1 / quality / distance).toFixed(7))
-            .replace(/%DIST%/gi, '' + distance.toFixed(7)));
+            .replace(/__ANGLE_STEP_SIZE__/gi, '' + (1 / quality / distance).toFixed(7))
+            .replace(/__DIST__/gi, distance.toFixed(0) + '.0'));
 
         this.uniforms.glowColor = new Float32Array([0, 0, 0, 1]);
-        this.distance = distance;
         this.color = color;
         this.outerStrength = outerStrength;
         this.innerStrength = innerStrength;
+
+        /**
+         * The distance of the glow. Make it 2 times more for resolution=2. It cant be changed after filter creation
+         * @member {number}
+         * @default 10
+         * @readonly
+         */
+        this.distance = distance;
     }
 
     /**
@@ -50,18 +57,6 @@ class GlowFilter extends Filter {
     }
     set color(value) {
         hex2rgb(value, this.uniforms.glowColor);
-    }
-
-    /**
-     * The distance of the glow. Make it 2 times more for resolution=2. It cant be changed after filter creation
-     * @member {number}
-     * @default 10
-     */
-    get distance() {
-        return this.uniforms.distance;
-    }
-    set distance(value) {
-        this.uniforms.distance = value;
     }
 
     /**

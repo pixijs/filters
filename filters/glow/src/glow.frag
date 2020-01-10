@@ -3,40 +3,53 @@ varying vec4 vColor;
 
 uniform sampler2D uSampler;
 
-uniform float distance;
 uniform float outerStrength;
 uniform float innerStrength;
+
 uniform vec4 glowColor;
+
 uniform vec4 filterArea;
 uniform vec4 filterClamp;
+
 const float PI = 3.14159265358979323846264;
+const float DIST = __DIST__;
+const float ANGLE_STEP_SIZE = min(__ANGLE_STEP_SIZE__, PI * 2.0);
+
+const float ANGLE_STEP_NUM = ceil(PI * 2.0 / ANGLE_STEP_SIZE);
+const float MAX_TOTAL_ALPHA = DIST * (DIST + 1.0) / 2.0 * ANGLE_STEP_NUM;
 
 void main(void) {
     vec2 px = vec2(1.0 / filterArea.x, 1.0 / filterArea.y);
-    vec4 ownColor = texture2D(uSampler, vTextureCoord);
-    vec4 curColor;
+
     float totalAlpha = 0.0;
-    float maxTotalAlpha = 0.0;
-    float cosAngle;
-    float sinAngle;
+
+    vec2 direction;
     vec2 displaced;
-    for (float angle = 0.0; angle <= PI * 2.0; angle += %QUALITY_DIST%) {
-       cosAngle = cos(angle);
-       sinAngle = sin(angle);
-       for (float curDistance = 1.0; curDistance <= %DIST%; curDistance++) {
-           displaced.x = vTextureCoord.x + cosAngle * curDistance * px.x;
-           displaced.y = vTextureCoord.y + sinAngle * curDistance * px.y;
-           curColor = texture2D(uSampler, clamp(displaced, filterClamp.xy, filterClamp.zw));
-           totalAlpha += (distance - curDistance) * curColor.a;
-           maxTotalAlpha += (distance - curDistance);
+    vec4 curColor;
+
+    for (float angle = 0.0; angle < PI * 2.0; angle += ANGLE_STEP_SIZE) {
+       direction = vec2(cos(angle), sin(angle)) * px;
+
+       for (float curDistance = 1.0; curDistance <= DIST; curDistance++) {
+           displaced = clamp(vTextureCoord + direction * curDistance, filterClamp.xy, filterClamp.zw);
+
+           curColor = texture2D(uSampler, displaced);
+
+           totalAlpha += (DIST - curDistance + 1.0) * curColor.a;
        }
     }
-    maxTotalAlpha = max(maxTotalAlpha, 0.0001);
+    
+    curColor = texture2D(uSampler, vTextureCoord);
 
-    ownColor.a = max(ownColor.a, 0.0001);
-    ownColor.rgb = ownColor.rgb / ownColor.a;
-    float outerGlowAlpha = (totalAlpha / maxTotalAlpha)  * outerStrength * (1. - ownColor.a);
-    float innerGlowAlpha = ((maxTotalAlpha - totalAlpha) / maxTotalAlpha) * innerStrength * ownColor.a;
-    float resultAlpha = (ownColor.a + outerGlowAlpha);
-    gl_FragColor = vec4(mix(mix(ownColor.rgb, glowColor.rgb, innerGlowAlpha / ownColor.a), glowColor.rgb, outerGlowAlpha / resultAlpha) * resultAlpha, resultAlpha);
+    float alphaRatio = (totalAlpha / MAX_TOTAL_ALPHA);
+
+    float innerGlowStrength = min(1.0, (1.0 - alphaRatio) * innerStrength * curColor.a);
+    
+    vec4 innerColor = mix(curColor, glowColor, innerGlowStrength);
+
+    float outerGlowStrength = min(1.0, alphaRatio * outerStrength * (1.0 - innerColor.a));
+
+    vec4 outerGlowColor = outerGlowStrength * glowColor.rgba;
+    
+    gl_FragColor = innerColor + outerGlowColor;
 }
