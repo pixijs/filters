@@ -31,7 +31,7 @@ class GlowFilter extends Filter {
     constructor(distance = 10, outerStrength = 4, innerStrength = 0, color = 0xffffff, quality = 0.1) {
         super(vertex, fragment
             .replace(/__ANGLE_STEP_SIZE__/gi, '' + (1 / quality / distance).toFixed(7))
-            .replace(/__DIST__/gi, distance.toFixed(0) + '.0'));
+            .replace(/__DIST__/gi, distance.toFixed(7)));
 
         this.uniforms.glowColor = new Float32Array([0, 0, 0, 1]);
         this.color = color;
@@ -45,6 +45,8 @@ class GlowFilter extends Filter {
          * @readonly
          */
         this.distance = distance;
+
+        this.padding = distance;
     }
 
     /**

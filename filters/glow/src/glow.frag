@@ -16,7 +16,11 @@ const float DIST = __DIST__;
 const float ANGLE_STEP_SIZE = min(__ANGLE_STEP_SIZE__, PI * 2.0);
 
 const float ANGLE_STEP_NUM = ceil(PI * 2.0 / ANGLE_STEP_SIZE);
-const float MAX_TOTAL_ALPHA = DIST * (DIST + 1.0) / 2.0 * ANGLE_STEP_NUM;
+
+const float MAX_TOTAL_ALPHA = ANGLE_STEP_NUM * (
+    floor(DIST) * (floor(DIST) + 1.0) / 2.0 +
+    DIST - floor(DIST)
+);
 
 void main(void) {
     vec2 px = vec2(1.0 / filterArea.x, 1.0 / filterArea.y);
@@ -47,7 +51,7 @@ void main(void) {
     
     vec4 innerColor = mix(curColor, glowColor, innerGlowStrength);
 
-    float outerGlowStrength = min(1.0, alphaRatio * outerStrength * (1.0 - innerColor.a));
+    float outerGlowStrength = min(1.0, alphaRatio * outerStrength) * (1.0 - innerColor.a);
 
     vec4 outerGlowColor = outerGlowStrength * glowColor.rgba;
     
