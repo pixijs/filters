@@ -14,17 +14,10 @@ uniform vec4 filterClamp;
 const float PI = 3.14159265358979323846264;
 
 const float DIST = __DIST__;
-const float FDIST = floor(__DIST__);
-
-// Calculate the 'step size' for the last loop step, which is unrolled
-const float LAST_STEP_DIST = DIST - FDIST;
-
 const float ANGLE_STEP_SIZE = min(__ANGLE_STEP_SIZE__, PI * 2.0);
 const float ANGLE_STEP_NUM = ceil(PI * 2.0 / ANGLE_STEP_SIZE);
 
-const float MAX_TOTAL_ALPHA = ANGLE_STEP_NUM * (
-    FDIST * (FDIST + 1.0) / 2.0 + LAST_STEP_DIST
-);
+const float MAX_TOTAL_ALPHA = ANGLE_STEP_NUM * DIST * (DIST + 1.0) / 2.0;
 
 void main(void) {
     vec2 px = vec2(1.0 / filterArea.x, 1.0 / filterArea.y);
@@ -38,22 +31,13 @@ void main(void) {
     for (float angle = 0.0; angle < PI * 2.0; angle += ANGLE_STEP_SIZE) {
        direction = vec2(cos(angle), sin(angle)) * px;
 
-       for (float curDistance = 0.0; curDistance < FDIST; curDistance++) {
+       for (float curDistance = 0.0; curDistance < DIST; curDistance++) {
            displaced = clamp(vTextureCoord + direction * 
                    (curDistance + 1.0), filterClamp.xy, filterClamp.zw);
 
            curColor = texture2D(uSampler, displaced);
 
-           totalAlpha += (FDIST - curDistance) * curColor.a;
-       }
-
-       // This is basically the last step of the loop unrolled.
-       // It is only performed if distance is fractional
-
-       if (LAST_STEP_DIST > 0.0) {
-           displaced = clamp(vTextureCoord + direction * DIST, filterClamp.xy, filterClamp.zw);
-           curColor = texture2D(uSampler, displaced);
-           totalAlpha += (LAST_STEP_DIST) * curColor.a;
+           totalAlpha += (DIST - curDistance) * curColor.a;
        }
     }
     

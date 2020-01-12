@@ -15,7 +15,7 @@ import {rgb2hex, hex2rgb} from '@pixi/utils';
  * @memberof PIXI.filters
  * @see {@link https://www.npmjs.com/package/@pixi/filter-glow|@pixi/filter-glow}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
- * @param {number} [distance=10] The distance of the glow. Make it 2 times more for resolution=2. It cant be changed after filter creation
+ * @param {number} [distance=10] The distance of the glow. Make it 2 times more for resolution=2. It cant be changed after filter creation.
  * @param {number} [outerStrength=4] The strength of the glow outward from the edge of the sprite.
  * @param {number} [innerStrength=0] The strength of the glow inward from the edge of the sprite.
  * @param {number} [color=0xffffff] The color of the glow.
@@ -29,22 +29,16 @@ import {rgb2hex, hex2rgb} from '@pixi/utils';
 class GlowFilter extends Filter {
 
     constructor(distance = 10, outerStrength = 4, innerStrength = 0, color = 0xffffff, quality = 0.1) {
+        distance = Math.round(distance);
+
         super(vertex, fragment
             .replace(/__ANGLE_STEP_SIZE__/gi, '' + (1 / quality / distance).toFixed(7))
-            .replace(/__DIST__/gi, distance.toFixed(7)));
+            .replace(/__DIST__/gi, distance.toFixed(0) + '.0'));
 
         this.uniforms.glowColor = new Float32Array([0, 0, 0, 1]);
         this.color = color;
         this.outerStrength = outerStrength;
         this.innerStrength = innerStrength;
-
-        /**
-         * The distance of the glow. Make it 2 times more for resolution=2. It cant be changed after filter creation
-         * @member {number}
-         * @default 10
-         * @readonly
-         */
-        this.distance = distance;
 
         this.padding = distance;
     }
