@@ -22,10 +22,10 @@
     "dist",
     "types.d.ts"
   ],
-  "dependencies": {
-    "@pixi/constants": "^5.0.0-X",
-    "@pixi/core": "^5.0.0-X",
-    "@pixi/math": "^5.0.0-X"
+  "peerDependencies": {
+    "@pixi/constants": "^5.0.0",
+    "@pixi/core": "^5.0.0",
+    "@pixi/math": "^5.0.0"
   },
   "devDependencies": {
     "@tools/fragments": "^3.0.3"

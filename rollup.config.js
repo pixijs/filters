@@ -140,7 +140,10 @@ async function main() {
         const freeze = false;
 
         // Generate the externals to use, by default don't include dependencies
-        const external = Object.keys(pkg.dependencies);
+        const external = [].concat(
+            Object.keys(pkg.dependencies || {}),
+            Object.keys(pkg.peerDependencies || {})
+        );
 
         results.push({
             input,
