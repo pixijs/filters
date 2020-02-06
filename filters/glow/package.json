@@ -6,7 +6,8 @@
   "description": "PixiJS filter to apply a glow effect",
   "author": "Mat Groves",
   "contributors": [
-    "Matt Karl <matt@mattkarl.com>"
+    "Matt Karl <matt@mattkarl.com>",
+    "Nils Kuhnhenn <lain@volafile.org>"
   ],
   "module": "lib/filter-glow.esm.js",
   "types": "types.d.ts",
