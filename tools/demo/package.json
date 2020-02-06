@@ -23,6 +23,6 @@
     "rollup-watch": "^4.3.1"
   },
   "dependencies": {
-    "pixi.js": "^5.0.0-X"
+    "pixi.js": "^5.0.0"
   }
 }
