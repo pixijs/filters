@@ -319,12 +319,15 @@
         {
             "name": "GlowFilter",
             "filename": "glow",
-            "options": {
-                "distance": 20,
-                "outerStrength": 1,
-                "innerStrength": 1,
-                "color": 16711680
-            }
+            "arguments": [
+                {
+                    "distance": 20,
+                    "outerStrength": 2,
+                    "innerStrength": 2,
+                    "color": 16711680,
+                    "quality": 0.5
+                }
+            ]
         },
         {
             "name": "ColorOverlayFilter",
