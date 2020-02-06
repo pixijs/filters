@@ -5,6 +5,7 @@ declare module "@pixi/filter-glow" {
         color:number;
         innerStrength:number;
         outerStrength:number;
+        knockout:boolean;
     }
     export interface GlowFilterOptions {
         color?:number;
@@ -12,5 +13,6 @@ declare module "@pixi/filter-glow" {
         innerStrength?:number;
         outerStrength?:number;
         quality?:number;
+        knockout?:boolean;
     }
 }
