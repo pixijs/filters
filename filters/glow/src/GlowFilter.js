@@ -21,6 +21,7 @@ import {rgb2hex, hex2rgb} from '@pixi/utils';
  * @param {number} [options.color=0xffffff] The color of the glow.
  * @param {number} [options.quality=0.1] A number between 0 and 1 that describes the quality of the glow.
  *        The higher the number the less performant.
+ * @param {boolean} [options.knockout=false] Toggle to hide the contents and only show glow.
  *
  * @example
  *  someSprite.filters = [
@@ -35,6 +36,7 @@ class GlowFilter extends Filter {
             outerStrength,
             innerStrength,
             color,
+            knockout,
             quality } = Object.assign({}, GlowFilter.defaults, options);
 
         distance = Math.round(distance);
@@ -50,6 +52,7 @@ class GlowFilter extends Filter {
             outerStrength,
             innerStrength,
             padding: distance,
+            knockout,
         });
     }
 
@@ -88,6 +91,18 @@ class GlowFilter extends Filter {
     set innerStrength(value) {
         this.uniforms.innerStrength = value;
     }
+
+    /**
+     * Only draw the glow, not the texture itself
+     * @member {boolean}
+     * @default false
+     */
+    get knockout() {
+        return this.uniforms.knockout;
+    }
+    set knockout(value) {
+        this.uniforms.knockout = value;
+    }
 }
 
 GlowFilter.defaults = {
@@ -96,6 +111,7 @@ GlowFilter.defaults = {
     innerStrength: 0,
     color: 0xffffff,
     quality: 0.1,
+    knockout: false,
 };
 
 export { GlowFilter };
