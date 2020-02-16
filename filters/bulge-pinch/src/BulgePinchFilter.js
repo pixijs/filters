@@ -16,18 +16,38 @@ import {Filter} from '@pixi/core';
  * @memberof PIXI.filters
  * @see {@link https://www.npmjs.com/package/@pixi/filter-bulge-pinch|@pixi/filter-bulge-pinch}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
- * @param {PIXI.Point|Array<number>} [center=[0,0]] The x and y coordinates of the center of the circle of effect.
- * @param {number} [radius=100] The radius of the circle of effect.
- * @param {number} [strength=1] -1 to 1 (-1 is strong pinch, 0 is no effect, 1 is strong bulge)
+ * @param {object} [options] Options to use for filter.
+ * @param {PIXI.Point|Array<number>} [options.center=[0,0]] The x and y coordinates of the center of the circle of effect.
+ * @param {number} [options.radius=100] The radius of the circle of effect.
+ * @param {number} [options.strength=1] -1 to 1 (-1 is strong pinch, 0 is no effect, 1 is strong bulge)
  */
 class BulgePinchFilter extends Filter {
 
-    constructor(center, radius, strength) {
+    constructor(options) {
         super(vertex, fragment);
+
+        // @deprecated (center, radius, strength) args
+        if (typeof options !== 'object') {
+            const [center, radius, strength] = arguments;
+            options = {};
+            if (center !== undefined) {
+                options.center = center;
+            }
+            if (radius !== undefined) {
+                options.radius = radius;
+            }
+            if (strength !== undefined) {
+                options.strength = strength;
+            }
+        }
+
         this.uniforms.dimensions = new Float32Array(2);
-        this.center = center || [0.5, 0.5];
-        this.radius = (typeof radius === 'number') ? radius : 100; // allow 0 to be passed
-        this.strength = (typeof strength === 'number') ? strength : 1; // allow 0 to be passed
+
+        Object.assign(this, {
+            center: [0.5, 0.5],
+            radius: 100,
+            strength: 1,
+        }, options);
     }
 
     apply(filterManager, input, output, clear) {

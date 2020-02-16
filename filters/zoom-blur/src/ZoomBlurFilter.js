@@ -11,19 +11,40 @@ import {Filter} from '@pixi/core';
  * @memberof PIXI.filters
  * @see {@link https://www.npmjs.com/package/@pixi/filter-zoom-blur|@pixi/filter-zoom-blur}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
- * @param {number} [strength=0.1] Sets the strength of the zoom blur effect
- * @param {PIXI.Point|number[]} [center=[0,0]] The center of the zoom.
- * @param {number} [innerRadius=0] The inner radius of zoom. The part in inner circle won't apply zoom blur effect.
- * @param {number} [radius=-1] See `radius` property.
+ * @param {object} [options] Filter options to use.
+ * @param {number} [options.strength=0.1] Sets the strength of the zoom blur effect
+ * @param {PIXI.Point|number[]} [options.center=[0,0]] The center of the zoom.
+ * @param {number} [options.innerRadius=0] The inner radius of zoom. The part in inner circle won't apply zoom blur effect.
+ * @param {number} [options.radius=-1] See `radius` property.
  */
 class ZoomBlurFilter extends Filter {
-    constructor(strength = 0.1, center = [0, 0], innerRadius = 0, radius = -1) {
+    constructor(options) {
         super(vertex, fragment);
 
-        this.center = center;
-        this.strength = strength;
-        this.innerRadius = innerRadius;
-        this.radius = radius;
+        // @deprecated (strength, center, innerRadius, radius) args
+        if (typeof options !== 'object') {
+            const [strength, center, innerRadius, radius] = arguments;
+            options = {};
+            if (strength !== undefined) {
+                options.strength = strength;
+            }
+            if (center !== undefined) {
+                options.center = center;
+            }
+            if (innerRadius !== undefined) {
+                options.innerRadius = innerRadius;
+            }
+            if (radius !== undefined) {
+                options.radius = radius;
+            }
+        }
+
+        Object.assign(this, {
+            strength: 0.1,
+            center: [0, 0],
+            innerRadius: 0,
+            radius: -1,
+        }, options);
     }
 
     /**
