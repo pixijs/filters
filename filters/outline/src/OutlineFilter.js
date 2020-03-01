@@ -20,7 +20,7 @@ import {rgb2hex, hex2rgb} from '@pixi/utils';
  *        setting will result in slower performance and more accuracy.
  *
  * @example
- *  someSprite.shader = new OutlineFilter(9, 0xFF0000);
+ *  someSprite.filters = [new OutlineFilter(2, 0x99ff99)];
  */
 class OutlineFilter extends Filter {
 
