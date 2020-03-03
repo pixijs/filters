@@ -30,7 +30,7 @@
     "watch": "rollup -cw",
     "lerna": "lerna",
     "prerelease": "run-s build",
-    "release": "lerna publish",
+    "release": "lerna publish --exact",
     "postrelease": "run-s deploy",
     "postversion": "npm run build"
   },
