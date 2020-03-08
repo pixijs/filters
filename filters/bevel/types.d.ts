@@ -1,5 +1,5 @@
 /// <reference types="pixi.js" />
-declare module "@pixi/filter-bevel" {
+declare namespace PIXI.filters {
     export class BevelFilter extends PIXI.Filter {
         constructor(options?:BevelOptions);
         rotation:number;
@@ -17,4 +17,9 @@ declare module "@pixi/filter-bevel" {
         shadowColor:number;
         shadowAlpha:number;
     }
+}
+
+declare module "@pixi/filter-bevel" {
+    export import BevelFilter = PIXI.filters.BevelFilter;
+    export import BevelOptions = PIXI.filters.BevelOptions;
 }

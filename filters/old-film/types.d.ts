@@ -1,7 +1,7 @@
 /// <reference types="pixi.js" />
-declare module "@pixi/filter-old-film" {
+declare namespace PIXI.filters {
     export class OldFilmFilter extends PIXI.Filter {
-        constructor(options?: OldFilmOptions, seed?: number);
+        constructor(options?: OldFilmFilterOptions, seed?: number);
         constructor(seed?: number);
         sepia: number;
         noise: number;
@@ -14,7 +14,7 @@ declare module "@pixi/filter-old-film" {
         vignettingBlur: number;
         seed: number;
     }
-    export interface OldFilmOptions {
+    export interface OldFilmFilterOptions {
         sepia?: number;
         noise?: number;
         noiseSize?: number;
@@ -25,4 +25,9 @@ declare module "@pixi/filter-old-film" {
         vignettingAlpha?: number;
         vignettingBlur?: number;
     }
+}
+
+declare module "@pixi/filter-old-film" {
+    export import OldFilmFilter = PIXI.filters.OldFilmFilter;
+    export import OldFilmFilterOptions = PIXI.filters.OldFilmFilterOptions;
 }

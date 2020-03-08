@@ -1,5 +1,5 @@
 /// <reference types="pixi.js" />
-declare module "@pixi/filter-advanced-bloom" {
+declare namespace PIXI.filters {
     export class AdvancedBloomFilter extends PIXI.Filter {
         constructor(options?: AdvancedBloomOptions);
         constructor(threshold?: number);
@@ -22,4 +22,9 @@ declare module "@pixi/filter-advanced-bloom" {
         pixelSize?: number|PIXI.Point|number[];
         resolution?: number;
     }
+}
+
+declare module "@pixi/filter-advanced-bloom" {
+    export import AdvancedBloomFilter = PIXI.filters.AdvancedBloomFilter;
+    export import AdvancedBloomOptions = PIXI.filters.AdvancedBloomOptions;
 }

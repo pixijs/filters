@@ -1,5 +1,5 @@
 /// <reference types="pixi.js" />
-declare module "@pixi/filter-godray" {
+declare namespace PIXI.filters {
     export class GodrayFilter extends PIXI.Filter {
         constructor(options?:GodrayFilterOptions);
         angle:number;
@@ -17,4 +17,9 @@ declare module "@pixi/filter-godray" {
         lacunarity:number;
         time:number;
     }
+}
+
+declare module "@pixi/filter-godray" {
+    export import GodrayFilter = PIXI.filters.GodrayFilter;
+    export import GodrayFilterOptions = PIXI.filters.GodrayFilterOptions;
 }
