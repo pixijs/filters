@@ -1,5 +1,5 @@
 /// <reference types="pixi.js" />
-declare module "@pixi/filter-glow" {
+declare namespace PIXI.filters {
     export class GlowFilter extends PIXI.Filter {
         constructor(options?:GlowFilterOptions);
         color:number;
@@ -15,4 +15,9 @@ declare module "@pixi/filter-glow" {
         quality?:number;
         knockout?:boolean;
     }
+}
+
+declare module "@pixi/filter-glow" {
+    export import GlowFilter = PIXI.filters.GlowFilter;
+    export import GlowFilterOptions = PIXI.filters.GlowFilterOptions;
 }

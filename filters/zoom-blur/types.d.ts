@@ -1,5 +1,5 @@
 /// <reference types="pixi.js" />
-declare module "@pixi/filter-zoom-blur" {
+declare namespace PIXI.filters {
     export interface ZoomBlurFilterOptions {
         strength?:number;
         center?:PIXI.Point|[number, number];
@@ -14,4 +14,9 @@ declare module "@pixi/filter-zoom-blur" {
         innerRadius:number;
         radius:number;
     }
+}
+
+declare module "@pixi/filter-zoom-blur" {
+    export import ZoomBlurFilterOptions = PIXI.filters.ZoomBlurFilterOptions;
+    export import ZoomBlurFilter = PIXI.filters.ZoomBlurFilter;
 }
