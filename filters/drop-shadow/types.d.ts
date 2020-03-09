@@ -1,5 +1,5 @@
 /// <reference types="pixi.js" />
-declare module "@pixi/filter-drop-shadow" {
+declare namespace PIXI.filters {
     export class DropShadowFilter extends PIXI.Filter {
         constructor(options?:DropShadowFilterOptions);
         alpha:number;
@@ -25,4 +25,9 @@ declare module "@pixi/filter-drop-shadow" {
         rotation?:number;
         shadowOnly?:boolean;
     }
+}
+
+declare module "@pixi/filter-drop-shadow" {
+    export import DropShadowFilter = PIXI.filters.DropShadowFilter;
+    export import DropShadowFilterOptions = PIXI.filters.DropShadowFilterOptions;
 }

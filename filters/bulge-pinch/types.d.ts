@@ -1,5 +1,5 @@
 /// <reference types="pixi.js" />
-declare module "@pixi/filter-bulge-pinch" {
+declare namespace PIXI.filters {
     export interface BulgePinchFilterOptions {
         center?:PIXI.Point|[number, number];
         radius?:number;
@@ -12,4 +12,9 @@ declare module "@pixi/filter-bulge-pinch" {
         radius:number;
         strength:number;
     }
+}
+
+declare module "@pixi/filter-bulge-pinch" {
+    export import BulgePinchFilterOptions = PIXI.filters.BulgePinchFilterOptions;
+    export import BulgePinchFilter = PIXI.filters.BulgePinchFilter;
 }

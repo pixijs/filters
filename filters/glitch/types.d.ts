@@ -1,7 +1,7 @@
 /// <reference types="pixi.js" />
-declare module "@pixi/filter-glitch" {
+declare namespace PIXI.filters {
     export class GlitchFilter extends PIXI.Filter {
-        constructor(options?:GlitchOptions);
+        constructor(options?:GlitchFilterOptions);
         slices:number;
         offset:number;
         direction:number;
@@ -17,7 +17,7 @@ declare module "@pixi/filter-glitch" {
         redraw(): void;
         readonly texture:PIXI.Texture;
     }
-    export interface GlitchOptions {
+    export interface GlitchFilterOptions {
         slices:number;
         offset:number;
         direction:number;
@@ -30,4 +30,9 @@ declare module "@pixi/filter-glitch" {
         minSize:number;
         sampleSize:number;
     }
+}
+
+declare module "@pixi/filter-glitch" {
+    export import GlitchFilter = PIXI.filters.GlitchFilter;
+    export import GlitchFilterOptions = PIXI.filters.GlitchFilterOptions;
 }
