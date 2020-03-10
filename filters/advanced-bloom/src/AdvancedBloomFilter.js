@@ -84,11 +84,11 @@ class AdvancedBloomFilter extends Filter {
 
         const brightTarget = filterManager.getFilterTexture();
 
-        this._extractFilter.apply(filterManager, input, brightTarget, true, currentState);
+        this._extractFilter.apply(filterManager, input, brightTarget, 1, currentState);
 
         const bloomTarget = filterManager.getFilterTexture();
 
-        this._blurFilter.apply(filterManager, brightTarget, bloomTarget, true, currentState);
+        this._blurFilter.apply(filterManager, brightTarget, bloomTarget, 1, currentState);
 
         this.uniforms.bloomScale = this.bloomScale;
         this.uniforms.brightness = this.brightness;

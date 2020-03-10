@@ -68,7 +68,7 @@ class KawaseBlurFilter extends Filter {
                 offset = this._kernels[i] + 0.5;
                 this.uniforms.uOffset[0] = offset * uvX;
                 this.uniforms.uOffset[1] = offset * uvY;
-                filterManager.applyFilter(this, source, target, true);
+                filterManager.applyFilter(this, source, target, 1);
 
                 tmp = source;
                 source = target;
