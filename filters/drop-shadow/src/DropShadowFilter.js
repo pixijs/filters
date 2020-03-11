@@ -90,11 +90,11 @@ class DropShadowFilter extends Filter {
     apply(filterManager, input, output, clear) {
         const target = filterManager.getFilterTexture();
 
-        this._tintFilter.apply(filterManager, input, target, true);
+        this._tintFilter.apply(filterManager, input, target, 1);
         this._blurFilter.apply(filterManager, target, output, clear);
 
         if (this.shadowOnly !== true) {
-            filterManager.applyFilter(this, input, output, false);
+            filterManager.applyFilter(this, input, output, 0);
         }
 
         filterManager.returnFilterTexture(target);
