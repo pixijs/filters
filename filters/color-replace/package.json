@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-color-replace",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "main": "lib/filter-color-replace.cjs.js",
   "bundle": "dist/filter-color-replace.js",
   "description": "PixiJS filter to replace a single color",

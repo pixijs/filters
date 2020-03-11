@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-outline",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "main": "lib/filter-outline.cjs.js",
   "bundle": "dist/filter-outline.js",
   "description": "PixiJS filter to apply an outline/stroke effect",

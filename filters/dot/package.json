@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-dot",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "main": "lib/filter-dot.cjs.js",
   "bundle": "dist/filter-dot.js",
   "description": "PixiJS filter to apply a black and white dot effect",

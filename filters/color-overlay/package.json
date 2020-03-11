@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-color-overlay",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "main": "lib/filter-color-overlay.cjs.js",
   "bundle": "dist/filter-color-overlay.js",
   "description": "PixiJS filter to overlay all colors with single color",
