@@ -45,8 +45,8 @@ class KawaseBlurFilter extends Filter {
      * @private
      */
     apply(filterManager, input, output, clear) {
-        const uvX = this.pixelSize.x / input._frame.width;
-        const uvY = this.pixelSize.y / input._frame.height;
+        const uvX = this._pixelSize.x / input._frame.width;
+        const uvY = this._pixelSize.y / input._frame.height;
         let offset;
 
         if (this._quality === 1 || this._blur === 0) {
