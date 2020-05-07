@@ -1,8 +1,8 @@
-import { vertex } from '@tools/fragments';
+import {vertex} from '@tools/fragments';
 import perlin from './perlin.frag';
 import fragment from './gorday.frag';
-import { Filter } from '@pixi/core';
-import { Point, DEG_TO_RAD } from '@pixi/math';
+import {Filter} from '@pixi/core';
+import {Point, DEG_TO_RAD} from '@pixi/math';
 
 /**
  * GordayFilter, {@link https://codepen.io/alaingalvan originally} by Alain Galvan
@@ -26,7 +26,7 @@ import { Point, DEG_TO_RAD } from '@pixi/math';
  * @param {number} [options.time=0] The current time position.
  * @param {PIXI.Point|number[]} [options.center=[0,0]] Focal point for non-parallel rays,
  *        to use this `parallel` must be set to `false`.
- * @param {number} [options.alpha=0.5] the alpha
+ * @param {number} [options.alpha=1.0] the alpha, defaults to 1, affects transparency of rays
  */
 class GodrayFilter extends Filter {
     constructor(options) {
@@ -37,9 +37,7 @@ class GodrayFilter extends Filter {
         // Fallback support for ctor: (angle, gain, lacunarity, time)
         if (typeof options === 'number') {
             // eslint-disable-next-line no-console
-            console.warn(
-                'GodrayFilter now uses options instead of (angle, gain, lacunarity, time)'
-            );
+            console.warn('GodrayFilter now uses options instead of (angle, gain, lacunarity, time)');
             options = { angle: options };
             if (arguments[1] !== undefined) {
                 options.gain = arguments[1];
@@ -55,18 +53,15 @@ class GodrayFilter extends Filter {
             }
         }
 
-        options = Object.assign(
-            {
-                angle: 30,
-                gain: 0.5,
-                lacunarity: 2.5,
-                time: 0,
-                parallel: true,
-                center: [0, 0],
-                alpha: 0.0,
-            },
-            options
-        );
+        options = Object.assign({
+            angle: 30,
+            gain: 0.5,
+            lacunarity: 2.5,
+            time: 0,
+            parallel: true,
+            center: [0, 0],
+            alpha: 1,
+        }, options);
 
         this._angleLight = new Point();
         this.angle = options.angle;
@@ -75,41 +70,41 @@ class GodrayFilter extends Filter {
         this.alpha = options.alpha;
 
         /**
-     * `true` if light rays are parallel (uses angle),
-     * `false` to use the focal `center` point
-     *
-     * @member {boolean}
-     * @default true
-     */
+         * `true` if light rays are parallel (uses angle),
+         * `false` to use the focal `center` point
+         *
+         * @member {boolean}
+         * @default true
+         */
         this.parallel = options.parallel;
 
         /**
-     * The position of the emitting point for light rays
-     * only used if `parallel` is set to `false`.
-     *
-     * @member {PIXI.Point|number[]}
-     * @default [0, 0]
-     */
+         * The position of the emitting point for light rays
+         * only used if `parallel` is set to `false`.
+         *
+         * @member {PIXI.Point|number[]}
+         * @default [0, 0]
+         */
         this.center = options.center;
 
         /**
-     * The current time.
-     *
-     * @member {number}
-     * @default 0
-     */
+         * The current time.
+         *
+         * @member {number}
+         * @default 0
+         */
         this.time = options.time;
     }
 
     /**
-   * Applies the filter.
-   * @private
-   * @param {PIXI.FilterManager} filterManager - The manager.
-   * @param {PIXI.RenderTarget} input - The input target.
-   * @param {PIXI.RenderTarget} output - The output target.
-   */
+     * Applies the filter.
+     * @private
+     * @param {PIXI.FilterManager} filterManager - The manager.
+     * @param {PIXI.RenderTarget} input - The input target.
+     * @param {PIXI.RenderTarget} output - The output target.
+     */
     apply(filterManager, input, output, clear) {
-        const { width, height } = input.filterFrame;
+        const {width, height} = input.filterFrame;
 
         this.uniforms.light = this.parallel ? this._angleLight : this.center;
 
@@ -125,11 +120,11 @@ class GodrayFilter extends Filter {
     }
 
     /**
-   * The angle/light-source of the rays in degrees. For instance, a value of 0 is vertical rays,
-   *     values of 90 or -90 produce horizontal rays.
-   * @member {number}
-   * @default 30
-   */
+     * The angle/light-source of the rays in degrees. For instance, a value of 0 is vertical rays,
+     *     values of 90 or -90 produce horizontal rays.
+     * @member {number}
+     * @default 30
+     */
     get angle() {
         return this._angle;
     }
@@ -143,12 +138,12 @@ class GodrayFilter extends Filter {
     }
 
     /**
-   * General intensity of the effect. A value closer to 1 will produce a more intense effect,
-   * where a value closer to 0 will produce a subtler effect.
-   *
-   * @member {number}
-   * @default 0.5
-   */
+     * General intensity of the effect. A value closer to 1 will produce a more intense effect,
+     * where a value closer to 0 will produce a subtler effect.
+     *
+     * @member {number}
+     * @default 0.5
+     */
     get gain() {
         return this.uniforms.gain;
     }
@@ -157,12 +152,12 @@ class GodrayFilter extends Filter {
     }
 
     /**
-   * The density of the fractal noise. A higher amount produces more rays and a smaller amound
-   * produces fewer waves.
-   *
-   * @member {number}
-   * @default 2.5
-   */
+     * The density of the fractal noise. A higher amount produces more rays and a smaller amound
+     * produces fewer waves.
+     *
+     * @member {number}
+     * @default 2.5
+     */
     get lacunarity() {
         return this.uniforms.lacunarity;
     }
@@ -171,10 +166,10 @@ class GodrayFilter extends Filter {
     }
 
     /**
-   * The alpha of the filter
-   * @member {number}
-   * @default 1
-   */
+     * The alpha (opacity) of the rays.  0 is fully transparent, 1 is fully opaque
+     * @member {number}
+     * @default 1
+     */
     get alpha() {
         return this.uniforms.alpha;
     }
