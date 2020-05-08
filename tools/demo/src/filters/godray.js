@@ -8,6 +8,7 @@ export default function() {
         opened: false,
         oncreate: function(folder) {
 
+            this.alpha = 1;
             this.light = 30;
             this.gain = 0.6;
             this.lacunarity = 2.75;
@@ -30,6 +31,7 @@ export default function() {
             folder.add(this, 'time', 0, 1);
             folder.add(this, 'gain', 0, 1);
             folder.add(this, 'lacunarity', 0, 5);
+            folder.add(this, 'alpha', 0, 1);
             folder.add(this, 'parallel');
             folder.add(this, 'angle', -60, 60);
             folder.add(this.center, 'x', -100, app.initWidth + 100).name('center.x');
