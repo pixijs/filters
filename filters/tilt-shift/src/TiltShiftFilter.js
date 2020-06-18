@@ -1,6 +1,7 @@
 import {TiltShiftXFilter} from './TiltShiftXFilter';
 import {TiltShiftYFilter} from './TiltShiftYFilter';
 import {Filter} from '@pixi/core';
+import {CLEAR_MODES} from '@pixi/constants';
 
 /**
  * @author Vico @vicocotea
@@ -31,7 +32,7 @@ class TiltShiftFilter extends Filter {
 
     apply(filterManager, input, output) {
         let renderTarget = filterManager.getFilterTexture();
-        this.tiltShiftXFilter.apply(filterManager, input, renderTarget);
+        this.tiltShiftXFilter.apply(filterManager, input, renderTarget, CLEAR_MODES.CLEAR);
         this.tiltShiftYFilter.apply(filterManager, renderTarget, output);
         filterManager.returnFilterTexture(renderTarget);
     }
