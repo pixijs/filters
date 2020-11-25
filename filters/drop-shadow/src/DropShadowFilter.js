@@ -24,7 +24,7 @@ import {rgb2hex, hex2rgb} from '@pixi/utils';
  * @param {number} [options.quality=3] - The quality of the Blur filter.
  * @param {number[]} [options.kernels=null] - The kernels of the Blur filter.
  * @param {number|number[]|PIXI.Point} [options.pixelSize=1] - the pixelSize of the Blur filter.
- * @param {number} [options.resolution=PIXI.settings.RESOLUTION] - The resolution of the Blur filter.
+ * @param {number} [options.resolution=PIXI.settings.FILTER_RESOLUTION] - The resolution of the Blur filter.
  */
 class DropShadowFilter extends Filter {
     constructor(options) {
@@ -58,7 +58,7 @@ class DropShadowFilter extends Filter {
             blur: 2,
             quality: 3,
             pixelSize: 1,
-            resolution: settings.RESOLUTION,
+            resolution: settings.FILTER_RESOLUTION,
         }, options);
 
         super();
@@ -123,7 +123,7 @@ class DropShadowFilter extends Filter {
      * The resolution of the filter.
      *
      * @member {number}
-     * @default PIXI.settings.RESOLUTION
+     * @default PIXI.settings.FILTER_RESOLUTION
      */
     get resolution() {
         return this._resolution;
