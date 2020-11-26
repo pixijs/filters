@@ -26,7 +26,7 @@ import {settings} from '@pixi/settings';
  * @param {number} [options.quality=4] - The quality of the Blur filter.
  * @param {number[]} [options.kernels=null] - The kernels of the Blur filter.
  * @param {number|number[]|PIXI.Point} [options.pixelSize=1] - the pixelSize of the Blur filter.
- * @param {number} [options.resolution=PIXI.settings.RESOLUTION] - The resolution of the Blur filter.
+ * @param {number} [options.resolution=PIXI.settings.FILTER_RESOLUTION] - The resolution of the Blur filter.
  */
 class AdvancedBloomFilter extends Filter {
 
@@ -46,7 +46,7 @@ class AdvancedBloomFilter extends Filter {
             blur: 8,
             quality: 4,
             pixelSize: 1,
-            resolution: settings.RESOLUTION,
+            resolution: settings.FILTER_RESOLUTION,
         }, options);
 
         /**

@@ -17,12 +17,12 @@ import {Point} from '@pixi/math';
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  * @param {number|PIXI.Point|number[]} [blur=2] Sets the strength of both the blurX and blurY properties simultaneously
  * @param {number} [quality=4] The quality of the blurX & blurY filter.
- * @param {number} [resolution=PIXI.settings.RESOLUTION] The resolution of the blurX & blurY filter.
+ * @param {number} [resolution=PIXI.settings.FILTER_RESOLUTION] The resolution of the blurX & blurY filter.
  * @param {number} [kernelSize=5] The kernelSize of the blurX & blurY filter.Options: 5, 7, 9, 11, 13, 15.
  */
 class BloomFilter extends Filter {
 
-    constructor(blur = 2, quality = 4, resolution = settings.RESOLUTION, kernelSize = 5) {
+    constructor(blur = 2, quality = 4, resolution = settings.FILTER_RESOLUTION, kernelSize = 5) {
         super();
 
         let blurX;
