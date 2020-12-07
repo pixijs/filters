@@ -10,6 +10,7 @@ uniform float aspect;
 uniform float gain;
 uniform float lacunarity;
 uniform float time;
+uniform float alpha;
 
 ${perlin}
 
@@ -36,6 +37,9 @@ void main(void) {
     //fade vertically.
     vec4 mist = vec4(noise, noise, noise, 1.0) * (1.0 - coord.y);
     mist.a = 1.0;
+    // apply user alpha
+    mist *= alpha;
 
     gl_FragColor = texture2D(uSampler, vTextureCoord) + mist;
+
 }

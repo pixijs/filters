@@ -26,9 +26,9 @@ import {Point, DEG_TO_RAD} from '@pixi/math';
  * @param {number} [options.time=0] The current time position.
  * @param {PIXI.Point|number[]} [options.center=[0,0]] Focal point for non-parallel rays,
  *        to use this `parallel` must be set to `false`.
+ * @param {number} [options.alpha=1.0] the alpha, defaults to 1, affects transparency of rays
  */
 class GodrayFilter extends Filter {
-
     constructor(options) {
         super(vertex, fragment.replace('${perlin}', perlin));
 
@@ -48,6 +48,9 @@ class GodrayFilter extends Filter {
             if (arguments[3] !== undefined) {
                 options.time = arguments[3];
             }
+            if (arguments[4] !== undefined) {
+                options.alpha = arguments[4];
+            }
         }
 
         options = Object.assign({
@@ -57,12 +60,14 @@ class GodrayFilter extends Filter {
             time: 0,
             parallel: true,
             center: [0, 0],
+            alpha: 1,
         }, options);
 
         this._angleLight = new Point();
         this.angle = options.angle;
         this.gain = options.gain;
         this.lacunarity = options.lacunarity;
+        this.alpha = options.alpha;
 
         /**
          * `true` if light rays are parallel (uses angle),
@@ -108,6 +113,7 @@ class GodrayFilter extends Filter {
         this.uniforms.dimensions[1] = height;
         this.uniforms.aspect = height / width;
         this.uniforms.time = this.time;
+        this.uniforms.alpha = this.alpha;
 
         // draw the filter...
         filterManager.applyFilter(this, input, output, clear);
@@ -157,6 +163,18 @@ class GodrayFilter extends Filter {
     }
     set lacunarity(value) {
         this.uniforms.lacunarity = value;
+    }
+
+    /**
+     * The alpha (opacity) of the rays.  0 is fully transparent, 1 is fully opaque
+     * @member {number}
+     * @default 1
+     */
+    get alpha() {
+        return this.uniforms.alpha;
+    }
+    set alpha(value) {
+        this.uniforms.alpha = value;
     }
 }
 
