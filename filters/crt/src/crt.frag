@@ -29,17 +29,10 @@ float rand(vec2 co) {
 void main(void)
 {
     vec2 pixelCoord = vTextureCoord.xy * filterArea.xy;
-    vec2 coord = pixelCoord / dimensions;
-
-    vec2 dir = vec2(coord - vec2(0.5, 0.5));
-
-    float _c = curvature > 0. ? curvature : 1.;
-    float k = curvature > 0. ?(length(dir * dir) * 0.25 * _c * _c + 0.935 * _c) : 1.;
-    vec2 uv = dir * k;
+    vec2 dir = vec2(vTextureCoord.xy - vec2(0.5, 0.5)) * filterArea.xy / dimensions;
 
     gl_FragColor = texture2D(uSampler, vTextureCoord);
     vec3 rgb = gl_FragColor.rgb;
-
 
     if (noise > 0.0 && noiseSize > 0.0)
     {
@@ -49,7 +42,12 @@ void main(void)
         rgb += _noise * noise;
     }
 
-    if (lineWidth > 0.0) {
+    if (lineWidth > 0.0)
+    {
+        float _c = curvature > 0. ? curvature : 1.;
+        float k = curvature > 0. ?(length(dir * dir) * 0.25 * _c * _c + 0.935 * _c) : 1.;
+        vec2 uv = dir * k;
+
         float v = (verticalLine ? uv.x * dimensions.x : uv.y * dimensions.y) * min(1.0, 2.0 / lineWidth ) / _c;
         float j = 1. + cos(v * 1.2 - time) * 0.5 * lineContrast;
         rgb *= j;

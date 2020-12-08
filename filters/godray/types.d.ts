@@ -8,6 +8,7 @@ declare namespace PIXI.filters {
         gain:number;
         lacunarity:number;
         time:number;
+        alpha:number;
     }
     export interface GodrayFilterOptions {
         angle:number;
@@ -16,6 +17,7 @@ declare namespace PIXI.filters {
         gain:number;
         lacunarity:number;
         time:number;
+        alpha:number;
     }
 }
 
