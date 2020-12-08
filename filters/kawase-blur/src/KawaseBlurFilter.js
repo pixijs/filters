@@ -83,6 +83,10 @@ class KawaseBlurFilter extends Filter {
         }
     }
 
+    _updatePadding() {
+        this.padding = Math.ceil(this._kernels.reduce((acc, v) => acc + v + 0.5, 0));
+    }
+
     /**
      * Auto generate kernels by blur & quality
      * @private
@@ -103,6 +107,8 @@ class KawaseBlurFilter extends Filter {
         }
 
         this._kernels = kernels;
+
+        this._updatePadding();
     }
 
     /**
