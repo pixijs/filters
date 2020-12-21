@@ -31,7 +31,7 @@ class TiltShiftFilter extends Filter {
 
     apply(filterManager, input, output) {
         let renderTarget = filterManager.getFilterTexture();
-        this.tiltShiftXFilter.apply(filterManager, input, renderTarget);
+        this.tiltShiftXFilter.apply(filterManager, input, renderTarget, 1);
         this.tiltShiftYFilter.apply(filterManager, renderTarget, output);
         filterManager.returnFilterTexture(renderTarget);
     }
