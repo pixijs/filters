@@ -32,24 +32,16 @@ class OutlineFilter extends Filter {
         const angleStep = (Math.PI * 2 / samples).toFixed(7);
 
         super(vertex, fragment.replace(/\$\{angleStep\}/, angleStep));
+
         this.uniforms.thickness = new Float32Array([0, 0]);
-
-        /**
-         * The thickness of the outline.
-         * @member {number}
-         * @default 1
-         */
-        this.thickness = thickness;
-
         this.uniforms.outlineColor = new Float32Array([0, 0, 0, 1]);
-        this.color = color;
 
-        this.quality = quality;
+        Object.assign(this, { thickness, color, quality });
     }
 
     apply(filterManager, input, output, clear) {
-        this.uniforms.thickness[0] = this.thickness / input._frame.width;
-        this.uniforms.thickness[1] = this.thickness / input._frame.height;
+        this.uniforms.thickness[0] = this._thickness / input._frame.width;
+        this.uniforms.thickness[1] = this._thickness / input._frame.height;
 
         filterManager.applyFilter(this, input, output, clear);
     }
@@ -64,6 +56,19 @@ class OutlineFilter extends Filter {
     }
     set color(value) {
         hex2rgb(value, this.uniforms.outlineColor);
+    }
+
+    /**
+     * The thickness of the outline.
+     * @member {number}
+     * @default 1
+     */
+    get thickness() {
+        return this._thickness;
+    }
+    set thickness(value) {
+        this._thickness = value;
+        this.padding = value;
     }
 }
 
