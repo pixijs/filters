@@ -25,17 +25,12 @@
     "dist",
     "types.d.ts"
   ],
-  "dependencies": {
-    "@pixi/filter-alpha": "^5.0.0",
-    "@pixi/filter-blur": "^5.0.0"
-  },
   "peerDependencies": {
+    "@pixi/filter-alpha": "^5.0.0",
+    "@pixi/filter-blur": "^5.0.0",
     "@pixi/constants": "^5.0.0",
     "@pixi/core": "^5.0.0",
     "@pixi/math": "^5.0.0",
     "@pixi/settings": "^5.0.0"
-  },
-  "devDependencies": {
-    "@tools/fragments": "^3.0.3"
   }
 }
