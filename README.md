@@ -1,6 +1,6 @@
 # PixiJS Filters
 
-[![Build Status](https://travis-ci.org/pixijs/pixi-filters.svg?branch=master)](https://travis-ci.org/pixijs/pixi-filters)
+[![Node.js CI](https://github.com/pixijs/pixi-filters/workflows/Node.js%20CI/badge.svg)](https://github.com/pixi.js/pixi-filters/actions?query=workflow%3A%22Node.js+CI%22)
 
 ## Demo
 
