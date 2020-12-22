@@ -4,7 +4,7 @@
 
 ## Demo
 
-Click [here](https://filters.pixijs.download/main/demo/index.html) to interactively play with filters to see how they work.
+Click [here](https://pixijs.io/pixi-filters/tools/demo/) to interactively play with filters to see how they work.
 
 ## Filters
 
