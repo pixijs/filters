@@ -47,14 +47,14 @@ class BloomFilter extends Filter {
         this.defaultFilter = new AlphaFilter();
     }
 
-    apply(filterManager, input, output) {
-        const renderTarget = filterManager.getFilterTexture(true);
+    apply(filterManager, input, output, clear) {
+        const renderTarget = filterManager.getFilterTexture();
 
         //TODO - copyTexSubImage2D could be used here?
-        this.defaultFilter.apply(filterManager, input, output);
+        this.defaultFilter.apply(filterManager, input, output, clear);
 
         this.blurXFilter.apply(filterManager, input, renderTarget);
-        this.blurYFilter.apply(filterManager, renderTarget, output);
+        this.blurYFilter.apply(filterManager, renderTarget, output, 0);
 
         filterManager.returnFilterTexture(renderTarget);
     }
