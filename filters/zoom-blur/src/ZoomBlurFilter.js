@@ -16,11 +16,11 @@ import {Filter} from '@pixi/core';
  * @param {PIXI.Point|number[]} [options.center=[0,0]] The center of the zoom.
  * @param {number} [options.innerRadius=0] The inner radius of zoom. The part in inner circle won't apply zoom blur effect.
  * @param {number} [options.radius=-1] See `radius` property.
+ * @param {number} [options.maxKernelSize=32] On older iOS devices, it's better to not go above `13.0`. Decreasing this
+ *        value will produce a lower-quality blur effect with more dithering.
  */
 class ZoomBlurFilter extends Filter {
     constructor(options) {
-        super(vertex, fragment);
-
         // @deprecated (strength, center, innerRadius, radius) args
         if (typeof options !== 'object') {
             const [strength, center, innerRadius, radius] = arguments;
@@ -39,12 +39,21 @@ class ZoomBlurFilter extends Filter {
             }
         }
 
-        Object.assign(this, {
+        // Apply default values
+        options = Object.assign({
             strength: 0.1,
             center: [0, 0],
             innerRadius: 0,
             radius: -1,
+            maxKernelSize: 32,
         }, options);
+
+        super(vertex, fragment.replace('${maxKernelSize}', options.maxKernelSize.toFixed(1)));
+
+        this.strength = options.strength;
+        this.center = options.center;
+        this.innerRadius = options.innerRadius;
+        this.radius = options.radius;
     }
 
     /**

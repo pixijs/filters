@@ -7,7 +7,7 @@ uniform float uStrength;
 uniform float uInnerRadius;
 uniform float uRadius;
 
-const float MAX_KERNEL_SIZE = 32.0;
+const float MAX_KERNEL_SIZE = ${maxKernelSize};
 
 // author: http://byteblacksmith.com/improvements-to-the-canonical-one-liner-glsl-rand-for-opengl-es-2-0/
 highp float rand(vec2 co, float seed) {

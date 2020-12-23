@@ -5,6 +5,7 @@ declare namespace PIXI.filters {
         center?:PIXI.Point|[number, number];
         innerRadius?:number;
         radius?:number;
+        maxKernelSize?:number;
     }
     export class ZoomBlurFilter extends PIXI.Filter {
         constructor(options?:ZoomBlurFilterOptions);
