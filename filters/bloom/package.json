@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-bloom",
-  "version": "3.1.1",
+  "version": "3.2.0",
   "main": "lib/filter-bloom.cjs.js",
   "bundle": "dist/filter-bloom.js",
   "description": "PixiJS filter to apply a simple bloom effect",
@@ -26,10 +26,10 @@
     "types.d.ts"
   ],
   "peerDependencies": {
-    "@pixi/filter-alpha": "^5.0.0",
-    "@pixi/filter-blur": "^5.0.0",
     "@pixi/constants": "^5.0.0",
     "@pixi/core": "^5.0.0",
+    "@pixi/filter-alpha": "^5.0.0",
+    "@pixi/filter-blur": "^5.0.0",
     "@pixi/math": "^5.0.0",
     "@pixi/settings": "^5.0.0"
   }

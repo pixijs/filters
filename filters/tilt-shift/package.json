@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-tilt-shift",
-  "version": "3.1.1",
+  "version": "3.2.0",
   "main": "lib/filter-tilt-shift.cjs.js",
   "bundle": "dist/filter-tilt-shift.js",
   "description": "PixiJS filter to render a tilt-shift-like camera effect",
