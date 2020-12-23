@@ -25,10 +25,8 @@
     "build:tools": "lerna run build --scope @tools/*",
     "watch:tools": "lerna run watch --parallel --scope @tools/*",
     "watch": "rollup -cw",
-    "lerna": "lerna",
     "prerelease": "run-s build",
-    "release": "lerna publish --exact",
-    "postversion": "run-s build"
+    "release": "lerna version --exact"
   },
   "devDependencies": {
     "@lerna/batch-packages": "^3.13.0",

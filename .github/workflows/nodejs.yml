@@ -58,6 +58,13 @@ jobs:
         SOURCE_DIR: 'dist'
         DEST_DIR: ${{ steps.branch_name.outputs.BRANCH_NAME }}
 
+    # Required for publishing with NPM
+    - name: Publish Latest Release to NPM
+      if: (github.event_name == 'release' || contains(github.ref, 'refs/tags')) && matrix.node-version == '12.x'
+      run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc && npx lerna publish from-git --yes
+      env:
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
     # Release is published and deployed into s3://bucket-name/v5.22/
     - name: Deploy Released Branches
       uses: jakejarvis/s3-sync-action@master
