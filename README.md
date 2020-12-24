@@ -121,4 +121,4 @@ npm run build:dev
 
 ## Documentation
 
-API documention can be found [here](http://pixijs.github.io/pixi-filters/docs/).
+API documention can be found [here](http://pixijs.io/pixi-filters/docs/).
