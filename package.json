@@ -2,6 +2,7 @@
   "name": "pixi-filters-monorepo",
   "private": true,
   "scripts": {
+    "start": "run-p watch watch:tools demo",
     "postinstall": "run-s bootstrap",
     "bootstrap": "lerna bootstrap --hoist --no-ci",
     "clean:build": "rimraf \"filters/*/{lib,dist}\" \"bundle/{lib,dist}\" tools/screenshots/dist",
