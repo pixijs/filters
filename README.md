@@ -1,6 +1,6 @@
 # PixiJS Filters
 
-[![Node.js CI](https://github.com/pixijs/pixi-filters/workflows/Node.js%20CI/badge.svg)](https://github.com/pixi.js/pixi-filters/actions?query=workflow%3A%22Node.js+CI%22)
+[![Node.js CI](https://github.com/pixijs/pixi-filters/workflows/Node.js%20CI/badge.svg)](https://github.com/pixi.js/pixi-filters/actions?query=workflow%3A%22Node.js+CI%22) [![npm version](https://badge.fury.io/js/pixi-filters.svg)](https://badge.fury.io/js/pixi-filters)
 
 ## Demo
 
