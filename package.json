@@ -28,7 +28,7 @@
     "watch": "rollup -cw",
     "prerelease": "run-s build",
     "release": "lerna version --exact",
-    "publish-ci": "lerna publish from-git --yes --no-verify-access"
+    "publish-ci": "lerna publish from-package --yes --no-verify-access"
   },
   "devDependencies": {
     "@lerna/batch-packages": "^3.13.0",
