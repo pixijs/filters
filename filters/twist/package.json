@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-twist",
-  "version": "3.1.1",
+  "version": "3.2.1",
   "main": "lib/filter-twist.cjs.js",
   "bundle": "dist/filter-twist.js",
   "description": "PixiJS filter to apply a twist effect to a DisplayObject",

@@ -1,6 +1,6 @@
 {
   "name": "pixi-filters",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "main": "lib/pixi-filters.cjs.js",
   "description": "PixiJS v5 optional display filters",
   "author": "Mat Groves <mat@goodboydigital.com>",
@@ -29,13 +29,13 @@
     "@pixi/filter-adjustment": "3.1.1",
     "@pixi/filter-advanced-bloom": "3.2.0",
     "@pixi/filter-ascii": "3.1.1",
-    "@pixi/filter-bevel": "3.1.1",
+    "@pixi/filter-bevel": "3.2.1",
     "@pixi/filter-bloom": "3.2.0",
     "@pixi/filter-bulge-pinch": "3.1.1",
     "@pixi/filter-color-map": "3.1.1",
     "@pixi/filter-color-overlay": "3.1.1",
     "@pixi/filter-color-replace": "3.1.1",
-    "@pixi/filter-convolution": "3.1.1",
+    "@pixi/filter-convolution": "3.2.1",
     "@pixi/filter-cross-hatch": "3.1.1",
     "@pixi/filter-crt": "3.2.0",
     "@pixi/filter-dot": "3.1.1",
@@ -56,7 +56,7 @@
     "@pixi/filter-shockwave": "3.1.1",
     "@pixi/filter-simple-lightmap": "3.1.1",
     "@pixi/filter-tilt-shift": "3.2.0",
-    "@pixi/filter-twist": "3.1.1",
-    "@pixi/filter-zoom-blur": "3.1.1"
+    "@pixi/filter-twist": "3.2.1",
+    "@pixi/filter-zoom-blur": "3.2.1"
   }
 }
