@@ -46,10 +46,10 @@ class DropShadowFilter extends Filter {
      * @member {number}
      * @default 45
      */
-    public angle: number;
+    public angle: number = 45;
 
-    private _distance: number;
-    private _resolution: number;
+    private _distance: number = 5;
+    private _resolution: number = settings.FILTER_RESOLUTION;
     private _tintFilter: Filter;
     private _blurFilter: KawaseBlurFilter;
 
@@ -68,26 +68,9 @@ class DropShadowFilter extends Filter {
      */
     constructor(options?: Partial<DropShadowFilterOptions>) {
 
-        // Fallback support for ctor: (rotation, distance, blur, color, alpha)
-        if (typeof options === 'number') {
-            // eslint-disable-next-line no-console
-            console.warn('DropShadowFilter now uses options instead of (rotation, distance, blur, color, alpha)');
-            options = { rotation: options };
-            if (arguments[1] !== undefined) {
-                options.distance = arguments[1];
-            }
-            if (arguments[2] !== undefined) {
-                options.blur = arguments[2];
-            }
-            if (arguments[3] !== undefined) {
-                options.color = arguments[3];
-            }
-            if (arguments[4] !== undefined) {
-                options.alpha = arguments[4];
-            }
-        }
+        super();
 
-        options = Object.assign({
+        const opt: DropShadowFilterOptions = Object.assign({
             rotation: 45,
             distance: 5,
             color: 0x000000,
@@ -100,9 +83,7 @@ class DropShadowFilter extends Filter {
             resolution: settings.FILTER_RESOLUTION,
         }, options);
 
-        super();
-
-        const { kernels, blur, quality, pixelSize, resolution } = options;
+        const { kernels, blur, quality, pixelSize, resolution } = opt;
 
         this._tintFilter = new Filter(vertex, fragment);
         this._tintFilter.uniforms.color = new Float32Array(4);
@@ -115,7 +96,7 @@ class DropShadowFilter extends Filter {
         this.pixelSize = pixelSize;
         this.resolution = resolution;
 
-        const { shadowOnly, rotation, distance, alpha, color } = options;
+        const { shadowOnly, rotation, distance, alpha, color } = opt;
 
         this.shadowOnly = shadowOnly;
         this.rotation = rotation;

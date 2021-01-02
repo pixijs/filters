@@ -93,14 +93,14 @@ class GlitchFilter extends Filter {
      *
      * @member {number}
      */
-    public offset: number;
+    public offset: number = 100;
 
     /**
      * The fill mode of the space after the offset.
      *
      * @member {number}
      */
-    public fillMode: number;
+    public fillMode: number = GlitchFilter.TRANSPARENT;
 
     /**
      * `true` will divide the bands roughly based on equal amounts
@@ -117,14 +117,14 @@ class GlitchFilter extends Filter {
      *
      * @member {number}
      */
-    public seed: number;
+    public seed: number = 0;
 
     /**
      * Minimum size of slices as a portion of the `sampleSize`
      *
      * @member {number}
      */
-    public minSize: number;
+    public minSize: number = 8;
 
     /**
      * Height of the displacement map canvas.
@@ -132,7 +132,7 @@ class GlitchFilter extends Filter {
      * @member {number}
      * @readonly
      */
-    public sampleSize: number;
+    public sampleSize: number = 512;
 
     /**
      * Internally generated canvas.
@@ -158,9 +158,9 @@ class GlitchFilter extends Filter {
      */
     private _slices: number = 0;
 
-    private _offsets: Float32Array;
-    private _sizes: Float32Array;
-    private _direction: number;
+    private _offsets: Float32Array = new Float32Array(1);
+    private _sizes: Float32Array = new Float32Array(1);
+    private _direction: number = 0;
 
     /**
      * @param {object} [options] - The more optional parameters of the filter.
@@ -308,7 +308,7 @@ class GlitchFilter extends Filter {
     redraw() {
         const size = this.sampleSize;
         const texture = this.texture;
-        const ctx = this._canvas.getContext('2d');
+        const ctx = this._canvas.getContext('2d') as CanvasRenderingContext2D;
         ctx.clearRect(0, 0, 8, size);
 
         let offset;
@@ -441,14 +441,14 @@ class GlitchFilter extends Filter {
      * Removes all references
      */
     destroy() {
-        this.texture.destroy(true);
-        this.texture = null;
-        this._canvas = null;
-        this.red = null;
-        this.green = null;
-        this.blue = null;
-        this._sizes = null;
-        this._offsets = null;
+        this.texture?.destroy(true);
+        this.texture =
+        this._canvas =
+        this.red =
+        this.green =
+        this.blue =
+        this._sizes =
+        this._offsets = null as any;
     }
 }
 

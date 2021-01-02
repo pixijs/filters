@@ -37,7 +37,7 @@ class OutlineFilter extends Filter {
      */
     public static MAX_SAMPLES = 100;
 
-    private _thickness: number;
+    private _thickness: number = 1;
 
     /**
      * @param {number} [thickness=1] The tickness of the outline. Make it 2 times more for resolution 2
@@ -46,18 +46,24 @@ class OutlineFilter extends Filter {
      *        setting will result in slower performance and more accuracy.
      */
     constructor(thickness: number = 1, color: number = 0x000000, quality: number = 0.1) {
-        const samples =  Math.max(
-            quality * OutlineFilter.MAX_SAMPLES,
-            OutlineFilter.MIN_SAMPLES
-        );
-        const angleStep = (Math.PI * 2 / samples).toFixed(7);
-
-        super(vertex, fragment.replace(/\$\{angleStep\}/, angleStep));
+        super(vertex, fragment.replace(/\$\{angleStep\}/, OutlineFilter.getAngleStep(quality)));
 
         this.uniforms.thickness = new Float32Array([0, 0]);
         this.uniforms.outlineColor = new Float32Array([0, 0, 0, 1]);
 
         Object.assign(this, { thickness, color, quality });
+    }
+
+    /**
+     * Get the angleStep by quality
+     * @private
+     */
+    private static getAngleStep(quality: number): string {
+        const samples =  Math.max(
+            quality * OutlineFilter.MAX_SAMPLES,
+            OutlineFilter.MIN_SAMPLES
+        );
+        return (Math.PI * 2 / samples).toFixed(7);
     }
 
     apply(filterManager, input, output, clear) {

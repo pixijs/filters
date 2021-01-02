@@ -35,8 +35,8 @@ type Color = number | number[] | Float32Array;
  */
 class ColorReplaceFilter extends Filter {
 
-    private _originalColor: number;
-    private _newColor: number;
+    private _originalColor: number = 0xff0000;
+    private _newColor: number = 0x0;
 
     /**
      * @param {number|Array<number>|Float32Array} [originalColor=0xFF0000] The color that will be changed, as a 3 component RGB e.g. [1.0, 1.0, 1.0]

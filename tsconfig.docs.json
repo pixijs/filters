@@ -1,0 +1,23 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "target": "es6",
+        "outDir": "./compiled",
+        "sourceMap": false,
+        "allowJs": true
+    },
+    "include": [
+        "filters",
+        "./global.d.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/dist/**",
+        "**/lib/**",
+        "**/test/**",
+        "**/scripts/**",
+        "**/types/**",
+        "dist/**",
+        "rollup.config.js",
+    ]
+}

@@ -26,7 +26,7 @@ type Color = number | number[] | Float32Array;
  */
 class ColorOverlayFilter extends Filter {
 
-    private _color: number;
+    private _color: number = 0x0;
 
     /**
      * @param {number|Array<number>} [color=0x000000] The resulting color, as a 3 component RGB e.g. [1.0, 0.5, 1.0]

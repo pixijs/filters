@@ -95,7 +95,7 @@ class GodrayFilter extends Filter {
             }
         }
 
-        options = Object.assign({
+        const opts: GodrayFilterOptions = Object.assign({
             angle: 30,
             gain: 0.5,
             lacunarity: 2.5,
@@ -106,13 +106,13 @@ class GodrayFilter extends Filter {
         }, options);
 
         this._angleLight = new Point();
-        this.angle = options.angle;
-        this.gain = options.gain;
-        this.lacunarity = options.lacunarity;
-        this.alpha = options.alpha;
-        this.parallel = options.parallel;
-        this.center = options.center;
-        this.time = options.time;
+        this.angle = opts.angle;
+        this.gain = opts.gain;
+        this.lacunarity = opts.lacunarity;
+        this.alpha = opts.alpha;
+        this.parallel = opts.parallel;
+        this.center = opts.center;
+        this.time = opts.time;
     }
 
     /**

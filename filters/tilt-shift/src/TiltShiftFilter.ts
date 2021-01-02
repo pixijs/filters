@@ -29,7 +29,7 @@ class TiltShiftFilter extends Filter {
      * @param {PIXI.Point} [start=null] The Y value to start the effect at.
      * @param {PIXI.Point} [end=null] The Y value to end the effect at.
      */
-    constructor(blur: number = 100, gradientBlur: number = 600, start: Point = null, end: Point = null) {
+    constructor(blur: number = 100, gradientBlur: number = 600, start?: Point, end?: Point) {
         super();
         this.tiltShiftXFilter = new TiltShiftXFilter(blur, gradientBlur, start, end);
         this.tiltShiftYFilter = new TiltShiftYFilter(blur, gradientBlur, start, end);

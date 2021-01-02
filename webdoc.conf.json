@@ -4,14 +4,19 @@
     },
     "source": {
         "include": [
-            "filters",
-            "bundle"
+            "filters/*/src/**/*.ts",
+            "bundle/src/*.ts"
         ],
         "excludePattern": "(node_modules|lib|dist)"
     },
     "plugins": [
         "plugins/markdown"
     ],
+    "template": {
+        "outputSourceFiles": true,
+        "readme": "./README.md",
+        "repository": "https://github.com/pixijs/pixi-filters/"
+    },
     "templates": {
         "cleverLinks": false,
         "monospaceLinks": false,
@@ -39,6 +44,7 @@
         "private": false,
         "lenient": true,
         "destination": "./dist/docs",
-        "template": "./node_modules/@pixi/jsdoc-template"
+        "template": "pixi-webdoc-template",
+        "export": "./dist/docs/pixi-filters.api.json"
     }
 }

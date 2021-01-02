@@ -54,7 +54,7 @@ class OldFilmFilter extends Filter {
 
         if (typeof options === 'number') {
             this.seed = options;
-            options = null;
+            options = undefined;
         }
         else {
             this.seed = seed;

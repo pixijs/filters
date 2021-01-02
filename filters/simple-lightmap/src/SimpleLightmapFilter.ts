@@ -28,7 +28,7 @@ type Color = number | number[];
 */
 class SimpleLightmapFilter extends Filter {
 
-    private _color: number;
+    private _color: number = 0x0;
 
     /**
      * @param {PIXI.Texture} texture a texture where your lightmap is rendered

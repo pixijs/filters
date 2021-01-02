@@ -37,8 +37,8 @@ type Color = number | number[] | Float32Array;
  */
 class MultiColorReplaceFilter extends Filter {
     
-    private _replacements: Array<[Color, Color]>;
-    private _maxColors: number;
+    private _replacements: Array<[Color, Color]> = [];
+    private _maxColors: number = 0;
 
     /**
      * @param {Array<Array>} replacements - The collection of replacement items. Each item is color-pair (an array length is 2).
@@ -50,11 +50,10 @@ class MultiColorReplaceFilter extends Filter {
      *                               If omitted, the default value is the length of `replacements`.
      */
     constructor(replacements: Array<[Color, Color]>, epsilon = 0.05, maxColors: number = replacements.length) {
-        super(vertex, fragment.replace(/%maxColors%/g, maxColors));
+        super(vertex, fragment.replace(/%maxColors%/g, (maxColors).toFixed(0)));
 
         this.epsilon = epsilon;
         this._maxColors = maxColors;
-        this._replacements = null;
         this.uniforms.originalColors = new Float32Array(maxColors * 3);
         this.uniforms.targetColors = new Float32Array(maxColors * 3);
         this.replacements = replacements;

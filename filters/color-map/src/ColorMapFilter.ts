@@ -3,7 +3,7 @@ import fragment from './color-map.frag';
 import {Filter, Texture, TextureSource} from '@pixi/core';
 import {MIPMAP_MODES, SCALE_MODES} from '@pixi/constants';
 
-type ColorMapSource = TextureSource | Texture;
+type ColorMapSource = TextureSource | Texture | null;
 
 /**
  * The ColorMapFilter applies a color-map effect to an object.<br>
@@ -28,8 +28,8 @@ class ColorMapFilter extends Filter {
     private _slicePixelSize: number = 0;
     private _sliceInnerSize: number = 0;
     private _nearest: boolean = false;
-    private _scaleMode: SCALE_MODES = null;
-    private _colorMap: Texture = null;
+    private _scaleMode: SCALE_MODES | null = null;
+    private _colorMap: Texture | null = null;
 
     /**
      * @param {HTMLImageElement|HTMLCanvasElement|PIXI.BaseTexture|PIXI.Texture} [colorMap] - The colorMap texture of the filter.
@@ -72,11 +72,14 @@ class ColorMapFilter extends Filter {
         return this._colorMap;
     }
     set colorMap(colorMap: ColorMapSource) {
+        if (!colorMap) {
+            return;
+        }
         if (!(colorMap instanceof Texture)) {
             colorMap = Texture.from(colorMap);
         }
         if ((colorMap as Texture)?.baseTexture) {
-            colorMap.baseTexture.scaleMode = this._scaleMode;
+            colorMap.baseTexture.scaleMode = this._scaleMode as SCALE_MODES;
             colorMap.baseTexture.mipmap = MIPMAP_MODES.OFF;
 
             this._size = colorMap.height;

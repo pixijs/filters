@@ -18,7 +18,7 @@ import {Point} from '@pixi/math';
  */
 class TiltShiftAxisFilter extends Filter {
 
-    constructor(blur: number = 100, gradientBlur: number = 600, start: Point = null, end: Point = null){
+    constructor(blur: number = 100, gradientBlur: number = 600, start?: Point, end?: Point){
         super(vertex, fragment);
         this.uniforms.blur = blur;
         this.uniforms.gradientBlur = gradientBlur;

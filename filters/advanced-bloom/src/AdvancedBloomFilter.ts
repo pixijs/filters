@@ -59,7 +59,7 @@ class AdvancedBloomFilter extends Filter {
 
     private _extractFilter: ExtractBrightnessFilter;
     private _blurFilter: KawaseBlurFilter;
-    private _resolution: number;
+    private _resolution: number = settings.FILTER_RESOLUTION;
 
     constructor(options?: Partial<AdvancedBloomFilterOptions>) {
 
@@ -69,7 +69,7 @@ class AdvancedBloomFilter extends Filter {
             options = { threshold: options };
         }
 
-        options = Object.assign({
+        const opt:AdvancedBloomFilterOptions = Object.assign({
             threshold: 0.5,
             bloomScale: 1.0,
             brightness: 1.0,
@@ -80,12 +80,12 @@ class AdvancedBloomFilter extends Filter {
             resolution: settings.FILTER_RESOLUTION,
         }, options);
 
-        this.bloomScale = options.bloomScale;
-        this.brightness = options.brightness;
+        this.bloomScale = opt.bloomScale;
+        this.brightness = opt.brightness;
 
-        const { kernels, blur, quality, pixelSize, resolution } = options;
+        const { kernels, blur, quality, pixelSize, resolution } = opt;
 
-        this._extractFilter = new ExtractBrightnessFilter(options.threshold);
+        this._extractFilter = new ExtractBrightnessFilter(opt.threshold);
         this._extractFilter.resolution = resolution;
         this._blurFilter = kernels ?
             new KawaseBlurFilter(kernels) :

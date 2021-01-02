@@ -21,9 +21,9 @@ type PixelSizeValue = IPoint | number[] | number;
 class KawaseBlurFilter extends Filter {
     private _pixelSize: Point;
     private _clamp: boolean;
-    private _kernels: number[] = null;
-    private _blur: number;
-    private _quality: number;
+    private _kernels: number[] = [];
+    private _blur: number = 4;
+    private _quality: number = 3;
 
     /**
      * @param {number|number[]} [blur=4] - The blur of the filter. Should be greater than `0`. If

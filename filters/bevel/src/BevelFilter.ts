@@ -25,8 +25,8 @@ interface BevelFilterOptions {
  */
 class BevelFilter extends Filter {
     
-    private _thickness: number;
-    private _angle: number;
+    private _thickness: number = 2;
+    private _angle: number = 0;
     
     /**
      * @param {object} [options] - The optional parameters of the filter.
