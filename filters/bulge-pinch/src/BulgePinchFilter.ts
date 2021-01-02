@@ -37,21 +37,6 @@ class BulgePinchFilter extends Filter {
     constructor(options?: Partial<BulgePinchFilterOptions>) {
         super(vertex, fragment);
 
-        // @deprecated (center, radius, strength) args
-        if (typeof options !== 'object') {
-            const [center, radius, strength] = arguments;
-            options = {};
-            if (center !== undefined) {
-                options.center = center;
-            }
-            if (radius !== undefined) {
-                options.radius = radius;
-            }
-            if (strength !== undefined) {
-                options.strength = strength;
-            }
-        }
-
         this.uniforms.dimensions = new Float32Array(2);
 
         Object.assign(this, {

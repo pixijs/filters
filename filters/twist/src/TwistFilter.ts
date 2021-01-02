@@ -31,17 +31,6 @@ class TwistFilter extends Filter {
     constructor(options?: Partial<TwistFilterOptions>) {
         super(vertex, fragment);
 
-        // @deprecated: constructor (radius, angle, padding)
-        if (typeof options === 'number') {
-            options = { radius: options };
-            if (arguments[1] !== undefined) {
-                options.angle = arguments[1];
-            }
-            if (arguments[2] !== undefined) {
-                options.padding = arguments[2];
-            }
-        }
-
         Object.assign(this, {
             radius: 200,
             angle: 4,

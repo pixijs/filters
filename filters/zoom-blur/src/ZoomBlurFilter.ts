@@ -34,26 +34,9 @@ class ZoomBlurFilter extends Filter {
      *        value will produce a lower-quality blur effect with more dithering.
      */
     constructor(options?: Partial<ZoomBlurFilterOptions>) {
-        // @deprecated (strength, center, innerRadius, radius) args
-        if (typeof options !== 'object') {
-            const [strength, center, innerRadius, radius] = arguments;
-            options = {};
-            if (strength !== undefined) {
-                options.strength = strength;
-            }
-            if (center !== undefined) {
-                options.center = center;
-            }
-            if (innerRadius !== undefined) {
-                options.innerRadius = innerRadius;
-            }
-            if (radius !== undefined) {
-                options.radius = radius;
-            }
-        }
 
         // Apply default values
-        options = Object.assign({
+        const { maxKernelSize, ...rest } = Object.assign({
             strength: 0.1,
             center: [0, 0],
             innerRadius: 0,
@@ -61,12 +44,9 @@ class ZoomBlurFilter extends Filter {
             maxKernelSize: 32,
         }, options);
 
-        super(vertex, fragment.replace('${maxKernelSize}', options.maxKernelSize.toFixed(1)));
+        super(vertex, fragment.replace('${maxKernelSize}', maxKernelSize.toFixed(1)));
 
-        this.strength = options.strength;
-        this.center = options.center;
-        this.innerRadius = options.innerRadius;
-        this.radius = options.radius;
+        Object.assign(this, rest);
     }
 
     /**
