@@ -4,11 +4,13 @@ import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import { string } from 'rollup-plugin-string';
 import { terser } from 'rollup-plugin-terser';
+import typescript from '@rollup/plugin-typescript';
 import dedupeDefaultVert from './scripts/rollup-dedupe-vert'
 import getSortedPackages from './scripts/get-sorted-packages';
 
 async function main() {
     const plugins = [
+        typescript(),
         commonjs({ preferBuiltins: true }),
         resolve({ preferBuiltins: true }),
         string({

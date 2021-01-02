@@ -52,6 +52,7 @@
     "rimraf": "^2.6.3",
     "rollup": "^2.35.1",
     "rollup-plugin-string": "^3.0.0",
-    "rollup-plugin-terser": "^7.0.2"
+    "rollup-plugin-terser": "^7.0.2",
+    "typescript": "^4.1.3"
   }
 }

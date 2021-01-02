@@ -23,9 +23,12 @@
     "types.d.ts"
   ],
   "peerDependencies": {
-    "@pixi/core": "^5.0.0"
+    "@pixi/core": "^6.0.0-X",
+    "@pixi/math": "^6.0.0-X"
   },
   "devDependencies": {
+    "@pixi/core": "^6.0.0-X",
+    "@pixi/math": "^6.0.0-X",
     "@tools/fragments": "^3.0.3"
   }
 }

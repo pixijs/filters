@@ -26,11 +26,19 @@
     "types.d.ts"
   ],
   "peerDependencies": {
-    "@pixi/constants": "^5.0.0",
-    "@pixi/core": "^5.0.0",
-    "@pixi/filter-alpha": "^5.0.0",
-    "@pixi/filter-blur": "^5.0.0",
-    "@pixi/math": "^5.0.0",
-    "@pixi/settings": "^5.0.0"
+    "@pixi/constants": "^6.0.0-X",
+    "@pixi/core": "^6.0.0-X",
+    "@pixi/filter-alpha": "^6.0.0-X",
+    "@pixi/filter-blur": "^6.0.0-X",
+    "@pixi/math": "^6.0.0-X",
+    "@pixi/settings": "^6.0.0-X"
+  },
+  "devDependencies": {
+    "@pixi/constants": "^6.0.0-X",
+    "@pixi/core": "^6.0.0-X",
+    "@pixi/filter-alpha": "^6.0.0-X",
+    "@pixi/filter-blur": "^6.0.0-X",
+    "@pixi/math": "^6.0.0-X",
+    "@pixi/settings": "^6.0.0-X"
   }
 }
