@@ -7,8 +7,9 @@ import { DEG_TO_RAD, Point } from '@pixi/math';
 import { rgb2hex, hex2rgb } from '@pixi/utils';
 import type { FilterSystem, RenderTexture } from '@pixi/core';
 import type { CLEAR_MODES } from '@pixi/constants';
+import type { IPoint } from '@pixi/math';
 
-type PixelSizeValue = number | number[] | Point;
+type PixelSizeValue = number | number[] | IPoint;
 
 interface DropShadowFilterOptions {
     rotation: number;

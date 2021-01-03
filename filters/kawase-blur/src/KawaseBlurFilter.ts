@@ -4,7 +4,7 @@ import fragmentClamp from './kawase-blur-clamp.frag';
 import { Filter } from '@pixi/core';
 import { Point } from '@pixi/math';
 import type { IPoint } from '@pixi/math';
-import type { FilterSystem, RenderTexture } from '@pixi/core';
+import type { FilterSystem, RenderTexture, FilterState } from '@pixi/core';
 import type { CLEAR_MODES } from '@pixi/constants';
 
 type PixelSizeValue = IPoint | number[] | number;
@@ -60,7 +60,7 @@ class KawaseBlurFilter extends Filter
      * Overrides apply
      * @private
      */
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES): void
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES, _state?: FilterState): void
     {
         const uvX = this._pixelSize.x / input._frame.width;
         const uvY = this._pixelSize.y / input._frame.height;
@@ -242,3 +242,4 @@ class KawaseBlurFilter extends Filter
 }
 
 export { KawaseBlurFilter };
+export type { PixelSizeValue };

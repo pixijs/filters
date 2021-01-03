@@ -6,6 +6,7 @@ import { Filter } from '@pixi/core';
 import { settings } from '@pixi/settings';
 import type { FilterSystem, FilterState, RenderTexture } from '@pixi/core';
 import type { CLEAR_MODES } from '@pixi/constants';
+import type { PixelSizeValue } from '@pixi/filter-kawase-blur';
 
 interface AdvancedBloomFilterOptions {
     threshold: number,
@@ -14,7 +15,7 @@ interface AdvancedBloomFilterOptions {
     kernels: number[],
     blur: number,
     quality: number,
-    pixelSize: number,
+    pixelSize: PixelSizeValue,
     resolution: number,
 }
 
@@ -109,7 +110,7 @@ class AdvancedBloomFilter extends Filter
 
         const bloomTarget = filterManager.getFilterTexture();
 
-        this._blurFilter.apply(filterManager, brightTarget, bloomTarget, 1, currentState);
+        this._blurFilter.apply(filterManager, brightTarget, bloomTarget, 1);
 
         this.uniforms.bloomScale = this.bloomScale;
         this.uniforms.brightness = this.brightness;
@@ -162,14 +163,13 @@ class AdvancedBloomFilter extends Filter
     /**
      * Sets the kernels of the Blur Filter
      *
-     * @member {number}
-     * @default 4
+     * @member {number[]}
      */
-    get kernels(): number
+    get kernels(): number[]
     {
         return this._blurFilter.kernels;
     }
-    set kernels(value: number)
+    set kernels(value: number[])
     {
         this._blurFilter.kernels = value;
     }
@@ -210,11 +210,11 @@ class AdvancedBloomFilter extends Filter
      * @member {number|number[]|PIXI.Point}
      * @default 1
      */
-    get pixelSize(): number
+    get pixelSize(): PixelSizeValue
     {
         return this._blurFilter.pixelSize;
     }
-    set pixelSize(value: number)
+    set pixelSize(value: PixelSizeValue)
     {
         this._blurFilter.pixelSize = value;
     }

@@ -14,11 +14,8 @@
         ],
         "baseUrl": "./",
         "paths": {
-            "@pixi/*": [
-                "filters/*/src"
-            ],
-            "pixi-filters": [
-                "bundle/src"
+            "@pixi/filter-kawase-blur": [
+                "filters/kawase-blur/src"
             ]
         },
         "outDir": "./out",
