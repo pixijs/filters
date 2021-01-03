@@ -1,6 +1,6 @@
-import {vertex} from '@tools/fragments';
+import { vertex } from '@tools/fragments';
 import fragment from './pixelate.frag';
-import {Filter} from '@pixi/core';
+import { Filter } from '@pixi/core';
 import type { Point } from '@pixi/math';
 
 type Size = number | number[] | Point;
@@ -15,12 +15,13 @@ type Size = number | number[] | Point;
  * @see {@link https://www.npmjs.com/package/@pixi/filter-pixelate|@pixi/filter-pixelate}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class PixelateFilter extends Filter {
-
+class PixelateFilter extends Filter
+{
     /**
      * @param {PIXI.Point|Array<number>|number} [size=10] Either the width/height of the size of the pixels, or square size
      */
-    constructor(size: Size = 10) {
+    constructor(size: Size = 10)
+    {
         super(vertex, fragment);
         this.size = size;
     }
@@ -32,11 +33,14 @@ class PixelateFilter extends Filter {
      * @member {PIXI.Point|Array<number>|number}
      * @default 10
      */
-    get size(): Size {
+    get size(): Size
+    {
         return this.uniforms.size;
     }
-    set size(value: Size) {
-        if (typeof value === 'number') {
+    set size(value: Size)
+    {
+        if (typeof value === 'number')
+        {
             value = [value, value];
         }
         this.uniforms.size = value;

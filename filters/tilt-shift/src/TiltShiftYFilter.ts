@@ -1,8 +1,9 @@
-import {TiltShiftAxisFilter} from './TiltShiftAxisFilter';
+import { TiltShiftAxisFilter } from './TiltShiftAxisFilter';
 
 /**
  * @author Vico @vicocotea
- * original filter https://github.com/evanw/glfx.js/blob/master/src/filters/blur/tiltshift.js by Evan Wallace : http://madebyevan.com/
+ * original filter https://github.com/evanw/glfx.js/blob/master/src/filters/blur/tiltshift.js
+ * by Evan Wallace : http://madebyevan.com/
  */
 
 /**
@@ -13,14 +14,17 @@ import {TiltShiftAxisFilter} from './TiltShiftAxisFilter';
  * @memberof PIXI.filters
  * @private
  */
-class TiltShiftYFilter extends TiltShiftAxisFilter {
+class TiltShiftYFilter extends TiltShiftAxisFilter
+{
     /**
      * Updates the filter delta values.
      */
-    protected updateDelta() {
+    protected updateDelta(): void
+    {
         const dx = this.uniforms.end.x - this.uniforms.start.x;
         const dy = this.uniforms.end.y - this.uniforms.start.y;
-        const d = Math.sqrt(dx * dx + dy * dy);
+        const d = Math.sqrt((dx * dx) + (dy * dy));
+
         this.uniforms.delta.x = -dy / d;
         this.uniforms.delta.y = dx / d;
     }

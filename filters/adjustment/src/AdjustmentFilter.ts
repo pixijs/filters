@@ -1,6 +1,8 @@
-import {vertex} from '@tools/fragments';
+import { vertex } from '@tools/fragments';
 import fragment from './adjustment.frag';
-import {Filter} from '@pixi/core';
+import { Filter } from '@pixi/core';
+import type { FilterSystem, RenderTexture } from '@pixi/core';
+import type { CLEAR_MODES } from '@pixi/constants';
 
 interface AdjustmentFilterOptions {
     gamma: number;
@@ -25,15 +27,15 @@ interface AdjustmentFilterOptions {
  * @see {@link https://www.npmjs.com/package/@pixi/filter-adjustment|@pixi/filter-adjustment}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class AdjustmentFilter extends Filter {
-
+class AdjustmentFilter extends Filter
+{
     /**
      * The amount of luminance
      * @member {number}
      * @memberof PIXI.filters.AdjustmentFilter#
      * @default 1
      */
-    public gamma: number = 1;
+    public gamma = 1;
 
     /**
      * The amount of saturation
@@ -41,7 +43,7 @@ class AdjustmentFilter extends Filter {
      * @memberof PIXI.filters.AdjustmentFilter#
      * @default 1
      */
-    public saturation: number = 1;
+    public saturation = 1;
 
     /**
      * The amount of contrast
@@ -49,7 +51,7 @@ class AdjustmentFilter extends Filter {
      * @memberof PIXI.filters.AdjustmentFilter#
      * @default 1
      */
-    public contrast: number = 1;
+    public contrast = 1;
 
     /**
      * The amount of brightness
@@ -57,7 +59,7 @@ class AdjustmentFilter extends Filter {
      * @memberof PIXI.filters.AdjustmentFilter#
      * @default 1
      */
-    public brightness: number = 1;
+    public brightness = 1;
 
     /**
      * The amount of red channel
@@ -65,7 +67,7 @@ class AdjustmentFilter extends Filter {
      * @memberof PIXI.filters.AdjustmentFilter#
      * @default 1
      */
-    public red: number = 1;
+    public red = 1;
 
     /**
      * The amount of green channel
@@ -73,7 +75,7 @@ class AdjustmentFilter extends Filter {
      * @memberof PIXI.filters.AdjustmentFilter#
      * @default 1
      */
-    public green: number = 1;
+    public green = 1;
 
     /**
      * The amount of blue channel
@@ -81,7 +83,7 @@ class AdjustmentFilter extends Filter {
      * @memberof PIXI.filters.AdjustmentFilter#
      * @default 1
      */
-    public blue: number = 1;
+    public blue = 1;
 
     /**
      * The amount of alpha channel
@@ -89,7 +91,7 @@ class AdjustmentFilter extends Filter {
      * @memberof PIXI.filters.AdjustmentFilter#
      * @default 1
      */
-    public alpha: number = 1;
+    public alpha = 1;
 
     /**
      * @param {object|number} [options] - The optional parameters of the filter.
@@ -102,7 +104,8 @@ class AdjustmentFilter extends Filter {
      * @param {number} [options.blue=1] - The multipled blue channel
      * @param {number} [options.alpha=1] - The overall alpha amount
      */
-    constructor(options?: Partial<AdjustmentFilterOptions>) {
+    constructor(options?: Partial<AdjustmentFilterOptions>)
+    {
         super(vertex, fragment);
 
         Object.assign(this, options);
@@ -112,7 +115,8 @@ class AdjustmentFilter extends Filter {
      * Override existing apply method in PIXI.Filter
      * @private
      */
-    apply(filterManager, input, output, clear) {
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES): void
+    {
         this.uniforms.gamma = Math.max(this.gamma, 0.0001);
         this.uniforms.saturation = this.saturation;
         this.uniforms.contrast = this.contrast;

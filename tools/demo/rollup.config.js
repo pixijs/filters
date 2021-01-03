@@ -1,6 +1,6 @@
 import buble from '@rollup/plugin-buble';
 import resolve from '@rollup/plugin-node-resolve';
-import {terser} from 'rollup-plugin-terser';
+import { terser } from 'rollup-plugin-terser';
 import commonjs from '@rollup/plugin-commonjs';
 import builtins from 'rollup-plugin-node-builtins';
 
@@ -23,13 +23,13 @@ export default {
     output: {
         globals,
         format: 'iife',
-        file: 'index.js'
+        file: 'index.js',
     },
     plugins: [
         builtins(),
         resolve(),
         commonjs(),
         buble(),
-        ...process.env.NODE_ENV === 'production' ? [terser()] : []
-    ]
+        ...process.env.NODE_ENV === 'production' ? [terser()] : [],
+    ],
 };

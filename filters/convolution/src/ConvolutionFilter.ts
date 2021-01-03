@@ -1,6 +1,6 @@
-import {vertex} from '@tools/fragments';
+import { vertex } from '@tools/fragments';
 import fragment from './convolution.frag';
-import {Filter} from '@pixi/core';
+import { Filter } from '@pixi/core';
 
 /**
  * The ConvolutionFilter class applies a matrix convolution filter effect.
@@ -16,18 +16,20 @@ import {Filter} from '@pixi/core';
  * @see {@link https://www.npmjs.com/package/@pixi/filter-convolution|@pixi/filter-convolution}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class ConvolutionFilter extends Filter {
-
+class ConvolutionFilter extends Filter
+{
     /**
      * @param {number[]} [matrix=[0,0,0,0,0,0,0,0,0]] An array of values used for matrix transformation. Specified as a 9 point Array.
      * @param {number} [width=200] Width of the object you are transforming
      * @param {number} [height=200] Height of the object you are transforming
      */
-    constructor(matrix: number[], width: number = 200, height: number = 200) {
+    constructor(matrix: number[], width = 200, height = 200)
+    {
         super(vertex, fragment);
         this.uniforms.texelSize = new Float32Array(2);
         this.uniforms.matrix = new Float32Array(9);
-        if (matrix !== undefined) {
+        if (matrix !== undefined)
+        {
             this.matrix = matrix;
         }
         this.width = width;
@@ -39,10 +41,12 @@ class ConvolutionFilter extends Filter {
      *
      * @member {Array<number>}
      */
-    get matrix(): number[] {
+    get matrix(): number[]
+    {
         return this.uniforms.matrix;
     }
-    set matrix(matrix: number[]) {
+    set matrix(matrix: number[])
+    {
         matrix.forEach((v, i) => this.uniforms.matrix[i] = v);
     }
 
@@ -51,11 +55,13 @@ class ConvolutionFilter extends Filter {
      *
      * @member {number}
      */
-    get width(): number {
-        return 1/this.uniforms.texelSize[0];
+    get width(): number
+    {
+        return 1 / this.uniforms.texelSize[0];
     }
-    set width(value: number) {
-        this.uniforms.texelSize[0] = 1/value;
+    set width(value: number)
+    {
+        this.uniforms.texelSize[0] = 1 / value;
     }
 
     /**
@@ -63,11 +69,13 @@ class ConvolutionFilter extends Filter {
      *
      * @member {number}
      */
-    get height(): number {
-        return 1/this.uniforms.texelSize[1];
+    get height(): number
+    {
+        return 1 / this.uniforms.texelSize[1];
     }
-    set height(value: number) {
-        this.uniforms.texelSize[1] = 1/value;
+    set height(value: number)
+    {
+        this.uniforms.texelSize[1] = 1 / value;
     }
 }
 

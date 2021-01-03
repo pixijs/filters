@@ -1,9 +1,11 @@
-import {vertex} from '@tools/fragments';
+import { vertex } from '@tools/fragments';
 import fragment from './glitch.frag';
-import {Filter, Texture} from '@pixi/core';
-import {SCALE_MODES} from '@pixi/constants';
-import {DEG_TO_RAD} from '@pixi/math';
-import type {IPoint} from '@pixi/math';
+import { Filter, Texture } from '@pixi/core';
+import { SCALE_MODES } from '@pixi/constants';
+import { DEG_TO_RAD, Rectangle } from '@pixi/math';
+import type { IPoint } from '@pixi/math';
+import type { FilterSystem, RenderTexture } from '@pixi/core';
+import type { CLEAR_MODES } from '@pixi/constants';
 
 type PointLike = IPoint | number[];
 
@@ -31,8 +33,8 @@ interface GlitchFilterOptions {
  * @see {@link https://www.npmjs.com/package/@pixi/filter-glitch|@pixi/filter-glitch}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class GlitchFilter extends Filter {
-
+class GlitchFilter extends Filter
+{
     /**
      * Fill mode as transparent
      *
@@ -93,7 +95,7 @@ class GlitchFilter extends Filter {
      *
      * @member {number}
      */
-    public offset: number = 100;
+    public offset = 100;
 
     /**
      * The fill mode of the space after the offset.
@@ -109,7 +111,7 @@ class GlitchFilter extends Filter {
      * @member {boolean}
      * @default false
      */
-    public average: boolean = false;
+    public average = false;
 
     /**
      * A seed value for randomizing color offset. Animating
@@ -117,14 +119,14 @@ class GlitchFilter extends Filter {
      *
      * @member {number}
      */
-    public seed: number = 0;
+    public seed = 0;
 
     /**
      * Minimum size of slices as a portion of the `sampleSize`
      *
      * @member {number}
      */
-    public minSize: number = 8;
+    public minSize = 8;
 
     /**
      * Height of the displacement map canvas.
@@ -132,7 +134,7 @@ class GlitchFilter extends Filter {
      * @member {number}
      * @readonly
      */
-    public sampleSize: number = 512;
+    public sampleSize = 512;
 
     /**
      * Internally generated canvas.
@@ -156,11 +158,11 @@ class GlitchFilter extends Filter {
      * @member {number}
      * @private
      */
-    private _slices: number = 0;
+    private _slices = 0;
 
     private _offsets: Float32Array = new Float32Array(1);
     private _sizes: Float32Array = new Float32Array(1);
-    private _direction: number = 0;
+    private _direction = 0;
 
     /**
      * @param {object} [options] - The more optional parameters of the filter.
@@ -182,8 +184,8 @@ class GlitchFilter extends Filter {
      * @param {number[]} [options.green=[0,0]] - Green channel offset.
      * @param {number[]} [options.blue=[0,0]] - Blue channel offset.
      */
-    constructor(options?: Partial<GlitchFilterOptions>) {
-
+    constructor(options?: Partial<GlitchFilterOptions>)
+    {
         super(vertex, fragment);
         this.uniforms.dimensions = new Float32Array(2);
 
@@ -211,10 +213,9 @@ class GlitchFilter extends Filter {
      * Override existing apply method in PIXI.Filter
      * @private
      */
-    apply(filterManager, input, output, clear) {
-
-        const width = input.filterFrame.width;
-        const height = input.filterFrame.height;
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES): void
+    {
+        const { width, height } = input.filterFrame as Rectangle;
 
         this.uniforms.dimensions[0] = width;
         this.uniforms.dimensions[1] = height;
@@ -232,30 +233,37 @@ class GlitchFilter extends Filter {
      *
      * @private
      */
-    private _randomizeSizes() {
+    private _randomizeSizes()
+    {
         const arr = this._sizes;
         const last = this._slices - 1;
         const size = this.sampleSize;
         const min = Math.min(this.minSize / size, 0.9 / this._slices);
 
-        if (this.average) {
+        if (this.average)
+        {
             const count = this._slices;
             let rest = 1;
 
-            for (let i = 0; i < last; i++) {
+            for (let i = 0; i < last; i++)
+            {
                 const averageWidth = rest / (count - i);
                 const w =  Math.max(averageWidth * (1 - Math.random() * 0.6), min);
+
                 arr[i] = w;
                 rest -= w;
             }
             arr[last] = rest;
         }
-        else {
+        else
+        {
             let rest = 1;
             const ratio = Math.sqrt(1 / this._slices);
 
-            for (let i = 0; i < last; i++) {
+            for (let i = 0; i < last; i++)
+            {
                 const w = Math.max(ratio * rest * Math.random(), min);
+
                 arr[i] = w;
                 rest -= w;
             }
@@ -268,12 +276,14 @@ class GlitchFilter extends Filter {
     /**
      * Shuffle the sizes of the slices, advanced usage.
      */
-    shuffle() {
+    shuffle()
+    {
         const arr = this._sizes;
         const last = this._slices - 1;
 
         // shuffle
-        for (let i = last; i > 0; i--) {
+        for (let i = last; i > 0; i--)
+        {
             const rand = (Math.random() * i) >> 0;
             const temp = arr[i];
 
@@ -287,8 +297,10 @@ class GlitchFilter extends Filter {
      *
      * @private
      */
-    private _randomizeOffsets() {
-        for (let i = 0 ; i < this._slices; i++) {
+    private _randomizeOffsets()
+    {
+        for (let i = 0; i < this._slices; i++)
+        {
             this._offsets[i] = Math.random() * (Math.random() < 0.5 ? -1 : 1);
         }
     }
@@ -296,7 +308,8 @@ class GlitchFilter extends Filter {
     /**
      * Regenerating random size, offsets for slices.
      */
-    refresh() {
+    refresh()
+    {
         this._randomizeSizes();
         this._randomizeOffsets();
         this.redraw();
@@ -305,21 +318,25 @@ class GlitchFilter extends Filter {
     /**
      * Redraw displacement bitmap texture, advanced usage.
      */
-    redraw() {
+    redraw()
+    {
         const size = this.sampleSize;
         const texture = this.texture;
         const ctx = this._canvas.getContext('2d') as CanvasRenderingContext2D;
+
         ctx.clearRect(0, 0, 8, size);
 
         let offset;
         let y = 0;
 
-        for (let i = 0 ; i < this._slices; i++) {
+        for (let i = 0; i < this._slices; i++)
+        {
             offset = Math.floor(this._offsets[i] * 256);
             const height = this._sizes[i] * size;
             const red = offset > 0 ? offset : 0;
             const green = offset < 0 ? -offset : 0;
-            ctx.fillStyle = 'rgba(' + red + ', ' + green + ', 0, 1)';
+
+            ctx.fillStyle = `rgba(${red}, ${green}, 0, 1)`;
             ctx.fillRect(0, y >> 0, size, height + 1 >> 0);
             y += height;
         }
@@ -333,14 +350,17 @@ class GlitchFilter extends Filter {
      *
      * @member {number[]|Float32Array}
      */
-    set sizes(sizes: Float32Array) {
+    set sizes(sizes: Float32Array)
+    {
         const len = Math.min(this._slices, sizes.length);
 
-        for (let i = 0; i < len; i++){
+        for (let i = 0; i < len; i++)
+        {
             this._sizes[i] = sizes[i];
         }
     }
-    get sizes(): Float32Array {
+    get sizes(): Float32Array
+    {
         return this._sizes;
     }
 
@@ -351,14 +371,17 @@ class GlitchFilter extends Filter {
      *
      * @member {number[]|Float32Array}
      */
-    set offsets(offsets: Float32Array) {
+    set offsets(offsets: Float32Array)
+    {
         const len = Math.min(this._slices, offsets.length);
 
-        for (let i = 0; i < len; i++){
+        for (let i = 0; i < len; i++)
+        {
             this._offsets[i] = offsets[i];
         }
     }
-    get offsets(): Float32Array {
+    get offsets(): Float32Array
+    {
         return this._offsets;
     }
 
@@ -367,11 +390,14 @@ class GlitchFilter extends Filter {
      * @member {number}
      * @default 5
      */
-    get slices(): number {
+    get slices(): number
+    {
         return this._slices;
     }
-    set slices(value: number) {
-        if (this._slices === value) {
+    set slices(value: number)
+    {
+        if (this._slices === value)
+        {
             return;
         }
         this._slices = value;
@@ -386,11 +412,14 @@ class GlitchFilter extends Filter {
      * @member {number}
      * @default 0
      */
-    get direction(): number {
+    get direction(): number
+    {
         return this._direction;
     }
-    set direction(value: number) {
-        if (this._direction === value) {
+    set direction(value: number)
+    {
+        if (this._direction === value)
+        {
             return;
         }
         this._direction = value;
@@ -406,10 +435,12 @@ class GlitchFilter extends Filter {
      *
      * @member {PIXI.Point|number[]}
      */
-    get red(): PointLike {
+    get red(): PointLike
+    {
         return this.uniforms.red;
     }
-    set red(value: PointLike) {
+    set red(value: PointLike)
+    {
         this.uniforms.red = value;
     }
 
@@ -418,10 +449,12 @@ class GlitchFilter extends Filter {
      *
      * @member {PIXI.Point|number[]}
      */
-    get green(): PointLike {
+    get green(): PointLike
+    {
         return this.uniforms.green;
     }
-    set green(value: PointLike) {
+    set green(value: PointLike)
+    {
         this.uniforms.green = value;
     }
 
@@ -430,25 +463,28 @@ class GlitchFilter extends Filter {
      *
      * @member {PIXI.Point|number[]}
      */
-    get blue(): PointLike {
+    get blue(): PointLike
+    {
         return this.uniforms.blue;
     }
-    set blue(value: PointLike) {
+    set blue(value: PointLike)
+    {
         this.uniforms.blue = value;
     }
 
     /**
      * Removes all references
      */
-    destroy() {
+    destroy()
+    {
         this.texture?.destroy(true);
-        this.texture =
-        this._canvas =
-        this.red =
-        this.green =
-        this.blue =
-        this._sizes =
-        this._offsets = null as any;
+        this.texture
+        = this._canvas
+        = this.red
+        = this.green
+        = this.blue
+        = this._sizes
+        = this._offsets = null as any;
     }
 }
 

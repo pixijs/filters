@@ -18,7 +18,7 @@
     "dist": "run-s build docs copy:*",
     "predocs": "rimraf dist/docs/*",
     "docs": "webdoc -R README.md",
-    "lint": "eslint --ext .js --ext .ts filters tools bundle --ignore-path .gitignore --max-warnings 0",
+    "lint": "eslint --ext .js --ext .ts filters bundle --ignore-path .gitignore --max-warnings 0",
     "demo": "open http://localhost:8080/tools/demo/index.html && http-server . -s -c-1",
     "examples": "run-s demo",
     "prebuild": "run-s lint",

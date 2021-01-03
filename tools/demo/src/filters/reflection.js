@@ -1,19 +1,26 @@
-export default function() {
+export default function ()
+{
     const app = this;
+
     app.addFilter('ReflectionFilter', {
-        oncreate(folder) {
+        oncreate(folder)
+        {
             const filter = this;
 
             filter.animating = true;
 
-            app.events.on('enable', function(enabled) {
-                if (enabled && filter.animating) {
+            app.events.on('enable', function (enabled)
+            {
+                if (enabled && filter.animating)
+                {
                     filter.time = 0;
                 }
             });
 
-            app.events.on('animate', function() {
-                if (filter.animating) {
+            app.events.on('animate', function ()
+            {
+                if (filter.animating)
+                {
                     filter.time += 0.1;
                 }
             });
@@ -29,6 +36,6 @@ export default function() {
             folder.add(this.alpha, '0', 0, 1).name('alpha.start');
             folder.add(this.alpha, '1', 0, 1).name('alpha.end');
             folder.add(this, 'time', 0, 20);
-        }
+        },
     });
 }

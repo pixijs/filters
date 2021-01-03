@@ -1,8 +1,11 @@
-import {vertex} from '@tools/fragments';
+import { vertex } from '@tools/fragments';
 import perlin from './perlin.frag';
 import fragment from './gorday.frag';
-import {Filter} from '@pixi/core';
-import {Point, DEG_TO_RAD} from '@pixi/math';
+import { Filter } from '@pixi/core';
+import { Point, DEG_TO_RAD } from '@pixi/math';
+import type { Rectangle } from '@pixi/math';
+import type { FilterSystem, RenderTexture } from '@pixi/core';
+import type { CLEAR_MODES } from '@pixi/constants';
 
 interface GodrayFilterOptions {
     angle: number;
@@ -29,8 +32,8 @@ interface GodrayFilterOptions {
  * @example
  *  displayObject.filters = [new GodrayFilter()];
  */
-class GodrayFilter extends Filter {
-
+class GodrayFilter extends Filter
+{
     /**
      * `true` if light rays are parallel (uses angle),
      * `false` to use the focal `center` point
@@ -38,7 +41,7 @@ class GodrayFilter extends Filter {
      * @member {boolean}
      * @default true
      */
-    public parallel: boolean = true;
+    public parallel = true;
 
     /**
      * The position of the emitting point for light rays
@@ -55,10 +58,10 @@ class GodrayFilter extends Filter {
      * @member {number}
      * @default 0
      */
-    public time: number = 0;
+    public time = 0;
 
     private _angleLight: Point;
-    private _angle: number;
+    private _angle: number = 0;
 
     /**
      * @param {object} [options] Filter options
@@ -71,26 +74,32 @@ class GodrayFilter extends Filter {
      *        to use this `parallel` must be set to `false`.
  * @param {number} [options.alpha=1.0] the alpha, defaults to 1, affects transparency of rays
      */
-    constructor(options?: Partial<GodrayFilterOptions>) {
+    constructor(options?: Partial<GodrayFilterOptions>)
+    {
         super(vertex, fragment.replace('${perlin}', perlin));
 
         this.uniforms.dimensions = new Float32Array(2);
 
         // Fallback support for ctor: (angle, gain, lacunarity, time)
-        if (typeof options === 'number') {
+        if (typeof options === 'number')
+        {
             // eslint-disable-next-line no-console
             console.warn('GodrayFilter now uses options instead of (angle, gain, lacunarity, time)');
             options = { angle: options };
-            if (arguments[1] !== undefined) {
+            if (arguments[1] !== undefined)
+            {
                 options.gain = arguments[1];
             }
-            if (arguments[2] !== undefined) {
+            if (arguments[2] !== undefined)
+            {
                 options.lacunarity = arguments[2];
             }
-            if (arguments[3] !== undefined) {
+            if (arguments[3] !== undefined)
+            {
                 options.time = arguments[3];
             }
-            if (arguments[4] !== undefined) {
+            if (arguments[4] !== undefined)
+            {
                 options.alpha = arguments[4];
             }
         }
@@ -122,8 +131,9 @@ class GodrayFilter extends Filter {
      * @param {PIXI.RenderTarget} input - The input target.
      * @param {PIXI.RenderTarget} output - The output target.
      */
-    apply(filterManager, input, output, clear) {
-        const {width, height} = input.filterFrame;
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES): void
+    {
+        const { width, height } = input.filterFrame as Rectangle;
 
         this.uniforms.light = this.parallel ? this._angleLight : this.center;
 
@@ -144,10 +154,12 @@ class GodrayFilter extends Filter {
      * @member {number}
      * @default 30
      */
-    get angle(): number {
+    get angle(): number
+    {
         return this._angle;
     }
-    set angle(value: number) {
+    set angle(value: number)
+    {
         this._angle = value;
 
         const radians = value * DEG_TO_RAD;
@@ -163,10 +175,12 @@ class GodrayFilter extends Filter {
      * @member {number}
      * @default 0.5
      */
-    get gain(): number {
+    get gain(): number
+    {
         return this.uniforms.gain;
     }
-    set gain(value: number) {
+    set gain(value: number)
+    {
         this.uniforms.gain = value;
     }
 
@@ -177,10 +191,12 @@ class GodrayFilter extends Filter {
      * @member {number}
      * @default 2.5
      */
-    get lacunarity(): number {
+    get lacunarity(): number
+    {
         return this.uniforms.lacunarity;
     }
-    set lacunarity(value: number) {
+    set lacunarity(value: number)
+    {
         this.uniforms.lacunarity = value;
     }
 
@@ -189,10 +205,12 @@ class GodrayFilter extends Filter {
      * @member {number}
      * @default 1
      */
-    get alpha(): number {
+    get alpha(): number
+    {
         return this.uniforms.alpha;
     }
-    set alpha(value: number) {
+    set alpha(value: number)
+    {
         this.uniforms.alpha = value;
     }
 }

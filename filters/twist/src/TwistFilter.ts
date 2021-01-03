@@ -1,7 +1,7 @@
-import {vertex} from '@tools/fragments';
+import { vertex } from '@tools/fragments';
 import fragment from './twist.frag';
-import {Filter} from '@pixi/core';
-import {Point} from '@pixi/math';
+import { Filter } from '@pixi/core';
+import { Point } from '@pixi/math';
 
 interface TwistFilterOptions {
     radius: number;
@@ -20,7 +20,8 @@ interface TwistFilterOptions {
  * @see {@link https://www.npmjs.com/package/@pixi/filter-twist|@pixi/filter-twist}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class TwistFilter extends Filter {
+class TwistFilter extends Filter
+{
     /**
      * @param {object} [options] Object object to use.
      * @param {number} [options.radius=200] The radius of the twist.
@@ -28,7 +29,8 @@ class TwistFilter extends Filter {
      * @param {number} [options.padding=20] Padding for filter area.
      * @param {number} [options.offset] Center of twist, in local, pixel coordinates.
      */
-    constructor(options?: Partial<TwistFilterOptions>) {
+    constructor(options?: Partial<TwistFilterOptions>)
+    {
         super(vertex, fragment);
 
         Object.assign(this, {
@@ -44,10 +46,12 @@ class TwistFilter extends Filter {
      *
      * @member {PIXI.Point}
      */
-    get offset(): Point {
+    get offset(): Point
+    {
         return this.uniforms.offset;
     }
-    set offset(value: Point) {
+    set offset(value: Point)
+    {
         this.uniforms.offset = value;
     }
 
@@ -56,10 +60,12 @@ class TwistFilter extends Filter {
      *
      * @member {number}
      */
-    get radius(): number {
+    get radius(): number
+    {
         return this.uniforms.radius;
     }
-    set radius(value: number) {
+    set radius(value: number)
+    {
         this.uniforms.radius = value;
     }
 
@@ -68,10 +74,12 @@ class TwistFilter extends Filter {
      *
      * @member {number}
      */
-    get angle(): number {
+    get angle(): number
+    {
         return this.uniforms.angle;
     }
-    set angle(value: number) {
+    set angle(value: number)
+    {
         this.uniforms.angle = value;
     }
 }

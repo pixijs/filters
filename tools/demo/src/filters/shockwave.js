@@ -1,25 +1,30 @@
-export default function() {
+export default function ()
+{
     const app = this;
 
     this.addFilter('ShockwaveFilter', {
         enabled: false,
         global: false,
         args: [[app.initWidth / 2, app.initHeight / 2]],
-        oncreate(folder) {
-
+        oncreate(folder)
+        {
             const filter = this;
             const maxTime = 2.5;
 
             filter.animating = true;
 
-            app.events.on('enable', function(enabled) {
-                if (enabled && filter.animating) {
+            app.events.on('enable', function (enabled)
+            {
+                if (enabled && filter.animating)
+                {
                     filter.time = 0;
                 }
             });
 
-            app.events.on('animate', function() {
-                if (filter.animating) {
+            app.events.on('animate', function ()
+            {
+                if (filter.animating)
+                {
                     filter.time += app.ticker.elapsedMS / 1000;
                     filter.time %= maxTime;
                 }
@@ -33,6 +38,6 @@ export default function() {
             folder.add(this, 'radius', 100, 2000);
             folder.add(this.center, '0', 0, app.initWidth).name('center.x');
             folder.add(this.center, '1', 0, app.initHeight).name('center.y');
-        }
+        },
     });
 }

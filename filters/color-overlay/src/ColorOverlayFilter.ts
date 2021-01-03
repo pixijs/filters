@@ -1,7 +1,7 @@
-import {vertex} from '@tools/fragments';
+import { vertex } from '@tools/fragments';
 import fragment from './colorOverlay.frag';
-import {Filter} from '@pixi/core';
-import {hex2rgb, rgb2hex} from '@pixi/utils';
+import { Filter } from '@pixi/core';
+import { hex2rgb, rgb2hex } from '@pixi/utils';
 
 type Color = number | number[] | Float32Array;
 
@@ -24,14 +24,15 @@ type Color = number | number[] | Float32Array;
  *   )];
  *
  */
-class ColorOverlayFilter extends Filter {
-
-    private _color: number = 0x0;
+class ColorOverlayFilter extends Filter
+{
+    private _color = 0x0;
 
     /**
      * @param {number|Array<number>} [color=0x000000] The resulting color, as a 3 component RGB e.g. [1.0, 0.5, 1.0]
      */
-    constructor(color: Color = 0x000000) {
+    constructor(color: Color = 0x000000)
+    {
         super(vertex, fragment);
         this.uniforms.color = new Float32Array(3);
         this.color = color;
@@ -42,20 +43,25 @@ class ColorOverlayFilter extends Filter {
      * @member {number|Array<number>|Float32Array}
      * @default 0x000000
      */
-    set color(value: Color) {
-        let arr = this.uniforms.color;
-        if (typeof value === 'number') {
+    set color(value: Color)
+    {
+        const arr = this.uniforms.color;
+
+        if (typeof value === 'number')
+        {
             hex2rgb(value, arr);
             this._color = value;
         }
-        else {
+        else
+        {
             arr[0] = value[0];
             arr[1] = value[1];
             arr[2] = value[2];
             this._color = rgb2hex(arr);
         }
     }
-    get color(): Color {
+    get color(): Color
+    {
         return this._color;
     }
 }

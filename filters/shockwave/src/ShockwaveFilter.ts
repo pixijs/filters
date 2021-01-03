@@ -1,7 +1,9 @@
-import {vertex} from '@tools/fragments';
+import { vertex } from '@tools/fragments';
 import fragment from './shockwave.frag';
-import {Filter} from '@pixi/core';
-import type {Point} from '@pixi/math';
+import { Filter } from '@pixi/core';
+import type { FilterSystem, RenderTexture } from '@pixi/core';
+import type { Point } from '@pixi/math';
+import type { CLEAR_MODES } from '@pixi/constants';
 
 type PointLike = Point|number[];
 
@@ -23,8 +25,8 @@ interface ShockwaveFilterOptions {
  * @see {@link https://www.npmjs.com/package/@pixi/filter-shockwave|@pixi/filter-shockwave}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class ShockwaveFilter extends Filter {
-
+class ShockwaveFilter extends Filter
+{
     /**
      * Sets the elapsed time of the shockwave.
      * It could control the current size of shockwave.
@@ -43,7 +45,8 @@ class ShockwaveFilter extends Filter {
      * @param {number} [options.radius=4] - See `radius` property.
      * @param {number} [time=0] - See `time` property.
      */
-    constructor(center: PointLike = [0, 0], options?: Partial<ShockwaveFilterOptions>, time = 0) {
+    constructor(center: PointLike = [0, 0], options?: Partial<ShockwaveFilterOptions>, time = 0)
+    {
         super(vertex, fragment);
         this.center = center;
         Object.assign(this, {
@@ -56,7 +59,8 @@ class ShockwaveFilter extends Filter {
         this.time = time;
     }
 
-    apply(filterManager, input, output, clear) {
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES): void
+    {
         /**
          * There is no set/get of `time`, for performance.
          * Because in the most real cases, `time` will be changed in ever game tick.
@@ -73,10 +77,12 @@ class ShockwaveFilter extends Filter {
      *
      * @member {PIXI.Point|number[]}
      */
-    get center(): PointLike {
+    get center(): PointLike
+    {
         return this.uniforms.center;
     }
-    set center(value: PointLike) {
+    set center(value: PointLike)
+    {
         this.uniforms.center = value;
     }
 
@@ -85,10 +91,12 @@ class ShockwaveFilter extends Filter {
      *
      * @member {number}
      */
-    get amplitude(): number {
+    get amplitude(): number
+    {
         return this.uniforms.amplitude;
     }
-    set amplitude(value: number) {
+    set amplitude(value: number)
+    {
         this.uniforms.amplitude = value;
     }
 
@@ -97,10 +105,12 @@ class ShockwaveFilter extends Filter {
      *
      * @member {number}
      */
-    get wavelength(): number {
+    get wavelength(): number
+    {
         return this.uniforms.wavelength;
     }
-    set wavelength(value: number) {
+    set wavelength(value: number)
+    {
         this.uniforms.wavelength = value;
     }
 
@@ -109,10 +119,12 @@ class ShockwaveFilter extends Filter {
      *
      * @member {number}
      */
-    get brightness(): number {
+    get brightness(): number
+    {
         return this.uniforms.brightness;
     }
-    set brightness(value: number) {
+    set brightness(value: number)
+    {
         this.uniforms.brightness = value;
     }
 
@@ -122,10 +134,12 @@ class ShockwaveFilter extends Filter {
      *
      * @member {number}
      */
-    get speed(): number {
+    get speed(): number
+    {
         return this.uniforms.speed;
     }
-    set speed(value: number) {
+    set speed(value: number)
+    {
         this.uniforms.speed = value;
     }
 
@@ -135,10 +149,12 @@ class ShockwaveFilter extends Filter {
      *
      * @member {number}
      */
-    get radius(): number {
+    get radius(): number
+    {
         return this.uniforms.radius;
     }
-    set radius(value: number) {
+    set radius(value: number)
+    {
         this.uniforms.radius = value;
     }
 }

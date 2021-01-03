@@ -1,11 +1,11 @@
-import {vertex} from '@tools/fragments';
+import { vertex } from '@tools/fragments';
 import fragment from './simpleLightmap.frag';
-import {Filter} from '@pixi/core';
-import type {Texture} from '@pixi/core';
-import {hex2rgb, rgb2hex} from '@pixi/utils';
+import { Filter } from '@pixi/core';
+import type { Texture, FilterSystem, RenderTexture } from '@pixi/core';
+import type { CLEAR_MODES } from '@pixi/constants';
+import { hex2rgb, rgb2hex } from '@pixi/utils';
 
 type Color = number | number[];
-
 
 /**
 * SimpleLightmap, originally by Oza94
@@ -26,16 +26,17 @@ type Color = number | number[];
 * @example
 *  displayObject.filters = [new SimpleLightmapFilter(texture, 0x666666)];
 */
-class SimpleLightmapFilter extends Filter {
-
-    private _color: number = 0x0;
+class SimpleLightmapFilter extends Filter
+{
+    private _color = 0x0;
 
     /**
      * @param {PIXI.Texture} texture a texture where your lightmap is rendered
      * @param {Array<number>|number} [color=0x000000] An RGBA array of the ambient color
      * @param {number} [alpha=1] Default alpha set independent of color (if it's a number, not array).
      */
-    constructor(texture: Texture, color: Color = 0x000000, alpha: number = 1) {
+    constructor(texture: Texture, color: Color = 0x000000, alpha = 1)
+    {
         super(vertex, fragment);
         this.uniforms.dimensions = new Float32Array(2);
         this.uniforms.ambientColor = new Float32Array([0, 0, 0, alpha]);
@@ -50,23 +51,25 @@ class SimpleLightmapFilter extends Filter {
      * @param {PIXI.RenderTarget} input - The input target.
      * @param {PIXI.RenderTarget} output - The output target.
      */
-    apply(filterManager, input, output, clear) {
-        this.uniforms.dimensions[0] = input.filterFrame.width;
-        this.uniforms.dimensions[1] = input.filterFrame.height;
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clearMode?: CLEAR_MODES): void
+    {
+        this.uniforms.dimensions[0] = input.filterFrame?.width;
+        this.uniforms.dimensions[1] = input.filterFrame?.height;
 
         // draw the filter...
-        filterManager.applyFilter(this, input, output, clear);
+        filterManager.applyFilter(this, input, output, clearMode);
     }
-
 
     /**
      * a texture where your lightmap is rendered
      * @member {PIXI.Texture}
      */
-    get texture(): Texture {
+    get texture(): Texture
+    {
         return this.uniforms.uLightmap;
     }
-    set texture(value: Texture) {
+    set texture(value: Texture)
+    {
         this.uniforms.uLightmap = value;
     }
 
@@ -74,13 +77,17 @@ class SimpleLightmapFilter extends Filter {
      * An RGBA array of the ambient color or a hex color without alpha
      * @member {Array<number>|number}
      */
-    set color(value: Color) {
+    set color(value: Color)
+    {
         const arr = this.uniforms.ambientColor;
-        if (typeof value === 'number') {
+
+        if (typeof value === 'number')
+        {
             hex2rgb(value, arr);
             this._color = value;
         }
-        else {
+        else
+        {
             arr[0] = value[0];
             arr[1] = value[1];
             arr[2] = value[2];
@@ -88,7 +95,8 @@ class SimpleLightmapFilter extends Filter {
             this._color = rgb2hex(arr);
         }
     }
-    get color(): Color {
+    get color(): Color
+    {
         return this._color;
     }
 
@@ -96,10 +104,12 @@ class SimpleLightmapFilter extends Filter {
      * When setting `color` as hex, this can be used to set alpha independently.
      * @member {number}
      */
-    get alpha(): number {
+    get alpha(): number
+    {
         return this.uniforms.ambientColor[3];
     }
-    set alpha(value: number) {
+    set alpha(value: number)
+    {
         this.uniforms.ambientColor[3] = value;
     }
 }

@@ -1,9 +1,11 @@
-import {Filter} from '@pixi/core';
-import {BLEND_MODES} from '@pixi/constants';
-import {AlphaFilter} from '@pixi/filter-alpha';
-import {BlurFilterPass} from '@pixi/filter-blur';
-import {settings} from '@pixi/settings';
-import {Point} from '@pixi/math';
+import { Filter } from '@pixi/core';
+import { BLEND_MODES } from '@pixi/constants';
+import { AlphaFilter } from '@pixi/filter-alpha';
+import { BlurFilterPass } from '@pixi/filter-blur';
+import { settings } from '@pixi/settings';
+import { Point } from '@pixi/math';
+import type { FilterSystem, RenderTexture } from '@pixi/core';
+import type { CLEAR_MODES } from '@pixi/constants';
 
 type BlurValue = number | Point | number[];
 
@@ -18,8 +20,8 @@ type BlurValue = number | Point | number[];
  * @see {@link https://www.npmjs.com/package/@pixi/filter-bloom|@pixi/filter-bloom}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class BloomFilter extends Filter {
-
+class BloomFilter extends Filter
+{
     private blurXFilter: BlurFilterPass;
     private blurYFilter: BlurFilterPass;
     private defaultFilter: AlphaFilter;
@@ -30,21 +32,25 @@ class BloomFilter extends Filter {
      * @param {number} [resolution=PIXI.settings.FILTER_RESOLUTION] The resolution of the blurX & blurY filter.
      * @param {number} [kernelSize=5] The kernelSize of the blurX & blurY filter.Options: 5, 7, 9, 11, 13, 15.
      */
-    constructor(blur: BlurValue = 2, quality: number = 4, resolution: number = settings.FILTER_RESOLUTION, kernelSize: number = 5) {
+    constructor(blur: BlurValue = 2, quality = 4, resolution: number = settings.FILTER_RESOLUTION, kernelSize = 5)
+    {
         super();
 
         let blurX;
         let blurY;
 
-        if (typeof blur === 'number') {
+        if (typeof blur === 'number')
+        {
             blurX = blur;
             blurY = blur;
         }
-        else if (blur instanceof Point) {
+        else if (blur instanceof Point)
+        {
             blurX = blur.x;
             blurY = blur.y;
         }
-        else if (Array.isArray(blur)) {
+        else if (Array.isArray(blur))
+        {
             blurX = blur[0];
             blurY = blur[1];
         }
@@ -55,10 +61,11 @@ class BloomFilter extends Filter {
         this.defaultFilter = new AlphaFilter();
     }
 
-    apply(filterManager, input, output, clear) {
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES): void
+    {
         const renderTarget = filterManager.getFilterTexture();
 
-        //TODO - copyTexSubImage2D could be used here?
+        // TODO - copyTexSubImage2D could be used here?
         this.defaultFilter.apply(filterManager, input, output, clear);
 
         this.blurXFilter.apply(filterManager, input, renderTarget);
@@ -73,10 +80,12 @@ class BloomFilter extends Filter {
      * @member {number}
      * @default 2
      */
-    get blur(): number {
+    get blur(): number
+    {
         return this.blurXFilter.blur;
     }
-    set blur(value: number) {
+    set blur(value: number)
+    {
         this.blurXFilter.blur = this.blurYFilter.blur = value;
     }
 
@@ -86,10 +95,12 @@ class BloomFilter extends Filter {
      * @member {number}
      * @default 2
      */
-    get blurX(): number {
+    get blurX(): number
+    {
         return this.blurXFilter.blur;
     }
-    set blurX(value: number) {
+    set blurX(value: number)
+    {
         this.blurXFilter.blur = value;
     }
 
@@ -99,10 +110,12 @@ class BloomFilter extends Filter {
      * @member {number}
      * @default 2
      */
-    get blurY(): number {
+    get blurY(): number
+    {
         return this.blurYFilter.blur;
     }
-    set blurY(value: number) {
+    set blurY(value: number)
+    {
         this.blurYFilter.blur = value;
     }
 }

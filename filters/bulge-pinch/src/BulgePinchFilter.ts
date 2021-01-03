@@ -1,7 +1,9 @@
-import {vertex} from '@tools/fragments';
+import { vertex } from '@tools/fragments';
 import fragment from './bulgePinch.frag';
-import {Filter} from '@pixi/core';
-import type { Point } from '@pixi/math';
+import { Filter } from '@pixi/core';
+import type { Point, Rectangle } from '@pixi/math';
+import type { FilterSystem, RenderTexture } from '@pixi/core';
+import type { CLEAR_MODES } from '@pixi/constants';
 
 type PointLike = Point | number[];
 
@@ -26,15 +28,16 @@ interface BulgePinchFilterOptions {
  * @see {@link https://www.npmjs.com/package/@pixi/filter-bulge-pinch|@pixi/filter-bulge-pinch}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class BulgePinchFilter extends Filter {
-
+class BulgePinchFilter extends Filter
+{
     /**
      * @param {object} [options] Options to use for filter.
      * @param {PIXI.Point|Array<number>} [options.center=[0,0]] The x and y coordinates of the center of the circle of effect.
      * @param {number} [options.radius=100] The radius of the circle of effect.
      * @param {number} [options.strength=1] -1 to 1 (-1 is strong pinch, 0 is no effect, 1 is strong bulge)
      */
-    constructor(options?: Partial<BulgePinchFilterOptions>) {
+    constructor(options?: Partial<BulgePinchFilterOptions>)
+    {
         super(vertex, fragment);
 
         this.uniforms.dimensions = new Float32Array(2);
@@ -46,9 +49,12 @@ class BulgePinchFilter extends Filter {
         }, options);
     }
 
-    apply(filterManager, input, output, clear) {
-        this.uniforms.dimensions[0] = input.filterFrame.width;
-        this.uniforms.dimensions[1] = input.filterFrame.height;
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES): void
+    {
+        const { width, height } = input.filterFrame as Rectangle;
+
+        this.uniforms.dimensions[0] = width;
+        this.uniforms.dimensions[1] = height;
         filterManager.applyFilter(this, input, output, clear);
     }
 
@@ -57,10 +63,12 @@ class BulgePinchFilter extends Filter {
      *
      * @member {number}
      */
-    get radius(): number {
+    get radius(): number
+    {
         return this.uniforms.radius;
     }
-    set radius(value: number) {
+    set radius(value: number)
+    {
         this.uniforms.radius = value;
     }
 
@@ -69,10 +77,12 @@ class BulgePinchFilter extends Filter {
      *
      * @member {number}
      */
-    get strength(): number {
+    get strength(): number
+    {
         return this.uniforms.strength;
     }
-    set strength(value: number) {
+    set strength(value: number)
+    {
         this.uniforms.strength = value;
     }
 
@@ -81,10 +91,12 @@ class BulgePinchFilter extends Filter {
      *
      * @member {PIXI.Point | Array<number>}
      */
-    get center(): PointLike {
+    get center(): PointLike
+    {
         return this.uniforms.center;
     }
-    set center(value: PointLike) {
+    set center(value: PointLike)
+    {
         this.uniforms.center = value;
     }
 }

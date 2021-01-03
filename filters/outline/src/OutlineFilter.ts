@@ -1,7 +1,9 @@
-import {vertex} from '@tools/fragments';
+import { vertex } from '@tools/fragments';
 import fragment from './outline.frag';
-import {Filter} from '@pixi/core';
-import {rgb2hex, hex2rgb} from '@pixi/utils';
+import { Filter } from '@pixi/core';
+import { rgb2hex, hex2rgb } from '@pixi/utils';
+import type { FilterSystem, RenderTexture } from '@pixi/core';
+import type { CLEAR_MODES } from '@pixi/constants';
 
 /**
  * OutlineFilter, originally by mishaa
@@ -17,8 +19,8 @@ import {rgb2hex, hex2rgb} from '@pixi/utils';
  * @example
  *  someSprite.filters = [new OutlineFilter(2, 0x99ff99)];
  */
-class OutlineFilter extends Filter {
-
+class OutlineFilter extends Filter
+{
     /**
      * The minimum number of samples for rendering outline.
      * @static
@@ -37,7 +39,7 @@ class OutlineFilter extends Filter {
      */
     public static MAX_SAMPLES = 100;
 
-    private _thickness: number = 1;
+    private _thickness = 1;
 
     /**
      * @param {number} [thickness=1] The tickness of the outline. Make it 2 times more for resolution 2
@@ -45,7 +47,8 @@ class OutlineFilter extends Filter {
      * @param {number} [quality=0.1] The quality of the outline from `0` to `1`, using a higher quality
      *        setting will result in slower performance and more accuracy.
      */
-    constructor(thickness: number = 1, color: number = 0x000000, quality: number = 0.1) {
+    constructor(thickness = 1, color = 0x000000, quality = 0.1)
+    {
         super(vertex, fragment.replace(/\$\{angleStep\}/, OutlineFilter.getAngleStep(quality)));
 
         this.uniforms.thickness = new Float32Array([0, 0]);
@@ -58,15 +61,18 @@ class OutlineFilter extends Filter {
      * Get the angleStep by quality
      * @private
      */
-    private static getAngleStep(quality: number): string {
+    private static getAngleStep(quality: number): string
+    {
         const samples =  Math.max(
             quality * OutlineFilter.MAX_SAMPLES,
-            OutlineFilter.MIN_SAMPLES
+            OutlineFilter.MIN_SAMPLES,
         );
+
         return (Math.PI * 2 / samples).toFixed(7);
     }
 
-    apply(filterManager, input, output, clear) {
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES): void
+    {
         this.uniforms.thickness[0] = this._thickness / input._frame.width;
         this.uniforms.thickness[1] = this._thickness / input._frame.height;
 
@@ -78,10 +84,12 @@ class OutlineFilter extends Filter {
      * @member {number}
      * @default 0x000000
      */
-    get color(): number {
+    get color(): number
+    {
         return rgb2hex(this.uniforms.outlineColor);
     }
-    set color(value: number) {
+    set color(value: number)
+    {
         hex2rgb(value, this.uniforms.outlineColor);
     }
 
@@ -90,10 +98,12 @@ class OutlineFilter extends Filter {
      * @member {number}
      * @default 1
      */
-    get thickness(): number {
+    get thickness(): number
+    {
         return this._thickness;
     }
-    set thickness(value: number) {
+    set thickness(value: number)
+    {
         this._thickness = value;
         this.padding = value;
     }

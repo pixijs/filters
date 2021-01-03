@@ -1,7 +1,9 @@
-import {vertex} from '@tools/fragments';
+import { vertex } from '@tools/fragments';
 import fragment from './radial-blur.frag';
-import {Filter} from '@pixi/core';
-import type {Point} from '@pixi/math';
+import { Filter } from '@pixi/core';
+import type { Point } from '@pixi/math';
+import type { FilterSystem, RenderTexture } from '@pixi/core';
+import type { CLEAR_MODES } from '@pixi/constants';
 
 type PointLike = Point | number[];
 
@@ -15,9 +17,9 @@ type PointLike = Point | number[];
  * @see {@link https://www.npmjs.com/package/@pixi/filter-radial-blur|@pixi/filter-radial-blur}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class RadialBlurFilter extends Filter {
-
-    private _angle: number = 0;
+class RadialBlurFilter extends Filter
+{
+    private _angle = 0;
 
     /**
      * The kernelSize for the blur filter. Must be odd number >= 3.
@@ -32,7 +34,8 @@ class RadialBlurFilter extends Filter {
      * @param {number} [kernelSize=5] - The kernelSize of the blur filter. Must be odd number >= 3
      * @param {number} [radius=-1] - The maximum size of the blur radius, `-1` is infinite
      */
-    constructor(angle: number = 0, center: PointLike = [0, 0], kernelSize = 5, radius = -1) {
+    constructor(angle = 0, center: PointLike = [0, 0], kernelSize = 5, radius = -1)
+    {
         super(vertex, fragment);
 
         this.angle = angle;
@@ -45,7 +48,8 @@ class RadialBlurFilter extends Filter {
      * Override existing apply method in PIXI.Filter
      * @private
      */
-    apply(filterManager, input, output, clear) {
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES): void
+    {
         this.uniforms.uKernelSize = this._angle !== 0 ? this.kernelSize : 0;
         filterManager.applyFilter(this, input, output, clear);
     }
@@ -56,12 +60,14 @@ class RadialBlurFilter extends Filter {
      * @member {PIXI.Point|number[]}
      * @default 0
      */
-    set angle(value: number) {
+    set angle(value: number)
+    {
         this._angle = value;
         this.uniforms.uRadian = value * Math.PI / 180;
     }
 
-    get angle(): number {
+    get angle(): number
+    {
         return this._angle;
     }
 
@@ -71,11 +77,13 @@ class RadialBlurFilter extends Filter {
      * @member {PIXI.Point|number[]}
      * @default [0, 0]
      */
-    get center(): PointLike {
+    get center(): PointLike
+    {
         return this.uniforms.uCenter;
     }
 
-    set center(value: PointLike) {
+    set center(value: PointLike)
+    {
         this.uniforms.uCenter = value;
     }
 
@@ -85,12 +93,15 @@ class RadialBlurFilter extends Filter {
      * @member {number}
      * @default -1
      */
-    get radius(): number {
+    get radius(): number
+    {
         return this.uniforms.uRadius;
     }
 
-    set radius(value: number) {
-        if (value < 0 || value === Infinity) {
+    set radius(value: number)
+    {
+        if (value < 0 || value === Infinity)
+        {
             value = -1;
         }
         this.uniforms.uRadius = value;

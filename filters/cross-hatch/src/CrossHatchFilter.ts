@@ -1,6 +1,6 @@
-import {vertex} from '@tools/fragments';
+import { vertex } from '@tools/fragments';
 import fragment from './crosshatch.frag';
-import {Filter} from '@pixi/core';
+import { Filter } from '@pixi/core';
 
 /**
  * A Cross Hatch effect filter.<br>
@@ -12,8 +12,10 @@ import {Filter} from '@pixi/core';
  * @see {@link https://www.npmjs.com/package/@pixi/filter-cross-hatch|@pixi/filter-cross-hatch}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class CrossHatchFilter extends Filter {
-    constructor() {
+class CrossHatchFilter extends Filter
+{
+    constructor()
+    {
         super(vertex, fragment);
     }
 }

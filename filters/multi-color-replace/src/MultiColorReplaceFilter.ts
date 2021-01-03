@@ -1,7 +1,7 @@
-import {vertex} from '@tools/fragments';
+import { vertex } from '@tools/fragments';
 import fragment from './multi-color-replace.frag';
-import {Filter} from '@pixi/core';
-import {hex2rgb, rgb2hex} from '@pixi/utils';
+import { Filter } from '@pixi/core';
+import { hex2rgb, rgb2hex } from '@pixi/utils';
 
 type Color = number | number[] | Float32Array;
 
@@ -35,10 +35,10 @@ type Color = number | number[] | Float32Array;
  *  )];
  *
  */
-class MultiColorReplaceFilter extends Filter {
-    
+class MultiColorReplaceFilter extends Filter
+{
     private _replacements: Array<[Color, Color]> = [];
-    private _maxColors: number = 0;
+    private _maxColors = 0;
 
     /**
      * @param {Array<Array>} replacements - The collection of replacement items. Each item is color-pair (an array length is 2).
@@ -49,7 +49,8 @@ class MultiColorReplaceFilter extends Filter {
      *                               fragment is only compiled once, this cannot be changed after construction.
      *                               If omitted, the default value is the length of `replacements`.
      */
-    constructor(replacements: Array<[Color, Color]>, epsilon = 0.05, maxColors: number = replacements.length) {
+    constructor(replacements: Array<[Color, Color]>, epsilon = 0.05, maxColors: number = replacements.length)
+    {
         super(vertex, fragment.replace(/%maxColors%/g, (maxColors).toFixed(0)));
 
         this.epsilon = epsilon;
@@ -64,27 +65,33 @@ class MultiColorReplaceFilter extends Filter {
      *
      * @member {Array<Array>}
      */
-    set replacements(replacements) {
+    set replacements(replacements)
+    {
         const originals = this.uniforms.originalColors;
         const targets = this.uniforms.targetColors;
         const colorCount = replacements.length;
 
-        if (colorCount > this._maxColors) {
+        if (colorCount > this._maxColors)
+        {
             throw `Length of replacements (${colorCount}) exceeds the maximum colors length (${this._maxColors})`;
         }
 
         // Fill with negative values
         originals[colorCount * 3] = -1;
 
-        for (let i = 0; i < colorCount; i++) {
+        for (let i = 0; i < colorCount; i++)
+        {
             const pair = replacements[i];
 
             // for original colors
             let color = pair[0];
-            if (typeof color === 'number') {
+
+            if (typeof color === 'number')
+            {
                 color = hex2rgb(color);
             }
-            else {
+            else
+            {
                 pair[0] = rgb2hex(color);
             }
 
@@ -94,10 +101,13 @@ class MultiColorReplaceFilter extends Filter {
 
             // for target colors
             let targetColor = pair[1];
-            if (typeof targetColor === 'number') {
+
+            if (typeof targetColor === 'number')
+            {
                 targetColor = hex2rgb(targetColor);
             }
-            else {
+            else
+            {
                 pair[1] = rgb2hex(targetColor);
             }
 
@@ -108,7 +118,8 @@ class MultiColorReplaceFilter extends Filter {
 
         this._replacements = replacements;
     }
-    get replacements() {
+    get replacements()
+    {
         return this._replacements;
     }
 
@@ -116,7 +127,8 @@ class MultiColorReplaceFilter extends Filter {
      * Should be called after changing any of the contents of the replacements.
      * This is a convenience method for resetting the `replacements`.
      */
-    refresh() {
+    refresh()
+    {
         this.replacements = this._replacements;
     }
 
@@ -127,7 +139,8 @@ class MultiColorReplaceFilter extends Filter {
      * @member {number}
      * @readonly
      */
-    get maxColors() {
+    get maxColors()
+    {
         return this._maxColors;
     }
 
@@ -137,10 +150,12 @@ class MultiColorReplaceFilter extends Filter {
      * @member {number}
      * @default 0.05
      */
-    set epsilon(value) {
+    set epsilon(value)
+    {
         this.uniforms.epsilon = value;
     }
-    get epsilon() {
+    get epsilon()
+    {
         return this.uniforms.epsilon;
     }
 }

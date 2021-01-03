@@ -1,7 +1,7 @@
-import {vertex} from '@tools/fragments';
+import { vertex } from '@tools/fragments';
 import fragment from './glow.frag';
-import {Filter} from '@pixi/core';
-import {rgb2hex, hex2rgb} from '@pixi/utils';
+import { Filter } from '@pixi/core';
+import { rgb2hex, hex2rgb } from '@pixi/utils';
 
 interface GlowFilterOptions {
     distance: number;
@@ -28,8 +28,8 @@ interface GlowFilterOptions {
  *      new GlowFilter({ distance: 15, outerStrength: 2 })
  *  ];
  */
-class GlowFilter extends Filter {
-
+class GlowFilter extends Filter
+{
     static readonly defaults: GlowFilterOptions = {
         distance: 10,
         outerStrength: 4,
@@ -50,7 +50,8 @@ class GlowFilter extends Filter {
      *        The higher the number the less performant.
      * @param {boolean} [options.knockout=false] Toggle to hide the contents and only show glow.
      */
-    constructor(options?: Partial<GlowFilterOptions>) {
+    constructor(options?: Partial<GlowFilterOptions>)
+    {
         let {
             distance,
             outerStrength,
@@ -62,8 +63,8 @@ class GlowFilter extends Filter {
         distance = Math.round(distance);
 
         super(vertex, fragment
-            .replace(/__ANGLE_STEP_SIZE__/gi, '' + (1 / quality / distance).toFixed(7))
-            .replace(/__DIST__/gi, distance.toFixed(0) + '.0'));
+            .replace(/__ANGLE_STEP_SIZE__/gi, `${(1 / quality / distance).toFixed(7)}`)
+            .replace(/__DIST__/gi, `${distance.toFixed(0)}.0`));
 
         this.uniforms.glowColor = new Float32Array([0, 0, 0, 1]);
 
@@ -81,10 +82,12 @@ class GlowFilter extends Filter {
      * @member {number}
      * @default 0xFFFFFF
      */
-    get color(): number {
+    get color(): number
+    {
         return rgb2hex(this.uniforms.glowColor);
     }
-    set color(value: number) {
+    set color(value: number)
+    {
         hex2rgb(value, this.uniforms.glowColor);
     }
 
@@ -93,10 +96,12 @@ class GlowFilter extends Filter {
      * @member {number}
      * @default 4
      */
-    get outerStrength(): number {
+    get outerStrength(): number
+    {
         return this.uniforms.outerStrength;
     }
-    set outerStrength(value: number) {
+    set outerStrength(value: number)
+    {
         this.uniforms.outerStrength = value;
     }
 
@@ -105,10 +110,12 @@ class GlowFilter extends Filter {
      * @member {number}
      * @default 0
      */
-    get innerStrength(): number {
+    get innerStrength(): number
+    {
         return this.uniforms.innerStrength;
     }
-    set innerStrength(value: number) {
+    set innerStrength(value: number)
+    {
         this.uniforms.innerStrength = value;
     }
 
@@ -117,10 +124,12 @@ class GlowFilter extends Filter {
      * @member {boolean}
      * @default false
      */
-    get knockout(): boolean {
+    get knockout(): boolean
+    {
         return this.uniforms.knockout;
     }
-    set knockout(value: boolean) {
+    set knockout(value: boolean)
+    {
         this.uniforms.knockout = value;
     }
 }

@@ -1,6 +1,6 @@
-import {vertex} from '@tools/fragments';
+import { vertex } from '@tools/fragments';
 import fragment from './ascii.frag';
-import {Filter} from '@pixi/core';
+import { Filter } from '@pixi/core';
 
 // TODO (cengler) - The Y is flipped in this shader for some reason.
 
@@ -19,12 +19,13 @@ import {Filter} from '@pixi/core';
  * @see {@link https://www.npmjs.com/package/@pixi/filter-ascii|@pixi/filter-ascii}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class AsciiFilter extends Filter {
-
+class AsciiFilter extends Filter
+{
     /**
      * @param {number} [size=8] Size of the font
      */
-    constructor(size: number = 8) {
+    constructor(size = 8)
+    {
         super(vertex, fragment);
         this.size = size;
     }
@@ -34,10 +35,12 @@ class AsciiFilter extends Filter {
      *
      * @member {number}
      */
-    get size(): number {
+    get size(): number
+    {
         return this.uniforms.pixelSize;
     }
-    set size(value: number) {
+    set size(value: number)
+    {
         this.uniforms.pixelSize = value;
     }
 }

@@ -1,7 +1,7 @@
-import {vertex} from '@tools/fragments';
+import { vertex } from '@tools/fragments';
 import fragment from './colorReplace.frag';
-import {Filter} from '@pixi/core';
-import {hex2rgb, rgb2hex} from '@pixi/utils';
+import { Filter } from '@pixi/core';
+import { hex2rgb, rgb2hex } from '@pixi/utils';
 
 type Color = number | number[] | Float32Array;
 
@@ -33,17 +33,18 @@ type Color = number | number[] | Float32Array;
  *  someOtherSprite.filters = [new ColorReplaceFilter(0xdcdcdc, 0xe1c8d7, 0.001)];
  *
  */
-class ColorReplaceFilter extends Filter {
-
-    private _originalColor: number = 0xff0000;
-    private _newColor: number = 0x0;
+class ColorReplaceFilter extends Filter
+{
+    private _originalColor = 0xff0000;
+    private _newColor = 0x0;
 
     /**
      * @param {number|Array<number>|Float32Array} [originalColor=0xFF0000] The color that will be changed, as a 3 component RGB e.g. [1.0, 1.0, 1.0]
      * @param {number|Array<number>|Float32Array} [newColor=0x000000] The resulting color, as a 3 component RGB e.g. [1.0, 0.5, 1.0]
      * @param {number} [epsilon=0.4] Tolerance/sensitivity of the floating-point comparison between colors (lower = more exact, higher = more inclusive)
      */
-    constructor(originalColor: Color = 0xFF0000, newColor: Color = 0x000000, epsilon: number = 0.4) {
+    constructor(originalColor: Color = 0xFF0000, newColor: Color = 0x000000, epsilon = 0.4)
+    {
         super(vertex, fragment);
         this.uniforms.originalColor = new Float32Array(3);
         this.uniforms.newColor = new Float32Array(3);
@@ -57,20 +58,25 @@ class ColorReplaceFilter extends Filter {
      * @member {number|Array<number>|Float32Array}
      * @default 0xFF0000
      */
-    set originalColor(value: Color) {
-        let arr = this.uniforms.originalColor;
-        if (typeof value === 'number') {
+    set originalColor(value: Color)
+    {
+        const arr = this.uniforms.originalColor;
+
+        if (typeof value === 'number')
+        {
             hex2rgb(value, arr);
             this._originalColor = value;
         }
-        else {
+        else
+        {
             arr[0] = value[0];
             arr[1] = value[1];
             arr[2] = value[2];
             this._originalColor = rgb2hex(arr);
         }
     }
-    get originalColor() {
+    get originalColor()
+    {
         return this._originalColor;
     }
 
@@ -79,20 +85,25 @@ class ColorReplaceFilter extends Filter {
      * @member {number|Array<number>|Float32Array}
      * @default 0x000000
      */
-    set newColor(value: Color) {
-        let arr = this.uniforms.newColor;
-        if (typeof value === 'number') {
+    set newColor(value: Color)
+    {
+        const arr = this.uniforms.newColor;
+
+        if (typeof value === 'number')
+        {
             hex2rgb(value, arr);
             this._newColor = value;
         }
-        else {
+        else
+        {
             arr[0] = value[0];
             arr[1] = value[1];
             arr[2] = value[2];
             this._newColor = rgb2hex(arr);
         }
     }
-    get newColor(): Color {
+    get newColor(): Color
+    {
         return this._newColor;
     }
 
@@ -101,10 +112,12 @@ class ColorReplaceFilter extends Filter {
      * @member {number}
      * @default 0.4
      */
-    set epsilon(value: number) {
+    set epsilon(value: number)
+    {
         this.uniforms.epsilon = value;
     }
-    get epsilon(): number {
+    get epsilon(): number
+    {
         return this.uniforms.epsilon;
     }
 }

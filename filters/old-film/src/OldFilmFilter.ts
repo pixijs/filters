@@ -1,6 +1,8 @@
-import {vertex} from '@tools/fragments';
+import { vertex } from '@tools/fragments';
 import fragment from './old-film.frag';
-import {Filter} from '@pixi/core';
+import { Filter } from '@pixi/core';
+import type { FilterSystem, RenderTexture } from '@pixi/core';
+import type { CLEAR_MODES } from '@pixi/constants';
 
 interface OldFilmFilterOptions {
     sepia: number;
@@ -24,12 +26,13 @@ interface OldFilmFilterOptions {
  * @see {@link https://www.npmjs.com/package/@pixi/filter-old-film|@pixi/filter-old-film}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class OldFilmFilter extends Filter {
+class OldFilmFilter extends Filter
+{
     /**
      * A see value to apply to the random noise generation
      * @member {number}
      */
-    public seed: number = 0;
+    public seed = 0;
 
     /**
      * @param {object|number} [options] - The optional parameters of old film effect.
@@ -48,15 +51,18 @@ class OldFilmFilter extends Filter {
      * @param {number} [options.vignettingBlur=0.3] - Blur intensity of the vignette
      * @param {number} [seed=0] - A see value to apply to the random noise generation
      */
-    constructor(options?: Partial<OldFilmFilterOptions>, seed: number = 0) {
+    constructor(options?: Partial<OldFilmFilterOptions>, seed = 0)
+    {
         super(vertex, fragment);
         this.uniforms.dimensions = new Float32Array(2);
 
-        if (typeof options === 'number') {
+        if (typeof options === 'number')
+        {
             this.seed = options;
             options = undefined;
         }
-        else {
+        else
+        {
             this.seed = seed;
         }
 
@@ -77,9 +83,10 @@ class OldFilmFilter extends Filter {
      * Override existing apply method in PIXI.Filter
      * @private
      */
-    apply(filterManager, input, output, clear) {
-        this.uniforms.dimensions[0] = input.filterFrame.width;
-        this.uniforms.dimensions[1] = input.filterFrame.height;
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES): void
+    {
+        this.uniforms.dimensions[0] = input.filterFrame?.width;
+        this.uniforms.dimensions[1] = input.filterFrame?.height;
 
         // named `seed` because in the most programming languages,
         // `random` used for "the function for generating random value".
@@ -87,7 +94,6 @@ class OldFilmFilter extends Filter {
 
         filterManager.applyFilter(this, input, output, clear);
     }
-
 
     /**
      * The amount of saturation of sepia effect,
@@ -97,11 +103,13 @@ class OldFilmFilter extends Filter {
      * @member {number}
      * @default 0
      */
-    set sepia(value) {
+    set sepia(value)
+    {
         this.uniforms.sepia = value;
     }
 
-    get sepia() {
+    get sepia()
+    {
         return this.uniforms.sepia;
     }
 
@@ -111,11 +119,13 @@ class OldFilmFilter extends Filter {
      * @member {number}
      * @default 0
      */
-    set noise(value) {
+    set noise(value)
+    {
         this.uniforms.noise = value;
     }
 
-    get noise() {
+    get noise()
+    {
         return this.uniforms.noise;
     }
 
@@ -125,11 +135,13 @@ class OldFilmFilter extends Filter {
      * @member {number}
      * @default 0
      */
-    set noiseSize(value) {
+    set noiseSize(value)
+    {
         this.uniforms.noiseSize = value;
     }
 
-    get noiseSize() {
+    get noiseSize()
+    {
         return this.uniforms.noiseSize;
     }
 
@@ -139,11 +151,13 @@ class OldFilmFilter extends Filter {
      * @member {number}
      * @default 0
      */
-    set scratch(value) {
+    set scratch(value)
+    {
         this.uniforms.scratch = value;
     }
 
-    get scratch() {
+    get scratch()
+    {
         return this.uniforms.scratch;
     }
 
@@ -153,11 +167,13 @@ class OldFilmFilter extends Filter {
      * @member {number}
      * @default 0
      */
-    set scratchDensity(value) {
+    set scratchDensity(value)
+    {
         this.uniforms.scratchDensity = value;
     }
 
-    get scratchDensity() {
+    get scratchDensity()
+    {
         return this.uniforms.scratchDensity;
     }
 
@@ -167,11 +183,13 @@ class OldFilmFilter extends Filter {
      * @member {number}
      * @default 0
      */
-    set scratchWidth(value) {
+    set scratchWidth(value)
+    {
         this.uniforms.scratchWidth = value;
     }
 
-    get scratchWidth() {
+    get scratchWidth()
+    {
         return this.uniforms.scratchWidth;
     }
 
@@ -182,11 +200,13 @@ class OldFilmFilter extends Filter {
      * @member {number}
      * @default 0
      */
-    set vignetting(value) {
+    set vignetting(value)
+    {
         this.uniforms.vignetting = value;
     }
 
-    get vignetting() {
+    get vignetting()
+    {
         return this.uniforms.vignetting;
     }
 
@@ -196,11 +216,13 @@ class OldFilmFilter extends Filter {
      * @member {number}
      * @default 0
      */
-    set vignettingAlpha(value) {
+    set vignettingAlpha(value)
+    {
         this.uniforms.vignettingAlpha = value;
     }
 
-    get vignettingAlpha() {
+    get vignettingAlpha()
+    {
         return this.uniforms.vignettingAlpha;
     }
 
@@ -210,11 +232,13 @@ class OldFilmFilter extends Filter {
      * @member {number}
      * @default 0
      */
-    set vignettingBlur(value) {
+    set vignettingBlur(value)
+    {
         this.uniforms.vignettingBlur = value;
     }
 
-    get vignettingBlur() {
+    get vignettingBlur()
+    {
         return this.uniforms.vignettingBlur;
     }
 }

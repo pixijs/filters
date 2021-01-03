@@ -11,17 +11,18 @@ import {
 
 const { EventEmitter } = utils;
 
-/*global dat,ga*/
+/* global dat,ga*/
 /**
  * Demo show a bunch of fish and a dat.gui controls
  * @class
  * @extends PIXI.Application
  */
-export default class DemoApplication extends Application {
-
-    constructor() {
-
+export default class DemoApplication extends Application
+{
+    constructor()
+    {
         const gui = new dat.GUI();
+
         gui.useLocalStorage = false;
 
         // Get the initial dementions for the application
@@ -34,7 +35,7 @@ export default class DemoApplication extends Application {
             width: initWidth,
             height: initHeight,
             autoStart: false,
-            backgroundColor:0x000000,
+            backgroundColor: 0x000000,
         });
 
         settings.PRECISION_FRAGMENT = 'highp';
@@ -59,7 +60,7 @@ export default class DemoApplication extends Application {
             -this.padding,
             -this.padding,
             initWidth + this.padding * 2,
-            initHeight + this.padding * 2
+            initHeight + this.padding * 2,
         );
 
         const app = this;
@@ -67,11 +68,14 @@ export default class DemoApplication extends Application {
         this.gui = gui;
         this.gui.add(this, 'rendering')
             .name('&bull; Rendering')
-            .onChange((value) => {
-                if (!value) {
+            .onChange((value) =>
+            {
+                if (!value)
+                {
                     app.stop();
                 }
-                else {
+                else
+                {
                     app.start();
                 }
             });
@@ -83,7 +87,8 @@ export default class DemoApplication extends Application {
      * Convenience for getting resources
      * @member {object}
      */
-    get resources() {
+    get resources()
+    {
         return this.loader.resources;
     }
 
@@ -91,8 +96,10 @@ export default class DemoApplication extends Application {
      * Load resources
      * @param {object} manifest Collection of resources to load
      */
-    load(manifest, callback) {
-        this.loader.add(manifest).load(() => {
+    load(manifest, callback)
+    {
+        this.loader.add(manifest).load(() =>
+        {
             callback();
             this.init();
             this.start();
@@ -102,10 +109,10 @@ export default class DemoApplication extends Application {
     /**
      * Called when the load is completed
      */
-    init() {
-
-        const {resources} = this.loader;
-        const {bounds, initWidth, initHeight} = this;
+    init()
+    {
+        const { resources } = this.loader;
+        const { bounds, initWidth, initHeight } = this;
 
         // Setup the container
         this.pond = new Container();
@@ -118,9 +125,11 @@ export default class DemoApplication extends Application {
         this.pond.addChild(this.bg);
 
         // Create and add the fish
-        for (let i = 0; i < this.fishCount; i++) {
-            const id = 'fish' + ((i % 4) + 1);
+        for (let i = 0; i < this.fishCount; i++)
+        {
+            const id = `fish${(i % 4) + 1}`;
             const fish = new Sprite(resources[id].texture);
+
             fish.anchor.set(0.5);
             fish.filters = this.fishFilters;
 
@@ -140,7 +149,7 @@ export default class DemoApplication extends Application {
         this.overlay = new TilingSprite(
             resources.overlay.texture,
             initWidth,
-            initHeight
+            initHeight,
         );
 
         // Add the overlay
@@ -157,9 +166,9 @@ export default class DemoApplication extends Application {
     /**
      * Resize the demo when the window resizes
      */
-    handleResize() {
-
-        const {padding, bg, overlay, filterArea, bounds} = this;
+    handleResize()
+    {
+        const { padding, bg, overlay, filterArea, bounds } = this;
 
         const width = this.domElement.offsetWidth;
         const height = this.domElement.offsetHeight;
@@ -170,11 +179,13 @@ export default class DemoApplication extends Application {
         const bgAspect = bg.texture.width / bg.texture.height;
         const winAspect = width / height;
 
-        if (winAspect > bgAspect) {
+        if (winAspect > bgAspect)
+        {
             bg.width = width;
             bg.height = width / bgAspect;
         }
-        else {
+        else
+        {
             bg.height = height;
             bg.width = height * bgAspect;
         }
@@ -206,15 +217,16 @@ export default class DemoApplication extends Application {
      * Animate the fish, overlay and filters (if applicable)
      * @param {number} delta - % difference in time from last frame render
      */
-    animate(delta) {
-
+    animate(delta)
+    {
         this.animateTimer += delta;
 
-        const {bounds, animateTimer, overlay} = this;
+        const { bounds, animateTimer, overlay } = this;
 
         this.events.emit('animate', delta, animateTimer);
 
-        if (!this.animating) {
+        if (!this.animating)
+        {
             return;
         }
 
@@ -222,8 +234,8 @@ export default class DemoApplication extends Application {
         overlay.tilePosition.x = animateTimer * -1;
         overlay.tilePosition.y = animateTimer * -1;
 
-        for (let i = 0; i < this.fishes.length; i++) {
-
+        for (let i = 0; i < this.fishes.length; i++)
+        {
             const fish = this.fishes[i];
 
             fish.direction += fish.turnSpeed * 0.01;
@@ -231,21 +243,24 @@ export default class DemoApplication extends Application {
             fish.x += Math.sin(fish.direction) * fish.speed;
             fish.y += Math.cos(fish.direction) * fish.speed;
 
-            fish.rotation = -fish.direction - Math.PI/2;
+            fish.rotation = -fish.direction - Math.PI / 2;
 
-            if (fish.x < bounds.x) {
+            if (fish.x < bounds.x)
+            {
                 fish.x += bounds.width;
             }
-            if (fish.x > bounds.x + bounds.width) {
+            if (fish.x > bounds.x + bounds.width)
+            {
                 fish.x -= bounds.width;
             }
-            if (fish.y < bounds.y) {
+            if (fish.y < bounds.y)
+            {
                 fish.y += bounds.height;
             }
-            if (fish.y > bounds.y + bounds.height) {
+            if (fish.y > bounds.y + bounds.height)
+            {
                 fish.y -= bounds.height;
             }
-
         }
     }
 
@@ -263,9 +278,10 @@ export default class DemoApplication extends Application {
      *        arguments and is scoped to the Demo application.
      * @return {PIXI.Filter} Instance of new filter
      */
-    addFilter(id, options) {
-
-        if (typeof options === 'function') {
+    addFilter(id, options)
+    {
+        if (typeof options === 'function')
+        {
             options = { oncreate: options };
         }
 
@@ -276,10 +292,11 @@ export default class DemoApplication extends Application {
             args: null,
             fishOnly: false,
             global: false,
-            oncreate: null
+            oncreate: null,
         }, options);
 
-        if (options.global) {
+        if (options.global)
+        {
             options.name += ' (pixi.js)';
         }
 
@@ -287,19 +304,25 @@ export default class DemoApplication extends Application {
         const folder = this.gui.addFolder(options.name);
         const ClassRef = filters[id] || externalFilters[id];
 
-        if (!ClassRef) {
+        if (!ClassRef)
+        {
             throw `Unable to find class name with "${id}"`;
         }
 
         let filter;
-        if (options.args) {
-            const ClassRefArgs = function(a) {
+
+        if (options.args)
+        {
+            const ClassRefArgs = function (a)
+            {
                 ClassRef.apply(this, a);
             };
+
             ClassRefArgs.prototype = ClassRef.prototype;
             filter = new ClassRefArgs(options.args);
         }
-        else {
+        else
+        {
             filter = new ClassRef();
         }
 
@@ -307,36 +330,44 @@ export default class DemoApplication extends Application {
         filter.enabled = options.enabled;
 
         // Track enabled change with analytics
-        folder.add(filter, 'enabled').onChange((enabled) => {
+        folder.add(filter, 'enabled').onChange((enabled) =>
+        {
             ga('send', 'event', id, enabled ? 'enabled' : 'disabled');
 
             app.events.emit('enable', enabled);
 
             this.render();
-            if (enabled) {
+            if (enabled)
+            {
                 folder.domElement.className += ' enabled';
             }
-            else {
+            else
+            {
                 folder.domElement.className = folder.domElement.className.replace(' enabled', '');
             }
         });
 
-        if (options.opened) {
+        if (options.opened)
+        {
             folder.open();
         }
 
-        if (options.enabled) {
+        if (options.enabled)
+        {
             folder.domElement.className += ' enabled';
         }
 
-        if (options.oncreate) {
+        if (options.oncreate)
+        {
             options.oncreate.call(filter, folder);
         }
 
-        if (options.fishOnly) {
+        if (options.fishOnly)
+        {
             this.fishFilters.push(filter);
         }
-        else {
+        else
+        {
             this.pondFilters.push(filter);
         }
 

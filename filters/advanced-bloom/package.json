@@ -32,10 +32,12 @@
     "@pixi/filter-kawase-blur": "3.2.0"
   },
   "peerDependencies": {
+    "@pixi/constants": "^6.0.0-X",
     "@pixi/core": "^6.0.0-X",
     "@pixi/settings": "^6.0.0-X"
   },
   "devDependencies": {
+    "@pixi/constants": "^6.0.0-X",
     "@pixi/core": "^6.0.0-X",
     "@pixi/settings": "^6.0.0-X",
     "@tools/fragments": "^3.0.3"

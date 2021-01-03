@@ -1,7 +1,7 @@
-import {vertex} from '@tools/fragments';
+import { vertex } from '@tools/fragments';
 import fragment from './tilt-shift.frag';
-import {Filter} from '@pixi/core';
-import {Point} from '@pixi/math';
+import { Filter } from '@pixi/core';
+import { Point } from '@pixi/math';
 
 /**
  * @author Vico @vicocotea
@@ -16,9 +16,10 @@ import {Point} from '@pixi/math';
  * @memberof PIXI.filters
  * @private
  */
-class TiltShiftAxisFilter extends Filter {
-
-    constructor(blur: number = 100, gradientBlur: number = 600, start?: Point, end?: Point){
+class TiltShiftAxisFilter extends Filter
+{
+    constructor(blur = 100, gradientBlur = 600, start?: Point, end?: Point)
+    {
         super(vertex, fragment);
         this.uniforms.blur = blur;
         this.uniforms.gradientBlur = gradientBlur;
@@ -34,7 +35,8 @@ class TiltShiftAxisFilter extends Filter {
      * This is overridden in the X and Y filters, does nothing for this class.
      *
      */
-    protected updateDelta() {
+    protected updateDelta()
+    {
         this.uniforms.delta.x = 0;
         this.uniforms.delta.y = 0;
     }
@@ -45,10 +47,12 @@ class TiltShiftAxisFilter extends Filter {
      * @member {number}
      * @memberof PIXI.filters.TiltShiftAxisFilter#
      */
-    get blur(): number {
+    get blur(): number
+    {
         return this.uniforms.blur;
     }
-    set blur(value: number) {
+    set blur(value: number)
+    {
         this.uniforms.blur = value;
     }
 
@@ -58,10 +62,12 @@ class TiltShiftAxisFilter extends Filter {
      * @member {number}
      * @memberof PIXI.filters.TiltShiftAxisFilter#
      */
-    get gradientBlur(): number {
+    get gradientBlur(): number
+    {
         return this.uniforms.gradientBlur;
     }
-    set gradientBlur(value: number) {
+    set gradientBlur(value: number)
+    {
         this.uniforms.gradientBlur = value;
     }
 
@@ -71,10 +77,12 @@ class TiltShiftAxisFilter extends Filter {
      * @member {PIXI.Point}
      * @memberof PIXI.filters.TiltShiftAxisFilter#
      */
-    get start(): Point {
+    get start(): Point
+    {
         return this.uniforms.start;
     }
-    set start(value: Point) {
+    set start(value: Point)
+    {
         this.uniforms.start = value;
         this.updateDelta();
     }
@@ -85,10 +93,12 @@ class TiltShiftAxisFilter extends Filter {
      * @member {PIXI.Point}
      * @memberof PIXI.filters.TiltShiftAxisFilter#
      */
-    get end(): Point {
+    get end(): Point
+    {
         return this.uniforms.end;
     }
-    set end(value: Point) {
+    set end(value: Point)
+    {
         this.uniforms.end = value;
         this.updateDelta();
     }

@@ -1,7 +1,7 @@
-import {TiltShiftXFilter} from './TiltShiftXFilter';
-import {TiltShiftYFilter} from './TiltShiftYFilter';
-import {Filter} from '@pixi/core';
-import type {Point} from '@pixi/math';
+import { TiltShiftXFilter } from './TiltShiftXFilter';
+import { TiltShiftYFilter } from './TiltShiftYFilter';
+import { Filter, FilterSystem, RenderTexture } from '@pixi/core';
+import type { Point } from '@pixi/math';
 
 /**
  * @author Vico @vicocotea
@@ -18,8 +18,8 @@ import type {Point} from '@pixi/math';
  * @see {@link https://www.npmjs.com/package/@pixi/filter-tilt-shift|@pixi/filter-tilt-shift}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class TiltShiftFilter extends Filter {
-
+class TiltShiftFilter extends Filter
+{
     private tiltShiftXFilter: TiltShiftXFilter;
     private tiltShiftYFilter: TiltShiftYFilter;
 
@@ -29,14 +29,17 @@ class TiltShiftFilter extends Filter {
      * @param {PIXI.Point} [start=null] The Y value to start the effect at.
      * @param {PIXI.Point} [end=null] The Y value to end the effect at.
      */
-    constructor(blur: number = 100, gradientBlur: number = 600, start?: Point, end?: Point) {
+    constructor(blur = 100, gradientBlur = 600, start?: Point, end?: Point)
+    {
         super();
         this.tiltShiftXFilter = new TiltShiftXFilter(blur, gradientBlur, start, end);
         this.tiltShiftYFilter = new TiltShiftYFilter(blur, gradientBlur, start, end);
     }
 
-    apply(filterManager, input, output) {
-        let renderTarget = filterManager.getFilterTexture();
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture): void
+    {
+        const renderTarget = filterManager.getFilterTexture();
+
         this.tiltShiftXFilter.apply(filterManager, input, renderTarget, 1);
         this.tiltShiftYFilter.apply(filterManager, renderTarget, output);
         filterManager.returnFilterTexture(renderTarget);
@@ -47,10 +50,12 @@ class TiltShiftFilter extends Filter {
      *
      * @member {number}
      */
-    get blur(): number {
+    get blur(): number
+    {
         return this.tiltShiftXFilter.blur;
     }
-    set blur(value: number) {
+    set blur(value: number)
+    {
         this.tiltShiftXFilter.blur = this.tiltShiftYFilter.blur = value;
     }
 
@@ -59,10 +64,12 @@ class TiltShiftFilter extends Filter {
      *
      * @member {number}
      */
-    get gradientBlur(): number {
+    get gradientBlur(): number
+    {
         return this.tiltShiftXFilter.gradientBlur;
     }
-    set gradientBlur(value: number) {
+    set gradientBlur(value: number)
+    {
         this.tiltShiftXFilter.gradientBlur = this.tiltShiftYFilter.gradientBlur = value;
     }
 
@@ -71,10 +78,12 @@ class TiltShiftFilter extends Filter {
      *
      * @member {PIXI.Point}
      */
-    get start(): Point {
+    get start(): Point
+    {
         return this.tiltShiftXFilter.start;
     }
-    set start(value: Point) {
+    set start(value: Point)
+    {
         this.tiltShiftXFilter.start = this.tiltShiftYFilter.start = value;
     }
 
@@ -83,10 +92,12 @@ class TiltShiftFilter extends Filter {
      *
      * @member {PIXI.Point}
      */
-    get end(): Point {
+    get end(): Point
+    {
         return this.tiltShiftXFilter.end;
     }
-    set end(value: Point) {
+    set end(value: Point)
+    {
         this.tiltShiftXFilter.end = this.tiltShiftYFilter.end = value;
     }
 }

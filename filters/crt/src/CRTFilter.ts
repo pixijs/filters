@@ -1,6 +1,9 @@
-import {vertex} from '@tools/fragments';
+import { vertex } from '@tools/fragments';
 import fragment from './crt.frag';
-import {Filter} from '@pixi/core';
+import { Filter } from '@pixi/core';
+import type { Rectangle } from '@pixi/math';
+import type { FilterSystem, RenderTexture } from '@pixi/core';
+import type { CLEAR_MODES } from '@pixi/constants';
 
 interface CRTFilterOptions {
     curvature: number;
@@ -26,14 +29,15 @@ interface CRTFilterOptions {
  * @see {@link https://www.npmjs.com/package/@pixi/filter-crt|@pixi/filter-crt}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class CRTFilter extends Filter {
+class CRTFilter extends Filter
+{
     /**
      * For animating interlaced lines
      *
      * @member {number}
      * @default 0
      */
-    public time: number = 0;
+    public time = 0;
 
     /**
      * A seed value to apply to the random noise generation
@@ -41,7 +45,7 @@ class CRTFilter extends Filter {
      * @member {number}
      * @default 0
      */
-    public seed: number = 0;
+    public seed = 0;
 
     /**
      * @param {object} [options] - The optional parameters of CRT effect
@@ -58,7 +62,8 @@ class CRTFilter extends Filter {
      * @param {number} [options.vignettingBlur=0.3] - Blur intensity of the vignette
      * @param {number} [options.time=0] - For animating interlaced lines
      */
-    constructor(options?: Partial<CRTFilterOptions>) {
+    constructor(options?: Partial<CRTFilterOptions>)
+    {
         super(vertex, fragment);
         this.uniforms.dimensions = new Float32Array(2);
 
@@ -81,9 +86,12 @@ class CRTFilter extends Filter {
      * Override existing apply method in PIXI.Filter
      * @private
      */
-    apply(filterManager, input, output, clear) {
-        this.uniforms.dimensions[0] = input.filterFrame.width;
-        this.uniforms.dimensions[1] = input.filterFrame.height;
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES): void
+    {
+        const { width, height } = input.filterFrame as Rectangle;
+
+        this.uniforms.dimensions[0] = width;
+        this.uniforms.dimensions[1] = height;
 
         this.uniforms.seed = this.seed;
         this.uniforms.time = this.time;
@@ -97,10 +105,12 @@ class CRTFilter extends Filter {
      * @member {number}
      * @default 1
      */
-    set curvature(value: number) {
+    set curvature(value: number)
+    {
         this.uniforms.curvature = value;
     }
-    get curvature(): number {
+    get curvature(): number
+    {
         return this.uniforms.curvature;
     }
 
@@ -110,10 +120,12 @@ class CRTFilter extends Filter {
      * @member {number}
      * @default 1
      */
-    set lineWidth(value: number) {
+    set lineWidth(value: number)
+    {
         this.uniforms.lineWidth = value;
     }
-    get lineWidth(): number {
+    get lineWidth(): number
+    {
         return this.uniforms.lineWidth;
     }
 
@@ -123,10 +135,12 @@ class CRTFilter extends Filter {
      * @member {number}
      * @default 0.25
      */
-    set lineContrast(value: number) {
+    set lineContrast(value: number)
+    {
         this.uniforms.lineContrast = value;
     }
-    get lineContrast(): number {
+    get lineContrast(): number
+    {
         return this.uniforms.lineContrast;
     }
 
@@ -136,10 +150,12 @@ class CRTFilter extends Filter {
      * @member {boolean}
      * @default false
      */
-    set verticalLine(value: boolean) {
+    set verticalLine(value: boolean)
+    {
         this.uniforms.verticalLine = value;
     }
-    get verticalLine(): boolean {
+    get verticalLine(): boolean
+    {
         return this.uniforms.verticalLine;
     }
 
@@ -149,10 +165,12 @@ class CRTFilter extends Filter {
      * @member {number}
      * @default 0
      */
-    set noise(value: number) {
+    set noise(value: number)
+    {
         this.uniforms.noise = value;
     }
-    get noise(): number {
+    get noise(): number
+    {
         return this.uniforms.noise;
     }
 
@@ -162,10 +180,12 @@ class CRTFilter extends Filter {
      * @member {number}
      * @default 0
      */
-    set noiseSize(value: number) {
+    set noiseSize(value: number)
+    {
         this.uniforms.noiseSize = value;
     }
-    get noiseSize(): number {
+    get noiseSize(): number
+    {
         return this.uniforms.noiseSize;
     }
 
@@ -176,10 +196,12 @@ class CRTFilter extends Filter {
      * @member {number}
      * @default 0
      */
-    set vignetting(value: number) {
+    set vignetting(value: number)
+    {
         this.uniforms.vignetting = value;
     }
-    get vignetting(): number {
+    get vignetting(): number
+    {
         return this.uniforms.vignetting;
     }
 
@@ -189,10 +211,12 @@ class CRTFilter extends Filter {
      * @member {number}
      * @default 0
      */
-    set vignettingAlpha(value: number) {
+    set vignettingAlpha(value: number)
+    {
         this.uniforms.vignettingAlpha = value;
     }
-    get vignettingAlpha(): number {
+    get vignettingAlpha(): number
+    {
         return this.uniforms.vignettingAlpha;
     }
 
@@ -202,10 +226,12 @@ class CRTFilter extends Filter {
      * @member {number}
      * @default 0
      */
-    set vignettingBlur(value: number) {
+    set vignettingBlur(value: number)
+    {
         this.uniforms.vignettingBlur = value;
     }
-    get vignettingBlur(): number {
+    get vignettingBlur(): number
+    {
         return this.uniforms.vignettingBlur;
     }
 }

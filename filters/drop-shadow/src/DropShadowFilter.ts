@@ -1,10 +1,12 @@
-import {KawaseBlurFilter} from '@pixi/filter-kawase-blur';
-import {vertex} from '@tools/fragments';
+import { KawaseBlurFilter } from '@pixi/filter-kawase-blur';
+import { vertex } from '@tools/fragments';
 import fragment from './dropshadow.frag';
-import {Filter} from '@pixi/core';
-import {settings} from '@pixi/settings';
-import {DEG_TO_RAD, Point} from '@pixi/math';
-import {rgb2hex, hex2rgb} from '@pixi/utils';
+import { Filter } from '@pixi/core';
+import { settings } from '@pixi/settings';
+import { DEG_TO_RAD, Point } from '@pixi/math';
+import { rgb2hex, hex2rgb } from '@pixi/utils';
+import type { FilterSystem, RenderTexture } from '@pixi/core';
+import type { CLEAR_MODES } from '@pixi/constants';
 
 type PixelSizeValue = number | number[] | Point;
 
@@ -30,8 +32,8 @@ interface DropShadowFilterOptions {
  * @see {@link https://www.npmjs.com/package/@pixi/filter-drop-shadow|@pixi/filter-drop-shadow}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class DropShadowFilter extends Filter {
-    
+class DropShadowFilter extends Filter
+{
     /**
      * Hide the contents, only show the shadow.
      *
@@ -42,13 +44,13 @@ class DropShadowFilter extends Filter {
 
     /**
      * Angle of the shadow in degrees.
-     * 
+     *
      * @member {number}
      * @default 45
      */
-    public angle: number = 45;
+    public angle = 45;
 
-    private _distance: number = 5;
+    private _distance = 5;
     private _resolution: number = settings.FILTER_RESOLUTION;
     private _tintFilter: Filter;
     private _blurFilter: KawaseBlurFilter;
@@ -66,8 +68,8 @@ class DropShadowFilter extends Filter {
      * @param {number|number[]|PIXI.Point} [options.pixelSize=1] - the pixelSize of the Blur filter.
      * @param {number} [options.resolution=PIXI.settings.FILTER_RESOLUTION] - The resolution of the Blur filter.
      */
-    constructor(options?: Partial<DropShadowFilterOptions>) {
-
+    constructor(options?: Partial<DropShadowFilterOptions>)
+    {
         super();
 
         const opt: DropShadowFilterOptions = Object.assign({
@@ -89,9 +91,9 @@ class DropShadowFilter extends Filter {
         this._tintFilter.uniforms.color = new Float32Array(4);
         this._tintFilter.uniforms.shift = new Point();
         this._tintFilter.resolution = resolution;
-        this._blurFilter = kernels ?
-            new KawaseBlurFilter(kernels) :
-            new KawaseBlurFilter(blur, quality);
+        this._blurFilter = kernels
+            ? new KawaseBlurFilter(kernels)
+            : new KawaseBlurFilter(blur, quality);
 
         this.pixelSize = pixelSize;
         this.resolution = resolution;
@@ -107,13 +109,15 @@ class DropShadowFilter extends Filter {
         this._updatePadding();
     }
 
-    apply(filterManager, input, output, clear) {
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES): void
+    {
         const target = filterManager.getFilterTexture();
 
         this._tintFilter.apply(filterManager, input, target, 1);
         this._blurFilter.apply(filterManager, target, output, clear);
 
-        if (this.shadowOnly !== true) {
+        if (this.shadowOnly !== true)
+        {
             filterManager.applyFilter(this, input, output, 0);
         }
 
@@ -124,7 +128,8 @@ class DropShadowFilter extends Filter {
      * Recalculate the proper padding amount.
      * @private
      */
-    private _updatePadding() {
+    private _updatePadding()
+    {
         this.padding = this.distance + (this.blur * 2);
     }
 
@@ -132,10 +137,11 @@ class DropShadowFilter extends Filter {
      * Update the transform matrix of offset angle.
      * @private
      */
-    private _updateShift() {
+    private _updateShift()
+    {
         this._tintFilter.uniforms.shift.set(
             this.distance * Math.cos(this.angle),
-            this.distance * Math.sin(this.angle)
+            this.distance * Math.sin(this.angle),
         );
     }
 
@@ -145,16 +151,20 @@ class DropShadowFilter extends Filter {
      * @member {number}
      * @default PIXI.settings.FILTER_RESOLUTION
      */
-    get resolution(): number {
+    get resolution(): number
+    {
         return this._resolution;
     }
-    set resolution(value: number) {
+    set resolution(value: number)
+    {
         this._resolution = value;
 
-        if (this._tintFilter) {
+        if (this._tintFilter)
+        {
             this._tintFilter.resolution = value;
         }
-        if (this._blurFilter) {
+        if (this._blurFilter)
+        {
             this._blurFilter.resolution = value;
         }
     }
@@ -164,10 +174,12 @@ class DropShadowFilter extends Filter {
      * @member {number}
      * @default 5
      */
-    get distance(): number {
+    get distance(): number
+    {
         return this._distance;
     }
-    set distance(value: number) {
+    set distance(value: number)
+    {
         this._distance = value;
         this._updatePadding();
         this._updateShift();
@@ -178,10 +190,12 @@ class DropShadowFilter extends Filter {
      * @member {number}
      * @default 2
      */
-    get rotation(): number {
+    get rotation(): number
+    {
         return this.angle / DEG_TO_RAD;
     }
-    set rotation(value: number) {
+    set rotation(value: number)
+    {
         this.angle = value * DEG_TO_RAD;
         this._updateShift();
     }
@@ -191,10 +205,12 @@ class DropShadowFilter extends Filter {
      * @member {number}
      * @default 1
      */
-    get alpha(): number {
+    get alpha(): number
+    {
         return this._tintFilter.uniforms.alpha;
     }
-    set alpha(value: number) {
+    set alpha(value: number)
+    {
         this._tintFilter.uniforms.alpha = value;
     }
 
@@ -203,10 +219,12 @@ class DropShadowFilter extends Filter {
      * @member {number}
      * @default 0x000000
      */
-    get color(): number {
+    get color(): number
+    {
         return rgb2hex(this._tintFilter.uniforms.color);
     }
-    set color(value: number) {
+    set color(value: number)
+    {
         hex2rgb(value, this._tintFilter.uniforms.color);
     }
 
@@ -215,10 +233,12 @@ class DropShadowFilter extends Filter {
      *
      * @member {number[]}
      */
-    get kernels(): number[] {
+    get kernels(): number[]
+    {
         return this._blurFilter.kernels;
     }
-    set kernels(value: number[]) {
+    set kernels(value: number[])
+    {
         this._blurFilter.kernels = value;
     }
 
@@ -227,10 +247,12 @@ class DropShadowFilter extends Filter {
      * @member {number}
      * @default 2
      */
-    get blur(): number {
+    get blur(): number
+    {
         return this._blurFilter.blur;
     }
-    set blur(value: number) {
+    set blur(value: number)
+    {
         this._blurFilter.blur = value;
         this._updatePadding();
     }
@@ -241,10 +263,12 @@ class DropShadowFilter extends Filter {
      * @member {number}
      * @default 4
      */
-    get quality(): number {
+    get quality(): number
+    {
         return this._blurFilter.quality;
     }
-    set quality(value: number) {
+    set quality(value: number)
+    {
         this._blurFilter.quality = value;
     }
 
@@ -254,10 +278,12 @@ class DropShadowFilter extends Filter {
      * @member {number|number[]|PIXI.Point}
      * @default 1
      */
-    get pixelSize(): PixelSizeValue {
+    get pixelSize(): PixelSizeValue
+    {
         return this._blurFilter.pixelSize;
     }
-    set pixelSize(value: PixelSizeValue) {
+    set pixelSize(value: PixelSizeValue)
+    {
         this._blurFilter.pixelSize = value;
     }
 }

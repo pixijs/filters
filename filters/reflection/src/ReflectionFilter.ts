@@ -1,6 +1,8 @@
-import {vertex} from '@tools/fragments';
+import { vertex } from '@tools/fragments';
 import fragment from './reflection.frag';
-import {Filter} from '@pixi/core';
+import { Filter } from '@pixi/core';
+import type { FilterSystem, RenderTexture } from '@pixi/core';
+import type { CLEAR_MODES } from '@pixi/constants';
 
 type Range = number[] | Float32Array;
 
@@ -23,15 +25,15 @@ interface ReflectionFilterOptions {
  * @see {@link https://www.npmjs.com/package/@pixi/filter-reflection|@pixi/filter-reflection}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class ReflectionFilter extends Filter {
-
+class ReflectionFilter extends Filter
+{
     /**
      * Time for animating position of waves
      *
      * @member {number}
      * @default 0
      */
-    public time: number = 0;
+    public time = 0;
 
     /**
      * @param {object} [options] - The optional parameters of Reflection effect.
@@ -43,7 +45,8 @@ class ReflectionFilter extends Filter {
      * @param {number} [options.alpha=[1, 1]] - Starting and ending alpha values
      * @param {number} [options.time=0] - Time for animating position of waves
      */
-    constructor(options?: Partial<ReflectionFilterOptions>) {
+    constructor(options?: Partial<ReflectionFilterOptions>)
+    {
         super(vertex, fragment);
         this.uniforms.amplitude = new Float32Array(2);
         this.uniforms.waveLength = new Float32Array(2);
@@ -64,9 +67,10 @@ class ReflectionFilter extends Filter {
      * Override existing apply method in PIXI.Filter
      * @private
      */
-    apply(filterManager, input, output, clear) {
-        this.uniforms.dimensions[0] = input.filterFrame.width;
-        this.uniforms.dimensions[1] = input.filterFrame.height;
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES): void
+    {
+        this.uniforms.dimensions[0] = input.filterFrame?.width;
+        this.uniforms.dimensions[1] = input.filterFrame?.height;
 
         this.uniforms.time = this.time;
 
@@ -79,10 +83,12 @@ class ReflectionFilter extends Filter {
      * @member {boolean}
      * @default true
      */
-    set mirror(value: boolean) {
+    set mirror(value: boolean)
+    {
         this.uniforms.mirror = value;
     }
-    get mirror(): boolean {
+    get mirror(): boolean
+    {
         return this.uniforms.mirror;
     }
 
@@ -93,10 +99,12 @@ class ReflectionFilter extends Filter {
      * @member {number}
      * @default 0.5
      */
-    set boundary(value: number) {
+    set boundary(value: number)
+    {
         this.uniforms.boundary = value;
     }
-    get boundary(): number {
+    get boundary(): number
+    {
         return this.uniforms.boundary;
     }
 
@@ -105,11 +113,13 @@ class ReflectionFilter extends Filter {
      * @member {number[]}
      * @default [0, 20]
      */
-    set amplitude(value: Range) {
+    set amplitude(value: Range)
+    {
         this.uniforms.amplitude[0] = value[0];
         this.uniforms.amplitude[1] = value[1];
     }
-    get amplitude(): Range {
+    get amplitude(): Range
+    {
         return this.uniforms.amplitude;
     }
 
@@ -118,11 +128,13 @@ class ReflectionFilter extends Filter {
      * @member {number[]}
      * @default [30, 100]
      */
-    set waveLength(value: Range) {
+    set waveLength(value: Range)
+    {
         this.uniforms.waveLength[0] = value[0];
         this.uniforms.waveLength[1] = value[1];
     }
-    get waveLength(): Range {
+    get waveLength(): Range
+    {
         return this.uniforms.waveLength;
     }
 
@@ -131,11 +143,13 @@ class ReflectionFilter extends Filter {
      * @member {number[]}
      * @default [1, 1]
      */
-    set alpha(value: Range) {
+    set alpha(value: Range)
+    {
         this.uniforms.alpha[0] = value[0];
         this.uniforms.alpha[1] = value[1];
     }
-    get alpha(): Range {
+    get alpha(): Range
+    {
         return this.uniforms.alpha;
     }
 }

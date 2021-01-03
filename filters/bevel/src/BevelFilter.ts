@@ -1,8 +1,8 @@
-import {vertex} from '@tools/fragments';
+import { vertex } from '@tools/fragments';
 import fragment from './bevel.frag';
-import {Filter} from '@pixi/core';
-import {DEG_TO_RAD} from '@pixi/math';
-import {rgb2hex, hex2rgb} from '@pixi/utils';
+import { Filter } from '@pixi/core';
+import { DEG_TO_RAD } from '@pixi/math';
+import { rgb2hex, hex2rgb } from '@pixi/utils';
 
 interface BevelFilterOptions {
     rotation: number,
@@ -23,11 +23,11 @@ interface BevelFilterOptions {
  * @see {@link https://www.npmjs.com/package/@pixi/filter-bevel|@pixi/filter-bevel}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class BevelFilter extends Filter {
-    
-    private _thickness: number = 2;
-    private _angle: number = 0;
-    
+class BevelFilter extends Filter
+{
+    private _thickness = 2;
+    private _angle = 0;
+
     /**
      * @param {object} [options] - The optional parameters of the filter.
      * @param {number} [options.rotation = 45] - The angle of the light in degrees.
@@ -37,7 +37,8 @@ class BevelFilter extends Filter {
      * @param {number} [options.shadowColor = 0x000000] - Color of the shadow.
      * @param {number} [options.shadowAlpha = 0.7] - Alpha of the shadow.
      */
-    constructor(options?: Partial<BevelFilterOptions>) {
+    constructor(options?: Partial<BevelFilterOptions>)
+    {
         super(vertex, fragment);
 
         this.uniforms.lightColor = new Float32Array(3);
@@ -62,7 +63,8 @@ class BevelFilter extends Filter {
      * Update the transform matrix of offset angle.
      * @private
      */
-    private _updateTransform() {
+    private _updateTransform()
+    {
         this.uniforms.transformX = this._thickness * Math.cos(this._angle);
         this.uniforms.transformY = this._thickness * Math.sin(this._angle);
     }
@@ -72,10 +74,12 @@ class BevelFilter extends Filter {
      * @member {number}
      * @default 45
      */
-    get rotation(): number {
+    get rotation(): number
+    {
         return this._angle / DEG_TO_RAD;
     }
-    set rotation(value: number) {
+    set rotation(value: number)
+    {
         this._angle = value * DEG_TO_RAD;
         this._updateTransform();
     }
@@ -85,10 +89,12 @@ class BevelFilter extends Filter {
      * @member {number}
      * @default 2
      */
-    get thickness(): number {
+    get thickness(): number
+    {
         return this._thickness;
     }
-    set thickness(value: number) {
+    set thickness(value: number)
+    {
         this._thickness = value;
         this._updateTransform();
     }
@@ -98,10 +104,12 @@ class BevelFilter extends Filter {
      * @member {number}
      * @default 0xffffff
      */
-    get lightColor(): number {
+    get lightColor(): number
+    {
         return rgb2hex(this.uniforms.lightColor);
     }
-    set lightColor(value: number) {
+    set lightColor(value: number)
+    {
         hex2rgb(value, this.uniforms.lightColor);
     }
 
@@ -110,10 +118,12 @@ class BevelFilter extends Filter {
      * @member {number}
      * @default 0.7
      */
-    get lightAlpha(): number {
+    get lightAlpha(): number
+    {
         return this.uniforms.lightAlpha;
     }
-    set lightAlpha(value: number) {
+    set lightAlpha(value: number)
+    {
         this.uniforms.lightAlpha = value;
     }
 
@@ -122,10 +132,12 @@ class BevelFilter extends Filter {
      * @member {number}
      * @default 0x000000
      */
-    get shadowColor(): number {
+    get shadowColor(): number
+    {
         return rgb2hex(this.uniforms.shadowColor);
     }
-    set shadowColor(value: number) {
+    set shadowColor(value: number)
+    {
         hex2rgb(value, this.uniforms.shadowColor);
     }
 
@@ -134,10 +146,12 @@ class BevelFilter extends Filter {
      * @member {number}
      * @default 0.7
      */
-    get shadowAlpha(): number {
+    get shadowAlpha(): number
+    {
         return this.uniforms.shadowAlpha;
     }
-    set shadowAlpha(value: number) {
+    set shadowAlpha(value: number)
+    {
         this.uniforms.shadowAlpha = value;
     }
 }

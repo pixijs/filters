@@ -1,9 +1,11 @@
-import {ExtractBrightnessFilter} from './ExtractBrightnessFilter';
-import {KawaseBlurFilter} from '@pixi/filter-kawase-blur';
-import {vertex} from '@tools/fragments';
+import { ExtractBrightnessFilter } from './ExtractBrightnessFilter';
+import { KawaseBlurFilter } from '@pixi/filter-kawase-blur';
+import { vertex } from '@tools/fragments';
 import fragment from './advanced-bloom.frag';
-import {Filter} from '@pixi/core';
-import {settings} from '@pixi/settings';
+import { Filter } from '@pixi/core';
+import { settings } from '@pixi/settings';
+import type { FilterSystem, FilterState, RenderTexture } from '@pixi/core';
+import type { CLEAR_MODES } from '@pixi/constants';
 
 interface AdvancedBloomFilterOptions {
     threshold: number,
@@ -39,15 +41,15 @@ interface AdvancedBloomFilterOptions {
  * @param {number|number[]|PIXI.Point} [options.pixelSize=1] - the pixelSize of the Blur filter.
  * @param {number} [options.resolution=PIXI.settings.FILTER_RESOLUTION] - The resolution of the Blur filter.
  */
-class AdvancedBloomFilter extends Filter {
-
+class AdvancedBloomFilter extends Filter
+{
     /**
      * To adjust the strength of the bloom. Higher values is more intense brightness.
      *
      * @member {number}
      * @default 1.0
      */
-    public bloomScale: number = 1;
+    public bloomScale = 1;
 
     /**
      * The brightness, lower value is more subtle brightness, higher value is blown-out.
@@ -55,17 +57,18 @@ class AdvancedBloomFilter extends Filter {
      * @member {number}
      * @default 1.0
      */
-    public brightness: number = 1;
+    public brightness = 1;
 
     private _extractFilter: ExtractBrightnessFilter;
     private _blurFilter: KawaseBlurFilter;
     private _resolution: number = settings.FILTER_RESOLUTION;
 
-    constructor(options?: Partial<AdvancedBloomFilterOptions>) {
-
+    constructor(options?: Partial<AdvancedBloomFilterOptions>)
+    {
         super(vertex, fragment);
 
-        if (typeof options === 'number') {
+        if (typeof options === 'number')
+        {
             options = { threshold: options };
         }
 
@@ -87,9 +90,9 @@ class AdvancedBloomFilter extends Filter {
 
         this._extractFilter = new ExtractBrightnessFilter(opt.threshold);
         this._extractFilter.resolution = resolution;
-        this._blurFilter = kernels ?
-            new KawaseBlurFilter(kernels) :
-            new KawaseBlurFilter(blur, quality);
+        this._blurFilter = kernels
+            ? new KawaseBlurFilter(kernels)
+            : new KawaseBlurFilter(blur, quality);
         this.pixelSize = pixelSize;
         this.resolution = resolution;
     }
@@ -98,8 +101,8 @@ class AdvancedBloomFilter extends Filter {
      * Override existing apply method in PIXI.Filter
      * @private
      */
-    apply(filterManager, input, output, clear, currentState) {
-
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES, currentState?: FilterState): void
+    {
         const brightTarget = filterManager.getFilterTexture();
 
         this._extractFilter.apply(filterManager, input, brightTarget, 1, currentState);
@@ -123,16 +126,20 @@ class AdvancedBloomFilter extends Filter {
      *
      * @member {number}
      */
-    get resolution(): number {
+    get resolution(): number
+    {
         return this._resolution;
     }
-    set resolution(value) {
+    set resolution(value)
+    {
         this._resolution = value;
 
-        if (this._extractFilter) {
+        if (this._extractFilter)
+        {
             this._extractFilter.resolution = value;
         }
-        if (this._blurFilter) {
+        if (this._blurFilter)
+        {
             this._blurFilter.resolution = value;
         }
     }
@@ -143,10 +150,12 @@ class AdvancedBloomFilter extends Filter {
      * @member {number}
      * @default 0.5
      */
-    get threshold(): number {
+    get threshold(): number
+    {
         return this._extractFilter.threshold;
     }
-    set threshold(value: number) {
+    set threshold(value: number)
+    {
         this._extractFilter.threshold = value;
     }
 
@@ -156,10 +165,12 @@ class AdvancedBloomFilter extends Filter {
      * @member {number}
      * @default 4
      */
-    get kernels(): number {
+    get kernels(): number
+    {
         return this._blurFilter.kernels;
     }
-    set kernels(value: number) {
+    set kernels(value: number)
+    {
         this._blurFilter.kernels = value;
     }
 
@@ -169,10 +180,12 @@ class AdvancedBloomFilter extends Filter {
      * @member {number}
      * @default 2
      */
-    get blur(): number {
+    get blur(): number
+    {
         return this._blurFilter.blur;
     }
-    set blur(value: number) {
+    set blur(value: number)
+    {
         this._blurFilter.blur = value;
     }
 
@@ -182,10 +195,12 @@ class AdvancedBloomFilter extends Filter {
      * @member {number}
      * @default 4
      */
-    get quality(): number {
+    get quality(): number
+    {
         return this._blurFilter.quality;
     }
-    set quality(value: number) {
+    set quality(value: number)
+    {
         this._blurFilter.quality = value;
     }
 
@@ -195,10 +210,12 @@ class AdvancedBloomFilter extends Filter {
      * @member {number|number[]|PIXI.Point}
      * @default 1
      */
-    get pixelSize(): number {
+    get pixelSize(): number
+    {
         return this._blurFilter.pixelSize;
     }
-    set pixelSize(value: number) {
+    set pixelSize(value: number)
+    {
         this._blurFilter.pixelSize = value;
     }
 }
