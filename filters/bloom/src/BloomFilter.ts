@@ -68,7 +68,7 @@ class BloomFilter extends Filter
         // TODO - copyTexSubImage2D could be used here?
         this.defaultFilter.apply(filterManager, input, output, clear);
 
-        this.blurXFilter.apply(filterManager, input, renderTarget);
+        this.blurXFilter.apply(filterManager, input, renderTarget, 1);
         this.blurYFilter.apply(filterManager, renderTarget, output, 0);
 
         filterManager.returnFilterTexture(renderTarget);
