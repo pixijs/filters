@@ -16,7 +16,7 @@
         "paths": {
             "@pixi/filter-*": [
                 "filters/*/src",
-                "node_modules/@pixi/*"
+                "node_modules/@pixi/filter-*"
             ]
         },
         "outDir": "./out",

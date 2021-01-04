@@ -42,7 +42,7 @@ async function main() {
         // Get settings from package JSON
         let { main, module, bundle, globals } = pkg.toJSON();
         const basePath = path.relative(__dirname, pkg.location);
-        const input = path.join(basePath, 'src/index.js');
+        const input = path.join(basePath, 'src/index.ts');
         const freeze = false;
 
         results.push({
