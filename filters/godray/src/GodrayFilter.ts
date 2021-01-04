@@ -61,7 +61,7 @@ class GodrayFilter extends Filter
     public time = 0;
 
     private _angleLight: Point;
-    private _angle: number = 0;
+    private _angle = 0;
 
     /**
      * @param {object} [options] Filter options
