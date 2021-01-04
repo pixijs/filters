@@ -23,8 +23,8 @@
             "outputSourceFiles": true
         },
         "applicationName": "PixiJS Filters",
-        "footer": "Made with ♥ by Goodboy Digital (goodboydigital.com)",
-        "copyright": "PixiJS Copyright © 2013-2017 Mat Groves.",
+        "footer": "Made with ♥ by PixiJS (pixijs.com)",
+        "copyright": "PixiJS Copyright © 2013-2020 PixiJS.",
         "googleAnalytics": "UA-103772589-3",
         "meta": {
             "title": "PixiJS Filters Documentation",
