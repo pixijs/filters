@@ -52,15 +52,15 @@ class GlowFilter extends Filter
      */
     constructor(options?: Partial<GlowFilterOptions>)
     {
-        let {
-            distance,
+        const opts: GlowFilterOptions = Object.assign({}, GlowFilter.defaults, options);
+        const {
             outerStrength,
             innerStrength,
             color,
             knockout,
-            quality } = Object.assign({}, GlowFilter.defaults, options);
+            quality } = opts;
 
-        distance = Math.round(distance);
+        const distance = Math.round(opts.distance);
 
         super(vertex, fragment
             .replace(/__ANGLE_STEP_SIZE__/gi, `${(1 / quality / distance).toFixed(7)}`)

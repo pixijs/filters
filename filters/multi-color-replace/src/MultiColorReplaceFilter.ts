@@ -41,13 +41,14 @@ class MultiColorReplaceFilter extends Filter
     private _maxColors = 0;
 
     /**
-     * @param {Array<Array>} replacements - The collection of replacement items. Each item is color-pair (an array length is 2).
-     *                       In the pair, the first value is original color , the second value is target color.
+     * @param {Array<Array>} replacements - The collection of replacement items. Each item is color-pair
+     *        (an array length is 2). In the pair, the first value is original color , the second value
+     *        is target color.
      * @param {number} [epsilon=0.05] - Tolerance of the floating-point comparison between colors
-     *                                  (lower = more exact, higher = more inclusive)
+     *        (lower = more exact, higher = more inclusive)
      * @param {number} [maxColors] - The maximum number of replacements filter is able to use. Because the
-     *                               fragment is only compiled once, this cannot be changed after construction.
-     *                               If omitted, the default value is the length of `replacements`.
+     *        fragment is only compiled once, this cannot be changed after construction.
+     *        If omitted, the default value is the length of `replacements`.
      */
     constructor(replacements: Array<[Color, Color]>, epsilon = 0.05, maxColors: number = replacements.length)
     {
@@ -65,7 +66,7 @@ class MultiColorReplaceFilter extends Filter
      *
      * @member {Array<Array>}
      */
-    set replacements(replacements)
+    set replacements(replacements: Array<[Color, Color]>)
     {
         const originals = this.uniforms.originalColors;
         const targets = this.uniforms.targetColors;
@@ -73,7 +74,7 @@ class MultiColorReplaceFilter extends Filter
 
         if (colorCount > this._maxColors)
         {
-            throw `Length of replacements (${colorCount}) exceeds the maximum colors length (${this._maxColors})`;
+            throw new Error(`Length of replacements (${colorCount}) exceeds the maximum colors length (${this._maxColors})`);
         }
 
         // Fill with negative values
@@ -118,7 +119,7 @@ class MultiColorReplaceFilter extends Filter
 
         this._replacements = replacements;
     }
-    get replacements()
+    get replacements(): Array<[Color, Color]>
     {
         return this._replacements;
     }
@@ -127,7 +128,7 @@ class MultiColorReplaceFilter extends Filter
      * Should be called after changing any of the contents of the replacements.
      * This is a convenience method for resetting the `replacements`.
      */
-    refresh()
+    refresh(): void
     {
         this.replacements = this._replacements;
     }
@@ -139,7 +140,7 @@ class MultiColorReplaceFilter extends Filter
      * @member {number}
      * @readonly
      */
-    get maxColors()
+    get maxColors(): number
     {
         return this._maxColors;
     }
@@ -150,11 +151,11 @@ class MultiColorReplaceFilter extends Filter
      * @member {number}
      * @default 0.05
      */
-    set epsilon(value)
+    set epsilon(value: number)
     {
         this.uniforms.epsilon = value;
     }
-    get epsilon()
+    get epsilon(): number
     {
         return this.uniforms.epsilon;
     }

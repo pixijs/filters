@@ -34,8 +34,10 @@ interface AdvancedBloomFilterOptions {
  * @param {object|number} [options] - The optional parameters of advanced bloom filter.
  *                        When options is a number , it will be `options.threshold`.
  * @param {number} [options.threshold=0.5] - Defines how bright a color needs to be to affect bloom.
- * @param {number} [options.bloomScale=1.0] - To adjust the strength of the bloom. Higher values is more intense brightness.
- * @param {number} [options.brightness=1.0] - The brightness, lower value is more subtle brightness, higher value is blown-out.
+ * @param {number} [options.bloomScale=1.0] - To adjust the strength of the bloom. Higher values is
+ *        more intense brightness.
+ * @param {number} [options.brightness=1.0] - The brightness, lower value is more subtle brightness,
+ *        higher value is blown-out.
  * @param {number} [options.blur=8] - Sets the strength of the Blur properties simultaneously
  * @param {number} [options.quality=4] - The quality of the Blur filter.
  * @param {number[]} [options.kernels=null] - The kernels of the Blur filter.
@@ -102,7 +104,12 @@ class AdvancedBloomFilter extends Filter
      * Override existing apply method in PIXI.Filter
      * @private
      */
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES, currentState?: FilterState): void
+    apply(
+        filterManager: FilterSystem,
+        input: RenderTexture,
+        output: RenderTexture,
+        clear: CLEAR_MODES,
+        currentState?: FilterState): void
     {
         const brightTarget = filterManager.getFilterTexture();
 
@@ -131,7 +138,7 @@ class AdvancedBloomFilter extends Filter
     {
         return this._resolution;
     }
-    set resolution(value)
+    set resolution(value: number)
     {
         this._resolution = value;
 

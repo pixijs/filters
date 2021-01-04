@@ -34,7 +34,8 @@ class ColorMapFilter extends Filter
     private _colorMap: Texture | null = null;
 
     /**
-     * @param {HTMLImageElement|HTMLCanvasElement|PIXI.BaseTexture|PIXI.Texture} [colorMap] - The colorMap texture of the filter.
+     * @param {HTMLImageElement|HTMLCanvasElement|PIXI.BaseTexture|PIXI.Texture} [colorMap] - The
+     *        colorMap texture of the filter.
      * @param {boolean} [nearest=false] - Whether use NEAREST for colorMap texture.
      * @param {number} [mix=1] - The mix from 0 to 1, where 0 is the original image and 1 is the color mapped image.
      */
@@ -139,7 +140,7 @@ class ColorMapFilter extends Filter
      * If the colorMap is based on canvas , and the content of canvas has changed,
      *   then call `updateColorMap` for update texture.
      */
-    updateColorMap()
+    updateColorMap(): void
     {
         const texture = this._colorMap;
 
@@ -157,7 +158,7 @@ class ColorMapFilter extends Filter
      *
      * @param {boolean} [destroyBase=false] Whether to destroy the base texture of colorMap as well
      */
-    destroy(destroyBase = false)
+    destroy(destroyBase = false): void
     {
         if (this._colorMap)
         {

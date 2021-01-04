@@ -80,30 +80,6 @@ class GodrayFilter extends Filter
 
         this.uniforms.dimensions = new Float32Array(2);
 
-        // Fallback support for ctor: (angle, gain, lacunarity, time)
-        if (typeof options === 'number')
-        {
-            // eslint-disable-next-line no-console
-            console.warn('GodrayFilter now uses options instead of (angle, gain, lacunarity, time)');
-            options = { angle: options };
-            if (arguments[1] !== undefined)
-            {
-                options.gain = arguments[1];
-            }
-            if (arguments[2] !== undefined)
-            {
-                options.lacunarity = arguments[2];
-            }
-            if (arguments[3] !== undefined)
-            {
-                options.time = arguments[3];
-            }
-            if (arguments[4] !== undefined)
-            {
-                options.alpha = arguments[4];
-            }
-        }
-
         const opts: GodrayFilterOptions = Object.assign({
             angle: 30,
             gain: 0.5,

@@ -248,7 +248,7 @@ class GlitchFilter extends Filter
             for (let i = 0; i < last; i++)
             {
                 const averageWidth = rest / (count - i);
-                const w =  Math.max(averageWidth * (1 - Math.random() * 0.6), min);
+                const w =  Math.max(averageWidth * (1 - (Math.random() * 0.6)), min);
 
                 arr[i] = w;
                 rest -= w;
@@ -276,7 +276,7 @@ class GlitchFilter extends Filter
     /**
      * Shuffle the sizes of the slices, advanced usage.
      */
-    shuffle()
+    shuffle(): void
     {
         const arr = this._sizes;
         const last = this._slices - 1;
@@ -297,7 +297,7 @@ class GlitchFilter extends Filter
      *
      * @private
      */
-    private _randomizeOffsets()
+    private _randomizeOffsets(): void
     {
         for (let i = 0; i < this._slices; i++)
         {
@@ -308,7 +308,7 @@ class GlitchFilter extends Filter
     /**
      * Regenerating random size, offsets for slices.
      */
-    refresh()
+    refresh(): void
     {
         this._randomizeSizes();
         this._randomizeOffsets();
@@ -318,7 +318,7 @@ class GlitchFilter extends Filter
     /**
      * Redraw displacement bitmap texture, advanced usage.
      */
-    redraw()
+    redraw(): void
     {
         const size = this.sampleSize;
         const texture = this.texture;
@@ -475,7 +475,7 @@ class GlitchFilter extends Filter
     /**
      * Removes all references
      */
-    destroy()
+    destroy(): void
     {
         this.texture?.destroy(true);
         this.texture

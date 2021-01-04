@@ -5,7 +5,8 @@ import { Point } from '@pixi/math';
 
 /**
  * @author Vico @vicocotea
- * original filter https://github.com/evanw/glfx.js/blob/master/src/filters/blur/tiltshift.js by Evan Wallace : http://madebyevan.com/
+ * original filter https://github.com/evanw/glfx.js/blob/master/src/filters/blur/tiltshift.js
+ * by Evan Wallace : http://madebyevan.com/
  */
 
 /**
@@ -35,7 +36,7 @@ class TiltShiftAxisFilter extends Filter
      * This is overridden in the X and Y filters, does nothing for this class.
      *
      */
-    protected updateDelta()
+    protected updateDelta(): void
     {
         this.uniforms.delta.x = 0;
         this.uniforms.delta.y = 0;

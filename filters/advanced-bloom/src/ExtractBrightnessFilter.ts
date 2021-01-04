@@ -25,11 +25,11 @@ class ExtractBrightnessFilter extends Filter
      * @member {number}
      * @default 0.5
      */
-    get threshold()
+    get threshold(): number
     {
         return this.uniforms.threshold;
     }
-    set threshold(value)
+    set threshold(value: number)
     {
         this.uniforms.threshold = value;
     }

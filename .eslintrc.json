@@ -1,5 +1,9 @@
 {
   "extends": [
     "@pixi/eslint-config"
-  ]
+  ],
+  "rules": {
+    "no-duplicate-imports": "off",
+    "@typescript-eslint/no-duplicate-imports": ["error"]
+  }
 }

@@ -103,12 +103,12 @@ class OldFilmFilter extends Filter
      * @member {number}
      * @default 0
      */
-    set sepia(value)
+    set sepia(value: number)
     {
         this.uniforms.sepia = value;
     }
 
-    get sepia()
+    get sepia(): number
     {
         return this.uniforms.sepia;
     }
@@ -119,12 +119,12 @@ class OldFilmFilter extends Filter
      * @member {number}
      * @default 0
      */
-    set noise(value)
+    set noise(value: number)
     {
         this.uniforms.noise = value;
     }
 
-    get noise()
+    get noise(): number
     {
         return this.uniforms.noise;
     }
@@ -135,12 +135,12 @@ class OldFilmFilter extends Filter
      * @member {number}
      * @default 0
      */
-    set noiseSize(value)
+    set noiseSize(value: number)
     {
         this.uniforms.noiseSize = value;
     }
 
-    get noiseSize()
+    get noiseSize(): number
     {
         return this.uniforms.noiseSize;
     }
@@ -151,12 +151,12 @@ class OldFilmFilter extends Filter
      * @member {number}
      * @default 0
      */
-    set scratch(value)
+    set scratch(value: number)
     {
         this.uniforms.scratch = value;
     }
 
-    get scratch()
+    get scratch(): number
     {
         return this.uniforms.scratch;
     }
@@ -167,12 +167,12 @@ class OldFilmFilter extends Filter
      * @member {number}
      * @default 0
      */
-    set scratchDensity(value)
+    set scratchDensity(value: number)
     {
         this.uniforms.scratchDensity = value;
     }
 
-    get scratchDensity()
+    get scratchDensity(): number
     {
         return this.uniforms.scratchDensity;
     }
@@ -183,12 +183,12 @@ class OldFilmFilter extends Filter
      * @member {number}
      * @default 0
      */
-    set scratchWidth(value)
+    set scratchWidth(value: number)
     {
         this.uniforms.scratchWidth = value;
     }
 
-    get scratchWidth()
+    get scratchWidth(): number
     {
         return this.uniforms.scratchWidth;
     }
@@ -200,12 +200,12 @@ class OldFilmFilter extends Filter
      * @member {number}
      * @default 0
      */
-    set vignetting(value)
+    set vignetting(value: number)
     {
         this.uniforms.vignetting = value;
     }
 
-    get vignetting()
+    get vignetting(): number
     {
         return this.uniforms.vignetting;
     }
@@ -216,12 +216,12 @@ class OldFilmFilter extends Filter
      * @member {number}
      * @default 0
      */
-    set vignettingAlpha(value)
+    set vignettingAlpha(value: number)
     {
         this.uniforms.vignettingAlpha = value;
     }
 
-    get vignettingAlpha()
+    get vignettingAlpha(): number
     {
         return this.uniforms.vignettingAlpha;
     }
@@ -232,12 +232,12 @@ class OldFilmFilter extends Filter
      * @member {number}
      * @default 0
      */
-    set vignettingBlur(value)
+    set vignettingBlur(value: number)
     {
         this.uniforms.vignettingBlur = value;
     }
 
-    get vignettingBlur()
+    get vignettingBlur(): number
     {
         return this.uniforms.vignettingBlur;
     }
