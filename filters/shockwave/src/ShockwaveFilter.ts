@@ -36,7 +36,7 @@ class ShockwaveFilter extends Filter
     public time: number;
 
     /**
-     * @param {PIXI.Point|number[]} [center=[0.5, 0.5]] See `center` property.
+     * @param {PIXI.Point|number[]} [center=[0.5, 0.5]] - See `center` property.
      * @param {object} [options] - The optional parameters of shockwave filter.
      * @param {number} [options.amplitude=0.5] - See `amplitude`` property.
      * @param {number} [options.wavelength=1.0] - See `wavelength` property.
@@ -61,11 +61,9 @@ class ShockwaveFilter extends Filter
 
     apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES): void
     {
-        /**
-         * There is no set/get of `time`, for performance.
-         * Because in the most real cases, `time` will be changed in ever game tick.
-         * Use set/get will take more function-call.
-         */
+        // There is no set/get of `time`, for performance.
+        // Because in the most real cases, `time` will be changed in ever game tick.
+        // Use set/get will take more function-call.
         this.uniforms.time = this.time;
 
         filterManager.applyFilter(this, input, output, clear);

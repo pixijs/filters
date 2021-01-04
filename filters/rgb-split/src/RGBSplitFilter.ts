@@ -18,9 +18,9 @@ type Offset = [number, number] | Point;
 class RGBSplitFilter extends Filter
 {
     /**
-     * @param {PIXI.Point | number[]} [red=[-10,0]] Red channel offset
-     * @param {PIXI.Point | number[]} [green=[0, 10]] Green channel offset
-     * @param {PIXI.Point | number[]} [blue=[0, 0]] Blue channel offset
+     * @param {PIXI.Point | number[]} [red=[-10,0]] - Red channel offset
+     * @param {PIXI.Point | number[]} [green=[0, 10]] - Green channel offset
+     * @param {PIXI.Point | number[]} [blue=[0, 0]] - Blue channel offset
      */
     constructor(red: Offset = [-10, 0], green: Offset = [0, 10], blue: Offset = [0, 0])
     {

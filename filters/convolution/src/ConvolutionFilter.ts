@@ -19,10 +19,10 @@ import { Filter } from '@pixi/core';
 class ConvolutionFilter extends Filter
 {
     /**
-     * @param {number[]} [matrix=[0,0,0,0,0,0,0,0,0]] An array of values used for matrix transformation.
+     * @param {number[]} [matrix=[0,0,0,0,0,0,0,0,0]] - An array of values used for matrix transformation.
      *        Specified as a 9 point Array.
-     * @param {number} [width=200] Width of the object you are transforming
-     * @param {number} [height=200] Height of the object you are transforming
+     * @param {number} [width=200] - Width of the object you are transforming
+     * @param {number} [height=200] - Height of the object you are transforming
      */
     constructor(matrix: number[], width = 200, height = 200)
     {

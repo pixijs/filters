@@ -13,11 +13,9 @@ interface BulgePinchFilterOptions {
     strength: number;
 }
 
-/**
- * @author Julien CLEREL @JuloxRox
- * original filter https://github.com/evanw/glfx.js/blob/master/src/filters/warp/bulgepinch.js
- * by Evan Wallace : http://madebyevan.com/
- */
+// @author Julien CLEREL @JuloxRox
+// original filter https://github.com/evanw/glfx.js/blob/master/src/filters/warp/bulgepinch.js
+// by Evan Wallace : http://madebyevan.com/
 
 /**
  * Bulges or pinches the image in a circle.<br>
@@ -32,11 +30,11 @@ interface BulgePinchFilterOptions {
 class BulgePinchFilter extends Filter
 {
     /**
-     * @param {object} [options] Options to use for filter.
-     * @param {PIXI.Point|Array<number>} [options.center=[0,0]] The x and y coordinates of the center
+     * @param {object} [options] - Options to use for filter.
+     * @param {PIXI.Point|Array<number>} [options.center=[0,0]] - The x and y coordinates of the center
      *        of the circle of effect.
-     * @param {number} [options.radius=100] The radius of the circle of effect.
-     * @param {number} [options.strength=1] -1 to 1 (-1 is strong pinch, 0 is no effect, 1 is strong bulge)
+     * @param {number} [options.radius=100] - The radius of the circle of effect.
+     * @param {number} [options.strength=1] - -1 to 1 (-1 is strong pinch, 0 is no effect, 1 is strong bulge)
      */
     constructor(options?: Partial<BulgePinchFilterOptions>)
     {

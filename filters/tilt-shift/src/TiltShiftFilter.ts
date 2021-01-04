@@ -4,11 +4,9 @@ import { Filter, FilterSystem, RenderTexture } from '@pixi/core';
 import type { Point } from '@pixi/math';
 import type { CLEAR_MODES } from '@pixi/constants';
 
-/**
- * @author Vico @vicocotea
- * original filter https://github.com/evanw/glfx.js/blob/master/src/filters/blur/tiltshift.js
- * by Evan Wallace : http://madebyevan.com/
- */
+// @author Vico @vicocotea
+// original filter https://github.com/evanw/glfx.js/blob/master/src/filters/blur/tiltshift.js
+// by Evan Wallace : http://madebyevan.com/
 
 /**
  * A TiltShift Filter. Manages the pass of both a TiltShiftXFilter and TiltShiftYFilter.<br>
@@ -26,10 +24,10 @@ class TiltShiftFilter extends Filter
     private tiltShiftYFilter: TiltShiftYFilter;
 
     /**
-     * @param {number} [blur=100] The strength of the blur.
-     * @param {number} [gradientBlur=600] The strength of the gradient blur.
-     * @param {PIXI.Point} [start=null] The Y value to start the effect at.
-     * @param {PIXI.Point} [end=null] The Y value to end the effect at.
+     * @param {number} [blur=100] - The strength of the blur.
+     * @param {number} [gradientBlur=600] - The strength of the gradient blur.
+     * @param {PIXI.Point} [start=null] - The Y value to start the effect at.
+     * @param {PIXI.Point} [end=null] - The Y value to end the effect at.
      */
     constructor(blur = 100, gradientBlur = 600, start?: Point, end?: Point)
     {

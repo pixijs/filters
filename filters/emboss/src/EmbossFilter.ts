@@ -15,7 +15,7 @@ import { Filter } from '@pixi/core';
 class EmbossFilter extends Filter
 {
     /**
-     * @param {number} [strength=5] Strength of the emboss.
+     * @param {number} [strength=5] - Strength of the emboss.
      */
     constructor(strength = 5)
     {

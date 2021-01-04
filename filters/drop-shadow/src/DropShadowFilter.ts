@@ -57,12 +57,12 @@ class DropShadowFilter extends Filter
     private _blurFilter: KawaseBlurFilter;
 
     /**
-     * @param {object} [options] Filter options
-     * @param {number} [options.rotation=45] The angle of the shadow in degrees.
-     * @param {number} [options.distance=5] Distance of shadow
-     * @param {number} [options.color=0x000000] Color of the shadow
-     * @param {number} [options.alpha=0.5] Alpha of the shadow
-     * @param {boolean} [options.shadowOnly=false] Whether render shadow only
+     * @param {object} [options] - Filter options
+     * @param {number} [options.rotation=45] - The angle of the shadow in degrees.
+     * @param {number} [options.distance=5] - Distance of shadow
+     * @param {number} [options.color=0x000000] - Color of the shadow
+     * @param {number} [options.alpha=0.5] - Alpha of the shadow
+     * @param {boolean} [options.shadowOnly=false] - Whether render shadow only
      * @param {number} [options.blur=2] - Sets the strength of the Blur properties simultaneously
      * @param {number} [options.quality=3] - The quality of the Blur filter.
      * @param {number[]} [options.kernels=null] - The kernels of the Blur filter.

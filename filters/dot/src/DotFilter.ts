@@ -2,10 +2,8 @@ import { vertex } from '@tools/fragments';
 import fragment from './dot.frag';
 import { Filter } from '@pixi/core';
 
-/**
- * @author Mat Groves http://matgroves.com/ @Doormat23
- * original filter: https://github.com/evanw/glfx.js/blob/master/src/filters/fun/dotscreen.js
- */
+// @author Mat Groves http://matgroves.com/ @Doormat23
+// original filter: https://github.com/evanw/glfx.js/blob/master/src/filters/fun/dotscreen.js
 
 /**
  * This filter applies a dotscreen effect making display objects appear to be made out of
@@ -21,8 +19,8 @@ import { Filter } from '@pixi/core';
 class DotFilter extends Filter
 {
     /**
-     * @param {number} [scale=1] The scale of the effect.
-     * @param {number} [angle=5] The radius of the effect.
+     * @param {number} [scale=1] - The scale of the effect.
+     * @param {number} [angle=5] - The radius of the effect.
      */
     constructor(scale = 1, angle = 5)
     {

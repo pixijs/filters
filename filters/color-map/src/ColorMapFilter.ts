@@ -156,7 +156,7 @@ class ColorMapFilter extends Filter
     /**
      * Destroys this filter
      *
-     * @param {boolean} [destroyBase=false] Whether to destroy the base texture of colorMap as well
+     * @param {boolean} [destroyBase=false] - Whether to destroy the base texture of colorMap as well
      */
     destroy(destroyBase = false): void
     {

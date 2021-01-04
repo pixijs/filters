@@ -42,9 +42,9 @@ class OutlineFilter extends Filter
     private _thickness = 1;
 
     /**
-     * @param {number} [thickness=1] The tickness of the outline. Make it 2 times more for resolution 2
-     * @param {number} [color=0x000000] The color of the outline.
-     * @param {number} [quality=0.1] The quality of the outline from `0` to `1`, using a higher quality
+     * @param {number} [thickness=1] - The tickness of the outline. Make it 2 times more for resolution 2
+     * @param {number} [color=0x000000] - The color of the outline.
+     * @param {number} [quality=0.1] - The quality of the outline from `0` to `1`, using a higher quality
      *        setting will result in slower performance and more accuracy.
      */
     constructor(thickness = 1, color = 0x000000, quality = 0.1)

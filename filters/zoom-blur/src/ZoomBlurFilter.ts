@@ -26,19 +26,18 @@ interface ZoomBlurFilterOptions {
 class ZoomBlurFilter extends Filter
 {
     /**
-     * @param {object} [options] Filter options to use.
-     * @param {number} [options.strength=0.1] Sets the strength of the zoom blur effect
-     * @param {PIXI.Point|number[]} [options.center=[0,0]] The center of the zoom.
-     * @param {number} [options.innerRadius=0] The inner radius of zoom. The part in inner circle won't apply
+     * @param {object} [options] - Filter options to use.
+     * @param {number} [options.strength=0.1] - Sets the strength of the zoom blur effect
+     * @param {PIXI.Point|number[]} [options.center=[0,0]] - The center of the zoom.
+     * @param {number} [options.innerRadius=0] - The inner radius of zoom. The part in inner circle won't apply
      *        zoom blur effect.
-     * @param {number} [options.radius=-1] See `radius` property.
-     * @param {number} [options.maxKernelSize=32] On older iOS devices, it's better to not go above `13.0`.
+     * @param {number} [options.radius=-1] - See `radius` property.
+     * @param {number} [options.maxKernelSize=32] - On older iOS devices, it's better to not go above `13.0`.
      *        Decreasing this value will produce a lower-quality blur effect with more dithering.
      */
     constructor(options?: Partial<ZoomBlurFilterOptions>)
     {
-        // Apply default values
-        const { maxKernelSize, ...rest } = Object.assign({
+        const opts: ZoomBlurFilterOptions = Object.assign({
             strength: 0.1,
             center: [0, 0],
             innerRadius: 0,
@@ -46,9 +45,9 @@ class ZoomBlurFilter extends Filter
             maxKernelSize: 32,
         }, options);
 
-        super(vertex, fragment.replace('${maxKernelSize}', maxKernelSize.toFixed(1)));
+        super(vertex, fragment.replace('${maxKernelSize}', opts.maxKernelSize.toFixed(1)));
 
-        Object.assign(this, rest);
+        Object.assign(this, opts);
     }
 
     /**

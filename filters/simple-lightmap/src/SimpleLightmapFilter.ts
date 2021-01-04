@@ -31,9 +31,9 @@ class SimpleLightmapFilter extends Filter
     private _color = 0x0;
 
     /**
-     * @param {PIXI.Texture} texture a texture where your lightmap is rendered
-     * @param {Array<number>|number} [color=0x000000] An RGBA array of the ambient color
-     * @param {number} [alpha=1] Default alpha set independent of color (if it's a number, not array).
+     * @param {PIXI.Texture} texture - a texture where your lightmap is rendered
+     * @param {Array<number>|number} [color=0x000000] - An RGBA array of the ambient color
+     * @param {number} [alpha=1] - Default alpha set independent of color (if it's a number, not array).
      */
     constructor(texture: Texture, color: Color = 0x000000, alpha = 1)
     {

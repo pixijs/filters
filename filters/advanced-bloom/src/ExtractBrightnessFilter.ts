@@ -10,7 +10,7 @@ import { Filter } from '@pixi/core';
 class ExtractBrightnessFilter extends Filter
 {
     /**
-     * @param {number} [threshold] Defines how bright a color needs to be extracted.
+     * @param {number} [threshold] - Defines how bright a color needs to be extracted.
      */
     constructor(threshold = 0.5)
     {

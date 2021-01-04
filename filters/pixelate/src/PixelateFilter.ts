@@ -18,7 +18,7 @@ type Size = number | number[] | Point;
 class PixelateFilter extends Filter
 {
     /**
-     * @param {PIXI.Point|Array<number>|number} [size=10] Either the width/height of the size of the pixels, or square size
+     * @param {PIXI.Point|Array<number>|number} [size=10] - Either the width/height of the size of the pixels, or square size
      */
     constructor(size: Size = 10)
     {

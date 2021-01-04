@@ -64,15 +64,15 @@ class GodrayFilter extends Filter
     private _angle = 0;
 
     /**
-     * @param {object} [options] Filter options
-     * @param {number} [options.angle=30] Angle/Light-source of the rays.
-     * @param {number} [options.gain=0.5] General intensity of the effect.
-     * @param {number} [options.lacunarity=2.5] The density of the fractal noise.
-     * @param {boolean} [options.parallel=true] `true` to use `angle`, `false` to use `center`
-     * @param {number} [options.time=0] The current time position.
-     * @param {PIXI.Point|number[]} [options.center=[0,0]] Focal point for non-parallel rays,
+     * @param {object} [options] - Filter options
+     * @param {number} [options.angle=30] - Angle/Light-source of the rays.
+     * @param {number} [options.gain=0.5] - General intensity of the effect.
+     * @param {number} [options.lacunarity=2.5] - The density of the fractal noise.
+     * @param {boolean} [options.parallel=true] - `true` to use `angle`, `false` to use `center`
+     * @param {number} [options.time=0] - The current time position.
+     * @param {PIXI.Point|number[]} [options.center=[0,0]] - Focal point for non-parallel rays,
      *        to use this `parallel` must be set to `false`.
- * @param {number} [options.alpha=1.0] the alpha, defaults to 1, affects transparency of rays
+ * @param {number} [options.alpha=1.0] - the alpha, defaults to 1, affects transparency of rays
      */
     constructor(options?: Partial<GodrayFilterOptions>)
     {

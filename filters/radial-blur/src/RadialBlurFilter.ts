@@ -29,8 +29,8 @@ class RadialBlurFilter extends Filter
     public kernelSize: number;
 
     /**
-     * @param {number} [angle=0] Sets the angle of the motion for blur effect.
-     * @param {PIXI.Point|number[]} [center=[0,0]] The center of the radial.
+     * @param {number} [angle=0] - Sets the angle of the motion for blur effect.
+     * @param {PIXI.Point|number[]} [center=[0,0]] - The center of the radial.
      * @param {number} [kernelSize=5] - The kernelSize of the blur filter. Must be odd number >= 3
      * @param {number} [radius=-1] - The maximum size of the blur radius, `-1` is infinite
      */

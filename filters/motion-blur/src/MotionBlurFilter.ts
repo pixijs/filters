@@ -29,7 +29,7 @@ class MotionBlurFilter extends Filter
     private _velocity: IPoint;
 
     /**
-     * @param {PIXI.ObservablePoint|PIXI.Point|number[]} [velocity=[0, 0]] Sets the velocity of the motion for blur effect.
+     * @param {PIXI.ObservablePoint|PIXI.Point|number[]} [velocity=[0, 0]] - Sets the velocity of the motion for blur effect.
      * @param {number} [kernelSize=5] - The kernelSize of the blur filter. Must be odd number >= 5
      * @param {number} [offset=0] - The offset of the blur filter.
      */

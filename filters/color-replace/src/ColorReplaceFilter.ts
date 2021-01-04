@@ -39,11 +39,11 @@ class ColorReplaceFilter extends Filter
     private _newColor = 0x0;
 
     /**
-     * @param {number|Array<number>|Float32Array} [originalColor=0xFF0000] The color that will be changed,
-     *        as a 3 component RGB e.g. [1.0, 1.0, 1.0]
-     * @param {number|Array<number>|Float32Array} [newColor=0x000000] The resulting color, as a 3 component
-     *        RGB e.g. [1.0, 0.5, 1.0]
-     * @param {number} [epsilon=0.4] Tolerance/sensitivity of the floating-point comparison between colors
+     * @param {number|Array<number>|Float32Array} [originalColor=0xFF0000] - The color that will be changed,
+     *        as a 3 component RGB e.g. `[1.0, 1.0, 1.0]`
+     * @param {number|Array<number>|Float32Array} [newColor=0x000000] - The resulting color, as a 3 component
+     *        RGB e.g. `[1.0, 0.5, 1.0]`
+     * @param {number} [epsilon=0.4] - Tolerance/sensitivity of the floating-point comparison between colors
      *        (lower = more exact, higher = more inclusive)
      */
     constructor(originalColor: Color = 0xFF0000, newColor: Color = 0x000000, epsilon = 0.4)

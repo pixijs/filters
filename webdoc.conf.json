@@ -3,11 +3,10 @@
         "allowUnknownTags": false
     },
     "source": {
-        "include": [
+        "includePattern": [
             "filters/*/src/**/*.ts",
             "bundle/src/*.ts"
-        ],
-        "excludePattern": "(node_modules|lib|dist)"
+        ]
     },
     "plugins": [
         "plugins/markdown"

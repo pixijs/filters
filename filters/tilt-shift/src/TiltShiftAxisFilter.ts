@@ -3,11 +3,9 @@ import fragment from './tilt-shift.frag';
 import { Filter } from '@pixi/core';
 import { Point } from '@pixi/math';
 
-/**
- * @author Vico @vicocotea
- * original filter https://github.com/evanw/glfx.js/blob/master/src/filters/blur/tiltshift.js
- * by Evan Wallace : http://madebyevan.com/
- */
+// @author Vico @vicocotea
+// original filter https://github.com/evanw/glfx.js/blob/master/src/filters/blur/tiltshift.js
+// by Evan Wallace : http://madebyevan.com/
 
 /**
  * A TiltShiftAxisFilter.

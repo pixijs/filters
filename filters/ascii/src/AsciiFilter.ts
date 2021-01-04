@@ -4,10 +4,8 @@ import { Filter } from '@pixi/core';
 
 // TODO (cengler) - The Y is flipped in this shader for some reason.
 
-/**
- * @author Vico @vicocotea
- * original shader : https://www.shadertoy.com/view/lssGDj by @movAX13h
- */
+// @author Vico @vicocotea
+// original shader : https://www.shadertoy.com/view/lssGDj by @movAX13h
 
 /**
  * An ASCII filter.<br>
@@ -22,7 +20,7 @@ import { Filter } from '@pixi/core';
 class AsciiFilter extends Filter
 {
     /**
-     * @param {number} [size=8] Size of the font
+     * @param {number} [size=8] - Size of the font
      */
     constructor(size = 8)
     {
