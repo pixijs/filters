@@ -1,15 +1,15 @@
 {
   "name": "@pixi/filter-zoom-blur",
   "version": "3.2.1",
-  "main": "lib/filter-zoom-blur.cjs.js",
+  "main": "dist/filter-zoom-blur.cjs.js",
   "bundle": "dist/filter-zoom-blur.js",
   "description": "PixiJS filter to apply zoom blur effect",
   "author": "finscn",
   "contributors": [
     "finscn <finscn@gmail.com>"
   ],
-  "module": "lib/filter-zoom-blur.esm.js",
-  "types": "types.d.ts",
+  "module": "dist/filter-zoom-blur.esm.js",
+  "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
   "license": "MIT",
@@ -21,9 +21,8 @@
     "access": "public"
   },
   "files": [
-    "lib",
     "dist",
-    "types.d.ts"
+    "index.d.ts"
   ],
   "peerDependencies": {
     "@pixi/core": "^6.0.0-X",

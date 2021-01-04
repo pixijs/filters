@@ -1,15 +1,15 @@
 {
   "name": "@pixi/filter-color-replace",
   "version": "3.1.1",
-  "main": "lib/filter-color-replace.cjs.js",
+  "main": "dist/filter-color-replace.cjs.js",
   "bundle": "dist/filter-color-replace.js",
   "description": "PixiJS filter to replace a single color",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
-  "module": "lib/filter-color-replace.esm.js",
-  "types": "types.d.ts",
+  "module": "dist/filter-color-replace.esm.js",
+  "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
   "license": "MIT",
@@ -21,9 +21,8 @@
     "access": "public"
   },
   "files": [
-    "lib",
     "dist",
-    "types.d.ts"
+    "index.d.ts"
   ],
   "peerDependencies": {
     "@pixi/core": "^6.0.0-X",

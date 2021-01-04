@@ -1,15 +1,15 @@
 {
   "name": "@pixi/filter-twist",
   "version": "3.2.1",
-  "main": "lib/filter-twist.cjs.js",
+  "main": "dist/filter-twist.cjs.js",
   "bundle": "dist/filter-twist.js",
   "description": "PixiJS filter to apply a twist effect to a DisplayObject",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
-  "module": "lib/filter-twist.esm.js",
-  "types": "types.d.ts",
+  "module": "dist/filter-twist.esm.js",
+  "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
   "license": "MIT",
@@ -21,9 +21,8 @@
     "access": "public"
   },
   "files": [
-    "lib",
     "dist",
-    "types.d.ts"
+    "index.d.ts"
   ],
   "peerDependencies": {
     "@pixi/core": "^6.0.0-X",

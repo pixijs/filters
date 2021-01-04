@@ -1,7 +1,7 @@
 {
   "name": "pixi-filters",
   "version": "3.2.2",
-  "main": "lib/pixi-filters.cjs.js",
+  "main": "dist/pixi-filters.cjs.js",
   "description": "PixiJS v5 optional display filters",
   "author": "Mat Groves <mat@goodboydigital.com>",
   "contributors": [
@@ -10,7 +10,7 @@
     "Chad Engler <chad@pantherdev.com>",
     "finscn <finscn@gmail.com>"
   ],
-  "module": "lib/pixi-filters.esm.js",
+  "module": "dist/pixi-filters.esm.js",
   "bundle": "dist/pixi-filters.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",

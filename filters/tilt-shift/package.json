@@ -1,15 +1,15 @@
 {
   "name": "@pixi/filter-tilt-shift",
   "version": "3.2.0",
-  "main": "lib/filter-tilt-shift.cjs.js",
+  "main": "dist/filter-tilt-shift.cjs.js",
   "bundle": "dist/filter-tilt-shift.js",
   "description": "PixiJS filter to render a tilt-shift-like camera effect",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
-  "module": "lib/filter-tilt-shift.esm.js",
-  "types": "types.d.ts",
+  "module": "dist/filter-tilt-shift.esm.js",
+  "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
   "license": "MIT",
@@ -21,9 +21,8 @@
     "access": "public"
   },
   "files": [
-    "lib",
     "dist",
-    "types.d.ts"
+    "index.d.ts"
   ],
   "peerDependencies": {
     "@pixi/constants": "^6.0.0-X",

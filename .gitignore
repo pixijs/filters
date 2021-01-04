@@ -1,7 +1,6 @@
 .idea
 .vscode
 node_modules
-lib
 *.log
 docs
 dist

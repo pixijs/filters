@@ -1,15 +1,15 @@
 {
   "name": "@pixi/filter-dot",
   "version": "3.1.1",
-  "main": "lib/filter-dot.cjs.js",
+  "main": "dist/filter-dot.cjs.js",
   "bundle": "dist/filter-dot.js",
   "description": "PixiJS filter to apply a black and white dot effect",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
-  "module": "lib/filter-dot.esm.js",
-  "types": "types.d.ts",
+  "module": "dist/filter-dot.esm.js",
+  "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
   "license": "MIT",
@@ -21,9 +21,8 @@
     "access": "public"
   },
   "files": [
-    "lib",
     "dist",
-    "types.d.ts"
+    "index.d.ts"
   ],
   "peerDependencies": {
     "@pixi/core": "^6.0.0-X"

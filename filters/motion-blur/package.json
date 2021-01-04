@@ -1,12 +1,12 @@
 {
   "name": "@pixi/filter-motion-blur",
   "version": "3.1.1",
-  "main": "lib/filter-motion-blur.cjs.js",
+  "main": "dist/filter-motion-blur.cjs.js",
   "bundle": "dist/filter-motion-blur.js",
   "description": "PixiJS filter to apply a directional blur effect",
   "author": "finscn <finscn@gmail.com>",
-  "module": "lib/filter-motion-blur.esm.js",
-  "types": "types.d.ts",
+  "module": "dist/filter-motion-blur.esm.js",
+  "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
   "license": "MIT",
@@ -18,9 +18,8 @@
     "access": "public"
   },
   "files": [
-    "lib",
     "dist",
-    "types.d.ts"
+    "index.d.ts"
   ],
   "peerDependencies": {
     "@pixi/constants": "^6.0.0-X",

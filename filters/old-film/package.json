@@ -1,12 +1,12 @@
 {
   "name": "@pixi/filter-old-film",
   "version": "3.1.1",
-  "main": "lib/filter-old-film.cjs.js",
+  "main": "dist/filter-old-film.cjs.js",
   "bundle": "dist/filter-old-film.js",
   "description": "PixiJS filter to apply an old film effect with grain and scratches",
   "author": "finscn <finscn@gmail.com>",
-  "module": "lib/filter-old-film.esm.js",
-  "types": "types.d.ts",
+  "module": "dist/filter-old-film.esm.js",
+  "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
   "license": "MIT",
@@ -18,9 +18,8 @@
     "access": "public"
   },
   "files": [
-    "lib",
     "dist",
-    "types.d.ts"
+    "index.d.ts"
   ],
   "peerDependencies": {
     "@pixi/constants": "^6.0.0-X",
