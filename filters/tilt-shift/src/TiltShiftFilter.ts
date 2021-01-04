@@ -2,6 +2,7 @@ import { TiltShiftXFilter } from './TiltShiftXFilter';
 import { TiltShiftYFilter } from './TiltShiftYFilter';
 import { Filter, FilterSystem, RenderTexture } from '@pixi/core';
 import type { Point } from '@pixi/math';
+import type { CLEAR_MODES } from '@pixi/constants';
 
 /**
  * @author Vico @vicocotea
@@ -36,12 +37,12 @@ class TiltShiftFilter extends Filter
         this.tiltShiftYFilter = new TiltShiftYFilter(blur, gradientBlur, start, end);
     }
 
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture): void
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clearMode: CLEAR_MODES): void
     {
         const renderTarget = filterManager.getFilterTexture();
 
         this.tiltShiftXFilter.apply(filterManager, input, renderTarget, 1);
-        this.tiltShiftYFilter.apply(filterManager, renderTarget, output);
+        this.tiltShiftYFilter.apply(filterManager, renderTarget, output, clearMode);
         filterManager.returnFilterTexture(renderTarget);
     }
 

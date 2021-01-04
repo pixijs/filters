@@ -61,7 +61,7 @@ class BloomFilter extends Filter
         this.defaultFilter = new AlphaFilter();
     }
 
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES): void
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES): void
     {
         const renderTarget = filterManager.getFilterTexture();
 

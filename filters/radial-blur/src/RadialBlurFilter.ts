@@ -48,7 +48,7 @@ class RadialBlurFilter extends Filter
      * Override existing apply method in PIXI.Filter
      * @private
      */
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES): void
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES): void
     {
         this.uniforms.uKernelSize = this._angle !== 0 ? this.kernelSize : 0;
         filterManager.applyFilter(this, input, output, clear);

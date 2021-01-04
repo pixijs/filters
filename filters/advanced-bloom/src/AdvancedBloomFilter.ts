@@ -102,7 +102,7 @@ class AdvancedBloomFilter extends Filter
      * Override existing apply method in PIXI.Filter
      * @private
      */
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES, currentState?: FilterState): void
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES, currentState?: FilterState): void
     {
         const brightTarget = filterManager.getFilterTexture();
 

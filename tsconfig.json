@@ -14,8 +14,9 @@
         ],
         "baseUrl": "./",
         "paths": {
-            "@pixi/filter-kawase-blur": [
-                "filters/kawase-blur/src"
+            "@pixi/filter-*": [
+                "filters/*/src",
+                "node_modules/@pixi/*"
             ]
         },
         "outDir": "./out",
@@ -29,5 +30,10 @@
         "**/scripts/**",
         "**/types/**",
         "rollup.config.js"
+    ],
+    "include": [
+        "filters",
+        "bundle",
+        "./global.d.ts"
     ]
 }

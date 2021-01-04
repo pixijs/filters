@@ -71,7 +71,7 @@ class OutlineFilter extends Filter
         return (Math.PI * 2 / samples).toFixed(7);
     }
 
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES): void
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES): void
     {
         this.uniforms.thickness[0] = this._thickness / input._frame.width;
         this.uniforms.thickness[1] = this._thickness / input._frame.height;

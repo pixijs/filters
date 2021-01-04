@@ -213,7 +213,7 @@ class GlitchFilter extends Filter
      * Override existing apply method in PIXI.Filter
      * @private
      */
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES): void
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES): void
     {
         const { width, height } = input.filterFrame as Rectangle;
 

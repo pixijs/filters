@@ -52,7 +52,7 @@ class ColorMapFilter extends Filter
      * Override existing apply method in PIXI.Filter
      * @private
      */
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES): void
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES): void
     {
         this.uniforms._mix = this.mix;
 

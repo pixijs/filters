@@ -60,7 +60,7 @@ class KawaseBlurFilter extends Filter
      * Overrides apply
      * @private
      */
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES, _state?: FilterState): void
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES, _state?: FilterState): void
     {
         const uvX = this._pixelSize.x / input._frame.width;
         const uvY = this._pixelSize.y / input._frame.height;

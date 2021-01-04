@@ -59,7 +59,7 @@ class ShockwaveFilter extends Filter
         this.time = time;
     }
 
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES): void
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES): void
     {
         /**
          * There is no set/get of `time`, for performance.

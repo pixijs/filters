@@ -115,7 +115,7 @@ class AdjustmentFilter extends Filter
      * Override existing apply method in PIXI.Filter
      * @private
      */
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES): void
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES): void
     {
         this.uniforms.gamma = Math.max(this.gamma, 0.0001);
         this.uniforms.saturation = this.saturation;

@@ -83,7 +83,7 @@ class OldFilmFilter extends Filter
      * Override existing apply method in PIXI.Filter
      * @private
      */
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES): void
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES): void
     {
         this.uniforms.dimensions[0] = input.filterFrame?.width;
         this.uniforms.dimensions[1] = input.filterFrame?.height;

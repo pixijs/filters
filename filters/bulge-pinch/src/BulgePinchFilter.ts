@@ -49,7 +49,7 @@ class BulgePinchFilter extends Filter
         }, options);
     }
 
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES): void
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES): void
     {
         const { width, height } = input.filterFrame as Rectangle;
 

@@ -110,7 +110,7 @@ class DropShadowFilter extends Filter
         this._updatePadding();
     }
 
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES): void
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES): void
     {
         const target = filterManager.getFilterTexture();
 

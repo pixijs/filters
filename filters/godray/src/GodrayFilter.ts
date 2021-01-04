@@ -131,7 +131,7 @@ class GodrayFilter extends Filter
      * @param {PIXI.RenderTarget} input - The input target.
      * @param {PIXI.RenderTarget} output - The output target.
      */
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear?: CLEAR_MODES): void
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES): void
     {
         const { width, height } = input.filterFrame as Rectangle;
 

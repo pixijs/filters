@@ -51,13 +51,13 @@ class SimpleLightmapFilter extends Filter
      * @param {PIXI.RenderTarget} input - The input target.
      * @param {PIXI.RenderTarget} output - The output target.
      */
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clearMode?: CLEAR_MODES): void
+    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES): void
     {
         this.uniforms.dimensions[0] = input.filterFrame?.width;
         this.uniforms.dimensions[1] = input.filterFrame?.height;
 
         // draw the filter...
-        filterManager.applyFilter(this, input, output, clearMode);
+        filterManager.applyFilter(this, input, output, clear);
     }
 
     /**
