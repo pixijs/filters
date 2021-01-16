@@ -37,7 +37,7 @@ class ZoomBlurFilter extends Filter
      */
     constructor(options?: Partial<ZoomBlurFilterOptions>)
     {
-        const opts: ZoomBlurFilterOptions = Object.assign({
+        const { maxKernelSize, ...rest }: ZoomBlurFilterOptions = Object.assign({
             strength: 0.1,
             center: [0, 0],
             innerRadius: 0,
@@ -45,9 +45,9 @@ class ZoomBlurFilter extends Filter
             maxKernelSize: 32,
         }, options);
 
-        super(vertex, fragment.replace('${maxKernelSize}', opts.maxKernelSize.toFixed(1)));
+        super(vertex, fragment.replace('${maxKernelSize}', maxKernelSize.toFixed(1)));
 
-        Object.assign(this, opts);
+        Object.assign(this, rest);
     }
 
     /**
