@@ -27,12 +27,17 @@ interface ReflectionFilterOptions {
  */
 class ReflectionFilter extends Filter
 {
-    /**
-     * Time for animating position of waves
-     *
-     * @member {number}
-     * @default 0
-     */
+    /** Default constructor options */
+    public static readonly defaults: ReflectionFilterOptions = {
+        mirror: true,
+        boundary: 0.5,
+        amplitude: [0, 20],
+        waveLength: [30, 100],
+        alpha: [1, 1],
+        time: 0,
+    };
+
+    /** Time for animating position of waves */
     public time = 0;
 
     /**
@@ -53,14 +58,7 @@ class ReflectionFilter extends Filter
         this.uniforms.alpha = new Float32Array(2);
         this.uniforms.dimensions = new Float32Array(2);
 
-        Object.assign(this, {
-            mirror: true,
-            boundary: 0.5,
-            amplitude: [0, 20],
-            waveLength: [30, 100],
-            alpha: [1, 1],
-            time: 0,
-        }, options);
+        Object.assign(this, ReflectionFilter.defaults, options);
     }
 
     /**

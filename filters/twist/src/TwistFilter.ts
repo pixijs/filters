@@ -22,6 +22,14 @@ interface TwistFilterOptions {
  */
 class TwistFilter extends Filter
 {
+    /** Default constructor options. */
+    public static readonly defaults: TwistFilterOptions = {
+        radius: 200,
+        angle: 4,
+        padding: 20,
+        offset: new Point(),
+    };
+
     /**
      * @param {object} [options] - Object object to use.
      * @param {number} [options.radius=200] - The radius of the twist.
@@ -33,12 +41,7 @@ class TwistFilter extends Filter
     {
         super(vertex, fragment);
 
-        Object.assign(this, {
-            radius: 200,
-            angle: 4,
-            padding: 20,
-            offset: new Point(),
-        }, options);
+        Object.assign(this, TwistFilter.defaults, options);
     }
 
     /**

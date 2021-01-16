@@ -35,113 +35,61 @@ interface GlitchFilterOptions {
  */
 class GlitchFilter extends Filter
 {
-    /**
-     * Fill mode as transparent
-     *
-     * @constant
-     * @static
-     * @member {int} TRANSPARENT
-     * @memberof PIXI.filters.GlitchFilter
-     * @readonly
-     */
+    /** Default constructor options. */
+    public static readonly defaults: GlitchFilterOptions = {
+        slices: 5,
+        offset: 100,
+        direction: 0,
+        fillMode: 0,
+        average: false,
+        seed: 0,
+        red: [0, 0],
+        green: [0, 0],
+        blue: [0, 0],
+        minSize: 8,
+        sampleSize: 512,
+    };
+
+    /** Fill mode as transparent */
     static readonly TRANSPARENT = 0;
 
-    /**
-     * Fill mode as original
-     *
-     * @constant
-     * @static
-     * @member {int} ORIGINAL
-     * @memberof PIXI.filters.GlitchFilter
-     * @readonly
-     */
+    /** Fill mode as original */
     static readonly ORIGINAL = 1;
 
-    /**
-     * Fill mode as loop
-     *
-     * @constant
-     * @static
-     * @member {int} LOOP
-     * @memberof PIXI.filters.GlitchFilter
-     * @readonly
-     */
+    /** Fill mode as loop */
     static readonly LOOP = 2;
 
-    /**
-     * Fill mode as clamp
-     *
-     * @constant
-     * @static
-     * @member {int} CLAMP
-     * @memberof PIXI.filters.GlitchFilter
-     * @readonly
-     */
+    /** Fill mode as clamp */
     static readonly CLAMP = 3;
 
-    /**
-     * Fill mode as mirror
-     *
-     * @constant
-     * @static
-     * @member {int} MIRROR
-     * @memberof PIXI.filters.GlitchFilter
-     * @readonly
-     */
+    /** Fill mode as mirror */
     static readonly MIRROR = 4;
 
-    /**
-     * The maximum offset value for each of the slices.
-     *
-     * @member {number}
-     */
+    /** The maximum offset value for each of the slices. */
     public offset = 100;
 
-    /**
-     * The fill mode of the space after the offset.
-     *
-     * @member {number}
-     */
+    /** The fill mode of the space after the offset. */
     public fillMode: number = GlitchFilter.TRANSPARENT;
 
     /**
      * `true` will divide the bands roughly based on equal amounts
      * where as setting to `false` will vary the band sizes dramatically (more random looking).
-     *
-     * @member {boolean}
-     * @default false
      */
     public average = false;
 
     /**
      * A seed value for randomizing color offset. Animating
      * this value to `Math.random()` produces a twitching effect.
-     *
-     * @member {number}
      */
     public seed = 0;
 
-    /**
-     * Minimum size of slices as a portion of the `sampleSize`
-     *
-     * @member {number}
-     */
+    /** Minimum size of slices as a portion of the `sampleSize` */
     public minSize = 8;
 
-    /**
-     * Height of the displacement map canvas.
-     *
-     * @member {number}
-     * @readonly
-     */
+    /** Height of the displacement map canvas. */
     public sampleSize = 512;
 
-    /**
-     * Internally generated canvas.
-     *
-     * @member {HTMLCanvasElement} _canvas
-     * @private
-     */
+    /** Internally generated canvas. */
     private _canvas: HTMLCanvasElement;
 
     /**
@@ -153,11 +101,7 @@ class GlitchFilter extends Filter
      */
     public texture: Texture;
 
-    /**
-     * Internal number of slices
-     * @member {number}
-     * @private
-     */
+    /** Internal number of slices */
     private _slices = 0;
 
     private _offsets: Float32Array = new Float32Array(1);
@@ -194,19 +138,7 @@ class GlitchFilter extends Filter
         this._canvas.height = this.sampleSize;
         this.texture = Texture.from(this._canvas, { scaleMode: SCALE_MODES.NEAREST });
 
-        Object.assign(this, {
-            slices: 5,
-            offset: 100,
-            direction: 0,
-            fillMode: 0,
-            average: false,
-            seed: 0,
-            red: [0, 0],
-            green: [0, 0],
-            blue: [0, 0],
-            minSize: 8,
-            sampleSize: 512,
-        }, options);
+        Object.assign(this, GlitchFilter.defaults, options);
     }
 
     /**

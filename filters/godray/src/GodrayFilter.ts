@@ -34,30 +34,30 @@ interface GodrayFilterOptions {
  */
 class GodrayFilter extends Filter
 {
+    /** Default for constructior options. */
+    public static readonly defaults: GodrayFilterOptions = {
+        angle: 30,
+        gain: 0.5,
+        lacunarity: 2.5,
+        time: 0,
+        parallel: true,
+        center: [0, 0],
+        alpha: 1,
+    };
+
     /**
      * `true` if light rays are parallel (uses angle),
      * `false` to use the focal `center` point
-     *
-     * @member {boolean}
-     * @default true
      */
     public parallel = true;
 
     /**
      * The position of the emitting point for light rays
      * only used if `parallel` is set to `false`.
-     *
-     * @member {PIXI.Point|number[]}
-     * @default [0, 0]
      */
     public center: number[] | Point;
 
-    /**
-     * The current time.
-     *
-     * @member {number}
-     * @default 0
-     */
+    /** The current time. */
     public time = 0;
 
     private _angleLight: Point;
@@ -80,15 +80,7 @@ class GodrayFilter extends Filter
 
         this.uniforms.dimensions = new Float32Array(2);
 
-        const opts: GodrayFilterOptions = Object.assign({
-            angle: 30,
-            gain: 0.5,
-            lacunarity: 2.5,
-            time: 0,
-            parallel: true,
-            center: [0, 0],
-            alpha: 1,
-        }, options);
+        const opts: GodrayFilterOptions = Object.assign(GodrayFilter.defaults, options);
 
         this._angleLight = new Point();
         this.angle = opts.angle;

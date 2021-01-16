@@ -19,10 +19,7 @@ type ColorMapSource = TextureSource | Texture | null;
  */
 class ColorMapFilter extends Filter
 {
-    /**
-     * The mix from 0 to 1, where 0 is the original image and 1 is the color mapped image.
-     * @member {number}
-     */
+    /** The mix from 0 to 1, where 0 is the original image and 1 is the color mapped image. */
     public mix = 1;
 
     private _size = 0;

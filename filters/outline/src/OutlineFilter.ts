@@ -21,22 +21,10 @@ import type { CLEAR_MODES } from '@pixi/constants';
  */
 class OutlineFilter extends Filter
 {
-    /**
-     * The minimum number of samples for rendering outline.
-     * @static
-     * @member {number} MIN_SAMPLES
-     * @memberof PIXI.filters.OutlineFilter
-     * @default 1
-     */
+    /** The minimum number of samples for rendering outline. */
     public static MIN_SAMPLES = 1;
 
-    /**
-     * The maximum number of samples for rendering outline.
-     * @static
-     * @member {number} MAX_SAMPLES
-     * @memberof PIXI.filters.OutlineFilter
-     * @default 100
-     */
+    /** The maximum number of samples for rendering outline. */
     public static MAX_SAMPLES = 100;
 
     private _thickness = 1;

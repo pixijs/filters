@@ -30,68 +30,28 @@ interface AdjustmentFilterOptions {
  */
 class AdjustmentFilter extends Filter
 {
-    /**
-     * The amount of luminance
-     * @member {number}
-     * @memberof PIXI.filters.AdjustmentFilter#
-     * @default 1
-     */
+    /** The amount of luminance */
     public gamma = 1;
 
-    /**
-     * The amount of saturation
-     * @member {number}
-     * @memberof PIXI.filters.AdjustmentFilter#
-     * @default 1
-     */
+    /** The amount of saturation */
     public saturation = 1;
 
-    /**
-     * The amount of contrast
-     * @member {number}
-     * @memberof PIXI.filters.AdjustmentFilter#
-     * @default 1
-     */
+    /** The amount of contrast */
     public contrast = 1;
 
-    /**
-     * The amount of brightness
-     * @member {number}
-     * @memberof PIXI.filters.AdjustmentFilter#
-     * @default 1
-     */
+    /** The amount of brightness */
     public brightness = 1;
 
-    /**
-     * The amount of red channel
-     * @member {number}
-     * @memberof PIXI.filters.AdjustmentFilter#
-     * @default 1
-     */
+    /** The amount of red channel */
     public red = 1;
 
-    /**
-     * The amount of green channel
-     * @member {number}
-     * @memberof PIXI.filters.AdjustmentFilter#
-     * @default 1
-     */
+    /** The amount of green channel */
     public green = 1;
 
-    /**
-     * The amount of blue channel
-     * @member {number}
-     * @memberof PIXI.filters.AdjustmentFilter#
-     * @default 1
-     */
+    /** The amount of blue channel */
     public blue = 1;
 
-    /**
-     * The amount of alpha channel
-     * @member {number}
-     * @memberof PIXI.filters.AdjustmentFilter#
-     * @default 1
-     */
+    /** The amount of alpha channel */
     public alpha = 1;
 
     /**
@@ -114,7 +74,7 @@ class AdjustmentFilter extends Filter
 
     /**
      * Override existing apply method in PIXI.Filter
-     * @private
+     * @ignore
      */
     apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES): void
     {

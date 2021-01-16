@@ -19,7 +19,7 @@ interface DropShadowFilterOptions {
     shadowOnly: boolean;
     blur: number;
     quality: number;
-    kernels: number[];
+    kernels: number[] | null;
     pixelSize: PixelSizeValue;
     resolution: number;
 }
@@ -35,20 +35,24 @@ interface DropShadowFilterOptions {
  */
 class DropShadowFilter extends Filter
 {
-    /**
-     * Hide the contents, only show the shadow.
-     *
-     * @member {boolean}
-     * @default false
-     */
+    /** Default constructor options. */
+    public static readonly defaults: DropShadowFilterOptions = {
+        rotation: 45,
+        distance: 5,
+        color: 0x000000,
+        alpha: 0.5,
+        shadowOnly: false,
+        kernels: null,
+        blur: 2,
+        quality: 3,
+        pixelSize: 1,
+        resolution: settings.FILTER_RESOLUTION,
+    };
+
+    /** Hide the contents, only show the shadow. */
     public shadowOnly: boolean;
 
-    /**
-     * Angle of the shadow in degrees.
-     *
-     * @member {number}
-     * @default 45
-     */
+    /** Angle of the shadow in degrees. */
     public angle = 45;
 
     private _distance = 5;
@@ -73,18 +77,7 @@ class DropShadowFilter extends Filter
     {
         super();
 
-        const opt: DropShadowFilterOptions = Object.assign({
-            rotation: 45,
-            distance: 5,
-            color: 0x000000,
-            alpha: 0.5,
-            shadowOnly: false,
-            kernels: null,
-            blur: 2,
-            quality: 3,
-            pixelSize: 1,
-            resolution: settings.FILTER_RESOLUTION,
-        }, options);
+        const opt: DropShadowFilterOptions = Object.assign(DropShadowFilter.defaults, options);
 
         const { kernels, blur, quality, pixelSize, resolution } = opt;
 

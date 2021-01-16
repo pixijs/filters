@@ -29,6 +29,13 @@ interface BulgePinchFilterOptions {
  */
 class BulgePinchFilter extends Filter
 {
+    /** Default constructor options. */
+    public static readonly defaults: BulgePinchFilterOptions = {
+        center: [0.5, 0.5],
+        radius: 100,
+        strength: 1,
+    };
+
     /**
      * @param {object} [options] - Options to use for filter.
      * @param {PIXI.Point|Array<number>} [options.center=[0,0]] - The x and y coordinates of the center
@@ -42,11 +49,7 @@ class BulgePinchFilter extends Filter
 
         this.uniforms.dimensions = new Float32Array(2);
 
-        Object.assign(this, {
-            center: [0.5, 0.5],
-            radius: 100,
-            strength: 1,
-        }, options);
+        Object.assign(this, BulgePinchFilter.defaults, options);
     }
 
     apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES): void

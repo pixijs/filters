@@ -28,10 +28,20 @@ interface OldFilmFilterOptions {
  */
 class OldFilmFilter extends Filter
 {
-    /**
-     * A see value to apply to the random noise generation
-     * @member {number}
-     */
+    /** Default constructor options */
+    public static readonly defaults: OldFilmFilterOptions = {
+        sepia: 0.3,
+        noise: 0.3,
+        noiseSize: 1.0,
+        scratch: 0.5,
+        scratchDensity: 0.3,
+        scratchWidth: 1.0,
+        vignetting: 0.3,
+        vignettingAlpha: 1.0,
+        vignettingBlur: 0.3,
+    };
+
+    /** A see value to apply to the random noise generation */
     public seed = 0;
 
     /**
@@ -66,17 +76,7 @@ class OldFilmFilter extends Filter
             this.seed = seed;
         }
 
-        Object.assign(this, {
-            sepia: 0.3,
-            noise: 0.3,
-            noiseSize: 1.0,
-            scratch: 0.5,
-            scratchDensity: 0.3,
-            scratchWidth: 1.0,
-            vignetting: 0.3,
-            vignettingAlpha: 1.0,
-            vignettingBlur: 0.3,
-        }, options);
+        Object.assign(this, OldFilmFilter.defaults, options);
     }
 
     /**

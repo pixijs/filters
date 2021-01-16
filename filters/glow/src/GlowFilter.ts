@@ -30,6 +30,7 @@ interface GlowFilterOptions {
  */
 class GlowFilter extends Filter
 {
+    /** Default values for options. */
     static readonly defaults: GlowFilterOptions = {
         distance: 10,
         outerStrength: 4,

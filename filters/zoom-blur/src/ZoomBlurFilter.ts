@@ -25,6 +25,15 @@ interface ZoomBlurFilterOptions {
  */
 class ZoomBlurFilter extends Filter
 {
+    /** Default constructor options. */
+    public static readonly defaults: ZoomBlurFilterOptions = {
+        strength: 0.1,
+        center: [0, 0],
+        innerRadius: 0,
+        radius: -1,
+        maxKernelSize: 32,
+    };
+
     /**
      * @param {object} [options] - Filter options to use.
      * @param {number} [options.strength=0.1] - Sets the strength of the zoom blur effect
@@ -37,13 +46,7 @@ class ZoomBlurFilter extends Filter
      */
     constructor(options?: Partial<ZoomBlurFilterOptions>)
     {
-        const { maxKernelSize, ...rest }: ZoomBlurFilterOptions = Object.assign({
-            strength: 0.1,
-            center: [0, 0],
-            innerRadius: 0,
-            radius: -1,
-            maxKernelSize: 32,
-        }, options);
+        const { maxKernelSize, ...rest }: ZoomBlurFilterOptions = Object.assign(ZoomBlurFilter.defaults, options);
 
         super(vertex, fragment.replace('${maxKernelSize}', maxKernelSize.toFixed(1)));
 

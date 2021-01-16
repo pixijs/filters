@@ -21,8 +21,6 @@ class MotionBlurFilter extends Filter
     /**
      * The kernelSize of the blur, higher values are slower but look better.
      * Use odd value greater than 5.
-     * @member {number}
-     * @default 5
      */
     public kernelSize = 5;
 

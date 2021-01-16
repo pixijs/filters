@@ -27,11 +27,18 @@ interface ShockwaveFilterOptions {
  */
 class ShockwaveFilter extends Filter
 {
+    /** Default constructor options. */
+    public static readonly defaults: ShockwaveFilterOptions = {
+        amplitude: 30.0,
+        wavelength: 160.0,
+        brightness: 1.0,
+        speed: 500.0,
+        radius: -1.0,
+    };
+
     /**
      * Sets the elapsed time of the shockwave.
      * It could control the current size of shockwave.
-     *
-     * @member {number}
      */
     public time: number;
 
@@ -49,13 +56,7 @@ class ShockwaveFilter extends Filter
     {
         super(vertex, fragment);
         this.center = center;
-        Object.assign(this, {
-            amplitude: 30.0,
-            wavelength: 160.0,
-            brightness: 1.0,
-            speed: 500.0,
-            radius: -1.0,
-        }, options);
+        Object.assign(this, ShockwaveFilter.defaults, options);
         this.time = time;
     }
 

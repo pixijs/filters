@@ -9,7 +9,7 @@ interface CRTFilterOptions {
     curvature: number;
     lineWidth: number;
     lineContrast: number;
-    verticalLine: number;
+    verticalLine: boolean;
     noise: number;
     noiseSize: number;
     seed: number;
@@ -31,20 +31,25 @@ interface CRTFilterOptions {
  */
 class CRTFilter extends Filter
 {
-    /**
-     * For animating interlaced lines
-     *
-     * @member {number}
-     * @default 0
-     */
+    /** Default constructor options */
+    public static readonly defaults: CRTFilterOptions = {
+        curvature: 1.0,
+        lineWidth: 1.0,
+        lineContrast: 0.25,
+        verticalLine: false,
+        noise: 0.0,
+        noiseSize: 1.0,
+        seed: 0.0,
+        vignetting: 0.3,
+        vignettingAlpha: 1.0,
+        vignettingBlur: 0.3,
+        time: 0.0,
+    };
+
+    /** For animating interlaced lines */
     public time = 0;
 
-    /**
-     * A seed value to apply to the random noise generation
-     *
-     * @member {number}
-     * @default 0
-     */
+    /** A seed value to apply to the random noise generation */
     public seed = 0;
 
     /**
@@ -67,19 +72,7 @@ class CRTFilter extends Filter
         super(vertex, fragment);
         this.uniforms.dimensions = new Float32Array(2);
 
-        Object.assign(this, {
-            curvature: 1.0,
-            lineWidth: 1.0,
-            lineContrast: 0.25,
-            verticalLine: false,
-            noise: 0.0,
-            noiseSize: 1.0,
-            seed: 0.0,
-            vignetting: 0.3,
-            vignettingAlpha: 1.0,
-            vignettingBlur: 0.3,
-            time: 0.0,
-        }, options);
+        Object.assign(this, CRTFilter.defaults, options);
     }
 
     /**
