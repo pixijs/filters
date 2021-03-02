@@ -1,4 +1,5 @@
-export default function() {
+export default function ()
+{
     this.addFilter('GlowFilter', {
         fishOnly: true,
         args: [{
@@ -9,11 +10,12 @@ export default function() {
             quality: 0.2,
             knockout: false,
         }],
-        oncreate(folder) {
+        oncreate(folder)
+        {
             folder.add(this, 'innerStrength', 0, 20);
             folder.add(this, 'outerStrength', 0, 20);
             folder.addColor(this, 'color');
             folder.add(this, 'knockout');
-        }
+        },
     });
 }

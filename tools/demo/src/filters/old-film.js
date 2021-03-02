@@ -1,14 +1,18 @@
-export default function() {
+export default function ()
+{
     const app = this;
+
     app.addFilter('OldFilmFilter', {
         enabled: false,
         global: false,
         opened: false,
         args: [[app.initWidth / 2, app.initHeight / 2]],
-        oncreate(folder) {
+        oncreate(folder)
+        {
             const filter = this;
 
-            app.events.on('animate', function() {
+            app.events.on('animate', function ()
+            {
                 filter.seed = Math.random();
             });
 
@@ -21,6 +25,6 @@ export default function() {
             folder.add(this, 'vignetting', 0, 1);
             folder.add(this, 'vignettingAlpha', 0, 1);
             folder.add(this, 'vignettingBlur', 0, 1);
-        }
+        },
     });
 }

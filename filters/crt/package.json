@@ -1,12 +1,12 @@
 {
   "name": "@pixi/filter-crt",
   "version": "3.2.0",
-  "main": "lib/filter-crt.cjs.js",
+  "main": "dist/filter-crt.cjs.js",
   "bundle": "dist/filter-crt.js",
   "description": "PixiJS filter to apply an effect resembling old CRT monitors",
   "author": "finscn <finscn@gmail.com>",
-  "module": "lib/filter-crt.esm.js",
-  "types": "types.d.ts",
+  "module": "dist/filter-crt.esm.js",
+  "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
   "license": "MIT",
@@ -18,14 +18,18 @@
     "access": "public"
   },
   "files": [
-    "lib",
     "dist",
-    "types.d.ts"
+    "index.d.ts"
   ],
   "peerDependencies": {
-    "@pixi/core": "^5.0.0"
+    "@pixi/constants": "^6.0.0",
+    "@pixi/core": "^6.0.0",
+    "@pixi/math": "^6.0.0"
   },
   "devDependencies": {
+    "@pixi/constants": "^6.0.0",
+    "@pixi/core": "^6.0.0",
+    "@pixi/math": "^6.0.0",
     "@tools/fragments": "^3.0.3"
   }
 }

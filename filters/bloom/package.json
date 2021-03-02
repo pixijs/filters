@@ -1,15 +1,15 @@
 {
   "name": "@pixi/filter-bloom",
   "version": "3.2.0",
-  "main": "lib/filter-bloom.cjs.js",
+  "main": "dist/filter-bloom.cjs.js",
   "bundle": "dist/filter-bloom.js",
   "description": "PixiJS filter to apply a simple bloom effect",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
-  "module": "lib/filter-bloom.esm.js",
-  "types": "types.d.ts",
+  "module": "dist/filter-bloom.esm.js",
+  "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
   "license": "MIT",
@@ -21,16 +21,23 @@
     "access": "public"
   },
   "files": [
-    "lib",
     "dist",
-    "types.d.ts"
+    "index.d.ts"
   ],
   "peerDependencies": {
-    "@pixi/constants": "^5.0.0",
-    "@pixi/core": "^5.0.0",
-    "@pixi/filter-alpha": "^5.0.0",
-    "@pixi/filter-blur": "^5.0.0",
-    "@pixi/math": "^5.0.0",
-    "@pixi/settings": "^5.0.0"
+    "@pixi/constants": "^6.0.0",
+    "@pixi/core": "^6.0.0",
+    "@pixi/filter-alpha": "^6.0.0",
+    "@pixi/filter-blur": "^6.0.0",
+    "@pixi/math": "^6.0.0",
+    "@pixi/settings": "^6.0.0"
+  },
+  "devDependencies": {
+    "@pixi/constants": "^6.0.0",
+    "@pixi/core": "^6.0.0",
+    "@pixi/filter-alpha": "^6.0.0",
+    "@pixi/filter-blur": "^6.0.0",
+    "@pixi/math": "^6.0.0",
+    "@pixi/settings": "^6.0.0"
   }
 }

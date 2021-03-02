@@ -1,25 +1,32 @@
-export default function() {
+export default function ()
+{
     const app = this;
+
     app.addFilter('CRTFilter', {
         args: [{
             lineWidth: 3,
             lineContrast: 0.3,
-            noise:0.2,
-            time:0.5,
+            noise: 0.2,
+            time: 0.5,
         }],
-        oncreate(folder) {
+        oncreate(folder)
+        {
             const filter = this;
 
             filter.animating = true;
 
-            app.events.on('enable', function(enabled) {
-                if (enabled && filter.animating) {
+            app.events.on('enable', function (enabled)
+            {
+                if (enabled && filter.animating)
+                {
                     filter.time = 0;
                 }
             });
 
-            app.events.on('animate', function() {
-                if (filter.animating) {
+            app.events.on('animate', function ()
+            {
+                if (filter.animating)
+                {
                     filter.seed = Math.random();
                     filter.time += 0.5;
                 }
@@ -38,6 +45,6 @@ export default function() {
             folder.add(this, 'vignettingBlur', 0, 1);
             folder.add(this, 'seed', 0, 1);
             folder.add(this, 'time', 0, 20);
-        }
+        },
     });
 }

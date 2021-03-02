@@ -1,12 +1,12 @@
 {
   "name": "@pixi/filter-color-map",
   "version": "3.1.1",
-  "main": "lib/filter-color-map.cjs.js",
+  "main": "dist/filter-color-map.cjs.js",
   "bundle": "dist/filter-color-map.js",
   "description": "PixiJS filter to apply a color adjust effect",
   "author": "finscn <finscn@gmail.com>",
-  "module": "lib/filter-color-map.esm.js",
-  "types": "types.d.ts",
+  "module": "dist/filter-color-map.esm.js",
+  "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
   "license": "MIT",
@@ -18,15 +18,16 @@
     "access": "public"
   },
   "files": [
-    "lib",
     "dist",
-    "types.d.ts"
+    "index.d.ts"
   ],
   "peerDependencies": {
-    "@pixi/constants": "^5.0.0",
-    "@pixi/core": "^5.0.0"
+    "@pixi/constants": "^6.0.0",
+    "@pixi/core": "^6.0.0"
   },
   "devDependencies": {
+    "@pixi/constants": "^6.0.0",
+    "@pixi/core": "^6.0.0",
     "@tools/fragments": "^3.0.3"
   }
 }

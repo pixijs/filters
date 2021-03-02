@@ -1,13 +1,14 @@
 import * as PIXI from 'pixi.js';
 
-export default function() {
+export default function ()
+{
     const app = this;
 
     this.addFilter('GodrayFilter', {
         enabled: false,
         opened: false,
-        oncreate: function(folder) {
-
+        oncreate(folder)
+        {
             this.alpha = 1;
             this.light = 30;
             this.gain = 0.6;
@@ -15,14 +16,18 @@ export default function() {
             this.animating = true;
             this.center = new PIXI.Point(100, -100);
 
-            app.events.on('enable', (enabled) => {
-                if (enabled && this.animating) {
+            app.events.on('enable', (enabled) =>
+            {
+                if (enabled && this.animating)
+                {
                     this.time = 0;
                 }
             });
 
-            app.events.on('animate', () => {
-                if (this.animating){
+            app.events.on('animate', () =>
+            {
+                if (this.animating)
+                {
                     this.time += app.ticker.elapsedMS / 1000;
                 }
             });
@@ -36,6 +41,6 @@ export default function() {
             folder.add(this, 'angle', -60, 60);
             folder.add(this.center, 'x', -100, app.initWidth + 100).name('center.x');
             folder.add(this.center, 'y', -1000, -100).name('center.y');
-        }
+        },
     });
 }

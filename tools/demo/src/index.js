@@ -12,12 +12,14 @@ const manifest = [
     { name: 'fish3', url: 'images/displacement_fish3.png' },
     { name: 'fish4', url: 'images/displacement_fish4.png' },
     { name: 'lightmap', url: 'images/lightmap.png' },
-    { name: 'colormap', url: 'images/colormap.png' }
+    { name: 'colormap', url: 'images/colormap.png' },
 ];
 
 // Load resources then add filters
-app.load(manifest, () => {
-    for (const i in filters) {
+app.load(manifest, () =>
+{
+    for (const i in filters)
+    {
         filters[i].call(app);
     }
 });

@@ -1,15 +1,15 @@
 {
   "name": "@pixi/filter-shockwave",
   "version": "3.1.1",
-  "main": "lib/filter-shockwave.cjs.js",
+  "main": "dist/filter-shockwave.cjs.js",
   "bundle": "dist/filter-shockwave.js",
   "description": "PixiJS filter to apply a shockwave-type effect",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
-  "module": "lib/filter-shockwave.esm.js",
-  "types": "types.d.ts",
+  "module": "dist/filter-shockwave.esm.js",
+  "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/pixi-filters/issues",
   "license": "MIT",
@@ -21,14 +21,18 @@
     "access": "public"
   },
   "files": [
-    "lib",
     "dist",
-    "types.d.ts"
+    "index.d.ts"
   ],
   "peerDependencies": {
-    "@pixi/core": "^5.0.0"
+    "@pixi/constants": "^6.0.0",
+    "@pixi/core": "^6.0.0",
+    "@pixi/math": "^6.0.0"
   },
   "devDependencies": {
+    "@pixi/constants": "^6.0.0",
+    "@pixi/core": "^6.0.0",
+    "@pixi/math": "^6.0.0",
     "@tools/fragments": "^3.0.3"
   }
 }

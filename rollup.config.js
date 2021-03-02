@@ -1,100 +1,18 @@
-import batchPackages from '@lerna/batch-packages';
-import filterPackages from '@lerna/filter-packages';
-import { getPackages } from '@lerna/project';
 import path from 'path';
-import fs from 'fs';
-import buble from 'rollup-plugin-buble';
-import resolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
+import buble from '@rollup/plugin-buble';
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
 import { string } from 'rollup-plugin-string';
 import { terser } from 'rollup-plugin-terser';
-import minimist from 'minimist';
-import MagicString from 'magic-string';
-
-/**
- * This plugin is a filesize optimization for the pixi-filters bundle
- * it removes all the successive occurances of the default vertex fragment
- * and reassigns the name of the vertex variable
- * @function dedupeDefaultVert
- * @private
- */
-function dedupeDefaultVert() {
-    const defaultVert = path.join(__dirname, 'tools/fragments/default.vert');
-    const fragment = fs.readFileSync(defaultVert, 'utf8')
-        .replace(/\n/g, '\\\\n')
-        .replace(/([()*=.])/g, '\\$1');
-
-    const pattern = new RegExp(`(var ([^=\\s]+)\\s?=\\s?)"${fragment}"`, 'g');
-
-    return {
-        name: 'dedupeDefaultVert',
-        renderChunk(code) {
-            const matches = [];
-            let match;
-
-            while ((match = pattern.exec(code)) !== null) {
-                matches.push(match);
-            }
-
-            if (matches.length <= 1) {
-                return null;
-            }
-
-            const str = new MagicString(code);
-            const key = matches[0][2];
-
-            for (let i = 1; i < matches.length; i++) {
-                const match = matches[i];
-                const start = code.indexOf(match[0]);
-
-                str.overwrite(
-                    start,
-                    start + match[0].length,
-                    match[1] + key
-                );
-            }
-
-            return {
-                code: str.toString(),
-                map: str.generateMap({ hires: true }),
-            };
-        },
-    };
-}
-
-/**
- * Get a list of the non-private sorted packages with Lerna v3
- * @see https://github.com/lerna/lerna/issues/1848
- * @return {Promise<Package[]>} List of packages
- */
-async function getSortedPackages() {
-    // Support --scope and --ignore globs
-    const {scope, ignore} = minimist(process.argv.slice(2));
-
-    // Standard Lerna plumbing getting packages
-    const packages = await getPackages(__dirname);
-    const filtered = filterPackages(
-        packages,
-        scope,
-        ignore,
-        false
-    );
-
-    return batchPackages(filtered)
-        .reduce((arr, batch) => arr.concat(batch), []);
-}
+import typescript from '@rollup/plugin-typescript';
+import dedupeDefaultVert from './scripts/rollup-dedupe-vert'
+import getSortedPackages from './scripts/get-sorted-packages';
 
 async function main() {
     const plugins = [
-        commonjs({
-            preferBuiltins: true,
-            namedExports: {
-                'resource-loader': ['Resource']
-            }
-        }),
-        resolve({
-            preferBuiltins: true
-        }),
+        typescript(),
+        commonjs({ preferBuiltins: true }),
+        resolve({ preferBuiltins: true }),
         string({
             include: [
                 '**/*.frag',
@@ -104,18 +22,6 @@ async function main() {
         dedupeDefaultVert(),
         buble()
     ];
-
-    const bundlePlugins = plugins.slice(0);
-
-    if (process.env.NODE_ENV === 'production') {
-        bundlePlugins.push(terser({
-            output: {
-                comments: function(node, comment) {
-                    return comment.line === 1;
-                }
-            }
-        }));
-    }
 
     const compiled = (new Date()).toUTCString().replace(/GMT/g, 'UTC');
     const sourcemap = true;
@@ -136,14 +42,8 @@ async function main() {
         // Get settings from package JSON
         let { main, module, bundle, globals } = pkg.toJSON();
         const basePath = path.relative(__dirname, pkg.location);
-        const input = path.join(basePath, 'src/index.js');
+        const input = path.join(basePath, 'src/index.ts');
         const freeze = false;
-
-        // Generate the externals to use, by default don't include dependencies
-        const external = [].concat(
-            Object.keys(pkg.dependencies || {}),
-            Object.keys(pkg.peerDependencies || {})
-        );
 
         results.push({
             input,
@@ -163,7 +63,11 @@ async function main() {
                     banner,
                 },
             ],
-            external,
+            // Generate the externals to use, by default don't include dependencies
+            external: [
+                ...Object.keys(pkg.dependencies || {}),
+                ...Object.keys(pkg.peerDependencies || {})
+            ],
             plugins,
         });
 
@@ -196,7 +100,16 @@ async function main() {
                     sourcemap,
                 },
                 treeshake: false,
-                plugins: bundlePlugins,
+                plugins: [
+                    ...plugins,
+                    ...process.env.NODE_ENV !== 'production' ? [] : [terser({
+                        output: {
+                            comments: function(node, comment) {
+                                return comment.line === 1;
+                            }
+                        }
+                    })]
+                ]
             });
         }
     });

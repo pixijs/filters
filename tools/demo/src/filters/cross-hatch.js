@@ -1,3 +1,4 @@
-export default function() {
+export default function ()
+{
     this.addFilter('CrossHatchFilter');
 }
