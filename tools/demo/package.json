@@ -9,6 +9,11 @@
     "build:dev": "rollup -cm",
     "watch": "rollup -cwm"
   },
+  "eslintConfig": {
+    "rules": {
+      "func-names": 0
+    }
+  },
   "devDependencies": {
     "cross-env": "^5.2.0",
     "pixi-filters": "3.2.2",

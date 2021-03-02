@@ -59,8 +59,8 @@ export default class DemoApplication extends Application
         this.bounds = new Rectangle(
             -this.padding,
             -this.padding,
-            initWidth + this.padding * 2,
-            initHeight + this.padding * 2,
+            initWidth + (this.padding * 2),
+            initHeight + (this.padding * 2),
         );
 
         const app = this;
@@ -134,13 +134,13 @@ export default class DemoApplication extends Application
             fish.filters = this.fishFilters;
 
             fish.direction = Math.random() * Math.PI * 2;
-            fish.speed = 2 + Math.random() * 2;
+            fish.speed = 2 + (Math.random() * 2);
             fish.turnSpeed = Math.random() - 0.8;
 
             fish.x = Math.random() * bounds.width;
             fish.y = Math.random() * bounds.height;
 
-            fish.scale.set(0.8 + Math.random() * 0.3);
+            fish.scale.set(0.8 + (Math.random() * 0.3));
             this.pond.addChild(fish);
             this.fishes.push(fish);
         }
@@ -198,13 +198,13 @@ export default class DemoApplication extends Application
 
         bounds.x = -padding;
         bounds.y = -padding;
-        bounds.width = width + padding * 2;
-        bounds.height = height + padding * 2;
+        bounds.width = width + (padding * 2);
+        bounds.height = height + (padding * 2);
 
         filterArea.x = filterAreaPadding;
         filterArea.y = filterAreaPadding;
-        filterArea.width = width - filterAreaPadding * 2;
-        filterArea.height = height - filterAreaPadding * 2;
+        filterArea.width = width - (filterAreaPadding * 2);
+        filterArea.height = height - (filterAreaPadding * 2);
 
         this.events.emit('resize', width, height);
 
@@ -243,7 +243,7 @@ export default class DemoApplication extends Application
             fish.x += Math.sin(fish.direction) * fish.speed;
             fish.y += Math.cos(fish.direction) * fish.speed;
 
-            fish.rotation = -fish.direction - Math.PI / 2;
+            fish.rotation = -fish.direction - (Math.PI / 2);
 
             if (fish.x < bounds.x)
             {
@@ -306,13 +306,14 @@ export default class DemoApplication extends Application
 
         if (!ClassRef)
         {
-            throw `Unable to find class name with "${id}"`;
+            throw new Error(`Unable to find class name with "${id}"`);
         }
 
         let filter;
 
         if (options.args)
         {
+            // eslint-disable-next-line func-style
             const ClassRefArgs = function (a)
             {
                 ClassRef.apply(this, a);
