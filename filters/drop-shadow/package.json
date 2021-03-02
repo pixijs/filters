@@ -31,18 +31,18 @@
     "@pixi/filter-kawase-blur": "3.2.0"
   },
   "peerDependencies": {
-    "@pixi/constants": "^6.0.0-X",
-    "@pixi/core": "^6.0.0-X",
-    "@pixi/math": "^6.0.0-X",
-    "@pixi/settings": "^6.0.0-X",
-    "@pixi/utils": "^6.0.0-X"
+    "@pixi/constants": "^6.0.0",
+    "@pixi/core": "^6.0.0",
+    "@pixi/math": "^6.0.0",
+    "@pixi/settings": "^6.0.0",
+    "@pixi/utils": "^6.0.0"
   },
   "devDependencies": {
-    "@pixi/constants": "^6.0.0-X",
-    "@pixi/core": "^6.0.0-X",
-    "@pixi/math": "^6.0.0-X",
-    "@pixi/settings": "^6.0.0-X",
-    "@pixi/utils": "^6.0.0-X",
+    "@pixi/constants": "^6.0.0",
+    "@pixi/core": "^6.0.0",
+    "@pixi/math": "^6.0.0",
+    "@pixi/settings": "^6.0.0",
+    "@pixi/utils": "^6.0.0",
     "@tools/fragments": "^3.0.3"
   }
 }

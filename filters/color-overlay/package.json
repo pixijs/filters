@@ -25,12 +25,12 @@
     "index.d.ts"
   ],
   "peerDependencies": {
-    "@pixi/core": "^6.0.0-X",
-    "@pixi/utils": "^6.0.0-X"
+    "@pixi/core": "^6.0.0",
+    "@pixi/utils": "^6.0.0"
   },
   "devDependencies": {
-    "@pixi/core": "^6.0.0-X",
-    "@pixi/utils": "^6.0.0-X",
+    "@pixi/core": "^6.0.0",
+    "@pixi/utils": "^6.0.0",
     "@tools/fragments": "^3.0.3"
   }
 }
