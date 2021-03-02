@@ -1,5 +1,0 @@
-{
-  "extends": [
-    "@pixi/eslint-config"
-  ]
-}
