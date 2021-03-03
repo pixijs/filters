@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-convolution",
-  "version": "3.2.1",
+  "version": "4.0.0",
   "main": "dist/filter-convolution.cjs.js",
   "bundle": "dist/filter-convolution.js",
   "description": "PixiJS filter to apply a convolution effect",
@@ -29,6 +29,6 @@
   },
   "devDependencies": {
     "@pixi/core": "^6.0.0",
-    "@tools/fragments": "^3.0.3"
+    "@tools/fragments": "4.0.0"
   }
 }

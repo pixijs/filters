@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-reflection",
-  "version": "3.1.1",
+  "version": "4.0.0",
   "main": "dist/filter-reflection.cjs.js",
   "bundle": "dist/filter-reflection.js",
   "description": "PixiJS filter to apply reflection and wave effect",
@@ -28,6 +28,6 @@
   "devDependencies": {
     "@pixi/constants": "^6.0.0",
     "@pixi/core": "^6.0.0",
-    "@tools/fragments": "^3.0.3"
+    "@tools/fragments": "4.0.0"
   }
 }

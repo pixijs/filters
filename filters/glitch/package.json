@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-glitch",
-  "version": "3.1.1",
+  "version": "4.0.0",
   "main": "dist/filter-glitch.cjs.js",
   "bundle": "dist/filter-glitch.js",
   "description": "PixiJS filter to apply a glitch effect",
@@ -30,6 +30,6 @@
     "@pixi/constants": "^6.0.0",
     "@pixi/core": "^6.0.0",
     "@pixi/math": "^6.0.0",
-    "@tools/fragments": "^3.0.3"
+    "@tools/fragments": "4.0.0"
   }
 }
