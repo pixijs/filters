@@ -2,6 +2,8 @@ import { vertex } from '@tools/fragments';
 import fragment from './colorOverlay.frag';
 import { Filter } from '@pixi/core';
 import { hex2rgb, rgb2hex } from '@pixi/utils';
+import type { FilterSystem, RenderTexture } from '@pixi/core';
+import type { CLEAR_MODES } from '@pixi/constants';
 
 type Color = number | number[] | Float32Array;
 
@@ -27,15 +29,18 @@ type Color = number | number[] | Float32Array;
 class ColorOverlayFilter extends Filter
 {
     private _color = 0x0;
+	private _alpha = 1;
 
     /**
      * @param {number|Array<number>} [color=0x000000] - The resulting color, as a 3 component RGB e.g. [1.0, 0.5, 1.0]
      */
-    constructor(color: Color = 0x000000)
+    constructor(color: Color = 0x000000, alpha: number = 1)
     {
         super(vertex, fragment);
         this.uniforms.color = new Float32Array(3);
+		this.uniforms.alpha = alpha;
         this.color = color;
+		this.alpha = alpha;
     }
 
     /**
@@ -64,6 +69,19 @@ class ColorOverlayFilter extends Filter
     {
         return this._color;
     }
+
+	/**
+	 * The alpha value of the color
+     * @member {number}
+     * @default 1
+	 */
+	set alpha(value: number) {
+		this.uniforms.alpha = value;
+		this._alpha = value;
+	}
+	get alpha(): number {
+		return this._alpha;
+	}
 }
 
 export { ColorOverlayFilter };
