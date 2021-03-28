@@ -93,6 +93,9 @@ class MotionBlurFilter extends Filter
     {
         this.uniforms.uVelocity[0] = this._velocity.x;
         this.uniforms.uVelocity[1] = this._velocity.y;
+
+        // The padding will be increased as the velocity and intern the blur size is changed
+        this.padding = (Math.max(Math.abs(this._velocity.x), Math.abs(this._velocity.y)) >> 0) + 1;
     }
 
     /**
