@@ -31,7 +31,7 @@ class ColorOverlayFilter extends Filter
 
     /**
      * @param {number|Array<number>} [color=0x000000] - The resulting color, as a 3 component RGB e.g. [1.0, 0.5, 1.0]
-     * @param {number} [alpha=0] - The alpha value of the color
+     * @param {number} [alpha=1] - The alpha value of the color
      */
     constructor(color: Color = 0x000000, alpha = 1)
     {
