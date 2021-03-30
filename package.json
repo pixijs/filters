@@ -1,10 +1,13 @@
 {
   "name": "pixi-filters-monorepo",
   "private": true,
+  "workspaces": [
+    "bundle",
+    "filters/*",
+    "tools/*"
+  ],
   "scripts": {
     "start": "run-p watch watch:tools demo",
-    "postinstall": "run-s bootstrap",
-    "bootstrap": "lerna bootstrap --hoist --no-ci",
     "clean:build": "rimraf \"filters/*/dist\" \"bundle/dist\" tools/screenshots/dist",
     "preclean": "run-s clean:build",
     "clean": "lerna clean",
@@ -34,6 +37,11 @@
     "prerelease": "run-s build",
     "release": "lerna version --exact",
     "publish-ci": "lerna publish from-package --yes --no-verify-access"
+  },
+  "engines": {
+    "node": ">=12",
+    "yarn": "please-use-npm",
+    "npm": ">=7"
   },
   "devDependencies": {
     "@lerna/batch-packages": "^3.13.0",
