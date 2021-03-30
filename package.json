@@ -48,7 +48,7 @@
     "@lerna/filter-packages": "^3.13.0",
     "@lerna/project": "^3.13.1",
     "@microsoft/api-extractor": "^7.12.1",
-    "@pixi-build-tools/api-extractor-lerna-monorepo": "^1.0.1",
+    "@pixi-build-tools/api-extractor-lerna-monorepo": "^1.0.3",
     "@pixi/eslint-config": "^2.0.1",
     "@rollup/plugin-buble": "^0.21.3",
     "@rollup/plugin-commonjs": "^17.0.0",
