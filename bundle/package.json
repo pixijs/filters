@@ -14,11 +14,11 @@
   "bundle": "dist/pixi-filters.js",
   "types": "types.d.ts",
   "homepage": "http://pixijs.com/",
-  "bugs": "https://github.com/pixijs/pixi-filters/issues",
+  "bugs": "https://github.com/pixijs/filters/issues",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pixijs/pixi-filters.git"
+    "url": "https://github.com/pixijs/filters.git"
   },
   "files": [
     "lib",

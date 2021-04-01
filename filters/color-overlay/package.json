@@ -11,11 +11,11 @@
   "module": "dist/filter-color-overlay.esm.js",
   "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
-  "bugs": "https://github.com/pixijs/pixi-filters/issues",
+  "bugs": "https://github.com/pixijs/filters/issues",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pixijs/pixi-filters.git"
+    "url": "https://github.com/pixijs/filters.git"
   },
   "publishConfig": {
     "access": "public"

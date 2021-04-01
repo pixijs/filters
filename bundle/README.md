@@ -1,6 +1,6 @@
 # PixiJS Filters
 
-[![Node.js CI](https://github.com/pixijs/pixi-filters/workflows/Node.js%20CI/badge.svg)](https://github.com/pixi.js/pixi-filters/actions?query=workflow%3A%22Node.js+CI%22) [![npm version](https://badge.fury.io/js/pixi-filters.svg)](https://badge.fury.io/js/pixi-filters)
+[![Node.js CI](https://github.com/pixijs/filters/workflows/Node.js%20CI/badge.svg)](https://github.com/pixi.js/pixi-filters/actions?query=workflow%3A%22Node.js+CI%22) [![npm version](https://badge.fury.io/js/pixi-filters.svg)](https://badge.fury.io/js/pixi-filters)
 
 PixiJS v5 optional display filters.
 
@@ -41,7 +41,7 @@ Filters include:
 
 ## Examples
 
-Click [here](http://pixijs.io/pixi-filters/tools/demo/) for filter demos.
+Click [here](http://pixijs.io/filters/tools/demo/) for filter demos.
 
 ## Installation
 
