@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-pixelate",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "main": "dist/filter-pixelate.cjs.js",
   "bundle": "dist/filter-pixelate.js",
   "description": "PixiJS filter to apply a pixelation effect",
