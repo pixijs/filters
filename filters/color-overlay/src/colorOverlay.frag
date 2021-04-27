@@ -5,5 +5,5 @@ uniform float alpha;
 
 void main(void) {
     vec4 currentColor = texture2D(uSampler, vTextureCoord);
-    gl_FragColor = vec4(mix(currentColor.rgb, color.rgb, currentColor.a * alpha), currentColor.a);
+   	gl_FragColor = vec4(mix(currentColor.rgb, color.rgb, currentColor.a * alpha + 0.01), currentColor.a);
 }
