@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-convolution",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "main": "dist/filter-convolution.cjs.js",
   "bundle": "dist/filter-convolution.js",
   "description": "PixiJS filter to apply a convolution effect",
@@ -11,11 +11,11 @@
   "module": "dist/filter-convolution.esm.js",
   "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
-  "bugs": "https://github.com/pixijs/pixi-filters/issues",
+  "bugs": "https://github.com/pixijs/filters/issues",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pixijs/pixi-filters.git"
+    "url": "https://github.com/pixijs/filters.git"
   },
   "publishConfig": {
     "access": "public"

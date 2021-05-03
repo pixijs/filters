@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-godray",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "main": "dist/filter-godray.cjs.js",
   "bundle": "dist/filter-godray.js",
   "description": "PixiJS filter to apply and animate atmospheric light rays",
@@ -12,11 +12,11 @@
   "module": "dist/filter-godray.esm.js",
   "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
-  "bugs": "https://github.com/pixijs/pixi-filters/issues",
+  "bugs": "https://github.com/pixijs/filters/issues",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pixijs/pixi-filters.git"
+    "url": "https://github.com/pixijs/filters.git"
   },
   "publishConfig": {
     "access": "public"

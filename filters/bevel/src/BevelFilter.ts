@@ -53,7 +53,7 @@ class BevelFilter extends Filter
             shadowAlpha: 0.7,
         }, options);
 
-        // Workaround: https://github.com/pixijs/pixi-filters/issues/230
+        // Workaround: https://github.com/pixijs/filters/issues/230
         // applies correctly only if there is at least a single-pixel padding with alpha=0 around an image
         // To solve this problem, a padding of 1 put on the filter should suffice
         this.padding = 1;

@@ -14,7 +14,7 @@
     "template": {
         "outputSourceFiles": true,
         "readme": "./README.md",
-        "repository": "https://github.com/pixijs/pixi-filters/"
+        "repository": "https://github.com/pixijs/filters/"
     },
     "templates": {
         "cleverLinks": false,
@@ -43,7 +43,7 @@
         "private": false,
         "lenient": true,
         "destination": "./dist/docs",
-        "template": "pixi-webdoc-template",
+        "template": "@pixi/webdoc-template",
         "export": "./dist/docs/pixi-filters.api.json"
     }
 }

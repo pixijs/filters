@@ -1,10 +1,10 @@
 # PixiJS Filters
 
-[![Node.js CI](https://github.com/pixijs/pixi-filters/workflows/Node.js%20CI/badge.svg)](https://github.com/pixi.js/pixi-filters/actions?query=workflow%3A%22Node.js+CI%22) [![npm version](https://badge.fury.io/js/pixi-filters.svg)](https://badge.fury.io/js/pixi-filters)
+[![Node.js CI](https://github.com/pixijs/filters/workflows/Node.js%20CI/badge.svg)](https://github.com/pixi.js/filters/actions?query=workflow%3A%22Node.js+CI%22) [![npm version](https://badge.fury.io/js/pixi-filters.svg)](https://badge.fury.io/js/pixi-filters)
 
 ## Demo
 
-Click [here](https://pixijs.io/pixi-filters/tools/demo/) to interactively play with filters to see how they work.
+Click [here](https://pixijs.io/filters/tools/demo/) to interactively play with filters to see how they work.
 
 ## Filters
 
@@ -79,7 +79,7 @@ Alternatively, you can use a CDN such as JSDelivr:
 <script src="https://cdn.jsdelivr.net/npm/pixi-filters@latest/dist/pixi-filters.js"></script>
 ```
 
-If all else failes, you can manually download the bundled file from the [releases](https://github.com/pixijs/pixi-filters/releases) section and include it in your project.
+If all else failes, you can manually download the bundled file from the [releases](https://github.com/pixijs/filters/releases) section and include it in your project.
 
 ## Building
 
@@ -121,4 +121,4 @@ npm run build:dev
 
 ## Documentation
 
-API documention can be found [here](http://pixijs.io/pixi-filters/docs/).
+API documention can be found [here](http://pixijs.io/filters/docs/).
