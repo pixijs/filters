@@ -1,6 +1,6 @@
 {
   "name": "pixi-filters",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "main": "dist/pixi-filters.cjs.js",
   "description": "PixiJS v5 optional display filters",
   "author": "Mat Groves <mat@goodboydigital.com>",
@@ -41,7 +41,7 @@
     "@pixi/filter-dot": "4.1.0",
     "@pixi/filter-drop-shadow": "4.1.0",
     "@pixi/filter-emboss": "4.1.0",
-    "@pixi/filter-glitch": "4.1.0",
+    "@pixi/filter-glitch": "4.1.1",
     "@pixi/filter-glow": "4.1.0",
     "@pixi/filter-godray": "4.1.0",
     "@pixi/filter-kawase-blur": "4.1.0",
