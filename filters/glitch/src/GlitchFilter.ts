@@ -107,7 +107,9 @@ class GlitchFilter extends Filter
     private _offsets: Float32Array = new Float32Array(1);
     private _sizes: Float32Array = new Float32Array(1);
 
-    /** direction is actually a setter for uniform.cosDir and uniform.sinDir. Initializing it prevents those values from being written! */
+    /** direction is actually a setter for uniform.cosDir and uniform.sinDir.
+     * Must be initialized to something different than the default value.
+    */
     private _direction = -1;
 
     /**
