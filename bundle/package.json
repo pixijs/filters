@@ -1,6 +1,6 @@
 {
   "name": "pixi-filters",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "main": "dist/pixi-filters.cjs.js",
   "description": "PixiJS v5 optional display filters",
   "author": "Mat Groves <mat@goodboydigital.com>",
@@ -39,7 +39,7 @@
     "@pixi/filter-cross-hatch": "4.1.0",
     "@pixi/filter-crt": "4.1.0",
     "@pixi/filter-dot": "4.1.0",
-    "@pixi/filter-drop-shadow": "4.1.0",
+    "@pixi/filter-drop-shadow": "4.1.2",
     "@pixi/filter-emboss": "4.1.0",
     "@pixi/filter-glitch": "4.1.1",
     "@pixi/filter-glow": "4.1.0",
