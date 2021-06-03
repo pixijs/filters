@@ -77,7 +77,9 @@ class DropShadowFilter extends Filter
     {
         super();
 
-        const opt: DropShadowFilterOptions = options ? {...DropShadowFilter.defaults, ...options} : DropShadowFilter.defaults;
+        const opt: DropShadowFilterOptions = options
+            ? { ...DropShadowFilter.defaults, ...options }
+            : DropShadowFilter.defaults;
 
         const { kernels, blur, quality, pixelSize, resolution } = opt;
 
