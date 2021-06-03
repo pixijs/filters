@@ -15,7 +15,8 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pixijs/filters.git"
+    "url": "https://github.com/pixijs/filters.git",
+    "directory": "filters/outline"
   },
   "publishConfig": {
     "access": "public"
