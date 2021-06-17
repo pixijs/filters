@@ -57,7 +57,7 @@ jobs:
     # Release is published and deployed into s3://bucket-name/v5.2.2/
     - name: Deploy Released Branches
       uses: jakejarvis/s3-sync-action@master
-      if: (github.event_name == 'release' && env.AWS_ACCESS_KEY_ID != ''
+      if: github.event_name == 'release' && env.AWS_ACCESS_KEY_ID != ''
       with:
         args: --acl public-read --follow-symlinks --delete --cache-control "max-age=2592000"
       env:
