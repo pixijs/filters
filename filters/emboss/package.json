@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-emboss",
-  "version": "4.1.3-rc.2",
+  "version": "4.1.3",
   "main": "dist/filter-emboss.cjs.js",
   "bundle": "dist/filter-emboss.js",
   "description": "PixiJS filter to apply an emboss effect",
@@ -30,6 +30,6 @@
   },
   "devDependencies": {
     "@pixi/core": "^6.0.0",
-    "@tools/fragments": "4.1.3-rc.2"
+    "@tools/fragments": "4.1.3"
   }
 }
