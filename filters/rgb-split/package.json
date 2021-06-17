@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-rgb-split",
-  "version": "4.1.3-rc",
+  "version": "4.1.3-rc.2",
   "main": "dist/filter-rgb-split.cjs.js",
   "bundle": "dist/filter-rgb-split.js",
   "description": "PixiJS filter to split and shift red, green or blue channels",
@@ -32,6 +32,6 @@
   "devDependencies": {
     "@pixi/core": "^6.0.0",
     "@pixi/math": "^6.0.0",
-    "@tools/fragments": "4.0.0"
+    "@tools/fragments": "4.1.3-rc.2"
   }
 }
