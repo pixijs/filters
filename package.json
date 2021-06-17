@@ -37,7 +37,7 @@
     "prerelease": "run-s build",
     "release": "lerna version --exact --no-push --no-git-tag-version",
     "postrelease": "./scripts/tag-release.sh",
-    "publish-ci": "lerna publish from-package --yes --no-verify-access"
+    "publish-ci": "lerna publish from-git --loglevel silly --yes --no-verify-access"
   },
   "engines": {
     "node": ">=12",
