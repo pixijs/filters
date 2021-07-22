@@ -12,7 +12,7 @@
   ],
   "module": "dist/pixi-filters.esm.js",
   "bundle": "dist/pixi-filters.js",
-  "types": "types.d.ts",
+  "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",
   "license": "MIT",
@@ -24,7 +24,7 @@
   "files": [
     "lib",
     "dist",
-    "types.d.ts"
+    "index.d.ts"
   ],
   "dependencies": {
     "@pixi/filter-adjustment": "4.1.3",
