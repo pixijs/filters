@@ -1,6 +1,6 @@
 {
   "name": "pixi-filters",
-  "version": "4.1.3",
+  "version": "4.1.4",
   "main": "dist/pixi-filters.cjs.js",
   "description": "PixiJS v5 optional display filters",
   "author": "Mat Groves <mat@goodboydigital.com>",
