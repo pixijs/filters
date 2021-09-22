@@ -56,9 +56,9 @@ class DropShadowFilter extends Filter
     public angle = 45;
 
     private _distance = 5;
-    private _resolution: number = settings.FILTER_RESOLUTION;
     private _tintFilter: Filter;
     private _blurFilter: KawaseBlurFilter;
+    protected _resolution: number = settings.FILTER_RESOLUTION;
 
     /**
      * @param {object} [options] - Filter options

@@ -53,7 +53,7 @@ class AdvancedBloomFilter extends Filter
 
     private _extractFilter: ExtractBrightnessFilter;
     private _blurFilter: KawaseBlurFilter;
-    private _resolution: number = settings.FILTER_RESOLUTION;
+    protected _resolution: number = settings.FILTER_RESOLUTION;
 
     /**
      * @param {object|number} [options] - The optional parameters of advanced bloom filter.
