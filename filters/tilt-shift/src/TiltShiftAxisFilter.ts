@@ -43,7 +43,6 @@ class TiltShiftAxisFilter extends Filter
     /**
      * The strength of the blur.
      *
-     * @member {number}
      * @memberof PIXI.filters.TiltShiftAxisFilter#
      */
     get blur(): number
@@ -58,7 +57,6 @@ class TiltShiftAxisFilter extends Filter
     /**
      * The strength of the gradient blur.
      *
-     * @member {number}
      * @memberof PIXI.filters.TiltShiftAxisFilter#
      */
     get gradientBlur(): number
