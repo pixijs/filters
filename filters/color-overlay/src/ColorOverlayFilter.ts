@@ -70,7 +70,6 @@ class ColorOverlayFilter extends Filter
 
     /**
      * The alpha value of the color
-     * @member {number}
      * @default 0
      */
     set alpha(value: number)

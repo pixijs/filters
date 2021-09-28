@@ -60,8 +60,6 @@ class TwistFilter extends Filter
 
     /**
      * The radius of the twist.
-     *
-     * @member {number}
      */
     get radius(): number
     {
@@ -74,8 +72,6 @@ class TwistFilter extends Filter
 
     /**
      * The angle of the twist.
-     *
-     * @member {number}
      */
     get angle(): number
     {

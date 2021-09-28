@@ -77,8 +77,6 @@ class ReflectionFilter extends Filter
 
     /**
      * `true` to reflect the image, `false` for waves-only
-     *
-     * @member {boolean}
      * @default true
      */
     set mirror(value: boolean)
@@ -93,8 +91,6 @@ class ReflectionFilter extends Filter
     /**
      * Vertical position of the reflection point, default is 50% (middle)
      * smaller numbers produce a larger reflection, larger numbers produce a smaller reflection.
-     *
-     * @member {number}
      * @default 0.5
      */
     set boundary(value: number)

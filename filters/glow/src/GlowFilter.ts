@@ -80,7 +80,6 @@ class GlowFilter extends Filter
 
     /**
      * The color of the glow.
-     * @member {number}
      * @default 0xFFFFFF
      */
     get color(): number
@@ -94,7 +93,6 @@ class GlowFilter extends Filter
 
     /**
      * The strength of the glow outward from the edge of the sprite.
-     * @member {number}
      * @default 4
      */
     get outerStrength(): number
@@ -108,7 +106,6 @@ class GlowFilter extends Filter
 
     /**
      * The strength of the glow inward from the edge of the sprite.
-     * @member {number}
      * @default 0
      */
     get innerStrength(): number
@@ -122,7 +119,6 @@ class GlowFilter extends Filter
 
     /**
      * Only draw the glow, not the texture itself
-     * @member {boolean}
      * @default false
      */
     get knockout(): boolean

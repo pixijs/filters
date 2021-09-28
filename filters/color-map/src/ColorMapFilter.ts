@@ -58,8 +58,7 @@ class ColorMapFilter extends Filter
     }
 
     /**
-     * the size of one color slice
-     * @member {number}
+     * The size of one color slice
      * @readonly
      */
     get colorSize(): number
@@ -108,7 +107,6 @@ class ColorMapFilter extends Filter
 
     /**
      * Whether use NEAREST for colorMap texture.
-     * @member {boolean}
      */
     get nearest(): boolean
     {

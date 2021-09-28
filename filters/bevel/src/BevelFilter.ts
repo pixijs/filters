@@ -71,7 +71,6 @@ class BevelFilter extends Filter
 
     /**
      * The angle of the light in degrees.
-     * @member {number}
      * @default 45
      */
     get rotation(): number
@@ -86,7 +85,6 @@ class BevelFilter extends Filter
 
     /**
      * The tickness of the bevel.
-     * @member {number}
      * @default 2
      */
     get thickness(): number
@@ -101,7 +99,6 @@ class BevelFilter extends Filter
 
     /**
      * Color of the light.
-     * @member {number}
      * @default 0xffffff
      */
     get lightColor(): number
@@ -115,7 +112,6 @@ class BevelFilter extends Filter
 
     /**
      * Alpha of the light.
-     * @member {number}
      * @default 0.7
      */
     get lightAlpha(): number
@@ -129,7 +125,6 @@ class BevelFilter extends Filter
 
     /**
      * Color of the shadow.
-     * @member {number}
      * @default 0x000000
      */
     get shadowColor(): number
@@ -143,7 +138,6 @@ class BevelFilter extends Filter
 
     /**
      * Alpha of the shadow.
-     * @member {number}
      * @default 0.7
      */
     get shadowAlpha(): number

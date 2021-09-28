@@ -22,7 +22,6 @@ class ExtractBrightnessFilter extends Filter
     /**
      * Defines how bright a color needs to be extracted.
      *
-     * @member {number}
      * @default 0.5
      */
     get threshold(): number

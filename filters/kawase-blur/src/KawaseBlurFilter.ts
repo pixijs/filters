@@ -137,8 +137,6 @@ class KawaseBlurFilter extends Filter
 
     /**
      * The kernel size of the blur filter, for advanced usage.
-     *
-     * @member {number[]}
      * @default [0]
      */
     get kernels(): number[]
@@ -165,7 +163,6 @@ class KawaseBlurFilter extends Filter
      * Get the if the filter is clampped.
      *
      * @readonly
-     * @member {boolean}
      * @default false
      */
     get clamp(): boolean
@@ -210,8 +207,6 @@ class KawaseBlurFilter extends Filter
 
     /**
      * The quality of the filter, integer greater than `1`.
-     *
-     * @member {number}
      * @default 3
      */
     get quality(): number
@@ -226,8 +221,6 @@ class KawaseBlurFilter extends Filter
 
     /**
      * The amount of blur, value greater than `0`.
-     *
-     * @member {number}
      * @default 4
      */
     get blur(): number

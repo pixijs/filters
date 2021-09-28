@@ -47,8 +47,6 @@ class TiltShiftFilter extends Filter
 
     /**
      * The strength of the blur.
-     *
-     * @member {number}
      */
     get blur(): number
     {
@@ -61,8 +59,6 @@ class TiltShiftFilter extends Filter
 
     /**
      * The strength of the gradient blur.
-     *
-     * @member {number}
      */
     get gradientBlur(): number
     {

@@ -56,8 +56,6 @@ class MotionBlurFilter extends Filter
 
     /**
      * Sets the velocity of the motion for blur effect.
-     *
-     * @member {PIXI.ObservablePoint|PIXI.Point|number[]}
      */
     set velocity(value: IPoint)
     {
@@ -100,8 +98,6 @@ class MotionBlurFilter extends Filter
 
     /**
      * The offset of the blur filter.
-     *
-     * @member {number}
      * @default 0
      */
     set offset(value: number)

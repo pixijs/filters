@@ -119,7 +119,6 @@ class GodrayFilter extends Filter
     /**
      * The angle/light-source of the rays in degrees. For instance, a value of 0 is vertical rays,
      *     values of 90 or -90 produce horizontal rays.
-     * @member {number}
      * @default 30
      */
     get angle(): number
@@ -139,8 +138,6 @@ class GodrayFilter extends Filter
     /**
      * General intensity of the effect. A value closer to 1 will produce a more intense effect,
      * where a value closer to 0 will produce a subtler effect.
-     *
-     * @member {number}
      * @default 0.5
      */
     get gain(): number
@@ -155,8 +152,6 @@ class GodrayFilter extends Filter
     /**
      * The density of the fractal noise. A higher amount produces more rays and a smaller amound
      * produces fewer waves.
-     *
-     * @member {number}
      * @default 2.5
      */
     get lacunarity(): number
@@ -169,8 +164,7 @@ class GodrayFilter extends Filter
     }
 
     /**
-     * The alpha (opacity) of the rays.  0 is fully transparent, 1 is fully opaque
-     * @member {number}
+     * The alpha (opacity) of the rays.  0 is fully transparent, 1 is fully opaque.
      * @default 1
      */
     get alpha(): number
