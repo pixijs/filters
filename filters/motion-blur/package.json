@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-motion-blur",
-  "version": "4.1.3",
+  "version": "4.1.5",
   "main": "dist/filter-motion-blur.cjs.js",
   "bundle": "dist/filter-motion-blur.js",
   "description": "PixiJS filter to apply a directional blur effect",

@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-simple-lightmap",
-  "version": "4.1.3",
+  "version": "4.1.5",
   "main": "dist/filter-simple-lightmap.cjs.js",
   "bundle": "dist/filter-simple-lightmap.js",
   "description": "PixiJS filter to create a light-map from a texture",

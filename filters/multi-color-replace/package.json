@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-multi-color-replace",
-  "version": "4.1.3",
+  "version": "4.1.5",
   "main": "dist/filter-multi-color-replace.cjs.js",
   "bundle": "dist/filter-multi-color-replace.js",
   "description": "PixiJS filter to dynamically replace multiple colors",

@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-reflection",
-  "version": "4.1.3",
+  "version": "4.1.5",
   "main": "dist/filter-reflection.cjs.js",
   "bundle": "dist/filter-reflection.js",
   "description": "PixiJS filter to apply reflection and wave effect",

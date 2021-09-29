@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-glow",
-  "version": "4.1.3",
+  "version": "4.1.5",
   "main": "dist/filter-glow.cjs.js",
   "bundle": "dist/filter-glow.js",
   "description": "PixiJS filter to apply a glow effect",

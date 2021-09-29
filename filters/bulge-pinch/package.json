@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-bulge-pinch",
-  "version": "4.1.3",
+  "version": "4.1.5",
   "main": "dist/filter-bulge-pinch.cjs.js",
   "bundle": "dist/filter-bulge-pinch.js",
   "description": "PixiJS filter to apply a bulge or a pinch effect",

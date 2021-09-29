@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-glitch",
-  "version": "4.1.3",
+  "version": "4.1.5",
   "main": "dist/filter-glitch.cjs.js",
   "bundle": "dist/filter-glitch.js",
   "description": "PixiJS filter to apply a glitch effect",

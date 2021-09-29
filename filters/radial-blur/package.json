@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-radial-blur",
-  "version": "4.1.3",
+  "version": "4.1.5",
   "main": "dist/filter-radial-blur.cjs.js",
   "bundle": "dist/filter-radial-blur.js",
   "description": "PixiJS filter to apply a radial blur effect",
