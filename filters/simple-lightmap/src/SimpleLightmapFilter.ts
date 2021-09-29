@@ -102,7 +102,6 @@ class SimpleLightmapFilter extends Filter
 
     /**
      * When setting `color` as hex, this can be used to set alpha independently.
-     * @member {number}
      */
     get alpha(): number
     {

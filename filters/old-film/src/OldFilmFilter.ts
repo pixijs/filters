@@ -99,8 +99,6 @@ class OldFilmFilter extends Filter
      * The amount of saturation of sepia effect,
      * a value of `1` is more saturation and closer to `0` is less,
      * and a value of `0` produces no sepia effect
-     *
-     * @member {number}
      * @default 0
      */
     set sepia(value: number)
@@ -115,8 +113,6 @@ class OldFilmFilter extends Filter
 
     /**
      * Opacity/intensity of the noise effect between `0` and `1`
-     *
-     * @member {number}
      * @default 0
      */
     set noise(value: number)
@@ -131,8 +127,6 @@ class OldFilmFilter extends Filter
 
     /**
      * The size of the noise particles
-     *
-     * @member {number}
      * @default 0
      */
     set noiseSize(value: number)
@@ -147,8 +141,6 @@ class OldFilmFilter extends Filter
 
     /**
      * How often scratches appear
-     *
-     * @member {number}
      * @default 0
      */
     set scratch(value: number)
@@ -163,8 +155,6 @@ class OldFilmFilter extends Filter
 
     /**
      * The density of the number of scratches
-     *
-     * @member {number}
      * @default 0
      */
     set scratchDensity(value: number)
@@ -179,8 +169,6 @@ class OldFilmFilter extends Filter
 
     /**
      * The width of the scratches
-     *
-     * @member {number}
      * @default 0
      */
     set scratchWidth(value: number)
@@ -196,8 +184,6 @@ class OldFilmFilter extends Filter
     /**
      * The radius of the vignette effect, smaller
      * values produces a smaller vignette
-     *
-     * @member {number}
      * @default 0
      */
     set vignetting(value: number)
@@ -212,8 +198,6 @@ class OldFilmFilter extends Filter
 
     /**
      * Amount of opacity of vignette
-     *
-     * @member {number}
      * @default 0
      */
     set vignettingAlpha(value: number)
@@ -228,8 +212,6 @@ class OldFilmFilter extends Filter
 
     /**
      * Blur intensity of the vignette
-     *
-     * @member {number}
      * @default 0
      */
     set vignettingBlur(value: number)

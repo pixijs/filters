@@ -149,7 +149,6 @@ class AdvancedBloomFilter extends Filter
     /**
      * Defines how bright a color needs to be to affect bloom.
      *
-     * @member {number}
      * @default 0.5
      */
     get threshold(): number
@@ -163,8 +162,6 @@ class AdvancedBloomFilter extends Filter
 
     /**
      * Sets the kernels of the Blur Filter
-     *
-     * @member {number[]}
      */
     get kernels(): number[]
     {
@@ -178,7 +175,6 @@ class AdvancedBloomFilter extends Filter
     /**
      * Sets the strength of the Blur properties simultaneously
      *
-     * @member {number}
      * @default 2
      */
     get blur(): number
@@ -193,7 +189,6 @@ class AdvancedBloomFilter extends Filter
     /**
      * Sets the quality of the Blur Filter
      *
-     * @member {number}
      * @default 4
      */
     get quality(): number

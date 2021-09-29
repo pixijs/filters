@@ -100,8 +100,6 @@ class MotionBlurFilter extends Filter
 
     /**
      * The offset of the blur filter.
-     *
-     * @member {number}
      * @default 0
      */
     set offset(value: number)

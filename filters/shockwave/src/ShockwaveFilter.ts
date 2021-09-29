@@ -87,8 +87,6 @@ class ShockwaveFilter extends Filter
 
     /**
      * The amplitude of the shockwave.
-     *
-     * @member {number}
      */
     get amplitude(): number
     {
@@ -101,8 +99,6 @@ class ShockwaveFilter extends Filter
 
     /**
      * The wavelength of the shockwave.
-     *
-     * @member {number}
      */
     get wavelength(): number
     {
@@ -115,8 +111,6 @@ class ShockwaveFilter extends Filter
 
     /**
      * The brightness of the shockwave.
-     *
-     * @member {number}
      */
     get brightness(): number
     {
@@ -130,8 +124,6 @@ class ShockwaveFilter extends Filter
     /**
      * The speed about the shockwave ripples out.
      * The unit is `pixel/second`
-     *
-     * @member {number}
      */
     get speed(): number
     {
@@ -145,8 +137,6 @@ class ShockwaveFilter extends Filter
     /**
      * The maximum radius of shockwave.
      * `< 0.0` means it's infinity.
-     *
-     * @member {number}
      */
     get radius(): number
     {

@@ -31,7 +31,6 @@ class DotFilter extends Filter
 
     /**
      * The scale of the effect.
-     * @member {number}
      * @default 1
      */
     get scale(): number
@@ -45,7 +44,6 @@ class DotFilter extends Filter
 
     /**
      * The radius of the effect.
-     * @member {number}
      * @default 5
      */
     get angle(): number

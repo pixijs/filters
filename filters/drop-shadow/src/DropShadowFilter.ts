@@ -143,8 +143,6 @@ class DropShadowFilter extends Filter
 
     /**
      * The resolution of the filter.
-     *
-     * @member {number}
      * @default PIXI.settings.FILTER_RESOLUTION
      */
     get resolution(): number
@@ -167,7 +165,6 @@ class DropShadowFilter extends Filter
 
     /**
      * Distance offset of the shadow
-     * @member {number}
      * @default 5
      */
     get distance(): number
@@ -183,7 +180,6 @@ class DropShadowFilter extends Filter
 
     /**
      * The angle of the shadow in degrees
-     * @member {number}
      * @default 2
      */
     get rotation(): number
@@ -198,7 +194,6 @@ class DropShadowFilter extends Filter
 
     /**
      * The alpha of the shadow
-     * @member {number}
      * @default 1
      */
     get alpha(): number
@@ -212,7 +207,6 @@ class DropShadowFilter extends Filter
 
     /**
      * The color of the shadow.
-     * @member {number}
      * @default 0x000000
      */
     get color(): number
@@ -226,8 +220,6 @@ class DropShadowFilter extends Filter
 
     /**
      * Sets the kernels of the Blur Filter
-     *
-     * @member {number[]}
      */
     get kernels(): number[]
     {
@@ -240,7 +232,6 @@ class DropShadowFilter extends Filter
 
     /**
      * The blur of the shadow
-     * @member {number}
      * @default 2
      */
     get blur(): number
@@ -255,8 +246,6 @@ class DropShadowFilter extends Filter
 
     /**
      * Sets the quality of the Blur Filter
-     *
-     * @member {number}
      * @default 4
      */
     get quality(): number

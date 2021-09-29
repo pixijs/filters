@@ -136,8 +136,6 @@ class MultiColorReplaceFilter extends Filter
     /**
      * The maximum number of color replacements supported by this filter. Can be changed
      * _only_ during construction.
-     *
-     * @member {number}
      * @readonly
      */
     get maxColors(): number
@@ -147,8 +145,6 @@ class MultiColorReplaceFilter extends Filter
 
     /**
      * Tolerance of the floating-point comparison between colors (lower = more exact, higher = more inclusive)
-     *
-     * @member {number}
      * @default 0.05
      */
     set epsilon(value: number)

@@ -69,7 +69,6 @@ class OutlineFilter extends Filter
 
     /**
      * The color of the glow.
-     * @member {number}
      * @default 0x000000
      */
     get color(): number
@@ -83,7 +82,6 @@ class OutlineFilter extends Filter
 
     /**
      * The thickness of the outline.
-     * @member {number}
      * @default 1
      */
     get thickness(): number

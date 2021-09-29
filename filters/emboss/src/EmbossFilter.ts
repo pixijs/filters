@@ -25,8 +25,6 @@ class EmbossFilter extends Filter
 
     /**
      * Strength of emboss.
-     *
-     * @member {number}
      */
     get strength(): number
     {

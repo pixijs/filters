@@ -70,8 +70,6 @@ class ZoomBlurFilter extends Filter
 
     /**
      * Intensity of the zoom effect.
-     *
-     * @member {number}
      * @default 0.1
      */
     get strength(): number
@@ -85,8 +83,6 @@ class ZoomBlurFilter extends Filter
 
     /**
      * Radius of the inner region not effected by blur.
-     *
-     * @member {number}
      * @default 0
      */
     get innerRadius(): number
@@ -101,8 +97,6 @@ class ZoomBlurFilter extends Filter
     /**
      * Outer radius of the effect. The default value is `-1`.
      * `< 0.0` means it's infinity.
-     *
-     * @member {number}
      * @default -1
      */
     get radius(): number

@@ -23,7 +23,6 @@ class RadialBlurFilter extends Filter
 
     /**
      * The kernelSize for the blur filter. Must be odd number >= 3.
-     * @member {number}
      * @default 5
      */
     public kernelSize: number;
@@ -56,8 +55,6 @@ class RadialBlurFilter extends Filter
 
     /**
      * Sets the angle in degrees of the motion for blur effect.
-     *
-     * @member {PIXI.Point|number[]}
      * @default 0
      */
     set angle(value: number)
@@ -89,8 +86,6 @@ class RadialBlurFilter extends Filter
 
     /**
      * Outer radius of the effect. The default value of `-1` is infinite.
-     *
-     * @member {number}
      * @default -1
      */
     get radius(): number

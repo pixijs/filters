@@ -76,8 +76,6 @@ class BloomFilter extends Filter
 
     /**
      * Sets the strength of both the blurX and blurY properties simultaneously
-     *
-     * @member {number}
      * @default 2
      */
     get blur(): number
@@ -91,8 +89,6 @@ class BloomFilter extends Filter
 
     /**
      * Sets the strength of the blurX property
-     *
-     * @member {number}
      * @default 2
      */
     get blurX(): number
@@ -106,8 +102,6 @@ class BloomFilter extends Filter
 
     /**
      * Sets the strength of the blurY property
-     *
-     * @member {number}
      * @default 2
      */
     get blurY(): number

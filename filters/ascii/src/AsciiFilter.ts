@@ -30,8 +30,6 @@ class AsciiFilter extends Filter
 
     /**
      * The pixel size used by the filter.
-     *
-     * @member {number}
      */
     get size(): number
     {

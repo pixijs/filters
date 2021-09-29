@@ -63,8 +63,6 @@ class BulgePinchFilter extends Filter
 
     /**
      * The radius of the circle of effect.
-     *
-     * @member {number}
      */
     get radius(): number
     {
@@ -77,8 +75,6 @@ class BulgePinchFilter extends Filter
 
     /**
      * The strength of the effect. -1 to 1 (-1 is strong pinch, 0 is no effect, 1 is strong bulge)
-     *
-     * @member {number}
      */
     get strength(): number
     {

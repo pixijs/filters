@@ -94,8 +94,6 @@ class CRTFilter extends Filter
 
     /**
      * Bent of interlaced lines, higher value means more bend
-     *
-     * @member {number}
      * @default 1
      */
     set curvature(value: number)
@@ -109,8 +107,6 @@ class CRTFilter extends Filter
 
     /**
      * Width of interlaced lines
-     *
-     * @member {number}
      * @default 1
      */
     set lineWidth(value: number)
@@ -124,8 +120,6 @@ class CRTFilter extends Filter
 
     /**
      * Contrast of interlaced lines
-     *
-     * @member {number}
      * @default 0.25
      */
     set lineContrast(value: number)
@@ -139,8 +133,6 @@ class CRTFilter extends Filter
 
     /**
      * `true` for vertical lines, `false` for horizontal lines
-     *
-     * @member {boolean}
      * @default false
      */
     set verticalLine(value: boolean)
@@ -154,8 +146,6 @@ class CRTFilter extends Filter
 
     /**
      * Opacity/intensity of the noise effect between `0` and `1`
-     *
-     * @member {number}
      * @default 0
      */
     set noise(value: number)
@@ -169,8 +159,6 @@ class CRTFilter extends Filter
 
     /**
      * The size of the noise particles
-     *
-     * @member {number}
      * @default 0
      */
     set noiseSize(value: number)
@@ -185,8 +173,6 @@ class CRTFilter extends Filter
     /**
      * The radius of the vignette effect, smaller
      * values produces a smaller vignette
-     *
-     * @member {number}
      * @default 0
      */
     set vignetting(value: number)
@@ -200,8 +186,6 @@ class CRTFilter extends Filter
 
     /**
      * Amount of opacity of vignette
-     *
-     * @member {number}
      * @default 0
      */
     set vignettingAlpha(value: number)
@@ -215,8 +199,6 @@ class CRTFilter extends Filter
 
     /**
      * Blur intensity of the vignette
-     *
-     * @member {number}
      * @default 0
      */
     set vignettingBlur(value: number)

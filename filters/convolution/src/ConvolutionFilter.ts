@@ -39,8 +39,6 @@ class ConvolutionFilter extends Filter
 
     /**
      * An array of values used for matrix transformation. Specified as a 9 point Array.
-     *
-     * @member {Array<number>}
      */
     get matrix(): number[]
     {
@@ -56,8 +54,6 @@ class ConvolutionFilter extends Filter
 
     /**
      * Width of the object you are transforming
-     *
-     * @member {number}
      */
     get width(): number
     {
@@ -70,8 +66,6 @@ class ConvolutionFilter extends Filter
 
     /**
      * Height of the object you are transforming
-     *
-     * @member {number}
      */
     get height(): number
     {

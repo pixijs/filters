@@ -112,7 +112,6 @@ class ColorReplaceFilter extends Filter
 
     /**
      * Tolerance/sensitivity of the floating-point comparison between colors (lower = more exact, higher = more inclusive)
-     * @member {number}
      * @default 0.4
      */
     set epsilon(value: number)

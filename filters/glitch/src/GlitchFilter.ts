@@ -323,7 +323,6 @@ class GlitchFilter extends Filter
 
     /**
      * The count of slices.
-     * @member {number}
      * @default 5
      */
     get slices(): number
@@ -345,7 +344,6 @@ class GlitchFilter extends Filter
 
     /**
      * The angle in degree of the offset of slices.
-     * @member {number}
      * @default 0
      */
     get direction(): number
