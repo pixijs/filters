@@ -35,8 +35,8 @@
     "watch:tools": "lerna run watch --parallel --scope @tools/*",
     "watch": "rollup -cw",
     "prerelease": "run-s build",
-    "release": "lerna version --exact --no-push --no-git-tag-version",
-    "postrelease": "./scripts/tag-release.sh",
+    "release": "lerna version --exact",
+    "version": "npm i --package-lock-only && git add package-lock.json",
     "publish-ci": "lerna publish from-package --yes --no-verify-access"
   },
   "engines": {
