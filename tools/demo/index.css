@@ -28,30 +28,18 @@ body {
     background:#000;
     padding:10px 0;
 }
-.dg.ac {
+.lil-gui.root {
     top:89px !important;
+    max-height: calc(100% - 89px);
 }
-.dg .title {
+.lil-gui .title { 
     color: #999;
-    user-select: none;
 }
-.dg.enabled .title {
+.lil-gui.enabled .title {
     color: #ea4080;
 }
 #logo img {
     display: block;
     margin:8px auto 0;
     width: 80%;
-}
-.dg .property-name .fa {
-    margin: 0 5px;
-}
-.dg .function .property-name {
-    width: 100%;
-}
-.dg .property-name {
-    width: 46%;
-}
-.dg .c {
-    width: 54%;
 }
