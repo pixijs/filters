@@ -29,8 +29,8 @@ float rand(vec2 co) {
 void main(void)
 {
     vec2 pixelCoord = vTextureCoord.xy * filterArea.xy;
-    vec2 dir = vec2(vTextureCoord.xy - vec2(0.5, 0.5)) * filterArea.xy / dimensions;
-
+    vec2 dir = vec2(vTextureCoord.xy * filterArea.xy / dimensions - vec2(0.5, 0.5));
+    
     gl_FragColor = texture2D(uSampler, vTextureCoord);
     vec3 rgb = gl_FragColor.rgb;
 
