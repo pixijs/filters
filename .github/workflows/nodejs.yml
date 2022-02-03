@@ -26,6 +26,8 @@ jobs:
       with:
         node-version: 14
         registry-url: 'https://registry.npmjs.org'
+    - name: Install npm
+      run: npm install -g npm
     - name: Install Dependencies
       run: npm install
 
