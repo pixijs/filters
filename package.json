@@ -36,13 +36,13 @@
     "watch": "rollup -cw",
     "prerelease": "run-s build",
     "release": "lerna version --exact",
-    "version": "npm i --package-lock-only && git add package-lock.json",
+    "version": "npx --yes npm@7.20.2 i --package-lock-only && git add package-lock.json",
     "publish-ci": "lerna publish from-package --yes --no-verify-access"
   },
   "engines": {
     "node": ">=12",
     "yarn": "please-use-npm",
-    "npm": ">=7 <=7.20.2"
+    "npm": ">=7"
   },
   "devDependencies": {
     "@lerna/batch-packages": "^3.13.0",
