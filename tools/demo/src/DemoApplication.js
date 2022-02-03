@@ -11,9 +11,9 @@ import {
 
 const { EventEmitter } = utils;
 
-/* global dat,ga*/
+/* global lil,ga*/
 /**
- * Demo show a bunch of fish and a dat.gui controls
+ * Demo show a bunch of fish and a lil-gui controls
  * @class
  * @extends PIXI.Application
  */
@@ -21,7 +21,7 @@ export default class DemoApplication extends Application
 {
     constructor()
     {
-        const gui = new dat.GUI();
+        const gui = new lil.GUI();
 
         gui.useLocalStorage = false;
 
@@ -301,7 +301,7 @@ export default class DemoApplication extends Application
         }
 
         const app = this;
-        const folder = this.gui.addFolder(options.name);
+        const folder = this.gui.addFolder(options.name).close();
         const ClassRef = filters[id] || externalFilters[id];
 
         if (!ClassRef)
