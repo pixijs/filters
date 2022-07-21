@@ -1,4 +1,4 @@
-# AdjustBasicFilter
+# CRTFilter
 
 PixiJS filter to apply an effect resembling old CRT monitors.
 
