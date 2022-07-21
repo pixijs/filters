@@ -10,7 +10,14 @@
     "Chad Engler <chad@pantherdev.com>",
     "finscn <finscn@gmail.com>"
   ],
-  "module": "dist/pixi-filters.esm.js",
+  "module": "dist/pixi-filters.esm.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/pixi-filters.esm.mjs",
+      "require": "./dist/pixi-filters.cjs.js",
+      "types": "./index.d.ts"
+    }
+  },
   "bundle": "dist/pixi-filters.js",
   "types": "index.d.ts",
   "homepage": "http://pixijs.com/",

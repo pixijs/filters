@@ -8,7 +8,14 @@
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
-  "module": "dist/filter-color-replace.esm.js",
+  "module": "dist/filter-color-replace.esm.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/filter-color-replace.esm.mjs",
+      "require": "./dist/filter-color-replace.cjs.js",
+      "types": "./index.d.ts"
+    }
+  },
   "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",

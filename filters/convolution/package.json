@@ -8,7 +8,14 @@
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
-  "module": "dist/filter-convolution.esm.js",
+  "module": "dist/filter-convolution.esm.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/filter-convolution.esm.mjs",
+      "require": "./dist/filter-convolution.cjs.js",
+      "types": "./index.d.ts"
+    }
+  },
   "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",

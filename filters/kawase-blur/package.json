@@ -5,7 +5,14 @@
   "bundle": "dist/filter-kawase-blur.js",
   "description": "PixiJS filter to apply an alternative, fast blur effect to Gaussian",
   "author": "finscn <finscn@gmail.com>",
-  "module": "dist/filter-kawase-blur.esm.js",
+  "module": "dist/filter-kawase-blur.esm.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/filter-kawase-blur.esm.mjs",
+      "require": "./dist/filter-kawase-blur.cjs.js",
+      "types": "./index.d.ts"
+    }
+  },
   "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",

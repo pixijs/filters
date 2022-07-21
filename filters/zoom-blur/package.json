@@ -8,7 +8,14 @@
   "contributors": [
     "finscn <finscn@gmail.com>"
   ],
-  "module": "dist/filter-zoom-blur.esm.js",
+  "module": "dist/filter-zoom-blur.esm.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/filter-zoom-blur.esm.mjs",
+      "require": "./dist/filter-zoom-blur.cjs.js",
+      "types": "./index.d.ts"
+    }
+  },
   "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",

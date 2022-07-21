@@ -8,7 +8,14 @@
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
-  "module": "dist/filter-cross-hatch.esm.js",
+  "module": "dist/filter-cross-hatch.esm.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/filter-cross-hatch.esm.mjs",
+      "require": "./dist/filter-cross-hatch.cjs.js",
+      "types": "./index.d.ts"
+    }
+  },
   "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",

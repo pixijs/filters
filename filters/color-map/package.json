@@ -5,7 +5,14 @@
   "bundle": "dist/filter-color-map.js",
   "description": "PixiJS filter to apply a color adjust effect",
   "author": "finscn <finscn@gmail.com>",
-  "module": "dist/filter-color-map.esm.js",
+  "module": "dist/filter-color-map.esm.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/filter-color-map.esm.mjs",
+      "require": "./dist/filter-color-map.cjs.js",
+      "types": "./index.d.ts"
+    }
+  },
   "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",

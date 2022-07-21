@@ -8,7 +8,14 @@
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
-  "module": "dist/filter-pixelate.esm.js",
+  "module": "dist/filter-pixelate.esm.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/filter-pixelate.esm.mjs",
+      "require": "./dist/filter-pixelate.cjs.js",
+      "types": "./index.d.ts"
+    }
+  },
   "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",

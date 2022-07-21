@@ -8,7 +8,14 @@
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
-  "module": "dist/filter-tilt-shift.esm.js",
+  "module": "dist/filter-tilt-shift.esm.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/filter-tilt-shift.esm.mjs",
+      "require": "./dist/filter-tilt-shift.cjs.js",
+      "types": "./index.d.ts"
+    }
+  },
   "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",

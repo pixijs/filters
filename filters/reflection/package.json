@@ -5,7 +5,14 @@
   "bundle": "dist/filter-reflection.js",
   "description": "PixiJS filter to apply reflection and wave effect",
   "author": "finscn <finscn@gmail.com>",
-  "module": "dist/filter-reflection.esm.js",
+  "module": "dist/filter-reflection.esm.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/filter-reflection.esm.mjs",
+      "require": "./dist/filter-reflection.cjs.js",
+      "types": "./index.d.ts"
+    }
+  },
   "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",
