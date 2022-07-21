@@ -38,7 +38,7 @@ All filters work with PixiJS v5.
 | **PixelateFilter**<br>_@pixi/filter-pixelate_ | ![pixelate](https://filters.pixijs.download/main/tools/screenshots/dist/pixelate.png?v=2) |
 | **RadialBlurFilter**<br>_@pixi/filter-radial-blur_ | ![radial-blur](https://filters.pixijs.download/main/tools/screenshots/dist/radial-blur.png?v=2) |
 | **ReflectionFilter**<br>_@pixi/filter-reflection_ | ![reflection](https://filters.pixijs.download/main/tools/screenshots/dist/reflection.png?v=2) |
-| **RGBSplitFilter**<br>_@pixi/filter-rgb_ | ![rgb split](https://filters.pixijs.download/main/tools/screenshots/dist/rgb.png?v=2) |
+| **RGBSplitFilter**<br>_@pixi/filter-rgb-split_ | ![rgb split](https://filters.pixijs.download/main/tools/screenshots/dist/rgb.png?v=2) |
 | **ShockwaveFilter**<br>_@pixi/filter-shockwave_ | ![shockwave](https://filters.pixijs.download/main/tools/screenshots/dist/shockwave.gif?v=3) |
 | **SimpleLightmapFilter**<br>_@pixi/filter-simple-lightmap_ | ![simple-lightmap](https://filters.pixijs.download/main/tools/screenshots/dist/simple-lightmap.png?v=2) |
 | **TiltShiftFilter**<br>_@pixi/filter-tilt-shift_ | ![tilt-shift](https://filters.pixijs.download/main/tools/screenshots/dist/tilt-shift.png?v=2) |
