@@ -5,7 +5,14 @@
   "bundle": "dist/filter-glitch.js",
   "description": "PixiJS filter to apply a glitch effect",
   "author": "finscn <finscn@gmail.com>",
-  "module": "dist/filter-glitch.esm.js",
+  "module": "dist/filter-glitch.esm.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/filter-glitch.esm.mjs",
+      "require": "./dist/filter-glitch.cjs.js",
+      "types": "./index.d.ts"
+    }
+  },
   "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",

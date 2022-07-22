@@ -8,7 +8,14 @@
   "contributors": [
     "finscn <finscn@gmail.com>"
   ],
-  "module": "dist/filter-advanced-bloom.esm.js",
+  "module": "dist/filter-advanced-bloom.esm.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/filter-advanced-bloom.esm.mjs",
+      "require": "./dist/filter-advanced-bloom.cjs.js",
+      "types": "./index.d.ts"
+    }
+  },
   "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",

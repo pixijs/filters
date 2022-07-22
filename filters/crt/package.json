@@ -5,7 +5,14 @@
   "bundle": "dist/filter-crt.js",
   "description": "PixiJS filter to apply an effect resembling old CRT monitors",
   "author": "finscn <finscn@gmail.com>",
-  "module": "dist/filter-crt.esm.js",
+  "module": "dist/filter-crt.esm.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/filter-crt.esm.mjs",
+      "require": "./dist/filter-crt.cjs.js",
+      "types": "./index.d.ts"
+    }
+  },
   "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",

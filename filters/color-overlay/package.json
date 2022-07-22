@@ -8,7 +8,14 @@
   "contributors": [
     "Michael Deal <hello@mudcu.be>"
   ],
-  "module": "dist/filter-color-overlay.esm.js",
+  "module": "dist/filter-color-overlay.esm.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/filter-color-overlay.esm.mjs",
+      "require": "./dist/filter-color-overlay.cjs.js",
+      "types": "./index.d.ts"
+    }
+  },
   "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",

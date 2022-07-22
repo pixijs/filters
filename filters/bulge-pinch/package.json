@@ -8,7 +8,14 @@
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
-  "module": "dist/filter-bulge-pinch.esm.js",
+  "module": "dist/filter-bulge-pinch.esm.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/filter-bulge-pinch.esm.mjs",
+      "require": "./dist/filter-bulge-pinch.cjs.js",
+      "types": "./index.d.ts"
+    }
+  },
   "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",

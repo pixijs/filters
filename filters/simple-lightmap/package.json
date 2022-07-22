@@ -8,7 +8,14 @@
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
-  "module": "dist/filter-simple-lightmap.esm.js",
+  "module": "dist/filter-simple-lightmap.esm.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/filter-simple-lightmap.esm.mjs",
+      "require": "./dist/filter-simple-lightmap.cjs.js",
+      "types": "./index.d.ts"
+    }
+  },
   "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",

@@ -8,7 +8,14 @@
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
-  "module": "dist/filter-dot.esm.js",
+  "module": "dist/filter-dot.esm.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/filter-dot.esm.mjs",
+      "require": "./dist/filter-dot.cjs.js",
+      "types": "./index.d.ts"
+    }
+  },
   "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",

@@ -8,7 +8,14 @@
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
-  "module": "dist/filter-shockwave.esm.js",
+  "module": "dist/filter-shockwave.esm.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/filter-shockwave.esm.mjs",
+      "require": "./dist/filter-shockwave.cjs.js",
+      "types": "./index.d.ts"
+    }
+  },
   "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",

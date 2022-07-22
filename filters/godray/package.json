@@ -9,7 +9,14 @@
     "Matt Karl <matt@mattkarl.com>",
     "Ivan Popelyshevl <ivan.popelyshev@gmail.com>"
   ],
-  "module": "dist/filter-godray.esm.js",
+  "module": "dist/filter-godray.esm.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/filter-godray.esm.mjs",
+      "require": "./dist/filter-godray.cjs.js",
+      "types": "./index.d.ts"
+    }
+  },
   "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",

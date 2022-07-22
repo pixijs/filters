@@ -9,7 +9,14 @@
     "Matt Karl <matt@mattkarl.com>",
     "Nils Kuhnhenn <lain@volafile.org>"
   ],
-  "module": "dist/filter-glow.esm.js",
+  "module": "dist/filter-glow.esm.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/filter-glow.esm.mjs",
+      "require": "./dist/filter-glow.cjs.js",
+      "types": "./index.d.ts"
+    }
+  },
   "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",

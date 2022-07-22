@@ -8,7 +8,14 @@
   "contributors": [
     "finscn <finscn@gmail.com>"
   ],
-  "module": "dist/filter-multi-color-replace.esm.js",
+  "module": "dist/filter-multi-color-replace.esm.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/filter-multi-color-replace.esm.mjs",
+      "require": "./dist/filter-multi-color-replace.cjs.js",
+      "types": "./index.d.ts"
+    }
+  },
   "types": "index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",
