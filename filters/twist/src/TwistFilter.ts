@@ -35,7 +35,7 @@ class TwistFilter extends Filter
      * @param {number} [options.radius=200] - The radius of the twist.
      * @param {number} [options.angle=4] - The angle of the twist.
      * @param {number} [options.padding=20] - Padding for filter area.
-     * @param {number} [options.offset] - Center of twist, in local, pixel coordinates.
+     * @param {PIXI.Point} [options.offset] - Center of twist, in local, pixel coordinates.
      */
     constructor(options?: Partial<TwistFilterOptions>)
     {
