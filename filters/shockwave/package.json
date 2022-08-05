@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-shockwave",
-  "version": "4.1.5",
+  "version": "4.2.0",
   "main": "dist/filter-shockwave.cjs.js",
   "bundle": "dist/filter-shockwave.js",
   "description": "PixiJS filter to apply a shockwave-type effect",

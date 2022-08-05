@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-bloom",
-  "version": "4.1.5",
+  "version": "4.2.0",
   "main": "dist/filter-bloom.cjs.js",
   "bundle": "dist/filter-bloom.js",
   "description": "PixiJS filter to apply a simple bloom effect",
