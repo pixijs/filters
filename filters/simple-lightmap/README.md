@@ -20,4 +20,4 @@ container.filters = [new SimpleLightmapFilter(texture, [0, 0, 0, 0.5])];
 
 ## Documentation
 
-See https://pixijs.github.io/pixi-filters/docs
+See https://filters.pixijs.download/main/docs/PIXI.filters.SimpleLightmapFilter.html
