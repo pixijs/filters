@@ -11,7 +11,6 @@ import { Filter, Point } from '@pixi/core';
  *
  * @class
  * @extends PIXI.Filter
- * @memberof PIXI.filters
  * @private
  */
 class TiltShiftAxisFilter extends Filter
@@ -42,7 +41,7 @@ class TiltShiftAxisFilter extends Filter
     /**
      * The strength of the blur.
      *
-     * @memberof PIXI.filters.TiltShiftAxisFilter#
+     * @memberof TiltShiftAxisFilter#
      */
     get blur(): number
     {
@@ -56,7 +55,7 @@ class TiltShiftAxisFilter extends Filter
     /**
      * The strength of the gradient blur.
      *
-     * @memberof PIXI.filters.TiltShiftAxisFilter#
+     * @memberof TiltShiftAxisFilter#
      */
     get gradientBlur(): number
     {
@@ -71,7 +70,7 @@ class TiltShiftAxisFilter extends Filter
      * The X value to start the effect at.
      *
      * @member {PIXI.Point}
-     * @memberof PIXI.filters.TiltShiftAxisFilter#
+     * @memberof TiltShiftAxisFilter#
      */
     get start(): Point
     {
@@ -87,7 +86,7 @@ class TiltShiftAxisFilter extends Filter
      * The X value to end the effect at.
      *
      * @member {PIXI.Point}
-     * @memberof PIXI.filters.TiltShiftAxisFilter#
+     * @memberof TiltShiftAxisFilter#
      */
     get end(): Point
     {

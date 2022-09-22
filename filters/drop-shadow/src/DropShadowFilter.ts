@@ -24,7 +24,6 @@ interface DropShadowFilterOptions {
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/drop-shadow.png)
  * @class
  * @extends PIXI.Filter
- * @memberof PIXI.filters
  * @see {@link https://www.npmjs.com/package/@pixi/filter-drop-shadow|@pixi/filter-drop-shadow}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */

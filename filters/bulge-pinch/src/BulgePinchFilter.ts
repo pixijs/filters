@@ -21,7 +21,6 @@ interface BulgePinchFilterOptions {
  *
  * @class
  * @extends PIXI.Filter
- * @memberof PIXI.filters
  * @see {@link https://www.npmjs.com/package/@pixi/filter-bulge-pinch|@pixi/filter-bulge-pinch}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */

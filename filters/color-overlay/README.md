@@ -20,4 +20,4 @@ container.filters = [new ColorOverlayFilter()];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.ColorOverlayFilter.html
+See https://filters.pixijs.download/main/docs/ColorOverlayFilter.html

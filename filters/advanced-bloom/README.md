@@ -20,4 +20,4 @@ container.filters = [new AdvancedBloomFilter()];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.AdvancedBloomFilter.html
+See https://filters.pixijs.download/main/docs/AdvancedBloomFilter.html

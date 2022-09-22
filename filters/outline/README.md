@@ -20,4 +20,4 @@ container.filters = [new OutlineFilter()];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.OutlineFilter.html
+See https://filters.pixijs.download/main/docs/OutlineFilter.html

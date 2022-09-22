@@ -20,4 +20,4 @@ container.filters = [new BloomFilter()];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.BloomFilter.html
+See https://filters.pixijs.download/main/docs/BloomFilter.html

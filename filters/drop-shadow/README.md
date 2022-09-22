@@ -20,4 +20,4 @@ container.filters = [new DropShadowFilter()];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.DropShadowFilter.html
+See https://filters.pixijs.download/main/docs/DropShadowFilter.html

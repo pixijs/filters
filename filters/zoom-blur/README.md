@@ -20,4 +20,4 @@ container.filters = [new ZoomBlurFilter()];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.ZoomBlurFilter.html
+See https://filters.pixijs.download/main/docs/ZoomBlurFilter.html

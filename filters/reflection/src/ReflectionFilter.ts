@@ -20,7 +20,6 @@ interface ReflectionFilterOptions {
  *
  * @class
  * @extends PIXI.Filter
- * @memberof PIXI.filters
  * @see {@link https://www.npmjs.com/package/@pixi/filter-reflection|@pixi/filter-reflection}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */

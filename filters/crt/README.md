@@ -20,4 +20,4 @@ container.filters = [new CRTFilter()];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.CRTFilter.html
+See https://filters.pixijs.download/main/docs/CRTFilter.html

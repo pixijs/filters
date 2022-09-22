@@ -13,7 +13,6 @@ import type { Point, CLEAR_MODES } from '@pixi/core';
  *
  * @class
  * @extends PIXI.Filter
- * @memberof PIXI.filters
  * @see {@link https://www.npmjs.com/package/@pixi/filter-tilt-shift|@pixi/filter-tilt-shift}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */

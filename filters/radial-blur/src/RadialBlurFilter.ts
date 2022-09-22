@@ -11,7 +11,6 @@ type PointLike = Point | number[];
  *
  * @class
  * @extends PIXI.Filter
- * @memberof PIXI.filters
  * @see {@link https://www.npmjs.com/package/@pixi/filter-radial-blur|@pixi/filter-radial-blur}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */

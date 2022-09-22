@@ -10,7 +10,6 @@ type Color = number | number[] | Float32Array;
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/multi-color-replace.png)
  * @class
  * @extends PIXI.Filter
- * @memberof PIXI.filters
  * @see {@link https://www.npmjs.com/package/@pixi/filter-multi-color-replace|@pixi/filter-multi-color-replace}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  *

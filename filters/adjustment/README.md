@@ -20,4 +20,4 @@ container.filters = [new AdjustmentFilter()];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.AdjustmentFilter.html
+See https://filters.pixijs.download/main/docs/AdjustmentFilter.html

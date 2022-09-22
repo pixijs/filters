@@ -20,4 +20,4 @@ container.filters = [new ColorReplaceFilter()];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.ColorReplaceFilter.html
+See https://filters.pixijs.download/main/docs/ColorReplaceFilter.html

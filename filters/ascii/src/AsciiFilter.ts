@@ -13,7 +13,6 @@ import { Filter } from '@pixi/core';
  *
  * @class
  * @extends PIXI.Filter
- * @memberof PIXI.filters
  * @see {@link https://www.npmjs.com/package/@pixi/filter-ascii|@pixi/filter-ascii}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */

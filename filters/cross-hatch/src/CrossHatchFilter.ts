@@ -8,7 +8,6 @@ import { Filter } from '@pixi/core';
  *
  * @class
  * @extends PIXI.Filter
- * @memberof PIXI.filters
  * @see {@link https://www.npmjs.com/package/@pixi/filter-cross-hatch|@pixi/filter-cross-hatch}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */

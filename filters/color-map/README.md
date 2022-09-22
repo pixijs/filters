@@ -23,4 +23,4 @@ container.filters = [new ColorMapFilter(colorMap)];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.ColorMapFilter.html
+See https://filters.pixijs.download/main/docs/ColorMapFilter.html

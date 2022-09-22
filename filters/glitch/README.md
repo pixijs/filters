@@ -20,4 +20,4 @@ container.filters = [new GlitchFilter()];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.GlitchFilter.html
+See https://filters.pixijs.download/main/docs/GlitchFilter.html

@@ -8,7 +8,6 @@ import { Filter } from '@pixi/core';
  *
  * @class
  * @extends PIXI.Filter
- * @memberof PIXI.filters
  * @see {@link https://www.npmjs.com/package/@pixi/filter-emboss|@pixi/filter-emboss}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */

@@ -20,4 +20,4 @@ container.filters = [new RadialBlurFilter(60, 9)];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.RadialBlurFilter.html
+See https://filters.pixijs.download/main/docs/RadialBlurFilter.html

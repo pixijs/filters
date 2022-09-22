@@ -25,7 +25,6 @@ interface AdvancedBloomFilterOptions {
  *
  * @class
  * @extends PIXI.Filter
- * @memberof PIXI.filters
  * @see {@link https://www.npmjs.com/package/@pixi/filter-advanced-bloom|@pixi/filter-advanced-bloom}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */

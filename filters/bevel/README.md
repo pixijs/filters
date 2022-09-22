@@ -20,4 +20,4 @@ container.filters = [new BevelFilter()];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.BevelFilter.html
+See https://filters.pixijs.download/main/docs/BevelFilter.html

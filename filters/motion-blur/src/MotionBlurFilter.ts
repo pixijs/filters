@@ -9,7 +9,6 @@ import type { IPoint, CLEAR_MODES, FilterSystem, RenderTexture } from '@pixi/cor
  *
  * @class
  * @extends PIXI.Filter
- * @memberof PIXI.filters
  * @see {@link https://www.npmjs.com/package/@pixi/filter-motion-blur|@pixi/filter-motion-blur}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */

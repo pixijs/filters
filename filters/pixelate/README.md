@@ -20,4 +20,4 @@ container.filters = [new PixelateFilter()];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.PixelateFilter.html
+See https://filters.pixijs.download/main/docs/PixelateFilter.html

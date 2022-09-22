@@ -20,4 +20,4 @@ container.filters = [new AsciiFilter()];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.AsciiFilter.html
+See https://filters.pixijs.download/main/docs/AsciiFilter.html

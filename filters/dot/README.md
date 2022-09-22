@@ -20,4 +20,4 @@ container.filters = [new DotFilter()];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.DotFilter.html
+See https://filters.pixijs.download/main/docs/DotFilter.html

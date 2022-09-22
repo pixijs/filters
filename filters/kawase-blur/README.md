@@ -20,4 +20,4 @@ container.filters = [new KawaseBlurFilter()];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.KawaseBlurFilter.html
+See https://filters.pixijs.download/main/docs/KawaseBlurFilter.html
