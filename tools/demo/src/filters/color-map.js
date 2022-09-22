@@ -1,6 +1,6 @@
 export default function ()
 {
-    const colorMap = this.resources.colormap.texture;
+    const colorMap = this.resources.colormap;
 
     this.addFilter('ColorMapFilter', {
         enabled: false,

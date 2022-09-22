@@ -15,15 +15,12 @@
     }
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.1",
     "cross-env": "^5.2.0",
     "pixi-filters": "4.2.0",
     "rimraf": "^2.6.3",
     "rollup": "^2.35.1",
-    "rollup-plugin-esbuild": "^4.10.1",
-    "rollup-plugin-node-builtins": "^2.1.2",
-    "rollup-plugin-node-globals": "^1.4.0"
+    "rollup-plugin-esbuild": "^4.10.1"
   },
   "dependencies": {
     "pixi.js": "^7.0.0-X"

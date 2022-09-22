@@ -7,10 +7,15 @@ import {
     Sprite,
     TilingSprite,
     Assets,
+    extensions,
+    TilingSpriteRenderer,
     utils,
     filters as externalFilters } from 'pixi.js';
 
 const { EventEmitter } = utils;
+
+// TODO: PixiJS should fix this!
+extensions.add(TilingSpriteRenderer);
 
 /* global lil,ga*/
 /**
@@ -299,23 +304,7 @@ export default class DemoApplication extends Application
             throw new Error(`Unable to find class name with "${id}"`);
         }
 
-        let filter;
-
-        if (options.args)
-        {
-            // eslint-disable-next-line func-style
-            const ClassRefArgs = function (a)
-            {
-                ClassRef.apply(this, a);
-            };
-
-            ClassRefArgs.prototype = ClassRef.prototype;
-            filter = new ClassRefArgs(options.args);
-        }
-        else
-        {
-            filter = new ClassRef();
-        }
+        const filter = new ClassRef(...(options.args || []));
 
         // Set enabled status
         filter.enabled = options.enabled;

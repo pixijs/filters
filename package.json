@@ -58,7 +58,6 @@
     "@pixi-build-tools/api-extractor-lerna-monorepo": "^1.0.3",
     "@pixi/eslint-config": "^2.0.1",
     "@pixi/webdoc-template": "^1.5.3",
-    "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.1",
     "@webdoc/cli": "^1.5.5",
     "acorn": "^6.1.1",

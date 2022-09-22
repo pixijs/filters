@@ -1,7 +1,5 @@
 import esbuild from 'rollup-plugin-esbuild';
 import resolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
-import builtins from 'rollup-plugin-node-builtins';
 
 const globals = {
     'pixi.js': 'PIXI',
@@ -19,9 +17,7 @@ export default {
         file: 'index.js',
     },
     plugins: [
-        builtins(),
         resolve(),
-        commonjs(),
         esbuild({
             target: 'ES2017',
             minify: process.env.NODE_ENV === 'production',
