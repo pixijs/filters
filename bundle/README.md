@@ -58,23 +58,26 @@ yarn add pixi-filters
 
 ## Usage
 
-### Browser
-
-```html
-<script src="https://pixijs.download/release/pixi.min.js"></script>
-<script src="pixi-filters/dist/pixi-filters.js"></script>
-```
-```js
-var filter = new PIXI.filters.AsciiFilter();
-```
-
 ### Bundler (Rollup, Webpack, etc)
 
-Use ES6+ imports to import the specific filter. _Note: `PIXI` global is not accessible when building with bundlers._
+Use imports to grab the specific filter to use. 
 
 ```js
 import { DotFilter } from 'pixi-filters';
+
 const filter = new DotFilter();
+```
+
+### Browser
+
+Filters are automatically added to the `PIXI.filters` global namespace.
+
+```html
+<script src="pixi.min.js"></script>
+<script src="pixi-filters.js"></script>
+<script>
+    const filter = new PIXI.filters.DotFilter();
+</script>
 ```
 
 ## Documentation
