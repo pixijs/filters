@@ -2,10 +2,8 @@ import { ExtractBrightnessFilter } from './ExtractBrightnessFilter';
 import { KawaseBlurFilter } from '@pixi/filter-kawase-blur';
 import { vertex } from '@tools/fragments';
 import fragment from './advanced-bloom.frag';
-import { Filter } from '@pixi/core';
-import { settings } from '@pixi/settings';
-import type { FilterSystem, FilterState, RenderTexture } from '@pixi/core';
-import type { CLEAR_MODES } from '@pixi/constants';
+import { Filter, settings } from '@pixi/core';
+import type { FilterSystem, FilterState, RenderTexture, CLEAR_MODES } from '@pixi/core';
 import type { PixelSizeValue } from '@pixi/filter-kawase-blur';
 
 interface AdvancedBloomFilterOptions {

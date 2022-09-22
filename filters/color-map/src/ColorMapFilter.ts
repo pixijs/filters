@@ -1,9 +1,7 @@
 import { vertex } from '@tools/fragments';
 import fragment from './color-map.frag';
-import { Filter, Texture, TextureSource } from '@pixi/core';
-import { MIPMAP_MODES, SCALE_MODES } from '@pixi/constants';
-import type { FilterSystem, RenderTexture } from '@pixi/core';
-import type { CLEAR_MODES } from '@pixi/constants';
+import { Filter, Texture, TextureSource, MIPMAP_MODES, SCALE_MODES } from '@pixi/core';
+import type { FilterSystem, RenderTexture, CLEAR_MODES } from '@pixi/core';
 
 type ColorMapSource = TextureSource | Texture | null;
 

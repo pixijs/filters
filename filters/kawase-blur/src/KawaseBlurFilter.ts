@@ -1,11 +1,8 @@
 import { vertex } from '@tools/fragments';
 import fragment from './kawase-blur.frag';
 import fragmentClamp from './kawase-blur-clamp.frag';
-import { Filter } from '@pixi/core';
-import { Point } from '@pixi/math';
-import type { IPoint } from '@pixi/math';
-import type { FilterSystem, RenderTexture } from '@pixi/core';
-import type { CLEAR_MODES } from '@pixi/constants';
+import { Filter, Point } from '@pixi/core';
+import type { IPoint, CLEAR_MODES, FilterSystem, RenderTexture } from '@pixi/core';
 
 type PixelSizeValue = IPoint | number[] | number;
 

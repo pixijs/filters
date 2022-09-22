@@ -1,7 +1,6 @@
 import { vertex } from '@tools/fragments';
 import fragment from './colorReplace.frag';
-import { Filter } from '@pixi/core';
-import { hex2rgb, rgb2hex } from '@pixi/utils';
+import { Filter, utils } from '@pixi/core';
 
 type Color = number | number[] | Float32Array;
 
@@ -67,7 +66,7 @@ class ColorReplaceFilter extends Filter
 
         if (typeof value === 'number')
         {
-            hex2rgb(value, arr);
+            utils.hex2rgb(value, arr);
             this._originalColor = value;
         }
         else
@@ -75,7 +74,7 @@ class ColorReplaceFilter extends Filter
             arr[0] = value[0];
             arr[1] = value[1];
             arr[2] = value[2];
-            this._originalColor = rgb2hex(arr);
+            this._originalColor = utils.rgb2hex(arr);
         }
     }
     get originalColor(): Color
@@ -94,7 +93,7 @@ class ColorReplaceFilter extends Filter
 
         if (typeof value === 'number')
         {
-            hex2rgb(value, arr);
+            utils.hex2rgb(value, arr);
             this._newColor = value;
         }
         else
@@ -102,7 +101,7 @@ class ColorReplaceFilter extends Filter
             arr[0] = value[0];
             arr[1] = value[1];
             arr[2] = value[2];
-            this._newColor = rgb2hex(arr);
+            this._newColor = utils.rgb2hex(arr);
         }
     }
     get newColor(): Color

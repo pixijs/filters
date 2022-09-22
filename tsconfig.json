@@ -2,12 +2,13 @@
     "compilerOptions": {
         "moduleResolution": "node",
         "allowJs": false,
-        "target": "es5",
+        "target": "ES2017",
         "removeComments": false,
         "esModuleInterop": true,
         "strict": true,
         "sourceMap": true,
         "inlineSources": true,
+        "skipLibCheck": true,
         "typeRoots": [
           "node_modules/@types",
           "typings"

@@ -1,7 +1,7 @@
 import { vertex } from '@tools/fragments';
 import fragment from './pixelate.frag';
 import { Filter } from '@pixi/core';
-import type { Point } from '@pixi/math';
+import type { Point } from '@pixi/core';
 
 type Size = number | number[] | Point;
 

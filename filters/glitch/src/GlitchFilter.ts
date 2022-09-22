@@ -1,11 +1,7 @@
 import { vertex } from '@tools/fragments';
 import fragment from './glitch.frag';
-import { Filter, Texture } from '@pixi/core';
-import { SCALE_MODES } from '@pixi/constants';
-import { DEG_TO_RAD, Rectangle } from '@pixi/math';
-import type { IPoint } from '@pixi/math';
-import type { FilterSystem, RenderTexture } from '@pixi/core';
-import type { CLEAR_MODES } from '@pixi/constants';
+import { Filter, Texture, SCALE_MODES, DEG_TO_RAD, Rectangle } from '@pixi/core';
+import type { IPoint, CLEAR_MODES, FilterSystem, RenderTexture } from '@pixi/core';
 
 type PointLike = IPoint | number[];
 

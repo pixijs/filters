@@ -33,19 +33,13 @@
     "index.d.ts"
   ],
   "peerDependencies": {
-    "@pixi/constants": "^6.0.0",
-    "@pixi/core": "^6.0.0",
-    "@pixi/filter-alpha": "^6.0.0",
-    "@pixi/filter-blur": "^6.0.0",
-    "@pixi/math": "^6.0.0",
-    "@pixi/settings": "^6.0.0"
+    "@pixi/core": "^7.0.0-X",
+    "@pixi/filter-alpha": "^7.0.0-X",
+    "@pixi/filter-blur": "^7.0.0-X"
   },
   "devDependencies": {
-    "@pixi/constants": "^6.0.0",
-    "@pixi/core": "^6.0.0",
-    "@pixi/filter-alpha": "^6.0.0",
-    "@pixi/filter-blur": "^6.0.0",
-    "@pixi/math": "^6.0.0",
-    "@pixi/settings": "^6.0.0"
+    "@pixi/core": "^7.0.0-X",
+    "@pixi/filter-alpha": "^7.0.0-X",
+    "@pixi/filter-blur": "^7.0.0-X"
   }
 }

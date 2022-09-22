@@ -1,9 +1,7 @@
 import { vertex } from '@tools/fragments';
 import fragment from './simpleLightmap.frag';
-import { Filter } from '@pixi/core';
-import type { Texture, FilterSystem, RenderTexture } from '@pixi/core';
-import type { CLEAR_MODES } from '@pixi/constants';
-import { hex2rgb, rgb2hex } from '@pixi/utils';
+import { Filter, utils } from '@pixi/core';
+import type { Texture, FilterSystem, RenderTexture, CLEAR_MODES } from '@pixi/core';
 
 type Color = number | number[];
 
@@ -83,7 +81,7 @@ class SimpleLightmapFilter extends Filter
 
         if (typeof value === 'number')
         {
-            hex2rgb(value, arr);
+            utils.hex2rgb(value, arr);
             this._color = value;
         }
         else
@@ -92,7 +90,7 @@ class SimpleLightmapFilter extends Filter
             arr[1] = value[1];
             arr[2] = value[2];
             arr[3] = value[3];
-            this._color = rgb2hex(arr);
+            this._color = utils.rgb2hex(arr);
         }
     }
     get color(): Color

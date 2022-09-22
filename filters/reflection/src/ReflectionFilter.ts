@@ -1,8 +1,7 @@
 import { vertex } from '@tools/fragments';
 import fragment from './reflection.frag';
 import { Filter } from '@pixi/core';
-import type { FilterSystem, RenderTexture } from '@pixi/core';
-import type { CLEAR_MODES } from '@pixi/constants';
+import type { FilterSystem, RenderTexture, CLEAR_MODES } from '@pixi/core';
 
 type Range = number[] | Float32Array;
 

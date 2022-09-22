@@ -34,14 +34,10 @@
     "index.d.ts"
   ],
   "peerDependencies": {
-    "@pixi/constants": "^6.0.0",
-    "@pixi/core": "^6.0.0",
-    "@pixi/math": "^6.0.0"
+    "@pixi/core": "^7.0.0-X"
   },
   "devDependencies": {
-    "@pixi/constants": "^6.0.0",
-    "@pixi/core": "^6.0.0",
-    "@pixi/math": "^6.0.0",
+    "@pixi/core": "^7.0.0-X",
     "@tools/fragments": "4.1.3"
   }
 }

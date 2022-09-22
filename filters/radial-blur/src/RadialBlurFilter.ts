@@ -1,9 +1,7 @@
 import { vertex } from '@tools/fragments';
 import fragment from './radial-blur.frag';
 import { Filter } from '@pixi/core';
-import type { Point } from '@pixi/math';
-import type { FilterSystem, RenderTexture } from '@pixi/core';
-import type { CLEAR_MODES } from '@pixi/constants';
+import type { Point, CLEAR_MODES, FilterSystem, RenderTexture } from '@pixi/core';
 
 type PointLike = Point | number[];
 

@@ -1,11 +1,8 @@
 import { vertex } from '@tools/fragments';
 import perlin from './perlin.frag';
 import fragment from './gorday.frag';
-import { Filter } from '@pixi/core';
-import { Point, DEG_TO_RAD } from '@pixi/math';
-import type { Rectangle } from '@pixi/math';
-import type { FilterSystem, RenderTexture } from '@pixi/core';
-import type { CLEAR_MODES } from '@pixi/constants';
+import { Filter, Point, DEG_TO_RAD } from '@pixi/core';
+import type { Rectangle, CLEAR_MODES, FilterSystem, RenderTexture } from '@pixi/core';
 
 interface GodrayFilterOptions {
     angle: number;

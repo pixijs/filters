@@ -20,14 +20,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
-    - name: Use Node.js 14.x
-      uses: actions/setup-node@v2
+      uses: actions/checkout@v3
+    - name: Use Node.js 16.x
+      uses: actions/setup-node@v3
       with:
-        node-version: 14
+        node-version: 16
         registry-url: 'https://registry.npmjs.org'
     - name: Install npm
-      run: npm install -g npm
+      run: npm install -g npm@8
     - name: Install Dependencies
       run: npm install
 
@@ -38,7 +38,7 @@ jobs:
       run: echo ::set-output name=BRANCH_NAME::${GITHUB_REF/refs\/heads\//}
 
     - name: Build for Distribution
-      uses: GabrielBB/xvfb-action@v1.0
+      uses: GabrielBB/xvfb-action@v1
       with:
         run: npm run dist
 

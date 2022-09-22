@@ -1,8 +1,7 @@
 import { TiltShiftXFilter } from './TiltShiftXFilter';
 import { TiltShiftYFilter } from './TiltShiftYFilter';
 import { Filter, FilterSystem, RenderTexture } from '@pixi/core';
-import type { Point } from '@pixi/math';
-import type { CLEAR_MODES } from '@pixi/constants';
+import type { Point, CLEAR_MODES } from '@pixi/core';
 
 // @author Vico @vicocotea
 // original filter https://github.com/evanw/glfx.js/blob/master/src/filters/blur/tiltshift.js
