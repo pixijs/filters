@@ -4,8 +4,8 @@ export default function ()
 {
     const app = this;
 
-    this.resources.map.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
-    const displacementSprite = new PIXI.Sprite(this.resources.map.texture);
+    this.resources.map.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
+    const displacementSprite = new PIXI.Sprite(this.resources.map);
 
     this.addFilter('DisplacementFilter', {
         enabled: true,

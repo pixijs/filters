@@ -10,6 +10,11 @@ app.on('ready', () =>
         width: 800,
         height: 600,
         show: debug,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false,
+            enableRemoteModule: true,
+        }
     });
 
     main.loadURL(url.format({

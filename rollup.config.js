@@ -1,7 +1,6 @@
 import path from 'path';
 import esbuild from 'rollup-plugin-esbuild';
 import resolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
 import { string } from 'rollup-plugin-string';
 import dedupeDefaultVert from './scripts/rollup-dedupe-vert'
 import getSortedPackages from './scripts/get-sorted-packages';
@@ -10,10 +9,9 @@ async function main() {
     const plugins = [
         esbuild({
             target: 'ES2017',
-            minify: process.env.NODE_ENV !== 'production',
+            minify: process.env.NODE_ENV === 'production',
         }),
-        commonjs({ preferBuiltins: true }),
-        resolve({ preferBuiltins: true }),
+        resolve(),
         string({
             include: [
                 '**/*.frag',

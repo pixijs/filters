@@ -40,7 +40,7 @@ PIXI.Assets.addBundle('assets', {
 });
 
 // Load image
-PIXI.Assets.load('assets').then((resources) =>
+PIXI.Assets.loadBundle('assets').then((resources) =>
 {
     lightmap = resources.lightmap;
     colormap = resources.colormap;
@@ -118,7 +118,7 @@ function next()
             // Save image
             app.render();
             base64ToImage(
-                app.renderer.plugins.extract.base64(),
+                app.renderer.extract.base64(),
                 outputPath + path.sep, {
                     fileName: obj.filename,
                     type: 'png',
