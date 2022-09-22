@@ -1,7 +1,6 @@
 import { vertex } from '@tools/fragments';
 import fragment from './tilt-shift.frag';
-import { Filter } from '@pixi/core';
-import { Point } from '@pixi/math';
+import { Filter, Point } from '@pixi/core';
 
 // @author Vico @vicocotea
 // original filter https://github.com/evanw/glfx.js/blob/master/src/filters/blur/tiltshift.js

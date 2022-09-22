@@ -1,13 +1,8 @@
 import { KawaseBlurFilter } from '@pixi/filter-kawase-blur';
 import { vertex } from '@tools/fragments';
 import fragment from './dropshadow.frag';
-import { Filter } from '@pixi/core';
-import { settings } from '@pixi/settings';
-import { DEG_TO_RAD, Point } from '@pixi/math';
-import { rgb2hex, hex2rgb } from '@pixi/utils';
-import type { FilterSystem, RenderTexture } from '@pixi/core';
-import type { CLEAR_MODES } from '@pixi/constants';
-import type { IPoint } from '@pixi/math';
+import { Filter, settings, DEG_TO_RAD, Point, utils } from '@pixi/core';
+import type { IPoint, CLEAR_MODES, FilterSystem, RenderTexture } from '@pixi/core';
 
 type PixelSizeValue = number | number[] | IPoint;
 
@@ -211,11 +206,11 @@ class DropShadowFilter extends Filter
      */
     get color(): number
     {
-        return rgb2hex(this._tintFilter.uniforms.color);
+        return utils.rgb2hex(this._tintFilter.uniforms.color);
     }
     set color(value: number)
     {
-        hex2rgb(value, this._tintFilter.uniforms.color);
+        utils.hex2rgb(value, this._tintFilter.uniforms.color);
     }
 
     /**

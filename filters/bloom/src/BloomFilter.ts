@@ -1,11 +1,7 @@
-import { Filter } from '@pixi/core';
-import { BLEND_MODES } from '@pixi/constants';
+import { Filter, Point, BLEND_MODES, settings } from '@pixi/core';
 import { AlphaFilter } from '@pixi/filter-alpha';
 import { BlurFilterPass } from '@pixi/filter-blur';
-import { settings } from '@pixi/settings';
-import { Point } from '@pixi/math';
-import type { FilterSystem, RenderTexture } from '@pixi/core';
-import type { CLEAR_MODES } from '@pixi/constants';
+import type { FilterSystem, RenderTexture, CLEAR_MODES } from '@pixi/core';
 
 type BlurValue = number | Point | number[];
 

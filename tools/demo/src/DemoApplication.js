@@ -6,6 +6,7 @@ import {
     Rectangle,
     Sprite,
     TilingSprite,
+    Assets,
     utils,
     filters as externalFilters } from 'pixi.js';
 
@@ -41,7 +42,7 @@ export default class DemoApplication extends Application
         settings.PRECISION_FRAGMENT = 'highp';
 
         this.domElement = domElement;
-
+        this.resources = null;
         this.initWidth = initWidth;
         this.initHeight = initHeight;
         this.animating = true;
@@ -84,26 +85,15 @@ export default class DemoApplication extends Application
     }
 
     /**
-     * Convenience for getting resources
-     * @member {object}
-     */
-    get resources()
-    {
-        return this.loader.resources;
-    }
-
-    /**
      * Load resources
      * @param {object} manifest Collection of resources to load
      */
-    load(manifest, callback)
+    async load(manifest)
     {
-        this.loader.add(manifest).load(() =>
-        {
-            callback();
-            this.init();
-            this.start();
-        });
+        Assets.addBundle('bundle', manifest);
+        this.resources = await Assets.loadBundle('bundle');
+        this.init();
+        this.start();
     }
 
     /**
@@ -111,7 +101,7 @@ export default class DemoApplication extends Application
      */
     init()
     {
-        const { resources } = this.loader;
+        const { resources } = this;
         const { bounds, initWidth, initHeight } = this;
 
         // Setup the container
@@ -121,14 +111,14 @@ export default class DemoApplication extends Application
         this.stage.addChild(this.pond);
 
         // Setup the background image
-        this.bg = new Sprite(resources.background.texture);
+        this.bg = new Sprite(resources.background);
         this.pond.addChild(this.bg);
 
         // Create and add the fish
         for (let i = 0; i < this.fishCount; i++)
         {
             const id = `fish${(i % 4) + 1}`;
-            const fish = new Sprite(resources[id].texture);
+            const fish = new Sprite(resources[id]);
 
             fish.anchor.set(0.5);
             fish.filters = this.fishFilters;
@@ -147,7 +137,7 @@ export default class DemoApplication extends Application
 
         // Setup the tiling sprite
         this.overlay = new TilingSprite(
-            resources.overlay.texture,
+            resources.overlay,
             initWidth,
             initHeight,
         );

@@ -1,7 +1,6 @@
 import { vertex } from '@tools/fragments';
 import fragment from './colorOverlay.frag';
-import { Filter } from '@pixi/core';
-import { hex2rgb, rgb2hex } from '@pixi/utils';
+import { Filter, utils } from '@pixi/core';
 
 type Color = number | number[] | Float32Array;
 
@@ -52,7 +51,7 @@ class ColorOverlayFilter extends Filter
 
         if (typeof value === 'number')
         {
-            hex2rgb(value, arr);
+            utils.hex2rgb(value, arr);
             this._color = value;
         }
         else
@@ -60,7 +59,7 @@ class ColorOverlayFilter extends Filter
             arr[0] = value[0];
             arr[1] = value[1];
             arr[2] = value[2];
-            this._color = rgb2hex(arr);
+            this._color = utils.rgb2hex(arr);
         }
     }
     get color(): Color

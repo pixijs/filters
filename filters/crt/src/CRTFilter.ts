@@ -1,9 +1,7 @@
 import { vertex } from '@tools/fragments';
 import fragment from './crt.frag';
 import { Filter } from '@pixi/core';
-import type { Rectangle } from '@pixi/math';
-import type { FilterSystem, RenderTexture } from '@pixi/core';
-import type { CLEAR_MODES } from '@pixi/constants';
+import type { Rectangle, CLEAR_MODES, FilterSystem, RenderTexture } from '@pixi/core';
 
 interface CRTFilterOptions {
     curvature: number;

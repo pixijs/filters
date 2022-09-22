@@ -1,9 +1,7 @@
 import { vertex } from '@tools/fragments';
 import fragment from './bulgePinch.frag';
 import { Filter } from '@pixi/core';
-import type { Point, Rectangle } from '@pixi/math';
-import type { FilterSystem, RenderTexture } from '@pixi/core';
-import type { CLEAR_MODES } from '@pixi/constants';
+import type { Point, Rectangle, FilterSystem, RenderTexture, CLEAR_MODES } from '@pixi/core';
 
 type PointLike = Point | number[];
 

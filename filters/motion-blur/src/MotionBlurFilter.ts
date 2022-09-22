@@ -1,10 +1,7 @@
 import { vertex } from '@tools/fragments';
 import fragment from './motion-blur.frag';
-import { Filter } from '@pixi/core';
-import { ObservablePoint, Point } from '@pixi/math';
-import type { IPoint } from '@pixi/math';
-import type { FilterSystem, RenderTexture } from '@pixi/core';
-import type { CLEAR_MODES } from '@pixi/constants';
+import { Filter, ObservablePoint, Point } from '@pixi/core';
+import type { IPoint, CLEAR_MODES, FilterSystem, RenderTexture } from '@pixi/core';
 
 /**
  * The MotionBlurFilter applies a Motion blur to an object.<br>

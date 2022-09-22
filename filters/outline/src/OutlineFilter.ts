@@ -1,9 +1,7 @@
 import { vertex } from '@tools/fragments';
 import fragment from './outline.frag';
-import { Filter } from '@pixi/core';
-import { rgb2hex, hex2rgb } from '@pixi/utils';
-import type { FilterSystem, RenderTexture } from '@pixi/core';
-import type { CLEAR_MODES } from '@pixi/constants';
+import { Filter, utils } from '@pixi/core';
+import type { FilterSystem, RenderTexture, CLEAR_MODES } from '@pixi/core';
 
 /**
  * OutlineFilter, originally by mishaa
@@ -73,11 +71,11 @@ class OutlineFilter extends Filter
      */
     get color(): number
     {
-        return rgb2hex(this.uniforms.outlineColor);
+        return utils.rgb2hex(this.uniforms.outlineColor);
     }
     set color(value: number)
     {
-        hex2rgb(value, this.uniforms.outlineColor);
+        utils.hex2rgb(value, this.uniforms.outlineColor);
     }
 
     /**

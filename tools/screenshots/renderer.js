@@ -32,27 +32,29 @@ let displacement;
 let lightmap;
 let colormap;
 
+PIXI.Assets.addBundle('assets', {
+    preview: path.join(__dirname, 'assets', 'preview.png'),
+    lightmap: path.join(__dirname, 'assets', 'lightmap.png'),
+    displacement: path.join(__dirname, 'assets', 'displacement.png'),
+    colormap: path.join(__dirname, 'assets', 'colormap.png'),
+});
+
 // Load image
-app.loader
-    .add('preview', path.join(__dirname, 'assets', 'preview.png'))
-    .add('lightmap', path.join(__dirname, 'assets', 'lightmap.png'))
-    .add('displacement', path.join(__dirname, 'assets', 'displacement.png'))
-    .add('colormap', path.join(__dirname, 'assets', 'colormap.png'))
-    .load((loader, resources) =>
-    {
-        lightmap = resources.lightmap.texture;
-        colormap = resources.colormap.texture;
-        displacement = new PIXI.Sprite(resources.displacement.texture);
-        sprite = new PIXI.Sprite(resources.preview.texture);
-        sprite.scale.set(0.5);
-        sprite.anchor.set(0.5);
-        sprite.x = app.view.width / 2;
-        sprite.y = app.view.height / 2;
-        sprite.filterArea = app.screen;
-        app.stage.addChild(sprite);
-        document.body.appendChild(app.view);
-        next();
-    });
+PIXI.Assets.load('assets').then((resources) =>
+{
+    lightmap = resources.lightmap;
+    colormap = resources.colormap;
+    displacement = new PIXI.Sprite(resources.displacement);
+    sprite = new PIXI.Sprite(resources.preview);
+    sprite.scale.set(0.5);
+    sprite.anchor.set(0.5);
+    sprite.x = app.view.width / 2;
+    sprite.y = app.view.height / 2;
+    sprite.filterArea = app.screen;
+    app.stage.addChild(sprite);
+    document.body.appendChild(app.view);
+    next();
+});
 
 function next()
 {

@@ -1,16 +1,17 @@
 import path from 'path';
-import buble from '@rollup/plugin-buble';
+import esbuild from 'rollup-plugin-esbuild';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import { string } from 'rollup-plugin-string';
-import { terser } from 'rollup-plugin-terser';
-import typescript from '@rollup/plugin-typescript';
 import dedupeDefaultVert from './scripts/rollup-dedupe-vert'
 import getSortedPackages from './scripts/get-sorted-packages';
 
 async function main() {
     const plugins = [
-        typescript(),
+        esbuild({
+            target: 'ES2017',
+            minify: process.env.NODE_ENV !== 'production',
+        }),
         commonjs({ preferBuiltins: true }),
         resolve({ preferBuiltins: true }),
         string({
@@ -19,8 +20,7 @@ async function main() {
                 '**/*.vert'
             ]
         }),
-        dedupeDefaultVert(),
-        buble()
+        dedupeDefaultVert()
     ];
 
     const compiled = (new Date()).toUTCString().replace(/GMT/g, 'UTC');
@@ -79,10 +79,6 @@ async function main() {
             const footer = `Object.assign(PIXI.filters, ${name});`;
             globals = Object.assign({
                 '@pixi/core': 'PIXI',
-                '@pixi/math': 'PIXI',
-                '@pixi/settings': 'PIXI',
-                '@pixi/constants': 'PIXI',
-                '@pixi/utils': 'PIXI.utils',
                 '@pixi/filter-alpha': 'PIXI.filters',
                 '@pixi/filter-blur': 'PIXI.filters'
             }, globals);
@@ -100,16 +96,7 @@ async function main() {
                     sourcemap,
                 },
                 treeshake: false,
-                plugins: [
-                    ...plugins,
-                    ...process.env.NODE_ENV !== 'production' ? [] : [terser({
-                        output: {
-                            comments: function(node, comment) {
-                                return comment.line === 1;
-                            }
-                        }
-                    })]
-                ]
+                plugins,
             });
         }
     });

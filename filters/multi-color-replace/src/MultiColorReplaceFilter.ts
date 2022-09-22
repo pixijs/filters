@@ -1,7 +1,6 @@
 import { vertex } from '@tools/fragments';
 import fragment from './multi-color-replace.frag';
-import { Filter } from '@pixi/core';
-import { hex2rgb, rgb2hex } from '@pixi/utils';
+import { Filter, utils } from '@pixi/core';
 
 type Color = number | number[] | Float32Array;
 
@@ -89,11 +88,11 @@ class MultiColorReplaceFilter extends Filter
 
             if (typeof color === 'number')
             {
-                color = hex2rgb(color);
+                color = utils.hex2rgb(color);
             }
             else
             {
-                pair[0] = rgb2hex(color);
+                pair[0] = utils.rgb2hex(color);
             }
 
             originals[i * 3] = color[0];
@@ -105,11 +104,11 @@ class MultiColorReplaceFilter extends Filter
 
             if (typeof targetColor === 'number')
             {
-                targetColor = hex2rgb(targetColor);
+                targetColor = utils.hex2rgb(targetColor);
             }
             else
             {
-                pair[1] = rgb2hex(targetColor);
+                pair[1] = utils.rgb2hex(targetColor);
             }
 
             targets[i * 3] = targetColor[0];
