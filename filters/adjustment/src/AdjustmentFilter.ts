@@ -17,13 +17,12 @@ interface AdjustmentFilterOptions {
 /**
  * The ability to adjust gamma, contrast, saturation, brightness, alpha or color-channel shift.
  * This is a faster and much simpler to use than
- * {@link http://pixijs.download/release/docs/PIXI.filters.ColorMatrixFilter.html ColorMatrixFilter}
+ * {@link http://pixijs.download/release/docs/ColorMatrixFilter.html ColorMatrixFilter}
  * because it does not use a matrix.<br>
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/adjustment.png)
  *
  * @class
  * @extends PIXI.Filter
- * @memberof PIXI.filters
  * @see {@link https://www.npmjs.com/package/@pixi/filter-adjustment|@pixi/filter-adjustment}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */

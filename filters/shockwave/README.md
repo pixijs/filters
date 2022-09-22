@@ -20,4 +20,4 @@ container.filters = [new ShockwaveFilter()];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.ShockwaveFilter.html
+See https://filters.pixijs.download/main/docs/ShockwaveFilter.html

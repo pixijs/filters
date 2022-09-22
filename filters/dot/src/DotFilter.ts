@@ -12,7 +12,6 @@ import { Filter } from '@pixi/core';
  *
  * @class
  * @extends PIXI.Filter
- * @memberof PIXI.filters
  * @see {@link https://www.npmjs.com/package/@pixi/filter-dot|@pixi/filter-dot}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */

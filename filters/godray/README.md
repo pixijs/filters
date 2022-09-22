@@ -20,4 +20,4 @@ container.filters = [new GodrayFilter()];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.GodrayFilter.html
+See https://filters.pixijs.download/main/docs/GodrayFilter.html

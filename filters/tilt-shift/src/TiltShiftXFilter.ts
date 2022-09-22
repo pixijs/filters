@@ -9,7 +9,6 @@ import { TiltShiftAxisFilter } from './TiltShiftAxisFilter';
  *
  * @class
  * @extends PIXI.TiltShiftAxisFilter
- * @memberof PIXI.filters
  * @private
  */
 class TiltShiftXFilter extends TiltShiftAxisFilter

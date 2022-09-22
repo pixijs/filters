@@ -11,7 +11,6 @@ type Size = number | number[] | Point;
  *
  * @class
  * @extends PIXI.Filter
- * @memberof PIXI.filters
  * @see {@link https://www.npmjs.com/package/@pixi/filter-pixelate|@pixi/filter-pixelate}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */

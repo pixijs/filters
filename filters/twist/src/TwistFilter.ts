@@ -15,7 +15,6 @@ interface TwistFilterOptions {
  *
  * @class
  * @extends PIXI.Filter
- * @memberof PIXI.filters
  * @see {@link https://www.npmjs.com/package/@pixi/filter-twist|@pixi/filter-twist}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */

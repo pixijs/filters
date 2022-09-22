@@ -20,4 +20,4 @@ container.filters = [new EmbossFilter()];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.EmbossFilter.html
+See https://filters.pixijs.download/main/docs/EmbossFilter.html

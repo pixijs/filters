@@ -19,7 +19,6 @@ interface ShockwaveFilterOptions {
  *
  * @class
  * @extends PIXI.Filter
- * @memberof PIXI.filters
  * @see {@link https://www.npmjs.com/package/@pixi/filter-shockwave|@pixi/filter-shockwave}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */

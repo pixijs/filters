@@ -11,7 +11,6 @@ type ColorMapSource = TextureSource | Texture | null;
  *
  * @class
  * @extends PIXI.Filter
- * @memberof PIXI.filters
  * @see {@link https://www.npmjs.com/package/@pixi/filter-color-map|@pixi/filter-color-map}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */

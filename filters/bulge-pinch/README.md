@@ -20,4 +20,4 @@ container.filters = [new BulgePinchFilter()];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.BulgePinchFilter.html
+See https://filters.pixijs.download/main/docs/BulgePinchFilter.html

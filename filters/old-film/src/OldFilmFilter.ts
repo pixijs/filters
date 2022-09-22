@@ -21,7 +21,6 @@ interface OldFilmFilterOptions {
  *
  * @class
  * @extends PIXI.Filter
- * @memberof PIXI.filters
  * @see {@link https://www.npmjs.com/package/@pixi/filter-old-film|@pixi/filter-old-film}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */

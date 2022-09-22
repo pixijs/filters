@@ -26,4 +26,4 @@ container.filters = [
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.MultiColorReplaceFilter.html
+See https://filters.pixijs.download/main/docs/MultiColorReplaceFilter.html

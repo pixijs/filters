@@ -22,7 +22,6 @@ interface GodrayFilterOptions {
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/godray.gif)
  * @class
  * @extends PIXI.Filter
- * @memberof PIXI.filters
  * @see {@link https://www.npmjs.com/package/@pixi/filter-godray|@pixi/filter-godray}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  *

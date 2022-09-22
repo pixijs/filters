@@ -18,7 +18,6 @@ interface GlowFilterOptions {
  * @class
  *
  * @extends PIXI.Filter
- * @memberof PIXI.filters
  * @see {@link https://www.npmjs.com/package/@pixi/filter-glow|@pixi/filter-glow}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  *

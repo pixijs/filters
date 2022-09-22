@@ -20,4 +20,4 @@ container.filters = [new GlowFilter()];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.GlowFilter.html
+See https://filters.pixijs.download/main/docs/GlowFilter.html

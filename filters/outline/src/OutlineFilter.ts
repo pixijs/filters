@@ -11,7 +11,6 @@ import type { FilterSystem, RenderTexture, CLEAR_MODES } from '@pixi/core';
  *
  * @class
  * @extends PIXI.Filter
- * @memberof PIXI.filters
  * @see {@link https://www.npmjs.com/package/@pixi/filter-outline|@pixi/filter-outline}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters} *
  * @example

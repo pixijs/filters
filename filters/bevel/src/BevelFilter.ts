@@ -17,7 +17,6 @@ interface BevelFilterOptions {
  *
  * @class
  * @extends PIXI.Filter
- * @memberof PIXI.filters
  * @see {@link https://www.npmjs.com/package/@pixi/filter-bevel|@pixi/filter-bevel}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */

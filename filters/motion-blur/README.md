@@ -20,4 +20,4 @@ container.filters = [new MotionBlurFilter([1,2], 9)];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.MotionBlurFilter.html
+See https://filters.pixijs.download/main/docs/MotionBlurFilter.html

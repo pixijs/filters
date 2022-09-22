@@ -25,7 +25,6 @@ interface GlitchFilterOptions {
  *
  * @class
  * @extends PIXI.Filter
- * @memberof PIXI.filters
  * @see {@link https://www.npmjs.com/package/@pixi/filter-glitch|@pixi/filter-glitch}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
@@ -114,11 +113,11 @@ class GlitchFilter extends Filter
      * @param {number} [options.offset=100] - The maximum offset amount of slices.
      * @param {number} [options.direction=0] - The angle in degree of the offset of slices.
      * @param {number} [options.fillMode=0] - The fill mode of the space after the offset. Acceptable values:
-     *  - `0` {@link PIXI.filters.GlitchFilter.TRANSPARENT TRANSPARENT}
-     *  - `1` {@link PIXI.filters.GlitchFilter.ORIGINAL ORIGINAL}
-     *  - `2` {@link PIXI.filters.GlitchFilter.LOOP LOOP}
-     *  - `3` {@link PIXI.filters.GlitchFilter.CLAMP CLAMP}
-     *  - `4` {@link PIXI.filters.GlitchFilter.MIRROR MIRROR}
+     *  - `0` {@link GlitchFilter.TRANSPARENT TRANSPARENT}
+     *  - `1` {@link GlitchFilter.ORIGINAL ORIGINAL}
+     *  - `2` {@link GlitchFilter.LOOP LOOP}
+     *  - `3` {@link GlitchFilter.CLAMP CLAMP}
+     *  - `4` {@link GlitchFilter.MIRROR MIRROR}
      * @param {number} [options.seed=0] - A seed value for randomizing glitch effect.
      * @param {boolean} [options.average=false] - `true` will divide the bands roughly based on equal amounts
      *                 where as setting to `false` will vary the band sizes dramatically (more random looking).

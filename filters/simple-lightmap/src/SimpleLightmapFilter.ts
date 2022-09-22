@@ -17,7 +17,6 @@ type Color = number | number[];
 * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/simple-lightmap.png)
 * @class
 * @extends PIXI.Filter
-* @memberof PIXI.filters
 * @see {@link https://www.npmjs.com/package/@pixi/filter-simple-lightmap|@pixi/filter-simple-lightmap}
 * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
 *

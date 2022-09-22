@@ -20,4 +20,4 @@ container.filters = [new RGBSplitFilter()];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.RGBSplitFilter.html
+See https://filters.pixijs.download/main/docs/RGBSplitFilter.html

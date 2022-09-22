@@ -20,4 +20,4 @@ container.filters = [new TwistFilter()];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.TwistFilter.html
+See https://filters.pixijs.download/main/docs/TwistFilter.html

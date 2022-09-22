@@ -20,4 +20,4 @@ container.filters = [new ReflectionFilter()];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.ReflectionFilter.html
+See https://filters.pixijs.download/main/docs/ReflectionFilter.html

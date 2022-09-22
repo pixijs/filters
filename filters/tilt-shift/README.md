@@ -20,4 +20,4 @@ container.filters = [new TiltShiftFilter()];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.TiltShiftFilter.html
+See https://filters.pixijs.download/main/docs/TiltShiftFilter.html

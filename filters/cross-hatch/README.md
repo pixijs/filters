@@ -20,4 +20,4 @@ container.filters = [new CrossHatchFilter()];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.CrossHatchFilter.html
+See https://filters.pixijs.download/main/docs/CrossHatchFilter.html

@@ -20,4 +20,4 @@ container.filters = [new OldFilmFilter()];
 
 ## Documentation
 
-See https://filters.pixijs.download/main/docs/PIXI.filters.OldFilmFilter.html
+See https://filters.pixijs.download/main/docs/OldFilmFilter.html
