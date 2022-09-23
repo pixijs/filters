@@ -1,22 +1,21 @@
 {
   "name": "@pixi/filter-convolution",
   "version": "4.2.0",
-  "main": "dist/filter-convolution.cjs.js",
-  "bundle": "dist/filter-convolution.js",
+  "main": "./dist/filter-convolution.js",
   "description": "PixiJS filter to apply a convolution effect",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
-  "module": "dist/filter-convolution.esm.mjs",
+  "module": "./dist/filter-convolution.mjs",
   "exports": {
     ".": {
-      "import": "./dist/filter-convolution.esm.mjs",
-      "require": "./dist/filter-convolution.cjs.js",
+      "import": "./dist/filter-convolution.mjs",
+      "require": "./dist/filter-convolution.js",
       "types": "./index.d.ts"
     }
   },
-  "types": "index.d.ts",
+  "types": "./index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",
   "license": "MIT",

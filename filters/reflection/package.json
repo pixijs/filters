@@ -1,19 +1,18 @@
 {
   "name": "@pixi/filter-reflection",
   "version": "4.2.0",
-  "main": "dist/filter-reflection.cjs.js",
-  "bundle": "dist/filter-reflection.js",
+  "main": "./dist/filter-reflection.js",
   "description": "PixiJS filter to apply reflection and wave effect",
   "author": "finscn <finscn@gmail.com>",
-  "module": "dist/filter-reflection.esm.mjs",
+  "module": "./dist/filter-reflection.mjs",
   "exports": {
     ".": {
-      "import": "./dist/filter-reflection.esm.mjs",
-      "require": "./dist/filter-reflection.cjs.js",
+      "import": "./dist/filter-reflection.mjs",
+      "require": "./dist/filter-reflection.js",
       "types": "./index.d.ts"
     }
   },
-  "types": "index.d.ts",
+  "types": "./index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",
   "license": "MIT",

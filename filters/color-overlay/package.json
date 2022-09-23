@@ -1,22 +1,21 @@
 {
   "name": "@pixi/filter-color-overlay",
   "version": "4.2.0",
-  "main": "dist/filter-color-overlay.cjs.js",
-  "bundle": "dist/filter-color-overlay.js",
+  "main": "./dist/filter-color-overlay.js",
   "description": "PixiJS filter to overlay all colors with single color",
   "author": "Michael Deal",
   "contributors": [
     "Michael Deal <hello@mudcu.be>"
   ],
-  "module": "dist/filter-color-overlay.esm.mjs",
+  "module": "./dist/filter-color-overlay.mjs",
   "exports": {
     ".": {
-      "import": "./dist/filter-color-overlay.esm.mjs",
-      "require": "./dist/filter-color-overlay.cjs.js",
+      "import": "./dist/filter-color-overlay.mjs",
+      "require": "./dist/filter-color-overlay.js",
       "types": "./index.d.ts"
     }
   },
-  "types": "index.d.ts",
+  "types": "./index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",
   "license": "MIT",

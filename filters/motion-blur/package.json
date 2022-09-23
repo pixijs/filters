@@ -1,19 +1,18 @@
 {
   "name": "@pixi/filter-motion-blur",
   "version": "4.2.0",
-  "main": "dist/filter-motion-blur.cjs.js",
-  "bundle": "dist/filter-motion-blur.js",
+  "main": "./dist/filter-motion-blur.js",
   "description": "PixiJS filter to apply a directional blur effect",
   "author": "finscn <finscn@gmail.com>",
-  "module": "dist/filter-motion-blur.esm.mjs",
+  "module": "./dist/filter-motion-blur.mjs",
   "exports": {
     ".": {
-      "import": "./dist/filter-motion-blur.esm.mjs",
-      "require": "./dist/filter-motion-blur.cjs.js",
+      "import": "./dist/filter-motion-blur.mjs",
+      "require": "./dist/filter-motion-blur.js",
       "types": "./index.d.ts"
     }
   },
-  "types": "index.d.ts",
+  "types": "./index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",
   "license": "MIT",

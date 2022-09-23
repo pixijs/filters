@@ -1,19 +1,18 @@
 {
   "name": "@pixi/filter-radial-blur",
   "version": "4.2.0",
-  "main": "dist/filter-radial-blur.cjs.js",
-  "bundle": "dist/filter-radial-blur.js",
+  "main": "./dist/filter-radial-blur.js",
   "description": "PixiJS filter to apply a radial blur effect",
   "author": "finscn <finscn@gmail.com>",
-  "module": "dist/filter-radial-blur.esm.mjs",
+  "module": "./dist/filter-radial-blur.mjs",
   "exports": {
     ".": {
-      "import": "./dist/filter-radial-blur.esm.mjs",
-      "require": "./dist/filter-radial-blur.cjs.js",
+      "import": "./dist/filter-radial-blur.mjs",
+      "require": "./dist/filter-radial-blur.js",
       "types": "./index.d.ts"
     }
   },
-  "types": "index.d.ts",
+  "types": "./index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",
   "license": "MIT",

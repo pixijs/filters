@@ -1,22 +1,21 @@
 {
   "name": "@pixi/filter-drop-shadow",
   "version": "4.2.0",
-  "main": "dist/filter-drop-shadow.cjs.js",
-  "bundle": "dist/filter-drop-shadow.js",
+  "main": "./dist/filter-drop-shadow.js",
   "description": "PixiJS filter to apply a drop shadow effect",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
-  "module": "dist/filter-drop-shadow.esm.mjs",
+  "module": "./dist/filter-drop-shadow.mjs",
   "exports": {
     ".": {
-      "import": "./dist/filter-drop-shadow.esm.mjs",
-      "require": "./dist/filter-drop-shadow.cjs.js",
+      "import": "./dist/filter-drop-shadow.mjs",
+      "require": "./dist/filter-drop-shadow.js",
       "types": "./index.d.ts"
     }
   },
-  "types": "index.d.ts",
+  "types": "./index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",
   "license": "MIT",
