@@ -6,7 +6,8 @@ import type { IPoint, CLEAR_MODES, FilterSystem, RenderTexture } from '@pixi/cor
 
 type PixelSizeValue = number | number[] | IPoint;
 
-interface DropShadowFilterOptions {
+interface DropShadowFilterOptions
+{
     rotation: number;
     distance: number;
     color: number;

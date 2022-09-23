@@ -2,7 +2,8 @@ import { vertex } from '@tools/fragments';
 import fragment from './twist.frag';
 import { Filter, Point } from '@pixi/core';
 
-interface TwistFilterOptions {
+interface TwistFilterOptions
+{
     radius: number;
     angle: number;
     padding: number;

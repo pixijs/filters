@@ -1,3 +1,4 @@
-declare module '@tools/fragments' {
+declare module '@tools/fragments'
+{
     export const vertex: string;
 }

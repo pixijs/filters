@@ -3,7 +3,8 @@ import fragment from './adjustment.frag';
 import { Filter } from '@pixi/core';
 import type { FilterSystem, RenderTexture, CLEAR_MODES } from '@pixi/core';
 
-interface AdjustmentFilterOptions {
+interface AdjustmentFilterOptions
+{
     gamma: number;
     saturation: number;
     contrast: number;

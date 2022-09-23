@@ -4,7 +4,8 @@ import { Filter, Point } from '@pixi/core';
 
 type PointLike = Point | number[];
 
-interface ZoomBlurFilterOptions {
+interface ZoomBlurFilterOptions
+{
     strength: number;
     center: PointLike;
     innerRadius: number;
