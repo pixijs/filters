@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-bloom",
-  "version": "4.2.0",
+  "version": "5.0.0",
   "main": "./dist/filter-bloom.js",
   "description": "PixiJS filter to apply a simple bloom effect",
   "author": "Mat Groves",
