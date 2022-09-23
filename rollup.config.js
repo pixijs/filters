@@ -3,7 +3,7 @@ import esbuild from 'rollup-plugin-esbuild';
 import resolve from '@rollup/plugin-node-resolve';
 import { string } from 'rollup-plugin-string';
 import dedupeDefaultVert from './scripts/rollup-dedupe-vert'
-import getSortedPackages from './scripts/get-sorted-packages';
+import workspacesRun from 'workspaces-run';
 
 async function main() {
     const plugins = [
@@ -23,13 +23,11 @@ async function main() {
 
     const compiled = (new Date()).toUTCString().replace(/GMT/g, 'UTC');
     const sourcemap = true;
-    const packages = await getSortedPackages();
-    const results = [];
 
-    packages.forEach((pkg) => {
+    const appendPackage = (pkg) => {
         const banner = [
             '/*!',
-            ` * ${pkg.name} - v${pkg.version}`,
+            ` * ${pkg.name} - v${pkg.config.version}`,
             ` * Compiled ${compiled}`,
             ' *',
             ` * ${pkg.name} is licensed under the MIT License.`,
@@ -38,12 +36,13 @@ async function main() {
         ].join('\n');
 
         // Get settings from package JSON
-        let { main, module, bundle, globals } = pkg.toJSON();
-        const basePath = path.relative(__dirname, pkg.location);
+        let { main, module, bundle, globals } = pkg.config;
+        const basePath = path.relative(__dirname, pkg.dir);
         const input = path.join(basePath, 'src/index.ts');
         const freeze = false;
+        const builds = [];
 
-        results.push({
+        builds.push({
             input,
             output: [
                 {
@@ -63,8 +62,8 @@ async function main() {
             ],
             // Generate the externals to use, by default don't include dependencies
             external: [
-                ...Object.keys(pkg.dependencies || {}),
-                ...Object.keys(pkg.peerDependencies || {})
+                ...Object.keys(pkg.config.dependencies || {}),
+                ...Object.keys(pkg.config.peerDependencies || {})
             ],
             plugins,
         });
@@ -80,7 +79,7 @@ async function main() {
                 '@pixi/filter-alpha': 'PIXI.filters',
                 '@pixi/filter-blur': 'PIXI.filters'
             }, globals);
-            results.push({
+            builds.push({
                 input,
                 external: Object.keys(globals),
                 output: {
@@ -96,6 +95,17 @@ async function main() {
                 treeshake: false,
                 plugins,
             });
+        }
+        return builds;
+    };
+
+    const results = [];
+
+    await workspacesRun({ cwd: __dirname, orderByDeps: true }, (pkg) =>
+    {
+        if (!pkg.config.private)
+        {
+            results.push(...appendPackage(pkg));
         }
     });
 
