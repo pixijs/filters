@@ -95,28 +95,10 @@ Build all filters, demo and screenshots by running the following:
 npm run build
 ```
 
-Build single filter by running the following:
-
-```bash
-npm run build:prod -- --scope "@pixi/filter-emboss"
-```
-
-Build multiple filters where scope is a glob expression:
-
-```bash
-npm run build:prod -- --scope "{@pixi/filter-emboss,@pixi/filter-glow}"
-```
-
-Watch all filters (auto-rebuild upon src changes):
+Watch all filters and demo (auto-rebuild upon src changes):
 
 ```bash
 npm run watch
-```
-
-Build all filters in dev-mode (un-minified):
-
-```bash
-npm run build:dev
 ```
 
 ## Documentation
