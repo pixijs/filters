@@ -42,7 +42,7 @@
   "engines": {
     "node": ">=16",
     "yarn": "please-use-npm",
-    "npm": ">=8"
+    "npm": ">=7"
   },
   "pre-commit": [
     "lint",
