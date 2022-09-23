@@ -5,7 +5,8 @@ import type { FilterSystem, RenderTexture, CLEAR_MODES } from '@pixi/core';
 
 type Range = number[] | Float32Array;
 
-interface ReflectionFilterOptions {
+interface ReflectionFilterOptions
+{
     mirror: boolean;
     boundary: number;
     amplitude: Range;

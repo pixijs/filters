@@ -2,7 +2,8 @@ import { vertex } from '@tools/fragments';
 import fragment from './glow.frag';
 import { Filter, utils } from '@pixi/core';
 
-interface GlowFilterOptions {
+interface GlowFilterOptions
+{
     distance: number;
     outerStrength: number;
     innerStrength: number;

@@ -6,7 +6,8 @@ import { Filter, settings } from '@pixi/core';
 import type { FilterSystem, FilterState, RenderTexture, CLEAR_MODES } from '@pixi/core';
 import type { PixelSizeValue } from '@pixi/filter-kawase-blur';
 
-interface AdvancedBloomFilterOptions {
+interface AdvancedBloomFilterOptions
+{
     threshold: number,
     bloomScale: number,
     brightness: number,

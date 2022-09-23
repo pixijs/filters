@@ -2,7 +2,8 @@ import { vertex } from '@tools/fragments';
 import fragment from './bevel.frag';
 import { Filter, DEG_TO_RAD, utils } from '@pixi/core';
 
-interface BevelFilterOptions {
+interface BevelFilterOptions
+{
     rotation: number,
     thickness: number,
     lightColor: number,

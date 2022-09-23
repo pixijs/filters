@@ -5,7 +5,8 @@ import type { Point, Rectangle, FilterSystem, RenderTexture, CLEAR_MODES } from 
 
 type PointLike = Point | number[];
 
-interface BulgePinchFilterOptions {
+interface BulgePinchFilterOptions
+{
     center: PointLike;
     radius: number;
     strength: number;

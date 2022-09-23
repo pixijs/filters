@@ -4,7 +4,8 @@ import fragment from './gorday.frag';
 import { Filter, Point, DEG_TO_RAD } from '@pixi/core';
 import type { Rectangle, CLEAR_MODES, FilterSystem, RenderTexture } from '@pixi/core';
 
-interface GodrayFilterOptions {
+interface GodrayFilterOptions
+{
     angle: number;
     gain: number;
     lacunarity: number;

@@ -5,7 +5,8 @@ import type { IPoint, CLEAR_MODES, FilterSystem, RenderTexture } from '@pixi/cor
 
 type PointLike = IPoint | number[];
 
-interface GlitchFilterOptions {
+interface GlitchFilterOptions
+{
     slices: number;
     offset: number;
     direction: number;

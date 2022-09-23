@@ -3,7 +3,8 @@ import fragment from './crt.frag';
 import { Filter } from '@pixi/core';
 import type { Rectangle, CLEAR_MODES, FilterSystem, RenderTexture } from '@pixi/core';
 
-interface CRTFilterOptions {
+interface CRTFilterOptions
+{
     curvature: number;
     lineWidth: number;
     lineContrast: number;

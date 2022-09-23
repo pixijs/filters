@@ -3,7 +3,8 @@ import fragment from './old-film.frag';
 import { Filter } from '@pixi/core';
 import type { FilterSystem, RenderTexture, CLEAR_MODES } from '@pixi/core';
 
-interface OldFilmFilterOptions {
+interface OldFilmFilterOptions
+{
     sepia: number;
     noise: number;
     noiseSize: number;

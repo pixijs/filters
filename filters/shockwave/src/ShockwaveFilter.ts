@@ -3,9 +3,10 @@ import fragment from './shockwave.frag';
 import { Filter } from '@pixi/core';
 import type { Point, CLEAR_MODES, FilterSystem, RenderTexture } from '@pixi/core';
 
-type PointLike = Point|number[];
+type PointLike = Point | number[];
 
-interface ShockwaveFilterOptions {
+interface ShockwaveFilterOptions
+{
     amplitude: number;
     wavelength: number;
     speed: number;
