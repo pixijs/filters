@@ -55,7 +55,6 @@
     "@pixi/webdoc-template": "^1.5.3",
     "@rollup/plugin-node-resolve": "^11.0.1",
     "@webdoc/cli": "^2.0.0",
-    "acorn": "^6.1.1",
     "copyfiles": "^2.1.0",
     "cross-env": "^5.2.0",
     "eslint": "^7.2.0",
