@@ -1,22 +1,21 @@
 {
   "name": "@pixi/filter-bulge-pinch",
   "version": "4.2.0",
-  "main": "dist/filter-bulge-pinch.cjs.js",
-  "bundle": "dist/filter-bulge-pinch.js",
+  "main": "./dist/filter-bulge-pinch.js",
   "description": "PixiJS filter to apply a bulge or a pinch effect",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
-  "module": "dist/filter-bulge-pinch.esm.mjs",
+  "module": "./dist/filter-bulge-pinch.mjs",
   "exports": {
     ".": {
-      "import": "./dist/filter-bulge-pinch.esm.mjs",
-      "require": "./dist/filter-bulge-pinch.cjs.js",
+      "import": "./dist/filter-bulge-pinch.mjs",
+      "require": "./dist/filter-bulge-pinch.js",
       "types": "./index.d.ts"
     }
   },
-  "types": "index.d.ts",
+  "types": "./index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",
   "license": "MIT",

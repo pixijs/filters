@@ -1,19 +1,18 @@
 {
   "name": "@pixi/filter-adjustment",
   "version": "4.2.0",
-  "main": "dist/filter-adjustment.cjs.js",
-  "bundle": "dist/filter-adjustment.js",
+  "main": "./dist/filter-adjustment.js",
   "description": "PixiJS filter to adjust gamma, contrast, saturation, brightness or color channels",
   "author": "finscn <finscn@gmail.com>",
-  "module": "dist/filter-adjustment.esm.mjs",
+  "module": "./dist/filter-adjustment.mjs",
   "exports": {
     ".": {
-      "import": "./dist/filter-adjustment.esm.mjs",
-      "require": "./dist/filter-adjustment.cjs.js",
+      "import": "./dist/filter-adjustment.mjs",
+      "require": "./dist/filter-adjustment.js",
       "types": "./index.d.ts"
     }
   },
-  "types": "index.d.ts",
+  "types": "./index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",
   "license": "MIT",

@@ -1,7 +1,6 @@
 {
   "name": "pixi-filters",
   "version": "4.2.0",
-  "main": "dist/pixi-filters.cjs.js",
   "description": "PixiJS v7 optional display filters",
   "author": "Mat Groves <mat@goodboydigital.com>",
   "contributors": [
@@ -10,16 +9,17 @@
     "Chad Engler <chad@pantherdev.com>",
     "finscn <finscn@gmail.com>"
   ],
-  "module": "dist/pixi-filters.esm.mjs",
+  "main": "./dist/cjs/pixi-filters.js",
+  "module": "./dist/esm/pixi-filters.mjs",
+  "bundle": "./dist/browser/pixi-filters.js",
   "exports": {
     ".": {
-      "import": "./dist/pixi-filters.esm.mjs",
-      "require": "./dist/pixi-filters.cjs.js",
+      "import": "./dist/esm/pixi-filters.mjs",
+      "require": "./dist/cjs/pixi-filters.js",
       "types": "./index.d.ts"
     }
   },
-  "bundle": "dist/pixi-filters.js",
-  "types": "index.d.ts",
+  "types": "./index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",
   "license": "MIT",

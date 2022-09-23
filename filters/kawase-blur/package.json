@@ -1,19 +1,18 @@
 {
   "name": "@pixi/filter-kawase-blur",
   "version": "4.2.0",
-  "main": "dist/filter-kawase-blur.cjs.js",
-  "bundle": "dist/filter-kawase-blur.js",
+  "main": "./dist/filter-kawase-blur.js",
   "description": "PixiJS filter to apply an alternative, fast blur effect to Gaussian",
   "author": "finscn <finscn@gmail.com>",
-  "module": "dist/filter-kawase-blur.esm.mjs",
+  "module": "./dist/filter-kawase-blur.mjs",
   "exports": {
     ".": {
-      "import": "./dist/filter-kawase-blur.esm.mjs",
-      "require": "./dist/filter-kawase-blur.cjs.js",
+      "import": "./dist/filter-kawase-blur.mjs",
+      "require": "./dist/filter-kawase-blur.js",
       "types": "./index.d.ts"
     }
   },
-  "types": "index.d.ts",
+  "types": "./index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",
   "license": "MIT",

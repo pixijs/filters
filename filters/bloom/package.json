@@ -1,22 +1,21 @@
 {
   "name": "@pixi/filter-bloom",
   "version": "4.2.0",
-  "main": "dist/filter-bloom.cjs.js",
-  "bundle": "dist/filter-bloom.js",
+  "main": "./dist/filter-bloom.js",
   "description": "PixiJS filter to apply a simple bloom effect",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
-  "module": "dist/filter-bloom.esm.mjs",
+  "module": "./dist/filter-bloom.mjs",
   "exports": {
     ".": {
-      "import": "./dist/filter-bloom.esm.mjs",
-      "require": "./dist/filter-bloom.cjs.js",
+      "import": "./dist/filter-bloom.mjs",
+      "require": "./dist/filter-bloom.js",
       "types": "./index.d.ts"
     }
   },
-  "types": "index.d.ts",
+  "types": "./index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",
   "license": "MIT",

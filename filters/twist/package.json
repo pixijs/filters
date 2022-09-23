@@ -1,22 +1,21 @@
 {
   "name": "@pixi/filter-twist",
   "version": "4.2.0",
-  "main": "dist/filter-twist.cjs.js",
-  "bundle": "dist/filter-twist.js",
+  "main": "./dist/filter-twist.js",
   "description": "PixiJS filter to apply a twist effect to a DisplayObject",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
-  "module": "dist/filter-twist.esm.mjs",
+  "module": "./dist/filter-twist.mjs",
   "exports": {
     ".": {
-      "import": "./dist/filter-twist.esm.mjs",
-      "require": "./dist/filter-twist.cjs.js",
+      "import": "./dist/filter-twist.mjs",
+      "require": "./dist/filter-twist.js",
       "types": "./index.d.ts"
     }
   },
-  "types": "index.d.ts",
+  "types": "./index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",
   "license": "MIT",

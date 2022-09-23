@@ -1,19 +1,18 @@
 {
   "name": "@pixi/filter-glitch",
   "version": "4.2.0",
-  "main": "dist/filter-glitch.cjs.js",
-  "bundle": "dist/filter-glitch.js",
+  "main": "./dist/filter-glitch.js",
   "description": "PixiJS filter to apply a glitch effect",
   "author": "finscn <finscn@gmail.com>",
-  "module": "dist/filter-glitch.esm.mjs",
+  "module": "./dist/filter-glitch.mjs",
   "exports": {
     ".": {
-      "import": "./dist/filter-glitch.esm.mjs",
-      "require": "./dist/filter-glitch.cjs.js",
+      "import": "./dist/filter-glitch.mjs",
+      "require": "./dist/filter-glitch.js",
       "types": "./index.d.ts"
     }
   },
-  "types": "index.d.ts",
+  "types": "./index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",
   "license": "MIT",

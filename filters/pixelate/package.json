@@ -1,22 +1,21 @@
 {
   "name": "@pixi/filter-pixelate",
   "version": "4.2.0",
-  "main": "dist/filter-pixelate.cjs.js",
-  "bundle": "dist/filter-pixelate.js",
+  "main": "./dist/filter-pixelate.js",
   "description": "PixiJS filter to apply a pixelation effect",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>"
   ],
-  "module": "dist/filter-pixelate.esm.mjs",
+  "module": "./dist/filter-pixelate.mjs",
   "exports": {
     ".": {
-      "import": "./dist/filter-pixelate.esm.mjs",
-      "require": "./dist/filter-pixelate.cjs.js",
+      "import": "./dist/filter-pixelate.mjs",
+      "require": "./dist/filter-pixelate.js",
       "types": "./index.d.ts"
     }
   },
-  "types": "index.d.ts",
+  "types": "./index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",
   "license": "MIT",

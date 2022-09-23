@@ -1,23 +1,22 @@
 {
   "name": "@pixi/filter-glow",
   "version": "4.2.0",
-  "main": "dist/filter-glow.cjs.js",
-  "bundle": "dist/filter-glow.js",
+  "main": "./dist/filter-glow.js",
   "description": "PixiJS filter to apply a glow effect",
   "author": "Mat Groves",
   "contributors": [
     "Matt Karl <matt@mattkarl.com>",
     "Nils Kuhnhenn <lain@volafile.org>"
   ],
-  "module": "dist/filter-glow.esm.mjs",
+  "module": "./dist/filter-glow.mjs",
   "exports": {
     ".": {
-      "import": "./dist/filter-glow.esm.mjs",
-      "require": "./dist/filter-glow.cjs.js",
+      "import": "./dist/filter-glow.mjs",
+      "require": "./dist/filter-glow.js",
       "types": "./index.d.ts"
     }
   },
-  "types": "index.d.ts",
+  "types": "./index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",
   "license": "MIT",

@@ -1,22 +1,21 @@
 {
   "name": "@pixi/filter-multi-color-replace",
   "version": "4.2.0",
-  "main": "dist/filter-multi-color-replace.cjs.js",
-  "bundle": "dist/filter-multi-color-replace.js",
+  "main": "./dist/filter-multi-color-replace.js",
   "description": "PixiJS filter to dynamically replace multiple colors",
   "author": "finscn",
   "contributors": [
     "finscn <finscn@gmail.com>"
   ],
-  "module": "dist/filter-multi-color-replace.esm.mjs",
+  "module": "./dist/filter-multi-color-replace.mjs",
   "exports": {
     ".": {
-      "import": "./dist/filter-multi-color-replace.esm.mjs",
-      "require": "./dist/filter-multi-color-replace.cjs.js",
+      "import": "./dist/filter-multi-color-replace.mjs",
+      "require": "./dist/filter-multi-color-replace.js",
       "types": "./index.d.ts"
     }
   },
-  "types": "index.d.ts",
+  "types": "./index.d.ts",
   "homepage": "http://pixijs.com/",
   "bugs": "https://github.com/pixijs/filters/issues",
   "license": "MIT",
