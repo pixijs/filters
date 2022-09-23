@@ -8,10 +8,8 @@
   ],
   "scripts": {
     "start": "run-p watch watch:tools demo",
-    "clean:build": "rimraf \"filters/*/dist\" \"bundle/dist\" tools/screenshots/dist",
-    "preclean": "run-s clean:build",
-    "clean": "lerna clean",
-    "clean:types": "rimraf out/*",
+    "clean": "git clean -fxd",
+    "clean:build": "rimraf \"{filters,tools}/*/dist\" \"bundle/dist\"",
     "copy:bundle": "copyfiles -f \"bundle/dist/*\" -e \"**/*.{cjs,esm}.*\" dist",
     "copy:filters": "copyfiles -f filters/*/dist/* -e \"**/*.{cjs,esm}.*\" dist/filters",
     "copy:screenshots": "copyfiles tools/screenshots/dist/* dist",
@@ -27,14 +25,14 @@
     "demo": "open http://localhost:8080/tools/demo/index.html && http-server . -s -c-1",
     "examples": "run-s demo",
     "prebuild": "run-s lint types",
-    "prebuild:types": "run-s clean:types",
+    "prebuild:types": "rimraf out",
     "build:types": "tsc && api-extractor-lerna-monorepo",
-    "postbuild:types": "run-s clean:types",
+    "postbuild:types": "rimraf out",
     "build": "run-s build:prod build:tools",
     "build:dev": "rollup -c",
     "build:prod": "cross-env NODE_ENV=production rollup -c",
-    "build:tools": "lerna run build --scope @tools/*",
-    "watch:tools": "lerna run watch --parallel --scope @tools/*",
+    "build:tools": "workspaces-run --only=\"@tools/{demo,screenshots}\" -- npm run build",
+    "watch:tools": "workspaces-run --parallel --only=\"@tools/demo\" -- npm run watch",
     "watch": "rollup -cw",
     "prerelease": "run-s build",
     "release": "lerna version --exact",
@@ -51,9 +49,6 @@
     "types"
   ],
   "devDependencies": {
-    "@lerna/batch-packages": "^3.13.0",
-    "@lerna/filter-packages": "^3.13.0",
-    "@lerna/project": "^3.13.1",
     "@microsoft/api-extractor": "~7.20.0",
     "@pixi-build-tools/api-extractor-lerna-monorepo": "^1.0.3",
     "@pixi/eslint-config": "^4.0.0",
@@ -75,7 +70,8 @@
     "rollup-plugin-esbuild": "^4.10.1",
     "rollup-plugin-string": "^3.0.0",
     "tslib": "^2.0.3",
-    "typescript": "^4.8.0"
+    "typescript": "^4.8.0",
+    "workspaces-run": "^1.0.1"
   },
   "eslintConfig": {
     "extends": [
