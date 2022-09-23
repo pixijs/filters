@@ -7,15 +7,10 @@ import {
     Sprite,
     TilingSprite,
     Assets,
-    extensions,
-    TilingSpriteRenderer,
     utils,
     filters as externalFilters } from 'pixi.js';
 
 const { EventEmitter } = utils;
-
-// TODO: PixiJS should fix this!
-extensions.add(TilingSpriteRenderer);
 
 /* global lil,ga*/
 /**
