@@ -82,7 +82,7 @@ class OutlineFilter extends Filter
     }
 
     /**
-     * The color of the glow.
+     * The color of the outline.
      * @default 0x000000
      */
     get color(): number
