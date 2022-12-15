@@ -4,5 +4,6 @@ export default function ()
     {
         folder.add(this, 'scale', 0.3, 1);
         folder.add(this, 'angle', 0, 5);
+        folder.add(this, 'grayscale');
     });
 }
