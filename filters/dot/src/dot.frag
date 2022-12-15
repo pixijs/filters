@@ -24,11 +24,12 @@ float pattern()
 void main()
 {
    vec4 color = texture2D(uSampler, vTextureCoord);
+   vec3 colorRGB = vec3(color);
 
    if (grayscale)
    {
-       color = vec4(vec3(color.r + color.g + color.b) / 3.0, color.a);
+       colorRGB = vec3(color.r + color.g + color.b) / 3.0;
    }
 
-   gl_FragColor = vec4(vec3(color * 10.0 - 5.0 + pattern()), color.a);
+   gl_FragColor = vec4(colorRGB * 10.0 - 5.0 + pattern(), color.a);
 }
