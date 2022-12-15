@@ -1,6 +1,7 @@
 varying vec2 vTextureCoord;
 uniform sampler2D uSampler;
 
+uniform float alpha;
 uniform vec2 thickness;
 uniform vec4 outlineColor;
 uniform vec4 filterClamp;
@@ -16,7 +17,7 @@ void main(void) {
         displaced.x = vTextureCoord.x + thickness.x * cos(angle);
         displaced.y = vTextureCoord.y + thickness.y * sin(angle);
         curColor = texture2D(uSampler, clamp(displaced, filterClamp.xy, filterClamp.zw));
-        maxAlpha = max(maxAlpha, curColor.a);
+        maxAlpha = max(maxAlpha, curColor.a * alpha);
     }
     float resultAlpha = max(maxAlpha, ownColor.a);
     gl_FragColor = vec4((ownColor.rgb + outlineColor.rgb * (1. - ownColor.a)) * resultAlpha, resultAlpha);
