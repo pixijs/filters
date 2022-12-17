@@ -543,6 +543,10 @@
         {
             "name": "ColorMapFilter",
             "filename": "color-map"
+        },
+        {
+            "name": "GrayscaleFilter",
+            "filename": "grayscale"
         }
     ]
 }
