@@ -11,6 +11,7 @@ uniform vec4 glowColor;
 uniform vec4 filterArea;
 uniform vec4 filterClamp;
 uniform bool knockout;
+uniform float alpha;
 
 const float PI = 3.14159265358979323846264;
 
@@ -54,13 +55,12 @@ void main(void) {
     float outerGlowAlpha = alphaRatio * outerStrength * (1. - curColor.a);
     float outerGlowStrength = min(1.0 - innerColor.a, outerGlowAlpha);
 
-    vec4 outerGlowColor = outerGlowStrength * glowColor.rgba;
-    
     if (knockout) {
-      float resultAlpha = outerGlowAlpha + innerGlowAlpha;
+      float resultAlpha = (outerGlowAlpha + innerGlowAlpha) * alpha;
       gl_FragColor = vec4(glowColor.rgb * resultAlpha, resultAlpha);
     }
     else {
+      vec4 outerGlowColor = outerGlowStrength * glowColor.rgba * alpha;
       gl_FragColor = innerColor + outerGlowColor;
     }
 }
