@@ -15,8 +15,8 @@ export default function ()
             folder.add(this, 'innerStrength', 0, 20);
             folder.add(this, 'outerStrength', 0, 20);
             folder.addColor(this, 'color');
-            folder.add(this, 'knockout');
             folder.add(this, 'alpha', 0, 1);
+            folder.add(this, 'knockout');
         },
     });
 }
