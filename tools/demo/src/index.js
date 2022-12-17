@@ -14,6 +14,7 @@ const main = async () =>
         fish2: 'images/displacement_fish2.png',
         fish3: 'images/displacement_fish3.png',
         fish4: 'images/displacement_fish4.png',
+        fish5: 'images/displacement_fish5.png',
         lightmap: 'images/lightmap.png',
         colormap: 'images/colormap.png',
     });

@@ -115,9 +115,11 @@ export default class DemoApplication extends Application
         this.pond.addChild(this.bg);
 
         // Create and add the fish
+        const fishVariations = 5;
+
         for (let i = 0; i < this.fishCount; i++)
         {
-            const id = `fish${(i % 4) + 1}`;
+            const id = `fish${(i % fishVariations) + 1}`;
             const fish = new Sprite(resources[id]);
 
             fish.anchor.set(0.5);
