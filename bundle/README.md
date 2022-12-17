@@ -2,7 +2,7 @@
 
 [![Node.js CI](https://github.com/pixijs/filters/workflows/Node.js%20CI/badge.svg)](https://github.com/pixi.js/pixi-filters/actions?query=workflow%3A%22Node.js+CI%22) [![npm version](https://badge.fury.io/js/pixi-filters.svg)](https://badge.fury.io/js/pixi-filters)
 
-PixiJS v5 optional display filters.
+PixiJS v7 optional display filters.
 
 Filters include:
 
@@ -24,6 +24,7 @@ Filters include:
 * **GlitchFilter** _@pixi/filter-glitch_
 * **GlowFilter** _@pixi/filter-glow_
 * **GodrayFilter** _@pixi/filter-godray_
+* **GrayscaleFilter** _@pixi/filter-grayscale_
 * **KawaseBlurFilter** _@pixi/filter-kawase-blur_
 * **MotionBlurFilter** _@pixi/filter-motion-blur_
 * **MultiColorFilter** _@pixi/filter-multi-color-replace_
