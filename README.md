@@ -8,7 +8,7 @@ Click [here](https://pixijs.io/filters/tools/demo/) to interactively play with f
 
 ## Filters
 
-All filters work with PixiJS v5.
+All filters work with PixiJS v7.
 
 | Filter | Preview |
 |---|---|
@@ -29,7 +29,8 @@ All filters work with PixiJS v5.
 | **EmbossFilter**<br>_@pixi/filter-emboss_ | ![emboss](https://filters.pixijs.download/main/tools/screenshots/dist/emboss.png?v=2) |
 | **GlitchFilter**<br>_@pixi/filter-glitch_ | ![glitch](https://filters.pixijs.download/main/tools/screenshots/dist/glitch.png?v=1) |
 | **GlowFilter**<br>_@pixi/filter-glow_ | ![glow](https://filters.pixijs.download/main/tools/screenshots/dist/glow.png?v=2) |
-| **Godray**<br>_@pixi/filter-godray_ | ![godray](https://filters.pixijs.download/main/tools/screenshots/dist/godray.gif?v=2) |
+| **GodrayFilter**<br>_@pixi/filter-godray_ | ![godray](https://filters.pixijs.download/main/tools/screenshots/dist/godray.gif?v=2) |
+| **GrayscaleFilter**<br>_@pixi/filter-grayscale_ | ![grayscale](https://filters.pixijs.download/main/tools/screenshots/dist/grayscale.png?v=1) |
 | **KawaseBlurFilter**<br>_@pixi/filter-kawase-blur_ | ![kawase-blur](https://filters.pixijs.download/main/tools/screenshots/dist/kawase-blur.png?v=1) |
 | **MotionBlurFilter**<br>_@pixi/filter-motion-blur_ | ![motion-blur](https://filters.pixijs.download/main/tools/screenshots/dist/motion-blur.png?v=1) |
 | **MultiColorReplaceFilter**<br>_@pixi/filter-multi-color-replace_ | ![multi-color-replace](https://filters.pixijs.download/main/tools/screenshots/dist/multi-color-replace.png?v=1) |
