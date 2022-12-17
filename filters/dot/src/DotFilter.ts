@@ -20,12 +20,14 @@ class DotFilter extends Filter
     /**
      * @param {number} [scale=1] - The scale of the effect.
      * @param {number} [angle=5] - The radius of the effect.
+     * @param {boolean} [grayscale=true] - Render as grayscale.
      */
-    constructor(scale = 1, angle = 5)
+    constructor(scale = 1, angle = 5, grayscale = true)
     {
         super(vertex, fragment);
         this.scale = scale;
         this.angle = angle;
+        this.grayscale = grayscale;
     }
 
     /**
@@ -52,6 +54,19 @@ class DotFilter extends Filter
     set angle(value: number)
     {
         this.uniforms.angle = value;
+    }
+
+    /**
+     * Render as grayscale.
+     * @default true
+     */
+    get grayscale(): boolean
+    {
+        return this.uniforms.grayscale;
+    }
+    set grayscale(value: boolean)
+    {
+        this.uniforms.grayscale = value;
     }
 }
 
