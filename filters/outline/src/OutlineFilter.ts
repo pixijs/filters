@@ -25,21 +25,24 @@ class OutlineFilter extends Filter
     public static MAX_SAMPLES = 100;
 
     private _thickness = 1;
+    private _alpha = 1.0;
 
     /**
      * @param {number} [thickness=1] - The tickness of the outline. Make it 2 times more for resolution 2
      * @param {number} [color=0x000000] - The color of the outline.
      * @param {number} [quality=0.1] - The quality of the outline from `0` to `1`, using a higher quality
      *        setting will result in slower performance and more accuracy.
+     * @param {number} [alpha=1.0] - The alpha of the outline.
      */
-    constructor(thickness = 1, color = 0x000000, quality = 0.1)
+    constructor(thickness = 1, color = 0x000000, quality = 0.1, alpha = 1.0)
     {
         super(vertex, fragment.replace(/\$\{angleStep\}/, OutlineFilter.getAngleStep(quality)));
 
         this.uniforms.thickness = new Float32Array([0, 0]);
         this.uniforms.outlineColor = new Float32Array([0, 0, 0, 1]);
+        this.uniforms.alpha = alpha;
 
-        Object.assign(this, { thickness, color, quality });
+        Object.assign(this, { thickness, color, quality, alpha });
     }
 
     /**
@@ -60,12 +63,26 @@ class OutlineFilter extends Filter
     {
         this.uniforms.thickness[0] = this._thickness / input._frame.width;
         this.uniforms.thickness[1] = this._thickness / input._frame.height;
+        this.uniforms.alpha = this._alpha;
 
         filterManager.applyFilter(this, input, output, clear);
     }
 
     /**
-     * The color of the glow.
+     * The alpha of the outline.
+     * @default 1.0
+     */
+    get alpha(): number
+    {
+        return this._alpha;
+    }
+    set alpha(value: number)
+    {
+        this._alpha = value;
+    }
+
+    /**
+     * The color of the outline.
      * @default 0x000000
      */
     get color(): number
