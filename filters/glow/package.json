@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-glow",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "main": "./dist/filter-glow.js",
   "description": "PixiJS filter to apply a glow effect",
   "author": "Mat Groves",

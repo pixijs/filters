@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-grayscale",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "main": "./dist/filter-grayscale.js",
   "description": "PixiJS filter to apply a grayscale effect",
   "author": "Viktor Persson",

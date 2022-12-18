@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-outline",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "main": "./dist/filter-outline.js",
   "description": "PixiJS filter to apply an outline/stroke effect",
   "author": "Mat Groves",
