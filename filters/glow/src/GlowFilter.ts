@@ -10,6 +10,7 @@ interface GlowFilterOptions
     color: number;
     quality: number;
     knockout: boolean;
+    alpha: number;
 }
 
 /**
@@ -37,6 +38,7 @@ class GlowFilter extends Filter
         color: 0xffffff,
         quality: 0.1,
         knockout: false,
+        alpha: 1,
     };
 
     /**
@@ -58,7 +60,8 @@ class GlowFilter extends Filter
             innerStrength,
             color,
             knockout,
-            quality } = opts;
+            quality,
+            alpha } = opts;
 
         const distance = Math.round(opts.distance);
 
@@ -67,6 +70,7 @@ class GlowFilter extends Filter
             .replace(/__DIST__/gi, `${distance.toFixed(0)}.0`));
 
         this.uniforms.glowColor = new Float32Array([0, 0, 0, 1]);
+        this.uniforms.alpha = 1;
 
         Object.assign(this, {
             color,
@@ -74,6 +78,7 @@ class GlowFilter extends Filter
             innerStrength,
             padding: distance,
             knockout,
+            alpha,
         });
     }
 
@@ -127,6 +132,19 @@ class GlowFilter extends Filter
     set knockout(value: boolean)
     {
         this.uniforms.knockout = value;
+    }
+
+    /**
+     * The alpha value of the glow
+     * @default 1
+     */
+    get alpha(): boolean
+    {
+        return this.uniforms.alpha;
+    }
+    set alpha(value: boolean)
+    {
+        this.uniforms.alpha = value;
     }
 }
 
