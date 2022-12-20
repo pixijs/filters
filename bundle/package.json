@@ -40,6 +40,7 @@
     "@pixi/filter-bevel": "5.0.0",
     "@pixi/filter-bloom": "5.0.0",
     "@pixi/filter-bulge-pinch": "5.0.0",
+    "@pixi/filter-color-gradient": "5.1.0",
     "@pixi/filter-color-map": "5.0.0",
     "@pixi/filter-color-overlay": "5.0.0",
     "@pixi/filter-color-replace": "5.0.0",
