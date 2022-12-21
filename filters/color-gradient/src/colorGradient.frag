@@ -8,7 +8,7 @@ uniform vec3 colors[NUM_STOPS*3];
 uniform float offsets[NUM_STOPS];
 uniform float alpha;
 
-struct GradientStop {
+struct ColorStop {
     float offset;
     vec3 color;
     float alpha;
@@ -37,15 +37,15 @@ void main(void) {
     }
 
     // find color stops
-    GradientStop from;
-    GradientStop to;
+    ColorStop from;
+    ColorStop to;
     int indexLast = NUM_STOPS-1;
 
     for (int i = 0; i < NUM_STOPS; i++) {
         if (y >= offsets[i]) {
             if (i < indexLast) {
-                from = GradientStop(offsets[i], colors[i], alphas[i]);
-                to = GradientStop(offsets[i+1], colors[i+1], alphas[i+1]);
+                from = ColorStop(offsets[i], colors[i], alphas[i]);
+                to = ColorStop(offsets[i+1], colors[i+1], alphas[i+1]);
             }
         }
     }

@@ -16,7 +16,7 @@ import { Container } from 'pixi.js';
 
 const container = new Container();
 
-const stops: GradientStop[] = [
+const stops: ColorStop[] = [
     { offset: 0.0, color: 0xff0000, alpha: 1.0, },
     { offset: 0.5, color: 0x00ff00, alpha: 0.5, },
     { offset: 1.0, color: 0x0000ff, alpha: 1.0, },

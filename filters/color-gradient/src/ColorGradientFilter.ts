@@ -2,14 +2,14 @@ import fragment from './colorGradient.frag';
 import vertex from './colorGradient.vert';
 import { Filter, utils } from '@pixi/core';
 
-export interface GradientStop
+export interface ColorStop
 {
     offset: number;
     color: number;
     alpha: number;
 }
 
-function sortStops(stops: GradientStop[]) : GradientStop[]
+function sortColorStops(stops: ColorStop[]) : ColorStop[]
 {
     return [...stops].sort((a, b) => a.offset - b.offset);
 }
@@ -25,13 +25,13 @@ function sortStops(stops: GradientStop[]) : GradientStop[]
  */
 class ColorGradientFilter extends Filter
 {
-    private _stops: GradientStop[] = [];
+    private _stops: ColorStop[] = [];
 
     /**
-   * @param {GradientStop[]} [stops] - Color stops of the gradient
+   * @param {ColorStop[]} [stops] - Color stops of the gradient
    * @param {number} [alpha=1.0] - The alpha value of the gradient
    */
-    constructor(stops: GradientStop[], alpha = 1.0)
+    constructor(stops: ColorStop[], alpha = 1.0)
     {
         super(vertex, fragment.replace(/%numStops%/g, stops.length.toString()));
 
@@ -39,14 +39,14 @@ class ColorGradientFilter extends Filter
         this.stops = stops;
     }
 
-    get stops() : GradientStop[]
+    get stops() : ColorStop[]
     {
         return this._stops;
     }
 
-    set stops(stops: GradientStop[])
+    set stops(stops: ColorStop[])
     {
-        const sortedStops = sortStops(stops);
+        const sortedStops = sortColorStops(stops);
 
         const colors = new Float32Array(sortedStops.length * 3);
         const R = 0;
