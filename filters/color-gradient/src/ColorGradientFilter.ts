@@ -29,14 +29,16 @@ class ColorGradientFilter extends Filter
 
     /**
    * @param {ColorStop[]} [stops] - Color stops of the gradient
+   * @param {number} [angle=90] - The angle of the gradient
    * @param {number} [alpha=1.0] - The alpha value of the gradient
    */
-    constructor(stops: ColorStop[], alpha = 1.0)
+    constructor(stops: ColorStop[], angle = 0, alpha = 1.0)
     {
         super(vertex, fragment.replace(/%numStops%/g, stops.length.toString()));
 
-        this.uniforms.alpha = alpha;
         this.stops = stops;
+        this.uniforms.angle = angle;
+        this.uniforms.alpha = alpha;
     }
 
     get stops() : ColorStop[]
@@ -67,6 +69,20 @@ class ColorGradientFilter extends Filter
         this.uniforms.offsets = sortedStops.map((s) => s.offset);
         this.uniforms.alphas = sortedStops.map((s) => s.alpha);
         this._stops = sortedStops;
+    }
+
+    /**
+   * The angle of the gradient
+   * @default 0
+   */
+    set angle(value: number)
+    {
+        this.uniforms.angle = value;
+    }
+
+    get angle(): number
+    {
+        return this.uniforms.angle;
     }
 
     /**
