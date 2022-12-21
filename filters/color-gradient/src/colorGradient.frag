@@ -59,7 +59,7 @@ void main(void) {
     // current position
     float rad = radians(angle);
     vec2 centerPoint = vec2(0.5);
-    vec2 rotatedPos = rotatePosition(vTextureCoord, vec2(0.5), radians(angle));
+    vec2 rotatedPos = rotatePosition(vFilterCoord, vec2(0.5), radians(angle));
     float pos = rotatedPos.y;
 
     // check gradient bounds
