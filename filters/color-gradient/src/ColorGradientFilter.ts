@@ -9,11 +9,10 @@ export interface GradientStop
     alpha: number;
 }
 
-// const testStops: GradientStop[] = [
-//     { offset: 0.0, color: 0xff0000, alpha: 1.0, },
-//     { offset: 0.5, color: 0x000000, alpha: 0.0, },
-//     { offset: 1.0, color: 0xff0000, alpha: 1.0, },
-// ];
+function sortStops(stops: GradientStop[]) : GradientStop[]
+{
+    return [...stops].sort((a, b) => a.offset - b.offset);
+}
 
 /**
  * Render a colored gradient.<br>
@@ -47,14 +46,16 @@ class ColorGradientFilter extends Filter
 
     set stops(stops: GradientStop[])
     {
-        const colors = new Float32Array(stops.length * 3);
+        const sortedStops = sortStops(stops);
+
+        const colors = new Float32Array(sortedStops.length * 3);
         const R = 0;
         const G = 1;
         const B = 2;
 
-        for (let i = 0; i < stops.length; i++)
+        for (let i = 0; i < sortedStops.length; i++)
         {
-            const color = utils.hex2rgb(stops[i].color);
+            const color = utils.hex2rgb(sortedStops[i].color);
             const indexStart = i * 3;
 
             colors[indexStart + R] = color[R];
@@ -63,9 +64,9 @@ class ColorGradientFilter extends Filter
         }
 
         this.uniforms.colors = colors;
-        this.uniforms.offsets = stops.map((s) => s.offset);
-        this.uniforms.alphas = stops.map((s) => s.alpha);
-        this._stops = stops;
+        this.uniforms.offsets = sortedStops.map((s) => s.offset);
+        this.uniforms.alphas = sortedStops.map((s) => s.alpha);
+        this._stops = sortedStops;
     }
 
     /**
