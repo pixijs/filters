@@ -45,7 +45,7 @@ void main(void) {
 
     // debug outline
     float w = 0.005;
-    if (vTextureCoord.x < w || vTextureCoord.x > 1.-w || vTextureCoord.y < w || vTextureCoord.y > 1.-w) {
+    if (vFilterCoord.x < w || vFilterCoord.x > 1.-w || vFilterCoord.y < w || vFilterCoord.y > 1.-w) {
         gl_FragColor = vec4(vec3(1., 1., 0), 1.);
         return;
     }
