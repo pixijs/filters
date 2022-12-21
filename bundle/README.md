@@ -12,6 +12,7 @@ Filters include:
 * **BevelFilter** _@pixi/filter-bevel_
 * **BloomFilter** _@pixi/filter-bloom_
 * **BulgePinchFilter** _@pixi/filter-bulge-pinch_
+* **ColorGradientFilter** _@pixi/filter-color-gradient_
 * **ColorMapFilter** _@pixi/filter-color-map_
 * **ColorOverlayFilter** _@pixi/filter-color-overlay_
 * **ColorReplaceFilter** _@pixi/filter-color-replace_

@@ -18,6 +18,7 @@ All filters work with PixiJS v7.
 | **BevelFilter**<br>_@pixi/filter-bevel_ | ![bevel](https://filters.pixijs.download/main/tools/screenshots/dist/bevel.png?v=2) |
 | **BloomFilter**<br>_@pixi/filter-bloom_ | ![bloom](https://filters.pixijs.download/main/tools/screenshots/dist/bloom.png?v=2) |
 | **BulgePinchFilter**<br>_@pixi/filter-bulge-pinch_ | ![bulge-pinch](https://filters.pixijs.download/main/tools/screenshots/dist/bulge-pinch.gif?v=2) |
+| **ColorGradientFilter**<br>_@pixi/filter-color-gradient_ | ![color-gradient](https://filters.pixijs.download/main/tools/screenshots/dist/color-gradient.png?v=2) |
 | **ColorMapFilter**<br>_@pixi/filter-color-map_ | ![color-map](https://filters.pixijs.download/main/tools/screenshots/dist/color-map.png?v=2) |
 | **ColorOverlayFilter**<br>_@pixi/filter-color-overlay_ | ![color-overlay](https://filters.pixijs.download/main/tools/screenshots/dist/color-overlay.png?v=2) |
 | **ColorReplaceFilter**<br>_@pixi/filter-color-replace_ | ![color-replace](https://filters.pixijs.download/main/tools/screenshots/dist/color-replace.png?v=2) |
