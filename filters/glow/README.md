@@ -1,6 +1,8 @@
 # GlowFilter
 
-PixiJS filter to apply a glow effect.
+> PixiJS filter to apply a glow effect.
+
+[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=GlowFilter)
 
 ## Installation
 

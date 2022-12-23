@@ -1,6 +1,8 @@
 # TiltShiftFilter
 
-PixiJS filter to render a tilt-shift-like camera effect.
+> PixiJS filter to render a tilt-shift-like camera effect.
+
+[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=TiltShiftFilter)
 
 ## Installation
 

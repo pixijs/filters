@@ -1,6 +1,8 @@
 # CrossHatchFilter
 
-PixiJS filter to apply a cross-hatch black and white effect.
+> PixiJS filter to apply a cross-hatch black and white effect.
+
+[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=CrossHatchFilter)
 
 ## Installation
 

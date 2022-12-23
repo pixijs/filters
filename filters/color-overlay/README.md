@@ -1,6 +1,8 @@
 # ColorOverlayFilter
 
-PixiJS filter to overlay all colors with single color.
+> PixiJS filter to overlay all colors with single color.
+
+[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=ColorOverlayFilter)
 
 ## Installation
 
