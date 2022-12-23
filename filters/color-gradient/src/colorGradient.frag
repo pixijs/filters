@@ -115,7 +115,7 @@ void main(void) {
     float relativePos = y - from.offset;
     float relativePercent = relativePos / stopHeight;// percent between [from.offset] and [to.offset].
 
-    float gradientAlpha = alpha * currentColor.a;
+    float gradientAlpha = uAlpha * currentColor.a;
     vec4 gradientColor = mix(colorFrom, colorTo, relativePercent) * gradientAlpha;
 
     // mix resulting color with current color
