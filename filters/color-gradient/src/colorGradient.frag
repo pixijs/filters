@@ -32,11 +32,12 @@ mat2 rotate2d(float _angle){
     sin(_angle), cos(_angle));
 }
 
-vec2 rotatePosition(vec2 pos, vec2 center, float _angle){
+vec2 rotatePosition(vec2 pos, float _angle){
+    vec2 center = vec2(0.5);
     vec2 result = pos - center;
     result = rotate2d(_angle) * result;
     result = result + center;
-    return result;
+    return clamp(result, vec2(0), vec2(1.));
 }
 
 void main(void) {
@@ -56,17 +57,14 @@ void main(void) {
         return;
     }
 
-    // current position
-    float rad = radians(angle);
-    vec2 centerPoint = vec2(0.5);
-    vec2 rotatedPos = rotatePosition(vFilterCoord, vec2(0.5), radians(angle));
-    float pos = rotatedPos.y;
+    // project position
+    float y = rotatePosition(vFilterCoord, radians(angle)).y;
 
     // check gradient bounds
     float offsetMin = offsets[0];
     float offsetMax = offsets[NUM_STOPS-1];
 
-    if (pos  < offsetMin || pos > offsetMax) {
+    if (y  < offsetMin || y > offsetMax) {
         gl_FragColor = currentColor;
         return;
     }
@@ -74,14 +72,11 @@ void main(void) {
     // find color stops
     ColorStop from;
     ColorStop to;
-    int indexLast = NUM_STOPS-1;
 
-    for (int i = 0; i < NUM_STOPS; i++) {
-        if (pos >= offsets[i]) {
-            if (i < indexLast) {
-                from = ColorStop(offsets[i], colors[i], alphas[i]);
-                to = ColorStop(offsets[i+1], colors[i+1], alphas[i+1]);
-            }
+    for (int i = 0; i < NUM_STOPS-1; i++) {
+        if (y >= offsets[i]) {
+            from = ColorStop(offsets[i], colors[i], alphas[i]);
+            to = ColorStop(offsets[i+1], colors[i+1], alphas[i+1]);
         }
     }
 
@@ -90,7 +85,7 @@ void main(void) {
     vec4 colorTo = vec4(to.color * to.alpha, to.alpha);
 
     float stopHeight = to.offset - from.offset;
-    float relativePos = pos - from.offset;
+    float relativePos = y - from.offset;
     float relativePercent = relativePos / stopHeight;// percent between [from.offset] and [to.offset].
 
     float gradientAlpha = alpha * currentColor.a;
