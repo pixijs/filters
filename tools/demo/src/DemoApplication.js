@@ -265,7 +265,6 @@ export default class DemoApplication extends Application
      * @param {array} [options.args] Constructor arguments
      * @param {boolean} [options.fishOnly=false] Apply to fish only, not whole scene
      * @param {boolean} [options.enabled=false] Filter is enabled by default
-     * @param {boolean} [options.opened=false] Filter Folder is opened by default
      * @param {function} [oncreate] Function takes filter and gui folder as
      *        arguments and is scoped to the Demo application.
      * @return {PIXI.Filter} Instance of new filter
@@ -324,12 +323,7 @@ export default class DemoApplication extends Application
             }
         });
 
-        if (options.opened)
-        {
-            folder.open();
-        }
-
-        if (options.enabled)
+        if (filter.enabled)
         {
             folder.domElement.className += ' enabled';
         }
