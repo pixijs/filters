@@ -15,6 +15,7 @@ interface ColorGradientFilterOptions
     stops: ColorStop[];
     angle: number;
     alpha: number;
+    maxColors: number;
 }
 
 function sortColorStops(stops: ColorStop[]) : ColorStop[]
@@ -46,6 +47,7 @@ class ColorGradientFilter extends Filter
         ],
         alpha: 1.0,
         angle: 0.0,
+        maxColors: 0,
     };
 
     private _stops: ColorStop[] = [];
@@ -58,6 +60,7 @@ class ColorGradientFilter extends Filter
    * @param {ColorStop[]} [options.stops] - Color stops of the gradient
    * @param {number} [options.angle=90] - The angle of the gradient
    * @param {number} [options.alpha=1.0] - The alpha value of the gradient
+   * @param {number} [options.maxColors=0] - The maximum number of colors to use in the gradient (0 = disabled)
    */
     constructor(options?: Partial<ColorGradientFilterOptions>)
     {
@@ -138,6 +141,20 @@ class ColorGradientFilter extends Filter
     get alpha(): number
     {
         return this.uniforms.alpha;
+    }
+
+    /**
+   * The maximum number of colors to use in the gradient
+   * @default 0
+   */
+    set maxColors(value: number)
+    {
+        this.uniforms.maxColors = value;
+    }
+
+    get maxColors(): number
+    {
+        return this.uniforms.maxColors;
     }
 }
 

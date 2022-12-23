@@ -12,6 +12,7 @@ uniform float offsets[NUM_STOPS];
 uniform int type;
 uniform float angle;
 uniform float alpha;
+uniform int maxColors;
 
 struct ColorStop {
     float offset;
@@ -86,6 +87,13 @@ void main(void) {
     if (y  < offsetMin || y > offsetMax) {
         gl_FragColor = currentColor;
         return;
+    }
+
+    // limit colors
+    if (maxColors > 0) {
+        float stepSize = 1./float(maxColors);
+        float stepNumber = float(floor(y/stepSize)) + 0.5;
+        y = stepSize * stepNumber;
     }
 
     // find color stops
