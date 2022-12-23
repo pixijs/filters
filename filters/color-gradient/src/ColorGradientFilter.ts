@@ -95,9 +95,9 @@ class ColorGradientFilter extends Filter
             colors[indexStart + B] = color[B];
         }
 
-        this.uniforms.colors = colors;
-        this.uniforms.offsets = sortedStops.map((s) => s.offset);
-        this.uniforms.alphas = sortedStops.map((s) => s.alpha);
+        this.uniforms.uColors = colors;
+        this.uniforms.uOffsets = sortedStops.map((s) => s.offset);
+        this.uniforms.uAlphas = sortedStops.map((s) => s.alpha);
         this._stops = sortedStops;
     }
 
@@ -107,12 +107,12 @@ class ColorGradientFilter extends Filter
    */
     set type(value: number)
     {
-        this.uniforms.type = value;
+        this.uniforms.uType = value;
     }
 
     get type(): number
     {
-        return this.uniforms.type;
+        return this.uniforms.uType;
     }
 
     /**
@@ -121,12 +121,12 @@ class ColorGradientFilter extends Filter
    */
     set angle(value: number)
     {
-        this.uniforms.angle = value;
+        this.uniforms.uAngle = value;
     }
 
     get angle(): number
     {
-        return this.uniforms.angle;
+        return this.uniforms.uAngle;
     }
 
     /**
@@ -135,12 +135,12 @@ class ColorGradientFilter extends Filter
    */
     set alpha(value: number)
     {
-        this.uniforms.alpha = value;
+        this.uniforms.uAlpha = value;
     }
 
     get alpha(): number
     {
-        return this.uniforms.alpha;
+        return this.uniforms.uAlpha;
     }
 
     /**
@@ -149,12 +149,12 @@ class ColorGradientFilter extends Filter
    */
     set maxColors(value: number)
     {
-        this.uniforms.maxColors = value;
+        this.uniforms.uMaxColors = value;
     }
 
     get maxColors(): number
     {
-        return this.uniforms.maxColors;
+        return this.uniforms.uMaxColors;
     }
 }
 

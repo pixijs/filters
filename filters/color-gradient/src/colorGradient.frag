@@ -6,13 +6,13 @@ const int TYPE_LINEAR = 0;
 const int TYPE_RADIAL = 1;
 
 const int NUM_STOPS = %numStops%;
-uniform float alphas[NUM_STOPS];
-uniform vec3 colors[NUM_STOPS*3];
-uniform float offsets[NUM_STOPS];
-uniform int type;
-uniform float angle;
-uniform float alpha;
-uniform int maxColors;
+uniform float uAlphas[NUM_STOPS];
+uniform vec3 uColors[NUM_STOPS*3];
+uniform float uOffsets[NUM_STOPS];
+uniform int uType;
+uniform float uAngle;
+uniform float uAlpha;
+uniform int uMaxColors;
 
 struct ColorStop {
     float offset;
@@ -20,27 +20,15 @@ struct ColorStop {
     float alpha;
 };
 
-//struct polar {
-//    float radius;
-//    float angle;
-//};
-//
-//polar uniToPolar(vec2 uniPos) {
-//    vec2 offsetPos = uniPos - vec2(0.5);// offset center to (0.5, 0.5)
-//    float radius=length(offsetPos);
-//    float angle=atan(offsetPos.y, offsetPos.x);
-//    return polar(radius, angle);
-//}
-
-mat2 rotate2d(float _angle){
-    return mat2(cos(_angle), -sin(_angle),
-    sin(_angle), cos(_angle));
+mat2 rotate2d(float angle){
+    return mat2(cos(angle), -sin(angle),
+    sin(angle), cos(angle));
 }
 
-float projectLinearPosition(vec2 pos, float _angle){
+float projectLinearPosition(vec2 pos, float angle){
     vec2 center = vec2(0.5);
     vec2 result = pos - center;
-    result = rotate2d(_angle) * result;
+    result = rotate2d(angle) * result;
     result = result + center;
     return clamp(result.y, 0., 1.);
 }
@@ -50,11 +38,19 @@ float projectRadialPosition(vec2 pos) {
     return clamp(2.*r, 0., 1.);
 }
 
-float projectPosition(vec2 pos, int _type, float _angle) {
-    if (_type == TYPE_LINEAR) {
-        return projectLinearPosition(pos, _angle);
-    } else if (_type == TYPE_RADIAL) {
+float projectAnglePosition(vec2 pos, float angle) {
+    vec2 center = pos - vec2(0.5);
+    float polarAngle=atan(-center.y, center.x);
+    return mod(polarAngle + angle, PI_2) / PI_2;
+}
+
+float projectPosition(vec2 pos, int type, float angle) {
+    if (type == TYPE_LINEAR) {
+        return projectLinearPosition(pos, angle);
+    } else if (type == TYPE_RADIAL) {
         return projectRadialPosition(pos);
+    } else if (type == TYPE_ANGLE) {
+        return projectAnglePosition(pos, angle);
     }
 
     return pos.y;
@@ -72,17 +68,17 @@ void main(void) {
     }
 
     // skip calculations if alpha is 0
-    if (0.0 == alpha) {
+    if (0.0 == uAlpha) {
         gl_FragColor = currentColor;
         return;
     }
 
     // project position
-    float y = projectPosition(vFilterCoord, type, radians(angle));
+    float y = projectPosition(vFilterCoord, uType, radians(uAngle));
 
     // check gradient bounds
-    float offsetMin = offsets[0];
-    float offsetMax = offsets[NUM_STOPS-1];
+    float offsetMin = uOffsets[0];
+    float offsetMax = uOffsets[NUM_STOPS-1];
 
     if (y  < offsetMin || y > offsetMax) {
         gl_FragColor = currentColor;
@@ -90,8 +86,8 @@ void main(void) {
     }
 
     // limit colors
-    if (maxColors > 0) {
-        float stepSize = 1./float(maxColors);
+    if (uMaxColors > 0) {
+        float stepSize = 1./float(uMaxColors);
         float stepNumber = float(floor(y/stepSize)) + 0.5;
         y = stepSize * stepNumber;
     }
@@ -101,9 +97,9 @@ void main(void) {
     ColorStop to;
 
     for (int i = 0; i < NUM_STOPS-1; i++) {
-        if (y >= offsets[i]) {
-            from = ColorStop(offsets[i], colors[i], alphas[i]);
-            to = ColorStop(offsets[i+1], colors[i+1], alphas[i+1]);
+        if (y >= uOffsets[i]) {
+            from = ColorStop(uOffsets[i], uColors[i], uAlphas[i]);
+            to = ColorStop(uOffsets[i+1], uColors[i+1], uAlphas[i+1]);
         }
     }
 
