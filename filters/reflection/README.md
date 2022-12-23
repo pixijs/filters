@@ -2,7 +2,7 @@
 
 > PixiJS filter to apply reflection and wave effect.
 
-[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=AdjustBasicFilter)
+[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=ReflectionFilter)
 
 ## Installation
 
