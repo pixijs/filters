@@ -34,7 +34,7 @@ float projectLinearPosition(vec2 pos, float angle){
     vec2 result = pos - center;
     result = rotate2d(angle) * result;
     result = result + center;
-    return clamp(result.y, 0., 1.);
+    return clamp(result.x, 0., 1.);
 }
 
 float projectRadialPosition(vec2 pos) {
