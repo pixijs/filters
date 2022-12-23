@@ -325,6 +325,7 @@ export default class DemoApplication extends Application
 
         if (filter.enabled)
         {
+            folder.open();
             folder.domElement.className += ' enabled';
         }
 
