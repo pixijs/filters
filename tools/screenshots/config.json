@@ -551,14 +551,15 @@
         {
             "name": "ColorGradientFilter",
             "filename": "color-gradient",
-            "arguments": [
-                [
+            "arguments": [{
+                "type": 0,
+                "stops": [
                     {"offset": 0.00, "color": 16711680, "alpha": 1.0},
                     {"offset": 0.50, "color": 65280, "alpha": 1.0},
                     {"offset": 1.00, "color": 255, "alpha": 1.0}
                 ],
-                0.5
-            ]
+                "alpha": 0.5
+            }]
         }
     ]
 }
