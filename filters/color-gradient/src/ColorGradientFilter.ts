@@ -69,6 +69,7 @@ class ColorGradientFilter extends Filter
         const options_ = { ...ColorGradientFilter.defaults, ...options };
 
         super(vertex, fragment.replace(/%numStops%/g, options_.stops.length.toString()));
+        this.autoFit = false;
 
         Object.assign(this, options_);
     }
