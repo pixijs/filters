@@ -85,8 +85,8 @@ void main(void) {
     // limit colors
     if (uMaxColors > 0) {
         float stepSize = 1./float(uMaxColors);
-        float stepNumber = float(floor(y/stepSize)) + 0.5;
-        y = stepSize * stepNumber;
+        float stepNumber = float(floor(y/stepSize));
+        y = stepSize * (stepNumber + 0.5); // offset by 0.5 to use color from middle of segment
     }
 
     // find color stops
@@ -104,9 +104,9 @@ void main(void) {
     vec4 colorFrom = vec4(from.color * from.alpha, from.alpha);
     vec4 colorTo = vec4(to.color * to.alpha, to.alpha);
 
-    float stopHeight = to.offset - from.offset;
-    float relativePos = y - from.offset;
-    float relativePercent = relativePos / stopHeight;// percent between [from.offset] and [to.offset].
+    float segmentHeight = to.offset - from.offset;
+    float relativePos = y - from.offset; // position from 0 to [segmentHeight]
+    float relativePercent = relativePos / segmentHeight; // position in percent between [from.offset] and [to.offset].
 
     float gradientAlpha = uAlpha * currentColor.a;
     vec4 gradientColor = mix(colorFrom, colorTo, relativePercent) * gradientAlpha;
