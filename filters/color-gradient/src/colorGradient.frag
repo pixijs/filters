@@ -2,10 +2,14 @@ varying vec2 vTextureCoord;
 varying vec2 vFilterCoord;
 uniform sampler2D uSampler;
 
+const int TYPE_LINEAR = 0;
+const int TYPE_RADIAL = 1;
+
 const int NUM_STOPS = %numStops%;
 uniform float alphas[NUM_STOPS];
 uniform vec3 colors[NUM_STOPS*3];
 uniform float offsets[NUM_STOPS];
+uniform int type;
 uniform float angle;
 uniform float alpha;
 
@@ -32,12 +36,27 @@ mat2 rotate2d(float _angle){
     sin(_angle), cos(_angle));
 }
 
-vec2 rotatePosition(vec2 pos, float _angle){
+float projectLinearPosition(vec2 pos, float _angle){
     vec2 center = vec2(0.5);
     vec2 result = pos - center;
     result = rotate2d(_angle) * result;
     result = result + center;
-    return clamp(result, vec2(0), vec2(1.));
+    return clamp(result.y, 0., 1.);
+}
+
+float projectRadialPosition(vec2 pos) {
+    float r = distance(vFilterCoord, vec2(0.5));
+    return clamp(2.*r, 0., 1.);
+}
+
+float projectPosition(vec2 pos, int _type, float _angle) {
+    if (_type == TYPE_LINEAR) {
+        return projectLinearPosition(pos, _angle);
+    } else if (_type == TYPE_RADIAL) {
+        return projectRadialPosition(pos);
+    }
+
+    return pos.y;
 }
 
 void main(void) {
@@ -58,7 +77,7 @@ void main(void) {
     }
 
     // project position
-    float y = rotatePosition(vFilterCoord, radians(angle)).y;
+    float y = projectPosition(vFilterCoord, type, radians(angle));
 
     // check gradient bounds
     float offsetMin = offsets[0];

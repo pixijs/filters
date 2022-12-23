@@ -10,9 +10,11 @@ export default function ()
         enabled: true,
         fishOnly: true,
         opened: true,
-        args: [stops, 1.0],
+        args: [{ stops }],
         oncreate(folder)
         {
+            folder.add(this, 'type', { LINEAR: 0, RADIAL: 1 });
+
             const onStopChange = () =>
             {
                 this.stops = stops;

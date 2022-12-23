@@ -2,10 +2,18 @@ import fragment from './colorGradient.frag';
 import vertex from './colorGradient.vert';
 import { Filter, utils } from '@pixi/core';
 
-export interface ColorStop
+interface ColorStop
 {
     offset: number;
     color: number;
+    alpha: number;
+}
+
+interface ColorGradientFilterOptions
+{
+    type: number;
+    stops: ColorStop[];
+    angle: number;
     alpha: number;
 }
 
@@ -25,20 +33,39 @@ function sortColorStops(stops: ColorStop[]) : ColorStop[]
  */
 class ColorGradientFilter extends Filter
 {
+    /** Gradient types */
+    static readonly LINEAR = 0;
+    static readonly RADIAL = 1;
+
+    /** Default constructor options */
+    public static readonly defaults: ColorGradientFilterOptions = {
+        type: ColorGradientFilter.LINEAR,
+        stops: [
+            { offset: 0.0, color: 0xffffff, alpha: 1.0 },
+            { offset: 1.0, color: 0x000000, alpha: 1.0 },
+        ],
+        alpha: 1.0,
+        angle: 0.0,
+    };
+
     private _stops: ColorStop[] = [];
 
     /**
-   * @param {ColorStop[]} [stops] - Color stops of the gradient
-   * @param {number} [angle=90] - The angle of the gradient
-   * @param {number} [alpha=1.0] - The alpha value of the gradient
+   * @param {object} [options] - Options to use for filter.
+   * @param {number} [options.type] - The type of gradient. Acceptable values:
+   *  - `0` {@link ColorGradientFilter.LINEAR LINEAR}
+   *  - `1` {@link ColorGradientFilter.RADIAL RADIAL}
+   * @param {ColorStop[]} [options.stops] - Color stops of the gradient
+   * @param {number} [options.angle=90] - The angle of the gradient
+   * @param {number} [options.alpha=1.0] - The alpha value of the gradient
    */
-    constructor(stops: ColorStop[], angle = 0, alpha = 1.0)
+    constructor(options?: Partial<ColorGradientFilterOptions>)
     {
-        super(vertex, fragment.replace(/%numStops%/g, stops.length.toString()));
+        const options_ = { ...ColorGradientFilter.defaults, ...options };
 
-        this.stops = stops;
-        this.uniforms.angle = angle;
-        this.uniforms.alpha = alpha;
+        super(vertex, fragment.replace(/%numStops%/g, options_.stops.length.toString()));
+
+        Object.assign(this, options_);
     }
 
     get stops() : ColorStop[]
@@ -69,6 +96,20 @@ class ColorGradientFilter extends Filter
         this.uniforms.offsets = sortedStops.map((s) => s.offset);
         this.uniforms.alphas = sortedStops.map((s) => s.alpha);
         this._stops = sortedStops;
+    }
+
+    /**
+   * The type of gradient
+   * @default ColorGradientFilter.LINEAR
+   */
+    set type(value: number)
+    {
+        this.uniforms.type = value;
+    }
+
+    get type(): number
+    {
+        return this.uniforms.type;
     }
 
     /**
