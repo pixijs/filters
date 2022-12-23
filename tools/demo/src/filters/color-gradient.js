@@ -13,7 +13,7 @@ export default function ()
         args: [{ stops }],
         oncreate(folder)
         {
-            folder.add(this, 'type', { LINEAR: 0, RADIAL: 1 });
+            folder.add(this, 'type', { LINEAR: 0, RADIAL: 1, CONIC: 2 });
 
             const onStopChange = () =>
             {

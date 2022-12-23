@@ -37,7 +37,7 @@ class ColorGradientFilter extends Filter
     /** Gradient types */
     static readonly LINEAR = 0;
     static readonly RADIAL = 1;
-    static readonly ANGLE = 2;
+    static readonly CONIC = 2;
 
     /** Default constructor options */
     public static readonly defaults: ColorGradientFilterOptions = {
@@ -58,7 +58,7 @@ class ColorGradientFilter extends Filter
    * @param {number} [options.type] - The type of gradient. Acceptable values:
    *  - `0` {@link ColorGradientFilter.LINEAR LINEAR}
    *  - `1` {@link ColorGradientFilter.RADIAL RADIAL}
-   *  - `2` {@link ColorGradientFilter.ANGLE ANGLE}
+   *  - `2` {@link ColorGradientFilter.CONIC CONIC}
    * @param {ColorStop[]} [options.stops] - Color stops of the gradient
    * @param {number} [options.angle=90] - The angle of the gradient
    * @param {number} [options.alpha=1.0] - The alpha value of the gradient

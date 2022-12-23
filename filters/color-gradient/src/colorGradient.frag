@@ -7,7 +7,7 @@ uniform sampler2D uSampler;
 
 const int TYPE_LINEAR = 0;
 const int TYPE_RADIAL = 1;
-const int TYPE_ANGLE = 2;
+const int TYPE_CONIC = 2;
 
 const int NUM_STOPS = %numStops%;
 uniform float uAlphas[NUM_STOPS];
@@ -53,7 +53,7 @@ float projectPosition(vec2 pos, int type, float angle) {
         return projectLinearPosition(pos, angle);
     } else if (type == TYPE_RADIAL) {
         return projectRadialPosition(pos);
-    } else if (type == TYPE_ANGLE) {
+    } else if (type == TYPE_CONIC) {
         return projectAnglePosition(pos, angle);
     }
 
