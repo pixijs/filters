@@ -1,4 +1,4 @@
-# AdjustBasicFilter
+# ReflectionFilter
 
 > PixiJS filter to apply reflection and wave effect.
 
