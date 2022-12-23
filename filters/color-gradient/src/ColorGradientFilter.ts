@@ -62,7 +62,7 @@ class ColorGradientFilter extends Filter
    * @param {ColorStop[]} [options.stops] - Color stops of the gradient
    * @param {number} [options.angle=90] - The angle of the gradient
    * @param {number} [options.alpha=1.0] - The alpha value of the gradient
-   * @param {number} [options.maxColors=0] - The maximum number of colors to use in the gradient (0 = disabled)
+   * @param {number} [options.maxColors=0] - The maximum number of colors to render (0 = disabled)
    */
     constructor(options?: Partial<ColorGradientFilterOptions>)
     {
@@ -147,7 +147,7 @@ class ColorGradientFilter extends Filter
     }
 
     /**
-   * The maximum number of colors to use in the gradient
+   * The maximum number of colors to render
    * @default 0
    */
     set maxColors(value: number)

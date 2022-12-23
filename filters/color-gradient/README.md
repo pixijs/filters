@@ -1,6 +1,8 @@
 # ColorGradientFilter
 
-PixiJS filter to render a color gradient.
+> PixiJS filter to render a color gradient.
+
+[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=ColorGradientFilter)
 
 ## Installation
 
@@ -16,14 +18,16 @@ import { Container } from 'pixi.js';
 
 const container = new Container();
 
-const stops: ColorStop[] = [
+const options = {
+  type: ColorGradientFilter.LINEAR,
+  stops: [
     { offset: 0.0, color: 0xff0000, alpha: 1.0, },
     { offset: 0.5, color: 0x00ff00, alpha: 0.5, },
     { offset: 1.0, color: 0x0000ff, alpha: 1.0, },
-];
-const alpha = 1.0;
+  ]
+}
 
-container.filters = [new ColorGradientFilter(stops, alpha)];
+container.filters = [new ColorGradientFilter(options)];
 ```
 
 ## Documentation
