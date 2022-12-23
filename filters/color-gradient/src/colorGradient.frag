@@ -1,9 +1,13 @@
+const float PI = 3.1415926538;
+const float PI_2 = PI*2.;
+
 varying vec2 vTextureCoord;
 varying vec2 vFilterCoord;
 uniform sampler2D uSampler;
 
 const int TYPE_LINEAR = 0;
 const int TYPE_RADIAL = 1;
+const int TYPE_ANGLE = 2;
 
 const int NUM_STOPS = %numStops%;
 uniform float uAlphas[NUM_STOPS];
