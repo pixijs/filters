@@ -64,14 +64,7 @@ void main(void) {
     // current/original color
     vec4 currentColor = texture2D(uSampler, vTextureCoord);
 
-    // debug outline
-    float w = 0.005;
-    if (vFilterCoord.x < w || vFilterCoord.x > 1.-w || vFilterCoord.y < w || vFilterCoord.y > 1.-w) {
-        gl_FragColor = vec4(vec3(1., 1., 0), 1.);
-        return;
-    }
-
-    // skip calculations if alpha is 0
+    // skip calculations if gradient alpha is 0
     if (0.0 == uAlpha) {
         gl_FragColor = currentColor;
         return;
