@@ -64,6 +64,8 @@ export default class DemoApplication extends Application
             initHeight + (this.padding * 2),
         );
 
+        this.enabledFilters = [];
+
         const app = this;
 
         this.gui = gui;
@@ -303,7 +305,7 @@ export default class DemoApplication extends Application
         const filter = new ClassRef(...(options.args || []));
 
         // Set enabled status
-        filter.enabled = options.enabled;
+        filter.enabled = (options.enabled && this.enabledFilters.length === 0) || this.enabledFilters.includes(id);
 
         // Track enabled change with analytics
         folder.add(filter, 'enabled').onChange((enabled) =>

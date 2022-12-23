@@ -1,10 +1,13 @@
 import './ga';
 import DemoApplication from './DemoApplication';
 import * as filters from './filters';
+import { getEnabledFiltersFromQueryString } from './utils';
 
 const main = async () =>
 {
     const app = new DemoApplication();
+
+    app.enabledFilters = getEnabledFiltersFromQueryString();
 
     await app.load({
         background: 'images/displacement_BG.jpg',
