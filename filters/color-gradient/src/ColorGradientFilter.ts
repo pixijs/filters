@@ -43,8 +43,8 @@ class ColorGradientFilter extends Filter
     public static readonly defaults: ColorGradientFilterOptions = {
         type: ColorGradientFilter.LINEAR,
         stops: [
-            { offset: 0.0, color: 0xffffff, alpha: 1.0 },
-            { offset: 1.0, color: 0x000000, alpha: 1.0 },
+            { offset: 0.0, color: 0xff0000, alpha: 1.0 },
+            { offset: 1.0, color: 0x0000ff, alpha: 1.0 },
         ],
         alpha: 1.0,
         angle: 0.0,
