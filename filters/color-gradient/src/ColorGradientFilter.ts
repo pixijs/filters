@@ -1,6 +1,7 @@
 import fragment from './colorGradient.frag';
 import vertex from './colorGradient.vert';
 import { Filter, utils } from '@pixi/core';
+// import { parse } from 'gradient-parser';
 
 type Color = number | string | Float32Array | number[];
 
@@ -72,6 +73,8 @@ class ColorGradientFilter extends Filter
 
         super(vertex, fragment.replace(/%numStops%/g, options_.stops.length.toString()));
         this.autoFit = false;
+
+        // console.log(parse('linear-gradient(to right, #ff0000, #0000ff)'));
 
         Object.assign(this, options_);
     }
