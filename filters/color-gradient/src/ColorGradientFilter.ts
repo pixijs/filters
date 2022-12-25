@@ -60,7 +60,7 @@ class ColorGradientFilter extends Filter
    *  - `1` {@link ColorGradientFilter.RADIAL RADIAL}
    *  - `2` {@link ColorGradientFilter.CONIC CONIC}
    * @param {ColorStop[]} [options.stops] - Color stops of the gradient
-   * @param {number} [options.angle=90] - The angle of the gradient
+   * @param {number} [options.angle=90] - The angle of the gradient in degrees
    * @param {number} [options.alpha=1.0] - The alpha value of the gradient
    * @param {number} [options.maxColors=0] - The maximum number of colors to render (0 = disabled)
    */
