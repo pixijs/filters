@@ -1,6 +1,8 @@
 # GrayscaleFilter
 
-PixiJS filter to apply a grayscale effect.
+> PixiJS filter to apply a grayscale effect.
+
+[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=GrayscaleFilter)
 
 ## Installation
 

@@ -1,6 +1,8 @@
 # BevelFilter
 
-PixiJS filter to apply a bevel effect.
+> PixiJS filter to apply a bevel effect.
+
+[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=BevelFilter)
 
 ## Installation
 

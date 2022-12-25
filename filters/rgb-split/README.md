@@ -1,6 +1,8 @@
 # RGBSplitFilter
 
-PixiJS filter to split and shift red, green or blue channels.
+> PixiJS filter to split and shift red, green or blue channels.
+
+[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=RGBSplitFilter)
 
 ## Installation
 

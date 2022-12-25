@@ -1,6 +1,8 @@
 # DropShadowFilter
 
-PixiJS filter to apply a drop shadow effect.
+> PixiJS filter to apply a drop shadow effect.
+
+[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=DropShadowFilter)
 
 ## Installation
 

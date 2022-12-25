@@ -64,6 +64,8 @@ export default class DemoApplication extends Application
             initHeight + (this.padding * 2),
         );
 
+        this.enabledFilters = [];
+
         const app = this;
 
         this.gui = gui;
@@ -265,7 +267,6 @@ export default class DemoApplication extends Application
      * @param {array} [options.args] Constructor arguments
      * @param {boolean} [options.fishOnly=false] Apply to fish only, not whole scene
      * @param {boolean} [options.enabled=false] Filter is enabled by default
-     * @param {boolean} [options.opened=false] Filter Folder is opened by default
      * @param {function} [oncreate] Function takes filter and gui folder as
      *        arguments and is scoped to the Demo application.
      * @return {PIXI.Filter} Instance of new filter
@@ -304,7 +305,7 @@ export default class DemoApplication extends Application
         const filter = new ClassRef(...(options.args || []));
 
         // Set enabled status
-        filter.enabled = options.enabled;
+        filter.enabled = (options.enabled && this.enabledFilters.length === 0) || this.enabledFilters.includes(id);
 
         // Track enabled change with analytics
         folder.add(filter, 'enabled').onChange((enabled) =>
@@ -324,13 +325,9 @@ export default class DemoApplication extends Application
             }
         });
 
-        if (options.opened)
+        if (filter.enabled)
         {
             folder.open();
-        }
-
-        if (options.enabled)
-        {
             folder.domElement.className += ' enabled';
         }
 

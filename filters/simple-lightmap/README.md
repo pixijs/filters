@@ -1,6 +1,8 @@
 # SimpleLightmapFilter
 
-PixiJS filter to create a light-map from a texture.
+> PixiJS filter to create a light-map from a texture.
+
+[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=SimpleLightmapFilter)
 
 ## Installation
 

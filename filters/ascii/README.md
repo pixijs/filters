@@ -1,6 +1,8 @@
 # AsciiFilter
 
-PixiJS filter to render DisplayObject as ASCII text.
+> PixiJS filter to render DisplayObject as ASCII text.
+
+[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=AsciiFilter)
 
 ## Installation
 

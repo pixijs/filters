@@ -1,6 +1,8 @@
 # AdvancedBloomFilter
 
-PixiJS filter to render Bloom Filter (with highlight) effect.
+> PixiJS filter to render Bloom Filter (with highlight) effect.
+
+[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=AdvancedBloomFilter)
 
 ## Installation
 

@@ -1,6 +1,8 @@
 # BulgePinchFilter
 
-PixiJS filter to apply a bulge or a pinch effect.
+> PixiJS filter to apply a bulge or a pinch effect.
+
+[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=BulgePinchFilter)
 
 ## Installation
 

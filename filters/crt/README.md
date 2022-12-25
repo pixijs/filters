@@ -1,6 +1,8 @@
 # CRTFilter
 
-PixiJS filter to apply an effect resembling old CRT monitors.
+> PixiJS filter to apply an effect resembling old CRT monitors.
+
+[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=CRTFilter)
 
 ## Installation
 

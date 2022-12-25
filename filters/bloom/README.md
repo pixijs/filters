@@ -1,6 +1,8 @@
 # BloomFilter
 
-PixiJS filter to apply a simple bloom effect.
+> PixiJS filter to apply a simple bloom effect.
+
+[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=BloomFilter)
 
 ## Installation
 
