@@ -2,10 +2,12 @@ import fragment from './colorGradient.frag';
 import vertex from './colorGradient.vert';
 import { Filter, utils } from '@pixi/core';
 
+type Color = number | string | Float32Array | number[];
+
 interface ColorStop
 {
     offset: number;
-    color: number | string;
+    color: Color;
     alpha: number;
 }
 
@@ -164,9 +166,15 @@ class ColorGradientFilter extends Filter
 export { ColorGradientFilter };
 
 // utils
-function colorToRgb(value: number | string) : number[] | Float32Array
+function colorToRgb(value: Color) : number[] | Float32Array
 {
-    const valueAsHex = (typeof value === 'string') ? utils.string2hex(value) : value;
-
-    return utils.hex2rgb(valueAsHex);
+    switch (typeof value)
+    {
+        case 'string':
+            return utils.hex2rgb(utils.string2hex(value));
+        case 'number':
+            return utils.hex2rgb(value);
+        default:
+            return value;
+    }
 }
