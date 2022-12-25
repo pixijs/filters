@@ -5,7 +5,7 @@ import { Filter, utils } from '@pixi/core';
 interface ColorStop
 {
     offset: number;
-    color: number;
+    color: number | string;
     alpha: number;
 }
 
@@ -90,7 +90,7 @@ class ColorGradientFilter extends Filter
 
         for (let i = 0; i < sortedStops.length; i++)
         {
-            const color = utils.hex2rgb(sortedStops[i].color);
+            const color = colorToRgb(sortedStops[i].color);
             const indexStart = i * 3;
 
             colors[indexStart + R] = color[R];
@@ -162,3 +162,11 @@ class ColorGradientFilter extends Filter
 }
 
 export { ColorGradientFilter };
+
+// utils
+function colorToRgb(value: number | string) : number[] | Float32Array
+{
+    const valueAsHex = (typeof value === 'string') ? utils.string2hex(value) : value;
+
+    return utils.hex2rgb(valueAsHex);
+}
