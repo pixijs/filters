@@ -56,15 +56,15 @@ class ColorGradientFilter extends Filter
     private _stops: ColorStop[] = [];
 
     /**
-   * @param {object} [options] - Options to use for filter.
-   * @param {number} [options.type] - The type of gradient. Acceptable values:
+   * @param {object} [options]
+   * @param {number} [options.type] - Acceptable values:
    *  - `0` {@link ColorGradientFilter.LINEAR LINEAR}
    *  - `1` {@link ColorGradientFilter.RADIAL RADIAL}
    *  - `2` {@link ColorGradientFilter.CONIC CONIC}
-   * @param {ColorStop[]} [options.stops] - Color stops of the gradient
-   * @param {number} [options.angle=90] - The angle of the gradient in degrees
-   * @param {number} [options.alpha=1.0] - The alpha value of the gradient
-   * @param {number} [options.maxColors=0] - The maximum number of colors to render (0 = disabled)
+   * @param {ColorStop[]} [options.stops] - Color stops
+   * @param {number} [options.angle=90] - Angle in degrees
+   * @param {number} [options.alpha=1.0] - Alpha value
+   * @param {number} [options.maxColors=0] - Maximum number of colors to render (0 = disabled)
    */
     constructor(options?: Partial<ColorGradientFilterOptions>)
     {
