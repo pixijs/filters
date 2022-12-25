@@ -70,7 +70,8 @@
         },
         {
             "name": "BevelFilter",
-            "filename": "bevel"
+            "filename": "bevel",
+            "fishOnly": true
         },
         {
             "name": "BloomFilter",
@@ -307,14 +308,16 @@
             "options": {
                 "thickness": 2,
                 "color": 16711680
-            }
+            },
+            "fishOnly": true
         },
         {
             "name": "DropShadowFilter",
             "filename": "drop-shadow",
             "options": {
                 "distance": 3
-            }
+            },
+            "fishOnly": true
         },
         {
             "name": "GlowFilter",
@@ -327,14 +330,16 @@
                     "color": 16711680,
                     "quality": 0.5
                 }
-            ]
+            ],
+            "fishOnly": true
         },
         {
             "name": "ColorOverlayFilter",
             "filename": "color-overlay",
             "options": {
                 "color": 16711680
-            }
+            },
+            "fishOnly": true
         },
         {
             "name": "ColorReplaceFilter",
