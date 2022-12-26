@@ -10,30 +10,43 @@ const fs = require('fs-extra');
 const path = require('path');
 const GIFEncoder = require('gifencoder');
 
+const sourceAssetSize = { width: 640, height: 320 };
+const outputOptions = {
+    path: path.join(__dirname, 'dist'),
+    width: 280,
+    height: 140,
+    border: {
+        color: 0xffffff,
+        width: 10,
+    },
+};
+
 const app = new PIXI.Application({
-    width: 270,
-    height: 161,
-    backgroundColor: 0xFFFFFF,
+    width: outputOptions.width,
+    height: outputOptions.height,
+    backgroundColor: outputOptions.border.color,
     autoStart: false,
 });
 
-const outputPath = path.join(__dirname, 'dist');
 const frames = {};
 
 // Make sure directory exists
-fs.ensureDirSync(outputPath);
+fs.ensureDirSync(outputOptions.path);
 
 // Empty the directory
-fs.emptyDirSync(outputPath);
+fs.emptyDirSync(outputOptions.path);
 
 let index = -1;
-let sprite;
+let preview;
+let bg;
+let fishes;
 let displacement;
 let lightmap;
 let colormap;
 
 PIXI.Assets.addBundle('assets', {
-    preview: path.join(__dirname, 'assets', 'preview.png'),
+    previewBackground: path.join(__dirname, 'assets', 'preview_background.png'),
+    previewFishes: path.join(__dirname, 'assets', 'preview_fishes.png'),
     lightmap: path.join(__dirname, 'assets', 'lightmap.png'),
     displacement: path.join(__dirname, 'assets', 'displacement.png'),
     colormap: path.join(__dirname, 'assets', 'colormap.png'),
@@ -45,13 +58,27 @@ PIXI.Assets.loadBundle('assets').then((resources) =>
     lightmap = resources.lightmap;
     colormap = resources.colormap;
     displacement = new PIXI.Sprite(resources.displacement);
-    sprite = new PIXI.Sprite(resources.preview);
-    sprite.scale.set(0.5);
-    sprite.anchor.set(0.5);
-    sprite.x = app.view.width / 2;
-    sprite.y = app.view.height / 2;
-    sprite.filterArea = app.screen;
-    app.stage.addChild(sprite);
+
+    const appCenter = { x: app.view.width / 2, y: app.view.height / 2 };
+    const spriteScale = {
+        x: (outputOptions.width - (2 * outputOptions.border.width)) / sourceAssetSize.width,
+        y: (outputOptions.height - (2 * outputOptions.border.width)) / sourceAssetSize.height,
+    };
+
+    fishes = new PIXI.Sprite(resources.previewFishes);
+    bg = new PIXI.Sprite(resources.previewBackground);
+
+    [fishes, bg].forEach((sprite) =>
+    {
+        sprite.anchor.set(0.5);
+        sprite.scale.set(spriteScale.x, spriteScale.y);
+        sprite.position.set(appCenter.x, appCenter.y);
+    });
+
+    preview = new PIXI.Container();
+    preview.addChild(bg, fishes);
+
+    app.stage.addChild(preview);
     document.body.appendChild(app.view);
     next();
 });
@@ -110,8 +137,17 @@ function next()
         }
 
         // Render the filter
-        sprite.scale.set(0.5);
-        sprite.filters = [filter];
+        fishes.filters = [];
+        preview.filters = [];
+
+        if (obj.fishOnly)
+        {
+            fishes.filters = [filter];
+        }
+        else
+        {
+            preview.filters = [filter];
+        }
 
         if (obj.filename)
         {
@@ -119,7 +155,7 @@ function next()
             app.render();
             base64ToImage(
                 app.renderer.extract.base64(),
-                outputPath + path.sep, {
+                outputOptions.path + path.sep, {
                     fileName: obj.filename,
                     type: 'png',
                 },
@@ -158,7 +194,7 @@ function nextAnim()
 
         // Stream output
         encoder.createReadStream().pipe(fs.createWriteStream(
-            path.join(outputPath, `${anim.filename}.gif`),
+            path.join(outputOptions.path, `${anim.filename}.gif`),
         ));
 
         encoder.start();
