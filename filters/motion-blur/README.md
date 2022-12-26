@@ -1,6 +1,8 @@
 # MotionBlurFilter
 
-PixiJS filter to apply a directional blur effect.
+> PixiJS filter to apply a directional blur effect.
+
+[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=MotionBlurFilter)
 
 ## Installation
 

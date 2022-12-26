@@ -1,6 +1,8 @@
 # AdjustmentFilter
 
-PixiJS filter to adjust gamma, contrast, saturation, brightness or color channels.
+> PixiJS filter to adjust gamma, contrast, saturation, brightness or color channels.
+
+[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=AdjustmentFilter)
 
 ## Installation
 

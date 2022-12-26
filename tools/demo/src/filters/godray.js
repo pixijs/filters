@@ -6,7 +6,6 @@ export default function ()
 
     this.addFilter('GodrayFilter', {
         enabled: false,
-        opened: false,
         oncreate(folder)
         {
             this.alpha = 1;

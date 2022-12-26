@@ -1,6 +1,8 @@
 # GodrayFilter
 
-PixiJS filter to apply and animate atmospheric light rays.
+> PixiJS filter to apply and animate atmospheric light rays.
+
+[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=GodrayFilter)
 
 ## Installation
 

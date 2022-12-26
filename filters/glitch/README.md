@@ -1,6 +1,8 @@
 # GlitchFilter
 
-PixiJS filter to apply a glitch effect.
+> PixiJS filter to apply a glitch effect.
+
+[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=GlitchFilter)
 
 ## Installation
 

@@ -1,6 +1,8 @@
 # EmbossFilter
 
-PixiJS filter to apply an emboss effect.
+> PixiJS filter to apply an emboss effect.
+
+[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=EmbossFilter)
 
 ## Installation
 

@@ -1,6 +1,8 @@
 # PixelateFilter
 
-PixiJS filter to apply a pixelation effect.
+> PixiJS filter to apply a pixelation effect.
+
+[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=PixelateFilter)
 
 ## Installation
 

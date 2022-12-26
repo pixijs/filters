@@ -1,6 +1,8 @@
 # TwistFilter
 
-PixiJS filter to apply a twist effect to a DisplayObject.
+> PixiJS filter to apply a twist effect to a DisplayObject.
+
+[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=TwistFilter)
 
 ## Installation
 
