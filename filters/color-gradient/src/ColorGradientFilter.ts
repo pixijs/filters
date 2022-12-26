@@ -1,18 +1,18 @@
 import fragment from './colorGradient.frag';
 import vertex from './colorGradient.vert';
 import { Filter, utils } from '@pixi/core';
-// import { parse } from 'gradient-parser';
+import { parseCssGradient } from './CssGradientParser';
 
-type Color = number | string | Float32Array | number[];
+export type Color = number | string | Float32Array | number[];
 
-interface ColorStop
+export interface ColorStop
 {
     offset: number;
     color: Color;
     alpha: number;
 }
 
-interface ColorGradientFilterOptions
+export interface ColorGradientFilterOptions
 {
     type: number;
     stops: ColorStop[];
@@ -21,7 +21,7 @@ interface ColorGradientFilterOptions
     maxColors: number;
 }
 
-function sortColorStops(stops: ColorStop[]) : ColorStop[]
+function sortColorStops(stops: ColorStop[]): ColorStop[]
 {
     return [...stops].sort((a, b) => a.offset - b.offset);
 }
@@ -54,6 +54,14 @@ class ColorGradientFilter extends Filter
         maxColors: 0,
     };
 
+    public static fromCssGradient(cssGradient: string, options?: Partial<ColorGradientFilterOptions>) : ColorGradientFilter
+    {
+        const optionsFromCssGradient = parseCssGradient(cssGradient);
+        const options_ = { ...optionsFromCssGradient, options };
+
+        return new ColorGradientFilter(options_);
+    }
+
     private _stops: ColorStop[] = [];
 
     /**
@@ -74,12 +82,10 @@ class ColorGradientFilter extends Filter
         super(vertex, fragment.replace(/%numStops%/g, options_.stops.length.toString()));
         this.autoFit = false;
 
-        // console.log(parse('linear-gradient(to right, #ff0000, #0000ff)'));
-
         Object.assign(this, options_);
     }
 
-    get stops() : ColorStop[]
+    get stops(): ColorStop[]
     {
         return this._stops;
     }
@@ -169,7 +175,7 @@ class ColorGradientFilter extends Filter
 export { ColorGradientFilter };
 
 // utils
-function colorToRgb(value: Color) : number[] | Float32Array
+function colorToRgb(value: Color): number[] | Float32Array
 {
     switch (typeof value)
     {
