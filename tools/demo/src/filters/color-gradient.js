@@ -1,15 +1,15 @@
+import { ColorGradientFilter } from '@pixi/filter-color-gradient';
+
+const deepCopy = (value) => JSON.parse(JSON.stringify(value));
+
 export default function ()
 {
-    const getDefaultStops = () => ([
-        { offset: 0.00, color: 0xff0000, alpha: 1.0 },
-        { offset: 1.00, color: 0x0000ff, alpha: 1.0 },
-    ]);
-    let stops = getDefaultStops();
+    let stops = deepCopy(ColorGradientFilter.defaults.stops);
 
     this.addFilter('ColorGradientFilter', {
         enabled: true,
         fishOnly: false,
-        args: [{ stops }],
+        args: [],
         oncreate(folder)
         {
             const removeColorStopControllers = () =>
@@ -49,8 +49,6 @@ export default function ()
 
                 folder.add(misc, 'remove color stop').disable(!canRemoveStops);
                 folder.add(misc, 'add color stop');
-
-                onStopChange();
             };
 
             // handle css gradient
@@ -60,24 +58,44 @@ export default function ()
             };
 
             // init
-            const setColorStops = (newStops) =>
+            const setColorStops = (newStops, scaleOffsets = false) =>
             {
-                const scaleFactor = (this.stops.length - 1) / (newStops.length - 1);
-                const lastIndexToScale = Math.min(newStops.length, this.stops.length);
-
-                for (let i = 0; i < lastIndexToScale; i++)
+                if (scaleOffsets)
                 {
-                    newStops[i].offset *= scaleFactor;
+                    const scaleFactor = (this.stops.length - 1) / (newStops.length - 1);
+                    const lastIndexToScale = Math.min(newStops.length, this.stops.length);
+
+                    for (let i = 0; i < lastIndexToScale; i++)
+                    {
+                        newStops[i].offset *= scaleFactor;
+                    }
                 }
 
-                stops = newStops;
                 createColorStopControllers(newStops);
+                stops = newStops;
+                onStopChange();
             };
 
             const applyDefaultOptions = () =>
             {
-                folder.reset();
-                setColorStops(getDefaultStops());
+                let index = 0;
+                const ctrlIndex = {
+                    enabled: index++,
+                    resetButton: index++,
+                    cssGradient: index++,
+                    type: index++,
+                    alpha: index++,
+                    angle: index++,
+                    maxColors: index++,
+                };
+
+                const defaults = deepCopy(ColorGradientFilter.defaults);
+
+                folder.controllers[ctrlIndex.type].setValue(defaults.type);
+                folder.controllers[ctrlIndex.alpha].setValue(defaults.alpha);
+                folder.controllers[ctrlIndex.angle].setValue(defaults.angle);
+                folder.controllers[ctrlIndex.maxColors].setValue(defaults.maxColors);
+                setColorStops(defaults.stops, false);
             };
 
             const addColorStop = () =>
@@ -90,20 +108,20 @@ export default function ()
                     color: getRandomColor(),
                 };
 
-                setColorStops([...this.stops].concat([newColorStop]));
+                setColorStops([...this.stops].concat([newColorStop]), true);
             };
 
-            const removeColorStop = () =>
+            const removeLastColorStop = () =>
             {
                 const newStops = [...this.stops.slice(0, -1)];
 
-                setColorStops(newStops);
+                setColorStops(newStops, true);
             };
 
             const misc = {
                 'reset options': applyDefaultOptions,
                 'add color stop': addColorStop,
-                'remove color stop': removeColorStop,
+                'remove color stop': removeLastColorStop,
                 cssGradient: '',
             };
 
