@@ -39,7 +39,9 @@
     "@jest/globals": "^29.3.1",
     "@pixi/core": "^7.0.0-X",
     "@tools/fragments": "5.0.0",
+    "@types/color-rgba": "^2.1.0",
     "@types/gradient-parser": "^0.1.2",
+    "color-rgba": "^2.4.0",
     "gradient-parser": "^1.0.2",
     "jest": "^29.3.1",
     "ts-jest": "^29.0.3"
