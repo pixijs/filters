@@ -1,35 +1,40 @@
-import { AngularNode, ColorStop as CssColorStop, DefaultRadialNode, DirectionalNode, ExtentKeywordNode, GradientNode, parse, ShapeNode } from 'gradient-parser';
+import {
+    AngularNode,
+    ColorStop as CssColorStop,
+    DefaultRadialNode,
+    DirectionalNode,
+    ExtentKeywordNode,
+    GradientNode,
+    ShapeNode,
+    parse
+} from 'gradient-parser';
 
-import { ColorGradientFilter, ColorStop } from './ColorGradientFilter';
+import { ColorStop } from './ColorGradientFilter';
 
-enum GradientType
-    {
-    Linear = ColorGradientFilter.LINEAR,
-    Radial = ColorGradientFilter.RADIAL,
-    // Conic = ColorGradientFilter.CONIC,
-}
-
-export interface ParseResult
-{
-    type: GradientType;
+export type ParseResult = {
+    type: number;
     stops: ColorStop[];
     angle: number;
-}
+};
 
-export function parseCssGradient(cssGrradient: string): ParseResult
+export function parseCssGradient(cssGradient: string): ParseResult
 {
-    const cssGradientNodes: GradientNode[] = parse(cssGrradient);
+    const cssGradientNodes: GradientNode[] = parse(cssGradient);
 
-    if (cssGradientNodes.length !== 1)
+    if (cssGradientNodes.length === 0)
     {
-        throw new Error('Unsupported CSS gradient.');
+        throw new Error('Invalid CSS gradient.');
+    }
+    else if (cssGradientNodes.length !== 1)
+    {
+        throw new Error('Unsupported CSS gradient (multiple gradients is not supported).');
     }
 
     const cssGradientNode = cssGradientNodes[0];
 
     const type = typeFromCssType(cssGradientNode.type);
-    const stops = parseColorStops(cssGradientNode.colorStops);
-    const angle = angleFromOrientation(cssGradientNode.orientation);
+    const stops = stopsFromCssStops(cssGradientNode.colorStops);
+    const angle = angleFromCssOrientation(cssGradientNode.orientation);
 
     return {
         type,
@@ -38,11 +43,11 @@ export function parseCssGradient(cssGrradient: string): ParseResult
     };
 }
 
-export function typeFromCssType(type: string): GradientType
+export function typeFromCssType(type: string): number
 {
     const supportedTypes: { [key: string]: number } = {
-        'linear-gradient': GradientType.Linear,
-        'radial-gradient': GradientType.Radial,
+        'linear-gradient': 0,
+        'radial-gradient': 1,
     };
 
     if (!(type in supportedTypes))
@@ -53,7 +58,7 @@ export function typeFromCssType(type: string): GradientType
     return supportedTypes[type];
 }
 
-export function parseColorStops(stops: CssColorStop[]): ColorStop[]
+export function stopsFromCssStops(stops: CssColorStop[]): ColorStop[]
 {
     // const defaultStepSize = 1 / (stops.length - 1);
     const offsets: number[] = offsetsFromCssColorStops(stops);
@@ -121,7 +126,6 @@ export function offsetsFromCssColorStops(stops: CssColorStop[]): number[]
         if (offset !== dynamicOffset)
         {
             prevFixedOffset = offset;
-            continue;
         }
         else if (i === 0)
         {
@@ -165,7 +169,7 @@ function fixFloatRounding(value: number): number
 
 type CssOrientation = DirectionalNode | AngularNode | (ShapeNode | DefaultRadialNode | ExtentKeywordNode)[] | undefined;
 
-export function angleFromOrientation(orientation: CssOrientation): number
+export function angleFromCssOrientation(orientation: CssOrientation): number
 {
     if (typeof orientation === 'undefined')
     {

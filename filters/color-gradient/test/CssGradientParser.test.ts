@@ -1,7 +1,12 @@
-import { angleFromDirectionalValue, angleFromOrientation, offsetsFromCssColorStops, parseCssGradient, typeFromCssType } from '../src/CssGradientParser';
-import { ColorGradientFilter, ColorStop } from '../src';
 import { describe, expect, jest, test } from '@jest/globals';
 import { parse } from 'gradient-parser';
+import {
+    angleFromDirectionalValue,
+    angleFromCssOrientation,
+    offsetsFromCssColorStops,
+    parseCssGradient, typeFromCssType
+} from '../src/CssGradientParser';
+import { ColorGradientFilter, ColorStop } from '../src';
 
 jest.mock('./../src/colorGradient.frag', () => '');
 jest.mock('./../src/colorGradient.vert', () => '');
@@ -81,14 +86,14 @@ describe('CssGradientParser', () =>
     {
         test('angular', () =>
         {
-            expect(angleFromOrientation({ type: 'angular', value: '5' })).toEqual(5);
-            expect(angleFromOrientation({ type: 'angular', value: '-5' })).toEqual(-5);
+            expect(angleFromCssOrientation({ type: 'angular', value: '5' })).toEqual(5);
+            expect(angleFromCssOrientation({ type: 'angular', value: '-5' })).toEqual(-5);
         });
 
         test('directional', () =>
         {
             // undefined
-            expect(angleFromOrientation(undefined)).toEqual(0);
+            expect(angleFromCssOrientation(undefined)).toEqual(0);
 
             // directions
             const testCases = {

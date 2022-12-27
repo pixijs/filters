@@ -5,21 +5,25 @@ import { parseCssGradient } from './CssGradientParser';
 
 export type Color = number | string | Float32Array | number[];
 
-export interface ColorStop
-{
+export type ColorStop = {
     offset: number;
     color: Color;
     alpha: number;
-}
+};
 
-export interface ColorGradientFilterOptions
-{
+export type DefaultOptions = {
     type: number;
     stops: ColorStop[];
-    angle: number;
-    alpha: number;
-    maxColors: number;
-}
+    angle?: number;
+    alpha?: number;
+    maxColors?: number;
+};
+
+export type CssOptions = {
+    css: string;
+    alpha?: number;
+    maxColors?: number;
+};
 
 function sortColorStops(stops: ColorStop[]): ColorStop[]
 {
@@ -43,7 +47,7 @@ class ColorGradientFilter extends Filter
     static readonly CONIC = 2;
 
     /** Default constructor options */
-    public static readonly defaults: ColorGradientFilterOptions = {
+    public static readonly defaults: DefaultOptions = {
         type: ColorGradientFilter.LINEAR,
         stops: [
             { offset: 0.0, color: 0xff0000, alpha: 1.0 },
@@ -54,30 +58,30 @@ class ColorGradientFilter extends Filter
         maxColors: 0,
     };
 
-    public static fromCssGradient(cssGradient: string, options?: Partial<ColorGradientFilterOptions>) : ColorGradientFilter
-    {
-        const optionsFromCssGradient = parseCssGradient(cssGradient);
-        const options_ = { ...optionsFromCssGradient, options };
-
-        return new ColorGradientFilter(options_);
-    }
-
     private _stops: ColorStop[] = [];
 
     /**
-   * @param {object} [options]
-   * @param {number} [options.type] - Acceptable values:
-   *  - `0` {@link ColorGradientFilter.LINEAR LINEAR}
-   *  - `1` {@link ColorGradientFilter.RADIAL RADIAL}
-   *  - `2` {@link ColorGradientFilter.CONIC CONIC}
-   * @param {ColorStop[]} [options.stops] - Color stops
-   * @param {number} [options.angle=90] - Angle in degrees
+   * @param {DefaultOptions | CssOptions} [options]
    * @param {number} [options.alpha=1.0] - Alpha value
    * @param {number} [options.maxColors=0] - Maximum number of colors to render (0 = disabled)
    */
-    constructor(options?: Partial<ColorGradientFilterOptions>)
+    constructor(options?: DefaultOptions | CssOptions)
     {
+        if (options && 'css' in options)
+        {
+            options = {
+                ...parseCssGradient(options.css || ''),
+                alpha: options.alpha,
+                maxColors: options.maxColors,
+            };
+        }
+
         const options_ = { ...ColorGradientFilter.defaults, ...options };
+
+        if (!options_.stops || options_.stops.length < 2)
+        {
+            throw new Error('ColorGradientFilter requires at least 2 color stops.');
+        }
 
         super(vertex, fragment.replace(/%numStops%/g, options_.stops.length.toString()));
         this.autoFit = false;
