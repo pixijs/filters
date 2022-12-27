@@ -117,6 +117,7 @@ export default function ()
                 folder.controllers[ctrlIndex.alpha].setValue(defaults.alpha);
                 folder.controllers[ctrlIndex.angle].setValue(defaults.angle);
                 folder.controllers[ctrlIndex.maxColors].setValue(defaults.maxColors);
+                folder.controllers[ctrlIndex.cssGradient].setValue('');
                 setColorStops(defaults.stops, false);
             };
 
