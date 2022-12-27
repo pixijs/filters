@@ -1,14 +1,14 @@
 export default function ()
 {
-    const stops = [
+    const getDefaultStops = () => ([
         { offset: 0.00, color: 0xff0000, alpha: 1.0 },
-        { offset: 0.50, color: 0x00ff00, alpha: 1.0 },
         { offset: 1.00, color: 0x0000ff, alpha: 1.0 },
-    ];
+    ]);
+    let stops = getDefaultStops();
 
     this.addFilter('ColorGradientFilter', {
         enabled: true,
-        fishOnly: true,
+        fishOnly: false,
         args: [{ stops }],
         oncreate(folder)
         {
@@ -16,7 +16,7 @@ export default function ()
             {
                 for (let i = folder.controllers.length - 1; i > 0; i--)
                 {
-                    if (folder.controllers[i]._name.includes('stops['))
+                    if (folder.controllers[i]._name.includes('stop'))
                     {
                         folder.controllers[i].destroy();
                     }
@@ -32,7 +32,7 @@ export default function ()
             {
                 removeColorStopControllers();
 
-                for (let i = 0; i < this.stops.length; i++)
+                for (let i = 0; i < stops.length; i++)
                 {
                     folder.addColor(stops[i], 'color')
                         .name(`stops[${i}].color`)
@@ -44,6 +44,13 @@ export default function ()
                         .name(`stops[${i}].alpha`)
                         .onChange(onStopChange);
                 }
+
+                const canRemoveStops = (stops.length > 2);
+
+                folder.add(misc, 'remove color stop').disable(!canRemoveStops);
+                folder.add(misc, 'add color stop');
+
+                onStopChange();
             };
 
             // handle css gradient
@@ -53,14 +60,50 @@ export default function ()
             };
 
             // init
+            const setColorStops = (newStops) =>
+            {
+                const scaleFactor = (this.stops.length - 1) / (newStops.length - 1);
+                const lastIndexToScale = Math.min(newStops.length, this.stops.length);
+
+                for (let i = 0; i < lastIndexToScale; i++)
+                {
+                    newStops[i].offset *= scaleFactor;
+                }
+
+                stops = newStops;
+                createColorStopControllers(newStops);
+            };
+
             const applyDefaultOptions = () =>
             {
                 folder.reset();
-                createColorStopControllers(stops);
+                setColorStops(getDefaultStops());
+            };
+
+            const addColorStop = () =>
+            {
+                const getRandomColor = () => [0, 0, 0].map(Math.random);
+
+                const newColorStop = {
+                    offset: 1.0,
+                    alpha: 1.0,
+                    color: getRandomColor(),
+                };
+
+                setColorStops([...this.stops].concat([newColorStop]));
+            };
+
+            const removeColorStop = () =>
+            {
+                const newStops = [...this.stops.slice(0, -1)];
+
+                setColorStops(newStops);
             };
 
             const misc = {
                 'reset options': applyDefaultOptions,
+                'add color stop': addColorStop,
+                'remove color stop': removeColorStop,
                 cssGradient: '',
             };
 
@@ -70,7 +113,6 @@ export default function ()
             folder.add(this, 'alpha', 0, 1);
             folder.add(this, 'angle', -180, 180, 1);
             folder.add(this, 'maxColors', 0, 24, 1);
-
             applyDefaultOptions(stops);
         },
     });
