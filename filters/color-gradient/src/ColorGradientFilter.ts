@@ -180,16 +180,3 @@ class ColorGradientFilter extends Filter
 
 export { ColorGradientFilter };
 
-// utils
-function colorToRgb(value: Color): number[] | Float32Array
-{
-    switch (typeof value)
-    {
-        case 'string':
-            return utils.hex2rgb(utils.string2hex(value));
-        case 'number':
-            return utils.hex2rgb(value);
-        default:
-            return value;
-    }
-}
