@@ -5,11 +5,12 @@ import {
     DirectionalNode,
     ExtentKeywordNode,
     GradientNode,
-    ShapeNode,
-    parse
+    parse,
+    ShapeNode
 } from 'gradient-parser';
 
 import { ColorStop } from './ColorGradientFilter';
+import { colorToNormalizedRgba } from './utils';
 
 export type ParseResult = {
     type: number;
@@ -60,21 +61,39 @@ export function typeFromCssType(type: string): number
 
 export function stopsFromCssStops(stops: CssColorStop[]): ColorStop[]
 {
-    // const defaultStepSize = 1 / (stops.length - 1);
     const offsets: number[] = offsetsFromCssColorStops(stops);
-
     const result: ColorStop[] = [];
 
-    for (let i = 0; i < offsets.length; i++)
+    for (let i = 0; i < stops.length; i++)
     {
+        const rgbaColor = colorAsNormalizedRgbaFromCssStop(stops[i]);
+
         result.push({
             offset: offsets[i],
-            color: stops[i].value.toString(),
-            alpha: 1.0,
+            color: rgbaColor.slice(0, 3),
+            alpha: rgbaColor[3]
         });
     }
 
     return result;
+}
+
+export function colorAsNormalizedRgbaFromCssStop(stop: CssColorStop): number[] | Float32Array
+{
+    return colorToNormalizedRgba(colorAsStringFromCssStop(stop));
+}
+
+export function colorAsStringFromCssStop(stop: CssColorStop): string
+{
+    switch (stop.type)
+    {
+        case 'hex':
+            return `#${stop.value}`;
+        case 'literal':
+            return stop.value;
+        default:
+            return `${stop.type}(${stop.value.join(',')})`;
+    }
 }
 
 export function offsetsFromCssColorStops(stops: CssColorStop[]): number[]

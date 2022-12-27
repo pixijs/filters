@@ -1,12 +1,15 @@
 import { describe, expect, jest, test } from '@jest/globals';
-import { parse } from 'gradient-parser';
+import { ColorStop as CssColorStop, parse } from 'gradient-parser';
 import {
-    angleFromDirectionalValue,
     angleFromCssOrientation,
+    angleFromDirectionalValue,
+    colorAsNormalizedRgbaFromCssStop,
     offsetsFromCssColorStops,
-    parseCssGradient, typeFromCssType
+    parseCssGradient,
+    typeFromCssType
 } from '../src/CssGradientParser';
-import { ColorGradientFilter, ColorStop } from '../src';
+
+import { ColorStop } from '../src';
 
 jest.mock('./../src/colorGradient.frag', () => '');
 jest.mock('./../src/colorGradient.vert', () => '');
@@ -17,8 +20,8 @@ describe('CssGradientParser', () =>
     {
         // valid types
         const testCases = {
-            'linear-gradient': ColorGradientFilter.LINEAR,
-            'radial-gradient': ColorGradientFilter.RADIAL,
+            'linear-gradient': 0,
+            'radial-gradient': 1,
         };
 
         for (const [input, expectedResult] of Object.entries(testCases))
@@ -38,23 +41,30 @@ describe('CssGradientParser', () =>
         }).toThrow('Unsupported gradient type "conic-gradient"');
     });
 
-    test('gets stops', () =>
+    describe('gets stops', () =>
     {
         const testCases: { [key: string]: ColorStop[] } = {
-            'linear-gradient(red, green)': [
-                { offset: 0.0, color: 'red', alpha: 1.0 },
-                { offset: 1.0, color: 'green', alpha: 1.0 },
+            'linear-gradient(red, blue)': [
+                { offset: 0.0, color: [1, 0, 0], alpha: 1.0 },
+                { offset: 1.0, color: [0, 0, 1], alpha: 1.0 },
             ],
-            'linear-gradient(red, green, blue)': [
-                { offset: 0.0, color: 'red', alpha: 1.0 },
-                { offset: 0.5, color: 'green', alpha: 1.0 },
-                { offset: 1.0, color: 'blue', alpha: 1.0 },
-            ]
+            'linear-gradient(red, yellow, blue)': [
+                { offset: 0.0, color: [1, 0, 0], alpha: 1.0 },
+                { offset: 0.5, color: [1, 1, 0], alpha: 1.0 },
+                { offset: 1.0, color: [0, 0, 1], alpha: 1.0 },
+            ],
+            'linear-gradient(rgba(255,0,0,0.5), #f0f)': [
+                { offset: 0.0, color: [1, 0, 0], alpha: 0.5 },
+                { offset: 1.0, color: [1, 0, 1], alpha: 1.0 },
+            ],
         };
 
         for (const [cssGradient, expectedStops] of Object.entries(testCases))
         {
-            expect(parseCssGradient(cssGradient).stops).toEqual(expectedStops);
+            test(cssGradient, () =>
+            {
+                expect(parseCssGradient(cssGradient).stops).toEqual(expectedStops);
+            });
         }
     });
 
@@ -80,6 +90,28 @@ describe('CssGradientParser', () =>
                 expect(offsetsFromCssColorStops(colorStops)).toEqual(expectedOffsets);
             });
         }
+    });
+
+    describe('gets color as normalized rgba from color stop', () =>
+    {
+    type testCaseType = { stop: CssColorStop, expectedValue: number[] };
+    const testCases: testCaseType[] = [
+        { stop: { type: 'literal', value: 'red' }, expectedValue: [1, 0, 0, 1] },
+        { stop: { type: 'hex', value: 'ff0000' }, expectedValue: [1, 0, 0, 1] },
+        { stop: { type: 'hex', value: 'f00' }, expectedValue: [1, 0, 0, 1] },
+        { stop: { type: 'rgb', value: ['255', '0', '0'] }, expectedValue: [1, 0, 0, 1] },
+        { stop: { type: 'rgba', value: ['255', '0', '0', '20%'] }, expectedValue: [1, 0, 0, 255 * 0.2 / 255] },
+    ];
+
+    for (let i = 0; i < testCases.length; i++)
+    {
+        const { stop, expectedValue } = testCases[i];
+
+        test(`${stop.value} = ${expectedValue}`, () =>
+        {
+            expect(colorAsNormalizedRgbaFromCssStop(stop)).toEqual(expectedValue);
+        });
+    }
     });
 
     describe('gets angle from orientation', () =>
