@@ -5,6 +5,15 @@ const deepCopy = (value) => JSON.parse(JSON.stringify(value));
 export default function ()
 {
     let stops = deepCopy(ColorGradientFilter.defaults.stops);
+    const ctrlIndex = {
+        enabled: 0,
+        resetOptions: 1,
+        cssGradient: 2,
+        type: 3,
+        alpha: 4,
+        angle: 5,
+        maxColors: 6,
+    };
 
     this.addFilter('ColorGradientFilter', {
         enabled: true,
@@ -51,13 +60,6 @@ export default function ()
                 folder.add(misc, 'add color stop');
             };
 
-            // handle css gradient
-            const onCssGradientChange = (value) =>
-            {
-                console.log('css gradient changed..');
-            };
-
-            // init
             const setColorStops = (newStops, scaleOffsets = false) =>
             {
                 if (scaleOffsets)
@@ -76,19 +78,39 @@ export default function ()
                 onStopChange();
             };
 
+            const onCssGradientChange = (css) =>
+            {
+                let filter;
+
+                const inputStyle = folder.controllers[ctrlIndex.cssGradient].domElement.style;
+
+                inputStyle.border = '';
+
+                if (css.trim().length === 0)
+                {
+                    return;
+                }
+
+                try
+                {
+                    filter = new ColorGradientFilter({ css });
+                }
+                catch (e)
+                {
+                    inputStyle.border = '2px solid red';
+
+                    return;
+                }
+
+                folder.controllers[ctrlIndex.type].setValue(filter.type);
+                folder.controllers[ctrlIndex.alpha].setValue(1.0);
+                folder.controllers[ctrlIndex.angle].setValue(filter.angle);
+                folder.controllers[ctrlIndex.maxColors].setValue(0);
+                setColorStops(filter.stops, false);
+            };
+
             const applyDefaultOptions = () =>
             {
-                let index = 0;
-                const ctrlIndex = {
-                    enabled: index++,
-                    resetButton: index++,
-                    cssGradient: index++,
-                    type: index++,
-                    alpha: index++,
-                    angle: index++,
-                    maxColors: index++,
-                };
-
                 const defaults = deepCopy(ColorGradientFilter.defaults);
 
                 folder.controllers[ctrlIndex.type].setValue(defaults.type);
