@@ -83,7 +83,7 @@ class ColorGradientFilter extends Filter
             throw new Error('ColorGradientFilter requires at least 2 color stops.');
         }
 
-        super(vertex, fragment.replace(/%numStops%/g, options_.stops.length.toString()));
+        super(vertex, fragment);
         this.autoFit = false;
 
         Object.assign(this, options_);
@@ -116,6 +116,7 @@ class ColorGradientFilter extends Filter
         this.uniforms.uColors = colors;
         this.uniforms.uOffsets = sortedStops.map((s) => s.offset);
         this.uniforms.uAlphas = sortedStops.map((s) => s.alpha);
+        this.uniforms.uNumStops = sortedStops.length;
         this._stops = sortedStops;
     }
 

@@ -8,11 +8,12 @@ uniform sampler2D uSampler;
 const int TYPE_LINEAR = 0;
 const int TYPE_RADIAL = 1;
 const int TYPE_CONIC = 2;
+const int MAX_STOPS = 32;
 
-const int NUM_STOPS = %numStops%;
-uniform float uAlphas[NUM_STOPS];
-uniform vec3 uColors[NUM_STOPS*3];
-uniform float uOffsets[NUM_STOPS];
+uniform int uNumStops;
+uniform float uAlphas[3*MAX_STOPS];
+uniform vec3 uColors[MAX_STOPS];
+uniform float uOffsets[MAX_STOPS];
 uniform int uType;
 uniform float uAngle;
 uniform float uAlpha;
@@ -75,7 +76,13 @@ void main(void) {
 
     // check gradient bounds
     float offsetMin = uOffsets[0];
-    float offsetMax = uOffsets[NUM_STOPS-1];
+    float offsetMax = 0.0;
+
+    for (int i = 0; i < MAX_STOPS; i++) {
+        if (i == uNumStops-1){ // last index
+            offsetMax = uOffsets[i];
+        }
+    }
 
     if (y  < offsetMin || y > offsetMax) {
         gl_FragColor = currentColor;
@@ -86,17 +93,21 @@ void main(void) {
     if (uMaxColors > 0) {
         float stepSize = 1./float(uMaxColors);
         float stepNumber = float(floor(y/stepSize));
-        y = stepSize * (stepNumber + 0.5); // offset by 0.5 to use color from middle of segment
+        y = stepSize * (stepNumber + 0.5);// offset by 0.5 to use color from middle of segment
     }
 
     // find color stops
     ColorStop from;
     ColorStop to;
 
-    for (int i = 0; i < NUM_STOPS-1; i++) {
+    for (int i = 0; i < MAX_STOPS; i++) {
         if (y >= uOffsets[i]) {
             from = ColorStop(uOffsets[i], uColors[i], uAlphas[i]);
             to = ColorStop(uOffsets[i+1], uColors[i+1], uAlphas[i+1]);
+        }
+
+        if (i == uNumStops-1){ // last index
+            break;
         }
     }
 
@@ -105,8 +116,8 @@ void main(void) {
     vec4 colorTo = vec4(to.color * to.alpha, to.alpha);
 
     float segmentHeight = to.offset - from.offset;
-    float relativePos = y - from.offset; // position from 0 to [segmentHeight]
-    float relativePercent = relativePos / segmentHeight; // position in percent between [from.offset] and [to.offset].
+    float relativePos = y - from.offset;// position from 0 to [segmentHeight]
+    float relativePercent = relativePos / segmentHeight;// position in percent between [from.offset] and [to.offset].
 
     float gradientAlpha = uAlpha * currentColor.a;
     vec4 gradientColor = mix(colorFrom, colorTo, relativePercent) * gradientAlpha;
