@@ -1,7 +1,8 @@
 import fragment from './colorGradient.frag';
 import vertex from './colorGradient.vert';
-import { Filter, utils } from '@pixi/core';
+import { Filter } from '@pixi/core';
 import { parseCssGradient } from './CssGradientParser';
+import { colorToNormalizedRgba } from './utils';
 
 export type Color = number | string | Float32Array | number[];
 
@@ -105,7 +106,7 @@ class ColorGradientFilter extends Filter
 
         for (let i = 0; i < sortedStops.length; i++)
         {
-            const color = colorToRgb(sortedStops[i].color);
+            const color = colorToNormalizedRgba(sortedStops[i].color);
             const indexStart = i * 3;
 
             colors[indexStart + R] = color[R];
