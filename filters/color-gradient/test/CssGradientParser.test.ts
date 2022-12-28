@@ -16,7 +16,7 @@ jest.mock('./../src/colorGradient.vert', () => '');
 
 describe('CssGradientParser', () =>
 {
-    test('gets type', () =>
+    test.concurrent('gets type', async () =>
     {
         // valid types
         const testCases = {
@@ -116,13 +116,13 @@ describe('CssGradientParser', () =>
 
     describe('gets angle from orientation', () =>
     {
-        test('angular', () =>
+        test.concurrent('angular', async () =>
         {
             expect(angleFromCssOrientation({ type: 'angular', value: '5' })).toEqual(5);
             expect(angleFromCssOrientation({ type: 'angular', value: '-5' })).toEqual(-5);
         });
 
-        test('directional', () =>
+        test.concurrent('directional', async () =>
         {
             // undefined
             expect(angleFromCssOrientation(undefined)).toEqual(0);

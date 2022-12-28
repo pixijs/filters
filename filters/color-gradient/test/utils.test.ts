@@ -3,7 +3,7 @@ import { colorToNormalizedRgba } from '../src/utils';
 
 describe.only('utils', () =>
 {
-    test('colorToNormalizedRgba', () =>
+    test.concurrent('colorToNormalizedRgba', async () =>
     {
         const rgbaRed = [1, 0, 0, 1];
         const transparentRed = [1, 0, 0, 0];
