@@ -20,7 +20,7 @@ export type ParseResult = {
 
 export function parseCssGradient(cssGradient: string): ParseResult
 {
-    const cssGradientNodes: GradientNode[] = parse(cssGradient);
+    const cssGradientNodes: GradientNode[] = parse(trimCssGradient(cssGradient));
 
     if (cssGradientNodes.length === 0)
     {
@@ -234,3 +234,14 @@ export function angleFromDirectionalValue(value: string): number
     return supportedValues[value];
 }
 
+export function trimCssGradient(value: string) : string
+{
+    let value_ = value.replace(/\s{2,}/gu, ' ');
+
+    value_ = value_.replace(/;/g, '');
+    value_ = value_.replace(/ ,/g, ',');
+    value_ = value_.replace(/\( /g, '(');
+    value_ = value_.replace(/ \)/g, ')');
+
+    return value_.trim();
+}

@@ -6,7 +6,8 @@ import {
     colorAsNormalizedRgbaFromCssStop,
     offsetsFromCssColorStops,
     parseCssGradient,
-    typeFromCssType
+    typeFromCssType,
+    trimCssGradient,
 } from '../src/CssGradientParser';
 
 import { ColorStop } from '../src';
@@ -16,6 +17,23 @@ jest.mock('./../src/colorGradient.vert', () => '');
 
 describe('CssGradientParser', () =>
 {
+    test.concurrent('trims CSS gradient', async () =>
+    {
+        const input = `
+            linear-gradient(
+      to   right, 
+         #fffdc2   ,
+      #fffdc2     15%,
+      #d7f0a2   15%,
+        #d7f0a2 85%,
+      #fffdc2 85%   
+    )  ;  `;
+
+        const expectedOutput = `linear-gradient(to right, #fffdc2, #fffdc2 15%, #d7f0a2 15%, #d7f0a2 85%, #fffdc2 85%)`;
+
+        expect(trimCssGradient(input)).toEqual(expectedOutput);
+    });
+
     test.concurrent('gets type', async () =>
     {
         // valid types
