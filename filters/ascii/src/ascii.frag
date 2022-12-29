@@ -52,10 +52,10 @@ void main()
     vec2 pixCoord = pixelate(coord, vec2(pixelSize));
     pixCoord = unmapCoord(pixCoord);
 
-    // sample the color at grid the position
+    // sample the color at grid position
     vec4 color = texture2D(uSampler, pixCoord);
 
-    // brightness of the color as it's received by the human eye
+    // brightness of the color as it's perceived by the human eye
     float gray = 0.3 * color.r + 0.59 * color.g + 0.11 * color.b;
 
     // determine the character to use
