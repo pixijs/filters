@@ -22,17 +22,17 @@ vec2 unmapCoord( vec2 coord )
 
 vec2 pixelate(vec2 coord, vec2 size)
 {
-    return floor( coord / size ) * size;
+    return floor(coord / size) * size;
 }
 
 vec2 getMod(vec2 coord, vec2 size)
 {
-    return mod( coord , size) / size;
+    return mod(coord, size) / size;
 }
 
 float character(float n, vec2 p)
 {
-    p = floor(p*vec2(4.0, -4.0) + 2.5);
+    p = floor(p*vec2(4.0, 4.0) + 2.5);
 
     if (clamp(p.x, 0.0, 4.0) == p.x)
     {
