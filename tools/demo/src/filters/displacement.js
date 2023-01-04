@@ -8,7 +8,7 @@ export default function ()
     const displacementSprite = new PIXI.Sprite(this.resources.map);
 
     this.addFilter('DisplacementFilter', {
-        enabled: true,
+        enabled: false,
         global: true,
         args: [displacementSprite, this.initWidth, this.initHeight],
         oncreate(folder)

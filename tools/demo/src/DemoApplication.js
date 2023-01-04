@@ -147,7 +147,7 @@ export default class DemoApplication extends Application
         );
 
         // Add the overlay
-        this.pond.addChild(this.overlay);
+        // this.pond.addChild(this.overlay);
 
         // Handle window resize event
         window.addEventListener('resize', this.handleResize.bind(this));

@@ -53,6 +53,7 @@
     "@pixi/filter-glow": "5.1.0",
     "@pixi/filter-godray": "5.0.0",
     "@pixi/filter-grayscale": "5.1.0",
+    "@pixi/filter-hue-rotation": "5.1.0",
     "@pixi/filter-kawase-blur": "5.0.0",
     "@pixi/filter-motion-blur": "5.0.0",
     "@pixi/filter-multi-color-replace": "5.0.0",

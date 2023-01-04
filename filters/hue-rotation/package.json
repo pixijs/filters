@@ -1,0 +1,41 @@
+{
+  "name": "@pixi/filter-hue-rotation",
+  "version": "5.1.0",
+  "main": "./dist/filter-hue-rotation.js",
+  "description": "PixiJS filter to apply a hue rotation",
+  "author": "Viktor Persson",
+  "contributors": [
+    "Viktor Persson"
+  ],
+  "module": "./dist/filter-hue-rotation.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/filter-hue-rotation.mjs",
+      "require": "./dist/filter-hue-rotation.js",
+      "types": "./index.d.ts"
+    }
+  },
+  "types": "./index.d.ts",
+  "homepage": "http://pixijs.com/",
+  "bugs": "https://github.com/pixijs/filters/issues",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pixijs/filters.git",
+    "directory": "filters/hue-rotation"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "index.d.ts"
+  ],
+  "peerDependencies": {
+    "@pixi/core": "^7.0.0-X"
+  },
+  "devDependencies": {
+    "@pixi/core": "^7.0.0-X",
+    "@tools/fragments": "5.0.0"
+  }
+}

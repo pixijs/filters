@@ -22,6 +22,7 @@ export { default as glitch } from './glitch';
 export { default as glow } from './glow';
 export { default as godray } from './godray';
 export { default as grayscale } from './grayscale';
+export { default as hueRotation } from './hue-rotation';
 export { default as kawaseBlur } from './kawase-blur';
 export { default as motionBlur } from './motion-blur';
 export { default as multiColorReplace } from './multi-color-replace';
