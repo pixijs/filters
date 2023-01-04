@@ -36,7 +36,7 @@ async function main() {
         ].join('\n');
 
         // Get settings from package JSON
-        let { main, module, bundle, globals } = pkg.config;
+        let { main, module, bundle, bundleModule, globals } = pkg.config;
         const basePath = path.relative(__dirname, pkg.dir);
         const input = path.join(basePath, 'src/index.ts');
         const freeze = false;
@@ -82,16 +82,26 @@ async function main() {
             builds.push({
                 input,
                 external: Object.keys(globals),
-                output: {
-                    name,
-                    banner,
-                    globals,
-                    file: path.join(basePath, bundle),
-                    format: 'iife',
-                    footer,
-                    freeze,
-                    sourcemap,
-                },
+                output: [
+                    {
+                        name,
+                        banner,
+                        globals,
+                        file: path.join(basePath, bundle),
+                        format: 'iife',
+                        footer,
+                        freeze,
+                        sourcemap,
+                    },
+                    {
+                        banner,
+                        globals,
+                        file: path.join(basePath, bundleModule),
+                        format: 'esm',
+                        freeze,
+                        sourcemap,
+                    },
+                ],
                 treeshake: false,
                 plugins,
             });
