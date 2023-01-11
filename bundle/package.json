@@ -12,6 +12,7 @@
   "main": "./dist/cjs/pixi-filters.js",
   "module": "./dist/esm/pixi-filters.mjs",
   "bundle": "./dist/browser/pixi-filters.js",
+  "bundleModule": "./dist/browser/pixi-filters.mjs",
   "exports": {
     ".": {
       "import": "./dist/esm/pixi-filters.mjs",
