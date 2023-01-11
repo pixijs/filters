@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-drop-shadow",
-  "version": "5.0.0",
+  "version": "5.1.1",
   "main": "./dist/filter-drop-shadow.js",
   "description": "PixiJS filter to apply a drop shadow effect",
   "author": "Mat Groves",
@@ -35,7 +35,7 @@
     "@pixi/filter-kawase-blur": "PIXI.filters"
   },
   "dependencies": {
-    "@pixi/filter-kawase-blur": "5.0.0"
+    "@pixi/filter-kawase-blur": "5.1.1"
   },
   "peerDependencies": {
     "@pixi/core": "^7.0.0-X"

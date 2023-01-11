@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-shockwave",
-  "version": "5.0.0",
+  "version": "5.1.1",
   "main": "./dist/filter-shockwave.js",
   "description": "PixiJS filter to apply a shockwave-type effect",
   "author": "Mat Groves",

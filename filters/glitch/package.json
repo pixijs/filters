@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-glitch",
-  "version": "5.0.0",
+  "version": "5.1.1",
   "main": "./dist/filter-glitch.js",
   "description": "PixiJS filter to apply a glitch effect",
   "author": "finscn <finscn@gmail.com>",
