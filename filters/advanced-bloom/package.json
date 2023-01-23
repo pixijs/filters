@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-advanced-bloom",
-  "version": "5.0.0",
+  "version": "5.1.1",
   "main": "./dist/filter-advanced-bloom.js",
   "description": "PixiJS filter to render Bloom Filter (with highlight) effect",
   "author": "finscn",
@@ -35,7 +35,7 @@
     "@pixi/filter-kawase-blur": "PIXI.filters"
   },
   "dependencies": {
-    "@pixi/filter-kawase-blur": "5.0.0"
+    "@pixi/filter-kawase-blur": "5.1.1"
   },
   "peerDependencies": {
     "@pixi/core": "^7.0.0-X"

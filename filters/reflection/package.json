@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-reflection",
-  "version": "5.0.0",
+  "version": "5.1.1",
   "main": "./dist/filter-reflection.js",
   "description": "PixiJS filter to apply reflection and wave effect",
   "author": "finscn <finscn@gmail.com>",

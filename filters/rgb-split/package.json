@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-rgb-split",
-  "version": "5.0.0",
+  "version": "5.1.1",
   "main": "./dist/filter-rgb-split.js",
   "description": "PixiJS filter to split and shift red, green or blue channels",
   "author": "Mat Groves",
