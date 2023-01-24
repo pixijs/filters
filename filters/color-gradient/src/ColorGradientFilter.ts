@@ -138,8 +138,8 @@ class ColorGradientFilter extends Filter
     }
 
     /**
-   * The angle of the gradient
-   * @default 0
+   * The angle of the gradient in degrees
+   * @default 90
    */
     set angle(value: number)
     {
@@ -152,8 +152,8 @@ class ColorGradientFilter extends Filter
     }
 
     /**
-   * The alpha value of the gradient
-   * @default 0
+   * The alpha value of the gradient (0-1)
+   * @default 1
    */
     set alpha(value: number)
     {
@@ -166,7 +166,7 @@ class ColorGradientFilter extends Filter
     }
 
     /**
-   * The maximum number of colors to render
+   * The maximum number of colors to render (0 = no limit)
    * @default 0
    */
     set maxColors(value: number)
