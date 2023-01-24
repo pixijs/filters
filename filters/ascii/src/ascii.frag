@@ -22,17 +22,17 @@ vec2 unmapCoord( vec2 coord )
 
 vec2 pixelate(vec2 coord, vec2 size)
 {
-    return floor( coord / size ) * size;
+    return floor(coord / size) * size;
 }
 
 vec2 getMod(vec2 coord, vec2 size)
 {
-    return mod( coord , size) / size;
+    return mod(coord, size) / size;
 }
 
 float character(float n, vec2 p)
 {
-    p = floor(p*vec2(4.0, -4.0) + 2.5);
+    p = floor(p*vec2(4.0, 4.0) + 2.5);
 
     if (clamp(p.x, 0.0, 4.0) == p.x)
     {
@@ -48,15 +48,17 @@ void main()
 {
     vec2 coord = mapCoord(vTextureCoord);
 
-    // get the rounded color..
+    // get the grid position
     vec2 pixCoord = pixelate(coord, vec2(pixelSize));
     pixCoord = unmapCoord(pixCoord);
 
+    // sample the color at grid position
     vec4 color = texture2D(uSampler, pixCoord);
 
-    // determine the character to use
-    float gray = (color.r + color.g + color.b) / 3.0;
+    // brightness of the color as it's perceived by the human eye
+    float gray = 0.3 * color.r + 0.59 * color.g + 0.11 * color.b;
 
+    // determine the character to use
     float n =  65536.0;             // .
     if (gray > 0.2) n = 65600.0;    // :
     if (gray > 0.3) n = 332772.0;   // *

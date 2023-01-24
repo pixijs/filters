@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-cross-hatch",
-  "version": "5.0.0",
+  "version": "5.1.1",
   "main": "./dist/filter-cross-hatch.js",
   "description": "PixiJS filter to apply a cross-hatch black and white effect",
   "author": "Mat Groves",

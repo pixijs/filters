@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-old-film",
-  "version": "5.0.0",
+  "version": "5.1.1",
   "main": "./dist/filter-old-film.js",
   "description": "PixiJS filter to apply an old film effect with grain and scratches",
   "author": "finscn <finscn@gmail.com>",
