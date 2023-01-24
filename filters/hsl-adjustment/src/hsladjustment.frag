@@ -47,6 +47,6 @@ void main()
     // lightness
     result.xyz += vec3(uLightness) * color.a;
 
-    // done
-    gl_FragColor = result;
+    // mix/alpha
+    gl_FragColor = mix(color, result, uAlpha);
 }
