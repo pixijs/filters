@@ -22,11 +22,10 @@ const options = {
   type: ColorGradientFilter.LINEAR,
   stops: [
     { offset: 0.0, color: 'red', alpha: 1.0, },
-    { offset: 0.5, color: 'green', alpha: 0.5, },
     { offset: 1.0, color: 'blue', alpha: 1.0, },
   ],
-  angle: 45,
-  alpha: 0.5,
+  angle: 90,
+  alpha: 0.8,
 }
 
 container.filters = [new ColorGradientFilter(options)];
