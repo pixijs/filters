@@ -1,6 +1,6 @@
 # HslAdjustmentFilter
 
-> PixiJS filter to apply a hue rotation.
+> PixiJS filter to apply a HSL adjustment.
 
 [View demo](https://filters.pixijs.download/main/demo/index.html?enabled=HslAdjustmentFilter)
 
