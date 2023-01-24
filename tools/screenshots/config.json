@@ -556,7 +556,6 @@
         {
             "name": "HslAdjustmentFilter",
             "filename": "hsl-adjustment",
-            "fishOnly": true,
             "arguments": [{
                 "hue": 180
             }]
