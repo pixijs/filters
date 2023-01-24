@@ -26,6 +26,8 @@ export type CssOptions = {
     maxColors?: number;
 };
 
+const ANGLE_OFFSET = 90; // align degrees with CSS
+
 function sortColorStops(stops: ColorStop[]): ColorStop[]
 {
     return [...stops].sort((a, b) => a.offset - b.offset);
@@ -55,7 +57,7 @@ class ColorGradientFilter extends Filter
             { offset: 1.0, color: 0x0000ff, alpha: 1.0 },
         ],
         alpha: 1.0,
-        angle: 0.0,
+        angle: 90.0,
         maxColors: 0,
     };
 
@@ -141,12 +143,12 @@ class ColorGradientFilter extends Filter
    */
     set angle(value: number)
     {
-        this.uniforms.uAngle = value;
+        this.uniforms.uAngle = value - ANGLE_OFFSET;
     }
 
     get angle(): number
     {
-        return this.uniforms.uAngle;
+        return this.uniforms.uAngle + ANGLE_OFFSET;
     }
 
     /**

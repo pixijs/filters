@@ -152,7 +152,7 @@ export default function ()
             folder.add(misc, 'cssGradient').name('from CSS gradient').onChange(onCssGradientChange);
             folder.add(this, 'type', { LINEAR: 0, RADIAL: 1, CONIC: 2 });
             folder.add(this, 'alpha', 0, 1);
-            folder.add(this, 'angle', -180, 180, 1);
+            folder.add(this, 'angle', 0, 360, 1);
             folder.add(this, 'maxColors', 0, 24, 1);
             applyDefaultOptions(stops);
         },

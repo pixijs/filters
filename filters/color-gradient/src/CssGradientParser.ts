@@ -212,14 +212,14 @@ export function angleFromCssOrientation(orientation: CssOrientation): number
 export function angleFromDirectionalValue(value: string): number
 {
     const supportedValues: { [key: string]: number } = {
-        left: -90,
+        left: 270,
         top: 0,
         bottom: 180,
         right: 90,
-        'left top': -45,
-        'top left': -45,
-        'left bottom': -135,
-        'bottom left': -135,
+        'left top': 315,
+        'top left': 315,
+        'left bottom': 225,
+        'bottom left': 225,
         'right top': 45,
         'top right': 45,
         'right bottom': 135,
