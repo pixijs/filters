@@ -140,7 +140,6 @@ API documention can be found [here](http://pixijs.io/filters/docs/).
 [TiltShift_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=TiltShiftFilter
 [Twist_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=TwistFilter
 [ZoomBlur_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=ZoomBlurFilter
-
 [Alpha_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=AlphaFilter
 [Blur_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=BlurFilter
 [ColorMatrix_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=ColorMatrixFilter
