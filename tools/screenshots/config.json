@@ -554,8 +554,8 @@
             "filename": "grayscale"
         },
         {
-            "name": "HueRotationFilter",
-            "filename": "hue-rotation",
+            "name": "HslAdjustmentFilter",
+            "filename": "hsl-adjustment",
             "fishOnly": true
         }
     ]

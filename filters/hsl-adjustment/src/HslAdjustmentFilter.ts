@@ -1,8 +1,8 @@
 import { Filter } from '@pixi/core';
 import { vertex } from '@tools/fragments';
-import fragment from './huerotation.frag';
+import fragment from './hsladjustment.frag';
 
-interface HueRotationFilterOptions
+interface HslAdjustmentFilterOptions
 {
     hue: number;
     saturation: number;
@@ -12,19 +12,19 @@ interface HueRotationFilterOptions
 }
 
 /**
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/hue-rotation.png)
+ * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/hsl-adjustment.png)
  *
  * @class
  * @extends PIXI.Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-hue-rotation|@pixi/filter-hue-rotation}
+ * @see {@link https://www.npmjs.com/package/@pixi/filter-hsl-adjustment|@pixi/filter-hsl-adjustment}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class HueRotationFilter extends Filter
+class HslAdjustmentFilter extends Filter
 {
     private _hue = 0;
 
     /** Default values for options. */
-    static readonly defaults: HueRotationFilterOptions = {
+    static readonly defaults: HslAdjustmentFilterOptions = {
         hue: 0,
         saturation: 0,
         lightness: 0,
@@ -32,10 +32,10 @@ class HueRotationFilter extends Filter
         alpha: 1,
     };
 
-    constructor(options?: Partial<HueRotationFilterOptions>)
+    constructor(options?: Partial<HslAdjustmentFilterOptions>)
     {
         super(vertex, fragment);
-        const options_: HueRotationFilterOptions = Object.assign({}, HueRotationFilter.defaults, options);
+        const options_: HslAdjustmentFilterOptions = Object.assign({}, HslAdjustmentFilter.defaults, options);
 
         Object.assign(this, options_);
     }
@@ -112,5 +112,5 @@ class HueRotationFilter extends Filter
     }
 }
 
-export { HueRotationFilter };
-export type { HueRotationFilterOptions };
+export { HslAdjustmentFilter };
+export type { HslAdjustmentFilterOptions };

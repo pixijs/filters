@@ -1,6 +1,6 @@
 export default function ()
 {
-    this.addFilter('HueRotationFilter', {
+    this.addFilter('HslAdjustmentFilter', {
         enabled: true,
         fishOnly: true,
         args: [],

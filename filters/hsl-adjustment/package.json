@@ -1,17 +1,17 @@
 {
-  "name": "@pixi/filter-hue-rotation",
-  "version": "5.1.0",
-  "main": "./dist/filter-hue-rotation.js",
-  "description": "PixiJS filter to apply a hue rotation",
+  "name": "@pixi/filter-hsl-adjustment",
+  "version": "5.1.1",
+  "main": "./dist/filter-hsl-adjustment.js",
+  "description": "PixiJS filter to apply a HSL adjustment",
   "author": "Viktor Persson",
   "contributors": [
     "Viktor Persson"
   ],
-  "module": "./dist/filter-hue-rotation.mjs",
+  "module": "./dist/filter-hsl-adjustment.mjs",
   "exports": {
     ".": {
-      "import": "./dist/filter-hue-rotation.mjs",
-      "require": "./dist/filter-hue-rotation.js",
+      "import": "./dist/filter-hsl-adjustment.mjs",
+      "require": "./dist/filter-hsl-adjustment.js",
       "types": "./index.d.ts"
     }
   },
@@ -22,7 +22,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/pixijs/filters.git",
-    "directory": "filters/hue-rotation"
+    "directory": "filters/hsl-adjustment"
   },
   "publishConfig": {
     "access": "public"
