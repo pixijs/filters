@@ -54,6 +54,7 @@
     "@pixi/filter-glow": "5.1.1",
     "@pixi/filter-godray": "5.1.1",
     "@pixi/filter-grayscale": "5.1.1",
+    "@pixi/filter-hsl-adjustment": "5.1.1",
     "@pixi/filter-kawase-blur": "5.1.1",
     "@pixi/filter-motion-blur": "5.1.1",
     "@pixi/filter-multi-color-replace": "5.1.1",

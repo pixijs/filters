@@ -17,6 +17,7 @@ export * from '@pixi/filter-glitch';
 export * from '@pixi/filter-glow';
 export * from '@pixi/filter-godray';
 export * from '@pixi/filter-grayscale';
+export * from '@pixi/filter-hsl-adjustment';
 export * from '@pixi/filter-kawase-blur';
 export * from '@pixi/filter-motion-blur';
 export * from '@pixi/filter-multi-color-replace';

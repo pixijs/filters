@@ -552,6 +552,13 @@
         {
             "name": "GrayscaleFilter",
             "filename": "grayscale"
+        },
+        {
+            "name": "HslAdjustmentFilter",
+            "filename": "hsl-adjustment",
+            "arguments": [{
+                "hue": 180
+            }]
         }
     ]
 }
