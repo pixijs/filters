@@ -70,7 +70,7 @@ class HslAdjustmentFilter extends Filter
     }
 
     /**
-   * Colorize the texture (render as a single color)
+   * Colorize (render as a single color)
    * @default false
    */
     get colorize(): boolean
