@@ -16,8 +16,9 @@ float getBrightness(vec4 color) {
 }
 
 // https://gist.github.com/mairod/a75e7b44f68110e1576d77419d608786?permalink_comment_id=3195243#gistcomment-3195243
+const vec3 k = vec3(0.57735, 0.57735, 0.57735);
+
 vec3 hueShift(vec3 color, float angle) {
-    const vec3 k = vec3(0.57735, 0.57735, 0.57735);
     float cosAngle = cos(angle);
     return vec3(
     color * cosAngle +
