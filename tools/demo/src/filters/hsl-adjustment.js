@@ -1,8 +1,8 @@
 export default function ()
 {
     this.addFilter('HslAdjustmentFilter', {
-        enabled: true,
-        fishOnly: true,
+        enabled: false,
+        fishOnly: false,
         args: [],
         oncreate(folder)
         {
