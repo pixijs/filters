@@ -19,8 +19,7 @@ import { Container } from 'pixi.js';
 const container = new Container();
 container.filters = [
   new HslAdjustmentFilter({
-    angle: 45,
-    alpha: 0.8,
+    hue: 180,
     colorize: true,
   })
 ];
