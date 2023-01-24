@@ -1,6 +1,6 @@
 # PixiJS Filters
 
-[![Node.js CI](https://github.com/pixijs/filters/workflows/Node.js%20CI/badge.svg)](https://github.com/pixi.js/filters/actions?query=workflow%3A%22Node.js+CI%22) [![npm version](https://badge.fury.io/js/pixi-filters.svg)](https://badge.fury.io/js/pixi-filters)
+[![Node.js CI](https://github.com/pixijs/filters/workflows/Node.js%20CI/badge.svg)](https://github.com/pixijs/filters/actions/workflows/nodejs.yml?query=branch%3Amain) [![npm version](https://badge.fury.io/js/pixi-filters.svg)](https://www.npmjs.com/package/pixi-filters)
 
 ## Demo
 
@@ -54,15 +54,15 @@ PixiJS has a handful of core filters that are built-in to the PixiJS library.
 |-----------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|
 | **AlphaFilter**<br>[View demo][Alpha_demo]                      | ![alpha](https://filters.pixijs.download/main/tools/screenshots/dist/alpha.png?v=2)                                     |
 | **BlurFilter**<br>[View demo][Blur_demo]                        | ![blur](https://filters.pixijs.download/main/tools/screenshots/dist/blur.png?v=2)                                       |
-| **ColorMatrixFilter** (contrast)[View demo][ColorMatrix_demo]   | ![color-matrix-contrast](https://filters.pixijs.download/main/tools/screenshots/dist/color-matrix-contrast.png?v=2)     |
-| **ColorMatrixFilter** (desaturate)[View demo][ColorMatrix_demo] | ![color-matrix-desaturate](https://filters.pixijs.download/main/tools/screenshots/dist/color-matrix-desaturate.png?v=2) |
-| **ColorMatrixFilter** (kodachrome)[View demo][ColorMatrix_demo] | ![color-matrix-kodachrome](https://filters.pixijs.download/main/tools/screenshots/dist/color-matrix-kodachrome.png?v=2) |
-| **ColorMatrixFilter** (lsd)[View demo][ColorMatrix_demo]        | ![color-matrix-lsd](https://filters.pixijs.download/main/tools/screenshots/dist/color-matrix-lsd.png?v=2)               |
-| **ColorMatrixFilter** (negative)[View demo][ColorMatrix_demo]   | ![color-matrix-negative](https://filters.pixijs.download/main/tools/screenshots/dist/color-matrix-negative.png?v=2)     |
-| **ColorMatrixFilter** (polaroid)[View demo][ColorMatrix_demo]   | ![color-matrix-polaroid](https://filters.pixijs.download/main/tools/screenshots/dist/color-matrix-polaroid.png?v=2)     |
-| **ColorMatrixFilter** (predator)[View demo][ColorMatrix_demo]   | ![color-matrix-predator](https://filters.pixijs.download/main/tools/screenshots/dist/color-matrix-predator.png?v=2)     |
-| **ColorMatrixFilter** (saturate)[View demo][ColorMatrix_demo]   | ![color-matrix-saturate](https://filters.pixijs.download/main/tools/screenshots/dist/color-matrix-saturate.png?v=2)     |
-| **ColorMatrixFilter** (sepia)[View demo][ColorMatrix_demo]      | ![color-matrix-sepia](https://filters.pixijs.download/main/tools/screenshots/dist/color-matrix-sepia.png?v=2)           |
+| **ColorMatrixFilter** (contrast)<br>[View demo][ColorMatrix_demo]   | ![color-matrix-contrast](https://filters.pixijs.download/main/tools/screenshots/dist/color-matrix-contrast.png?v=2)     |
+| **ColorMatrixFilter** (desaturate)<br>[View demo][ColorMatrix_demo] | ![color-matrix-desaturate](https://filters.pixijs.download/main/tools/screenshots/dist/color-matrix-desaturate.png?v=2) |
+| **ColorMatrixFilter** (kodachrome)<br>[View demo][ColorMatrix_demo] | ![color-matrix-kodachrome](https://filters.pixijs.download/main/tools/screenshots/dist/color-matrix-kodachrome.png?v=2) |
+| **ColorMatrixFilter** (lsd)<br>[View demo][ColorMatrix_demo]        | ![color-matrix-lsd](https://filters.pixijs.download/main/tools/screenshots/dist/color-matrix-lsd.png?v=2)               |
+| **ColorMatrixFilter** (negative)<br>[View demo][ColorMatrix_demo]   | ![color-matrix-negative](https://filters.pixijs.download/main/tools/screenshots/dist/color-matrix-negative.png?v=2)     |
+| **ColorMatrixFilter** (polaroid)<br>[View demo][ColorMatrix_demo]   | ![color-matrix-polaroid](https://filters.pixijs.download/main/tools/screenshots/dist/color-matrix-polaroid.png?v=2)     |
+| **ColorMatrixFilter** (predator)<br>[View demo][ColorMatrix_demo]   | ![color-matrix-predator](https://filters.pixijs.download/main/tools/screenshots/dist/color-matrix-predator.png?v=2)     |
+| **ColorMatrixFilter** (saturate)<br>[View demo][ColorMatrix_demo]   | ![color-matrix-saturate](https://filters.pixijs.download/main/tools/screenshots/dist/color-matrix-saturate.png?v=2)     |
+| **ColorMatrixFilter** (sepia)<br>[View demo][ColorMatrix_demo]      | ![color-matrix-sepia](https://filters.pixijs.download/main/tools/screenshots/dist/color-matrix-sepia.png?v=2)           |
 | **DisplacementFilter**<br>[View demo][Displacement_demo]        | ![displacement](https://filters.pixijs.download/main/tools/screenshots/dist/displacement.png?v=2)                       |
 | **NoiseFilter**<br>[View demo][Noise_demo]                      | ![noise](https://filters.pixijs.download/main/tools/screenshots/dist/noise.png?v=2)                                     |
 
