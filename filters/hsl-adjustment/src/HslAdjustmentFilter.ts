@@ -41,7 +41,7 @@ class HslAdjustmentFilter extends Filter
     }
 
     /**
-   * The hue of rotation
+   * hue (-180 to 180)
    * @default 0
    */
     get hue(): number
@@ -56,7 +56,7 @@ class HslAdjustmentFilter extends Filter
     }
 
     /**
-   * The alpha value of the hue rotation
+   * Alpha (0-1)
    * @default 1
    */
     get alpha(): boolean
@@ -70,7 +70,7 @@ class HslAdjustmentFilter extends Filter
     }
 
     /**
-   * Colorize the texture (use single color)
+   * Colorize the texture (render as a single color)
    * @default false
    */
     get colorize(): boolean
@@ -84,8 +84,8 @@ class HslAdjustmentFilter extends Filter
     }
 
     /**
-   * The lightness value of the hue rotation
-   * @default 1
+   * Lightness (-1 to 1)
+   * @default 0
    */
     get lightness(): boolean
     {
@@ -98,8 +98,8 @@ class HslAdjustmentFilter extends Filter
     }
 
     /**
-   * The saturation value of the hue rotation
-   * @default 1
+   * Saturation (-1 to 1)
+   * @default 0
    */
     get saturation(): boolean
     {
