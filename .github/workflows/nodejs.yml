@@ -40,7 +40,7 @@ jobs:
       run: echo BRANCH_NAME=${GITHUB_REF/refs\/heads\//} >> $GITHUB_OUTPUT
 
     - name: Build for Distribution
-      uses: xvfb-run --auto-servernum npm run dist
+      run: xvfb-run --auto-servernum npm run dist
 
     # Append assets to releases
     - name: Upload Assets to Release
