@@ -16,7 +16,7 @@ export default function ()
     };
 
     this.addFilter('ColorGradientFilter', {
-        enabled: true,
+        enabled: false,
         fishOnly: true,
         args: [],
         oncreate(folder)
