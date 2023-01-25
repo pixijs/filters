@@ -31,6 +31,7 @@ All filters work with PixiJS v7.
 | **GlowFilter**<br>_@pixi/filter-glow_<br>[View demo][Glow_demo]                                          | ![glow](https://filters.pixijs.download/main/tools/screenshots/dist/glow.png?v=2)                               |
 | **GodrayFilter**<br>_@pixi/filter-godray_<br>[View demo][Godray_demo]                                    | ![godray](https://filters.pixijs.download/main/tools/screenshots/dist/godray.gif?v=2)                           |
 | **GrayscaleFilter**<br>_@pixi/filter-grayscale_<br>[View demo][Grayscale_demo]                           | ![grayscale](https://filters.pixijs.download/main/tools/screenshots/dist/grayscale.png?v=1)                     |
+| **HslAdjustmentFilter**<br>_@pixi/filter-hsl-adjustment_<br>[View demo][HslAdjustment_demo]              | ![hsl-adjustment](https://filters.pixijs.download/main/tools/screenshots/dist/hsl-adjustment.png?v=1)           |
 | **KawaseBlurFilter**<br>_@pixi/filter-kawase-blur_<br>[View demo][KawaseBlur_demo]                       | ![kawase-blur](https://filters.pixijs.download/main/tools/screenshots/dist/kawase-blur.png?v=1)                 |
 | **MotionBlurFilter**<br>_@pixi/filter-motion-blur_<br>[View demo][MotionBlur_demo]                       | ![motion-blur](https://filters.pixijs.download/main/tools/screenshots/dist/motion-blur.png?v=1)                 |
 | **MultiColorReplaceFilter**<br>_@pixi/filter-multi-color-replace_<br>[View demo][MultiColorReplace_demo] | ![multi-color-replace](https://filters.pixijs.download/main/tools/screenshots/dist/multi-color-replace.png?v=1) |
@@ -126,6 +127,7 @@ API documention can be found [here](http://pixijs.io/filters/docs/).
 [Glow_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=GlowFilter
 [Godray_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=GodrayFilter
 [Grayscale_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=GrayscaleFilter
+[HslAdjustment_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=HslAdjustmentFilter
 [KawaseBlur_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=KawaseBlurFilter
 [MotionBlur_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=MotionBlurFilter
 [MultiColorReplace_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=MultiColorReplaceFilter
