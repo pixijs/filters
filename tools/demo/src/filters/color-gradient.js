@@ -21,6 +21,8 @@ export default function ()
         args: [],
         oncreate(folder)
         {
+            let miscControls = {};
+
             const removeColorStopControllers = () =>
             {
                 for (let i = folder.controllers.length - 1; i > 0; i--)
@@ -56,8 +58,8 @@ export default function ()
 
                 const canRemoveStops = (stops.length > 2);
 
-                folder.add(misc, 'remove color stop').disable(!canRemoveStops);
-                folder.add(misc, 'add color stop');
+                folder.add(miscControls, 'remove color stop').disable(!canRemoveStops);
+                folder.add(miscControls, 'add color stop');
             };
 
             const setColorStops = (newStops, scaleOffsets = false) =>
@@ -141,15 +143,15 @@ export default function ()
                 setColorStops(newStops, true);
             };
 
-            const misc = {
+            miscControls = Object.assign(miscControls, {
                 'reset options': applyDefaultOptions,
                 'add color stop': addColorStop,
                 'remove color stop': removeLastColorStop,
                 cssGradient: '',
-            };
+            });
 
-            folder.add(misc, 'reset options');
-            folder.add(misc, 'cssGradient').name('from CSS gradient').onChange(onCssGradientChange);
+            folder.add(miscControls, 'reset options');
+            folder.add(miscControls, 'cssGradient').name('from CSS gradient').onChange(onCssGradientChange);
             folder.add(this, 'type', { LINEAR: 0, RADIAL: 1, CONIC: 2 });
             folder.add(this, 'alpha', 0, 1);
             folder.add(this, 'angle', 0, 360, 1);
