@@ -50,6 +50,7 @@
   ],
   "devDependencies": {
     "@microsoft/api-extractor": "~7.20.0",
+    "@rollup/plugin-commonjs": "^11.0.0",
     "@pixi-build-tools/api-extractor-lerna-monorepo": "^1.1.0",
     "@pixi/eslint-config": "^4.0.1",
     "@pixi/webdoc-template": "^1.5.5",
