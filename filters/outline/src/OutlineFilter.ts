@@ -26,6 +26,7 @@ class OutlineFilter extends Filter
 
     private _thickness = 1;
     private _alpha = 1.0;
+    private _knockout = false;
 
     /**
      * @param {number} [thickness=1] - The tickness of the outline. Make it 2 times more for resolution 2
@@ -33,16 +34,18 @@ class OutlineFilter extends Filter
      * @param {number} [quality=0.1] - The quality of the outline from `0` to `1`, using a higher quality
      *        setting will result in slower performance and more accuracy.
      * @param {number} [alpha=1.0] - The alpha of the outline.
+     * @param {boolean} [knockout=false] - Only render outline, not the contents.
      */
-    constructor(thickness = 1, color = 0x000000, quality = 0.1, alpha = 1.0)
+    constructor(thickness = 1, color = 0x000000, quality = 0.1, alpha = 1.0, knockout = false)
     {
         super(vertex, fragment.replace(/\$\{angleStep\}/, OutlineFilter.getAngleStep(quality)));
 
-        this.uniforms.thickness = new Float32Array([0, 0]);
-        this.uniforms.outlineColor = new Float32Array([0, 0, 0, 1]);
-        this.uniforms.alpha = alpha;
+        this.uniforms.uThickness = new Float32Array([0, 0]);
+        this.uniforms.uColor = new Float32Array([0, 0, 0, 1]);
+        this.uniforms.uAlpha = alpha;
+        this.uniforms.uKnockout = knockout;
 
-        Object.assign(this, { thickness, color, quality, alpha });
+        Object.assign(this, { thickness, color, quality, alpha, knockout });
     }
 
     /**
@@ -61,9 +64,10 @@ class OutlineFilter extends Filter
 
     apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES): void
     {
-        this.uniforms.thickness[0] = this._thickness / input._frame.width;
-        this.uniforms.thickness[1] = this._thickness / input._frame.height;
-        this.uniforms.alpha = this._alpha;
+        this.uniforms.uThickness[0] = this._thickness / input._frame.width;
+        this.uniforms.uThickness[1] = this._thickness / input._frame.height;
+        this.uniforms.uAlpha = this._alpha;
+        this.uniforms.uKnockout = this._knockout;
 
         filterManager.applyFilter(this, input, output, clear);
     }
@@ -87,11 +91,24 @@ class OutlineFilter extends Filter
      */
     get color(): number
     {
-        return utils.rgb2hex(this.uniforms.outlineColor);
+        return utils.rgb2hex(this.uniforms.uColor);
     }
     set color(value: number)
     {
-        utils.hex2rgb(value, this.uniforms.outlineColor);
+        utils.hex2rgb(value, this.uniforms.uColor);
+    }
+
+    /**
+     * Only render outline, not the contents.
+     * @default false
+     */
+    get knockout(): boolean
+    {
+        return this._knockout;
+    }
+    set knockout(value: boolean)
+    {
+        this._knockout = value;
     }
 
     /**
