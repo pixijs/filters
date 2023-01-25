@@ -554,6 +554,13 @@
             "filename": "grayscale"
         },
         {
+            "name": "HslAdjustmentFilter",
+            "filename": "hsl-adjustment",
+            "arguments": [{
+                "hue": 180
+            }]
+        },
+        {
             "name": "ColorGradientFilter",
             "filename": "color-gradient",
             "fishOnly": true,
