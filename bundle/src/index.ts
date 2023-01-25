@@ -4,6 +4,7 @@ export * from '@pixi/filter-ascii';
 export * from '@pixi/filter-bevel';
 export * from '@pixi/filter-bloom';
 export * from '@pixi/filter-bulge-pinch';
+export * from '@pixi/filter-color-gradient';
 export * from '@pixi/filter-color-map';
 export * from '@pixi/filter-color-overlay';
 export * from '@pixi/filter-color-replace';

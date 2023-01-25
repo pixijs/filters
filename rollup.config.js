@@ -1,6 +1,7 @@
 import path from 'path';
 import esbuild from 'rollup-plugin-esbuild';
 import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
 import { string } from 'rollup-plugin-string';
 import dedupeDefaultVert from './scripts/rollup-dedupe-vert'
 import workspacesRun from 'workspaces-run';
@@ -12,6 +13,7 @@ async function main() {
             minify: process.env.NODE_ENV === 'production',
         }),
         resolve(),
+        commonjs(),
         string({
             include: [
                 '**/*.frag',

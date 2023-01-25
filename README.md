@@ -18,6 +18,7 @@ All filters work with PixiJS v7.
 | **BevelFilter**<br>_@pixi/filter-bevel_<br>[View demo][Bevel_demo]                                       | ![bevel](https://filters.pixijs.download/main/tools/screenshots/dist/bevel.png?v=2)                             |
 | **BloomFilter**<br>_@pixi/filter-bloom_<br>[View demo][Bloom_demo]                                       | ![bloom](https://filters.pixijs.download/main/tools/screenshots/dist/bloom.png?v=2)                             |
 | **BulgePinchFilter**<br>_@pixi/filter-bulge-pinch_<br>[View demo][BulgePinch_demo]                       | ![bulge-pinch](https://filters.pixijs.download/main/tools/screenshots/dist/bulge-pinch.gif?v=2)                 |
+| **ColorGradientFilter**<br>_@pixi/filter-color-gradient_<br>[View demo][ColorGradient_demo]              | ![color-gradient](https://filters.pixijs.download/main/tools/screenshots/dist/color-gradient.png?v=2)           |
 | **ColorMapFilter**<br>_@pixi/filter-color-map_<br>[View demo][ColorMap_demo]                             | ![color-map](https://filters.pixijs.download/main/tools/screenshots/dist/color-map.png?v=2)                     |
 | **ColorOverlayFilter**<br>_@pixi/filter-color-overlay_<br>[View demo][ColorOverlay_demo]                 | ![color-overlay](https://filters.pixijs.download/main/tools/screenshots/dist/color-overlay.png?v=2)             |
 | **ColorReplaceFilter**<br>_@pixi/filter-color-replace_<br>[View demo][ColorReplace_demo]                 | ![color-replace](https://filters.pixijs.download/main/tools/screenshots/dist/color-replace.png?v=2)             |
@@ -31,6 +32,7 @@ All filters work with PixiJS v7.
 | **GlowFilter**<br>_@pixi/filter-glow_<br>[View demo][Glow_demo]                                          | ![glow](https://filters.pixijs.download/main/tools/screenshots/dist/glow.png?v=2)                               |
 | **GodrayFilter**<br>_@pixi/filter-godray_<br>[View demo][Godray_demo]                                    | ![godray](https://filters.pixijs.download/main/tools/screenshots/dist/godray.gif?v=2)                           |
 | **GrayscaleFilter**<br>_@pixi/filter-grayscale_<br>[View demo][Grayscale_demo]                           | ![grayscale](https://filters.pixijs.download/main/tools/screenshots/dist/grayscale.png?v=1)                     |
+| **HslAdjustmentFilter**<br>_@pixi/filter-hsl-adjustment_<br>[View demo][HslAdjustment_demo]              | ![hsl-adjustment](https://filters.pixijs.download/main/tools/screenshots/dist/hsl-adjustment.png?v=1)           |
 | **KawaseBlurFilter**<br>_@pixi/filter-kawase-blur_<br>[View demo][KawaseBlur_demo]                       | ![kawase-blur](https://filters.pixijs.download/main/tools/screenshots/dist/kawase-blur.png?v=1)                 |
 | **MotionBlurFilter**<br>_@pixi/filter-motion-blur_<br>[View demo][MotionBlur_demo]                       | ![motion-blur](https://filters.pixijs.download/main/tools/screenshots/dist/motion-blur.png?v=1)                 |
 | **MultiColorReplaceFilter**<br>_@pixi/filter-multi-color-replace_<br>[View demo][MultiColorReplace_demo] | ![multi-color-replace](https://filters.pixijs.download/main/tools/screenshots/dist/multi-color-replace.png?v=1) |
@@ -113,6 +115,7 @@ API documention can be found [here](http://pixijs.io/filters/docs/).
 [Bevel_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=BevelFilter
 [Bloom_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=BloomFilter
 [BulgePinch_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=BulgePinchFilter
+[ColorGradient_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=ColorGradientFilter
 [ColorMap_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=ColorMapFilter
 [ColorOverlay_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=ColorOverlayFilter
 [ColorReplace_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=ColorReplaceFilter
@@ -126,6 +129,7 @@ API documention can be found [here](http://pixijs.io/filters/docs/).
 [Glow_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=GlowFilter
 [Godray_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=GodrayFilter
 [Grayscale_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=GrayscaleFilter
+[HslAdjustment_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=HslAdjustmentFilter
 [KawaseBlur_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=KawaseBlurFilter
 [MotionBlur_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=MotionBlurFilter
 [MultiColorReplace_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=MultiColorReplaceFilter

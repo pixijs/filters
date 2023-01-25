@@ -41,6 +41,7 @@
     "@pixi/filter-bevel": "5.1.1",
     "@pixi/filter-bloom": "5.1.1",
     "@pixi/filter-bulge-pinch": "5.1.1",
+    "@pixi/filter-color-gradient": "5.1.1",
     "@pixi/filter-color-map": "5.1.1",
     "@pixi/filter-color-overlay": "5.1.1",
     "@pixi/filter-color-replace": "5.1.1",
