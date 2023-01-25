@@ -21,6 +21,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+    - name: Install Canvas Dependencies
+      run: sudo apt-get install xvfb
     - name: Use Node.js 16.x
       uses: actions/setup-node@v3
       with:
@@ -35,12 +37,18 @@ jobs:
     - name: Extract Branch Name
       id: branch_name
       if: github.event_name == 'push'
-      run: echo ::set-output name=BRANCH_NAME::${GITHUB_REF/refs\/heads\//}
+      run: echo BRANCH_NAME=${GITHUB_REF/refs\/heads\//} >> $GITHUB_OUTPUT
 
     - name: Build for Distribution
-      uses: GabrielBB/xvfb-action@v1
+      uses: xvfb-run --auto-servernum npm run dist
+
+    # Append assets to releases
+    - name: Upload Assets to Release
+      if: github.event_name == 'release'
+      uses: softprops/action-gh-release@v1
       with:
-        run: npm run dist
+        files: |
+          ./bundle/dist/browser/*
 
     # Examples:
     # 1) PR feature/acme merged into dev
