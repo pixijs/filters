@@ -33,6 +33,6 @@ void main(void) {
     vec4 sourceColor = texture2D(uSampler, vTextureCoord);
     vec4 contentColor = sourceColor * float(!uKnockout);
     float outlineAlpha = uAlpha * outlineMaxAlphaAtPos(vTextureCoord.xy) * (1.-sourceColor.a);
-    vec4 outlineColor = vec4(vec3(uColor), outlineAlpha);
+    vec4 outlineColor = vec4(vec3(uColor) * outlineAlpha, outlineAlpha);
     gl_FragColor = contentColor + outlineColor;
 }
