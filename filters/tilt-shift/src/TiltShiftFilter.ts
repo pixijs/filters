@@ -1,7 +1,8 @@
 import { TiltShiftXFilter } from './TiltShiftXFilter';
 import { TiltShiftYFilter } from './TiltShiftYFilter';
-import { Filter, FilterSystem, RenderTexture } from '@pixi/core';
+import { Filter, FilterSystem, RenderTexture, utils } from '@pixi/core';
 import type { Point, CLEAR_MODES } from '@pixi/core';
+import type { TiltShiftFilterOptions } from './TiltShiftAxisFilter';
 
 // @author Vico @vicocotea
 // original filter https://github.com/evanw/glfx.js/blob/master/src/filters/blur/tiltshift.js
@@ -18,20 +19,50 @@ import type { Point, CLEAR_MODES } from '@pixi/core';
  */
 class TiltShiftFilter extends Filter
 {
+    /** Default options */
+    static readonly defaults: TiltShiftFilterOptions = {
+        /** The strength of the blur. */
+        blur: 100,
+        /** The strength of the blur gradient */
+        gradientBlur: 600,
+        /** The position to start the effect at. */
+        start: undefined,
+        /** The position to end the effect at. */
+        end: undefined,
+    };
+
     private tiltShiftXFilter: TiltShiftXFilter;
     private tiltShiftYFilter: TiltShiftYFilter;
 
     /**
+     * @param {TiltShiftFilterOptions} [options] - The optional parameters of the tilt shift filter.
+     */
+    constructor(options?: Partial<TiltShiftFilterOptions>);
+
+    /**
+     * @deprecated since 5.3.0
      * @param {number} [blur=100] - The strength of the blur.
      * @param {number} [gradientBlur=600] - The strength of the gradient blur.
-     * @param {PIXI.Point} [start=null] - The Y value to start the effect at.
-     * @param {PIXI.Point} [end=null] - The Y value to end the effect at.
+     * @param {PIXI.Point} [start=null] - The position to start the effect at.
+     * @param {PIXI.Point} [end=null] - The position to end the effect at.
      */
-    constructor(blur = 100, gradientBlur = 600, start?: Point, end?: Point)
+    constructor(blur?: number, gradientBlur?: number, start?: Point, end?: Point);
+
+    /** @ignore */
+    constructor(options?: Partial<TiltShiftFilterOptions> | number, gradientBlur?: number, start?: Point, end?: Point)
     {
         super();
-        this.tiltShiftXFilter = new TiltShiftXFilter(blur, gradientBlur, start, end);
-        this.tiltShiftYFilter = new TiltShiftYFilter(blur, gradientBlur, start, end);
+
+        if (typeof options === 'number')
+        {
+            utils.deprecation('5.3.0', 'TiltShiftFilter constructor arguments is deprecated, use options.');
+            options = { blur: options, gradientBlur, start, end };
+        }
+
+        options = Object.assign({}, TiltShiftFilter.defaults, options);
+
+        this.tiltShiftXFilter = new TiltShiftXFilter(options as TiltShiftFilterOptions);
+        this.tiltShiftYFilter = new TiltShiftYFilter(options as TiltShiftFilterOptions);
     }
 
     apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clearMode: CLEAR_MODES): void
@@ -43,9 +74,7 @@ class TiltShiftFilter extends Filter
         filterManager.returnFilterTexture(renderTarget);
     }
 
-    /**
-     * The strength of the blur.
-     */
+    /** The strength of the blur. */
     get blur(): number
     {
         return this.tiltShiftXFilter.blur;
@@ -55,9 +84,7 @@ class TiltShiftFilter extends Filter
         this.tiltShiftXFilter.blur = this.tiltShiftYFilter.blur = value;
     }
 
-    /**
-     * The strength of the gradient blur.
-     */
+    /** The strength of the gradient blur. */
     get gradientBlur(): number
     {
         return this.tiltShiftXFilter.gradientBlur;
@@ -68,7 +95,7 @@ class TiltShiftFilter extends Filter
     }
 
     /**
-     * The Y value to start the effect at.
+     * The position to start the effect at.
      *
      * @member {PIXI.Point}
      */
@@ -82,7 +109,7 @@ class TiltShiftFilter extends Filter
     }
 
     /**
-     * The Y value to end the effect at.
+     * The position to end the effect at.
      *
      * @member {PIXI.Point}
      */
