@@ -25,13 +25,26 @@ class HslAdjustmentFilter extends Filter
 
     /** Default values for options. */
     static readonly defaults: HslAdjustmentFilterOptions = {
+        /** Hue */
         hue: 0,
+        /** Saturation */
         saturation: 0,
+        /** Lightness */
         lightness: 0,
+        /** Colorize */
         colorize: false,
+        /** Alpha */
         alpha: 1,
     };
 
+    /**
+     * @param options - The optional parameters of the filter.
+     * @param {number} [options.hue=0] - The amount of hue in degrees (-180 to 180)
+     * @param {number} [options.saturation=0] - The amount of color saturation (-1 to 1)
+     * @param {number} [options.lightness=0] - The amount of lightness (-1 to 1)
+     * @param {boolean} [options.colorize=false] - Whether to colorize the image
+     * @param {number} [options.alpha=1] - The amount of alpha (0 to 1)
+     */
     constructor(options?: Partial<HslAdjustmentFilterOptions>)
     {
         super(vertex, fragment);
@@ -41,9 +54,9 @@ class HslAdjustmentFilter extends Filter
     }
 
     /**
-   * hue (-180 to 180)
-   * @default 0
-   */
+     * Hue (-180 to 180)
+     * @default 0
+     */
     get hue(): number
     {
         return this._hue;
@@ -56,9 +69,9 @@ class HslAdjustmentFilter extends Filter
     }
 
     /**
-   * Alpha (0-1)
-   * @default 1
-   */
+     * Alpha (0-1)
+     * @default 1
+     */
     get alpha(): boolean
     {
         return this.uniforms.uAlpha;
@@ -70,9 +83,9 @@ class HslAdjustmentFilter extends Filter
     }
 
     /**
-   * Colorize (render as a single color)
-   * @default false
-   */
+     * Colorize (render as a single color)
+     * @default false
+     */
     get colorize(): boolean
     {
         return this.uniforms.uColorize;
@@ -84,9 +97,9 @@ class HslAdjustmentFilter extends Filter
     }
 
     /**
-   * Lightness (-1 to 1)
-   * @default 0
-   */
+     * Lightness (-1 to 1)
+     * @default 0
+     */
     get lightness(): boolean
     {
         return this.uniforms.uLightness;
@@ -98,9 +111,9 @@ class HslAdjustmentFilter extends Filter
     }
 
     /**
-   * Saturation (-1 to 1)
-   * @default 0
-   */
+     * Saturation (-1 to 1)
+     * @default 0
+     */
     get saturation(): boolean
     {
         return this.uniforms.uSaturation;
