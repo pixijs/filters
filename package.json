@@ -18,7 +18,7 @@
     "dist": "run-s build build:types docs copy:*",
     "predocs": "rimraf dist/docs/*",
     "docs": "webdoc -R README.md",
-    "lint": "eslint --ext .js --ext .ts filters bundle tools --ignore-path .gitignore",
+    "lint": "eslint --ext .js --ext .ts filters bundle tools --ignore-path .gitignore --max-warnings 0",
     "types": "tsc -noEmit",
     "lint:fix": "npm run lint -- --fix",
     "demo": "open-cli http://localhost:8080/tools/demo/index.html && http-server . -s -c-1",
