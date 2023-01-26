@@ -7,6 +7,21 @@ import { Filter, Point } from '@pixi/core';
 // by Evan Wallace : http://madebyevan.com/
 
 /**
+ * Options for creating filter.
+ */
+interface TiltShiftFilterOptions
+{
+    /** The strength of the blur. */
+    blur: number;
+    /** The strength of the blur gradient */
+    gradientBlur: number;
+    /** The position to start the effect at. */
+    start?: Point | undefined;
+    /** The position to end the effect at. */
+    end?: Point | undefined;
+}
+
+/**
  * A TiltShiftAxisFilter.
  *
  * @class
@@ -15,13 +30,14 @@ import { Filter, Point } from '@pixi/core';
  */
 class TiltShiftAxisFilter extends Filter
 {
-    constructor(blur = 100, gradientBlur = 600, start?: Point, end?: Point)
+    constructor(options: TiltShiftFilterOptions)
     {
         super(vertex, fragment);
-        this.uniforms.blur = blur;
-        this.uniforms.gradientBlur = gradientBlur;
-        this.uniforms.start = start || new Point(0, window.innerHeight / 2);
-        this.uniforms.end = end || new Point(600, window.innerHeight / 2);
+
+        this.uniforms.blur = options.blur;
+        this.uniforms.gradientBlur = options.gradientBlur;
+        this.uniforms.start = options.start ?? new Point(0, window.innerHeight / 2);
+        this.uniforms.end = options.end ?? new Point(600, window.innerHeight / 2);
         this.uniforms.delta = new Point(30, 30);
         this.uniforms.texSize = new Point(window.innerWidth, window.innerHeight);
         this.updateDelta();
@@ -100,3 +116,4 @@ class TiltShiftAxisFilter extends Filter
 }
 
 export { TiltShiftAxisFilter };
+export type { TiltShiftFilterOptions };
