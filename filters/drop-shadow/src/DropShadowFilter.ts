@@ -1,15 +1,18 @@
 import { KawaseBlurFilter } from '@pixi/filter-kawase-blur';
 import { vertex } from '@tools/fragments';
 import fragment from './dropshadow.frag';
-import { Filter, settings, DEG_TO_RAD, Point, utils } from '@pixi/core';
-import type { IPoint, CLEAR_MODES, FilterSystem, RenderTexture } from '@pixi/core';
+import { Filter, settings, DEG_TO_RAD, ObservablePoint, utils } from '@pixi/core';
+import type { IPoint, CLEAR_MODES, FilterSystem, RenderTexture, IPointData } from '@pixi/core';
 
 type PixelSizeValue = number | number[] | IPoint;
 
 interface DropShadowFilterOptions
 {
-    rotation: number;
-    distance: number;
+    /** @deprecated */
+    rotation?: number;
+    /** @deprecated */
+    distance?: number;
+    offset: IPointData;
     color: number;
     alpha: number;
     shadowOnly: boolean;
@@ -32,8 +35,7 @@ class DropShadowFilter extends Filter
 {
     /** Default constructor options. */
     public static readonly defaults: DropShadowFilterOptions = {
-        rotation: 45,
-        distance: 5,
+        offset: { x: 4, y: 4 },
         color: 0x000000,
         alpha: 0.5,
         shadowOnly: false,
@@ -47,9 +49,14 @@ class DropShadowFilter extends Filter
     /** Hide the contents, only show the shadow. */
     public shadowOnly: boolean;
 
-    /** Angle of the shadow in degrees. */
+    /**
+     * Angle of the shadow in degrees
+     * @deprecated since 5.3.0
+     * @see DropShadowFilter#offset
+     */
     public angle = 45;
 
+    private _offset: ObservablePoint;
     private _distance = 5;
     private _tintFilter: Filter;
     private _blurFilter: KawaseBlurFilter;
@@ -57,8 +64,7 @@ class DropShadowFilter extends Filter
 
     /**
      * @param {object} [options] - Filter options
-     * @param {number} [options.rotation=45] - The angle of the shadow in degrees.
-     * @param {number} [options.distance=5] - Distance of shadow
+     * @param {number} [options.offset={x: 4, y: 4}] - Offset of the shadow
      * @param {number} [options.color=0x000000] - Color of the shadow
      * @param {number} [options.alpha=0.5] - Alpha of the shadow
      * @param {boolean} [options.shadowOnly=false] - Whether render shadow only
@@ -78,9 +84,10 @@ class DropShadowFilter extends Filter
 
         const { kernels, blur, quality, pixelSize, resolution } = opt;
 
+        this._offset = new ObservablePoint(this._updatePadding, this);
         this._tintFilter = new Filter(vertex, fragment);
         this._tintFilter.uniforms.color = new Float32Array(4);
-        this._tintFilter.uniforms.shift = new Point();
+        this._tintFilter.uniforms.shift = this._offset;
         this._tintFilter.resolution = resolution;
         this._blurFilter = kernels
             ? new KawaseBlurFilter(kernels)
@@ -89,15 +96,23 @@ class DropShadowFilter extends Filter
         this.pixelSize = pixelSize;
         this.resolution = resolution;
 
-        const { shadowOnly, rotation, distance, alpha, color } = opt;
+        const { shadowOnly, rotation, distance, offset, alpha, color } = opt;
 
         this.shadowOnly = shadowOnly;
-        this.rotation = rotation;
-        this.distance = distance;
+
+        // Check for deprecated options first
+        if (rotation !== undefined && distance !== undefined)
+        {
+            this.rotation = rotation;
+            this.distance = distance;
+        }
+        else
+        {
+            this.offset = offset;
+        }
+
         this.alpha = alpha;
         this.color = color;
-
-        this._updatePadding();
     }
 
     apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES): void
@@ -121,12 +136,18 @@ class DropShadowFilter extends Filter
      */
     private _updatePadding()
     {
-        this.padding = this.distance + (this.blur * 2);
+        const offsetPadding = Math.max(
+            Math.abs(this._offset.x),
+            Math.abs(this._offset.y)
+        );
+
+        this.padding = offsetPadding + (this.blur * 2);
     }
 
     /**
      * Update the transform matrix of offset angle.
      * @private
+     * @deprecated
      */
     private _updateShift()
     {
@@ -134,6 +155,21 @@ class DropShadowFilter extends Filter
             this.distance * Math.cos(this.angle),
             this.distance * Math.sin(this.angle),
         );
+    }
+
+    /**
+     * Set the offset position of the drop-shadow relative to the original image.
+     * @type {PIXI.IPointData}
+     * @default {x: 4, y: 4}
+     */
+    public set offset(value: IPointData)
+    {
+        this._offset.copyFrom(value);
+        this._updatePadding();
+    }
+    public get offset(): ObservablePoint
+    {
+        return this._offset;
     }
 
     /**
@@ -161,6 +197,8 @@ class DropShadowFilter extends Filter
     /**
      * Distance offset of the shadow
      * @default 5
+     * @deprecated since 5.3.0
+     * @see DropShadowFilter#offset
      */
     get distance(): number
     {
@@ -168,6 +206,7 @@ class DropShadowFilter extends Filter
     }
     set distance(value: number)
     {
+        utils.deprecation('5.3.0', 'DropShadowFilter distance is deprecated, use offset');
         this._distance = value;
         this._updatePadding();
         this._updateShift();
@@ -175,7 +214,8 @@ class DropShadowFilter extends Filter
 
     /**
      * The angle of the shadow in degrees
-     * @default 2
+     * @deprecated since 5.3.0
+     * @see DropShadowFilter#offset
      */
     get rotation(): number
     {
@@ -183,6 +223,7 @@ class DropShadowFilter extends Filter
     }
     set rotation(value: number)
     {
+        utils.deprecation('5.3.0', 'DropShadowFilter rotation is deprecated, use offset');
         this.angle = value * DEG_TO_RAD;
         this._updateShift();
     }

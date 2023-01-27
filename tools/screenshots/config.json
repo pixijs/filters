@@ -315,7 +315,10 @@
             "name": "DropShadowFilter",
             "filename": "drop-shadow",
             "options": {
-                "distance": 3
+                "offset": {
+                    "x": 2,
+                    "y": 2
+                }
             },
             "fishOnly": true
         },
