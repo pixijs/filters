@@ -35,18 +35,18 @@ void main()
 
     // colorize
     if (uColorize)  {
-        result.xyz = vec3(brightness, 0, 0);
+        result.rgb = vec3(brightness, 0, 0);
     }
 
     // hue
-    result.xyz = hueShift(result.xyz, uHue);
+    result.rgb = hueShift(result.rgb, uHue);
 
     // saturation
-    result.xyz = mix(vec3(brightness), result.xyz, 1.+uSaturation);
-    result.xyz = clamp(result.xyz, 0., 1.);
+    result.rgb = mix(vec3(brightness), result.rgb, 1.+uSaturation);
+    result.rgb = clamp(result.rgb, 0., 1.);
 
     // lightness
-    result.xyz += vec3(uLightness) * color.a;
+    result.rgb += vec3(uLightness) * color.a;
 
     // alpha
     gl_FragColor = mix(color, result, uAlpha);
