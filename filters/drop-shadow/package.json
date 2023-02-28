@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-drop-shadow",
-  "version": "5.1.1",
+  "version": "5.2.0",
   "main": "./dist/filter-drop-shadow.js",
   "description": "PixiJS filter to apply a drop shadow effect",
   "author": "Mat Groves",
