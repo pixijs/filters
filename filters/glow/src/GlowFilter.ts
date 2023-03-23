@@ -138,11 +138,11 @@ class GlowFilter extends Filter
      * The alpha value of the glow
      * @default 1
      */
-    get alpha(): boolean
+    get alpha(): number
     {
         return this.uniforms.alpha;
     }
-    set alpha(value: boolean)
+    set alpha(value: number)
     {
         this.uniforms.alpha = value;
     }
