@@ -1,6 +1,6 @@
 {
   "name": "pixi-filters",
-  "version": "5.2.0",
+  "version": "5.2.1",
   "description": "PixiJS v7 optional display filters",
   "author": "Mat Groves <mat@goodboydigital.com>",
   "contributors": [
@@ -52,7 +52,7 @@
     "@pixi/filter-drop-shadow": "5.2.0",
     "@pixi/filter-emboss": "5.1.1",
     "@pixi/filter-glitch": "5.1.1",
-    "@pixi/filter-glow": "5.1.1",
+    "@pixi/filter-glow": "5.2.1",
     "@pixi/filter-godray": "5.1.1",
     "@pixi/filter-grayscale": "5.1.1",
     "@pixi/filter-hsl-adjustment": "5.2.0",
