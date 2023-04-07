@@ -82,7 +82,7 @@ class ColorGradientFilter extends Filter
         }
         else
         {
-            options_ = { ...ColorGradientFilter.defaults, ...options };    
+            options_ = { ...ColorGradientFilter.defaults, ...options };
         }
 
         if (!options_.stops || options_.stops.length < 2)
