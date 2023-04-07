@@ -70,16 +70,20 @@ class ColorGradientFilter extends Filter
    */
     constructor(options?: DefaultOptions | CssOptions)
     {
+        let options_;
+
         if (options && 'css' in options)
         {
-            options = {
+            options_ = {
                 ...parseCssGradient(options.css || ''),
                 alpha: options.alpha ?? ColorGradientFilter.defaults.alpha,
                 maxColors: options.maxColors ?? ColorGradientFilter.defaults.maxColors,
             };
         }
-
-        const options_ = { ...ColorGradientFilter.defaults, ...options };
+        else
+        {
+            options_ = { ...ColorGradientFilter.defaults, ...options };    
+        }
 
         if (!options_.stops || options_.stops.length < 2)
         {
