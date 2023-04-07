@@ -72,12 +72,12 @@ class HslAdjustmentFilter extends Filter
      * Alpha (0-1)
      * @default 1
      */
-    get alpha(): boolean
+    get alpha(): number
     {
         return this.uniforms.uAlpha;
     }
 
-    set alpha(value: boolean)
+    set alpha(value: number)
     {
         this.uniforms.uAlpha = value;
     }
@@ -100,12 +100,12 @@ class HslAdjustmentFilter extends Filter
      * Lightness (-1 to 1)
      * @default 0
      */
-    get lightness(): boolean
+    get lightness(): number
     {
         return this.uniforms.uLightness;
     }
 
-    set lightness(value: boolean)
+    set lightness(value: number)
     {
         this.uniforms.uLightness = value;
     }
@@ -114,12 +114,12 @@ class HslAdjustmentFilter extends Filter
      * Saturation (-1 to 1)
      * @default 0
      */
-    get saturation(): boolean
+    get saturation(): number
     {
         return this.uniforms.uSaturation;
     }
 
-    set saturation(value: boolean)
+    set saturation(value: number)
     {
         this.uniforms.uSaturation = value;
     }
