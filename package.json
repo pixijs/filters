@@ -9,7 +9,7 @@
   "scripts": {
     "start": "run-p watch watch:tools demo",
     "clean": "git clean -fxd",
-    "clean:build": "rimraf --glob {filters,tools}/*/dist\" \"bundle/dist\"",
+    "clean:build": "rimraf --glob \"{filters,tools}/*/dist\" \"bundle/dist\"",
     "copy:bundle": "copyfiles -f \"bundle/dist/browser/*\" dist",
     "copy:screenshots": "copyfiles tools/screenshots/dist/* dist",
     "copy:demo": "copyfiles -f tools/demo/index.* dist/demo",
