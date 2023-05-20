@@ -1,7 +1,7 @@
 import { KawaseBlurFilter } from '@pixi/filter-kawase-blur';
 import { vertex } from '@tools/fragments';
 import fragment from './dropshadow.frag';
-import { Filter, settings, DEG_TO_RAD, ObservablePoint, utils } from '@pixi/core';
+import { Filter, DEG_TO_RAD, ObservablePoint, utils } from '@pixi/core';
 import type { IPoint, CLEAR_MODES, FilterSystem, RenderTexture, IPointData } from '@pixi/core';
 
 type PixelSizeValue = number | number[] | IPoint;
@@ -43,7 +43,7 @@ class DropShadowFilter extends Filter
         blur: 2,
         quality: 3,
         pixelSize: 1,
-        resolution: settings.FILTER_RESOLUTION,
+        resolution: window.devicePixelRatio,
     };
 
     /** Hide the contents, only show the shadow. */
@@ -60,7 +60,7 @@ class DropShadowFilter extends Filter
     private _distance = 5;
     private _tintFilter: Filter;
     private _blurFilter: KawaseBlurFilter;
-    protected _resolution: number = settings.FILTER_RESOLUTION;
+    protected _resolution: number = window.devicePixelRatio;
 
     /**
      * @param {object} [options] - Filter options
@@ -72,7 +72,7 @@ class DropShadowFilter extends Filter
      * @param {number} [options.quality=3] - The quality of the Blur filter.
      * @param {number[]} [options.kernels=null] - The kernels of the Blur filter.
      * @param {number|number[]|PIXI.Point} [options.pixelSize=1] - the pixelSize of the Blur filter.
-     * @param {number} [options.resolution=PIXI.settings.FILTER_RESOLUTION] - The resolution of the Blur filter.
+     * @param {number} [options.resolution=PIXI.window.devicePixelRatio] - The resolution of the Blur filter.
      */
     constructor(options?: Partial<DropShadowFilterOptions>)
     {
@@ -174,7 +174,7 @@ class DropShadowFilter extends Filter
 
     /**
      * The resolution of the filter.
-     * @default PIXI.settings.FILTER_RESOLUTION
+     * @default PIXI.window.devicePixelRatio
      */
     get resolution(): number
     {

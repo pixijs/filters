@@ -2,7 +2,7 @@ import { ExtractBrightnessFilter } from './ExtractBrightnessFilter';
 import { KawaseBlurFilter } from '@pixi/filter-kawase-blur';
 import { vertex } from '@tools/fragments';
 import fragment from './advanced-bloom.frag';
-import { Filter, settings } from '@pixi/core';
+import { Filter } from '@pixi/core';
 import type { FilterSystem, FilterState, RenderTexture, CLEAR_MODES } from '@pixi/core';
 import type { PixelSizeValue } from '@pixi/filter-kawase-blur';
 
@@ -40,7 +40,7 @@ class AdvancedBloomFilter extends Filter
         blur: 8,
         quality: 4,
         pixelSize: 1,
-        resolution: settings.FILTER_RESOLUTION,
+        resolution: window.devicePixelRatio,
     };
 
     /** To adjust the strength of the bloom. Higher values is more intense brightness. */
@@ -51,7 +51,7 @@ class AdvancedBloomFilter extends Filter
 
     private _extractFilter: ExtractBrightnessFilter;
     private _blurFilter: KawaseBlurFilter;
-    protected _resolution: number = settings.FILTER_RESOLUTION;
+    protected _resolution: number = window.devicePixelRatio;
 
     /**
      * @param {object|number} [options] - The optional parameters of advanced bloom filter.
@@ -65,7 +65,7 @@ class AdvancedBloomFilter extends Filter
      * @param {number} [options.quality=4] - The quality of the Blur filter.
      * @param {number[]} [options.kernels=null] - The kernels of the Blur filter.
      * @param {number|number[]|PIXI.Point} [options.pixelSize=1] - the pixelSize of the Blur filter.
-     * @param {number} [options.resolution=PIXI.settings.FILTER_RESOLUTION] - The resolution of the Blur filter.
+     * @param {number} [options.resolution=PIXI.window.devicePixelRatio] - The resolution of the Blur filter.
      */
     constructor(options?: Partial<AdvancedBloomFilterOptions>)
     {
