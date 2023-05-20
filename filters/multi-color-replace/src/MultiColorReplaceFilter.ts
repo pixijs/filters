@@ -1,8 +1,8 @@
 import { vertex } from '@tools/fragments';
 import fragment from './multi-color-replace.frag';
-import { Filter, utils } from '@pixi/core';
+import { Color, Filter } from '@pixi/core';
 
-type Color = number | number[] | Float32Array;
+type ColorType = number | number[] | Float32Array;
 
 /**
  * Filter for replacing a color with another color. Similar to ColorReplaceFilter, but support multiple
@@ -35,7 +35,7 @@ type Color = number | number[] | Float32Array;
  */
 class MultiColorReplaceFilter extends Filter
 {
-    private _replacements: Array<[Color, Color]> = [];
+    private _replacements: Array<[ColorType, ColorType]> = [];
     private _maxColors = 0;
 
     /**
@@ -48,7 +48,7 @@ class MultiColorReplaceFilter extends Filter
      *        fragment is only compiled once, this cannot be changed after construction.
      *        If omitted, the default value is the length of `replacements`.
      */
-    constructor(replacements: Array<[Color, Color]>, epsilon = 0.05, maxColors: number = replacements.length)
+    constructor(replacements: Array<[ColorType, ColorType]>, epsilon = 0.05, maxColors: number = replacements.length)
     {
         super(vertex, fragment.replace(/%maxColors%/g, (maxColors).toFixed(0)));
 
@@ -64,7 +64,7 @@ class MultiColorReplaceFilter extends Filter
      *
      * @member {Array<Array>}
      */
-    set replacements(replacements: Array<[Color, Color]>)
+    set replacements(replacements: Array<[ColorType, ColorType]>)
     {
         const originals = this.uniforms.originalColors;
         const targets = this.uniforms.targetColors;
@@ -87,11 +87,11 @@ class MultiColorReplaceFilter extends Filter
 
             if (typeof color === 'number')
             {
-                color = utils.hex2rgb(color);
+                color = new Color(color).toArray();
             }
             else
             {
-                pair[0] = utils.rgb2hex(color);
+                pair[0] = new Color(color).toArray();
             }
 
             originals[i * 3] = color[0];
@@ -103,11 +103,11 @@ class MultiColorReplaceFilter extends Filter
 
             if (typeof targetColor === 'number')
             {
-                targetColor = utils.hex2rgb(targetColor);
+                targetColor = new Color(targetColor).toArray();
             }
             else
             {
-                pair[1] = utils.rgb2hex(targetColor);
+                pair[1] = new Color(targetColor).toArray();
             }
 
             targets[i * 3] = targetColor[0];
@@ -117,7 +117,7 @@ class MultiColorReplaceFilter extends Filter
 
         this._replacements = replacements;
     }
-    get replacements(): Array<[Color, Color]>
+    get replacements(): Array<[ColorType, ColorType]>
     {
         return this._replacements;
     }

@@ -1,9 +1,9 @@
 import { vertex } from '@tools/fragments';
 import fragment from './simpleLightmap.frag';
-import { Filter, utils } from '@pixi/core';
+import { Color, Filter } from '@pixi/core';
 import type { Texture, FilterSystem, RenderTexture, CLEAR_MODES } from '@pixi/core';
 
-type Color = number | number[];
+type ColorType = number | number[];
 
 /**
 * SimpleLightmap, originally by Oza94
@@ -32,7 +32,7 @@ class SimpleLightmapFilter extends Filter
      * @param {Array<number>|number} [color=0x000000] - An RGBA array of the ambient color
      * @param {number} [alpha=1] - Default alpha set independent of color (if it's a number, not array).
      */
-    constructor(texture: Texture, color: Color = 0x000000, alpha = 1)
+    constructor(texture: Texture, color: ColorType = 0x000000, alpha = 1)
     {
         super(vertex, fragment);
         this.uniforms.dimensions = new Float32Array(2);
@@ -74,14 +74,13 @@ class SimpleLightmapFilter extends Filter
      * An RGBA array of the ambient color or a hex color without alpha
      * @member {Array<number>|number}
      */
-    set color(value: Color)
+    set color(value: ColorType)
     {
         const arr = this.uniforms.ambientColor;
 
         if (typeof value === 'number')
         {
-            utils.hex2rgb(value, arr);
-            this._color = value;
+            this._color = new Color(value).toNumber();
         }
         else
         {
@@ -89,10 +88,10 @@ class SimpleLightmapFilter extends Filter
             arr[1] = value[1];
             arr[2] = value[2];
             arr[3] = value[3];
-            this._color = utils.rgb2hex(arr);
+            this._color = new Color(arr).toNumber();
         }
     }
-    get color(): Color
+    get color(): ColorType
     {
         return this._color;
     }

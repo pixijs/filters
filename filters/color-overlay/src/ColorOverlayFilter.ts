@@ -1,8 +1,8 @@
 import { vertex } from '@tools/fragments';
 import fragment from './colorOverlay.frag';
-import { Filter, utils } from '@pixi/core';
+import { Color, Filter } from '@pixi/core';
 
-type Color = number | number[] | Float32Array;
+type ColorType = number | number[] | Float32Array;
 
 /**
  * Replace all colors within a source graphic with a single color.<br>
@@ -31,7 +31,7 @@ class ColorOverlayFilter extends Filter
      * @param {number|Array<number>} [color=0x000000] - The resulting color, as a 3 component RGB e.g. [1.0, 0.5, 1.0]
      * @param {number} [alpha=1] - The alpha value of the color
      */
-    constructor(color: Color = 0x000000, alpha = 1)
+    constructor(color: ColorType = 0x000000, alpha = 1)
     {
         super(vertex, fragment);
         this.uniforms.color = new Float32Array(3);
@@ -44,24 +44,23 @@ class ColorOverlayFilter extends Filter
      * @member {number|Array<number>|Float32Array}
      * @default 0x000000
      */
-    set color(value: Color)
+    set color(value: ColorType)
     {
         const arr = this.uniforms.color;
 
         if (typeof value === 'number')
         {
-            utils.hex2rgb(value, arr);
-            this._color = value;
+            this._color = new Color(value).toNumber();
         }
         else
         {
             arr[0] = value[0];
             arr[1] = value[1];
             arr[2] = value[2];
-            this._color = utils.rgb2hex(arr);
+            this._color = new Color(arr).toNumber();
         }
     }
-    get color(): Color
+    get color(): ColorType
     {
         return this._color;
     }

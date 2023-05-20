@@ -1,8 +1,8 @@
 import { vertex } from '@tools/fragments';
 import fragment from './colorReplace.frag';
-import { Filter, utils } from '@pixi/core';
+import { Color, Filter } from '@pixi/core';
 
-type Color = number | number[] | Float32Array;
+type ColorType = number | number[] | Float32Array;
 
 /**
  * ColorReplaceFilter, originally by mishaa, updated by timetocode
@@ -44,7 +44,7 @@ class ColorReplaceFilter extends Filter
      * @param {number} [epsilon=0.4] - Tolerance/sensitivity of the floating-point comparison between colors
      *        (lower = more exact, higher = more inclusive)
      */
-    constructor(originalColor: Color = 0xFF0000, newColor: Color = 0x000000, epsilon = 0.4)
+    constructor(originalColor: ColorType = 0xFF0000, newColor: ColorType = 0x000000, epsilon = 0.4)
     {
         super(vertex, fragment);
         this.uniforms.originalColor = new Float32Array(3);
@@ -59,24 +59,23 @@ class ColorReplaceFilter extends Filter
      * @member {number|Array<number>|Float32Array}
      * @default 0xFF0000
      */
-    set originalColor(value: Color)
+    set originalColor(value: ColorType)
     {
         const arr = this.uniforms.originalColor;
 
         if (typeof value === 'number')
         {
-            utils.hex2rgb(value, arr);
-            this._originalColor = value;
+            this._originalColor =new Color(value).toNumber();
         }
         else
         {
             arr[0] = value[0];
             arr[1] = value[1];
             arr[2] = value[2];
-            this._originalColor = utils.rgb2hex(arr);
+            this._originalColor = new Color(arr).toNumber();
         }
     }
-    get originalColor(): Color
+    get originalColor(): ColorType
     {
         return this._originalColor;
     }
@@ -86,24 +85,23 @@ class ColorReplaceFilter extends Filter
      * @member {number|Array<number>|Float32Array}
      * @default 0x000000
      */
-    set newColor(value: Color)
+    set newColor(value: ColorType)
     {
         const arr = this.uniforms.newColor;
 
         if (typeof value === 'number')
         {
-            utils.hex2rgb(value, arr);
-            this._newColor = value;
+            this._newColor = new Color(value).toNumber();
         }
         else
         {
             arr[0] = value[0];
             arr[1] = value[1];
             arr[2] = value[2];
-            this._newColor = utils.rgb2hex(arr);
+            this._newColor = new Color(arr).toNumber();
         }
     }
-    get newColor(): Color
+    get newColor(): ColorType
     {
         return this._newColor;
     }

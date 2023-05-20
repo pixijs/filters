@@ -1,6 +1,6 @@
 import { vertex } from '@tools/fragments';
 import fragment from './glow.frag';
-import { Filter, utils } from '@pixi/core';
+import { Color, Filter } from '@pixi/core';
 
 interface GlowFilterOptions
 {
@@ -88,11 +88,11 @@ class GlowFilter extends Filter
      */
     get color(): number
     {
-        return utils.rgb2hex(this.uniforms.glowColor);
+        return new Color(this.uniforms.glowColor).toNumber();
     }
     set color(value: number)
     {
-        utils.hex2rgb(value, this.uniforms.glowColor);
+        this.uniforms.glowColor = new Color(value);
     }
 
     /**

@@ -1,6 +1,6 @@
 import { vertex } from '@tools/fragments';
 import fragment from './outline.frag';
-import { Filter, utils } from '@pixi/core';
+import { Color, Filter } from '@pixi/core';
 import type { FilterSystem, RenderTexture, CLEAR_MODES } from '@pixi/core';
 
 /**
@@ -91,11 +91,11 @@ class OutlineFilter extends Filter
      */
     get color(): number
     {
-        return utils.rgb2hex(this.uniforms.uColor);
+        return new Color(this.uniforms.uColor).toNumber();
     }
     set color(value: number)
     {
-        utils.hex2rgb(value, this.uniforms.uColor);
+        this.uniforms.uColor = new Color(value);
     }
 
     /**
