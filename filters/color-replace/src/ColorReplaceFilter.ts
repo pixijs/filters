@@ -65,7 +65,7 @@ class ColorReplaceFilter extends Filter
 
         if (typeof value === 'number')
         {
-            this._originalColor =new Color(value).toNumber();
+            this._originalColor = new Color(value).toNumber();
         }
         else
         {
