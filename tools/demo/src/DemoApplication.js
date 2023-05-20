@@ -8,7 +8,8 @@ import {
     TilingSprite,
     Assets,
     utils,
-    filters as externalFilters } from 'pixi.js';
+    filters as externalFilters,
+    Program } from 'pixi.js';
 
 const { EventEmitter } = utils;
 
@@ -39,7 +40,7 @@ export default class DemoApplication extends Application
             backgroundColor: 0x000000,
         });
 
-        settings.PRECISION_FRAGMENT = 'highp';
+        Program.defaultFragmentPrecision = 'highp';
 
         this.domElement = domElement;
         this.resources = null;
