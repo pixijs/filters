@@ -1,6 +1,6 @@
 import { vertex } from '@tools/fragments';
 import fragment from './bevel.frag';
-import { Filter, DEG_TO_RAD, utils } from '@pixi/core';
+import { Filter, DEG_TO_RAD, Color } from '@pixi/core';
 
 interface BevelFilterOptions
 {
@@ -101,11 +101,11 @@ class BevelFilter extends Filter
      */
     get lightColor(): number
     {
-        return utils.rgb2hex(this.uniforms.lightColor);
+        return new Color(this.uniforms.lightColor).toNumber();
     }
     set lightColor(value: number)
     {
-        utils.hex2rgb(value, this.uniforms.lightColor);
+        this.uniforms.lightColor = new Color(value);
     }
 
     /**
@@ -127,11 +127,11 @@ class BevelFilter extends Filter
      */
     get shadowColor(): number
     {
-        return utils.rgb2hex(this.uniforms.shadowColor);
+        return new Color(this.uniforms.shadowColor).toNumber();
     }
     set shadowColor(value: number)
     {
-        utils.hex2rgb(value, this.uniforms.shadowColor);
+        this.uniforms.shadowColor = new Color(value);
     }
 
     /**

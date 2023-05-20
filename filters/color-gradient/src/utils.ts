@@ -1,16 +1,15 @@
-// utils
-import { utils } from '@pixi/core';
-import { Color } from './ColorGradientFilter';
+import { Color } from '@pixi/core';
+import { Color as ColorGradientFilter } from './ColorGradientFilter';
 import rgba from 'color-rgba';
 
-export function colorToNormalizedRgba(value: Color): number[] | Float32Array
+export function colorToNormalizedRgba(value: ColorGradientFilter): number[] | Float32Array
 {
     switch (typeof value)
     {
         case 'string':
             return stringToNormalizedRgba(value);
         case 'number':
-            return utils.hex2rgb(value);
+            return [new Color(value).toNumber()];
         default:
             return value;
     }
