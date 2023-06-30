@@ -18,6 +18,7 @@ export type DefaultOptions = {
     angle?: number;
     alpha?: number;
     maxColors?: number;
+    replaceColors?: boolean;
 };
 
 export type CssOptions = {
@@ -59,6 +60,7 @@ class ColorGradientFilter extends Filter
         alpha: 1.0,
         angle: 90.0,
         maxColors: 0,
+        replaceColors: false,
     };
 
     private _stops: ColorStop[] = [];
@@ -181,6 +183,21 @@ class ColorGradientFilter extends Filter
     get maxColors(): number
     {
         return this.uniforms.uMaxColors;
+    }
+
+    /**
+     * If true, the gradient will replace the existing color, otherwise it
+     * will be multiplied with it
+     * @default false
+     */
+    set replaceColors(value: boolean)
+    {
+        this.uniforms.uReplaceColors = value;
+    }
+
+    get replaceColors(): boolean
+    {
+        return this.uniforms.uReplaceColors;
     }
 }
 
