@@ -18,7 +18,7 @@ export type DefaultOptions = {
     angle?: number;
     alpha?: number;
     maxColors?: number;
-    replaceColors?: boolean;
+    replace?: boolean;
 };
 
 export type CssOptions = {
@@ -60,7 +60,7 @@ class ColorGradientFilter extends Filter
         alpha: 1.0,
         angle: 90.0,
         maxColors: 0,
-        replaceColors: false,
+        replace: false,
     };
 
     private _stops: ColorStop[] = [];
@@ -190,14 +190,14 @@ class ColorGradientFilter extends Filter
      * will be multiplied with it
      * @default false
      */
-    set replaceColors(value: boolean)
+    set replace(value: boolean)
     {
-        this.uniforms.uReplaceColors = value;
+        this.uniforms.uReplace = value;
     }
 
-    get replaceColors(): boolean
+    get replace(): boolean
     {
-        return this.uniforms.uReplaceColors;
+        return this.uniforms.uReplace;
     }
 }
 

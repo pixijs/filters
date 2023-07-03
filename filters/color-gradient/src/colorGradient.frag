@@ -18,7 +18,7 @@ uniform int uType;
 uniform float uAngle;
 uniform float uAlpha;
 uniform int uMaxColors;
-uniform bool uReplaceColors;
+uniform bool uReplace;
 
 struct ColorStop {
     float offset;
@@ -123,7 +123,7 @@ void main(void) {
     float gradientAlpha = uAlpha * currentColor.a;
     vec4 gradientColor = mix(colorFrom, colorTo, relativePercent) * gradientAlpha;
 
-    if (uReplaceColors == false) {
+    if (uReplace == false) {
         // mix resulting color with current color
         gl_FragColor = gradientColor + currentColor*(1.-gradientColor.a);
     } else {
