@@ -156,6 +156,7 @@ export default function ()
             folder.add(this, 'alpha', 0, 1);
             folder.add(this, 'angle', 0, 360, 1);
             folder.add(this, 'maxColors', 0, 24, 1);
+            folder.add(this, 'replace', false);
             applyDefaultOptions(stops);
         },
     });
