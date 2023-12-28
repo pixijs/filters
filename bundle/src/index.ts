@@ -28,7 +28,6 @@ export * from '@pixi/filter-pixelate';
 export * from '@pixi/filter-radial-blur';
 export * from '@pixi/filter-reflection';
 export * from '@pixi/filter-rgb-split';
-export * from '@pixi/filter-shockwave';
 export * from '@pixi/filter-simple-lightmap';
 export * from '@pixi/filter-tilt-shift';
 export * from '@pixi/filter-twist';

@@ -29,7 +29,7 @@
         "meta": {
             "title": "PixiJS Filters Documentation",
             "description": "API Documentation for PixiJS filters",
-            "keyword": "filters, webgl, ascii, bloom, convolution, cross-hatch, dotfilter, emboss, pixelate, shockwave, twist, tiltshift"
+            "keyword": "filters, webgl, ascii, bloom, convolution, cross-hatch, dotfilter, emboss, pixelate, twist, tiltshift"
         },
         "linenums": true
     },

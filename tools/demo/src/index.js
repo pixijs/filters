@@ -9,22 +9,34 @@ const main = async () =>
 
     app.enabledFilters = getEnabledFiltersFromQueryString();
 
-    await app.load({
-        background: 'images/displacement_BG.jpg',
-        overlay: 'images/overlay.png',
-        map: 'images/displacement_map.png',
-        fish1: 'images/displacement_fish1.png',
-        fish2: 'images/displacement_fish2.png',
-        fish3: 'images/displacement_fish3.png',
-        fish4: 'images/displacement_fish4.png',
-        fish5: 'images/displacement_fish5.png',
-        lightmap: 'images/lightmap.png',
-        colormap: 'images/colormap.png',
-    });
-    for (const i in filters)
-    {
-        filters[i].call(app);
-    }
+    await app.init();
+    await app.load([
+        { alias: 'background', src: 'images/displacement_BG.jpg' },
+        { alias: 'overlay', src: 'images/overlay.png' },
+        { alias: 'map', src: 'images/displacement_map.png' },
+        { alias: 'fish1', src: 'images/displacement_fish1.png' },
+        { alias: 'fish2', src: 'images/displacement_fish2.png' },
+        { alias: 'fish3', src: 'images/displacement_fish3.png' },
+        { alias: 'fish4', src: 'images/displacement_fish4.png' },
+        { alias: 'fish5', src: 'images/displacement_fish5.png' },
+        { alias: 'lightmap', src: 'images/lightmap.png' },
+        { alias: 'colormap', src: 'images/colormap.png' },
+    ]);
+
+    filters.alpha.call(app);
+    filters.blur.call(app);
+    filters.colorMatrix.call(app);
+    filters.displacement.call(app);
+    filters.noise.call(app);
+
+    // TODO: https://github.com/orgs/pixijs/projects/2/views/4?pane=issue&itemId=48586590
+    // filters.shockwave.call(app);
+
+    // TODO: Re-enable this in place of the above once v8 conversion is complete
+    // for (const i in filters)
+    // {
+    //     filters[i].call(app);
+    // }
 };
 
 main();

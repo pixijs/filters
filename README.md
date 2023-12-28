@@ -41,8 +41,7 @@ All filters work with PixiJS v7.
 | **PixelateFilter**<br>_@pixi/filter-pixelate_<br>[View demo][Pixelate_demo]                              | ![pixelate](https://filters.pixijs.download/main/tools/screenshots/dist/pixelate.png?v=2)                       |
 | **RadialBlurFilter**<br>_@pixi/filter-radial-blur_<br>[View demo][RadialBlur_demo]                       | ![radial-blur](https://filters.pixijs.download/main/tools/screenshots/dist/radial-blur.png?v=2)                 |
 | **ReflectionFilter**<br>_@pixi/filter-reflection_<br>[View demo][Reflection_demo]                        | ![reflection](https://filters.pixijs.download/main/tools/screenshots/dist/reflection.png?v=2)                   |
-| **RGBSplitFilter**<br>_@pixi/filter-rgb-split_<br>[View demo][RGBSplit_demo]                             | ![rgb split](https://filters.pixijs.download/main/tools/screenshots/dist/rgb.png?v=2)                           |
-| **ShockwaveFilter**<br>_@pixi/filter-shockwave_<br>[View demo][Shockwave_demo]                           | ![shockwave](https://filters.pixijs.download/main/tools/screenshots/dist/shockwave.gif?v=3)                     |
+| **RGBSplitFilter**<br>_@pixi/filter-rgb-split_<br>[View demo][RGBSplit_demo]                             | ![rgb split](https://filters.pixijs.download/main/tools/screenshots/dist/rgb.png?v=2)                           |                  |
 | **SimpleLightmapFilter**<br>_@pixi/filter-simple-lightmap_<br>[View demo][SimpleLightmap_demo]           | ![simple-lightmap](https://filters.pixijs.download/main/tools/screenshots/dist/simple-lightmap.png?v=2)         |
 | **TiltShiftFilter**<br>_@pixi/filter-tilt-shift_<br>[View demo][TiltShift_demo]                          | ![tilt-shift](https://filters.pixijs.download/main/tools/screenshots/dist/tilt-shift.png?v=2)                   |
 | **TwistFilter**<br>_@pixi/filter-twist_<br>[View demo][Twist_demo]                                       | ![twist](https://filters.pixijs.download/main/tools/screenshots/dist/twist.png?v=2)                             |
@@ -139,7 +138,6 @@ API documention can be found [here](http://pixijs.io/filters/docs/).
 [RadialBlur_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=RadialBlurFilter
 [Reflection_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=ReflectionFilter
 [RGBSplit_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=RGBSplitFilter
-[Shockwave_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=ShockwaveFilter
 [SimpleLightmap_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=SimpleLightmapFilter
 [TiltShift_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=TiltShiftFilter
 [Twist_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=TwistFilter

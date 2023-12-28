@@ -65,7 +65,6 @@
     "@pixi/filter-radial-blur": "5.1.1",
     "@pixi/filter-reflection": "5.1.1",
     "@pixi/filter-rgb-split": "5.1.1",
-    "@pixi/filter-shockwave": "5.1.1",
     "@pixi/filter-simple-lightmap": "5.1.1",
     "@pixi/filter-tilt-shift": "5.2.0",
     "@pixi/filter-twist": "5.1.1",

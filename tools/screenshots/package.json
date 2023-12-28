@@ -11,6 +11,6 @@
     "fs-extra": "^7.0.1",
     "gifencoder": "^2.0.1",
     "pixi-filters": "5.2.1",
-    "pixi.js": "^7.0.0-X"
+    "pixi.js": "github:pixijs/pixi.js#chore/v8/webgl-1"
   }
 }
