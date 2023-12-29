@@ -1,7 +1,7 @@
 import { TiltShiftXFilter } from './TiltShiftXFilter';
 import { TiltShiftYFilter } from './TiltShiftYFilter';
-import { Filter, FilterSystem, RenderTexture, utils } from '@pixi/core';
-import type { Point, CLEAR_MODES } from '@pixi/core';
+import { Filter, FilterSystem, RenderTexture } from 'pixi.js';
+import type { Point, RenderSurface, Texture } from 'pixi.js';
 import type { TiltShiftFilterOptions } from './TiltShiftAxisFilter';
 
 // @author Vico @vicocotea
@@ -13,11 +13,11 @@ import type { TiltShiftFilterOptions } from './TiltShiftAxisFilter';
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/tilt-shift.png)
  *
  * @class
- * @extends PIXI.Filter
+ * @extends Filter
  * @see {@link https://www.npmjs.com/package/@pixi/filter-tilt-shift|@pixi/filter-tilt-shift}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class TiltShiftFilter extends Filter
+export class TiltShiftFilter extends Filter
 {
     /** Default options */
     static readonly defaults: TiltShiftFilterOptions = {
@@ -43,8 +43,8 @@ class TiltShiftFilter extends Filter
      * @deprecated since 5.3.0
      * @param {number} [blur=100] - The strength of the blur.
      * @param {number} [gradientBlur=600] - The strength of the gradient blur.
-     * @param {PIXI.Point} [start=null] - The position to start the effect at.
-     * @param {PIXI.Point} [end=null] - The position to end the effect at.
+     * @param {Point} [start=null] - The position to start the effect at.
+     * @param {Point} [end=null] - The position to end the effect at.
      */
     constructor(blur?: number, gradientBlur?: number, start?: Point, end?: Point);
 
@@ -65,7 +65,7 @@ class TiltShiftFilter extends Filter
         this.tiltShiftYFilter = new TiltShiftYFilter(options as TiltShiftFilterOptions);
     }
 
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clearMode: CLEAR_MODES): void
+    apply(filterManager: FilterSystem, input: Texture, output: RenderSurface, clear: boolean): void
     {
         const renderTarget = filterManager.getFilterTexture();
 
@@ -97,7 +97,7 @@ class TiltShiftFilter extends Filter
     /**
      * The position to start the effect at.
      *
-     * @member {PIXI.Point}
+     * @member {Point}
      */
     get start(): Point
     {
@@ -111,7 +111,7 @@ class TiltShiftFilter extends Filter
     /**
      * The position to end the effect at.
      *
-     * @member {PIXI.Point}
+     * @member {Point}
      */
     get end(): Point
     {
@@ -122,6 +122,4 @@ class TiltShiftFilter extends Filter
         this.tiltShiftXFilter.end = this.tiltShiftYFilter.end = value;
     }
 }
-
-export { TiltShiftFilter };
 

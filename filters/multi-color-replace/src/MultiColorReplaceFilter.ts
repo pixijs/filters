@@ -1,6 +1,6 @@
 import { vertex } from '@tools/fragments';
 import fragment from './multi-color-replace.frag';
-import { Filter, utils } from '@pixi/core';
+import { Filter, GlProgram } from 'pixi.js';
 
 type Color = number | number[] | Float32Array;
 
@@ -9,7 +9,7 @@ type Color = number | number[] | Float32Array;
  * colors.<br>
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/multi-color-replace.png)
  * @class
- * @extends PIXI.Filter
+ * @extends Filter
  * @see {@link https://www.npmjs.com/package/@pixi/filter-multi-color-replace|@pixi/filter-multi-color-replace}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  *
@@ -33,7 +33,7 @@ type Color = number | number[] | Float32Array;
  *  )];
  *
  */
-class MultiColorReplaceFilter extends Filter
+export class MultiColorReplaceFilter extends Filter
 {
     private _replacements: Array<[Color, Color]> = [];
     private _maxColors = 0;
@@ -50,13 +50,22 @@ class MultiColorReplaceFilter extends Filter
      */
     constructor(replacements: Array<[Color, Color]>, epsilon = 0.05, maxColors: number = replacements.length)
     {
-        super(vertex, fragment.replace(/%maxColors%/g, (maxColors).toFixed(0)));
+        const glProgram = new GlProgram({
+            vertex,
+            fragment: fragment.replace(/%maxColors%/g, (maxColors).toFixed(0)),
+            name: 'multi-color-replace-filter',
+        });
 
-        this.epsilon = epsilon;
+        super({
+            glProgram,
+            resources: {},
+        });
+
+        // this.epsilon = epsilon;
         this._maxColors = maxColors;
-        this.uniforms.originalColors = new Float32Array(maxColors * 3);
-        this.uniforms.targetColors = new Float32Array(maxColors * 3);
-        this.replacements = replacements;
+        // this.uniforms.originalColors = new Float32Array(maxColors * 3);
+        // this.uniforms.targetColors = new Float32Array(maxColors * 3);
+        // this.replacements = replacements;
     }
 
     /**
@@ -64,63 +73,63 @@ class MultiColorReplaceFilter extends Filter
      *
      * @member {Array<Array>}
      */
-    set replacements(replacements: Array<[Color, Color]>)
-    {
-        const originals = this.uniforms.originalColors;
-        const targets = this.uniforms.targetColors;
-        const colorCount = replacements.length;
+    // set replacements(replacements: Array<[Color, Color]>)
+    // {
+    //     const originals = this.uniforms.originalColors;
+    //     const targets = this.uniforms.targetColors;
+    //     const colorCount = replacements.length;
 
-        if (colorCount > this._maxColors)
-        {
-            throw new Error(`Length of replacements (${colorCount}) exceeds the maximum colors length (${this._maxColors})`);
-        }
+    //     if (colorCount > this._maxColors)
+    //     {
+    //         throw new Error(`Length of replacements (${colorCount}) exceeds the maximum colors length (${this._maxColors})`);
+    //     }
 
-        // Fill with negative values
-        originals[colorCount * 3] = -1;
+    //     // Fill with negative values
+    //     originals[colorCount * 3] = -1;
 
-        for (let i = 0; i < colorCount; i++)
-        {
-            const pair = replacements[i];
+    //     for (let i = 0; i < colorCount; i++)
+    //     {
+    //         const pair = replacements[i];
 
-            // for original colors
-            let color = pair[0];
+    //         // for original colors
+    //         let color = pair[0];
 
-            if (typeof color === 'number')
-            {
-                color = utils.hex2rgb(color);
-            }
-            else
-            {
-                pair[0] = utils.rgb2hex(color);
-            }
+    //         if (typeof color === 'number')
+    //         {
+    //             color = utils.hex2rgb(color);
+    //         }
+    //         else
+    //         {
+    //             pair[0] = utils.rgb2hex(color);
+    //         }
 
-            originals[i * 3] = color[0];
-            originals[(i * 3) + 1] = color[1];
-            originals[(i * 3) + 2] = color[2];
+    //         originals[i * 3] = color[0];
+    //         originals[(i * 3) + 1] = color[1];
+    //         originals[(i * 3) + 2] = color[2];
 
-            // for target colors
-            let targetColor = pair[1];
+    //         // for target colors
+    //         let targetColor = pair[1];
 
-            if (typeof targetColor === 'number')
-            {
-                targetColor = utils.hex2rgb(targetColor);
-            }
-            else
-            {
-                pair[1] = utils.rgb2hex(targetColor);
-            }
+    //         if (typeof targetColor === 'number')
+    //         {
+    //             targetColor = utils.hex2rgb(targetColor);
+    //         }
+    //         else
+    //         {
+    //             pair[1] = utils.rgb2hex(targetColor);
+    //         }
 
-            targets[i * 3] = targetColor[0];
-            targets[(i * 3) + 1] = targetColor[1];
-            targets[(i * 3) + 2] = targetColor[2];
-        }
+    //         targets[i * 3] = targetColor[0];
+    //         targets[(i * 3) + 1] = targetColor[1];
+    //         targets[(i * 3) + 2] = targetColor[2];
+    //     }
 
-        this._replacements = replacements;
-    }
-    get replacements(): Array<[Color, Color]>
-    {
-        return this._replacements;
-    }
+    //     this._replacements = replacements;
+    // }
+    // get replacements(): Array<[Color, Color]>
+    // {
+    //     return this._replacements;
+    // }
 
     /**
      * Should be called after changing any of the contents of the replacements.
@@ -128,7 +137,7 @@ class MultiColorReplaceFilter extends Filter
      */
     refresh(): void
     {
-        this.replacements = this._replacements;
+        // this.replacements = this._replacements;
     }
 
     /**
@@ -145,14 +154,12 @@ class MultiColorReplaceFilter extends Filter
      * Tolerance of the floating-point comparison between colors (lower = more exact, higher = more inclusive)
      * @default 0.05
      */
-    set epsilon(value: number)
-    {
-        this.uniforms.epsilon = value;
-    }
-    get epsilon(): number
-    {
-        return this.uniforms.epsilon;
-    }
+    // set epsilon(value: number)
+    // {
+    //     this.uniforms.epsilon = value;
+    // }
+    // get epsilon(): number
+    // {
+    //     return this.uniforms.epsilon;
+    // }
 }
-
-export { MultiColorReplaceFilter };

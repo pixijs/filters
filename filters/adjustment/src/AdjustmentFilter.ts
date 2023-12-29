@@ -55,7 +55,7 @@ export interface AdjustmentFilterOptions
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/adjustment.png)
  *
  * @class
- * @extends PIXI.Filter
+ * @extends Filter
  * @see {@link https://www.npmjs.com/package/@pixi/filter-adjustment|@pixi/filter-adjustment}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
@@ -184,8 +184,5 @@ export class AdjustmentFilter extends Filter
      * @default 1
      */
     get alpha(): number { return this.resources.adjustmentUniforms.uniforms.uColor[3]; }
-    set alpha(value: number)
-    {
-        this.resources.adjustmentUniforms.uniforms.uColor[3] = value; console.log(this.resources, this._uniformBindMap);
-    }
+    set alpha(value: number) { this.resources.adjustmentUniforms.uniforms.uColor[3] = value; }
 }

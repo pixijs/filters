@@ -1,6 +1,6 @@
 import { vertex } from '@tools/fragments';
 import fragment from './glow.frag';
-import { Filter, utils } from '@pixi/core';
+import { Filter, GlProgram } from 'pixi.js';
 
 interface GlowFilterOptions
 {
@@ -19,7 +19,7 @@ interface GlowFilterOptions
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/glow.png)
  * @class
  *
- * @extends PIXI.Filter
+ * @extends Filter
  * @see {@link https://www.npmjs.com/package/@pixi/filter-glow|@pixi/filter-glow}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  *
@@ -28,7 +28,7 @@ interface GlowFilterOptions
  *      new GlowFilter({ distance: 15, outerStrength: 2 })
  *  ];
  */
-class GlowFilter extends Filter
+export class GlowFilter extends Filter
 {
     /** Default values for options. */
     static readonly defaults: GlowFilterOptions = {
@@ -65,12 +65,21 @@ class GlowFilter extends Filter
 
         const distance = Math.round(opts.distance);
 
-        super(vertex, fragment
-            .replace(/__ANGLE_STEP_SIZE__/gi, `${(1 / quality / distance).toFixed(7)}`)
-            .replace(/__DIST__/gi, `${distance.toFixed(0)}.0`));
+        const glProgram = new GlProgram({
+            vertex,
+            fragment: fragment
+                .replace(/__ANGLE_STEP_SIZE__/gi, `${(1 / quality / distance).toFixed(7)}`)
+                .replace(/__DIST__/gi, `${distance.toFixed(0)}.0`),
+            name: 'glow-filter',
+        });
 
-        this.uniforms.glowColor = new Float32Array([0, 0, 0, 1]);
-        this.uniforms.alpha = 1;
+        super({
+            glProgram,
+            resources: {},
+        });
+
+        // this.uniforms.glowColor = new Float32Array([0, 0, 0, 1]);
+        // this.uniforms.alpha = 1;
 
         Object.assign(this, {
             color,
@@ -86,67 +95,64 @@ class GlowFilter extends Filter
      * The color of the glow.
      * @default 0xFFFFFF
      */
-    get color(): number
-    {
-        return utils.rgb2hex(this.uniforms.glowColor);
-    }
-    set color(value: number)
-    {
-        utils.hex2rgb(value, this.uniforms.glowColor);
-    }
+    // get color(): number
+    // {
+    //     return utils.rgb2hex(this.uniforms.glowColor);
+    // }
+    // set color(value: number)
+    // {
+    //     utils.hex2rgb(value, this.uniforms.glowColor);
+    // }
 
     /**
      * The strength of the glow outward from the edge of the sprite.
      * @default 4
      */
-    get outerStrength(): number
-    {
-        return this.uniforms.outerStrength;
-    }
-    set outerStrength(value: number)
-    {
-        this.uniforms.outerStrength = value;
-    }
+    // get outerStrength(): number
+    // {
+    //     return this.uniforms.outerStrength;
+    // }
+    // set outerStrength(value: number)
+    // {
+    //     this.uniforms.outerStrength = value;
+    // }
 
     /**
      * The strength of the glow inward from the edge of the sprite.
      * @default 0
      */
-    get innerStrength(): number
-    {
-        return this.uniforms.innerStrength;
-    }
-    set innerStrength(value: number)
-    {
-        this.uniforms.innerStrength = value;
-    }
+    // get innerStrength(): number
+    // {
+    //     return this.uniforms.innerStrength;
+    // }
+    // set innerStrength(value: number)
+    // {
+    //     this.uniforms.innerStrength = value;
+    // }
 
     /**
      * Only draw the glow, not the texture itself
      * @default false
      */
-    get knockout(): boolean
-    {
-        return this.uniforms.knockout;
-    }
-    set knockout(value: boolean)
-    {
-        this.uniforms.knockout = value;
-    }
+    // get knockout(): boolean
+    // {
+    //     return this.uniforms.knockout;
+    // }
+    // set knockout(value: boolean)
+    // {
+    //     this.uniforms.knockout = value;
+    // }
 
     /**
      * The alpha value of the glow
      * @default 1
      */
-    get alpha(): number
-    {
-        return this.uniforms.alpha;
-    }
-    set alpha(value: number)
-    {
-        this.uniforms.alpha = value;
-    }
+    // get alpha(): number
+    // {
+    //     return this.uniforms.alpha;
+    // }
+    // set alpha(value: number)
+    // {
+    //     this.uniforms.alpha = value;
+    // }
 }
-
-export { GlowFilter };
-export type { GlowFilterOptions };

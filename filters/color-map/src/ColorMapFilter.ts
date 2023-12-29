@@ -1,7 +1,7 @@
 import { vertex } from '@tools/fragments';
 import fragment from './color-map.frag';
-import { Filter, Texture, TextureSource, MIPMAP_MODES, SCALE_MODES } from '@pixi/core';
-import type { FilterSystem, RenderTexture, CLEAR_MODES } from '@pixi/core';
+import { Filter, Texture, TextureSource, GlProgram } from 'pixi.js';
+import type { FilterSystem, RenderSurface } from 'pixi.js';
 
 type ColorMapSource = TextureSource | Texture | null;
 
@@ -10,11 +10,11 @@ type ColorMapSource = TextureSource | Texture | null;
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/color-map.png)
  *
  * @class
- * @extends PIXI.Filter
+ * @extends Filter
  * @see {@link https://www.npmjs.com/package/@pixi/filter-color-map|@pixi/filter-color-map}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class ColorMapFilter extends Filter
+export class ColorMapFilter extends Filter
 {
     /** The mix from 0 to 1, where 0 is the original image and 1 is the color mapped image. */
     public mix = 1;
@@ -24,32 +24,41 @@ class ColorMapFilter extends Filter
     private _slicePixelSize = 0;
     private _sliceInnerSize = 0;
     private _nearest = false;
-    private _scaleMode: SCALE_MODES | null = null;
+    // private _scaleMode: SCALE_MODES | null = null;
     private _colorMap: Texture | null = null;
 
     /**
-     * @param {HTMLImageElement|HTMLCanvasElement|PIXI.BaseTexture|PIXI.Texture} [colorMap] - The
+     * @param {HTMLImageElement|HTMLCanvasElement|BaseTexture|Texture} [colorMap] - The
      *        colorMap texture of the filter.
      * @param {boolean} [nearest=false] - Whether use NEAREST for colorMap texture.
      * @param {number} [mix=1] - The mix from 0 to 1, where 0 is the original image and 1 is the color mapped image.
      */
     constructor(colorMap: ColorMapSource, nearest = false, mix = 1)
     {
-        super(vertex, fragment);
+        const glProgram = new GlProgram({
+            vertex,
+            fragment,
+            name: 'color-map-filter',
+        });
 
-        this._scaleMode = null;
-        this.nearest = nearest;
+        super({
+            glProgram,
+            resources: {},
+        });
+
+        // this._scaleMode = null;
+        // this.nearest = nearest;
         this.mix = mix;
         this.colorMap = colorMap;
     }
 
     /**
-     * Override existing apply method in PIXI.Filter
+     * Override existing apply method in Filter
      * @private
      */
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES): void
+    apply(filterManager: FilterSystem, input: Texture, output: RenderSurface, clear: boolean): void
     {
-        this.uniforms._mix = this.mix;
+        // this.uniforms._mix = this.mix;
 
         filterManager.applyFilter(this, input, output, clear);
     }
@@ -65,7 +74,7 @@ class ColorMapFilter extends Filter
 
     /**
      * the colorMap texture
-     * @member {PIXI.Texture}
+     * @member {Texture}
      */
     get colorMap(): ColorMapSource
     {
@@ -83,20 +92,20 @@ class ColorMapFilter extends Filter
         }
         if ((colorMap as Texture)?.baseTexture)
         {
-            colorMap.baseTexture.scaleMode = this._scaleMode as SCALE_MODES;
-            colorMap.baseTexture.mipmap = MIPMAP_MODES.OFF;
+            // colorMap.baseTexture.scaleMode = this._scaleMode as SCALE_MODES;
+            // colorMap.baseTexture.mipmap = MIPMAP_MODES.OFF;
 
             this._size = colorMap.height;
             this._sliceSize = 1 / this._size;
             this._slicePixelSize = this._sliceSize / this._size;
             this._sliceInnerSize = this._slicePixelSize * (this._size - 1);
 
-            this.uniforms._size = this._size;
-            this.uniforms._sliceSize = this._sliceSize;
-            this.uniforms._slicePixelSize = this._slicePixelSize;
-            this.uniforms._sliceInnerSize = this._sliceInnerSize;
+            // this.uniforms._size = this._size;
+            // this.uniforms._sliceSize = this._sliceSize;
+            // this.uniforms._slicePixelSize = this._slicePixelSize;
+            // this.uniforms._sliceInnerSize = this._sliceInnerSize;
 
-            this.uniforms.colorMap = colorMap;
+            // this.uniforms.colorMap = colorMap;
         }
 
         this._colorMap = colorMap;
@@ -105,28 +114,28 @@ class ColorMapFilter extends Filter
     /**
      * Whether use NEAREST for colorMap texture.
      */
-    get nearest(): boolean
-    {
-        return this._nearest;
-    }
-    set nearest(nearest: boolean)
-    {
-        this._nearest = nearest;
-        this._scaleMode = nearest ? SCALE_MODES.NEAREST : SCALE_MODES.LINEAR;
+    // get nearest(): boolean
+    // {
+    //     return this._nearest;
+    // }
+    // set nearest(nearest: boolean)
+    // {
+    //     this._nearest = nearest;
+    //     this._scaleMode = nearest ? SCALE_MODES.NEAREST : SCALE_MODES.LINEAR;
 
-        const texture = this._colorMap;
+    //     const texture = this._colorMap;
 
-        if (texture && texture.baseTexture)
-        {
-            texture.baseTexture._glTextures = {};
+    //     if (texture && texture.baseTexture)
+    //     {
+    //         texture.baseTexture._glTextures = {};
 
-            texture.baseTexture.scaleMode = this._scaleMode;
-            texture.baseTexture.mipmap = MIPMAP_MODES.OFF;
+    //         texture.baseTexture.scaleMode = this._scaleMode;
+    //         texture.baseTexture.mipmap = MIPMAP_MODES.OFF;
 
-            texture._updateID++;
-            texture.baseTexture.emit('update', texture.baseTexture);
-        }
-    }
+    //         texture._updateID++;
+    //         texture.baseTexture.emit('update', texture.baseTexture);
+    //     }
+    // }
 
     /**
      * If the colorMap is based on canvas , and the content of canvas has changed,
@@ -138,7 +147,7 @@ class ColorMapFilter extends Filter
 
         if (texture && texture.baseTexture)
         {
-            texture._updateID++;
+            // texture._updateID++;
             texture.baseTexture.emit('update', texture.baseTexture);
 
             this.colorMap = texture;
@@ -159,6 +168,3 @@ class ColorMapFilter extends Filter
         super.destroy();
     }
 }
-
-export { ColorMapFilter };
-

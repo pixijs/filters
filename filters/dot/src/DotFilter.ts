@@ -1,6 +1,6 @@
 import { vertex } from '@tools/fragments';
 import fragment from './dot.frag';
-import { Filter } from '@pixi/core';
+import { Filter, GlProgram } from 'pixi.js';
 
 // @author Mat Groves http://matgroves.com/ @Doormat23
 // original filter: https://github.com/evanw/glfx.js/blob/master/src/filters/fun/dotscreen.js
@@ -11,11 +11,11 @@ import { Filter } from '@pixi/core';
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/dot.png)
  *
  * @class
- * @extends PIXI.Filter
+ * @extends Filter
  * @see {@link https://www.npmjs.com/package/@pixi/filter-dot|@pixi/filter-dot}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class DotFilter extends Filter
+export class DotFilter extends Filter
 {
     /**
      * @param {number} [scale=1] - The scale of the effect.
@@ -24,50 +24,58 @@ class DotFilter extends Filter
      */
     constructor(scale = 1, angle = 5, grayscale = true)
     {
-        super(vertex, fragment);
-        this.scale = scale;
-        this.angle = angle;
-        this.grayscale = grayscale;
+        const glProgram = new GlProgram({
+            vertex,
+            fragment,
+            name: 'dot-filter',
+        });
+
+        super({
+            glProgram,
+            resources: {},
+        });
+
+        // this.scale = scale;
+        // this.angle = angle;
+        // this.grayscale = grayscale;
     }
 
     /**
      * The scale of the effect.
      * @default 1
      */
-    get scale(): number
-    {
-        return this.uniforms.scale;
-    }
-    set scale(value: number)
-    {
-        this.uniforms.scale = value;
-    }
+    // get scale(): number
+    // {
+    //     return this.uniforms.scale;
+    // }
+    // set scale(value: number)
+    // {
+    //     this.uniforms.scale = value;
+    // }
 
     /**
      * The radius of the effect.
      * @default 5
      */
-    get angle(): number
-    {
-        return this.uniforms.angle;
-    }
-    set angle(value: number)
-    {
-        this.uniforms.angle = value;
-    }
+    // get angle(): number
+    // {
+    //     return this.uniforms.angle;
+    // }
+    // set angle(value: number)
+    // {
+    //     this.uniforms.angle = value;
+    // }
 
     /**
      * Render as grayscale.
      * @default true
      */
-    get grayscale(): boolean
-    {
-        return this.uniforms.grayscale;
-    }
-    set grayscale(value: boolean)
-    {
-        this.uniforms.grayscale = value;
-    }
+    // get grayscale(): boolean
+    // {
+    //     return this.uniforms.grayscale;
+    // }
+    // set grayscale(value: boolean)
+    // {
+    //     this.uniforms.grayscale = value;
+    // }
 }
-
-export { DotFilter };

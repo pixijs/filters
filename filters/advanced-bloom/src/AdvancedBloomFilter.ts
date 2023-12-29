@@ -2,8 +2,8 @@ import { ExtractBrightnessFilter } from './ExtractBrightnessFilter';
 import { KawaseBlurFilter } from '@pixi/filter-kawase-blur';
 import { vertex } from '@tools/fragments';
 import fragment from './advanced-bloom.frag';
-import { Filter } from '@pixi/core';
-import type { FilterSystem, FilterState, RenderTexture, CLEAR_MODES } from '@pixi/core';
+import { Filter, GlProgram } from 'pixi.js';
+import type { FilterSystem, RenderSurface, Texture } from 'pixi.js';
 import type { PixelSizeValue } from '@pixi/filter-kawase-blur';
 
 interface AdvancedBloomFilterOptions
@@ -25,11 +25,11 @@ interface AdvancedBloomFilterOptions
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/advanced-bloom.png)
  *
  * @class
- * @extends PIXI.Filter
+ * @extends Filter
  * @see {@link https://www.npmjs.com/package/@pixi/filter-advanced-bloom|@pixi/filter-advanced-bloom}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class AdvancedBloomFilter extends Filter
+export class AdvancedBloomFilter extends Filter
 {
     /** Default construction options. */
     public static readonly defaults: AdvancedBloomFilterOptions = {
@@ -64,12 +64,21 @@ class AdvancedBloomFilter extends Filter
      * @param {number} [options.blur=8] - Sets the strength of the Blur properties simultaneously
      * @param {number} [options.quality=4] - The quality of the Blur filter.
      * @param {number[]} [options.kernels=null] - The kernels of the Blur filter.
-     * @param {number|number[]|PIXI.Point} [options.pixelSize=1] - the pixelSize of the Blur filter.
+     * @param {number|number[]|Point} [options.pixelSize=1] - the pixelSize of the Blur filter.
      * @param {number} [options.resolution=1] - The resolution of the Blur filter.
      */
     constructor(options?: Partial<AdvancedBloomFilterOptions>)
     {
-        super(vertex, fragment);
+        const glProgram = new GlProgram({
+            vertex,
+            fragment,
+            name: 'advanced-bloom-filter',
+        });
+
+        super({
+            glProgram,
+            resources: {},
+        });
 
         if (typeof options === 'number')
         {
@@ -93,56 +102,51 @@ class AdvancedBloomFilter extends Filter
     }
 
     /**
-     * Override existing apply method in PIXI.Filter
+     * Override existing apply method in Filter
      *
      * @private
      */
-    apply(
-        filterManager: FilterSystem,
-        input: RenderTexture,
-        output: RenderTexture,
-        clear: CLEAR_MODES,
-        currentState?: FilterState): void
+    apply(filterManager: FilterSystem, input: Texture, output: RenderSurface, clear: boolean): void
     {
-        const brightTarget = filterManager.getFilterTexture();
+        // const brightTarget = filterManager.getFilterTexture();
 
-        this._extractFilter.apply(filterManager, input, brightTarget, 1, currentState);
+        // this._extractFilter.apply(filterManager, input, brightTarget, 1, currentState);
 
-        const bloomTarget = filterManager.getFilterTexture();
+        // const bloomTarget = filterManager.getFilterTexture();
 
-        this._blurFilter.apply(filterManager, brightTarget, bloomTarget, 1);
+        // this._blurFilter.apply(filterManager, brightTarget, bloomTarget, 1);
 
-        this.uniforms.bloomScale = this.bloomScale;
-        this.uniforms.brightness = this.brightness;
-        this.uniforms.bloomTexture = bloomTarget;
+        // this.uniforms.bloomScale = this.bloomScale;
+        // this.uniforms.brightness = this.brightness;
+        // this.uniforms.bloomTexture = bloomTarget;
 
-        filterManager.applyFilter(this, input, output, clear);
+        // filterManager.applyFilter(this, input, output, clear);
 
-        filterManager.returnFilterTexture(bloomTarget);
-        filterManager.returnFilterTexture(brightTarget);
+        // filterManager.returnFilterTexture(bloomTarget);
+        // filterManager.returnFilterTexture(brightTarget);
     }
 
     /**
      * The resolution of the filter.
      * @ignore
      */
-    get resolution(): number
-    {
-        return this._resolution;
-    }
-    set resolution(value: number)
-    {
-        this._resolution = value;
+    // get resolution(): number
+    // {
+    //     return this._resolution;
+    // }
+    // set resolution(value: number)
+    // {
+    //     this._resolution = value;
 
-        if (this._extractFilter)
-        {
-            this._extractFilter.resolution = value;
-        }
-        if (this._blurFilter)
-        {
-            this._blurFilter.resolution = value;
-        }
-    }
+    //     if (this._extractFilter)
+    //     {
+    //         this._extractFilter.resolution = value;
+    //     }
+    //     if (this._blurFilter)
+    //     {
+    //         this._blurFilter.resolution = value;
+    //     }
+    // }
 
     /**
      * Defines how bright a color needs to be to affect bloom.
@@ -201,7 +205,7 @@ class AdvancedBloomFilter extends Filter
     /**
      * Sets the pixelSize of the Kawase Blur filter
      *
-     * @member {number|number[]|PIXI.Point}
+     * @member {number|number[]|Point}
      * @default 1
      */
     get pixelSize(): PixelSizeValue
@@ -213,6 +217,3 @@ class AdvancedBloomFilter extends Filter
         this._blurFilter.pixelSize = value;
     }
 }
-
-export { AdvancedBloomFilter };
-export type { AdvancedBloomFilterOptions };

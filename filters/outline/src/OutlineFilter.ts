@@ -1,7 +1,7 @@
 import { vertex } from '@tools/fragments';
 import fragment from './outline.frag';
-import { Filter, utils } from '@pixi/core';
-import type { FilterSystem, RenderTexture, CLEAR_MODES } from '@pixi/core';
+import { Filter, GlProgram } from 'pixi.js';
+import type { FilterSystem, RenderSurface, Texture } from 'pixi.js';
 
 /**
  * OutlineFilter, originally by mishaa
@@ -10,13 +10,13 @@ import type { FilterSystem, RenderTexture, CLEAR_MODES } from '@pixi/core';
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/outline.png)
  *
  * @class
- * @extends PIXI.Filter
+ * @extends Filter
  * @see {@link https://www.npmjs.com/package/@pixi/filter-outline|@pixi/filter-outline}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters} *
  * @example
  *  someSprite.filters = [new OutlineFilter(2, 0x99ff99)];
  */
-class OutlineFilter extends Filter
+export class OutlineFilter extends Filter
 {
     /** The minimum number of samples for rendering outline. */
     public static MIN_SAMPLES = 1;
@@ -38,12 +38,21 @@ class OutlineFilter extends Filter
      */
     constructor(thickness = 1, color = 0x000000, quality = 0.1, alpha = 1.0, knockout = false)
     {
-        super(vertex, fragment.replace(/\$\{angleStep\}/, OutlineFilter.getAngleStep(quality)));
+        const glProgram = new GlProgram({
+            vertex,
+            fragment: fragment.replace(/\$\{angleStep\}/, OutlineFilter.getAngleStep(quality)),
+            name: 'outline-filter',
+        });
 
-        this.uniforms.uThickness = new Float32Array([0, 0]);
-        this.uniforms.uColor = new Float32Array([0, 0, 0, 1]);
-        this.uniforms.uAlpha = alpha;
-        this.uniforms.uKnockout = knockout;
+        super({
+            glProgram,
+            resources: {},
+        });
+
+        // this.uniforms.uThickness = new Float32Array([0, 0]);
+        // this.uniforms.uColor = new Float32Array([0, 0, 0, 1]);
+        // this.uniforms.uAlpha = alpha;
+        // this.uniforms.uKnockout = knockout;
 
         Object.assign(this, { thickness, color, quality, alpha, knockout });
     }
@@ -62,14 +71,14 @@ class OutlineFilter extends Filter
         return (Math.PI * 2 / samples).toFixed(7);
     }
 
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES): void
+    apply(filterManager: FilterSystem, input: Texture, output: RenderSurface, clear: boolean): void
     {
-        this.uniforms.uThickness[0] = this._thickness / input._frame.width;
-        this.uniforms.uThickness[1] = this._thickness / input._frame.height;
-        this.uniforms.uAlpha = this._alpha;
-        this.uniforms.uKnockout = this._knockout;
+        // this.uniforms.uThickness[0] = this._thickness / input._frame.width;
+        // this.uniforms.uThickness[1] = this._thickness / input._frame.height;
+        // this.uniforms.uAlpha = this._alpha;
+        // this.uniforms.uKnockout = this._knockout;
 
-        filterManager.applyFilter(this, input, output, clear);
+        // filterManager.applyFilter(this, input, output, clear);
     }
 
     /**
@@ -89,14 +98,14 @@ class OutlineFilter extends Filter
      * The color of the outline.
      * @default 0x000000
      */
-    get color(): number
-    {
-        return utils.rgb2hex(this.uniforms.uColor);
-    }
-    set color(value: number)
-    {
-        utils.hex2rgb(value, this.uniforms.uColor);
-    }
+    // get color(): number
+    // {
+    //     return utils.rgb2hex(this.uniforms.uColor);
+    // }
+    // set color(value: number)
+    // {
+    //     utils.hex2rgb(value, this.uniforms.uColor);
+    // }
 
     /**
      * Only render outline, not the contents.
@@ -125,5 +134,3 @@ class OutlineFilter extends Filter
         this.padding = value;
     }
 }
-
-export { OutlineFilter };

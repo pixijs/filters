@@ -1,10 +1,10 @@
 import { vertex } from '@tools/fragments';
 import fragment from './kawase-blur.frag';
 import fragmentClamp from './kawase-blur-clamp.frag';
-import { Filter, Point } from '@pixi/core';
-import type { IPoint, CLEAR_MODES, FilterSystem, RenderTexture } from '@pixi/core';
+import { Filter, GlProgram, Point } from 'pixi.js';
+import type { FilterSystem, RenderSurface, RenderTexture, Texture } from 'pixi.js';
 
-type PixelSizeValue = IPoint | number[] | number;
+export type PixelSizeValue = Point | number[] | number;
 
 /**
  * A much faster blur than Gaussian blur, but more complicated to use.<br>
@@ -12,11 +12,11 @@ type PixelSizeValue = IPoint | number[] | number;
  *
  * @see https://software.intel.com/en-us/blogs/2014/07/15/an-investigation-of-fast-real-time-gpu-based-image-blur-algorithms
  * @class
- * @extends PIXI.Filter
+ * @extends Filter
  * @see {@link https://www.npmjs.com/package/@pixi/filter-kawase-blur|@pixi/filter-kawase-blur}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class KawaseBlurFilter extends Filter
+export class KawaseBlurFilter extends Filter
 {
     private _pixelSize: Point;
     private _clamp: boolean;
@@ -33,8 +33,18 @@ class KawaseBlurFilter extends Filter
      */
     constructor(blur: number | number[] = 4, quality = 3, clamp = false)
     {
-        super(vertex, clamp ? fragmentClamp : fragment);
-        this.uniforms.uOffset = new Float32Array(2);
+        const glProgram = new GlProgram({
+            vertex,
+            fragment: clamp ? fragmentClamp : fragment,
+            name: 'kawase-blur-filter',
+        });
+
+        super({
+            glProgram,
+            resources: {},
+        });
+
+        // this.uniforms.uOffset = new Float32Array(2);
 
         this._pixelSize = new Point();
         this.pixelSize = 1;
@@ -56,47 +66,47 @@ class KawaseBlurFilter extends Filter
      * Overrides apply
      * @private
      */
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES): void
+    apply(filterManager: FilterSystem, input: Texture, output: RenderSurface, clear: boolean): void
     {
-        const uvX = this._pixelSize.x / input._frame.width;
-        const uvY = this._pixelSize.y / input._frame.height;
-        let offset;
+        // const uvX = this._pixelSize.x / input._frame.width;
+        // const uvY = this._pixelSize.y / input._frame.height;
+        // let offset;
 
-        if (this._quality === 1 || this._blur === 0)
-        {
-            offset = this._kernels[0] + 0.5;
-            this.uniforms.uOffset[0] = offset * uvX;
-            this.uniforms.uOffset[1] = offset * uvY;
-            filterManager.applyFilter(this, input, output, clear);
-        }
-        else
-        {
-            const renderTarget = filterManager.getFilterTexture();
+        // if (this._quality === 1 || this._blur === 0)
+        // {
+        //     offset = this._kernels[0] + 0.5;
+        //     this.uniforms.uOffset[0] = offset * uvX;
+        //     this.uniforms.uOffset[1] = offset * uvY;
+        //     filterManager.applyFilter(this, input, output, clear);
+        // }
+        // else
+        // {
+        //     const renderTarget = filterManager.getFilterTexture();
 
-            let source = input;
-            let target = renderTarget;
-            let tmp;
+        //     let source = input;
+        //     let target = renderTarget;
+        //     let tmp;
 
-            const last = this._quality - 1;
+        //     const last = this._quality - 1;
 
-            for (let i = 0; i < last; i++)
-            {
-                offset = this._kernels[i] + 0.5;
-                this.uniforms.uOffset[0] = offset * uvX;
-                this.uniforms.uOffset[1] = offset * uvY;
-                filterManager.applyFilter(this, source, target, 1);
+        //     for (let i = 0; i < last; i++)
+        //     {
+        //         offset = this._kernels[i] + 0.5;
+        //         this.uniforms.uOffset[0] = offset * uvX;
+        //         this.uniforms.uOffset[1] = offset * uvY;
+        //         filterManager.applyFilter(this, source, target, 1);
 
-                tmp = source;
-                source = target;
-                target = tmp;
-            }
-            offset = this._kernels[last] + 0.5;
-            this.uniforms.uOffset[0] = offset * uvX;
-            this.uniforms.uOffset[1] = offset * uvY;
-            filterManager.applyFilter(this, source, output, clear);
+        //         tmp = source;
+        //         source = target;
+        //         target = tmp;
+        //     }
+        //     offset = this._kernels[last] + 0.5;
+        //     this.uniforms.uOffset[0] = offset * uvX;
+        //     this.uniforms.uOffset[1] = offset * uvY;
+        //     filterManager.applyFilter(this, source, output, clear);
 
-            filterManager.returnFilterTexture(renderTarget);
-        }
+        //     filterManager.returnFilterTexture(renderTarget);
+        // }
     }
 
     private _updatePadding()
@@ -169,7 +179,7 @@ class KawaseBlurFilter extends Filter
     /**
      * Sets the pixel size of the filter. Large size is blurrier. For advanced usage.
      *
-     * @member {PIXI.Point|number[]}
+     * @member {Point|number[]}
      * @default [1, 1]
      */
     set pixelSize(value: PixelSizeValue)
@@ -229,6 +239,3 @@ class KawaseBlurFilter extends Filter
         this._generateKernels();
     }
 }
-
-export { KawaseBlurFilter };
-export type { PixelSizeValue };

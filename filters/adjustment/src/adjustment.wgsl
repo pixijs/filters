@@ -16,7 +16,7 @@ struct AdjustmentUniforms {
 };
 
 @group(0) @binding(0) var<uniform> gfu: GlobalFilterUniforms;
-@group(0) @binding(1) var uTexture: texture_2d<f32>;
+@group(0) @binding(1) var uSampler: texture_2d<f32>;
 
 @group(1) @binding(0) var<uniform> adjustmentUniforms : AdjustmentUniforms;
 
@@ -65,7 +65,7 @@ fn mainFragment(
   @location(0) uv: vec2<f32>,
   @builtin(position) position: vec4<f32>
 ) -> @location(0) vec4<f32> {
-  var sample = textureSample(uTexture, uSampler, uv);
+  var sample = textureSample(uSampler, uSampler, uv);
   let color = adjustmentUniforms.uColor;
 
   if (sample.a > 0.0) 

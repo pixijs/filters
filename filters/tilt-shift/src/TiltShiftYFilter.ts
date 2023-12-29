@@ -8,23 +8,21 @@ import { TiltShiftAxisFilter } from './TiltShiftAxisFilter';
  * A TiltShiftYFilter.
  *
  * @class
- * @extends PIXI.TiltShiftAxisFilter
+ * @extends TiltShiftAxisFilter
  * @private
  */
-class TiltShiftYFilter extends TiltShiftAxisFilter
+export class TiltShiftYFilter extends TiltShiftAxisFilter
 {
     /**
      * Updates the filter delta values.
      */
     protected updateDelta(): void
     {
-        const dx = this.uniforms.end.x - this.uniforms.start.x;
-        const dy = this.uniforms.end.y - this.uniforms.start.y;
-        const d = Math.sqrt((dx * dx) + (dy * dy));
+        // const dx = this.uniforms.end.x - this.uniforms.start.x;
+        // const dy = this.uniforms.end.y - this.uniforms.start.y;
+        // const d = Math.sqrt((dx * dx) + (dy * dy));
 
-        this.uniforms.delta.x = -dy / d;
-        this.uniforms.delta.y = dx / d;
+        // this.uniforms.delta.x = -dy / d;
+        // this.uniforms.delta.y = dx / d;
     }
 }
-
-export { TiltShiftYFilter };

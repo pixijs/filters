@@ -1,8 +1,8 @@
-import { Filter } from '@pixi/core';
+import { Filter, GlProgram } from 'pixi.js';
 import { vertex } from '@tools/fragments';
 import fragment from './hsladjustment.frag';
 
-interface HslAdjustmentFilterOptions
+export interface HslAdjustmentFilterOptions
 {
     hue: number;
     saturation: number;
@@ -15,11 +15,11 @@ interface HslAdjustmentFilterOptions
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/hsl-adjustment.png)
  *
  * @class
- * @extends PIXI.Filter
+ * @extends Filter
  * @see {@link https://www.npmjs.com/package/@pixi/filter-hsl-adjustment|@pixi/filter-hsl-adjustment}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class HslAdjustmentFilter extends Filter
+export class HslAdjustmentFilter extends Filter
 {
     private _hue = 0;
 
@@ -47,7 +47,16 @@ class HslAdjustmentFilter extends Filter
      */
     constructor(options?: Partial<HslAdjustmentFilterOptions>)
     {
-        super(vertex, fragment);
+        const glProgram = new GlProgram({
+            vertex,
+            fragment,
+            name: 'hsl-adjustment-filter',
+        });
+
+        super({
+            glProgram,
+            resources: {},
+        });
         const options_: HslAdjustmentFilterOptions = Object.assign({}, HslAdjustmentFilter.defaults, options);
 
         Object.assign(this, options_);
@@ -65,65 +74,62 @@ class HslAdjustmentFilter extends Filter
     set hue(value: number)
     {
         this._hue = value;
-        this.uniforms.uHue = this._hue * (Math.PI / 180); // convert degrees to radians
+        // this.uniforms.uHue = this._hue * (Math.PI / 180); // convert degrees to radians
     }
 
     /**
      * Alpha (0-1)
      * @default 1
      */
-    get alpha(): number
-    {
-        return this.uniforms.uAlpha;
-    }
+    // get alpha(): number
+    // {
+    //     return this.uniforms.uAlpha;
+    // }
 
-    set alpha(value: number)
-    {
-        this.uniforms.uAlpha = value;
-    }
+    // set alpha(value: number)
+    // {
+    //     this.uniforms.uAlpha = value;
+    // }
 
     /**
      * Colorize (render as a single color)
      * @default false
      */
-    get colorize(): boolean
-    {
-        return this.uniforms.uColorize;
-    }
+    // get colorize(): boolean
+    // {
+    //     return this.uniforms.uColorize;
+    // }
 
-    set colorize(value: boolean)
-    {
-        this.uniforms.uColorize = value;
-    }
+    // set colorize(value: boolean)
+    // {
+    //     this.uniforms.uColorize = value;
+    // }
 
     /**
      * Lightness (-1 to 1)
      * @default 0
      */
-    get lightness(): number
-    {
-        return this.uniforms.uLightness;
-    }
+    // get lightness(): number
+    // {
+    //     return this.uniforms.uLightness;
+    // }
 
-    set lightness(value: number)
-    {
-        this.uniforms.uLightness = value;
-    }
+    // set lightness(value: number)
+    // {
+    //     this.uniforms.uLightness = value;
+    // }
 
     /**
      * Saturation (-1 to 1)
      * @default 0
      */
-    get saturation(): number
-    {
-        return this.uniforms.uSaturation;
-    }
+    // get saturation(): number
+    // {
+    //     return this.uniforms.uSaturation;
+    // }
 
-    set saturation(value: number)
-    {
-        this.uniforms.uSaturation = value;
-    }
+    // set saturation(value: number)
+    // {
+    //     this.uniforms.uSaturation = value;
+    // }
 }
-
-export { HslAdjustmentFilter };
-export type { HslAdjustmentFilterOptions };

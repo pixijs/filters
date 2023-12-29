@@ -1,8 +1,8 @@
 import { vertex } from '@tools/fragments';
 import perlin from './perlin.frag';
 import fragment from './gorday.frag';
-import { Filter, Point, DEG_TO_RAD } from '@pixi/core';
-import type { Rectangle, CLEAR_MODES, FilterSystem, RenderTexture } from '@pixi/core';
+import { Filter, Point, DEG_TO_RAD, GlProgram } from 'pixi.js';
+import type { Rectangle, FilterSystem, RenderTexture } from 'pixi.js';
 
 interface GodrayFilterOptions
 {
@@ -22,14 +22,14 @@ interface GodrayFilterOptions
  *
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/godray.gif)
  * @class
- * @extends PIXI.Filter
+ * @extends Filter
  * @see {@link https://www.npmjs.com/package/@pixi/filter-godray|@pixi/filter-godray}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  *
  * @example
  *  displayObject.filters = [new GodrayFilter()];
  */
-class GodrayFilter extends Filter
+export class GodrayFilter extends Filter
 {
     /** Default for constructior options. */
     public static readonly defaults: GodrayFilterOptions = {
@@ -67,23 +67,32 @@ class GodrayFilter extends Filter
      * @param {number} [options.lacunarity=2.5] - The density of the fractal noise.
      * @param {boolean} [options.parallel=true] - `true` to use `angle`, `false` to use `center`
      * @param {number} [options.time=0] - The current time position.
-     * @param {PIXI.Point|number[]} [options.center=[0,0]] - Focal point for non-parallel rays,
+     * @param {Point|number[]} [options.center=[0,0]] - Focal point for non-parallel rays,
      *        to use this `parallel` must be set to `false`.
  * @param {number} [options.alpha=1.0] - the alpha, defaults to 1, affects transparency of rays
      */
     constructor(options?: Partial<GodrayFilterOptions>)
     {
-        super(vertex, fragment.replace('${perlin}', perlin));
+        const glProgram = new GlProgram({
+            vertex,
+            fragment: fragment.replace('${perlin}', perlin),
+            name: 'god-ray-filter',
+        });
 
-        this.uniforms.dimensions = new Float32Array(2);
+        super({
+            glProgram,
+            resources: {},
+        });
+
+        // this.uniforms.dimensions = new Float32Array(2);
 
         const opts: GodrayFilterOptions = Object.assign(GodrayFilter.defaults, options);
 
         this._angleLight = new Point();
         this.angle = opts.angle;
-        this.gain = opts.gain;
-        this.lacunarity = opts.lacunarity;
-        this.alpha = opts.alpha;
+        // this.gain = opts.gain;
+        // this.lacunarity = opts.lacunarity;
+        // this.alpha = opts.alpha;
         this.parallel = opts.parallel;
         this.center = opts.center;
         this.time = opts.time;
@@ -92,25 +101,25 @@ class GodrayFilter extends Filter
     /**
      * Applies the filter.
      * @private
-     * @param {PIXI.FilterManager} filterManager - The manager.
-     * @param {PIXI.RenderTarget} input - The input target.
-     * @param {PIXI.RenderTarget} output - The output target.
+     * @param {FilterManager} filterManager - The manager.
+     * @param {RenderTarget} input - The input target.
+     * @param {RenderTarget} output - The output target.
      */
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES): void
+    apply(filterManager: FilterSystem, input: Texture, output: RenderSurface, clear: boolean): void
     {
-        const { width, height } = input.filterFrame as Rectangle;
+        // const { width, height } = input.filterFrame as Rectangle;
 
-        this.uniforms.light = this.parallel ? this._angleLight : this.center;
+        // this.uniforms.light = this.parallel ? this._angleLight : this.center;
 
-        this.uniforms.parallel = this.parallel;
-        this.uniforms.dimensions[0] = width;
-        this.uniforms.dimensions[1] = height;
-        this.uniforms.aspect = height / width;
-        this.uniforms.time = this.time;
-        this.uniforms.alpha = this.alpha;
+        // this.uniforms.parallel = this.parallel;
+        // this.uniforms.dimensions[0] = width;
+        // this.uniforms.dimensions[1] = height;
+        // this.uniforms.aspect = height / width;
+        // this.uniforms.time = this.time;
+        // this.uniforms.alpha = this.alpha;
 
-        // draw the filter...
-        filterManager.applyFilter(this, input, output, clear);
+        // // draw the filter...
+        // filterManager.applyFilter(this, input, output, clear);
     }
 
     /**
@@ -137,41 +146,39 @@ class GodrayFilter extends Filter
      * where a value closer to 0 will produce a subtler effect.
      * @default 0.5
      */
-    get gain(): number
-    {
-        return this.uniforms.gain;
-    }
-    set gain(value: number)
-    {
-        this.uniforms.gain = value;
-    }
+    // get gain(): number
+    // {
+    //     return this.uniforms.gain;
+    // }
+    // set gain(value: number)
+    // {
+    //     this.uniforms.gain = value;
+    // }
 
     /**
      * The density of the fractal noise. A higher amount produces more rays and a smaller amound
      * produces fewer waves.
      * @default 2.5
      */
-    get lacunarity(): number
-    {
-        return this.uniforms.lacunarity;
-    }
-    set lacunarity(value: number)
-    {
-        this.uniforms.lacunarity = value;
-    }
+    // get lacunarity(): number
+    // {
+    //     return this.uniforms.lacunarity;
+    // }
+    // set lacunarity(value: number)
+    // {
+    //     this.uniforms.lacunarity = value;
+    // }
 
     /**
      * The alpha (opacity) of the rays.  0 is fully transparent, 1 is fully opaque.
      * @default 1
      */
-    get alpha(): number
-    {
-        return this.uniforms.alpha;
-    }
-    set alpha(value: number)
-    {
-        this.uniforms.alpha = value;
-    }
+    // get alpha(): number
+    // {
+    //     return this.uniforms.alpha;
+    // }
+    // set alpha(value: number)
+    // {
+    //     this.uniforms.alpha = value;
+    // }
 }
-
-export { GodrayFilter };

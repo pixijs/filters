@@ -1,6 +1,6 @@
 import { vertex } from '@tools/fragments';
 import fragment from './colorReplace.frag';
-import { Filter, utils } from '@pixi/core';
+import { Filter, GlProgram } from 'pixi.js';
 
 type Color = number | number[] | Float32Array;
 
@@ -10,7 +10,7 @@ type Color = number | number[] | Float32Array;
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/color-replace.png)
  *
  * @class
- * @extends PIXI.Filter
+ * @extends Filter
  * @see {@link https://www.npmjs.com/package/@pixi/filter-color-replace|@pixi/filter-color-replace}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  *
@@ -31,7 +31,7 @@ type Color = number | number[] | Float32Array;
  *  someOtherSprite.filters = [new ColorReplaceFilter(0xdcdcdc, 0xe1c8d7, 0.001)];
  *
  */
-class ColorReplaceFilter extends Filter
+export class ColorReplaceFilter extends Filter
 {
     private _originalColor = 0xff0000;
     private _newColor = 0x0;
@@ -46,12 +46,22 @@ class ColorReplaceFilter extends Filter
      */
     constructor(originalColor: Color = 0xFF0000, newColor: Color = 0x000000, epsilon = 0.4)
     {
-        super(vertex, fragment);
-        this.uniforms.originalColor = new Float32Array(3);
-        this.uniforms.newColor = new Float32Array(3);
-        this.originalColor = originalColor;
-        this.newColor = newColor;
-        this.epsilon = epsilon;
+        const glProgram = new GlProgram({
+            vertex,
+            fragment,
+            name: 'color-replace-filter',
+        });
+
+        super({
+            glProgram,
+            resources: {},
+        });
+
+        // this.uniforms.originalColor = new Float32Array(3);
+        // this.uniforms.newColor = new Float32Array(3);
+        // this.originalColor = originalColor;
+        // this.newColor = newColor;
+        // this.epsilon = epsilon;
     }
 
     /**
@@ -59,67 +69,65 @@ class ColorReplaceFilter extends Filter
      * @member {number|Array<number>|Float32Array}
      * @default 0xFF0000
      */
-    set originalColor(value: Color)
-    {
-        const arr = this.uniforms.originalColor;
+    // set originalColor(value: Color)
+    // {
+    //     const arr = this.uniforms.originalColor;
 
-        if (typeof value === 'number')
-        {
-            utils.hex2rgb(value, arr);
-            this._originalColor = value;
-        }
-        else
-        {
-            arr[0] = value[0];
-            arr[1] = value[1];
-            arr[2] = value[2];
-            this._originalColor = utils.rgb2hex(arr);
-        }
-    }
-    get originalColor(): Color
-    {
-        return this._originalColor;
-    }
+    //     if (typeof value === 'number')
+    //     {
+    //         utils.hex2rgb(value, arr);
+    //         this._originalColor = value;
+    //     }
+    //     else
+    //     {
+    //         arr[0] = value[0];
+    //         arr[1] = value[1];
+    //         arr[2] = value[2];
+    //         this._originalColor = utils.rgb2hex(arr);
+    //     }
+    // }
+    // get originalColor(): Color
+    // {
+    //     return this._originalColor;
+    // }
 
     /**
      * The resulting color, as a 3 component RGB e.g. [1.0, 0.5, 1.0]
      * @member {number|Array<number>|Float32Array}
      * @default 0x000000
      */
-    set newColor(value: Color)
-    {
-        const arr = this.uniforms.newColor;
+    // set newColor(value: Color)
+    // {
+    //     const arr = this.uniforms.newColor;
 
-        if (typeof value === 'number')
-        {
-            utils.hex2rgb(value, arr);
-            this._newColor = value;
-        }
-        else
-        {
-            arr[0] = value[0];
-            arr[1] = value[1];
-            arr[2] = value[2];
-            this._newColor = utils.rgb2hex(arr);
-        }
-    }
-    get newColor(): Color
-    {
-        return this._newColor;
-    }
+    //     if (typeof value === 'number')
+    //     {
+    //         utils.hex2rgb(value, arr);
+    //         this._newColor = value;
+    //     }
+    //     else
+    //     {
+    //         arr[0] = value[0];
+    //         arr[1] = value[1];
+    //         arr[2] = value[2];
+    //         this._newColor = utils.rgb2hex(arr);
+    //     }
+    // }
+    // get newColor(): Color
+    // {
+    //     return this._newColor;
+    // }
 
     /**
      * Tolerance/sensitivity of the floating-point comparison between colors (lower = more exact, higher = more inclusive)
      * @default 0.4
      */
-    set epsilon(value: number)
-    {
-        this.uniforms.epsilon = value;
-    }
-    get epsilon(): number
-    {
-        return this.uniforms.epsilon;
-    }
+    // set epsilon(value: number)
+    // {
+    //     this.uniforms.epsilon = value;
+    // }
+    // get epsilon(): number
+    // {
+    //     return this.uniforms.epsilon;
+    // }
 }
-
-export { ColorReplaceFilter };

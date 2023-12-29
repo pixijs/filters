@@ -1,11 +1,11 @@
 import { vertex } from '@tools/fragments';
 import fragment from './glitch.frag';
-import { Filter, Texture, SCALE_MODES, DEG_TO_RAD, Rectangle } from '@pixi/core';
-import type { IPoint, CLEAR_MODES, FilterSystem, RenderTexture } from '@pixi/core';
+import { Filter, Texture, DEG_TO_RAD, Rectangle, GlProgram } from 'pixi.js';
+import type { FilterSystem, Point, RenderSurface, RenderTexture } from 'pixi.js';
 
-type PointLike = IPoint | number[];
+type PointLike = Point | number[];
 
-interface GlitchFilterOptions
+export interface GlitchFilterOptions
 {
     slices: number;
     offset: number;
@@ -25,11 +25,11 @@ interface GlitchFilterOptions
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/glitch.png)
  *
  * @class
- * @extends PIXI.Filter
+ * @extends Filter
  * @see {@link https://www.npmjs.com/package/@pixi/filter-glitch|@pixi/filter-glitch}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class GlitchFilter extends Filter
+export class GlitchFilter extends Filter
 {
     /** Default constructor options. */
     public static readonly defaults: GlitchFilterOptions = {
@@ -92,10 +92,10 @@ class GlitchFilter extends Filter
      * The displacement map is used to generate the bands.
      * If using your own texture, `slices` will be ignored.
      *
-     * @member {PIXI.Texture}
+     * @member {Texture}
      * @readonly
      */
-    public texture: Texture;
+    // public texture: Texture;
 
     /** Internal number of slices */
     private _slices = 0;
@@ -130,34 +130,44 @@ class GlitchFilter extends Filter
      */
     constructor(options?: Partial<GlitchFilterOptions>)
     {
-        super(vertex, fragment);
-        this.uniforms.dimensions = new Float32Array(2);
+        const glProgram = new GlProgram({
+            vertex,
+            fragment,
+            name: 'glitch-filter',
+        });
+
+        super({
+            glProgram,
+            resources: {},
+        });
+
+        // this.uniforms.dimensions = new Float32Array(2);
 
         this._canvas = document.createElement('canvas');
         this._canvas.width = 4;
         this._canvas.height = this.sampleSize;
-        this.texture = Texture.from(this._canvas, { scaleMode: SCALE_MODES.NEAREST });
+        // this.texture = Texture.from(this._canvas, { scaleMode: SCALE_MODES.NEAREST });
 
         Object.assign(this, GlitchFilter.defaults, options);
     }
 
     /**
-     * Override existing apply method in PIXI.Filter
+     * Override existing apply method in Filter
      * @private
      */
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES): void
+    apply(filterManager: FilterSystem, input: Texture, output: RenderSurface, clear: boolean): void
     {
-        const { width, height } = input.filterFrame as Rectangle;
+        // const { width, height } = input.filterFrame as Rectangle;
 
-        this.uniforms.dimensions[0] = width;
-        this.uniforms.dimensions[1] = height;
-        this.uniforms.aspect = height / width;
+        // this.uniforms.dimensions[0] = width;
+        // this.uniforms.dimensions[1] = height;
+        // this.uniforms.aspect = height / width;
 
-        this.uniforms.seed = this.seed;
-        this.uniforms.offset = this.offset;
-        this.uniforms.fillMode = this.fillMode;
+        // this.uniforms.seed = this.seed;
+        // this.uniforms.offset = this.offset;
+        // this.uniforms.fillMode = this.fillMode;
 
-        filterManager.applyFilter(this, input, output, clear);
+        // filterManager.applyFilter(this, input, output, clear);
     }
 
     /**
@@ -253,7 +263,7 @@ class GlitchFilter extends Filter
     redraw(): void
     {
         const size = this.sampleSize;
-        const texture = this.texture;
+        // const texture = this.texture;
         const ctx = this._canvas.getContext('2d') as CanvasRenderingContext2D;
 
         ctx.clearRect(0, 0, 8, size);
@@ -273,8 +283,8 @@ class GlitchFilter extends Filter
             y += height;
         }
 
-        texture.baseTexture.update();
-        this.uniforms.displacementMap = texture;
+        // texture.baseTexture.update();
+        // this.uniforms.displacementMap = texture;
     }
 
     /**
@@ -321,102 +331,99 @@ class GlitchFilter extends Filter
      * The count of slices.
      * @default 5
      */
-    get slices(): number
-    {
-        return this._slices;
-    }
-    set slices(value: number)
-    {
-        if (this._slices === value)
-        {
-            return;
-        }
-        this._slices = value;
-        this.uniforms.slices = value;
-        this._sizes = this.uniforms.slicesWidth = new Float32Array(value);
-        this._offsets = this.uniforms.slicesOffset = new Float32Array(value);
-        this.refresh();
-    }
+    // get slices(): number
+    // {
+    //     return this._slices;
+    // }
+    // set slices(value: number)
+    // {
+    //     if (this._slices === value)
+    //     {
+    //         return;
+    //     }
+    //     this._slices = value;
+    //     this.uniforms.slices = value;
+    //     this._sizes = this.uniforms.slicesWidth = new Float32Array(value);
+    //     this._offsets = this.uniforms.slicesOffset = new Float32Array(value);
+    //     this.refresh();
+    // }
 
     /**
      * The angle in degree of the offset of slices.
      * @default 0
      */
-    get direction(): number
-    {
-        return this._direction;
-    }
-    set direction(value: number)
-    {
-        if (this._direction === value)
-        {
-            return;
-        }
-        this._direction = value;
+    // get direction(): number
+    // {
+    //     return this._direction;
+    // }
+    // set direction(value: number)
+    // {
+    //     if (this._direction === value)
+    //     {
+    //         return;
+    //     }
+    //     this._direction = value;
 
-        const radians = value * DEG_TO_RAD;
+    //     const radians = value * DEG_TO_RAD;
 
-        this.uniforms.sinDir = Math.sin(radians);
-        this.uniforms.cosDir = Math.cos(radians);
-    }
+    //     this.uniforms.sinDir = Math.sin(radians);
+    //     this.uniforms.cosDir = Math.cos(radians);
+    // }
 
     /**
      * Red channel offset.
      *
-     * @member {PIXI.Point|number[]}
+     * @member {Point|number[]}
      */
-    get red(): PointLike
-    {
-        return this.uniforms.red;
-    }
-    set red(value: PointLike)
-    {
-        this.uniforms.red = value;
-    }
+    // get red(): PointLike
+    // {
+    //     return this.uniforms.red;
+    // }
+    // set red(value: PointLike)
+    // {
+    //     this.uniforms.red = value;
+    // }
 
     /**
      * Green channel offset.
      *
-     * @member {PIXI.Point|number[]}
+     * @member {Point|number[]}
      */
-    get green(): PointLike
-    {
-        return this.uniforms.green;
-    }
-    set green(value: PointLike)
-    {
-        this.uniforms.green = value;
-    }
+    // get green(): PointLike
+    // {
+    //     return this.uniforms.green;
+    // }
+    // set green(value: PointLike)
+    // {
+    //     this.uniforms.green = value;
+    // }
 
     /**
      * Blue offset.
      *
-     * @member {PIXI.Point|number[]}
+     * @member {Point|number[]}
      */
-    get blue(): PointLike
-    {
-        return this.uniforms.blue;
-    }
-    set blue(value: PointLike)
-    {
-        this.uniforms.blue = value;
-    }
+    // get blue(): PointLike
+    // {
+    //     return this.uniforms.blue;
+    // }
+    // set blue(value: PointLike)
+    // {
+    //     this.uniforms.blue = value;
+    // }
 
     /**
      * Removes all references
      */
     destroy(): void
     {
-        this.texture?.destroy(true);
-        this.texture
-        = this._canvas
-        = this.red
-        = this.green
-        = this.blue
-        = this._sizes
-        = this._offsets = null as any;
+        // this.texture?.destroy(true);
+        // this.texture
+        // = this._canvas
+        // = this.red
+        // = this.green
+        // = this.blue
+        // = this._sizes
+        // = this._offsets = null as any;
     }
 }
-
-export { GlitchFilter };
-export type { GlitchFilterOptions };

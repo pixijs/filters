@@ -1,6 +1,6 @@
 import { vertex } from '@tools/fragments';
 import fragment from './twist.frag';
-import { Filter, Point } from '@pixi/core';
+import { Filter, GlProgram, Point } from 'pixi.js';
 
 interface TwistFilterOptions
 {
@@ -15,11 +15,11 @@ interface TwistFilterOptions
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/twist.png)
  *
  * @class
- * @extends PIXI.Filter
+ * @extends Filter
  * @see {@link https://www.npmjs.com/package/@pixi/filter-twist|@pixi/filter-twist}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class TwistFilter extends Filter
+export class TwistFilter extends Filter
 {
     /** Default constructor options. */
     public static readonly defaults: TwistFilterOptions = {
@@ -34,11 +34,20 @@ class TwistFilter extends Filter
      * @param {number} [options.radius=200] - The radius of the twist.
      * @param {number} [options.angle=4] - The angle of the twist.
      * @param {number} [options.padding=20] - Padding for filter area.
-     * @param {PIXI.Point} [options.offset] - Center of twist, in local, pixel coordinates.
+     * @param {Point} [options.offset] - Center of twist, in local, pixel coordinates.
      */
     constructor(options?: Partial<TwistFilterOptions>)
     {
-        super(vertex, fragment);
+        const glProgram = new GlProgram({
+            vertex,
+            fragment,
+            name: 'twist-filter',
+        });
+
+        super({
+            glProgram,
+            resources: {},
+        });
 
         Object.assign(this, TwistFilter.defaults, options);
     }
@@ -46,41 +55,38 @@ class TwistFilter extends Filter
     /**
      * This point describes the the offset of the twist.
      *
-     * @member {PIXI.Point}
+     * @member {Point}
      */
-    get offset(): Point
-    {
-        return this.uniforms.offset;
-    }
-    set offset(value: Point)
-    {
-        this.uniforms.offset = value;
-    }
+    // get offset(): Point
+    // {
+    //     return this.uniforms.offset;
+    // }
+    // set offset(value: Point)
+    // {
+    //     this.uniforms.offset = value;
+    // }
 
     /**
      * The radius of the twist.
      */
-    get radius(): number
-    {
-        return this.uniforms.radius;
-    }
-    set radius(value: number)
-    {
-        this.uniforms.radius = value;
-    }
+    // get radius(): number
+    // {
+    //     return this.uniforms.radius;
+    // }
+    // set radius(value: number)
+    // {
+    //     this.uniforms.radius = value;
+    // }
 
     /**
      * The angle of the twist.
      */
-    get angle(): number
-    {
-        return this.uniforms.angle;
-    }
-    set angle(value: number)
-    {
-        this.uniforms.angle = value;
-    }
+    // get angle(): number
+    // {
+    //     return this.uniforms.angle;
+    // }
+    // set angle(value: number)
+    // {
+    //     this.uniforms.angle = value;
+    // }
 }
-
-export { TwistFilter };
-export type { TwistFilterOptions };

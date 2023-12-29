@@ -1,6 +1,6 @@
 import fragment from './colorGradient.frag';
 import vertex from './colorGradient.vert';
-import { Filter } from '@pixi/core';
+import { Filter, GlProgram } from 'pixi.js';
 import { parseCssGradient } from './CssGradientParser';
 import { colorToNormalizedRgba } from './utils';
 
@@ -39,11 +39,11 @@ function sortColorStops(stops: ColorStop[]): ColorStop[]
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/color-gradient.png)
  *
  * @class
- * @extends PIXI.Filter
+ * @extends Filter
  * @see {@link https://www.npmjs.com/package/@pixi/filter-color-gradient|@pixi/filter-color-gradient}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class ColorGradientFilter extends Filter
+export class ColorGradientFilter extends Filter
 {
     /** Gradient types */
     static readonly LINEAR = 0;
@@ -92,8 +92,17 @@ class ColorGradientFilter extends Filter
             throw new Error('ColorGradientFilter requires at least 2 color stops.');
         }
 
-        super(vertex, fragment);
-        this.autoFit = false;
+        const glProgram = new GlProgram({
+            vertex,
+            fragment,
+            name: 'color-gradient-filter',
+        });
+
+        super({
+            glProgram,
+            resources: {},
+        });
+        // this.autoFit = false;
 
         Object.assign(this, options_);
     }
@@ -122,10 +131,10 @@ class ColorGradientFilter extends Filter
             colors[indexStart + B] = color[B];
         }
 
-        this.uniforms.uColors = colors;
-        this.uniforms.uOffsets = sortedStops.map((s) => s.offset);
-        this.uniforms.uAlphas = sortedStops.map((s) => s.alpha);
-        this.uniforms.uNumStops = sortedStops.length;
+        // this.uniforms.uColors = colors;
+        // this.uniforms.uOffsets = sortedStops.map((s) => s.offset);
+        // this.uniforms.uAlphas = sortedStops.map((s) => s.alpha);
+        // this.uniforms.uNumStops = sortedStops.length;
         this._stops = sortedStops;
     }
 
@@ -133,73 +142,71 @@ class ColorGradientFilter extends Filter
    * The type of gradient
    * @default ColorGradientFilter.LINEAR
    */
-    set type(value: number)
-    {
-        this.uniforms.uType = value;
-    }
+    // set type(value: number)
+    // {
+    //     this.uniforms.uType = value;
+    // }
 
-    get type(): number
-    {
-        return this.uniforms.uType;
-    }
+    // get type(): number
+    // {
+    //     return this.uniforms.uType;
+    // }
 
     /**
    * The angle of the gradient in degrees
    * @default 90
    */
-    set angle(value: number)
-    {
-        this.uniforms.uAngle = value - ANGLE_OFFSET;
-    }
+    // set angle(value: number)
+    // {
+    //     this.uniforms.uAngle = value - ANGLE_OFFSET;
+    // }
 
-    get angle(): number
-    {
-        return this.uniforms.uAngle + ANGLE_OFFSET;
-    }
+    // get angle(): number
+    // {
+    //     return this.uniforms.uAngle + ANGLE_OFFSET;
+    // }
 
     /**
    * The alpha value of the gradient (0-1)
    * @default 1
    */
-    set alpha(value: number)
-    {
-        this.uniforms.uAlpha = value;
-    }
+    // set alpha(value: number)
+    // {
+    //     this.uniforms.uAlpha = value;
+    // }
 
-    get alpha(): number
-    {
-        return this.uniforms.uAlpha;
-    }
+    // get alpha(): number
+    // {
+    //     return this.uniforms.uAlpha;
+    // }
 
     /**
    * The maximum number of colors to render (0 = no limit)
    * @default 0
    */
-    set maxColors(value: number)
-    {
-        this.uniforms.uMaxColors = value;
-    }
+    // set maxColors(value: number)
+    // {
+    //     this.uniforms.uMaxColors = value;
+    // }
 
-    get maxColors(): number
-    {
-        return this.uniforms.uMaxColors;
-    }
+    // get maxColors(): number
+    // {
+    //     return this.uniforms.uMaxColors;
+    // }
 
     /**
      * If true, the gradient will replace the existing color, otherwise it
      * will be multiplied with it
      * @default false
      */
-    set replace(value: boolean)
-    {
-        this.uniforms.uReplace = value;
-    }
+    // set replace(value: boolean)
+    // {
+    //     this.uniforms.uReplace = value;
+    // }
 
-    get replace(): boolean
-    {
-        return this.uniforms.uReplace;
-    }
+    // get replace(): boolean
+    // {
+    //     return this.uniforms.uReplace;
+    // }
 }
-
-export { ColorGradientFilter };
 

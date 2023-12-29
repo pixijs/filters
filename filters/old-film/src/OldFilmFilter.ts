@@ -1,9 +1,9 @@
 import { vertex } from '@tools/fragments';
 import fragment from './old-film.frag';
-import { Filter } from '@pixi/core';
-import type { FilterSystem, RenderTexture, CLEAR_MODES } from '@pixi/core';
+import { Filter, GlProgram } from 'pixi.js';
+import type { FilterSystem, RenderSurface, Texture } from 'pixi.js';
 
-interface OldFilmFilterOptions
+export interface OldFilmFilterOptions
 {
     sepia: number;
     noise: number;
@@ -21,11 +21,11 @@ interface OldFilmFilterOptions
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/old-film.gif)
  *
  * @class
- * @extends PIXI.Filter
+ * @extends Filter
  * @see {@link https://www.npmjs.com/package/@pixi/filter-old-film|@pixi/filter-old-film}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class OldFilmFilter extends Filter
+export class OldFilmFilter extends Filter
 {
     /** Default constructor options */
     public static readonly defaults: OldFilmFilterOptions = {
@@ -62,8 +62,18 @@ class OldFilmFilter extends Filter
      */
     constructor(options?: Partial<OldFilmFilterOptions>, seed = 0)
     {
-        super(vertex, fragment);
-        this.uniforms.dimensions = new Float32Array(2);
+        const glProgram = new GlProgram({
+            vertex,
+            fragment,
+            name: 'old-film-filter',
+        });
+
+        super({
+            glProgram,
+            resources: {},
+        });
+
+        // this.uniforms.dimensions = new Float32Array(2);
 
         if (typeof options === 'number')
         {
@@ -79,19 +89,19 @@ class OldFilmFilter extends Filter
     }
 
     /**
-     * Override existing apply method in PIXI.Filter
+     * Override existing apply method in Filter
      * @private
      */
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES): void
+    apply(filterManager: FilterSystem, input: Texture, output: RenderSurface, clear: boolean): void
     {
-        this.uniforms.dimensions[0] = input.filterFrame?.width;
-        this.uniforms.dimensions[1] = input.filterFrame?.height;
+        // this.uniforms.dimensions[0] = input.filterFrame?.width;
+        // this.uniforms.dimensions[1] = input.filterFrame?.height;
 
-        // named `seed` because in the most programming languages,
-        // `random` used for "the function for generating random value".
-        this.uniforms.seed = this.seed;
+        // // named `seed` because in the most programming languages,
+        // // `random` used for "the function for generating random value".
+        // this.uniforms.seed = this.seed;
 
-        filterManager.applyFilter(this, input, output, clear);
+        // filterManager.applyFilter(this, input, output, clear);
     }
 
     /**
@@ -100,129 +110,126 @@ class OldFilmFilter extends Filter
      * and a value of `0` produces no sepia effect
      * @default 0
      */
-    set sepia(value: number)
-    {
-        this.uniforms.sepia = value;
-    }
+    // set sepia(value: number)
+    // {
+    //     this.uniforms.sepia = value;
+    // }
 
-    get sepia(): number
-    {
-        return this.uniforms.sepia;
-    }
+    // get sepia(): number
+    // {
+    //     return this.uniforms.sepia;
+    // }
 
     /**
      * Opacity/intensity of the noise effect between `0` and `1`
      * @default 0
      */
-    set noise(value: number)
-    {
-        this.uniforms.noise = value;
-    }
+    // set noise(value: number)
+    // {
+    //     this.uniforms.noise = value;
+    // }
 
-    get noise(): number
-    {
-        return this.uniforms.noise;
-    }
+    // get noise(): number
+    // {
+    //     return this.uniforms.noise;
+    // }
 
     /**
      * The size of the noise particles
      * @default 0
      */
-    set noiseSize(value: number)
-    {
-        this.uniforms.noiseSize = value;
-    }
+    // set noiseSize(value: number)
+    // {
+    //     this.uniforms.noiseSize = value;
+    // }
 
-    get noiseSize(): number
-    {
-        return this.uniforms.noiseSize;
-    }
+    // get noiseSize(): number
+    // {
+    //     return this.uniforms.noiseSize;
+    // }
 
     /**
      * How often scratches appear
      * @default 0
      */
-    set scratch(value: number)
-    {
-        this.uniforms.scratch = value;
-    }
+    // set scratch(value: number)
+    // {
+    //     this.uniforms.scratch = value;
+    // }
 
-    get scratch(): number
-    {
-        return this.uniforms.scratch;
-    }
+    // get scratch(): number
+    // {
+    //     return this.uniforms.scratch;
+    // }
 
     /**
      * The density of the number of scratches
      * @default 0
      */
-    set scratchDensity(value: number)
-    {
-        this.uniforms.scratchDensity = value;
-    }
+    // set scratchDensity(value: number)
+    // {
+    //     this.uniforms.scratchDensity = value;
+    // }
 
-    get scratchDensity(): number
-    {
-        return this.uniforms.scratchDensity;
-    }
+    // get scratchDensity(): number
+    // {
+    //     return this.uniforms.scratchDensity;
+    // }
 
     /**
      * The width of the scratches
      * @default 0
      */
-    set scratchWidth(value: number)
-    {
-        this.uniforms.scratchWidth = value;
-    }
+    // set scratchWidth(value: number)
+    // {
+    //     this.uniforms.scratchWidth = value;
+    // }
 
-    get scratchWidth(): number
-    {
-        return this.uniforms.scratchWidth;
-    }
+    // get scratchWidth(): number
+    // {
+    //     return this.uniforms.scratchWidth;
+    // }
 
     /**
      * The radius of the vignette effect, smaller
      * values produces a smaller vignette
      * @default 0
      */
-    set vignetting(value: number)
-    {
-        this.uniforms.vignetting = value;
-    }
+    // set vignetting(value: number)
+    // {
+    //     this.uniforms.vignetting = value;
+    // }
 
-    get vignetting(): number
-    {
-        return this.uniforms.vignetting;
-    }
+    // get vignetting(): number
+    // {
+    //     return this.uniforms.vignetting;
+    // }
 
     /**
      * Amount of opacity of vignette
      * @default 0
      */
-    set vignettingAlpha(value: number)
-    {
-        this.uniforms.vignettingAlpha = value;
-    }
+    // set vignettingAlpha(value: number)
+    // {
+    //     this.uniforms.vignettingAlpha = value;
+    // }
 
-    get vignettingAlpha(): number
-    {
-        return this.uniforms.vignettingAlpha;
-    }
+    // get vignettingAlpha(): number
+    // {
+    //     return this.uniforms.vignettingAlpha;
+    // }
 
     /**
      * Blur intensity of the vignette
      * @default 0
      */
-    set vignettingBlur(value: number)
-    {
-        this.uniforms.vignettingBlur = value;
-    }
+    // set vignettingBlur(value: number)
+    // {
+    //     this.uniforms.vignettingBlur = value;
+    // }
 
-    get vignettingBlur(): number
-    {
-        return this.uniforms.vignettingBlur;
-    }
+    // get vignettingBlur(): number
+    // {
+    //     return this.uniforms.vignettingBlur;
+    // }
 }
-
-export { OldFilmFilter };
-export type { OldFilmFilterOptions };

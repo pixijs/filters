@@ -1,22 +1,31 @@
 import { vertex } from '@tools/fragments';
 import fragment from './extract-brightness.frag';
-import { Filter } from '@pixi/core';
+import { Filter, GlProgram } from 'pixi.js';
 
 /**
  * Internal filter for AdvancedBloomFilter to get brightness.
  * @class
  * @private
  */
-class ExtractBrightnessFilter extends Filter
+export class ExtractBrightnessFilter extends Filter
 {
     /**
      * @param {number} [threshold] - Defines how bright a color needs to be extracted.
      */
     constructor(threshold = 0.5)
     {
-        super(vertex, fragment);
+        const glProgram = new GlProgram({
+            vertex,
+            fragment,
+            name: 'extract-brightness-filter',
+        });
 
-        this.threshold = threshold;
+        super({
+            glProgram,
+            resources: {},
+        });
+
+        // this.threshold = threshold;
     }
 
     /**
@@ -24,15 +33,12 @@ class ExtractBrightnessFilter extends Filter
      *
      * @default 0.5
      */
-    get threshold(): number
-    {
-        return this.uniforms.threshold;
-    }
-    set threshold(value: number)
-    {
-        this.uniforms.threshold = value;
-    }
+    // get threshold(): number
+    // {
+    //     return this.uniforms.threshold;
+    // }
+    // set threshold(value: number)
+    // {
+    //     this.uniforms.threshold = value;
+    // }
 }
-
-export { ExtractBrightnessFilter };
-

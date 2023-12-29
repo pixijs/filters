@@ -1,7 +1,7 @@
 in vec2 vTextureCoord;
 out vec4 finalColor;
 
-uniform sampler2D uTexture;
+uniform sampler2D uSampler;
 uniform float uGamma;
 uniform float uContrast;
 uniform float uSaturation;
@@ -10,7 +10,7 @@ uniform vec4 uColor;
 
 void main()
 {
-    vec4 c = texture(uTexture, vTextureCoord);
+    vec4 c = texture(uSampler, vTextureCoord);
 
     if (c.a > 0.0) {
         c.rgb /= c.a;

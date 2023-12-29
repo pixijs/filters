@@ -1,9 +1,9 @@
 import { vertex } from '@tools/fragments';
 import fragment from './crt.frag';
-import { Filter } from '@pixi/core';
-import type { Rectangle, CLEAR_MODES, FilterSystem, RenderTexture } from '@pixi/core';
+import { Filter, GlProgram } from 'pixi.js';
+import type { FilterSystem, RenderSurface, RenderTexture, Texture } from 'pixi.js';
 
-interface CRTFilterOptions
+export interface CRTFilterOptions
 {
     curvature: number;
     lineWidth: number;
@@ -23,11 +23,11 @@ interface CRTFilterOptions
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/crt.gif)
  *
  * @class
- * @extends PIXI.Filter
+ * @extends Filter
  * @see {@link https://www.npmjs.com/package/@pixi/filter-crt|@pixi/filter-crt}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class CRTFilter extends Filter
+export class CRTFilter extends Filter
 {
     /** Default constructor options */
     public static readonly defaults: CRTFilterOptions = {
@@ -67,147 +67,154 @@ class CRTFilter extends Filter
      */
     constructor(options?: Partial<CRTFilterOptions>)
     {
-        super(vertex, fragment);
-        this.uniforms.dimensions = new Float32Array(2);
+        const glProgram = new GlProgram({
+            vertex,
+            fragment,
+            name: 'crt-filter',
+        });
+
+        super({
+            glProgram,
+            resources: {},
+        });
+
+        // this.uniforms.dimensions = new Float32Array(2);
 
         Object.assign(this, CRTFilter.defaults, options);
     }
 
     /**
-     * Override existing apply method in PIXI.Filter
+     * Override existing apply method in Filter
      * @private
      */
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES): void
+    apply(filterManager: FilterSystem, input: Texture, output: RenderSurface, clear: boolean): void
     {
-        const { width, height } = input.filterFrame as Rectangle;
+        // const { width, height } = input.filterFrame as Rectangle;
 
-        this.uniforms.dimensions[0] = width;
-        this.uniforms.dimensions[1] = height;
+        // this.uniforms.dimensions[0] = width;
+        // this.uniforms.dimensions[1] = height;
 
-        this.uniforms.seed = this.seed;
-        this.uniforms.time = this.time;
+        // this.uniforms.seed = this.seed;
+        // this.uniforms.time = this.time;
 
-        filterManager.applyFilter(this, input, output, clear);
+        // filterManager.applyFilter(this, input, output, clear);
     }
 
     /**
      * Bent of interlaced lines, higher value means more bend
      * @default 1
      */
-    set curvature(value: number)
-    {
-        this.uniforms.curvature = value;
-    }
-    get curvature(): number
-    {
-        return this.uniforms.curvature;
-    }
+    // set curvature(value: number)
+    // {
+    //     this.uniforms.curvature = value;
+    // }
+    // get curvature(): number
+    // {
+    //     return this.uniforms.curvature;
+    // }
 
     /**
      * Width of interlaced lines
      * @default 1
      */
-    set lineWidth(value: number)
-    {
-        this.uniforms.lineWidth = value;
-    }
-    get lineWidth(): number
-    {
-        return this.uniforms.lineWidth;
-    }
+    // set lineWidth(value: number)
+    // {
+    //     this.uniforms.lineWidth = value;
+    // }
+    // get lineWidth(): number
+    // {
+    //     return this.uniforms.lineWidth;
+    // }
 
     /**
      * Contrast of interlaced lines
      * @default 0.25
      */
-    set lineContrast(value: number)
-    {
-        this.uniforms.lineContrast = value;
-    }
-    get lineContrast(): number
-    {
-        return this.uniforms.lineContrast;
-    }
+    // set lineContrast(value: number)
+    // {
+    //     this.uniforms.lineContrast = value;
+    // }
+    // get lineContrast(): number
+    // {
+    //     return this.uniforms.lineContrast;
+    // }
 
     /**
      * `true` for vertical lines, `false` for horizontal lines
      * @default false
      */
-    set verticalLine(value: boolean)
-    {
-        this.uniforms.verticalLine = value;
-    }
-    get verticalLine(): boolean
-    {
-        return this.uniforms.verticalLine;
-    }
+    // set verticalLine(value: boolean)
+    // {
+    //     this.uniforms.verticalLine = value;
+    // }
+    // get verticalLine(): boolean
+    // {
+    //     return this.uniforms.verticalLine;
+    // }
 
     /**
      * Opacity/intensity of the noise effect between `0` and `1`
      * @default 0
      */
-    set noise(value: number)
-    {
-        this.uniforms.noise = value;
-    }
-    get noise(): number
-    {
-        return this.uniforms.noise;
-    }
+    // set noise(value: number)
+    // {
+    //     this.uniforms.noise = value;
+    // }
+    // get noise(): number
+    // {
+    //     return this.uniforms.noise;
+    // }
 
     /**
      * The size of the noise particles
      * @default 0
      */
-    set noiseSize(value: number)
-    {
-        this.uniforms.noiseSize = value;
-    }
-    get noiseSize(): number
-    {
-        return this.uniforms.noiseSize;
-    }
+    // set noiseSize(value: number)
+    // {
+    //     this.uniforms.noiseSize = value;
+    // }
+    // get noiseSize(): number
+    // {
+    //     return this.uniforms.noiseSize;
+    // }
 
     /**
      * The radius of the vignette effect, smaller
      * values produces a smaller vignette
      * @default 0
      */
-    set vignetting(value: number)
-    {
-        this.uniforms.vignetting = value;
-    }
-    get vignetting(): number
-    {
-        return this.uniforms.vignetting;
-    }
+    // set vignetting(value: number)
+    // {
+    //     this.uniforms.vignetting = value;
+    // }
+    // get vignetting(): number
+    // {
+    //     return this.uniforms.vignetting;
+    // }
 
     /**
      * Amount of opacity of vignette
      * @default 0
      */
-    set vignettingAlpha(value: number)
-    {
-        this.uniforms.vignettingAlpha = value;
-    }
-    get vignettingAlpha(): number
-    {
-        return this.uniforms.vignettingAlpha;
-    }
+    // set vignettingAlpha(value: number)
+    // {
+    //     this.uniforms.vignettingAlpha = value;
+    // }
+    // get vignettingAlpha(): number
+    // {
+    //     return this.uniforms.vignettingAlpha;
+    // }
 
     /**
      * Blur intensity of the vignette
      * @default 0
      */
-    set vignettingBlur(value: number)
-    {
-        this.uniforms.vignettingBlur = value;
-    }
-    get vignettingBlur(): number
-    {
-        return this.uniforms.vignettingBlur;
-    }
+    // set vignettingBlur(value: number)
+    // {
+    //     this.uniforms.vignettingBlur = value;
+    // }
+    // get vignettingBlur(): number
+    // {
+    //     return this.uniforms.vignettingBlur;
+    // }
 }
-
-export { CRTFilter };
-export type { CRTFilterOptions };

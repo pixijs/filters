@@ -27,7 +27,7 @@ export interface BloomFilterOptions
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/bloom.png)
  *
  * @class
- * @extends PIXI.Filter
+ * @extends Filter
  * @see {@link https://www.npmjs.com/package/@pixi/filter-bloom|@pixi/filter-bloom}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */

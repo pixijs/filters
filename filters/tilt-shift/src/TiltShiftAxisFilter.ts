@@ -1,6 +1,6 @@
 import { vertex } from '@tools/fragments';
 import fragment from './tilt-shift.frag';
-import { Filter, Point } from '@pixi/core';
+import { Filter, GlProgram, Point } from 'pixi.js';
 
 // @author Vico @vicocotea
 // original filter https://github.com/evanw/glfx.js/blob/master/src/filters/blur/tiltshift.js
@@ -9,7 +9,7 @@ import { Filter, Point } from '@pixi/core';
 /**
  * Options for creating filter.
  */
-interface TiltShiftFilterOptions
+export interface TiltShiftFilterOptions
 {
     /** The strength of the blur. */
     blur: number;
@@ -25,21 +25,30 @@ interface TiltShiftFilterOptions
  * A TiltShiftAxisFilter.
  *
  * @class
- * @extends PIXI.Filter
+ * @extends Filter
  * @private
  */
-class TiltShiftAxisFilter extends Filter
+export class TiltShiftAxisFilter extends Filter
 {
     constructor(options: TiltShiftFilterOptions)
     {
-        super(vertex, fragment);
+        const glProgram = new GlProgram({
+            vertex,
+            fragment,
+            name: 'tilt-shift-axis-filter',
+        });
 
-        this.uniforms.blur = options.blur;
-        this.uniforms.gradientBlur = options.gradientBlur;
-        this.uniforms.start = options.start ?? new Point(0, window.innerHeight / 2);
-        this.uniforms.end = options.end ?? new Point(600, window.innerHeight / 2);
-        this.uniforms.delta = new Point(30, 30);
-        this.uniforms.texSize = new Point(window.innerWidth, window.innerHeight);
+        super({
+            glProgram,
+            resources: {},
+        });
+
+        // this.uniforms.blur = options.blur;
+        // this.uniforms.gradientBlur = options.gradientBlur;
+        // this.uniforms.start = options.start ?? new Point(0, window.innerHeight / 2);
+        // this.uniforms.end = options.end ?? new Point(600, window.innerHeight / 2);
+        // this.uniforms.delta = new Point(30, 30);
+        // this.uniforms.texSize = new Point(window.innerWidth, window.innerHeight);
         this.updateDelta();
     }
 
@@ -50,8 +59,8 @@ class TiltShiftAxisFilter extends Filter
      */
     protected updateDelta(): void
     {
-        this.uniforms.delta.x = 0;
-        this.uniforms.delta.y = 0;
+        // this.uniforms.delta.x = 0;
+        // this.uniforms.delta.y = 0;
     }
 
     /**
@@ -59,61 +68,58 @@ class TiltShiftAxisFilter extends Filter
      *
      * @memberof TiltShiftAxisFilter#
      */
-    get blur(): number
-    {
-        return this.uniforms.blur;
-    }
-    set blur(value: number)
-    {
-        this.uniforms.blur = value;
-    }
+    // get blur(): number
+    // {
+    //     return this.uniforms.blur;
+    // }
+    // set blur(value: number)
+    // {
+    //     this.uniforms.blur = value;
+    // }
 
     /**
      * The strength of the gradient blur.
      *
      * @memberof TiltShiftAxisFilter#
      */
-    get gradientBlur(): number
-    {
-        return this.uniforms.gradientBlur;
-    }
-    set gradientBlur(value: number)
-    {
-        this.uniforms.gradientBlur = value;
-    }
+    // get gradientBlur(): number
+    // {
+    //     return this.uniforms.gradientBlur;
+    // }
+    // set gradientBlur(value: number)
+    // {
+    //     this.uniforms.gradientBlur = value;
+    // }
 
     /**
      * The X value to start the effect at.
      *
-     * @member {PIXI.Point}
+     * @member {Point}
      * @memberof TiltShiftAxisFilter#
      */
-    get start(): Point
-    {
-        return this.uniforms.start;
-    }
-    set start(value: Point)
-    {
-        this.uniforms.start = value;
-        this.updateDelta();
-    }
+    // get start(): Point
+    // {
+    //     return this.uniforms.start;
+    // }
+    // set start(value: Point)
+    // {
+    //     this.uniforms.start = value;
+    //     this.updateDelta();
+    // }
 
     /**
      * The X value to end the effect at.
      *
-     * @member {PIXI.Point}
+     * @member {Point}
      * @memberof TiltShiftAxisFilter#
      */
-    get end(): Point
-    {
-        return this.uniforms.end;
-    }
-    set end(value: Point)
-    {
-        this.uniforms.end = value;
-        this.updateDelta();
-    }
+    // get end(): Point
+    // {
+    //     return this.uniforms.end;
+    // }
+    // set end(value: Point)
+    // {
+    //     this.uniforms.end = value;
+    //     this.updateDelta();
+    // }
 }
-
-export { TiltShiftAxisFilter };
-export type { TiltShiftFilterOptions };

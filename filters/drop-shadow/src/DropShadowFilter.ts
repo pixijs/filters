@@ -1,8 +1,8 @@
 import { KawaseBlurFilter } from '@pixi/filter-kawase-blur';
 import { vertex } from '@tools/fragments';
 import fragment from './dropshadow.frag';
-import { Filter, DEG_TO_RAD, ObservablePoint, utils } from '@pixi/core';
-import type { IPoint, CLEAR_MODES, FilterSystem, RenderTexture, IPointData } from '@pixi/core';
+import { Filter, DEG_TO_RAD, ObservablePoint, utils } from 'pixi.js';
+import type { IPoint, CLEAR_MODES, FilterSystem, RenderTexture, IPointData } from 'pixi.js';
 
 type PixelSizeValue = number | number[] | IPoint;
 
@@ -27,7 +27,7 @@ interface DropShadowFilterOptions
  * Drop shadow filter.<br>
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/drop-shadow.png)
  * @class
- * @extends PIXI.Filter
+ * @extends Filter
  * @see {@link https://www.npmjs.com/package/@pixi/filter-drop-shadow|@pixi/filter-drop-shadow}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
@@ -71,7 +71,7 @@ class DropShadowFilter extends Filter
      * @param {number} [options.blur=2] - Sets the strength of the Blur properties simultaneously
      * @param {number} [options.quality=3] - The quality of the Blur filter.
      * @param {number[]} [options.kernels=null] - The kernels of the Blur filter.
-     * @param {number|number[]|PIXI.Point} [options.pixelSize=1] - the pixelSize of the Blur filter.
+     * @param {number|number[]|Point} [options.pixelSize=1] - the pixelSize of the Blur filter.
      * @param {number} [options.resolution=1] - The resolution of the Blur filter.
      */
     constructor(options?: Partial<DropShadowFilterOptions>)
@@ -115,7 +115,7 @@ class DropShadowFilter extends Filter
         this.color = color;
     }
 
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES): void
+    apply(filterManager: FilterSystem, input: Texture, output: RenderSurface, clear: boolean): void
     {
         const target = filterManager.getFilterTexture();
 
@@ -159,7 +159,7 @@ class DropShadowFilter extends Filter
 
     /**
      * Set the offset position of the drop-shadow relative to the original image.
-     * @type {PIXI.IPointData}
+     * @type {IPointData}
      * @default {x: 4, y: 4}
      */
     public set offset(value: IPointData)
@@ -296,7 +296,7 @@ class DropShadowFilter extends Filter
     /**
      * Sets the pixelSize of the Kawase Blur filter
      *
-     * @member {number|number[]|PIXI.Point}
+     * @member {number|number[]|Point}
      * @default 1
      */
     get pixelSize(): PixelSizeValue

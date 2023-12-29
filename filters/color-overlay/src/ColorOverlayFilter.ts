@@ -1,6 +1,6 @@
 import { vertex } from '@tools/fragments';
 import fragment from './colorOverlay.frag';
-import { Filter, utils } from '@pixi/core';
+import { Filter, GlProgram } from 'pixi.js';
 
 type Color = number | number[] | Float32Array;
 
@@ -9,7 +9,7 @@ type Color = number | number[] | Float32Array;
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/color-overlay.png)
  *
  * @class
- * @extends PIXI.Filter
+ * @extends Filter
  * @see {@link https://www.npmjs.com/package/@pixi/filter-color-replace|@pixi/filter-color-replace}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  *
@@ -22,7 +22,7 @@ type Color = number | number[] | Float32Array;
  *   )];
  *
  */
-class ColorOverlayFilter extends Filter
+export class ColorOverlayFilter extends Filter
 {
     private _color = 0x0;
     private _alpha = 1;
@@ -33,10 +33,19 @@ class ColorOverlayFilter extends Filter
      */
     constructor(color: Color = 0x000000, alpha = 1)
     {
-        super(vertex, fragment);
-        this.uniforms.color = new Float32Array(3);
-        this.color = color;
-        this.alpha = alpha;
+        const glProgram = new GlProgram({
+            vertex,
+            fragment,
+            name: 'color-overlay-filter',
+        });
+
+        super({
+            glProgram,
+            resources: {},
+        });
+        // this.uniforms.color = new Float32Array(3);
+        // this.color = color;
+        // this.alpha = alpha;
     }
 
     /**
@@ -44,41 +53,39 @@ class ColorOverlayFilter extends Filter
      * @member {number|Array<number>|Float32Array}
      * @default 0x000000
      */
-    set color(value: Color)
-    {
-        const arr = this.uniforms.color;
+    // set color(value: Color)
+    // {
+    //     const arr = this.uniforms.color;
 
-        if (typeof value === 'number')
-        {
-            utils.hex2rgb(value, arr);
-            this._color = value;
-        }
-        else
-        {
-            arr[0] = value[0];
-            arr[1] = value[1];
-            arr[2] = value[2];
-            this._color = utils.rgb2hex(arr);
-        }
-    }
-    get color(): Color
-    {
-        return this._color;
-    }
+    //     if (typeof value === 'number')
+    //     {
+    //         utils.hex2rgb(value, arr);
+    //         this._color = value;
+    //     }
+    //     else
+    //     {
+    //         arr[0] = value[0];
+    //         arr[1] = value[1];
+    //         arr[2] = value[2];
+    //         this._color = utils.rgb2hex(arr);
+    //     }
+    // }
+    // get color(): Color
+    // {
+    //     return this._color;
+    // }
 
     /**
      * The alpha value of the color
      * @default 0
      */
-    set alpha(value: number)
-    {
-        this.uniforms.alpha = value;
-        this._alpha = value;
-    }
-    get alpha(): number
-    {
-        return this._alpha;
-    }
+    // set alpha(value: number)
+    // {
+    //     this.uniforms.alpha = value;
+    //     this._alpha = value;
+    // }
+    // get alpha(): number
+    // {
+    //     return this._alpha;
+    // }
 }
-
-export { ColorOverlayFilter };

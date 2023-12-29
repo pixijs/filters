@@ -1,5 +1,4 @@
 // utils
-import { utils } from '@pixi/core';
 import { Color } from './ColorGradientFilter';
 import rgba from 'color-rgba';
 
@@ -10,7 +9,9 @@ export function colorToNormalizedRgba(value: Color): number[] | Float32Array
         case 'string':
             return stringToNormalizedRgba(value);
         case 'number':
-            return utils.hex2rgb(value);
+            // TODO: Do conversion
+            return [0, 0, 0, 1];
+            // return hex2rgb(value);
         default:
             return value;
     }

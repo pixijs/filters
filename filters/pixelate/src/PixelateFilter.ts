@@ -1,7 +1,7 @@
 import { vertex } from '@tools/fragments';
 import fragment from './pixelate.frag';
-import { Filter } from '@pixi/core';
-import type { Point } from '@pixi/core';
+import { Filter, GlProgram } from 'pixi.js';
+import type { Point } from 'pixi.js';
 
 type Size = number | number[] | Point;
 
@@ -10,40 +10,48 @@ type Size = number | number[] | Point;
  * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/pixelate.png)
  *
  * @class
- * @extends PIXI.Filter
+ * @extends Filter
  * @see {@link https://www.npmjs.com/package/@pixi/filter-pixelate|@pixi/filter-pixelate}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class PixelateFilter extends Filter
+export class PixelateFilter extends Filter
 {
     /**
-     * @param {PIXI.Point|Array<number>|number} [size=10] - Either the width/height of the size of the pixels, or square size
+     * @param {Point|Array<number>|number} [size=10] - Either the width/height of the size of the pixels, or square size
      */
     constructor(size: Size = 10)
     {
-        super(vertex, fragment);
-        this.size = size;
+        const glProgram = new GlProgram({
+            vertex,
+            fragment,
+            name: 'pixelate-filter',
+        });
+
+        super({
+            glProgram,
+            resources: {},
+        });
+
+        // this.size = size;
     }
 
     /**
      * This a point that describes the size of the blocks.
      * x is the width of the block and y is the height.
      *
-     * @member {PIXI.Point|Array<number>|number}
+     * @member {Point|Array<number>|number}
      * @default 10
      */
-    get size(): Size
-    {
-        return this.uniforms.size;
-    }
-    set size(value: Size)
-    {
-        if (typeof value === 'number')
-        {
-            value = [value, value];
-        }
-        this.uniforms.size = value;
-    }
+    // get size(): Size
+    // {
+    //     return this.uniforms.size;
+    // }
+    // set size(value: Size)
+    // {
+    //     if (typeof value === 'number')
+    //     {
+    //         value = [value, value];
+    //     }
+    //     this.uniforms.size = value;
+    // }
 }
-
-export { PixelateFilter };
