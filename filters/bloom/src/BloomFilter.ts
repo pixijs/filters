@@ -1,9 +1,25 @@
-import { Filter, Point, BLEND_MODES } from '@pixi/core';
-import { AlphaFilter } from '@pixi/filter-alpha';
-import { BlurFilterPass } from '@pixi/filter-blur';
-import type { FilterSystem, RenderTexture, CLEAR_MODES } from '@pixi/core';
+import { AlphaFilter, BlurFilterPass, FilterSystem, Point, RenderSurface, Texture, TexturePool } from 'pixi.js';
 
-type BlurValue = number | Point | number[];
+type BlurValue = number | Point | [number, number];
+
+export interface BloomFilterOptions
+{
+    /**
+     * Sets the strength of the blur. If only a number is provided, it will assign to both x and y.
+     * @default [2,2]
+     */
+    strength?: BlurValue;
+    /**
+     * The quality of the blur.
+     * @default 4
+     */
+    quality?: number;
+    /**
+     * The kernel size of the blur filter. Must be an odd number between 5 and 15 (inclusive).
+     * @default 5
+     */
+    kernelSize?: number;
+}
 
 /**
  * The BloomFilter applies a Gaussian blur to an object.
@@ -15,99 +31,125 @@ type BlurValue = number | Point | number[];
  * @see {@link https://www.npmjs.com/package/@pixi/filter-bloom|@pixi/filter-bloom}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class BloomFilter extends Filter
+export class BloomFilter extends AlphaFilter
 {
-    private blurXFilter: BlurFilterPass;
-    private blurYFilter: BlurFilterPass;
-    private defaultFilter: AlphaFilter;
+    /** Default values for options. */
+    public static readonly DEFAULT_OPTIONS: BloomFilterOptions = {
+        strength: [2, 2],
+        quality: 4,
+        kernelSize: 5
+    };
 
-    /**
-    * @param {number|PIXI.Point|number[]} [blur=2] - Sets the strength of both the blurX and blurY properties simultaneously
-    * @param {number} [quality=4] - The quality of the blurX & blurY filter.
-    * @param {number} [resolution=1] - The resolution of the blurX & blurY filter.
-    * @param {number} [kernelSize=5] - The kernelSize of the blurX & blurY filter.Options: 5, 7, 9, 11, 13, 15.
-    */
-    constructor(blur: BlurValue = 2, quality = 4, resolution = 1, kernelSize = 5)
+    private _blurXFilter: BlurFilterPass;
+    private _blurYFilter: BlurFilterPass;
+    private _strength: BlurValue;
+
+    constructor(options?: BloomFilterOptions)
     {
+        options = { ...BloomFilter.DEFAULT_OPTIONS, ...options };
+
         super();
 
-        let blurX;
-        let blurY;
+        this._strength = options.strength ?? 2;
+        let strengthX;
+        let strengthY;
 
-        if (typeof blur === 'number')
+        if (Array.isArray(this._strength))
         {
-            blurX = blur;
-            blurY = blur;
+            strengthX = this._strength[0];
+            strengthY = this._strength[1];
         }
-        else if (blur instanceof Point)
+        else if (this._strength instanceof Point)
         {
-            blurX = blur.x;
-            blurY = blur.y;
+            strengthX = this._strength.x;
+            strengthY = this._strength.y;
         }
-        else if (Array.isArray(blur))
+        else
         {
-            blurX = blur[0];
-            blurY = blur[1];
+            strengthX = strengthY = this._strength;
         }
 
-        this.blurXFilter = new BlurFilterPass(true, blurX, quality, resolution, kernelSize);
-        this.blurYFilter = new BlurFilterPass(false, blurY, quality, resolution, kernelSize);
-        this.blurYFilter.blendMode = BLEND_MODES.SCREEN;
-        this.defaultFilter = new AlphaFilter();
+        this._blurXFilter = new BlurFilterPass({
+            ...options,
+            horizontal: true,
+            strength: strengthX
+        });
+
+        this._blurYFilter = new BlurFilterPass({
+            ...options,
+            horizontal: false,
+            strength: strengthY
+        });
+
+        this._blurYFilter.blendMode = 'screen';
     }
 
-    apply(filterManager: FilterSystem, input: RenderTexture, output: RenderTexture, clear: CLEAR_MODES): void
+    /**
+     * Override existing apply method in `Filter`
+     * @override
+     * @ignore
+     */
+    public override apply(filterManager: FilterSystem, input: Texture, output: RenderSurface, clear: boolean): void
     {
-        const renderTarget = filterManager.getFilterTexture();
+        const tempTexture = TexturePool.getSameSizeTexture(input);
+        const tempTexture2 = TexturePool.getSameSizeTexture(input);
 
-        // TODO - copyTexSubImage2D could be used here?
-        this.defaultFilter.apply(filterManager, input, output, clear);
+        filterManager.applyFilter(this, input, tempTexture, false);
+        filterManager.applyFilter(this._blurXFilter, tempTexture, tempTexture2, false);
+        filterManager.applyFilter(this._blurYFilter, tempTexture2, output, clear);
 
-        this.blurXFilter.apply(filterManager, input, renderTarget, 1);
-        this.blurYFilter.apply(filterManager, renderTarget, output, 0);
-
-        filterManager.returnFilterTexture(renderTarget);
+        TexturePool.returnTexture(tempTexture);
+        TexturePool.returnTexture(tempTexture2);
     }
 
     /**
      * Sets the strength of both the blurX and blurY properties simultaneously
      * @default 2
      */
-    get blur(): number
+    get strength(): BlurValue { return this._strength; }
+    set strength(value: BlurValue)
     {
-        return this.blurXFilter.blur;
-    }
-    set blur(value: number)
-    {
-        this.blurXFilter.blur = this.blurYFilter.blur = value;
-    }
-
-    /**
-     * Sets the strength of the blurX property
-     * @default 2
-     */
-    get blurX(): number
-    {
-        return this.blurXFilter.blur;
-    }
-    set blurX(value: number)
-    {
-        this.blurXFilter.blur = value;
+        if (value === this._strength) return;
+        this._strength = value;
+        this._updateStrength();
     }
 
     /**
-     * Sets the strength of the blurY property
+     * Sets the strength of the blur on the `x` axis
      * @default 2
      */
-    get blurY(): number
+    get strengthX(): number { return this._blurXFilter.strength; }
+    set strengthX(value: number) { this._blurXFilter.strength = value; }
+
+    /**
+     * Sets the strength of the blur on the `y` axis
+     * @default 2
+     */
+    get strengthY(): number { return this._blurYFilter.strength; }
+    set strengthY(value: number) { this._blurYFilter.strength = value; }
+
+    private _updateStrength()
     {
-        return this.blurYFilter.blur;
-    }
-    set blurY(value: number)
-    {
-        this.blurYFilter.blur = value;
+        let strengthX;
+        let strengthY;
+
+        if (Array.isArray(this._strength))
+        {
+            strengthX = this._strength[0];
+            strengthY = this._strength[1];
+        }
+        else if (this._strength instanceof Point)
+        {
+            strengthX = this._strength.x;
+            strengthY = this._strength.y;
+        }
+        else
+        {
+            strengthX = strengthY = this._strength;
+        }
+
+        this._blurXFilter.strength = strengthX;
+        this._blurYFilter.strength = strengthY;
     }
 }
-
-export { BloomFilter };
 
