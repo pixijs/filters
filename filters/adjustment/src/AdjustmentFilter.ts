@@ -1,6 +1,7 @@
 import { vertex } from '@tools/fragments';
 import fragment from './adjustment.frag';
-import { Filter, GlProgram, UniformGroup } from 'pixi.js';
+import source from './adjustment.wgsl';
+import { Filter, GlProgram, GpuProgram, UniformGroup } from 'pixi.js';
 
 export interface AdjustmentFilterOptions
 {
@@ -103,6 +104,17 @@ export class AdjustmentFilter extends Filter
             },
         });
 
+        const gpuProgram = new GpuProgram({
+            vertex: {
+                source,
+                entryPoint: 'mainVertex',
+            },
+            fragment: {
+                source,
+                entryPoint: 'mainFragment',
+            },
+        });
+
         const glProgram = new GlProgram({
             vertex,
             fragment,
@@ -110,6 +122,7 @@ export class AdjustmentFilter extends Filter
         });
 
         super({
+            gpuProgram,
             glProgram,
             resources: {
                 adjustmentUniforms
