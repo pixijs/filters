@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-bloom",
-  "version": "5.1.1",
+  "version": "8.0.0",
   "main": "./dist/filter-bloom.js",
   "description": "PixiJS filter to apply a simple bloom effect",
   "author": "Mat Groves",
@@ -32,13 +32,9 @@
     "index.d.ts"
   ],
   "peerDependencies": {
-    "@pixi/core": "^7.0.0-X",
-    "@pixi/filter-alpha": "^7.0.0-X",
-    "@pixi/filter-blur": "^7.0.0-X"
+    "pixi.js": "^8.0.0-X"
   },
   "devDependencies": {
-    "@pixi/core": "^7.0.0-X",
-    "@pixi/filter-alpha": "^7.0.0-X",
-    "@pixi/filter-blur": "^7.0.0-X"
+    "pixi.js": "^8.0.0-X"
   }
 }

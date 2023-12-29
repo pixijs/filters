@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-color-overlay",
-  "version": "5.1.1",
+  "version": "8.0.0",
   "main": "./dist/filter-color-overlay.js",
   "description": "PixiJS filter to overlay all colors with single color",
   "author": "Michael Deal",
@@ -32,10 +32,10 @@
     "index.d.ts"
   ],
   "peerDependencies": {
-    "@pixi/core": "^7.0.0-X"
+    "pixi.js": "^8.0.0-X"
   },
   "devDependencies": {
-    "@pixi/core": "^7.0.0-X",
-    "@tools/fragments": "5.0.0"
+    "pixi.js": "^8.0.0-X",
+    "@tools/fragments": "8.0.0"
   }
 }

@@ -1,5 +1,5 @@
 import * as filters from 'pixi-filters';
-import PIXI, {
+import PixiFilters, {
     Application,
     Container,
     Rectangle,
@@ -13,7 +13,7 @@ import PIXI, {
 /**
  * Demo show a bunch of fish and a lil-gui controls
  * @class
- * @extends PIXI.Application
+ * @extends Application
  */
 export default class DemoApplication extends Application
 {
@@ -257,14 +257,14 @@ export default class DemoApplication extends Application
      * Add a new filter
      * @param {string} id Class name
      * @param {object|function} options The class name of filter or options
-     * @param {string} [options.id] The name of the PIXI.filters class
+     * @param {string} [options.id] The name of the filter class
      * @param {boolean} [options.global] Filter is in pixi.js
      * @param {array} [options.args] Constructor arguments
      * @param {boolean} [options.fishOnly=false] Apply to fish only, not whole scene
      * @param {boolean} [options.enabled=false] Filter is enabled by default
      * @param {function} [oncreate] Function takes filter and gui folder as
      *        arguments and is scoped to the Demo application.
-     * @return {PIXI.Filter} Instance of new filter
+     * @return {Filter} Instance of new filter
      */
     addFilter(id, options)
     {
@@ -290,7 +290,7 @@ export default class DemoApplication extends Application
 
         const app = this;
         const folder = this.gui.addFolder(options.name).close();
-        const ClassRef = filters[id] || PIXI[id];
+        const ClassRef = filters[id] || PixiFilters[id];
 
         if (!ClassRef)
         {

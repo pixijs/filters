@@ -91,7 +91,7 @@ app.init({
 
         if (obj)
         {
-            const FilterClass = filters[obj.name] || PIXI.filters[obj.name];
+            const FilterClass = filters[obj.name] || PIXI[obj.name];
 
             assert(!!FilterClass, `Filter ${obj.name} does not exist`);
             let filter;
