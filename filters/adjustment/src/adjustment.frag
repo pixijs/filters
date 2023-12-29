@@ -1,31 +1,29 @@
-varying vec2 vTextureCoord;
-uniform sampler2D uSampler;
+in vec2 vTextureCoord;
+out vec4 finalColor;
 
-uniform float gamma;
-uniform float contrast;
-uniform float saturation;
-uniform float brightness;
-uniform float red;
-uniform float green;
-uniform float blue;
-uniform float alpha;
+uniform sampler2D uTexture;
+uniform float uGamma;
+uniform float uContrast;
+uniform float uSaturation;
+uniform float uBrightness;
+uniform vec4 uColor;
 
-void main(void)
+void main()
 {
-    vec4 c = texture2D(uSampler, vTextureCoord);
+    vec4 c = texture(uTexture, vTextureCoord);
 
     if (c.a > 0.0) {
         c.rgb /= c.a;
 
-        vec3 rgb = pow(c.rgb, vec3(1. / gamma));
-        rgb = mix(vec3(.5), mix(vec3(dot(vec3(.2125, .7154, .0721), rgb)), rgb, saturation), contrast);
-        rgb.r *= red;
-        rgb.g *= green;
-        rgb.b *= blue;
-        c.rgb = rgb * brightness;
+        vec3 rgb = pow(c.rgb, vec3(1. / uGamma));
+        rgb = mix(vec3(.5), mix(vec3(dot(vec3(.2125, .7154, .0721), rgb)), rgb, uSaturation), uContrast);
+        rgb.r *= uColor.r;
+        rgb.g *= uColor.g;
+        rgb.b *= uColor.b;
+        c.rgb = rgb * uBrightness;
 
         c.rgb *= c.a;
     }
 
-    gl_FragColor = c * alpha;
+    finalColor = c * uColor.a;
 }

@@ -9,7 +9,7 @@ const main = async () =>
 
     app.enabledFilters = getEnabledFiltersFromQueryString();
 
-    await app.init();
+    await app.init({ preference: 'webgl' });
     await app.load([
         { alias: 'background', src: 'images/displacement_BG.jpg' },
         { alias: 'overlay', src: 'images/overlay.png' },
@@ -23,14 +23,18 @@ const main = async () =>
         { alias: 'colormap', src: 'images/colormap.png' },
     ]);
 
-    filters.alpha.call(app);
-    filters.blur.call(app);
-    filters.colorMatrix.call(app);
-    filters.displacement.call(app);
-    filters.noise.call(app);
+    // filters.alpha.call(app);
+    // filters.blur.call(app);
+    // filters.colorMatrix.call(app);
+    // filters.displacement.call(app);
+    // filters.noise.call(app);
 
     // TODO: https://github.com/orgs/pixijs/projects/2/views/4?pane=issue&itemId=48586590
     // filters.shockwave.call(app);
+
+    filters.adjustment.call(app);
+    // filters.bloom.call(app);
+    // filters.kawaseBlur.call(app);
 
     // TODO: Re-enable this in place of the above once v8 conversion is complete
     // for (const i in filters)
