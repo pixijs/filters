@@ -91,15 +91,12 @@ export class BloomFilter extends AlphaFilter
      */
     public override apply(filterManager: FilterSystem, input: Texture, output: RenderSurface, clear: boolean): void
     {
-        const tempTexture = TexturePool.getSameSizeTexture(input);
-        const tempTexture2 = TexturePool.getSameSizeTexture(input);
+        const renderTarget = TexturePool.getSameSizeTexture(input);
 
-        filterManager.applyFilter(this, input, tempTexture, false);
-        filterManager.applyFilter(this._blurXFilter, tempTexture, tempTexture2, false);
-        filterManager.applyFilter(this._blurYFilter, tempTexture2, output, clear);
-
-        TexturePool.returnTexture(tempTexture);
-        TexturePool.returnTexture(tempTexture2);
+        filterManager.applyFilter(this, input, output, clear);
+        filterManager.applyFilter(this._blurXFilter, input, renderTarget, true);
+        filterManager.applyFilter(this._blurYFilter, renderTarget, output, false);
+        TexturePool.returnTexture(renderTarget);
     }
 
     /**
