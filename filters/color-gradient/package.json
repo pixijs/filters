@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-color-gradient",
-  "version": "5.2.0",
+  "version": "8.0.0",
   "main": "./dist/filter-color-gradient.js",
   "description": "PixiJS filter to render a color gradient.",
   "author": "Viktor Persson",
@@ -33,12 +33,12 @@
     "test:watch": "jest test --watch"
   },
   "peerDependencies": {
-    "@pixi/core": "^7.0.0-X"
+    "pixi.js": "^8.0.0-X"
   },
   "devDependencies": {
     "@jest/globals": "^29.3.1",
-    "@pixi/core": "^7.0.0-X",
-    "@tools/fragments": "5.0.0",
+    "pixi.js": "^8.0.0-X",
+    "@tools/fragments": "8.0.0",
     "@types/color-rgba": "^2.1.0",
     "@types/gradient-parser": "^0.1.2",
     "color-rgba": "^2.4.0",

@@ -1,11 +1,7 @@
 import esbuild from 'rollup-plugin-esbuild';
 import resolve from '@rollup/plugin-node-resolve';
-
 const globals = {
     'pixi.js': 'PIXI',
-    '@pixi/core': 'PIXI',
-    '@pixi/filter-alpha': 'PIXI.filters',
-    '@pixi/filter-blur': 'PIXI.filters',
 };
 
 export default {

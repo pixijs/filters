@@ -2,7 +2,7 @@
 
 [![Node.js CI](https://github.com/pixijs/filters/workflows/Node.js%20CI/badge.svg)](https://github.com/pixi.js/pixi-filters/actions?query=workflow%3A%22Node.js+CI%22) [![npm version](https://badge.fury.io/js/pixi-filters.svg)](https://badge.fury.io/js/pixi-filters)
 
-PixiJS v7 optional display filters.
+PixiJS v8 optional display filters.
 
 Filters include:
 

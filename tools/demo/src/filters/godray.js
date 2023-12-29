@@ -1,4 +1,4 @@
-import * as PIXI from 'pixi.js';
+import { Point } from 'pixi.js';
 
 export default function ()
 {
@@ -13,7 +13,7 @@ export default function ()
             this.gain = 0.6;
             this.lacunarity = 2.75;
             this.animating = true;
-            this.center = new PIXI.Point(100, -100);
+            this.center = new Point(100, -100);
 
             app.events.on('enable', (enabled) =>
             {

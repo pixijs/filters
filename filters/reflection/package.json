@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-reflection",
-  "version": "5.1.1",
+  "version": "8.0.0",
   "main": "./dist/filter-reflection.js",
   "description": "PixiJS filter to apply reflection and wave effect",
   "author": "finscn <finscn@gmail.com>",
@@ -29,10 +29,10 @@
     "index.d.ts"
   ],
   "peerDependencies": {
-    "@pixi/core": "^7.0.0-X"
+    "pixi.js": "^8.0.0-X"
   },
   "devDependencies": {
-    "@pixi/core": "^7.0.0-X",
-    "@tools/fragments": "5.0.0"
+    "pixi.js": "^8.0.0-X",
+    "@tools/fragments": "8.0.0"
   }
 }

@@ -41,7 +41,8 @@ async function main()
         ].join('\n');
 
         // Get settings from package JSON
-        let { main, module, bundle, bundleModule, globals } = pkg.config;
+        const { main, module, bundle, bundleModule } = pkg.config;
+        let { globals } = pkg.config;
         const basePath = path.relative(__dirname, pkg.dir);
         const input = path.join(basePath, 'src/index.ts');
         const freeze = false;
@@ -79,12 +80,10 @@ async function main()
         if (bundle)
         {
             const name = '__filters';
-            const footer = `Object.assign(PIXI.filters, ${name});`;
+            const footer = `Object.assign(PIXI, ${name});`;
 
             globals = Object.assign({
-                '@pixi/core': 'PIXI',
-                '@pixi/filter-alpha': 'PIXI.filters',
-                '@pixi/filter-blur': 'PIXI.filters'
+                'pixi.js': 'PIXI',
             }, globals);
             builds.push({
                 input,
