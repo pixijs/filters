@@ -3,10 +3,11 @@ import esbuild from 'rollup-plugin-esbuild';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import { string } from 'rollup-plugin-string';
-import dedupeDefaultVert from './scripts/rollup-dedupe-vert'
+import dedupeDefaultVert from './scripts/rollup-dedupe-vert';
 import workspacesRun from 'workspaces-run';
 
-async function main() {
+async function main()
+{
     const plugins = [
         esbuild({
             target: 'ES2017',
@@ -17,7 +18,8 @@ async function main() {
         string({
             include: [
                 '**/*.frag',
-                '**/*.vert'
+                '**/*.vert',
+                '**/*.wgsl'
             ]
         }),
         dedupeDefaultVert()
@@ -26,7 +28,8 @@ async function main() {
     const compiled = (new Date()).toUTCString().replace(/GMT/g, 'UTC');
     const sourcemap = true;
 
-    const appendPackage = (pkg) => {
+    const appendPackage = (pkg) =>
+    {
         const banner = [
             '/*!',
             ` * ${pkg.name} - v${pkg.config.version}`,
@@ -73,9 +76,11 @@ async function main() {
         // The package.json file has a bundle field
         // we'll use this to generate the bundle file
         // this will package all dependencies
-        if (bundle) {
+        if (bundle)
+        {
             const name = '__filters';
             const footer = `Object.assign(PIXI.filters, ${name});`;
+
             globals = Object.assign({
                 '@pixi/core': 'PIXI',
                 '@pixi/filter-alpha': 'PIXI.filters',
@@ -108,6 +113,7 @@ async function main() {
                 plugins,
             });
         }
+
         return builds;
     };
 
