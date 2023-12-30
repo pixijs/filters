@@ -1,40 +1,36 @@
-precision mediump float;
+precision highp float;
+in vec2 vTextureCoord;
+out vec4 finalColor;
 
-varying vec2 vTextureCoord;
-
-uniform vec2 size;
+uniform vec2 uSize;
 uniform sampler2D uSampler;
-
-uniform vec4 filterArea;
+uniform vec4 uInputSize;
 
 vec2 mapCoord( vec2 coord )
 {
-    coord *= filterArea.xy;
-    coord += filterArea.zw;
+    coord *= uInputSize.xy;
+    coord += uInputSize.zw;
 
     return coord;
 }
 
 vec2 unmapCoord( vec2 coord )
 {
-    coord -= filterArea.zw;
-    coord /= filterArea.xy;
+    coord -= uInputSize.zw;
+    coord /= uInputSize.xy;
 
     return coord;
 }
 
-vec2 pixelate(vec2 coord, vec2 size)
+vec2 pixelate(vec2 coord, vec2 uSize)
 {
-	return floor( coord / size ) * size;
+	return floor( coord / uSize ) * uSize;
 }
 
 void main(void)
 {
     vec2 coord = mapCoord(vTextureCoord);
-
-    coord = pixelate(coord, size);
-
+    coord = pixelate(coord, uSize);
     coord = unmapCoord(coord);
-
-    gl_FragColor = texture2D(uSampler, coord);
+    finalColor = texture(uSampler, coord);
 }
