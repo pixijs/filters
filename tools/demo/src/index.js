@@ -35,6 +35,7 @@ const main = async () =>
     filters.adjustment.call(app);
     filters.bloom.call(app);
     filters.grayscale.call(app);
+    filters.twist.call(app);
     // filters.kawaseBlur.call(app);
 
     // TODO: Re-enable this in place of the above once v8 conversion is complete

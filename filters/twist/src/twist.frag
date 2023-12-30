@@ -1,56 +1,54 @@
-varying vec2 vTextureCoord;
+precision highp float;
+in vec2 vTextureCoord;
+out vec4 finalColor;
 
 uniform sampler2D uSampler;
-uniform float radius;
-uniform float angle;
-uniform vec2 offset;
-uniform vec4 filterArea;
+uniform vec2 uTwist;
+uniform vec2 uOffset;
+uniform vec4 uInputSize;
 
 vec2 mapCoord( vec2 coord )
 {
-    coord *= filterArea.xy;
-    coord += filterArea.zw;
+    coord *= uInputSize.xy;
+    coord += uInputSize.zw;
 
     return coord;
 }
 
 vec2 unmapCoord( vec2 coord )
 {
-    coord -= filterArea.zw;
-    coord /= filterArea.xy;
+    coord -= uInputSize.zw;
+    coord /= uInputSize.xy;
 
     return coord;
 }
 
 vec2 twist(vec2 coord)
 {
-    coord -= offset;
+    coord -= uOffset;
 
     float dist = length(coord);
+    float uRadius = uTwist[0];
+    float uAngle = uTwist[1];
 
-    if (dist < radius)
+    if (dist < uRadius)
     {
-        float ratioDist = (radius - dist) / radius;
-        float angleMod = ratioDist * ratioDist * angle;
+        float ratioDist = (uRadius - dist) / uRadius;
+        float angleMod = ratioDist * ratioDist * uAngle;
         float s = sin(angleMod);
         float c = cos(angleMod);
         coord = vec2(coord.x * c - coord.y * s, coord.x * s + coord.y * c);
     }
 
-    coord += offset;
+    coord += uOffset;
 
     return coord;
 }
 
 void main(void)
 {
-
     vec2 coord = mapCoord(vTextureCoord);
-
     coord = twist(coord);
-
     coord = unmapCoord(coord);
-
-    gl_FragColor = texture2D(uSampler, coord );
-
+    finalColor = texture(uSampler, coord);
 }

@@ -73,17 +73,6 @@ export class AdjustmentFilter extends Filter
         alpha: 1,
     };
 
-    /**
-     * @param {object|number} [options] - The optional parameters of the filter.
-     * @param {number} [options.gamma=1] - The amount of luminance
-     * @param {number} [options.saturation=1] - The amount of color saturation
-     * @param {number} [options.contrast=1] - The amount of contrast
-     * @param {number} [options.brightness=1] - The overall brightness
-     * @param {number} [options.red=1] - The multipled red channel
-     * @param {number} [options.green=1] - The multipled green channel
-     * @param {number} [options.blue=1] - The multipled blue channel
-     * @param {number} [options.alpha=1] - The overall alpha amount
-     */
     constructor(options?: AdjustmentFilterOptions)
     {
         options = { ...AdjustmentFilter.DEFAULT_OPTIONS, ...options };
