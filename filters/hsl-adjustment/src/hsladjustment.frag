@@ -1,12 +1,10 @@
-precision mediump float;
+in vec2 vTextureCoord;
+out vec4 finalColor;
 
-varying vec2 vTextureCoord;
 uniform sampler2D uSampler;
-uniform float uHue;
+uniform vec3 uHsl;
 uniform float uAlpha;
-uniform bool uColorize;
-uniform float uSaturation;
-uniform float uLightness;
+uniform float uColorize;
 
 // https://en.wikipedia.org/wiki/Luma_(video)
 const vec3 weight = vec3(0.299, 0.587, 0.114);
@@ -29,30 +27,34 @@ vec3 hueShift(vec3 color, float angle) {
 
 void main()
 {
-    vec4 color = texture2D(uSampler, vTextureCoord);
-    vec4 result = color;
+    vec4 color = texture(uSampler, vTextureCoord);
+    vec3 resultRGB = color.rgb;
+
+    float hue = uHsl[0];
+    float saturation = uHsl[1];
+    float lightness = uHsl[2];
 
     // colorize
-    if (uColorize) {
-        result.rgb = vec3(getWeightedAverage(result.rgb), 0., 0.);
+    if (uColorize > 0.5) {
+        resultRGB = vec3(getWeightedAverage(resultRGB), 0., 0.);
     }
 
     // hue
-    result.rgb = hueShift(result.rgb, uHue);
+    resultRGB = hueShift(resultRGB, hue);
 
     // saturation
     // https://github.com/evanw/glfx.js/blob/master/src/filters/adjust/huesaturation.js
-    float average = (result.r + result.g + result.b) / 3.0;
+    float average = (resultRGB.r + resultRGB.g + resultRGB.b) / 3.0;
 
-    if (uSaturation > 0.) {
-        result.rgb += (average - result.rgb) * (1. - 1. / (1.001 - uSaturation));
+    if (saturation > 0.) {
+        resultRGB += (average - resultRGB) * (1. - 1. / (1.001 - saturation));
     } else {
-        result.rgb -= (average - result.rgb) * uSaturation;
+        resultRGB -= (average - resultRGB) * saturation;
     }
 
     // lightness
-    result.rgb = mix(result.rgb, vec3(ceil(uLightness)) * color.a, abs(uLightness));
+    resultRGB = mix(resultRGB, vec3(ceil(lightness)) * color.a, abs(lightness));
 
     // alpha
-    gl_FragColor = mix(color, result, uAlpha);
+    finalColor = mix(color, vec4(resultRGB, color.a), uAlpha);
 }
