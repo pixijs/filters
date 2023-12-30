@@ -1,16 +1,50 @@
-import { vertex } from '@tools/fragments';
+import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './glow.frag';
-import { Filter, GlProgram } from 'pixi.js';
+import source from './glow.wgsl';
+import { Color, ColorSource, Filter, GlProgram, GpuProgram, UniformGroup } from 'pixi.js';
 
-interface GlowFilterOptions
+/**
+ * This WebGPU filter has been ported from the WebGL renderer that was originally created by mishaa
+ * http://codepen.io/mishaa/pen/raKzrm
+ */
+
+export interface GlowFilterOptions
 {
-    distance: number;
-    outerStrength: number;
-    innerStrength: number;
-    color: number;
-    quality: number;
-    knockout: boolean;
-    alpha: number;
+    /**
+     * The distance of the glow
+     * @default 10
+     */
+    distance?: number;
+    /**
+     * The strength of the glow outward from the edge of the sprite
+     * @default 4
+     */
+    outerStrength?: number;
+    /**
+     * The strength of the glow inward from the edge of the sprite
+     * @default 0
+     */
+    innerStrength?: number;
+    /**
+     * The color of the glow
+     * @default 0xffffff
+     */
+    color?: ColorSource;
+    /**
+     * The alpha of the glow
+     * @default 1
+     */
+    alpha?: number;
+    /**
+     * A number between 0 and 1 that describes the quality of the glow. The higher the number the less performant
+     * @default 0.1
+     */
+    quality?: number;
+    /**
+     * Toggle to hide the contents and only show glow
+     * @default false
+     */
+    knockout?: boolean;
 }
 
 /**
@@ -31,40 +65,50 @@ interface GlowFilterOptions
 export class GlowFilter extends Filter
 {
     /** Default values for options. */
-    static readonly defaults: GlowFilterOptions = {
+    public static readonly DEFAULT_OPTIONS: GlowFilterOptions = {
         distance: 10,
         outerStrength: 4,
         innerStrength: 0,
         color: 0xffffff,
+        alpha: 1,
         quality: 0.1,
         knockout: false,
-        alpha: 1,
     };
 
-    /**
-     * @param {number} [options] - Options for glow.
-     * @param {number} [options.distance=10] - The distance of the glow. Make it 2 times more for resolution=2.
-     *        It can't be changed after filter creation.
-     * @param {number} [options.outerStrength=4] - The strength of the glow outward from the edge of the sprite.
-     * @param {number} [options.innerStrength=0] - The strength of the glow inward from the edge of the sprite.
-     * @param {number} [options.color=0xffffff] - The color of the glow.
-     * @param {number} [options.quality=0.1] - A number between 0 and 1 that describes the quality of the glow.
-     *        The higher the number the less performant.
-     * @param {boolean} [options.knockout=false] - Toggle to hide the contents and only show glow.
-     */
-    constructor(options?: Partial<GlowFilterOptions>)
+    private _color: Color;
+
+    constructor(options?: GlowFilterOptions)
     {
-        const opts: GlowFilterOptions = Object.assign({}, GlowFilter.defaults, options);
-        const {
-            outerStrength,
-            innerStrength,
-            color,
-            knockout,
-            quality,
-            alpha } = opts;
+        options = { ...GlowFilter.DEFAULT_OPTIONS, ...options };
 
-        const distance = Math.round(opts.distance);
+        const distance = options.distance ?? 10;
+        const quality = options.quality ?? 0.1;
 
+        const glowUniforms = new UniformGroup({
+            uDistance: { value: distance, type: 'f32' },
+            uStrength: { value: [options.innerStrength, options.outerStrength], type: 'vec2<f32>' },
+            uColor: { value: new Float32Array(3), type: 'vec3<f32>' },
+            uAlpha: { value: options.alpha, type: 'f32' },
+            uQuality: { value: quality, type: 'f32' },
+            uKnockout: { value: (options?.knockout ?? false) ? 1 : 0, type: 'f32' },
+        });
+
+        const gpuProgram = new GpuProgram({
+            vertex: {
+                source: wgslVertex,
+                entryPoint: 'mainVertex',
+            },
+            fragment: {
+                source,
+                entryPoint: 'mainFragment',
+            },
+        });
+
+        /**
+         * Altering uDistance and uQuality won't have any affect on WebGL
+         * since we hard-assign them during creation to allow
+         * for the values to be used in GLSL loops
+         */
         const glProgram = new GlProgram({
             vertex,
             fragment: fragment
@@ -74,85 +118,68 @@ export class GlowFilter extends Filter
         });
 
         super({
+            gpuProgram,
             glProgram,
-            resources: {},
-        });
-
-        // this.uniforms.glowColor = new Float32Array([0, 0, 0, 1]);
-        // this.uniforms.alpha = 1;
-
-        Object.assign(this, {
-            color,
-            outerStrength,
-            innerStrength,
+            resources: {
+                glowUniforms
+            },
             padding: distance,
-            knockout,
-            alpha,
         });
+
+        this._color = new Color();
+        this.color = options.color ?? 0xffffff;
     }
-
-    /**
-     * The color of the glow.
-     * @default 0xFFFFFF
-     */
-    // get color(): number
-    // {
-    //     return utils.rgb2hex(this.uniforms.glowColor);
-    // }
-    // set color(value: number)
-    // {
-    //     utils.hex2rgb(value, this.uniforms.glowColor);
-    // }
-
-    /**
-     * The strength of the glow outward from the edge of the sprite.
-     * @default 4
-     */
-    // get outerStrength(): number
-    // {
-    //     return this.uniforms.outerStrength;
-    // }
-    // set outerStrength(value: number)
-    // {
-    //     this.uniforms.outerStrength = value;
-    // }
-
-    /**
-     * The strength of the glow inward from the edge of the sprite.
-     * @default 0
-     */
-    // get innerStrength(): number
-    // {
-    //     return this.uniforms.innerStrength;
-    // }
-    // set innerStrength(value: number)
-    // {
-    //     this.uniforms.innerStrength = value;
-    // }
 
     /**
      * Only draw the glow, not the texture itself
      * @default false
      */
-    // get knockout(): boolean
-    // {
-    //     return this.uniforms.knockout;
-    // }
-    // set knockout(value: boolean)
-    // {
-    //     this.uniforms.knockout = value;
-    // }
+    get distance(): number { return this.resources.glowUniforms.uniforms.uDistance; }
+    set distance(value: number) { this.resources.glowUniforms.uniforms.uDistance = this.padding = value; }
 
     /**
-     * The alpha value of the glow
-     * @default 1
-     */
-    // get alpha(): number
-    // {
-    //     return this.uniforms.alpha;
-    // }
-    // set alpha(value: number)
-    // {
-    //     this.uniforms.alpha = value;
-    // }
+    * The strength of the glow inward from the edge of the sprite.
+    * @default 0
+    */
+    get innerStrength(): number { return this.resources.glowUniforms.uniforms.uStrength[0]; }
+    set innerStrength(value: number) { this.resources.glowUniforms.uniforms.uStrength[0] = value; }
+
+    /**
+    * The strength of the glow outward from the edge of the sprite.
+    * @default 4
+    */
+    get outerStrength(): number { return this.resources.glowUniforms.uniforms.uStrength[1]; }
+    set outerStrength(value: number) { this.resources.glowUniforms.uniforms.uStrength[1] = value; }
+
+    /**
+    * The color of the glow.
+    * @default 0xFFFFFF
+    */
+    get color(): ColorSource { return this._color.value as ColorSource; }
+    set color(value: ColorSource)
+    {
+        this._color.setValue(value);
+        this.resources.glowUniforms.uniforms.uColor = this._color.toArray().slice(0, 3);
+    }
+
+    /**
+    * The alpha of the glow
+    * @default 1
+    */
+    get alpha(): number { return this.resources.glowUniforms.uniforms.uAlpha; }
+    set alpha(value: number) { this.resources.glowUniforms.uniforms.uAlpha = value; }
+
+    /**
+    * A number between 0 and 1 that describes the quality of the glow. The higher the number the less performant
+    * @default 0.1
+    */
+    get quality(): number { return this.resources.glowUniforms.uniforms.uQuality; }
+    set quality(value: number) { this.resources.glowUniforms.uniforms.uQuality = value; }
+
+    /**
+    * Only draw the glow, not the texture itself
+    * @default false
+    */
+    get knockout(): boolean { return this.resources.glowUniforms.uniforms.uKnockout === 1; }
+    set knockout(value: boolean) { this.resources.glowUniforms.uniforms.uKnockout = value ? 1 : 0; }
 }
