@@ -1,2 +1,3 @@
 import vertex from './default.vert';
-export { vertex };
+import wgslVertex from './default.vert';
+export { vertex, wgslVertex };

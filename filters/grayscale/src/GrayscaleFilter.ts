@@ -1,6 +1,7 @@
-import { Filter, GlProgram } from 'pixi.js';
-import { vertex } from '@tools/fragments';
+import { Filter, GlProgram, GpuProgram } from 'pixi.js';
+import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './grayscale.frag';
+import source from './grayscale.wgsl';
 
 /**
  * This filter applies a grayscale effect.<br>
@@ -15,6 +16,17 @@ export class GrayscaleFilter extends Filter
 {
     constructor()
     {
+        const gpuProgram = new GpuProgram({
+            vertex: {
+                source: wgslVertex,
+                entryPoint: 'mainVertex',
+            },
+            fragment: {
+                source,
+                entryPoint: 'mainFragment',
+            },
+        });
+
         const glProgram = new GlProgram({
             vertex,
             fragment,
@@ -22,6 +34,7 @@ export class GrayscaleFilter extends Filter
         });
 
         super({
+            gpuProgram,
             glProgram,
             resources: {},
         });

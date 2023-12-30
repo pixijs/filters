@@ -1,4 +1,4 @@
-import { vertex } from '@tools/fragments';
+import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './adjustment.frag';
 import source from './adjustment.wgsl';
 import { Filter, GlProgram, GpuProgram, UniformGroup } from 'pixi.js';
@@ -106,7 +106,7 @@ export class AdjustmentFilter extends Filter
 
         const gpuProgram = new GpuProgram({
             vertex: {
-                source,
+                source: wgslVertex,
                 entryPoint: 'mainVertex',
             },
             fragment: {
