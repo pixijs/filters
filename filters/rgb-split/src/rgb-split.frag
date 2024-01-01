@@ -1,17 +1,18 @@
-precision mediump float;
-
-varying vec2 vTextureCoord;
+precision highp float;
+in vec2 vTextureCoord;
+out vec4 finalColor;
 
 uniform sampler2D uSampler;
-uniform vec4 filterArea;
-uniform vec2 red;
-uniform vec2 green;
-uniform vec2 blue;
+uniform vec4 uInputSize;
+uniform vec2 uRed;
+uniform vec2 uGreen;
+uniform vec2 uBlue;
 
 void main(void)
 {
-   gl_FragColor.r = texture2D(uSampler, vTextureCoord + red/filterArea.xy).r;
-   gl_FragColor.g = texture2D(uSampler, vTextureCoord + green/filterArea.xy).g;
-   gl_FragColor.b = texture2D(uSampler, vTextureCoord + blue/filterArea.xy).b;
-   gl_FragColor.a = texture2D(uSampler, vTextureCoord).a;
+   float r = texture2D(uSampler, vTextureCoord + uRed/uInputSize.xy).r;
+   float g = texture2D(uSampler, vTextureCoord + uGreen/uInputSize.xy).g;
+   float b = texture2D(uSampler, vTextureCoord + uBlue/uInputSize.xy).b;
+   float a = texture2D(uSampler, vTextureCoord).a;
+   finalColor = vec4(r, g, b, a);
 }
