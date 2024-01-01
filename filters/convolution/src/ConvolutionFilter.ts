@@ -1,6 +1,33 @@
-import { vertex } from '@tools/fragments';
+import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './convolution.frag';
-import { Filter, GlProgram } from 'pixi.js';
+import source from './convolution.wgsl';
+import { Filter, GlProgram, GpuProgram, UniformGroup } from 'pixi.js';
+
+type FixedArray<T, L extends number> = [ T, ...Array<T> ] & { length: L };
+
+export type ConvolutionMatrix = Float32Array | FixedArray<number, 9>;
+
+export interface ConvolutionFilterOptions
+{
+    /**
+     * An array of values used for matrix transformation, specified as a 9 point Array
+     * @example
+     * const matrix = new Float32Array(9); // 9 elements of value 0
+     * const matrix = [0,0.5,0,0.5,1,0.5,0,0.5,0];
+     * @default [0,0,0,0,0,0,0,0,0]
+     */
+    matrix?: ConvolutionMatrix;
+    /**
+     * Width of the object you are transforming
+     * @default 200
+     */
+    width?: number;
+    /**
+     * Height of the object you are transforming
+     * @default 200
+     */
+    height?: number;
+}
 
 /**
  * The ConvolutionFilter class applies a matrix convolution filter effect.
@@ -17,14 +44,36 @@ import { Filter, GlProgram } from 'pixi.js';
  */
 export class ConvolutionFilter extends Filter
 {
-    /**
-     * @param {number[]} [matrix=[0,0,0,0,0,0,0,0,0]] - An array of values used for matrix transformation.
-     *        Specified as a 9 point Array.
-     * @param {number} [width=200] - Width of the object you are transforming
-     * @param {number} [height=200] - Height of the object you are transforming
-     */
-    constructor(matrix: number[], width = 200, height = 200)
+    /** Default values for options. */
+    public static readonly DEFAULT_OPTIONS: ConvolutionFilterOptions = {
+        matrix: new Float32Array(9),
+        width: 200,
+        height: 200,
+    };
+
+    constructor(options?: ConvolutionFilterOptions)
     {
+        options = { ...ConvolutionFilter.DEFAULT_OPTIONS, ...options };
+
+        const width = options.width ?? 200;
+        const height = options.height ?? 200;
+
+        const convolutionUniforms = new UniformGroup({
+            uMatrix: { value: options.matrix, type: 'vec3<f32>', size: 3 },
+            uTexelSize: { value: [1 / width, 1 / height], type: 'vec2<f32>' },
+        });
+
+        const gpuProgram = new GpuProgram({
+            vertex: {
+                source: wgslVertex,
+                entryPoint: 'mainVertex',
+            },
+            fragment: {
+                source,
+                entryPoint: 'mainFragment',
+            },
+        });
+
         const glProgram = new GlProgram({
             vertex,
             fragment,
@@ -32,56 +81,44 @@ export class ConvolutionFilter extends Filter
         });
 
         super({
+            gpuProgram,
             glProgram,
-            resources: {},
+            resources: {
+                convolutionUniforms,
+            },
         });
 
-        // this.uniforms.texelSize = new Float32Array(2);
-        // this.uniforms.matrix = new Float32Array(9);
-        // if (matrix !== undefined)
-        // {
-        //     this.matrix = matrix;
-        // }
-        // this.width = width;
-        // this.height = height;
+        this.width = width;
+        this.height = height;
     }
 
     /**
-     * An array of values used for matrix transformation. Specified as a 9 point Array.
+     * An array of values used for matrix transformation, specified as a 9 point Array
+     * @example
+     * const matrix = new Float32Array(9); // 9 elements of value 0
+     * const matrix = [0,0.5,0,0.5,1,0.5,0,0.5,0];
+     * @default [0,0,0,0,0,0,0,0,0]
      */
-    // get matrix(): number[]
-    // {
-    //     return this.uniforms.matrix;
-    // }
-    // set matrix(matrix: number[])
-    // {
-    //     matrix.forEach((v, i) =>
-    //     {
-    //         this.uniforms.matrix[i] = v;
-    //     });
-    // }
+    get matrix(): ConvolutionMatrix { return this.resources.convolutionUniforms.uniforms.uMatrix; }
+    set matrix(matrix: ConvolutionMatrix)
+    {
+        matrix.forEach((v, i) =>
+        {
+            this.resources.convolutionUniforms.uniforms.uMatrix[i] = v;
+        });
+    }
 
     /**
      * Width of the object you are transforming
+     * @default 200
      */
-    // get width(): number
-    // {
-    //     return 1 / this.uniforms.texelSize[0];
-    // }
-    // set width(value: number)
-    // {
-    //     this.uniforms.texelSize[0] = 1 / value;
-    // }
+    get width(): number { return 1 / this.resources.convolutionUniforms.uniforms.uTexelSize[0]; }
+    set width(value: number) { this.resources.convolutionUniforms.uniforms.uTexelSize[0] = 1 / value; }
 
     /**
      * Height of the object you are transforming
+     * @default 200
      */
-    // get height(): number
-    // {
-    //     return 1 / this.uniforms.texelSize[1];
-    // }
-    // set height(value: number)
-    // {
-    //     this.uniforms.texelSize[1] = 1 / value;
-    // }
+    get height(): number { return 1 / this.resources.convolutionUniforms.uniforms.uTexelSize[1]; }
+    set height(value: number) { this.resources.convolutionUniforms.uniforms.uTexelSize[1] = 1 / value; }
 }
