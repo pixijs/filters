@@ -1,21 +1,26 @@
-varying vec2 vTextureCoord;
+precision highp float;
+in vec2 vTextureCoord;
+out vec4 finalColor;
 
-uniform vec4 filterArea;
-uniform float pixelSize;
 uniform sampler2D uSampler;
+uniform float uSize;
+uniform vec3 uColor;
+uniform float uReplaceColor;
+
+uniform vec4 uInputSize;
 
 vec2 mapCoord( vec2 coord )
 {
-    coord *= filterArea.xy;
-    coord += filterArea.zw;
+    coord *= uInputSize.xy;
+    coord += uInputSize.zw;
 
     return coord;
 }
 
 vec2 unmapCoord( vec2 coord )
 {
-    coord -= filterArea.zw;
-    coord /= filterArea.xy;
+    coord -= uInputSize.zw;
+    coord /= uInputSize.xy;
 
     return coord;
 }
@@ -49,11 +54,11 @@ void main()
     vec2 coord = mapCoord(vTextureCoord);
 
     // get the grid position
-    vec2 pixCoord = pixelate(coord, vec2(pixelSize));
+    vec2 pixCoord = pixelate(coord, vec2(uSize));
     pixCoord = unmapCoord(pixCoord);
 
     // sample the color at grid position
-    vec4 color = texture2D(uSampler, pixCoord);
+    vec4 color = texture(uSampler, pixCoord);
 
     // brightness of the color as it's perceived by the human eye
     float gray = 0.3 * color.r + 0.59 * color.g + 0.11 * color.b;
@@ -69,8 +74,7 @@ void main()
     if (gray > 0.8) n = 11512810.0; // #
 
     // get the mod..
-    vec2 modd = getMod(coord, vec2(pixelSize));
+    vec2 modd = getMod(coord, vec2(uSize));
 
-    gl_FragColor = color * character( n, vec2(-1.0) + modd * 2.0);
-
+    finalColor = (uReplaceColor > 0.5 ? vec4(uColor, 1.) : color) * character( n, vec2(-1.0) + modd * 2.0);
 }
