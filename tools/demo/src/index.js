@@ -43,6 +43,7 @@ const main = async () =>
     filters.ascii.call(app);
     filters.crossHatch.call(app);
     filters.convolution.call(app);
+    filters.dot.call(app);
     // filters.kawaseBlur.call(app);
 
     // TODO: Re-enable this in place of the above once v8 conversion is complete

@@ -1,9 +1,34 @@
-import { vertex } from '@tools/fragments';
+import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './dot.frag';
-import { Filter, GlProgram } from 'pixi.js';
+import source from './dot.wgsl';
+import { Filter, GlProgram, GpuProgram } from 'pixi.js';
 
 // @author Mat Groves http://matgroves.com/ @Doormat23
 // original filter: https://github.com/evanw/glfx.js/blob/master/src/filters/fun/dotscreen.js
+
+/**
+ * This WebGPU filter has been ported from the WebGL renderer that was originally created by Mat Groves (@GoodBoyDigital)
+ * Original filter: https://github.com/evanw/glfx.js/blob/master/src/filters/fun/dotscreen.js
+ */
+
+export interface DotFilterOptions
+{
+    /**
+     * The scale of the effect
+     * @default 1
+     */
+    scale?: number;
+    /**
+     * The angle of the effect
+     * @default 5
+     */
+    angle?: number;
+    /**
+     * Whether to rendering it in grey scale
+     * @default true
+     */
+    greyscale?: boolean;
+}
 
 /**
  * This filter applies a dotscreen effect making display objects appear to be made out of
@@ -17,13 +42,34 @@ import { Filter, GlProgram } from 'pixi.js';
  */
 export class DotFilter extends Filter
 {
-    /**
-     * @param {number} [scale=1] - The scale of the effect.
-     * @param {number} [angle=5] - The radius of the effect.
-     * @param {boolean} [grayscale=true] - Render as grayscale.
-     */
-    constructor(scale = 1, angle = 5, grayscale = true)
+    /** Default values for options. */
+    public static readonly DEFAULT_OPTIONS: DotFilterOptions = {
+        scale: 1,
+        angle: 5,
+        greyscale: true
+    };
+
+    constructor(options?: DotFilterOptions)
     {
+        options = { ...DotFilter.DEFAULT_OPTIONS, ...options };
+
+        const dotUniforms = {
+            uScale: { value: options.scale, type: 'f32' },
+            uAngle: { value: options.angle, type: 'f32' },
+            uGreyScale: { value: options.greyscale ? 1 : 0, type: 'f32' },
+        };
+
+        const gpuProgram = new GpuProgram({
+            vertex: {
+                source: wgslVertex,
+                entryPoint: 'mainVertex',
+            },
+            fragment: {
+                source,
+                entryPoint: 'mainFragment',
+            },
+        });
+
         const glProgram = new GlProgram({
             vertex,
             fragment,
@@ -31,51 +77,32 @@ export class DotFilter extends Filter
         });
 
         super({
+            gpuProgram,
             glProgram,
-            resources: {},
+            resources: {
+                dotUniforms,
+            },
         });
-
-        // this.scale = scale;
-        // this.angle = angle;
-        // this.grayscale = grayscale;
     }
 
     /**
      * The scale of the effect.
      * @default 1
      */
-    // get scale(): number
-    // {
-    //     return this.uniforms.scale;
-    // }
-    // set scale(value: number)
-    // {
-    //     this.uniforms.scale = value;
-    // }
+    get scale(): number { return this.resources.dotUniforms.uniforms.uScale; }
+    set scale(value: number) { this.resources.dotUniforms.uniforms.uScale = value; }
 
     /**
-     * The radius of the effect.
-     * @default 5
-     */
-    // get angle(): number
-    // {
-    //     return this.uniforms.angle;
-    // }
-    // set angle(value: number)
-    // {
-    //     this.uniforms.angle = value;
-    // }
+    * The radius of the effect.
+    * @default 5
+    */
+    get angle(): number { return this.resources.dotUniforms.uniforms.uAngle; }
+    set angle(value: number) { this.resources.dotUniforms.uniforms.uAngle = value; }
 
     /**
-     * Render as grayscale.
-     * @default true
-     */
-    // get grayscale(): boolean
-    // {
-    //     return this.uniforms.grayscale;
-    // }
-    // set grayscale(value: boolean)
-    // {
-    //     this.uniforms.grayscale = value;
-    // }
+    * Whether to rendering it in grey scale.
+    * @default true
+    */
+    get greyscale(): boolean { return this.resources.dotUniforms.uniforms.uGreyScale === 1; }
+    set greyscale(value: boolean) { this.resources.dotUniforms.uniforms.uGreyScale = value ? 1 : 0; }
 }
