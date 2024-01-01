@@ -54,6 +54,12 @@ export class AsciiFilter extends Filter
 
         options = { ...AsciiFilter.DEFAULT_OPTIONS, ...options } as AsciiFilterOptions;
 
+        const asciiUniforms = {
+            uSize: { value: options.size, type: 'f32' },
+            uColor: { value: new Float32Array(3), type: 'vec3<f32>' },
+            uReplaceColor: { value: Number(replaceColor), type: 'f32' },
+        };
+
         const gpuProgram = new GpuProgram({
             vertex: {
                 source: wgslVertex,
@@ -75,11 +81,7 @@ export class AsciiFilter extends Filter
             gpuProgram,
             glProgram,
             resources: {
-                asciiUniforms: {
-                    uSize: { value: options.size, type: 'f32' },
-                    uColor: { value: new Float32Array(3), type: 'vec3<f32>' },
-                    uReplaceColor: { value: Number(replaceColor), type: 'f32' },
-                }
+                asciiUniforms,
             },
         });
 

@@ -1,6 +1,7 @@
-import { vertex } from '@tools/fragments';
+import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './crosshatch.frag';
-import { Filter, GlProgram } from 'pixi.js';
+import source from './crosshatch.wgsl';
+import { Filter, GlProgram, GpuProgram } from 'pixi.js';
 
 /**
  * A Cross Hatch effect filter.<br>
@@ -15,6 +16,17 @@ export class CrossHatchFilter extends Filter
 {
     constructor()
     {
+        const gpuProgram = new GpuProgram({
+            vertex: {
+                source: wgslVertex,
+                entryPoint: 'mainVertex',
+            },
+            fragment: {
+                source,
+                entryPoint: 'mainFragment',
+            },
+        });
+
         const glProgram = new GlProgram({
             vertex,
             fragment,
@@ -22,6 +34,7 @@ export class CrossHatchFilter extends Filter
         });
 
         super({
+            gpuProgram,
             glProgram,
             resources: {},
         });
