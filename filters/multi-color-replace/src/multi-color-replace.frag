@@ -1,37 +1,37 @@
-varying vec2 vTextureCoord;
+in vec2 vTextureCoord;
+out vec4 finalColor;
+
+const int MAX_COLORS = ${MAX_COLORS};
+
 uniform sampler2D uSampler;
-
-uniform float epsilon;
-
-const int MAX_COLORS = %maxColors%;
-
-uniform vec3 originalColors[MAX_COLORS];
-uniform vec3 targetColors[MAX_COLORS];
+uniform vec3 uOriginalColors[MAX_COLORS];
+uniform vec3 uTargetColors[MAX_COLORS];
+uniform float uTolerance;
 
 void main(void)
 {
-    gl_FragColor = texture2D(uSampler, vTextureCoord);
+    finalColor = texture(uSampler, vTextureCoord);
 
-    float alpha = gl_FragColor.a;
+    float alpha = finalColor.a;
     if (alpha < 0.0001)
     {
       return;
     }
 
-    vec3 color = gl_FragColor.rgb / alpha;
+    vec3 color = finalColor.rgb / alpha;
 
     for(int i = 0; i < MAX_COLORS; i++)
     {
-      vec3 origColor = originalColors[i];
+      vec3 origColor = uOriginalColors[i];
       if (origColor.r < 0.0)
       {
         break;
       }
       vec3 colorDiff = origColor - color;
-      if (length(colorDiff) < epsilon)
+      if (length(colorDiff) < uTolerance)
       {
-        vec3 targetColor = targetColors[i];
-        gl_FragColor = vec4((targetColor + colorDiff) * alpha, alpha);
+        vec3 targetColor = uTargetColors[i];
+        finalColor = vec4((targetColor + colorDiff) * alpha, alpha);
         return;
       }
     }

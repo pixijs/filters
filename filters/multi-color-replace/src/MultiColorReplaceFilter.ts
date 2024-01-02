@@ -1,8 +1,30 @@
-import { vertex } from '@tools/fragments';
+import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './multi-color-replace.frag';
-import { Filter, GlProgram } from 'pixi.js';
+import source from './multi-color-replace.wgsl';
+import { Color, ColorSource, Filter, FilterOptions, GlProgram, GpuProgram } from 'pixi.js';
 
-type Color = number | number[] | Float32Array;
+export interface MultiColorReplaceFilterOptions
+{
+    /**
+     * The collection of replacement items. Each item is color-pair
+     * (an array length is 2). In the pair, the first value is original color , the second value is target color
+     *
+     * _If you wish to change individual elements on the replacement array after instantiation,
+     * use the `refresh` function to update the uniforms once you've made the changes_
+     */
+    replacements: Array<[ColorSource, ColorSource]>;
+    /**
+     * Tolerance/sensitivity of the floating-point comparison between colors (lower = more exact, higher = more inclusive)
+     * @default 0.05
+     */
+    tolerance?: number
+    /**
+     * The maximum number of replacements filter is able to use.
+     * Because the fragment is only compiled once, this cannot be changed after construction.
+     * If omitted, the default value is the length of `replacements`
+     */
+    maxColors?: number;
+}
 
 /**
  * Filter for replacing a color with another color. Similar to ColorReplaceFilter, but support multiple
@@ -15,151 +37,168 @@ type Color = number | number[] | Float32Array;
  *
  * @example
  *  // replaces pure red with pure blue, and replaces pure green with pure white
- *  someSprite.filters = [new MultiColorReplaceFilter(
- *    [
+ *  someSprite.filters = [new MultiColorReplaceFilter({
+ *    replacements: [
  *      [0xFF0000, 0x0000FF],
  *      [0x00FF00, 0xFFFFFF]
  *    ],
- *    0.001
- *  )];
+ *    tolerance: 0.001
+ *  })];
  *
  *  You also could use [R, G, B] as the color
- *  someOtherSprite.filters = [new MultiColorReplaceFilter(
- *    [
+ *  someOtherSprite.filters = [new MultiColorReplaceFilter({
+ *    replacements: [
  *      [ [1,0,0], [0,0,1] ],
  *      [ [0,1,0], [1,1,1] ]
  *    ],
- *    0.001
- *  )];
+ *    tolerance: 0.001
+ *  })];
  *
  */
 export class MultiColorReplaceFilter extends Filter
 {
-    private _replacements: Array<[Color, Color]> = [];
-    private _maxColors = 0;
+    /** Default values for options. */
+    public static readonly DEFAULT_OPTIONS: MultiColorReplaceFilterOptions & Partial<FilterOptions> = {
+        ...Filter.defaultOptions,
+        replacements: [[0xff0000, 0x0000ff]],
+        tolerance: 0.05,
+        maxColors: undefined,
+    };
 
-    /**
-     * @param {Array<Array>} replacements - The collection of replacement items. Each item is color-pair
-     *        (an array length is 2). In the pair, the first value is original color , the second value
-     *        is target color.
-     * @param {number} [epsilon=0.05] - Tolerance of the floating-point comparison between colors
-     *        (lower = more exact, higher = more inclusive)
-     * @param {number} [maxColors] - The maximum number of replacements filter is able to use. Because the
-     *        fragment is only compiled once, this cannot be changed after construction.
-     *        If omitted, the default value is the length of `replacements`.
-     */
-    constructor(replacements: Array<[Color, Color]>, epsilon = 0.05, maxColors: number = replacements.length)
+    public uniforms: {
+        uOriginalColors: Float32Array;
+        uTargetColors: Float32Array;
+        uTolerance: number;
+    };
+
+    private _replacements: Array<[ColorSource, ColorSource]> = [];
+    private _maxColors: number;
+
+    constructor(options?: MultiColorReplaceFilterOptions)
     {
+        options = { ...MultiColorReplaceFilter.DEFAULT_OPTIONS, ...options };
+
+        const maxColors = options.maxColors ?? options.replacements.length;
+
+        const gpuProgram = new GpuProgram({
+            vertex: {
+                source: wgslVertex.replace(/\${MAX_COLORS}/g, (maxColors).toFixed(0)),
+                entryPoint: 'mainVertex',
+            },
+            fragment: {
+                source,
+                entryPoint: 'mainFragment',
+            },
+        });
+
         const glProgram = new GlProgram({
             vertex,
-            fragment: fragment.replace(/%maxColors%/g, (maxColors).toFixed(0)),
+            fragment: fragment.replace(/\${MAX_COLORS}/g, (maxColors).toFixed(0)),
             name: 'multi-color-replace-filter',
         });
 
         super({
+            gpuProgram,
             glProgram,
-            resources: {},
+            resources: {
+                multiColorReplaceUniforms: {
+                    uOriginalColors: {
+                        value: new Float32Array(3 * maxColors),
+                        type: 'vec3<f32>',
+                        size: maxColors
+                    },
+                    uTargetColors: {
+                        value: new Float32Array(3 * maxColors),
+                        type: 'vec3<f32>',
+                        size: maxColors
+                    },
+                    uTolerance: { value: options.tolerance, type: 'f32' },
+                }
+            },
         });
 
-        // this.epsilon = epsilon;
         this._maxColors = maxColors;
-        // this.uniforms.originalColors = new Float32Array(maxColors * 3);
-        // this.uniforms.targetColors = new Float32Array(maxColors * 3);
-        // this.replacements = replacements;
+
+        this.uniforms = this.resources.multiColorReplaceUniforms.uniforms;
+
+        this.replacements = options.replacements;
     }
 
     /**
-     * The source and target colors for replacement. See constructor for information on the format.
-     *
-     * @member {Array<Array>}
+     * The collection of replacement items. Each item is color-pair
+     * (an array length is 2). In the pair, the first value is original color , the second value is target color
      */
-    // set replacements(replacements: Array<[Color, Color]>)
-    // {
-    //     const originals = this.uniforms.originalColors;
-    //     const targets = this.uniforms.targetColors;
-    //     const colorCount = replacements.length;
+    set replacements(replacements: Array<[ColorSource, ColorSource]>)
+    {
+        const originals = this.uniforms.uOriginalColors;
+        const targets = this.uniforms.uTargetColors;
+        const colorCount = replacements.length;
+        const color = new Color();
 
-    //     if (colorCount > this._maxColors)
-    //     {
-    //         throw new Error(`Length of replacements (${colorCount}) exceeds the maximum colors length (${this._maxColors})`);
-    //     }
+        if (colorCount > this._maxColors)
+        {
+            throw new Error(`Length of replacements (${colorCount}) exceeds the maximum colors length (${this._maxColors})`);
+        }
 
-    //     // Fill with negative values
-    //     originals[colorCount * 3] = -1;
+        // Fill with negative values
+        originals[colorCount * 3] = -1;
 
-    //     for (let i = 0; i < colorCount; i++)
-    //     {
-    //         const pair = replacements[i];
+        let r;
+        let g;
+        let b;
 
-    //         // for original colors
-    //         let color = pair[0];
+        for (let i = 0; i < colorCount; i++)
+        {
+            const pair = replacements[i];
 
-    //         if (typeof color === 'number')
-    //         {
-    //             color = utils.hex2rgb(color);
-    //         }
-    //         else
-    //         {
-    //             pair[0] = utils.rgb2hex(color);
-    //         }
+            // for original colors
+            color.setValue(pair[0]);
 
-    //         originals[i * 3] = color[0];
-    //         originals[(i * 3) + 1] = color[1];
-    //         originals[(i * 3) + 2] = color[2];
+            [r, g, b] = color.toArray();
 
-    //         // for target colors
-    //         let targetColor = pair[1];
+            originals[i * 3] = r;
+            originals[(i * 3) + 1] = g;
+            originals[(i * 3) + 2] = b;
 
-    //         if (typeof targetColor === 'number')
-    //         {
-    //             targetColor = utils.hex2rgb(targetColor);
-    //         }
-    //         else
-    //         {
-    //             pair[1] = utils.rgb2hex(targetColor);
-    //         }
+            // for target colors
+            color.setValue(pair[1]);
 
-    //         targets[i * 3] = targetColor[0];
-    //         targets[(i * 3) + 1] = targetColor[1];
-    //         targets[(i * 3) + 2] = targetColor[2];
-    //     }
+            [r, g, b] = color.toArray();
 
-    //     this._replacements = replacements;
-    // }
-    // get replacements(): Array<[Color, Color]>
-    // {
-    //     return this._replacements;
-    // }
+            targets[i * 3] = r;
+            targets[(i * 3) + 1] = g;
+            targets[(i * 3) + 2] = b;
+        }
+
+        this._replacements = replacements;
+    }
+
+    get replacements(): Array<[ColorSource, ColorSource]>
+    {
+        return this._replacements;
+    }
 
     /**
-     * Should be called after changing any of the contents of the replacements.
-     * This is a convenience method for resetting the `replacements`.
-     */
+      * Should be called after changing any of the contents of the replacements.
+      * This is a convenience method for resetting the `replacements`.
+      * @todo implement nested proxy to remove the need for this function
+      */
     refresh(): void
     {
-        // this.replacements = this._replacements;
+        this.replacements = this._replacements;
     }
 
     /**
-     * The maximum number of color replacements supported by this filter. Can be changed
-     * _only_ during construction.
-     * @readonly
-     */
-    get maxColors(): number
-    {
-        return this._maxColors;
-    }
+      * The maximum number of color replacements supported by this filter. Can be changed
+      * _only_ during construction.
+      * @readonly
+      */
+    get maxColors(): number { return this._maxColors; }
 
     /**
-     * Tolerance of the floating-point comparison between colors (lower = more exact, higher = more inclusive)
-     * @default 0.05
-     */
-    // set epsilon(value: number)
-    // {
-    //     this.uniforms.epsilon = value;
-    // }
-    // get epsilon(): number
-    // {
-    //     return this.uniforms.epsilon;
-    // }
+      * Tolerance of the floating-point comparison between colors (lower = more exact, higher = more inclusive)
+      * @default 0.05
+      */
+    get tolerance(): number { return this.uniforms.uTolerance; }
+    set tolerance(value: number) { this.uniforms.uTolerance = value; }
 }

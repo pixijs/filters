@@ -21,7 +21,7 @@ export interface ColorReplaceFilterOptions
      * @example [1.0, 1.0, 1.0] = 0xffffff
      * @default 0x000000
      */
-    newColor?: ColorSource;
+    targetColor?: ColorSource;
     /**
      * Tolerance/sensitivity of the floating-point comparison between colors (lower = more exact, higher = more inclusive)
      * @default 0.4
@@ -43,17 +43,17 @@ export interface ColorReplaceFilterOptions
  *  // replaces true red with true blue
  *  someSprite.filters = [new ColorReplaceFilter({
  *   originalColor: [1, 0, 0],
- *   newColor: [0, 0, 1],
+ *   targetColor: [0, 0, 1],
  *   tolerance: 0.001
  *   })];
  *  // replaces the RGB color 220, 220, 220 with the RGB color 225, 200, 215
  *  someOtherSprite.filters = [new ColorReplaceFilter({
  *   originalColor: [220/255.0, 220/255.0, 220/255.0],
- *   newColor: [225/255.0, 200/255.0, 215/255.0],
+ *   targetColor: [225/255.0, 200/255.0, 215/255.0],
  *   tolerance: 0.001
  *   })];
  *  // replaces the RGB color 220, 220, 220 with the RGB color 225, 200, 215
- *  someOtherSprite.filters = [new ColorReplaceFilter({ originalColor: 0xdcdcdc, newColor: 0xe1c8d7, tolerance: 0.001 })];
+ *  someOtherSprite.filters = [new ColorReplaceFilter({ originalColor: 0xdcdcdc, targetColor: 0xe1c8d7, tolerance: 0.001 })];
  *
  */
 export class ColorReplaceFilter extends Filter
@@ -62,18 +62,18 @@ export class ColorReplaceFilter extends Filter
     public static readonly DEFAULT_OPTIONS: ColorReplaceFilterOptions & Partial<FilterOptions> = {
         ...Filter.defaultOptions,
         originalColor: 0xff0000,
-        newColor: 0x000000,
+        targetColor: 0x000000,
         tolerance: 0.4
     };
 
     public uniforms: {
         uOriginalColor: Float32Array,
-        uNewColor: Float32Array,
+        uTargetColor: Float32Array,
         uTolerance: number,
     };
 
     private _originalColor: Color;
-    private _newColor: Color;
+    private _targetColor: Color;
 
     constructor(options: ColorReplaceFilterOptions = {})
     {
@@ -102,7 +102,7 @@ export class ColorReplaceFilter extends Filter
             resources: {
                 colorReplaceUniforms: {
                     uOriginalColor: { value: new Float32Array(3), type: 'vec3<f32>' },
-                    uNewColor: { value: new Float32Array(3), type: 'vec3<f32>' },
+                    uTargetColor: { value: new Float32Array(3), type: 'vec3<f32>' },
                     uTolerance: { value: options.tolerance, type: 'f32' },
                 }
             },
@@ -111,7 +111,7 @@ export class ColorReplaceFilter extends Filter
         this.uniforms = this.resources.colorReplaceUniforms.uniforms;
 
         this._originalColor = new Color();
-        this._newColor = new Color();
+        this._targetColor = new Color();
 
         Object.assign(this, options);
     }
@@ -137,15 +137,15 @@ export class ColorReplaceFilter extends Filter
       * @example [1.0, 1.0, 1.0] = 0xffffff
       * @default 0x000000
       */
-    get newColor(): ColorSource { return this._newColor.value as ColorSource; }
-    set newColor(value: ColorSource)
+    get targetColor(): ColorSource { return this._targetColor.value as ColorSource; }
+    set targetColor(value: ColorSource)
     {
-        this._newColor.setValue(value);
-        const [r, g, b] = this._newColor.toArray();
+        this._targetColor.setValue(value);
+        const [r, g, b] = this._targetColor.toArray();
 
-        this.uniforms.uNewColor[0] = r;
-        this.uniforms.uNewColor[1] = g;
-        this.uniforms.uNewColor[2] = b;
+        this.uniforms.uTargetColor[0] = r;
+        this.uniforms.uTargetColor[1] = g;
+        this.uniforms.uTargetColor[2] = b;
     }
 
     /**

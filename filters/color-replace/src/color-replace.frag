@@ -3,7 +3,7 @@ out vec4 finalColor;
 
 uniform sampler2D uSampler;
 uniform vec3 uOriginalColor;
-uniform vec3 uNewColor;
+uniform vec3 uTargetColor;
 uniform float uTolerance;
 
 void main(void) {
@@ -11,5 +11,5 @@ void main(void) {
     vec3 colorDiff = uOriginalColor - (c.rgb / max(c.a, 0.0000000001));
     float colorDistance = length(colorDiff);
     float doReplace = step(colorDistance, uTolerance);
-    finalColor = vec4(mix(c.rgb, (uNewColor + colorDiff) * c.a, doReplace), c.a);
+    finalColor = vec4(mix(c.rgb, (uTargetColor + colorDiff) * c.a, doReplace), c.a);
 }

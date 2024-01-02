@@ -1,6 +1,6 @@
 struct ColorReplaceUniforms {
   uOriginalColor: vec3<f32>,
-  uNewColor: vec3<f32>,
+  uTargetColor: vec3<f32>,
   uTolerance: f32,
 };
 
@@ -18,5 +18,5 @@ fn mainFragment(
   let colorDistance: f32 = length(colorDiff);
   let doReplace: f32 = step(colorDistance, colorReplaceUniforms.uTolerance);
 
-  return vec4<f32>(mix(sample.rgb, (colorReplaceUniforms.uNewColor + colorDiff) * sample.a, doReplace), sample.a);
+  return vec4<f32>(mix(sample.rgb, (colorReplaceUniforms.uTargetColor + colorDiff) * sample.a, doReplace), sample.a);
 }
