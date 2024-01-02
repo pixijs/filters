@@ -21,7 +21,7 @@ export interface ShockwaveFilterOptions
 {
     /**
      * The `x` and `y` center coordinates to change the position of the center of the circle of effect.
-     * @default [0,0]
+     * @default {x:0,y:0}
      */
     center?: PointData;
     /**

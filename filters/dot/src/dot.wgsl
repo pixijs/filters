@@ -36,7 +36,7 @@ fn pattern(uv: vec2<f32>) -> f32
   let s: f32 = sin(dotUniforms.uAngle);
   let c: f32 = cos(dotUniforms.uAngle);
   
-  let tex: vec2<f32> = uv * gfu.inputSize.xy;
+  let tex: vec2<f32> = uv * gfu.uInputSize.xy;
   
   let p: vec2<f32> = vec2<f32>(
       c * tex.x - s * tex.y,

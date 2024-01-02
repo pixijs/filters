@@ -28,7 +28,7 @@ fn mainFragment(
 fn mapCoord(coord: vec2<f32> ) -> vec2<f32>
 {
   var mappedCoord: vec2<f32> = coord;
-  mappedCoord *= gfu.inputSize.xy;
+  mappedCoord *= gfu.uInputSize.xy;
   mappedCoord += gfu.outputFrame.xy;
   return mappedCoord;
 }
@@ -37,7 +37,7 @@ fn unmapCoord(coord: vec2<f32> ) -> vec2<f32>
 {
   var mappedCoord: vec2<f32> = coord;
   mappedCoord -= gfu.outputFrame.xy;
-  mappedCoord /= gfu.inputSize.xy;
+  mappedCoord /= gfu.uInputSize.xy;
   return mappedCoord;
 }
 

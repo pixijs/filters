@@ -1,13 +1,15 @@
-varying vec2 vTextureCoord;
+precision highp float;
+in vec2 vTextureCoord;
+out vec4 finalColor;
+
 uniform sampler2D uSampler;
-uniform vec4 filterArea;
-
-uniform vec2 uCenter;
 uniform float uStrength;
-uniform float uInnerRadius;
-uniform float uRadius;
+uniform vec2 uCenter;
+uniform vec2 uRadii;
 
-const float MAX_KERNEL_SIZE = ${maxKernelSize};
+uniform vec4 uInputSize;
+
+const float MAX_KERNEL_SIZE = ${MAX_KERNEL_SIZE};
 
 // author: http://byteblacksmith.com/improvements-to-the-canonical-one-liner-glsl-rand-for-opengl-es-2-0/
 highp float rand(vec2 co, float seed) {
@@ -17,17 +19,16 @@ highp float rand(vec2 co, float seed) {
 }
 
 void main() {
+    float minGradient = uRadii[0] * 0.3;
+    float innerRadius = (uRadii[0] + minGradient * 0.5) / uInputSize.x;
 
-    float minGradient = uInnerRadius * 0.3;
-    float innerRadius = (uInnerRadius + minGradient * 0.5) / filterArea.x;
-
-    float gradient = uRadius * 0.3;
-    float radius = (uRadius - gradient * 0.5) / filterArea.x;
+    float gradient = uRadii[1] * 0.3;
+    float radius = (uRadii[1] - gradient * 0.5) / uInputSize.x;
 
     float countLimit = MAX_KERNEL_SIZE;
 
-    vec2 dir = vec2(uCenter.xy / filterArea.xy - vTextureCoord);
-    float dist = length(vec2(dir.x, dir.y * filterArea.y / filterArea.x));
+    vec2 dir = vec2(uCenter.xy / uInputSize.xy - vTextureCoord);
+    float dist = length(vec2(dir.x, dir.y * uInputSize.y / uInputSize.x));
 
     float strength = uStrength;
 
@@ -42,13 +43,13 @@ void main() {
     }
 
     if (delta > 0.0) {
-        float normalCount = gap / filterArea.x;
+        float normalCount = gap / uInputSize.x;
         delta = (normalCount - delta) / normalCount;
         countLimit *= delta;
         strength *= delta;
         if (countLimit < 1.0)
         {
-            gl_FragColor = texture2D(uSampler, vTextureCoord);
+            gl_FragColor = texture(uSampler, vTextureCoord);
             return;
         }
     }
@@ -65,7 +66,7 @@ void main() {
         float percent = (t + offset) / MAX_KERNEL_SIZE;
         float weight = 4.0 * (percent - percent * percent);
         vec2 p = vTextureCoord + dir * percent;
-        vec4 sample = texture2D(uSampler, p);
+        vec4 sample = texture(uSampler, p);
 
         // switch to pre-multiplied alpha to correctly blur transparent images
         // sample.rgb *= sample.a;

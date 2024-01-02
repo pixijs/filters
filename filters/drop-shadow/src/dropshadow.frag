@@ -4,10 +4,10 @@ uniform float alpha;
 uniform vec3 color;
 
 uniform vec2 shift;
-uniform vec4 inputSize;
+uniform vec4 uInputSize;
 
 void main(void){
-    vec4 sample = texture2D(uSampler, vTextureCoord - shift * inputSize.zw);
+    vec4 sample = texture2D(uSampler, vTextureCoord - shift * uInputSize.zw);
 
     // Premultiply alpha
     sample.rgb = color.rgb * sample.a;
