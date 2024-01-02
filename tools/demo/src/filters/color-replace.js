@@ -4,6 +4,6 @@ export default function ()
     {
         folder.addColor(this, 'originalColor');
         folder.addColor(this, 'newColor');
-        folder.add(this, 'epsilon', 0, 1);
+        folder.add(this, 'tolerance', 0, 1);
     });
 }
