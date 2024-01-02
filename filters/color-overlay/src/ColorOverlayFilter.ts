@@ -1,38 +1,67 @@
-import { vertex } from '@tools/fragments';
-import fragment from './colorOverlay.frag';
-import { Filter, GlProgram } from 'pixi.js';
+import { vertex, wgslVertex } from '@tools/fragments';
+import fragment from './color-overlay.frag';
+import source from './color-overlay.wgsl';
+import { Color, ColorSource, Filter, FilterOptions, GlProgram, GpuProgram, UniformGroup } from 'pixi.js';
 
-type Color = number | number[] | Float32Array;
+export interface ColorOverlayFilterOptions
+{
+    /**
+     * The color of the overlay
+     * @default 0x000000
+     */
+    color?: ColorSource;
+    /**
+     * The alpha of the overlay
+     * @default 1
+     */
+    alpha?: number;
+}
 
 /**
- * Replace all colors within a source graphic with a single color.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/color-overlay.png)
+ * Overlay a source graphic with a color.<br>
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-color-replace|@pixi/filter-color-replace}
+ * @see {@link https://www.npmjs.com/package/@pixi/filter-color-overlay|@pixi/filter-color-overlay}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
- *
- * @example
- *  // replaces red with blue
- *  someSprite.filters = [new ColorOverlayFilter(
- *   [1, 0, 0],
- *   [0, 0, 1],
- *   0.001
- *   )];
- *
  */
 export class ColorOverlayFilter extends Filter
 {
-    private _color = 0x0;
-    private _alpha = 1;
+    /** Default shockwave filter options */
+    public static readonly defaultOptions: ColorOverlayFilterOptions & Partial<FilterOptions> = {
+        ...Filter.defaultOptions,
+        /** The color of the overlay */
+        color: 0x000000,
+        /** The alpha of the overlay */
+        alpha: 1,
+    };
+
+    public uniforms: {
+        uColor: Float32Array;
+        uAlpha: number;
+    };
+
+    private _color: Color;
 
     /**
      * @param {number|Array<number>} [color=0x000000] - The resulting color, as a 3 component RGB e.g. [1.0, 0.5, 1.0]
      * @param {number} [alpha=1] - The alpha value of the color
      */
-    constructor(color: Color = 0x000000, alpha = 1)
+    constructor(options: ColorOverlayFilterOptions = {})
     {
+        options = { ...ColorOverlayFilter.defaultOptions, ...options };
+
+        const gpuProgram = new GpuProgram({
+            vertex: {
+                source: wgslVertex,
+                entryPoint: 'mainVertex',
+            },
+            fragment: {
+                source,
+                entryPoint: 'mainFragment',
+            },
+        });
+
         const glProgram = new GlProgram({
             vertex,
             fragment,
@@ -40,52 +69,41 @@ export class ColorOverlayFilter extends Filter
         });
 
         super({
+            gpuProgram,
             glProgram,
-            resources: {},
+            resources: {
+                colorOverlayUniforms: new UniformGroup({
+                    uColor: { value: new Float32Array(3), type: 'vec3<f32>' },
+                    uAlpha: { value: options.alpha, type: 'f32' },
+                })
+            },
         });
-        // this.uniforms.color = new Float32Array(3);
-        // this.color = color;
-        // this.alpha = alpha;
+
+        this.uniforms = this.resources.colorOverlayUniforms.uniforms;
+        this._color = new Color();
+        this.color = options.color ?? 0x000000;
     }
 
     /**
-     * The resulting color, as a 3 component RGB e.g. [1.0, 0.5, 1.0]
+     * The over color source
      * @member {number|Array<number>|Float32Array}
      * @default 0x000000
      */
-    // set color(value: Color)
-    // {
-    //     const arr = this.uniforms.color;
+    get color(): ColorSource { return this._color.value as ColorSource; }
+    set color(value: ColorSource)
+    {
+        this._color.setValue(value);
+        const [r, g, b] = this._color.toArray();
 
-    //     if (typeof value === 'number')
-    //     {
-    //         utils.hex2rgb(value, arr);
-    //         this._color = value;
-    //     }
-    //     else
-    //     {
-    //         arr[0] = value[0];
-    //         arr[1] = value[1];
-    //         arr[2] = value[2];
-    //         this._color = utils.rgb2hex(arr);
-    //     }
-    // }
-    // get color(): Color
-    // {
-    //     return this._color;
-    // }
+        this.uniforms.uColor[0] = r;
+        this.uniforms.uColor[1] = g;
+        this.uniforms.uColor[2] = b;
+    }
 
     /**
      * The alpha value of the color
-     * @default 0
+     * @default 1
      */
-    // set alpha(value: number)
-    // {
-    //     this.uniforms.alpha = value;
-    //     this._alpha = value;
-    // }
-    // get alpha(): number
-    // {
-    //     return this._alpha;
-    // }
+    get alpha(): number { return this.uniforms.uAlpha; }
+    set alpha(value: number) { this.uniforms.uAlpha = value; }
 }

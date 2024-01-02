@@ -46,6 +46,7 @@ const main = async () =>
     filters.dot.call(app);
     filters.shockwave.call(app);
     filters.zoomBlur.call(app);
+    filters.colorOverlay.call(app);
     // filters.kawaseBlur.call(app);
 
     // TODO: Re-enable this in place of the above once v8 conversion is complete
