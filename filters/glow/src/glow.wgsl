@@ -10,7 +10,7 @@ struct GlowUniforms {
 struct GlobalFilterUniforms {
   uInputSize:vec4<f32>,
   uInputPixel:vec4<f32>,
-  uuInputClamp:vec4<f32>,
+  uInputClamp:vec4<f32>,
   uOutputFrame:vec4<f32>,
   uGlobalFrame:vec4<f32>,
   uOutputTexture:vec4<f32>,

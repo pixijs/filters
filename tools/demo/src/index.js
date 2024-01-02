@@ -44,6 +44,7 @@ const main = async () =>
     filters.crossHatch.call(app);
     filters.convolution.call(app);
     filters.dot.call(app);
+    filters.shockwave.call(app);
     // filters.kawaseBlur.call(app);
 
     // TODO: Re-enable this in place of the above once v8 conversion is complete

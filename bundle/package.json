@@ -65,6 +65,7 @@
     "@pixi/filter-radial-blur": "8.0.0",
     "@pixi/filter-reflection": "8.0.0",
     "@pixi/filter-rgb-split": "8.0.0",
+    "@pixi/filter-shockwave": "8.0.0",
     "@pixi/filter-simple-lightmap": "8.0.0",
     "@pixi/filter-tilt-shift": "8.0.0",
     "@pixi/filter-twist": "8.0.0",
