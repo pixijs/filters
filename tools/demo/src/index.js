@@ -49,6 +49,7 @@ const main = async () =>
     filters.colorOverlay.call(app);
     filters.colorReplace.call(app);
     filters.multiColorReplace.call(app);
+    filters.colorMap.call(app);
     // filters.kawaseBlur.call(app);
 
     // TODO: Re-enable this in place of the above once v8 conversion is complete

@@ -1,9 +1,25 @@
-import { vertex } from '@tools/fragments';
+import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './color-map.frag';
-import { Filter, Texture, TextureSource, GlProgram } from 'pixi.js';
-import type { FilterSystem, RenderSurface } from 'pixi.js';
+import source from './color-map.wgsl';
+import { Filter, Texture, TextureSource, GlProgram, GpuProgram, SCALE_MODE } from 'pixi.js';
 
-type ColorMapSource = TextureSource | Texture | null;
+type ColorMapTexture = TextureSource | Texture;
+
+export interface ColorMapFilterOptions
+{
+    /** The colorMap texture of the filter. */
+    colorMap: ColorMapTexture;
+    /**
+     *  The mix from 0 to 1, where 0 is the original image and 1 is the color mapped image.
+     * @default 1
+     */
+    mix?: number;
+    /**
+     * Whether use NEAREST scale mode for `colorMap` texture.
+     * @default false
+     */
+    nearest?: boolean;
+}
 
 /**
  * The ColorMapFilter applies a color-map effect to an object.<br>
@@ -16,25 +32,46 @@ type ColorMapSource = TextureSource | Texture | null;
  */
 export class ColorMapFilter extends Filter
 {
-    /** The mix from 0 to 1, where 0 is the original image and 1 is the color mapped image. */
-    public mix = 1;
+    /** Default values for options. */
+    public static readonly DEFAULT_OPTIONS: ColorMapFilterOptions = {
+        colorMap: Texture.WHITE,
+        nearest: false,
+        mix: 1
+    };
+
+    public uniforms: {
+        uMix: number;
+        uSize: number;
+        uSliceSize: number;
+        uSlicePixelSize: number;
+        uSliceInnerSize: number;
+    };
 
     private _size = 0;
     private _sliceSize = 0;
     private _slicePixelSize = 0;
     private _sliceInnerSize = 0;
     private _nearest = false;
-    // private _scaleMode: SCALE_MODES | null = null;
-    private _colorMap: Texture | null = null;
+    private _scaleMode: SCALE_MODE = 'linear';
+    private _colorMap!: ColorMapTexture;
 
-    /**
-     * @param {HTMLImageElement|HTMLCanvasElement|BaseTexture|Texture} [colorMap] - The
-     *        colorMap texture of the filter.
-     * @param {boolean} [nearest=false] - Whether use NEAREST for colorMap texture.
-     * @param {number} [mix=1] - The mix from 0 to 1, where 0 is the original image and 1 is the color mapped image.
-     */
-    constructor(colorMap: ColorMapSource, nearest = false, mix = 1)
+    constructor(options: ColorMapFilterOptions)
     {
+        options = { ...ColorMapFilter.DEFAULT_OPTIONS, ...options };
+
+        if (!options.colorMap) throw Error('No color map texture source was provided to ColorMapFilter');
+
+        const gpuProgram = new GpuProgram({
+            vertex: {
+                source: wgslVertex,
+                entryPoint: 'mainVertex',
+            },
+            fragment: {
+                source,
+                entryPoint: 'mainFragment',
+            },
+        });
+
         const glProgram = new GlProgram({
             vertex,
             fragment,
@@ -42,129 +79,105 @@ export class ColorMapFilter extends Filter
         });
 
         super({
+            gpuProgram,
             glProgram,
-            resources: {},
+            resources: {
+                colorMapUniforms: {
+                    uMix: { value: options.mix, type: 'f32' },
+                    uSize: { value: 0, type: 'f32' },
+                    uSliceSize: { value: 0, type: 'f32' },
+                    uSlicePixelSize: { value: 0, type: 'f32' },
+                    uSliceInnerSize: { value: 0, type: 'f32' },
+                },
+                uMapTexture: options.colorMap,
+            },
         });
 
-        // this._scaleMode = null;
-        // this.nearest = nearest;
-        this.mix = mix;
-        this.colorMap = colorMap;
+        this.uniforms = this.resources.colorMapUniforms.uniforms;
+
+        Object.assign(this, options);
     }
 
-    /**
-     * Override existing apply method in Filter
-     * @private
-     */
-    apply(filterManager: FilterSystem, input: Texture, output: RenderSurface, clear: boolean): void
-    {
-        // this.uniforms._mix = this.mix;
-
-        filterManager.applyFilter(this, input, output, clear);
-    }
+    /** The mix from 0 to 1, where 0 is the original image and 1 is the color mapped image. */
+    get mix(): number { return this.uniforms.uMix; }
+    set mix(value: number) { this.uniforms.uMix = value; }
 
     /**
-     * The size of one color slice
+     * The size of one color slice.
      * @readonly
      */
-    get colorSize(): number
+    get colorSize(): number { return this._size; }
+
+    /** The colorMap texture. */
+    get colorMap(): ColorMapTexture { return this._colorMap; }
+    set colorMap(value: ColorMapTexture)
     {
-        return this._size;
+        if (!value || value === this.colorMap) return;
+
+        const source = value instanceof Texture ? value.source : value;
+
+        source.style.scaleMode = this._scaleMode;
+        source.autoGenerateMipmaps = false;
+
+        this._size = source.height;
+        this._sliceSize = 1 / this._size;
+        this._slicePixelSize = this._sliceSize / this._size;
+        this._sliceInnerSize = this._slicePixelSize * (this._size - 1);
+
+        this.uniforms.uSize = this._size;
+        this.uniforms.uSliceSize = this._sliceSize;
+        this.uniforms.uSlicePixelSize = this._slicePixelSize;
+        this.uniforms.uSliceInnerSize = this._sliceInnerSize;
+
+        this.resources.uMapTexture = source;
+        this._colorMap = value;
+    }
+
+    /** Whether use NEAREST for colorMap texture. */
+    get nearest(): boolean { return this._nearest; }
+    set nearest(nearest: boolean)
+    {
+        this._nearest = nearest;
+        this._scaleMode = nearest ? 'nearest' : 'linear';
+
+        const texture = this._colorMap;
+
+        if (texture && texture.source)
+        {
+            texture.source.style.scaleMode = this._scaleMode;
+            texture.source.autoGenerateMipmaps = false;
+            texture.source.style.update();
+            texture.source.update();
+        }
     }
 
     /**
-     * the colorMap texture
-     * @member {Texture}
-     */
-    get colorMap(): ColorMapSource
-    {
-        return this._colorMap;
-    }
-    set colorMap(colorMap: ColorMapSource)
-    {
-        if (!colorMap)
-        {
-            return;
-        }
-        if (!(colorMap instanceof Texture))
-        {
-            colorMap = Texture.from(colorMap);
-        }
-        if ((colorMap as Texture)?.baseTexture)
-        {
-            // colorMap.baseTexture.scaleMode = this._scaleMode as SCALE_MODES;
-            // colorMap.baseTexture.mipmap = MIPMAP_MODES.OFF;
-
-            this._size = colorMap.height;
-            this._sliceSize = 1 / this._size;
-            this._slicePixelSize = this._sliceSize / this._size;
-            this._sliceInnerSize = this._slicePixelSize * (this._size - 1);
-
-            // this.uniforms._size = this._size;
-            // this.uniforms._sliceSize = this._sliceSize;
-            // this.uniforms._slicePixelSize = this._slicePixelSize;
-            // this.uniforms._sliceInnerSize = this._sliceInnerSize;
-
-            // this.uniforms.colorMap = colorMap;
-        }
-
-        this._colorMap = colorMap;
-    }
-
-    /**
-     * Whether use NEAREST for colorMap texture.
-     */
-    // get nearest(): boolean
-    // {
-    //     return this._nearest;
-    // }
-    // set nearest(nearest: boolean)
-    // {
-    //     this._nearest = nearest;
-    //     this._scaleMode = nearest ? SCALE_MODES.NEAREST : SCALE_MODES.LINEAR;
-
-    //     const texture = this._colorMap;
-
-    //     if (texture && texture.baseTexture)
-    //     {
-    //         texture.baseTexture._glTextures = {};
-
-    //         texture.baseTexture.scaleMode = this._scaleMode;
-    //         texture.baseTexture.mipmap = MIPMAP_MODES.OFF;
-
-    //         texture._updateID++;
-    //         texture.baseTexture.emit('update', texture.baseTexture);
-    //     }
-    // }
-
-    /**
-     * If the colorMap is based on canvas , and the content of canvas has changed,
-     *   then call `updateColorMap` for update texture.
+     * If the colorMap is based on canvas,
+     * and the content of canvas has changed, then call `updateColorMap` for update texture.
      */
     updateColorMap(): void
     {
         const texture = this._colorMap;
 
-        if (texture && texture.baseTexture)
+        if (texture?.source)
         {
-            // texture._updateID++;
-            texture.baseTexture.emit('update', texture.baseTexture);
-
+            texture.source.update();
             this.colorMap = texture;
         }
     }
 
     /**
      * Destroys this filter
-     *
-     * @param {boolean} [destroyBase=false] - Whether to destroy the base texture of colorMap as well
+     * @param destroyBase Whether to destroy the base texture of colorMap as well
+     * @default false
      */
-    destroy(destroyBase = false): void
-    {
-        if (this._colorMap)
-        {
-            this._colorMap.destroy(destroyBase);
-        }
-        super.destroy();
-    }
+    // TODO: Implement destroy functionality
+    // destroy(): void
+    // {
+    // if (this._colorMap)
+    // {
+    //     this._colorMap.destroy(destroyBase);
+    // }
+    // super.destroy();
+    // }
 }
