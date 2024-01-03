@@ -1,7 +1,39 @@
-import { vertex } from '@tools/fragments';
+import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './outline.frag';
-import { Filter, GlProgram } from 'pixi.js';
-import type { FilterSystem, RenderSurface, Texture } from 'pixi.js';
+import source from './outline.wgsl';
+import { Color, Filter, GlProgram, GpuProgram } from 'pixi.js';
+import type { ColorSource, FilterSystem, RenderSurface, Texture } from 'pixi.js';
+
+export interface OutlineFilterOptions
+{
+    /**
+     * The thickness of the outline
+     * @default 1
+     */
+    thickness?: number;
+    /**
+     * The color of the outline
+     * @example [1.0, 1.0, 1.0] = 0xffffff
+     * @default 0x000000
+     */
+    color?: ColorSource;
+    /**
+     * The alpha of the outline
+     * @default 1
+     */
+    alpha?: number;
+    /**
+     * The quality of the outline from `0` to `1`.
+     * Using a higher quality setting will result in more accuracy but slower performance
+     * @default 0.1
+     */
+    quality?: number;
+    /**
+     * Whether to only render outline, not the contents.
+     * @default false
+     */
+    knockout?: boolean;
+}
 
 /**
  * OutlineFilter, originally by mishaa
@@ -18,119 +50,159 @@ import type { FilterSystem, RenderSurface, Texture } from 'pixi.js';
  */
 export class OutlineFilter extends Filter
 {
+    /** Default values for options. */
+    public static readonly DEFAULT_OPTIONS: OutlineFilterOptions = {
+        thickness: 1,
+        color: 0x000000,
+        alpha: 1,
+        quality: 0.1,
+        knockout: false,
+    };
+
     /** The minimum number of samples for rendering outline. */
     public static MIN_SAMPLES = 1;
 
     /** The maximum number of samples for rendering outline. */
     public static MAX_SAMPLES = 100;
 
-    private _thickness = 1;
-    private _alpha = 1.0;
-    private _knockout = false;
+    public uniforms: {
+        uThickness: Float32Array,
+        uColor: Float32Array,
+        uAlpha: number;
+        uAngleStep: number,
+        uKnockout: number,
+    };
 
-    /**
-     * @param {number} [thickness=1] - The tickness of the outline. Make it 2 times more for resolution 2
-     * @param {number} [color=0x000000] - The color of the outline.
-     * @param {number} [quality=0.1] - The quality of the outline from `0` to `1`, using a higher quality
-     *        setting will result in slower performance and more accuracy.
-     * @param {number} [alpha=1.0] - The alpha of the outline.
-     * @param {boolean} [knockout=false] - Only render outline, not the contents.
-     */
-    constructor(thickness = 1, color = 0x000000, quality = 0.1, alpha = 1.0, knockout = false)
+    private _color: Color;
+    private _thickness!: number;
+    private _quality!: number;
+
+    constructor(options?: OutlineFilterOptions)
     {
+        options = { ...OutlineFilter.DEFAULT_OPTIONS, ...options };
+
+        const quality = options.quality ?? 0.1;
+
+        const gpuProgram = new GpuProgram({
+            vertex: {
+                source: wgslVertex,
+                entryPoint: 'mainVertex',
+            },
+            fragment: {
+                source,
+                entryPoint: 'mainFragment',
+            },
+        });
+
         const glProgram = new GlProgram({
             vertex,
-            fragment: fragment.replace(/\$\{angleStep\}/, OutlineFilter.getAngleStep(quality)),
+            fragment: fragment.replace(/\$\{ANGLE_STEP\}/, OutlineFilter.getAngleStep(quality).toFixed(7)),
             name: 'outline-filter',
         });
 
         super({
+            gpuProgram,
             glProgram,
-            resources: {},
+            resources: {
+                outlineUniforms: {
+                    uThickness: { value: new Float32Array(2), type: 'vec2<f32>' },
+                    uColor: { value: new Float32Array(3), type: 'vec3<f32>' },
+                    uAlpha: { value: options.alpha, type: 'f32' },
+                    uAngleStep: { value: 0, type: 'f32' },
+                    uKnockout: { value: options.knockout ? 1 : 0, type: 'i32' },
+                }
+            },
         });
 
-        // this.uniforms.uThickness = new Float32Array([0, 0]);
-        // this.uniforms.uColor = new Float32Array([0, 0, 0, 1]);
-        // this.uniforms.uAlpha = alpha;
-        // this.uniforms.uKnockout = knockout;
+        this.uniforms = this.resources.outlineUniforms.uniforms;
+        this.uniforms.uAngleStep = OutlineFilter.getAngleStep(quality);
 
-        Object.assign(this, { thickness, color, quality, alpha, knockout });
+        this._color = new Color();
+        this.color = options.color ?? 0x000000;
+
+        Object.assign(this, options);
+
+        console.log(this);
+    }
+
+    /**
+     * Override existing apply method in `Filter`
+     * @override
+     * @ignore
+     */
+    public override apply(
+        filterManager: FilterSystem,
+        input: Texture,
+        output: RenderSurface,
+        clearMode: boolean
+    ): void
+    {
+        this.uniforms.uThickness[0] = this.thickness / input.source.width;
+        this.uniforms.uThickness[1] = this.thickness / input.source.height;
+
+        this.resources.outlineUniforms.update();
+
+        filterManager.applyFilter(this, input, output, clearMode);
     }
 
     /**
      * Get the angleStep by quality
-     * @private
+     * @param quality
      */
-    private static getAngleStep(quality: number): string
+    private static getAngleStep(quality: number): number
     {
-        const samples =  Math.max(
+        return parseFloat(((Math.PI * 2) / Math.max(
             quality * OutlineFilter.MAX_SAMPLES,
             OutlineFilter.MIN_SAMPLES,
-        );
-
-        return (Math.PI * 2 / samples).toFixed(7);
-    }
-
-    apply(filterManager: FilterSystem, input: Texture, output: RenderSurface, clear: boolean): void
-    {
-        // this.uniforms.uThickness[0] = this._thickness / input._frame.width;
-        // this.uniforms.uThickness[1] = this._thickness / input._frame.height;
-        // this.uniforms.uAlpha = this._alpha;
-        // this.uniforms.uKnockout = this._knockout;
-
-        // filterManager.applyFilter(this, input, output, clear);
+        )).toFixed(7));
     }
 
     /**
-     * The alpha of the outline.
-     * @default 1.0
-     */
-    get alpha(): number
-    {
-        return this._alpha;
-    }
-    set alpha(value: number)
-    {
-        this._alpha = value;
-    }
-
-    /**
-     * The color of the outline.
-     * @default 0x000000
-     */
-    // get color(): number
-    // {
-    //     return utils.rgb2hex(this.uniforms.uColor);
-    // }
-    // set color(value: number)
-    // {
-    //     utils.hex2rgb(value, this.uniforms.uColor);
-    // }
-
-    /**
-     * Only render outline, not the contents.
-     * @default false
-     */
-    get knockout(): boolean
-    {
-        return this._knockout;
-    }
-    set knockout(value: boolean)
-    {
-        this._knockout = value;
-    }
-
-    /**
-     * The thickness of the outline.
+     * The thickness of the outline
      * @default 1
      */
-    get thickness(): number
+    get thickness(): number { return this._thickness; }
+    set thickness(value: number) { this._thickness = this.padding = value; }
+
+    /**
+     * The color value of the ambient color
+     * @example [1.0, 1.0, 1.0] = 0xffffff
+     * @default 0x000000
+     */
+    get color(): ColorSource { return this._color.value as ColorSource; }
+    set color(value: ColorSource)
     {
-        return this._thickness;
+        this._color.setValue(value);
+        const [r, g, b] = this._color.toArray();
+
+        this.uniforms.uColor[0] = r;
+        this.uniforms.uColor[1] = g;
+        this.uniforms.uColor[2] = b;
     }
-    set thickness(value: number)
+
+    /**
+     * Coefficient for alpha multiplication
+     * @default 1
+     */
+    get alpha(): number { return this.uniforms.uAlpha; }
+    set alpha(value: number) { this.uniforms.uAlpha = value; }
+
+    /**
+     * The quality of the outline from `0` to `1`.
+     * Using a higher quality setting will result in more accuracy but slower performance
+     * @default 0.1
+     */
+    get quality(): number { return this._quality; }
+    set quality(value: number)
     {
-        this._thickness = value;
-        this.padding = value;
+        this._quality = value;
+        this.uniforms.uAngleStep = OutlineFilter.getAngleStep(value);
     }
+
+    /**
+     * Whether to only render outline, not the contents.
+     * @default false
+     */
+    get knockout(): boolean { return this.uniforms.uKnockout === 1; }
+    set knockout(value: boolean) { this.uniforms.uKnockout = value ? 1 : 0; }
 }

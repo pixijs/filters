@@ -1,14 +1,17 @@
-varying vec2 vTextureCoord;
-uniform sampler2D uSampler;
-uniform vec4 filterClamp;
+precision highp float;
+in vec2 vTextureCoord;
+out vec4 finalColor;
 
-uniform float uAlpha;
+uniform sampler2D uSampler;
 uniform vec2 uThickness;
-uniform vec4 uColor;
-uniform bool uKnockout;
+uniform vec3 uColor;
+uniform float uAlpha;
+uniform float uKnockout;
+
+uniform vec4 uInputClamp;
 
 const float DOUBLE_PI = 2. * 3.14159265358979323846264;
-const float ANGLE_STEP = ${angleStep};
+const float ANGLE_STEP = ${ANGLE_STEP};
 
 float outlineMaxAlphaAtPos(vec2 pos) {
     if (uThickness.x == 0. || uThickness.y == 0.) {
@@ -22,7 +25,7 @@ float outlineMaxAlphaAtPos(vec2 pos) {
     for (float angle = 0.; angle <= DOUBLE_PI; angle += ANGLE_STEP) {
         displacedPos.x = vTextureCoord.x + uThickness.x * cos(angle);
         displacedPos.y = vTextureCoord.y + uThickness.y * sin(angle);
-        displacedColor = texture2D(uSampler, clamp(displacedPos, filterClamp.xy, filterClamp.zw));
+        displacedColor = texture(uSampler, clamp(displacedPos, uInputClamp.xy, uInputClamp.zw));
         maxAlpha = max(maxAlpha, displacedColor.a);
     }
 
@@ -30,9 +33,9 @@ float outlineMaxAlphaAtPos(vec2 pos) {
 }
 
 void main(void) {
-    vec4 sourceColor = texture2D(uSampler, vTextureCoord);
-    vec4 contentColor = sourceColor * float(!uKnockout);
+    vec4 sourceColor = texture(uSampler, vTextureCoord);
+    vec4 contentColor = sourceColor * float(uKnockout < 0.5);
     float outlineAlpha = uAlpha * outlineMaxAlphaAtPos(vTextureCoord.xy) * (1.-sourceColor.a);
     vec4 outlineColor = vec4(vec3(uColor) * outlineAlpha, outlineAlpha);
-    gl_FragColor = contentColor + outlineColor;
+    finalColor = contentColor + outlineColor;
 }
