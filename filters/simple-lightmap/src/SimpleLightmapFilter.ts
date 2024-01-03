@@ -1,9 +1,24 @@
-import { vertex } from '@tools/fragments';
-import fragment from './simpleLightmap.frag';
-import { Filter, GlProgram } from 'pixi.js';
-import type { Texture, FilterSystem, RenderTexture, RenderSurface } from 'pixi.js';
+import { vertex, wgslVertex } from '@tools/fragments';
+import fragment from './simple-lightmap.frag';
+import source from './simple-lightmap.wgsl';
+import { Color, Filter, GlProgram, GpuProgram, Texture, FilterSystem, RenderSurface, ColorSource } from 'pixi.js';
 
-type Color = number | number[];
+export interface SimpleLightmapFilterOptions
+{
+    /** A texture where your lightmap is rendered */
+    lightMap: Texture;
+    /**
+     * The color value of the ambient color
+     * @example [1.0, 1.0, 1.0] = 0xffffff
+     * @default 0x000000
+     */
+    color?: ColorSource;
+    /**
+     * Coefficient for alpha multiplication
+     * @default 1
+     */
+    alpha?: number;
+}
 
 /**
 * SimpleLightmap, originally by Oza94
@@ -25,15 +40,38 @@ type Color = number | number[];
 */
 export class SimpleLightmapFilter extends Filter
 {
-    private _color = 0x0;
+    /** Default values for options. */
+    public static readonly DEFAULT_OPTIONS: SimpleLightmapFilterOptions = {
+        lightMap: Texture.WHITE,
+        color: 0x000000,
+        alpha: 1
+    };
 
-    /**
-     * @param {Texture} texture - a texture where your lightmap is rendered
-     * @param {Array<number>|number} [color=0x000000] - An RGBA array of the ambient color
-     * @param {number} [alpha=1] - Default alpha set independent of color (if it's a number, not array).
-     */
-    constructor(texture: Texture, color: Color = 0x000000, alpha = 1)
+    public uniforms: {
+        uColor: Float32Array;
+        uAlpha: number;
+        uDimensions: Float32Array;
+    };
+
+    private _color: Color;
+    private _lightMap!: Texture;
+
+    constructor(options: SimpleLightmapFilterOptions)
     {
+        options = { ...SimpleLightmapFilter.DEFAULT_OPTIONS, ...options };
+
+        if (!options.lightMap) throw Error('No light map texture source was provided to SimpleLightmapFilter');
+
+        const gpuProgram = new GpuProgram({
+            vertex: {
+                source: wgslVertex,
+                entryPoint: 'mainVertex',
+            },
+            fragment: {
+                source,
+                entryPoint: 'mainFragment',
+            },
+        });
         const glProgram = new GlProgram({
             vertex,
             fragment,
@@ -41,81 +79,73 @@ export class SimpleLightmapFilter extends Filter
         });
 
         super({
+            gpuProgram,
             glProgram,
-            resources: {},
+            resources: {
+                simpleLightmapUniforms: {
+                    uColor: { value: new Float32Array(3), type: 'vec3<f32>' },
+                    uAlpha: { value: options.alpha, type: 'f32' },
+                    uDimensions: { value: new Float32Array(2), type: 'vec2<f32>' },
+                },
+                uMapTexture: options.lightMap,
+            },
         });
 
-        // this.uniforms.dimensions = new Float32Array(2);
-        // this.uniforms.ambientColor = new Float32Array([0, 0, 0, alpha]);
-        // this.texture = texture;
-        // this.color = color;
+        this.uniforms = this.resources.simpleLightmapUniforms.uniforms;
+
+        this._color = new Color();
+        this.color = options.color ?? 0x000000;
+
+        Object.assign(this, options);
     }
 
     /**
-     * Applies the filter.
-     * @private
-     * @param {FilterManager} filterManager - The manager.
-     * @param {RenderTarget} input - The input target.
-     * @param {RenderTarget} output - The output target.
+     * Override existing apply method in `Filter`
+     * @override
+     * @ignore
      */
-    apply(filterManager: FilterSystem, input: Texture, output: RenderSurface, clear: boolean): void
+    public override apply(
+        filterManager: FilterSystem,
+        input: Texture,
+        output: RenderSurface,
+        clearMode: boolean,
+    ): void
     {
-        // this.uniforms.dimensions[0] = input.filterFrame?.width;
-        // this.uniforms.dimensions[1] = input.filterFrame?.height;
+        this.uniforms.uDimensions[0] = input.frame.width;
+        this.uniforms.uDimensions[1] = input.frame.height;
 
-        // // draw the filter...
-        // filterManager.applyFilter(this, input, output, clear);
+        // draw the filter...
+        filterManager.applyFilter(this, input, output, clearMode);
+    }
+
+    /** A sprite where your lightmap is rendered */
+    get lightMap(): Texture { return this._lightMap; }
+    set lightMap(value: Texture)
+    {
+        this._lightMap = value;
+        this.resources.uMapTexture = value.source;
     }
 
     /**
-     * a texture where your lightmap is rendered
-     * @member {Texture}
+     * The color value of the ambient color
+     * @example [1.0, 1.0, 1.0] = 0xffffff
+     * @default 0x000000
      */
-    // get texture(): Texture
-    // {
-    //     return this.uniforms.uLightmap;
-    // }
-    // set texture(value: Texture)
-    // {
-    //     this.uniforms.uLightmap = value;
-    // }
+    get color(): ColorSource { return this._color.value as ColorSource; }
+    set color(value: ColorSource)
+    {
+        this._color.setValue(value);
+        const [r, g, b] = this._color.toArray();
+
+        this.uniforms.uColor[0] = r;
+        this.uniforms.uColor[1] = g;
+        this.uniforms.uColor[2] = b;
+    }
 
     /**
-     * An RGBA array of the ambient color or a hex color without alpha
-     * @member {Array<number>|number}
+     * Coefficient for alpha multiplication
+     * @default 1
      */
-    // set color(value: Color)
-    // {
-    //     const arr = this.uniforms.ambientColor;
-
-    //     if (typeof value === 'number')
-    //     {
-    //         utils.hex2rgb(value, arr);
-    //         this._color = value;
-    //     }
-    //     else
-    //     {
-    //         arr[0] = value[0];
-    //         arr[1] = value[1];
-    //         arr[2] = value[2];
-    //         arr[3] = value[3];
-    //         this._color = utils.rgb2hex(arr);
-    //     }
-    // }
-    // get color(): Color
-    // {
-    //     return this._color;
-    // }
-
-    /**
-     * When setting `color` as hex, this can be used to set alpha independently.
-     */
-    // get alpha(): number
-    // {
-    //     return this.uniforms.ambientColor[3];
-    // }
-    // set alpha(value: number)
-    // {
-    //     this.uniforms.ambientColor[3] = value;
-    // }
+    get alpha(): number { return this.uniforms.uAlpha; }
+    set alpha(value: number) { this.uniforms.uAlpha = value; }
 }
