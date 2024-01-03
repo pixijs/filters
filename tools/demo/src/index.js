@@ -57,7 +57,7 @@ const main = async () =>
     filters.godray.call(app);
     filters.reflection.call(app);
     filters.simpleLightmap.call(app);
-    // filters.kawaseBlur.call(app);
+    filters.kawaseBlur.call(app);
 
     // TODO: Re-enable this in place of the above once v8 conversion is complete
     // for (const i in filters)
