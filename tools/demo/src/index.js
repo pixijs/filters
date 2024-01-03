@@ -58,6 +58,7 @@ const main = async () =>
     filters.reflection.call(app);
     filters.simpleLightmap.call(app);
     filters.kawaseBlur.call(app);
+    filters.motionBlur.call(app);
 
     // TODO: Re-enable this in place of the above once v8 conversion is complete
     // for (const i in filters)

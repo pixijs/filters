@@ -1,7 +1,29 @@
-import { vertex } from '@tools/fragments';
+import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './motion-blur.frag';
-import { Filter, GlProgram, ObservablePoint, Point } from 'pixi.js';
-import type { FilterSystem, RenderSurface, Texture } from 'pixi.js';
+import source from './motion-blur.wgsl';
+import { Filter, GlProgram, GpuProgram } from 'pixi.js';
+import type { PointData } from 'pixi.js';
+
+export interface MotionBlurFilterOptions
+{
+    /**
+     * Sets the velocity of the motion for blur effect
+     * This should be a size 2 array or an object containing `x` and `y` values, you cannot change types
+     * once defined in the constructor
+     * @default {x:0,y:0}
+     */
+    velocity?: PointData;
+    /**
+     * The kernelSize of the blur filter. Must be odd number >= 5
+     * @default 5
+     */
+    kernelSize?: number;
+    /**
+     * The offset of the blur filter
+     * @default 0
+     */
+    offset?: number;
+}
 
 /**
  * The MotionBlurFilter applies a Motion blur to an object.<br>
@@ -14,21 +36,36 @@ import type { FilterSystem, RenderSurface, Texture } from 'pixi.js';
  */
 export class MotionBlurFilter extends Filter
 {
-    /**
-     * The kernelSize of the blur, higher values are slower but look better.
-     * Use odd value greater than 5.
-     */
-    public kernelSize = 5;
+    /** Default values for options. */
+    public static readonly DEFAULT_OPTIONS: MotionBlurFilterOptions = {
+        velocity: { x: 0, y: 0 },
+        kernelSize: 5,
+        offset: 0,
+    };
 
-    // private _velocity: Point;
+    public uniforms: {
+        uVelocity: PointData;
+        uKernelSize: number;
+        uOffset: number;
+    };
 
-    /**
-     * @param {ObservablePoint|Point|number[]} [velocity=[0, 0]] - Sets the velocity of the motion for blur effect.
-     * @param {number} [kernelSize=5] - The kernelSize of the blur filter. Must be odd number >= 5
-     * @param {number} [offset=0] - The offset of the blur filter.
-     */
-    constructor(velocity: number[] | Point | ObservablePoint = [0, 0], kernelSize = 5, offset = 0)
+    private _kernelSize!: number;
+
+    constructor(options?: MotionBlurFilterOptions)
     {
+        options = { ...MotionBlurFilter.DEFAULT_OPTIONS, ...options };
+
+        const gpuProgram = new GpuProgram({
+            vertex: {
+                source: wgslVertex,
+                entryPoint: 'mainVertex',
+            },
+            fragment: {
+                source,
+                entryPoint: 'mainFragment',
+            },
+        });
+
         const glProgram = new GlProgram({
             vertex,
             fragment,
@@ -36,85 +73,79 @@ export class MotionBlurFilter extends Filter
         });
 
         super({
+            gpuProgram,
             glProgram,
-            resources: {},
+            resources: {
+                motionBlurUniforms: {
+                    uVelocity: { value: options.velocity, type: 'vec2<f32>' },
+                    uKernelSize: { value: Math.trunc(options.kernelSize ?? 5), type: 'f32' },
+                    uOffset: { value: options.offset, type: 'f32' },
+                }
+            },
         });
 
-        // this.uniforms.uVelocity = new Float32Array(2);
-        // this._velocity = new ObservablePoint(this.velocityChanged, this);
-        this.setVelocity(velocity);
+        this.uniforms = this.resources.motionBlurUniforms.uniforms;
 
-        this.kernelSize = kernelSize;
-        // this.offset = offset;
+        Object.assign(this, options);
     }
 
     /**
-     * Override existing apply method in Filter
-     * @private
+     * Sets the velocity of the motion for blur effect
+     * This should be a size 2 array or an object containing `x` and `y` values, you cannot change types
+     * once defined in the constructor
+     * @default {x:0,y:0}
      */
-    apply(filterManager: FilterSystem, input: Texture, output: RenderSurface, clear: boolean): void
+    get velocity(): PointData { return this.uniforms.uVelocity; }
+    set velocity(value: PointData)
     {
-        // const { x, y } = this.velocity;
-
-        // this.uniforms.uKernelSize = (x !== 0 || y !== 0) ? this.kernelSize : 0;
-        // filterManager.applyFilter(this, input, output, clear);
+        this.uniforms.uVelocity = value;
+        this._updateDirty();
     }
 
     /**
-     * Sets the velocity of the motion for blur effect.
-     *
-     * @member {ObservablePoint|Point|number[]}
-     */
-    // set velocity(value: Point)
-    // {
-    //     this.setVelocity(value);
-    // }
-    // get velocity(): Point
-    // {
-    //     return this._velocity;
-    // }
-
-    /**
-     * Set velocity with more broad types
-     */
-    private setVelocity(value: Point | number[])
-    {
-        // if (Array.isArray(value))
-        // {
-        //     const [x, y] = value;
-
-        //     this._velocity.set(x, y);
-        // }
-        // else
-        // {
-        //     this._velocity.copyFrom(value);
-        // }
-    }
-
-    /**
-     * Handle velocity changed
-     * @private
-     */
-    private velocityChanged()
-    {
-        // this.uniforms.uVelocity[0] = this._velocity.x;
-        // this.uniforms.uVelocity[1] = this._velocity.y;
-
-        // The padding will be increased as the velocity and intern the blur size is changed
-        // this.padding = (Math.max(Math.abs(this._velocity.x), Math.abs(this._velocity.y)) >> 0) + 1;
-    }
-
-    /**
-     * The offset of the blur filter.
+     * Sets the velocity of the motion for blur effect on the `x` axis
      * @default 0
      */
-    // set offset(value: number)
-    // {
-    //     this.uniforms.uOffset = value;
-    // }
+    get velocityX(): number { return this.velocity.x; }
+    set velocityX(value: number)
+    {
+        this.velocity.x = value;
+        this._updateDirty();
+    }
 
-    // get offset(): number
-    // {
-    //     return this.uniforms.uOffset;
-    // }
+    /**
+     * Sets the velocity of the motion for blur effect on the `x` axis
+     * @default 0
+     */
+    get velocityY(): number { return this.velocity.y; }
+    set velocityY(value: number)
+    {
+        this.velocity.y = value;
+        this._updateDirty();
+    }
+
+    /**
+     * The kernelSize of the blur filter. Must be odd number >= 5
+     * @default 5
+     */
+    get kernelSize(): number { return this._kernelSize; }
+    set kernelSize(value: number)
+    {
+        this._kernelSize = value;
+        this._updateDirty();
+    }
+
+    /**
+     * The offset of the blur filter
+     * @default 0
+     */
+    get offset(): number { return this.uniforms.uOffset; }
+    set offset(value: number) { this.uniforms.uOffset = value; }
+
+    private _updateDirty()
+    {
+        // The padding will be increased as the velocity and intern the blur size is changed
+        this.padding = (Math.max(Math.abs(this.velocityX), Math.abs(this.velocityY)) >> 0) + 1;
+        this.uniforms.uKernelSize = (this.velocityX !== 0 || this.velocityY !== 0) ? this._kernelSize : 0;
+    }
 }

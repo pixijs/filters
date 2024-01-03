@@ -1,10 +1,13 @@
-varying vec2 vTextureCoord;
-uniform sampler2D uSampler;
-uniform vec4 filterArea;
+precision highp float;
+in vec2 vTextureCoord;
+out vec4 finalColor;
 
+uniform sampler2D uSampler;
 uniform vec2 uVelocity;
 uniform int uKernelSize;
 uniform float uOffset;
+
+uniform vec4 uInputSize;
 
 const int MAX_KERNEL_SIZE = 2048;
 
@@ -16,15 +19,15 @@ const int MAX_KERNEL_SIZE = 2048;
 
 void main(void)
 {
-    vec4 color = texture2D(uSampler, vTextureCoord);
+    vec4 color = texture(uSampler, vTextureCoord);
 
     if (uKernelSize == 0)
     {
-        gl_FragColor = color;
+        finalColor = color;
         return;
     }
 
-    vec2 velocity = uVelocity / filterArea.xy;
+    vec2 velocity = uVelocity / uInputSize.xy;
     float offset = -uOffset / length(uVelocity) - 0.5;
     int k = uKernelSize - 1;
 
@@ -33,7 +36,7 @@ void main(void)
             break;
         }
         vec2 bias = velocity * (float(i) / float(k) + offset);
-        color += texture2D(uSampler, vTextureCoord + bias);
+        color += texture(uSampler, vTextureCoord + bias);
     }
-    gl_FragColor = color / float(uKernelSize);
+    finalColor = color / float(uKernelSize);
 }
