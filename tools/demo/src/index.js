@@ -52,6 +52,7 @@ const main = async () =>
     filters.colorMap.call(app);
     filters.colorGradient.call(app);
     filters.bulgePinch.call(app);
+    filters.bevel.call(app);
     // filters.kawaseBlur.call(app);
 
     // TODO: Re-enable this in place of the above once v8 conversion is complete
