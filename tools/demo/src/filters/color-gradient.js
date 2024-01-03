@@ -18,7 +18,7 @@ export default function ()
     this.addFilter('ColorGradientFilter', {
         enabled: false,
         fishOnly: true,
-        args: [],
+        args: ctrlIndex,
         oncreate(folder)
         {
             let miscControls = {};

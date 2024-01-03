@@ -10,7 +10,7 @@ import {
 } from 'gradient-parser';
 
 import { ColorStop } from './ColorGradientFilter';
-import { colorToNormalizedRgba } from './utils';
+import { Color } from 'pixi.js';
 
 export type ParseResult = {
     type: number;
@@ -63,10 +63,12 @@ export function stopsFromCssStops(stops: CssColorStop[]): ColorStop[]
 {
     const offsets: number[] = offsetsFromCssColorStops(stops);
     const result: ColorStop[] = [];
+    const color = new Color();
 
     for (let i = 0; i < stops.length; i++)
     {
-        const rgbaColor = colorAsNormalizedRgbaFromCssStop(stops[i]);
+        const colorString = colorAsStringFromCssStop(stops[i]);
+        const rgbaColor = color.setValue(colorString).toArray();
 
         result.push({
             offset: offsets[i],
@@ -76,11 +78,6 @@ export function stopsFromCssStops(stops: CssColorStop[]): ColorStop[]
     }
 
     return result;
-}
-
-export function colorAsNormalizedRgbaFromCssStop(stop: CssColorStop): number[] | Float32Array
-{
-    return colorToNormalizedRgba(colorAsStringFromCssStop(stop));
 }
 
 export function colorAsStringFromCssStop(stop: CssColorStop): string

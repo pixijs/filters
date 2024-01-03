@@ -1,14 +1,12 @@
-import fragment from './colorGradient.frag';
-import vertex from './colorGradient.vert';
-import { Filter, GlProgram } from 'pixi.js';
+import fragment from './color-gradient.frag';
+import vertex from './color-gradient.vert';
+import source from './color-gradient.wgsl';
+import { Color, ColorSource, Filter, GlProgram, GpuProgram } from 'pixi.js';
 import { parseCssGradient } from './CssGradientParser';
-import { colorToNormalizedRgba } from './utils';
-
-export type Color = number | string | Float32Array | number[];
 
 export type ColorStop = {
     offset: number;
-    color: Color;
+    color: ColorSource;
     alpha: number;
 };
 
@@ -63,6 +61,18 @@ export class ColorGradientFilter extends Filter
         replace: false,
     };
 
+    public uniforms: {
+        uType: number;
+        uAngle: number;
+        uAlpha: number;
+        uColors: Float32Array;
+        uOffsets: Float32Array;
+        uAlphas: Float32Array;
+        uNumStops: number;
+        uMaxColors: number;
+        uReplace: number;
+    };
+
     private _stops: ColorStop[] = [];
 
     /**
@@ -72,11 +82,9 @@ export class ColorGradientFilter extends Filter
    */
     constructor(options?: DefaultOptions | CssOptions)
     {
-        let options_;
-
         if (options && 'css' in options)
         {
-            options_ = {
+            options = {
                 ...parseCssGradient(options.css || ''),
                 alpha: options.alpha ?? ColorGradientFilter.defaults.alpha,
                 maxColors: options.maxColors ?? ColorGradientFilter.defaults.maxColors,
@@ -84,13 +92,24 @@ export class ColorGradientFilter extends Filter
         }
         else
         {
-            options_ = { ...ColorGradientFilter.defaults, ...options };
+            options = { ...ColorGradientFilter.defaults, ...options };
         }
 
-        if (!options_.stops || options_.stops.length < 2)
+        if (!options.stops || options.stops.length < 2)
         {
             throw new Error('ColorGradientFilter requires at least 2 color stops.');
         }
+
+        const gpuProgram = new GpuProgram({
+            vertex: {
+                source,
+                entryPoint: 'mainVertex',
+            },
+            fragment: {
+                source,
+                entryPoint: 'mainFragment',
+            },
+        });
 
         const glProgram = new GlProgram({
             vertex,
@@ -98,13 +117,31 @@ export class ColorGradientFilter extends Filter
             name: 'color-gradient-filter',
         });
 
-        super({
-            glProgram,
-            resources: {},
-        });
-        // this.autoFit = false;
+        const maxStops = 32;
 
-        Object.assign(this, options_);
+        super({
+            gpuProgram,
+            glProgram,
+            resources: {
+                colorGradientUniforms: {
+                    uType: { value: options.type, type: 'f32' },
+                    uAngle: { value: options.angle ?? ANGLE_OFFSET, type: 'f32' },
+                    uAlpha: { value: options.alpha, type: 'f32' },
+                    uReplace: { value: options.replace ? 1 : 0, type: 'f32' },
+
+                    uColors: { value: new Float32Array(maxStops * 3), type: 'vec3<f32>', size: maxStops },
+                    uOffsets: { value: new Float32Array(maxStops), type: 'f32', size: maxStops },
+                    uAlphas: { value: new Float32Array(maxStops * 3), type: 'f32', size: maxStops * 3 },
+                    uNumStops: { value: options.stops.length, type: 'f32' },
+
+                    uMaxColors: { value: options.maxColors, type: 'f32' },
+                },
+            },
+        });
+
+        this.uniforms = this.resources.colorGradientUniforms.uniforms;
+
+        Object.assign(this, options);
     }
 
     get stops(): ColorStop[]
@@ -115,26 +152,27 @@ export class ColorGradientFilter extends Filter
     set stops(stops: ColorStop[])
     {
         const sortedStops = sortColorStops(stops);
-
+        const color = new Color();
         const colors = new Float32Array(sortedStops.length * 3);
-        const R = 0;
-        const G = 1;
-        const B = 2;
+        let r;
+        let g;
+        let b;
 
         for (let i = 0; i < sortedStops.length; i++)
         {
-            const color = colorToNormalizedRgba(sortedStops[i].color);
+            color.setValue(sortedStops[i].color);
             const indexStart = i * 3;
 
-            colors[indexStart + R] = color[R];
-            colors[indexStart + G] = color[G];
-            colors[indexStart + B] = color[B];
+            [r, g, b] = color.toArray();
+            colors[indexStart] = r;
+            colors[indexStart + 1] = g;
+            colors[indexStart + 2] = b;
         }
 
-        // this.uniforms.uColors = colors;
-        // this.uniforms.uOffsets = sortedStops.map((s) => s.offset);
-        // this.uniforms.uAlphas = sortedStops.map((s) => s.alpha);
-        // this.uniforms.uNumStops = sortedStops.length;
+        this.uniforms.uColors = colors;
+        this.uniforms.uOffsets.set(sortedStops.map((s) => s.offset));
+        this.uniforms.uAlphas.set(sortedStops.map((s) => s.alpha));
+        this.uniforms.uNumStops = sortedStops.length;
         this._stops = sortedStops;
     }
 
@@ -142,71 +180,36 @@ export class ColorGradientFilter extends Filter
    * The type of gradient
    * @default ColorGradientFilter.LINEAR
    */
-    // set type(value: number)
-    // {
-    //     this.uniforms.uType = value;
-    // }
-
-    // get type(): number
-    // {
-    //     return this.uniforms.uType;
-    // }
+    get type(): number { return this.uniforms.uType; }
+    set type(value: number) { this.uniforms.uType = value; }
 
     /**
    * The angle of the gradient in degrees
    * @default 90
    */
-    // set angle(value: number)
-    // {
-    //     this.uniforms.uAngle = value - ANGLE_OFFSET;
-    // }
-
-    // get angle(): number
-    // {
-    //     return this.uniforms.uAngle + ANGLE_OFFSET;
-    // }
+    get angle(): number { return this.uniforms.uAngle + ANGLE_OFFSET; }
+    set angle(value: number) { this.uniforms.uAngle = value - ANGLE_OFFSET; }
 
     /**
    * The alpha value of the gradient (0-1)
    * @default 1
    */
-    // set alpha(value: number)
-    // {
-    //     this.uniforms.uAlpha = value;
-    // }
-
-    // get alpha(): number
-    // {
-    //     return this.uniforms.uAlpha;
-    // }
+    get alpha(): number { return this.uniforms.uAlpha; }
+    set alpha(value: number) { this.uniforms.uAlpha = value; }
 
     /**
    * The maximum number of colors to render (0 = no limit)
    * @default 0
    */
-    // set maxColors(value: number)
-    // {
-    //     this.uniforms.uMaxColors = value;
-    // }
-
-    // get maxColors(): number
-    // {
-    //     return this.uniforms.uMaxColors;
-    // }
+    get maxColors(): number { return this.uniforms.uMaxColors; }
+    set maxColors(value: number) { this.uniforms.uMaxColors = value; }
 
     /**
      * If true, the gradient will replace the existing color, otherwise it
      * will be multiplied with it
      * @default false
      */
-    // set replace(value: boolean)
-    // {
-    //     this.uniforms.uReplace = value;
-    // }
-
-    // get replace(): boolean
-    // {
-    //     return this.uniforms.uReplace;
-    // }
+    get replace(): boolean { return this.uniforms.uReplace > 0.5; }
+    set replace(value: boolean) { this.uniforms.uReplace = value ? 1 : 0; }
 }
 

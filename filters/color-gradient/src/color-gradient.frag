@@ -1,15 +1,14 @@
-const float PI = 3.1415926538;
-const float PI_2 = PI*2.;
-
-varying vec2 vTextureCoord;
-varying vec2 vFilterCoord;
-uniform sampler2D uSampler;
+precision highp float;
+in vec2 vTextureCoord;
+in vec2 vFilterCoord;
+out vec4 finalColor;
 
 const int TYPE_LINEAR = 0;
 const int TYPE_RADIAL = 1;
 const int TYPE_CONIC = 2;
 const int MAX_STOPS = 32;
 
+uniform sampler2D uSampler;
 uniform int uNumStops;
 uniform float uAlphas[3*MAX_STOPS];
 uniform vec3 uColors[MAX_STOPS];
@@ -19,6 +18,9 @@ uniform float uAngle;
 uniform float uAlpha;
 uniform int uMaxColors;
 uniform bool uReplace;
+
+const float PI = 3.1415926538;
+const float PI_2 = PI*2.;
 
 struct ColorStop {
     float offset;
@@ -40,7 +42,7 @@ float projectLinearPosition(vec2 pos, float angle){
 }
 
 float projectRadialPosition(vec2 pos) {
-    float r = distance(vFilterCoord, vec2(0.5));
+    float r = distance(pos, vec2(0.5));
     return clamp(2.*r, 0., 1.);
 }
 
@@ -64,11 +66,11 @@ float projectPosition(vec2 pos, int type, float angle) {
 
 void main(void) {
     // current/original color
-    vec4 currentColor = texture2D(uSampler, vTextureCoord);
+    vec4 currentColor = texture(uSampler, vTextureCoord);
 
     // skip calculations if gradient alpha is 0
     if (0.0 == uAlpha) {
-        gl_FragColor = currentColor;
+        finalColor = currentColor;
         return;
     }
 
@@ -86,7 +88,7 @@ void main(void) {
     }
 
     if (y  < offsetMin || y > offsetMax) {
-        gl_FragColor = currentColor;
+        finalColor = currentColor;
         return;
     }
 
@@ -125,9 +127,9 @@ void main(void) {
 
     if (uReplace == false) {
         // mix resulting color with current color
-        gl_FragColor = gradientColor + currentColor*(1.-gradientColor.a);
+        finalColor = gradientColor + currentColor*(1.-gradientColor.a);
     } else {
         // replace with gradient color
-        gl_FragColor = gradientColor;
+        finalColor = gradientColor;
     }
 }
