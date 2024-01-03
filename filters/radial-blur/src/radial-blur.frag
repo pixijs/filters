@@ -1,28 +1,31 @@
-varying vec2 vTextureCoord;
-uniform sampler2D uSampler;
-uniform vec4 filterArea;
+precision highp float;
+in vec2 vTextureCoord;
+out vec4 finalColor;
 
+uniform sampler2D uSampler;
 uniform float uRadian;
 uniform vec2 uCenter;
 uniform float uRadius;
 uniform int uKernelSize;
 
+uniform vec4 uInputSize;
+
 const int MAX_KERNEL_SIZE = 2048;
 
 void main(void)
 {
-    vec4 color = texture2D(uSampler, vTextureCoord);
+    vec4 color = texture(uSampler, vTextureCoord);
 
     if (uKernelSize == 0)
     {
-        gl_FragColor = color;
+        finalColor = color;
         return;
     }
 
-    float aspect = filterArea.y / filterArea.x;
-    vec2 center = uCenter.xy / filterArea.xy;
-    float gradient = uRadius / filterArea.x * 0.3;
-    float radius = uRadius / filterArea.x - gradient * 0.5;
+    float aspect = uInputSize.y / uInputSize.x;
+    vec2 center = uCenter.xy / uInputSize.xy;
+    float gradient = uRadius / uInputSize.x * 0.3;
+    float radius = uRadius / uInputSize.x - gradient * 0.5;
     int k = uKernelSize - 1;
 
     vec2 coord = vTextureCoord;
@@ -35,7 +38,7 @@ void main(void)
         float gap = gradient;
         float scale = 1.0 - abs(delta / gap);
         if (scale <= 0.0) {
-            gl_FragColor = color;
+            finalColor = color;
             return;
         }
         radianStep *= scale;
@@ -57,7 +60,7 @@ void main(void)
         coord.y /= aspect;
         coord += center;
 
-        vec4 sample = texture2D(uSampler, coord);
+        vec4 sample = texture(uSampler, coord);
 
         // switch to pre-multiplied alpha to correctly blur transparent images
         // sample.rgb *= sample.a;
@@ -65,5 +68,5 @@ void main(void)
         color += sample;
     }
 
-    gl_FragColor = color / float(uKernelSize);
+    finalColor = color / float(uKernelSize);
 }

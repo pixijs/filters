@@ -61,6 +61,7 @@ const main = async () =>
     filters.motionBlur.call(app);
     filters.outline.call(app);
     filters.emboss.call(app);
+    filters.radialBlur.call(app);
 
     // TODO: Re-enable this in place of the above once v8 conversion is complete
     // for (const i in filters)
