@@ -3,12 +3,12 @@ export default function ()
     const app = this;
 
     app.addFilter('CRTFilter', {
-        args: [{
+        args: {
             lineWidth: 3,
             lineContrast: 0.3,
             noise: 0.2,
             time: 0.5,
-        }],
+        },
         oncreate(folder)
         {
             const filter = this;

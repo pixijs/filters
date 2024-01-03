@@ -1,21 +1,68 @@
-import { vertex } from '@tools/fragments';
+import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './crt.frag';
-import { Filter, GlProgram } from 'pixi.js';
-import type { FilterSystem, RenderSurface, RenderTexture, Texture } from 'pixi.js';
+import source from './crt.wgsl';
+import { Filter, GlProgram, GpuProgram } from 'pixi.js';
+import type { FilterSystem, RenderSurface, Texture } from 'pixi.js';
 
 export interface CRTFilterOptions
 {
-    curvature: number;
-    lineWidth: number;
-    lineContrast: number;
-    verticalLine: boolean;
-    noise: number;
-    noiseSize: number;
-    seed: number;
-    vignetting: number;
-    vignettingAlpha: number;
-    vignettingBlur: number;
-    time: number;
+    /**
+     * Bend of interlaced lines, higher value means more bend
+     * @default 1
+     */
+    curvature?: number,
+    /**
+     * Width of the interlaced lines
+     * @default 1
+     */
+    lineWidth?: number,
+    /**
+     * Contrast of interlaced lines
+     * @default 0.25
+     */
+    lineContrast?: number,
+    /**
+     * The orientation of the line:
+     *
+     * `true` create vertical lines, `false` creates horizontal lines
+     * @default false
+     */
+    verticalLine?: boolean,
+    /**
+     * For animating interlaced lines
+     * @default 0
+     */
+    time?: number,
+    /**
+     * Opacity/intensity of the noise effect between `0` and `1`
+     * @default 0.3
+     */
+    noise?: number,
+    /**
+     * The size of the noise particles
+     * @default 1
+     */
+    noiseSize?: number,
+    /**
+     * A seed value to apply to the random noise generation
+     * @default 0
+     */
+    seed?: number,
+    /**
+     * The radius of the vignette effect, smaller values produces a smaller vignette
+     * @default 0.3
+     */
+    vignetting?: number,
+    /**
+     * Amount of opacity on the vignette
+     * @default 1
+     */
+    vignettingAlpha?: number,
+    /**
+     * Blur intensity of the vignette
+     * @default 0.3
+     */
+    vignettingBlur?: number,
 }
 
 /**
@@ -29,44 +76,57 @@ export interface CRTFilterOptions
  */
 export class CRTFilter extends Filter
 {
-    /** Default constructor options */
-    public static readonly defaults: CRTFilterOptions = {
+    /** Default values for options. */
+    public static readonly DEFAULT_OPTIONS: CRTFilterOptions = {
         curvature: 1.0,
         lineWidth: 1.0,
         lineContrast: 0.25,
         verticalLine: false,
         noise: 0.0,
         noiseSize: 1.0,
-        seed: 0.0,
         vignetting: 0.3,
         vignettingAlpha: 1.0,
         vignettingBlur: 0.3,
         time: 0.0,
+        seed: 0.0,
     };
 
-    /** For animating interlaced lines */
-    public time = 0;
-
-    /** A seed value to apply to the random noise generation */
-    public seed = 0;
+    public uniforms: {
+        uLine: Float32Array;
+        uNoise: Float32Array;
+        uVignette: Float32Array;
+        uSeed: number;
+        uTime: number;
+        uDimensions: Float32Array;
+    };
 
     /**
-     * @param {object} [options] - The optional parameters of CRT effect
-     * @param {number} [options.curvature=1.0] - Bent of interlaced lines, higher value means more bend
-     * @param {number} [options.lineWidth=1.0] - Width of the interlaced lines
-     * @param {number} [options.lineContrast=0.25] - Contrast of interlaced lines
-     * @param {number} [options.verticalLine=false] - `true` is vertical lines, `false` is horizontal
-     * @param {number} [options.noise=0.3] - Opacity/intensity of the noise effect between `0` and `1`
-     * @param {number} [options.noiseSize=1.0] - The size of the noise particles
-     * @param {number} [options.seed=0] - A seed value to apply to the random noise generation
-     * @param {number} [options.vignetting=0.3] - The radius of the vignette effect, smaller
-     *        values produces a smaller vignette
-     * @param {number} [options.vignettingAlpha=1.0] - Amount of opacity of vignette
-     * @param {number} [options.vignettingBlur=0.3] - Blur intensity of the vignette
-     * @param {number} [options.time=0] - For animating interlaced lines
+     * A seed value to apply to the random noise generation
+     * @default 0
      */
-    constructor(options?: Partial<CRTFilterOptions>)
+    public seed!: number;
+
+    /**
+     * Opacity/intensity of the noise effect between `0` and `1`
+     * @default 0.3
+     */
+    public time!: number;
+
+    constructor(options?: CRTFilterOptions)
     {
+        options = { ...CRTFilter.DEFAULT_OPTIONS, ...options };
+
+        const gpuProgram = new GpuProgram({
+            vertex: {
+                source: wgslVertex,
+                entryPoint: 'mainVertex',
+            },
+            fragment: {
+                source,
+                entryPoint: 'mainFragment',
+            },
+        });
+
         const glProgram = new GlProgram({
             vertex,
             fragment,
@@ -74,147 +134,108 @@ export class CRTFilter extends Filter
         });
 
         super({
+            gpuProgram,
             glProgram,
-            resources: {},
+            resources: {
+                crtUniforms: {
+                    uLine: { value: new Float32Array(4), type: 'vec4<f32>' },
+                    uNoise: { value: new Float32Array(2), type: 'vec2<f32>' },
+                    uVignette: { value: new Float32Array(3), type: 'vec3<f32>' },
+                    uSeed: { value: options.seed, type: 'f32' },
+                    uTime: { value: options.time, type: 'f32' },
+                    uDimensions: { value: new Float32Array(2), type: 'vec2<f32>' },
+                }
+            },
         });
 
-        // this.uniforms.dimensions = new Float32Array(2);
+        this.uniforms = this.resources.crtUniforms.uniforms;
 
-        Object.assign(this, CRTFilter.defaults, options);
+        Object.assign(this, options);
     }
 
     /**
-     * Override existing apply method in Filter
-     * @private
+     * Override existing apply method in `Filter`
+     * @override
+     * @ignore
      */
-    apply(filterManager: FilterSystem, input: Texture, output: RenderSurface, clear: boolean): void
+    public override apply(
+        filterManager: FilterSystem,
+        input: Texture,
+        output: RenderSurface,
+        clearMode: boolean
+    ): void
     {
-        // const { width, height } = input.filterFrame as Rectangle;
+        this.uniforms.uDimensions[0] = input.frame.width;
+        this.uniforms.uDimensions[1] = input.frame.height;
 
-        // this.uniforms.dimensions[0] = width;
-        // this.uniforms.dimensions[1] = height;
+        this.uniforms.uSeed = this.seed;
+        this.uniforms.uTime = this.time;
 
-        // this.uniforms.seed = this.seed;
-        // this.uniforms.time = this.time;
-
-        // filterManager.applyFilter(this, input, output, clear);
+        filterManager.applyFilter(this, input, output, clearMode);
     }
 
     /**
-     * Bent of interlaced lines, higher value means more bend
+     * Bend of interlaced lines, higher value means more bend
      * @default 1
      */
-    // set curvature(value: number)
-    // {
-    //     this.uniforms.curvature = value;
-    // }
-    // get curvature(): number
-    // {
-    //     return this.uniforms.curvature;
-    // }
+    get curvature(): number { return this.uniforms.uLine[0]; }
+    set curvature(value: number) { this.uniforms.uLine[0] = value; }
 
     /**
      * Width of interlaced lines
      * @default 1
      */
-    // set lineWidth(value: number)
-    // {
-    //     this.uniforms.lineWidth = value;
-    // }
-    // get lineWidth(): number
-    // {
-    //     return this.uniforms.lineWidth;
-    // }
+    get lineWidth(): number { return this.uniforms.uLine[1]; }
+    set lineWidth(value: number) { this.uniforms.uLine[1] = value; }
 
     /**
      * Contrast of interlaced lines
      * @default 0.25
      */
-    // set lineContrast(value: number)
-    // {
-    //     this.uniforms.lineContrast = value;
-    // }
-    // get lineContrast(): number
-    // {
-    //     return this.uniforms.lineContrast;
-    // }
+    get lineContrast(): number { return this.uniforms.uLine[2]; }
+    set lineContrast(value: number) { this.uniforms.uLine[2] = value; }
 
     /**
-     * `true` for vertical lines, `false` for horizontal lines
+     * The orientation of the line:
+     *
+     * `true` create vertical lines, `false` creates horizontal lines
      * @default false
      */
-    // set verticalLine(value: boolean)
-    // {
-    //     this.uniforms.verticalLine = value;
-    // }
-    // get verticalLine(): boolean
-    // {
-    //     return this.uniforms.verticalLine;
-    // }
+    get verticalLine(): boolean { return this.uniforms.uLine[3] > 0.5; }
+    set verticalLine(value: boolean) { this.uniforms.uLine[3] = value ? 1 : 0; }
 
     /**
      * Opacity/intensity of the noise effect between `0` and `1`
-     * @default 0
+     * @default 0.3
      */
-    // set noise(value: number)
-    // {
-    //     this.uniforms.noise = value;
-    // }
-    // get noise(): number
-    // {
-    //     return this.uniforms.noise;
-    // }
+    get noise(): number { return this.uniforms.uNoise[0]; }
+    set noise(value: number) { this.uniforms.uNoise[0] = value; }
 
     /**
      * The size of the noise particles
      * @default 0
      */
-    // set noiseSize(value: number)
-    // {
-    //     this.uniforms.noiseSize = value;
-    // }
-    // get noiseSize(): number
-    // {
-    //     return this.uniforms.noiseSize;
-    // }
+    get noiseSize(): number { return this.uniforms.uNoise[1]; }
+    set noiseSize(value: number) { this.uniforms.uNoise[1] = value; }
 
     /**
-     * The radius of the vignette effect, smaller
-     * values produces a smaller vignette
-     * @default 0
+     * The radius of the vignette effect, smaller values produces a smaller vignette
+     * @default 0.3
      */
-    // set vignetting(value: number)
-    // {
-    //     this.uniforms.vignetting = value;
-    // }
-    // get vignetting(): number
-    // {
-    //     return this.uniforms.vignetting;
-    // }
+    get vignetting(): number { return this.uniforms.uVignette[0]; }
+    set vignetting(value: number) { this.uniforms.uVignette[0] = value; }
 
     /**
      * Amount of opacity of vignette
-     * @default 0
+     * @default 1
      */
-    // set vignettingAlpha(value: number)
-    // {
-    //     this.uniforms.vignettingAlpha = value;
-    // }
-    // get vignettingAlpha(): number
-    // {
-    //     return this.uniforms.vignettingAlpha;
-    // }
+    get vignettingAlpha(): number { return this.uniforms.uVignette[1]; }
+    set vignettingAlpha(value: number) { this.uniforms.uVignette[1] = value; }
 
     /**
      * Blur intensity of the vignette
-     * @default 0
+     * @default 0.3
      */
-    // set vignettingBlur(value: number)
-    // {
-    //     this.uniforms.vignettingBlur = value;
-    // }
-    // get vignettingBlur(): number
-    // {
-    //     return this.uniforms.vignettingBlur;
-    // }
+    get vignettingBlur(): number { return this.uniforms.uVignette[2]; }
+    set vignettingBlur(value: number) { this.uniforms.uVignette[2] = value; }
 }
