@@ -54,6 +54,7 @@ const main = async () =>
     filters.bulgePinch.call(app);
     filters.bevel.call(app);
     filters.crt.call(app);
+    filters.godray.call(app);
     // filters.kawaseBlur.call(app);
 
     // TODO: Re-enable this in place of the above once v8 conversion is complete

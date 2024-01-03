@@ -6,6 +6,7 @@ export default function ()
 
     this.addFilter('GodrayFilter', {
         enabled: false,
+        args: { center: { x: app.initWidth * 0.5, y: -100 } },
         oncreate(folder)
         {
             this.alpha = 1;
@@ -13,7 +14,6 @@ export default function ()
             this.gain = 0.6;
             this.lacunarity = 2.75;
             this.animating = true;
-            this.center = new Point(100, -100);
 
             app.events.on('enable', (enabled) =>
             {
@@ -38,8 +38,8 @@ export default function ()
             folder.add(this, 'alpha', 0, 1);
             folder.add(this, 'parallel');
             folder.add(this, 'angle', -60, 60);
-            folder.add(this.center, 'x', -100, app.initWidth + 100).name('center.x');
-            folder.add(this.center, 'y', -1000, -100).name('center.y');
+            folder.add(this, 'centerX', -100, app.initWidth + 100).name('center.x');
+            folder.add(this, 'centerY', -1000, -100).name('center.y');
         },
     });
 }
