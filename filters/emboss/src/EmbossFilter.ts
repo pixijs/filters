@@ -1,6 +1,16 @@
-import { vertex } from '@tools/fragments';
+import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './emboss.frag';
-import { Filter, GlProgram } from 'pixi.js';
+import source from './emboss.wgsl';
+import { Filter, GlProgram, GpuProgram } from 'pixi.js';
+
+export interface EmbossFilterOptions
+{
+    /**
+     * Strength of the emboss
+     * @default 5
+     */
+    strength?: number;
+}
 
 /**
  * An RGB Split Filter.<br>
@@ -13,11 +23,30 @@ import { Filter, GlProgram } from 'pixi.js';
  */
 export class EmbossFilter extends Filter
 {
-    /**
-     * @param {number} [strength=5] - Strength of the emboss.
-     */
-    constructor(strength = 5)
+    /** Default values for options. */
+    public static readonly DEFAULT_OPTIONS: EmbossFilterOptions = {
+        strength: 5,
+    };
+
+    public uniforms: {
+        uStrength: number;
+    };
+
+    constructor(options?: EmbossFilterOptions)
     {
+        options = { ...EmbossFilter.DEFAULT_OPTIONS, ...options };
+
+        const gpuProgram = new GpuProgram({
+            vertex: {
+                source: wgslVertex,
+                entryPoint: 'mainVertex',
+            },
+            fragment: {
+                source,
+                entryPoint: 'mainFragment',
+            },
+        });
+
         const glProgram = new GlProgram({
             vertex,
             fragment,
@@ -25,22 +54,22 @@ export class EmbossFilter extends Filter
         });
 
         super({
+            gpuProgram,
             glProgram,
-            resources: {},
+            resources: {
+                embossUniforms: {
+                    uStrength: { value: options.strength, type: 'f32' },
+                }
+            },
         });
 
-        // this.strength = strength;
+        this.uniforms = this.resources.embossUniforms.uniforms;
     }
 
     /**
-     * Strength of emboss.
+     * Strength of the emboss
+     * @default 5
      */
-    // get strength(): number
-    // {
-    //     return this.uniforms.strength;
-    // }
-    // set strength(value: number)
-    // {
-    //     this.uniforms.strength = value;
-    // }
+    get strength(): number { return this.uniforms.uStrength; }
+    set strength(value: number) { this.uniforms.uStrength = value; }
 }
