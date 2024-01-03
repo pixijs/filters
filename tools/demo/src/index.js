@@ -55,6 +55,7 @@ const main = async () =>
     filters.bevel.call(app);
     filters.crt.call(app);
     filters.godray.call(app);
+    filters.reflection.call(app);
     // filters.kawaseBlur.call(app);
 
     // TODO: Re-enable this in place of the above once v8 conversion is complete

@@ -1,16 +1,18 @@
-varying vec2 vTextureCoord;
+precision highp float;
+in vec2 vTextureCoord;
+out vec4 finalColor;
+
 uniform sampler2D uSampler;
+uniform float uMirror;
+uniform float uBoundary;
+uniform vec2 uAmplitude;
+uniform vec2 uWavelength;
+uniform vec2 uAlpha;
+uniform float uTime;
+uniform vec2 uDimensions;
 
-uniform vec4 filterArea;
-uniform vec4 filterClamp;
-uniform vec2 dimensions;
-
-uniform bool mirror;
-uniform float boundary;
-uniform vec2 amplitude;
-uniform vec2 waveLength;
-uniform vec2 alpha;
-uniform float time;
+uniform vec4 uInputSize;
+uniform vec4 uInputClamp;
 
 float rand(vec2 co) {
     return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);
@@ -18,27 +20,27 @@ float rand(vec2 co) {
 
 void main(void)
 {
-    vec2 pixelCoord = vTextureCoord.xy * filterArea.xy;
-    vec2 coord = pixelCoord / dimensions;
+    vec2 pixelCoord = vTextureCoord.xy * uInputSize.xy;
+    vec2 coord = pixelCoord / uDimensions;
 
-    if (coord.y < boundary) {
-        gl_FragColor = texture2D(uSampler, vTextureCoord);
+    if (coord.y < uBoundary) {
+        finalColor = texture(uSampler, vTextureCoord);
         return;
     }
 
-    float k = (coord.y - boundary) / (1. - boundary + 0.0001);
-    float areaY = boundary * dimensions.y / filterArea.y;
+    float k = (coord.y - uBoundary) / (1. - uBoundary + 0.0001);
+    float areaY = uBoundary * uDimensions.y / uInputSize.y;
     float v = areaY + areaY - vTextureCoord.y;
-    float y = mirror ? v : vTextureCoord.y;
+    float y = uMirror > 0.5 ? v : vTextureCoord.y;
 
-    float _amplitude = ((amplitude.y - amplitude.x) * k + amplitude.x ) / filterArea.x;
-    float _waveLength = ((waveLength.y - waveLength.x) * k + waveLength.x) / filterArea.y;
-    float _alpha = (alpha.y - alpha.x) * k + alpha.x;
+    float _amplitude = ((uAmplitude.y - uAmplitude.x) * k + uAmplitude.x ) / uInputSize.x;
+    float _waveLength = ((uWavelength.y - uWavelength.x) * k + uWavelength.x) / uInputSize.y;
+    float _alpha = (uAlpha.y - uAlpha.x) * k + uAlpha.x;
 
-    float x = vTextureCoord.x + cos(v * 6.28 / _waveLength - time) * _amplitude;
-    x = clamp(x, filterClamp.x, filterClamp.z);
+    float x = vTextureCoord.x + cos(v * 6.28 / _waveLength - uTime) * _amplitude;
+    x = clamp(x, uInputClamp.x, uInputClamp.z);
 
-    vec4 color = texture2D(uSampler, vec2(x, y));
+    vec4 color = texture(uSampler, vec2(x, y));
 
-    gl_FragColor = color * _alpha;
+    finalColor = color * _alpha;
 }
