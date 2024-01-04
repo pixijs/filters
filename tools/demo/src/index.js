@@ -23,56 +23,10 @@ const main = async () =>
         { alias: 'colormap', src: 'images/colormap.png' },
     ]);
 
-    // filters.alpha.call(app);
-    // filters.blur.call(app);
-    // filters.colorMatrix.call(app);
-    // filters.displacement.call(app);
-    // filters.noise.call(app);
-
-    // TODO: https://github.com/orgs/pixijs/projects/2/views/4?pane=issue&itemId=48586590
-    // filters.shockwave.call(app);
-
-    filters.adjustment.call(app);
-    filters.bloom.call(app);
-    filters.grayscale.call(app);
-    filters.twist.call(app);
-    filters.pixelate.call(app);
-    filters.glow.call(app);
-    filters.hslAdjustment.call(app);
-    filters.rgb.call(app);
-    filters.ascii.call(app);
-    filters.crossHatch.call(app);
-    filters.convolution.call(app);
-    filters.dot.call(app);
-    filters.shockwave.call(app);
-    filters.zoomBlur.call(app);
-    filters.colorOverlay.call(app);
-    filters.colorReplace.call(app);
-    filters.multiColorReplace.call(app);
-    filters.colorMap.call(app);
-    filters.colorGradient.call(app);
-    filters.bulgePinch.call(app);
-    filters.bevel.call(app);
-    filters.crt.call(app);
-    filters.godray.call(app);
-    filters.reflection.call(app);
-    filters.simpleLightmap.call(app);
-    filters.kawaseBlur.call(app);
-    filters.motionBlur.call(app);
-    filters.outline.call(app);
-    filters.emboss.call(app);
-    filters.radialBlur.call(app);
-    filters.glitch.call(app);
-    filters.advancedBloom.call(app);
-    filters.oldFilm.call(app);
-    filters.tiltShift.call(app);
-    filters.dropShadow.call(app);
-
-    // TODO: Re-enable this in place of the above once v8 conversion is complete
-    // for (const i in filters)
-    // {
-    //     filters[i].call(app);
-    // }
+    for (const i in filters)
+    {
+        filters[i].call(app);
+    }
 };
 
 main();

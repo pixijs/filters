@@ -1,6 +1,6 @@
 struct GlitchUniforms {
   uSeed: f32
-  uDimension: vec2<f32>,
+  uDimensions: vec2<f32>,
   uAspect: f32,
   uFillMode: u32,
   uOffset: f32,

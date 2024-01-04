@@ -77,7 +77,7 @@ export class GlitchFilter extends Filter
 
     public uniforms: {
         uSeed: number
-        uDimension: PointData,
+        uDimensions: PointData,
         uAspect: number,
         uFillMode: number,
         uOffset: number,
@@ -144,7 +144,7 @@ export class GlitchFilter extends Filter
             resources: {
                 glitchUniforms: {
                     uSeed: { value: options?.seed ?? 0, type: 'f32' },
-                    uDimension: { value: new Float32Array(2), type: 'vec2<f32>' },
+                    uDimensions: { value: new Float32Array(2), type: 'vec2<f32>' },
                     uAspect: { value: 1, type: 'f32' },
                     uFillMode: { value: options?.fillMode ?? 0, type: 'u32' },
                     uOffset: { value: options?.offset ?? 100, type: 'f32' },
@@ -162,7 +162,7 @@ export class GlitchFilter extends Filter
         this._canvas = document.createElement('canvas');
         this._canvas.width = 4;
         this._canvas.height = this.sampleSize;
-        this.texture = getCanvasTexture(this._canvas, { width: 500, height: 500, style: { scaleMode: 'nearest' } });
+        this.texture = getCanvasTexture(this._canvas, { style: { scaleMode: 'nearest' } });
 
         Object.assign(this, options);
     }
@@ -180,8 +180,8 @@ export class GlitchFilter extends Filter
     {
         const { width, height } = input.frame;
 
-        this.uniforms.uDimension.x = width;
-        this.uniforms.uDimension.y = height;
+        this.uniforms.uDimensions.x = width;
+        this.uniforms.uDimensions.y = height;
         this.uniforms.uAspect = height / width;
 
         filterManager.applyFilter(this, input, output, clearMode);
@@ -301,8 +301,7 @@ export class GlitchFilter extends Filter
         }
 
         texture.source.update();
-        this.resources.uDisplacementMap = texture.source;
-        this.resources.uDisplacementMap.update();
+        this.resources.uDisplacementMap = texture;
     }
 
     /**

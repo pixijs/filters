@@ -5,7 +5,7 @@ out vec4 finalColor;
 uniform sampler2D uSampler;
 uniform sampler2D uDisplacementMap;
 uniform float uSeed;
-uniform vec2 uDimension;
+uniform vec2 uDimensions;
 uniform float uAspect;
 uniform int uFillMode;
 uniform float uOffset;
@@ -25,7 +25,7 @@ const int MIRROR = 4;
 
 void main(void)
 {
-    vec2 coord = (vTextureCoord * uInputSize.xy) / uDimension;
+    vec2 coord = (vTextureCoord * uInputSize.xy) / uDimensions;
 
     if (coord.x > 1.0 || coord.y > 1.0) {
         return;
