@@ -17,7 +17,8 @@ struct GlobalFilterUniforms {
 
 @group(0) @binding(0) var<uniform> gfu: GlobalFilterUniforms;
 
-@group(0) @binding(1) var uSampler: texture_2d<f32>;
+@group(0) @binding(1) var uTexture: texture_2d<f32>; 
+@group(0) @binding(2) var uSampler: sampler;
 @group(1) @binding(0) var<uniform> bevelUniforms : BevelUniforms;
 
 @fragment
@@ -26,9 +27,9 @@ fn mainFragment(
   @location(0) uv : vec2<f32>
 ) -> @location(0) vec4<f32> {
   let transform = vec2<f32>(1.0 / gfu.uInputSize.xy) * vec2<f32>(bevelUniforms.uTransform.x, bevelUniforms.uTransform.y);
-  var color: vec4<f32> = textureSample(uSampler, uSampler, uv);
-  let lightSample: f32 = textureSample(uSampler, uSampler, uv - transform).a;
-  let shadowSample: f32 = textureSample(uSampler, uSampler, uv + transform).a;
+  var color: vec4<f32> = textureSample(uTexture, uSampler, uv);
+  let lightSample: f32 = textureSample(uTexture, uSampler, uv - transform).a;
+  let shadowSample: f32 = textureSample(uTexture, uSampler, uv + transform).a;
 
   let light = vec4<f32>(bevelUniforms.uLightColor, bevelUniforms.uLightAlpha);
   let shadow = vec4<f32>(bevelUniforms.uShadowColor, bevelUniforms.uShadowAlpha);

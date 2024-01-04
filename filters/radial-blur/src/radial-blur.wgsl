@@ -16,7 +16,8 @@ struct GlobalFilterUniforms {
 
 @group(0) @binding(0) var<uniform> gfu: GlobalFilterUniforms;
 
-@group(0) @binding(1) var uSampler: texture_2d<f32>;
+@group(0) @binding(1) var uTexture: texture_2d<f32>; 
+@group(0) @binding(2) var uSampler: sampler;
 @group(1) @binding(0) var<uniform> radialBlurUniforms : RadialBlurUniforms;
 
 @fragment
@@ -65,7 +66,7 @@ fn mainFragment(
   let c: f32 = cos(radianStep);
   let rotationMatrix: mat2x2<f32> = mat2x2<f32>(vec2<f32>(c, -s), vec2<f32>(s, c));
   
-  var color: vec4<f32> = textureSample(uSampler, uSampler, uv);
+  var color: vec4<f32> = textureSample(uTexture, uSampler, uv);
   let baseColor = vec4<f32>(color);
 
   let minK: i32 = min(i32(uKernelSize) - 1, MAX_KERNEL_SIZE - 1);
@@ -77,7 +78,7 @@ fn mainFragment(
     coord = rotationMatrix * coord;
     coord.y /= aspect;
     coord += center;
-    let sample: vec4<f32> = textureSample(uSampler, uSampler, coord);
+    let sample: vec4<f32> = textureSample(uTexture, uSampler, coord);
     // switch to pre-multiplied alpha to correctly blur transparent images
     // sample.rgb *= sample.a;
     color += sample;

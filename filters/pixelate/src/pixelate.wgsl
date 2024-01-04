@@ -13,7 +13,8 @@ struct GlobalFilterUniforms {
 
 @group(0) @binding(0) var<uniform> gfu: GlobalFilterUniforms;
 
-@group(0) @binding(1) var uSampler: texture_2d<f32>;
+@group(0) @binding(1) var uTexture: texture_2d<f32>; 
+@group(0) @binding(2) var uSampler: sampler;
 @group(1) @binding(0) var<uniform> pixelateUniforms : PixelateUniforms;
 
 @fragment
@@ -27,7 +28,7 @@ fn mainFragment(
   var pixCoord: vec2<f32> = pixelate(coord, pixelSize);
   pixCoord = unmapCoord(pixCoord);
 
-  return textureSample(uSampler, uSampler, pixCoord);
+  return textureSample(uTexture, uSampler, pixCoord);
 }
 
 fn mapCoord(coord: vec2<f32> ) -> vec2<f32>

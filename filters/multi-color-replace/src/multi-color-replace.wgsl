@@ -4,7 +4,8 @@ struct MultiColorReplaceUniforms {
   uTolerance:f32,
 };
 
-@group(0) @binding(1) var uSampler: texture_2d<f32>;
+@group(0) @binding(1) var uTexture: texture_2d<f32>; 
+@group(0) @binding(2) var uSampler: sampler;
 @group(1) @binding(0) var<uniform> multiColorReplaceUniforms : MultiColorReplaceUniforms;
 
 @fragment
@@ -16,7 +17,7 @@ fn mainFragment(
   let uTargetColors = multiColorReplaceUniforms.uTargetColors;
   let uTolerance = multiColorReplaceUniforms.uTolerance;
 
-  var color: vec4<f32> = textureSample(uSampler, uSampler, uv);
+  var color: vec4<f32> = textureSample(uTexture, uSampler, uv);
 
   let alpha: f32 = color.a;
 

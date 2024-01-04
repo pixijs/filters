@@ -18,7 +18,8 @@ struct GlobalFilterUniforms {
 
 @group(0) @binding(0) var<uniform> gfu: GlobalFilterUniforms;
 
-@group(0) @binding(1) var uSampler: texture_2d<f32>;
+@group(0) @binding(1) var uTexture: texture_2d<f32>; 
+@group(0) @binding(2) var uSampler: sampler;
 @group(1) @binding(0) var<uniform> colorGradientUniforms : ColorGradientUniforms;
 
 struct VSOutput {
@@ -118,7 +119,7 @@ fn mainFragment(
   @location(1) coord : vec2<f32>
 ) -> @location(0) vec4<f32> {
   // current/original color
-  var currentColor: vec4<f32> = textureSample(uSampler, uSampler, uv);
+  var currentColor: vec4<f32> = textureSample(uTexture, uSampler, uv);
 
   // skip calculations if gradient alpha is 0
   if (uAlpha == 0.0) { return currentColor; }

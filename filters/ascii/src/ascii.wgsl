@@ -15,7 +15,8 @@ struct GlobalFilterUniforms {
 
 @group(0) @binding(0) var<uniform> gfu: GlobalFilterUniforms;
 
-@group(0) @binding(1) var uSampler: texture_2d<f32>;
+@group(0) @binding(1) var uTexture: texture_2d<f32>; 
+@group(0) @binding(2) var uSampler: sampler;
 @group(1) @binding(0) var<uniform> asciiUniforms : AsciiUniforms;
 
 @fragment
@@ -30,7 +31,7 @@ fn mainFragment(
     var pixCoord: vec2<f32> = pixelate(coord, vec2<f32>(pixelSize));
     pixCoord = unmapCoord(pixCoord);
 
-    var color = textureSample(uSampler, uSampler, pixCoord);
+    var color = textureSample(uTexture, uSampler, pixCoord);
 
     // determine the character to use
     let gray: f32 = 0.3 * color.r + 0.59 * color.g + 0.11 * color.b;

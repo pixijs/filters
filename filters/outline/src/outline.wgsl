@@ -17,7 +17,8 @@ struct GlobalFilterUniforms {
 
 @group(0) @binding(0) var<uniform> gfu: GlobalFilterUniforms;
 
-@group(0) @binding(1) var uSampler: texture_2d<f32>;
+@group(0) @binding(1) var uTexture: texture_2d<f32>; 
+@group(0) @binding(2) var uSampler: sampler;
 @group(1) @binding(0) var<uniform> outlineUniforms : OutlineUniforms;
 
 @fragment
@@ -25,7 +26,7 @@ fn mainFragment(
   @builtin(position) position: vec4<f32>,
   @location(0) uv : vec2<f32>
 ) -> @location(0) vec4<f32> {
-  let sourceColor: vec4<f32> = textureSample(uSampler, uSampler, uv);
+  let sourceColor: vec4<f32> = textureSample(uTexture, uSampler, uv);
   let contentColor: vec4<f32> = sourceColor * f32(1 - outlineUniforms.uKnockout);
   
   let outlineAlpha: f32 = outlineUniforms.uAlpha * outlineMaxAlphaAtPos(uv) * (1. - sourceColor.a);
@@ -54,7 +55,7 @@ fn outlineMaxAlphaAtPos(uv: vec2<f32>) -> f32 {
   {
     displaced.x = uv.x + thickness.x * cos(angle);
     displaced.y = uv.y + thickness.y * sin(angle);
-    curColor = textureSample(uSampler, uSampler, clamp(displaced, gfu.uInputClamp.xy, gfu.uInputClamp.zw));
+    curColor = textureSample(uTexture, uSampler, clamp(displaced, gfu.uInputClamp.xy, gfu.uInputClamp.zw));
     maxAlpha = max(maxAlpha, curColor.a);
   }
 

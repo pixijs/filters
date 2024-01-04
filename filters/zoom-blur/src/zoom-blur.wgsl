@@ -15,7 +15,8 @@ struct GlobalFilterUniforms {
 
 @group(0) @binding(0) var<uniform> gfu: GlobalFilterUniforms;
 
-@group(0) @binding(1) var uSampler: texture_2d<f32>;
+@group(0) @binding(1) var uTexture: texture_2d<f32>; 
+@group(0) @binding(2) var uSampler: sampler;
 @group(1) @binding(0) var<uniform> zoomBlurUniforms : ZoomBlurUniforms;
 
 @fragment
@@ -79,7 +80,7 @@ fn mainFragment(
     let percent: f32 = (t + offset) / MAX_KERNEL_SIZE;
     let weight: f32 = 4.0 * (percent - percent * percent);
     let p: vec2<f32> = uv + dir * percent;
-    let sample: vec4<f32> = textureSample(uSampler, uSampler, p);
+    let sample: vec4<f32> = textureSample(uTexture, uSampler, p);
     
     if (t < countLimit)
     {
@@ -90,7 +91,7 @@ fn mainFragment(
 
   color /= total;
 
-  return select(color, textureSample(uSampler, uSampler, uv), returnColorOnly);
+  return select(color, textureSample(uTexture, uSampler, uv), returnColorOnly);
 }
 
 // author: http://byteblacksmith.com/improvements-to-the-canonical-one-liner-glsl-rand-for-opengl-es-2-0/

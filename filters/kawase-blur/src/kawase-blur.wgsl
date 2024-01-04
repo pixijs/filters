@@ -2,7 +2,8 @@ struct KawaseBlurUniforms {
   uOffset:vec2<f32>,
 };
 
-@group(0) @binding(1) var uSampler: texture_2d<f32>;
+@group(0) @binding(1) var uTexture: texture_2d<f32>; 
+@group(0) @binding(2) var uSampler: sampler;
 @group(1) @binding(0) var<uniform> kawaseBlurUniforms : KawaseBlurUniforms;
 
 @fragment
@@ -14,13 +15,13 @@ fn mainFragment(
   var color: vec4<f32> = vec4<f32>(0.0);
 
   // Sample top left pixel
-  color += textureSample(uSampler, uSampler, vec2<f32>(uv.x - uOffset.x, uv.y + uOffset.y));
+  color += textureSample(uTexture, uSampler, vec2<f32>(uv.x - uOffset.x, uv.y + uOffset.y));
   // Sample top right pixel
-  color += textureSample(uSampler, uSampler, vec2<f32>(uv.x + uOffset.x, uv.y + uOffset.y));
+  color += textureSample(uTexture, uSampler, vec2<f32>(uv.x + uOffset.x, uv.y + uOffset.y));
   // Sample bottom right pixel
-  color += textureSample(uSampler, uSampler, vec2<f32>(uv.x + uOffset.x, uv.y - uOffset.y));
+  color += textureSample(uTexture, uSampler, vec2<f32>(uv.x + uOffset.x, uv.y - uOffset.y));
   // Sample bottom left pixel
-  color += textureSample(uSampler, uSampler, vec2<f32>(uv.x - uOffset.x, uv.y - uOffset.y));
+  color += textureSample(uTexture, uSampler, vec2<f32>(uv.x - uOffset.x, uv.y - uOffset.y));
   // Average
   color *= 0.25;
 

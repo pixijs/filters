@@ -6,7 +6,8 @@ struct TiltShiftUniforms {
   uTexSize: vec2<f32>,
 };
 
-@group(0) @binding(1) var uSampler: texture_2d<f32>;
+@group(0) @binding(1) var uTexture: texture_2d<f32>; 
+@group(0) @binding(2) var uSampler: sampler;
 @group(1) @binding(0) var<uniform> tiltShiftUniforms : TiltShiftUniforms;
 
 @fragment
@@ -32,7 +33,7 @@ fn mainFragment(
   {
     var percent: f32 = (t + offset - 0.5) / 30.0;
     var weight: f32 = 1.0 - abs(percent);
-    var sample: vec4<f32> = textureSample(uSampler, uSampler, uv + uDelta / uTexSize * percent * radius);
+    var sample: vec4<f32> = textureSample(uTexture, uSampler, uv + uDelta / uTexSize * percent * radius);
     sample = vec4<f32>(sample.xyz * sample.a, sample.a); // multiply sample.rgb with sample.a
     color += sample * weight;
     total += weight;

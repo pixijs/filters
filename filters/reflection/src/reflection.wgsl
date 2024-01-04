@@ -19,7 +19,8 @@ struct GlobalFilterUniforms {
 
 @group(0) @binding(0) var<uniform> gfu: GlobalFilterUniforms;
 
-@group(0) @binding(1) var uSampler: texture_2d<f32>;
+@group(0) @binding(1) var uTexture: texture_2d<f32>; 
+@group(0) @binding(2) var uSampler: sampler;
 @group(1) @binding(0) var<uniform> reflectionUniforms : ReflectionUniforms;
 
 @fragment
@@ -55,7 +56,7 @@ fn mainFragment(
   var x: f32 = uv.x + cos(v * 6.28 / waveLength - uTime) * amplitude;
   x = clamp(x, gfu.uInputClamp.x, gfu.uInputClamp.z);
   
-  return textureSample(uSampler, uSampler, select(vec2<f32>(x, y), uv, returnColorOnly)) * alpha;
+  return textureSample(uTexture, uSampler, select(vec2<f32>(x, y), uv, returnColorOnly)) * alpha;
 }
 
 fn rand(co: vec2<f32>) -> f32 
