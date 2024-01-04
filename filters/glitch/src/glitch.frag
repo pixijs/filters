@@ -1,23 +1,21 @@
-// precision highp float;
+precision highp float;
+in vec2 vTextureCoord;
+out vec4 finalColor;
 
-varying vec2 vTextureCoord;
 uniform sampler2D uSampler;
+uniform sampler2D uDisplacementMap;
+uniform float uSeed;
+uniform vec2 uDimension;
+uniform float uAspect;
+uniform int uFillMode;
+uniform float uOffset;
+uniform float uDirection;
+uniform vec2 uRed;
+uniform vec2 uGreen;
+uniform vec2 uBlue;
 
-uniform vec4 filterArea;
-uniform vec4 filterClamp;
-uniform vec2 dimensions;
-uniform float aspect;
-
-uniform sampler2D displacementMap;
-uniform float offset;
-uniform float sinDir;
-uniform float cosDir;
-uniform int fillMode;
-
-uniform float seed;
-uniform vec2 red;
-uniform vec2 green;
-uniform vec2 blue;
+uniform vec4 uInputSize;
+uniform vec4 uInputClamp;
 
 const int TRANSPARENT = 0;
 const int ORIGINAL = 1;
@@ -27,15 +25,18 @@ const int MIRROR = 4;
 
 void main(void)
 {
-    vec2 coord = (vTextureCoord * filterArea.xy) / dimensions;
+    vec2 coord = (vTextureCoord * uInputSize.xy) / uDimension;
 
     if (coord.x > 1.0 || coord.y > 1.0) {
         return;
     }
 
+    float sinDir = sin(uDirection);
+    float cosDir = cos(uDirection);
+
     float cx = coord.x - 0.5;
-    float cy = (coord.y - 0.5) * aspect;
-    float ny = (-sinDir * cx + cosDir * cy) / aspect + 0.5;
+    float cy = (coord.y - 0.5) * uAspect;
+    float ny = (-sinDir * cx + cosDir * cy) / uAspect + 0.5;
 
     // displacementMap: repeat
     // ny = ny > 1.0 ? ny - 1.0 : (ny < 0.0 ? 1.0 + ny : ny);
@@ -43,54 +44,54 @@ void main(void)
     // displacementMap: mirror
     ny = ny > 1.0 ? 2.0 - ny : (ny < 0.0 ? -ny : ny);
 
-    vec4 dc = texture2D(displacementMap, vec2(0.5, ny));
+    vec4 dc = texture(uDisplacementMap, vec2(0.5, ny));
 
-    float displacement = (dc.r - dc.g) * (offset / filterArea.x);
+    float displacement = (dc.r - dc.g) * (uOffset / uInputSize.x);
 
-    coord = vTextureCoord + vec2(cosDir * displacement, sinDir * displacement * aspect);
+    coord = vTextureCoord + vec2(cosDir * displacement, sinDir * displacement * uAspect);
 
-    if (fillMode == CLAMP) {
-        coord = clamp(coord, filterClamp.xy, filterClamp.zw);
+    if (uFillMode == CLAMP) {
+        coord = clamp(coord, uInputClamp.xy, uInputClamp.zw);
     } else {
-        if( coord.x > filterClamp.z ) {
-            if (fillMode == TRANSPARENT) {
+        if( coord.x > uInputClamp.z ) {
+            if (uFillMode == TRANSPARENT) {
                 discard;
-            } else if (fillMode == LOOP) {
-                coord.x -= filterClamp.z;
-            } else if (fillMode == MIRROR) {
-                coord.x = filterClamp.z * 2.0 - coord.x;
+            } else if (uFillMode == LOOP) {
+                coord.x -= uInputClamp.z;
+            } else if (uFillMode == MIRROR) {
+                coord.x = uInputClamp.z * 2.0 - coord.x;
             }
-        } else if( coord.x < filterClamp.x ) {
-            if (fillMode == TRANSPARENT) {
+        } else if( coord.x < uInputClamp.x ) {
+            if (uFillMode == TRANSPARENT) {
                 discard;
-            } else if (fillMode == LOOP) {
-                coord.x += filterClamp.z;
-            } else if (fillMode == MIRROR) {
-                coord.x *= -filterClamp.z;
+            } else if (uFillMode == LOOP) {
+                coord.x += uInputClamp.z;
+            } else if (uFillMode == MIRROR) {
+                coord.x *= -uInputClamp.z;
             }
         }
 
-        if( coord.y > filterClamp.w ) {
-            if (fillMode == TRANSPARENT) {
+        if( coord.y > uInputClamp.w ) {
+            if (uFillMode == TRANSPARENT) {
                 discard;
-            } else if (fillMode == LOOP) {
-                coord.y -= filterClamp.w;
-            } else if (fillMode == MIRROR) {
-                coord.y = filterClamp.w * 2.0 - coord.y;
+            } else if (uFillMode == LOOP) {
+                coord.y -= uInputClamp.w;
+            } else if (uFillMode == MIRROR) {
+                coord.y = uInputClamp.w * 2.0 - coord.y;
             }
-        } else if( coord.y < filterClamp.y ) {
-            if (fillMode == TRANSPARENT) {
+        } else if( coord.y < uInputClamp.y ) {
+            if (uFillMode == TRANSPARENT) {
                 discard;
-            } else if (fillMode == LOOP) {
-                coord.y += filterClamp.w;
-            } else if (fillMode == MIRROR) {
-                coord.y *= -filterClamp.w;
+            } else if (uFillMode == LOOP) {
+                coord.y += uInputClamp.w;
+            } else if (uFillMode == MIRROR) {
+                coord.y *= -uInputClamp.w;
             }
         }
     }
 
-    gl_FragColor.r = texture2D(uSampler, coord + red * (1.0 - seed * 0.4) / filterArea.xy).r;
-    gl_FragColor.g = texture2D(uSampler, coord + green * (1.0 - seed * 0.3) / filterArea.xy).g;
-    gl_FragColor.b = texture2D(uSampler, coord + blue * (1.0 - seed * 0.2) / filterArea.xy).b;
-    gl_FragColor.a = texture2D(uSampler, coord).a;
+    finalColor.r = texture(uSampler, coord + uRed * (1.0 - uSeed * 0.4) / uInputSize.xy).r;
+    finalColor.g = texture(uSampler, coord + uGreen * (1.0 - uSeed * 0.3) / uInputSize.xy).g;
+    finalColor.b = texture(uSampler, coord + uBlue * (1.0 - uSeed * 0.2) / uInputSize.xy).b;
+    finalColor.a = texture(uSampler, coord).a;
 }

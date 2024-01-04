@@ -1,23 +1,52 @@
-import { vertex } from '@tools/fragments';
+import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './glitch.frag';
-import { Filter, Texture, DEG_TO_RAD, Rectangle, GlProgram } from 'pixi.js';
-import type { FilterSystem, Point, RenderSurface, RenderTexture } from 'pixi.js';
+import source from './glitch.wgsl';
+import { Filter, Texture, DEG_TO_RAD, GlProgram, GpuProgram, getCanvasTexture } from 'pixi.js';
+import type { FilterSystem, PointData, RenderSurface } from 'pixi.js';
 
-type PointLike = Point | number[];
+/**
+ * @param {object} [options] - The more optional parameters of the filter.
+ * @param {number} [options.slices=5] - The maximum number of slices.
+ * @param {number} [options.offset=100] - The maximum offset amount of slices.
+ * @param {number} [options.direction=0] - The angle in degree of the offset of slices.
+ * @param {number} [options.fillMode=0] - The fill mode of the space after the offset. Acceptable values:
+ *  - `0` {@link GlitchFilter.TRANSPARENT TRANSPARENT}
+ *  - `1` {@link GlitchFilter.ORIGINAL ORIGINAL}
+ *  - `2` {@link GlitchFilter.LOOP LOOP}
+ *  - `3` {@link GlitchFilter.CLAMP CLAMP}
+ *  - `4` {@link GlitchFilter.MIRROR MIRROR}
+ * @param {number} [options.seed=0] - A seed value for randomizing glitch effect.
+ * @param {boolean} [options.average=false] - `true` will divide the bands roughly based on equal amounts
+ *                 where as setting to `false` will vary the band sizes dramatically (more random looking).
+ * @param {number} [options.minSize=8] - Minimum size of individual slice. Segment of total `sampleSize`
+ * @param {number} [options.sampleSize=512] - The resolution of the displacement map texture.
+ * @param {number[]} [options.red=[0,0]] - Red channel offset
+ * @param {number[]} [options.green=[0,0]] - Green channel offset.
+ * @param {number[]} [options.blue=[0,0]] - Blue channel offset.
+ */
+
+enum FILL_MODES
+    {
+    TRANSPARENT = 0,
+    ORIGINAL = 1,
+    LOOP = 2,
+    CLAMP = 3,
+    MIRROR = 4,
+}
 
 export interface GlitchFilterOptions
 {
-    slices: number;
-    offset: number;
-    direction: number;
-    fillMode: number;
-    seed: number;
-    average: boolean;
-    minSize: number;
-    sampleSize: number;
-    red: PointLike;
-    green: PointLike;
-    blue: PointLike;
+    slices?: number;
+    offset?: number;
+    direction?: number;
+    fillMode?: number;
+    seed?: number;
+    average?: boolean;
+    minSize?: number;
+    sampleSize?: number;
+    red?: PointData;
+    green?: PointData;
+    blue?: PointData;
 }
 
 /**
@@ -39,45 +68,30 @@ export class GlitchFilter extends Filter
         fillMode: 0,
         average: false,
         seed: 0,
-        red: [0, 0],
-        green: [0, 0],
-        blue: [0, 0],
+        red: { x: 0, y: 0 },
+        green: { x: 0, y: 0 },
+        blue: { x: 0, y: 0 },
         minSize: 8,
         sampleSize: 512,
     };
 
-    /** Fill mode as transparent */
-    static readonly TRANSPARENT = 0;
-
-    /** Fill mode as original */
-    static readonly ORIGINAL = 1;
-
-    /** Fill mode as loop */
-    static readonly LOOP = 2;
-
-    /** Fill mode as clamp */
-    static readonly CLAMP = 3;
-
-    /** Fill mode as mirror */
-    static readonly MIRROR = 4;
-
-    /** The maximum offset value for each of the slices. */
-    public offset = 100;
-
-    /** The fill mode of the space after the offset. */
-    public fillMode: number = GlitchFilter.TRANSPARENT;
+    public uniforms: {
+        uSeed: number
+        uDimension: PointData,
+        uAspect: number,
+        uFillMode: number,
+        uOffset: number,
+        uDirection: number,
+        uRed: PointData,
+        uGreen: PointData,
+        uBlue: PointData,
+    };
 
     /**
      * `true` will divide the bands roughly based on equal amounts
      * where as setting to `false` will vary the band sizes dramatically (more random looking).
      */
     public average = false;
-
-    /**
-     * A seed value for randomizing color offset. Animating
-     * this value to `Math.random()` produces a twitching effect.
-     */
-    public seed = 0;
 
     /** Minimum size of slices as a portion of the `sampleSize` */
     public minSize = 8;
@@ -95,41 +109,29 @@ export class GlitchFilter extends Filter
      * @member {Texture}
      * @readonly
      */
-    // public texture: Texture;
+    public texture: Texture;
 
     /** Internal number of slices */
     private _slices = 0;
 
-    private _offsets: Float32Array = new Float32Array(1);
     private _sizes: Float32Array = new Float32Array(1);
+    private _offsets: Float32Array = new Float32Array(1);
 
-    /** direction is actually a setter for uniform.cosDir and uniform.sinDir.
-     * Must be initialized to something different than the default value.
-    */
-    private _direction = -1;
-
-    /**
-     * @param {object} [options] - The more optional parameters of the filter.
-     * @param {number} [options.slices=5] - The maximum number of slices.
-     * @param {number} [options.offset=100] - The maximum offset amount of slices.
-     * @param {number} [options.direction=0] - The angle in degree of the offset of slices.
-     * @param {number} [options.fillMode=0] - The fill mode of the space after the offset. Acceptable values:
-     *  - `0` {@link GlitchFilter.TRANSPARENT TRANSPARENT}
-     *  - `1` {@link GlitchFilter.ORIGINAL ORIGINAL}
-     *  - `2` {@link GlitchFilter.LOOP LOOP}
-     *  - `3` {@link GlitchFilter.CLAMP CLAMP}
-     *  - `4` {@link GlitchFilter.MIRROR MIRROR}
-     * @param {number} [options.seed=0] - A seed value for randomizing glitch effect.
-     * @param {boolean} [options.average=false] - `true` will divide the bands roughly based on equal amounts
-     *                 where as setting to `false` will vary the band sizes dramatically (more random looking).
-     * @param {number} [options.minSize=8] - Minimum size of individual slice. Segment of total `sampleSize`
-     * @param {number} [options.sampleSize=512] - The resolution of the displacement map texture.
-     * @param {number[]} [options.red=[0,0]] - Red channel offset
-     * @param {number[]} [options.green=[0,0]] - Green channel offset.
-     * @param {number[]} [options.blue=[0,0]] - Blue channel offset.
-     */
-    constructor(options?: Partial<GlitchFilterOptions>)
+    constructor(options?: GlitchFilterOptions)
     {
+        options = { ...GlitchFilter.defaults, ...options };
+
+        const gpuProgram = new GpuProgram({
+            vertex: {
+                source: wgslVertex,
+                entryPoint: 'mainVertex',
+            },
+            fragment: {
+                source,
+                entryPoint: 'mainFragment',
+            },
+        });
+
         const glProgram = new GlProgram({
             vertex,
             fragment,
@@ -137,37 +139,52 @@ export class GlitchFilter extends Filter
         });
 
         super({
+            gpuProgram,
             glProgram,
-            resources: {},
+            resources: {
+                glitchUniforms: {
+                    uSeed: { value: options?.seed ?? 0, type: 'f32' },
+                    uDimension: { value: new Float32Array(2), type: 'vec2<f32>' },
+                    uAspect: { value: 1, type: 'f32' },
+                    uFillMode: { value: options?.fillMode ?? 0, type: 'u32' },
+                    uOffset: { value: options?.offset ?? 100, type: 'f32' },
+                    uDirection: { value: options?.direction ?? 0, type: 'f32' },
+                    uRed: { value: new Float32Array(2), type: 'vec2<f32>' },
+                    uGreen: { value: new Float32Array(2), type: 'vec2<f32>' },
+                    uBlue: { value: new Float32Array(2), type: 'vec2<f32>' },
+                },
+                uDisplacementMap: Texture.WHITE,
+            },
         });
 
-        // this.uniforms.dimensions = new Float32Array(2);
+        this.uniforms = this.resources.glitchUniforms.uniforms;
 
         this._canvas = document.createElement('canvas');
         this._canvas.width = 4;
         this._canvas.height = this.sampleSize;
-        // this.texture = Texture.from(this._canvas, { scaleMode: SCALE_MODES.NEAREST });
+        this.texture = getCanvasTexture(this._canvas, { width: 500, height: 500, style: { scaleMode: 'nearest' } });
 
-        Object.assign(this, GlitchFilter.defaults, options);
+        Object.assign(this, options);
     }
 
     /**
      * Override existing apply method in Filter
      * @private
      */
-    apply(filterManager: FilterSystem, input: Texture, output: RenderSurface, clear: boolean): void
+    apply(
+        filterManager: FilterSystem,
+        input: Texture,
+        output: RenderSurface,
+        clearMode: boolean
+    ): void
     {
-        // const { width, height } = input.filterFrame as Rectangle;
+        const { width, height } = input.frame;
 
-        // this.uniforms.dimensions[0] = width;
-        // this.uniforms.dimensions[1] = height;
-        // this.uniforms.aspect = height / width;
+        this.uniforms.uDimension.x = width;
+        this.uniforms.uDimension.y = height;
+        this.uniforms.uAspect = height / width;
 
-        // this.uniforms.seed = this.seed;
-        // this.uniforms.offset = this.offset;
-        // this.uniforms.fillMode = this.fillMode;
-
-        // filterManager.applyFilter(this, input, output, clear);
+        filterManager.applyFilter(this, input, output, clearMode);
     }
 
     /**
@@ -263,7 +280,7 @@ export class GlitchFilter extends Filter
     redraw(): void
     {
         const size = this.sampleSize;
-        // const texture = this.texture;
+        const texture = this.texture;
         const ctx = this._canvas.getContext('2d') as CanvasRenderingContext2D;
 
         ctx.clearRect(0, 0, 8, size);
@@ -283,8 +300,9 @@ export class GlitchFilter extends Filter
             y += height;
         }
 
-        // texture.baseTexture.update();
-        // this.uniforms.displacementMap = texture;
+        texture.source.update();
+        this.resources.uDisplacementMap = texture.source;
+        this.resources.uDisplacementMap.update();
     }
 
     /**
@@ -322,108 +340,83 @@ export class GlitchFilter extends Filter
             this._offsets[i] = offsets[i];
         }
     }
-    get offsets(): Float32Array
-    {
-        return this._offsets;
-    }
+    get offsets(): Float32Array { return this._offsets; }
 
     /**
      * The count of slices.
      * @default 5
      */
-    // get slices(): number
-    // {
-    //     return this._slices;
-    // }
-    // set slices(value: number)
-    // {
-    //     if (this._slices === value)
-    //     {
-    //         return;
-    //     }
-    //     this._slices = value;
-    //     this.uniforms.slices = value;
-    //     this._sizes = this.uniforms.slicesWidth = new Float32Array(value);
-    //     this._offsets = this.uniforms.slicesOffset = new Float32Array(value);
-    //     this.refresh();
-    // }
+    get slices(): number { return this._slices; }
+    set slices(value: number)
+    {
+        if (this._slices === value) return;
+        this._slices = value;
+        this._sizes = new Float32Array(value);
+        this._offsets = new Float32Array(value);
+        this.refresh();
+    }
+
+    /**
+     * The maximum offset amount of slices.
+     * @default 100
+     */
+    get offset(): number { return this.uniforms.uOffset; }
+    set offset(value: number) { this.uniforms.uOffset = value; }
+
+    /**
+     * A seed value for randomizing glitch effect.
+     * @default 0
+     */
+    get seed(): number { return this.uniforms.uSeed; }
+    set seed(value: number) { this.uniforms.uSeed = value; }
+
+    /**
+     * The fill mode of the space after the offset.
+     * @default FILL_MODES.TRANSPARENT
+     */
+    get fillMode(): FILL_MODES { return this.uniforms.uFillMode; }
+    set fillMode(value: FILL_MODES) { this.uniforms.uFillMode = value; }
 
     /**
      * The angle in degree of the offset of slices.
      * @default 0
      */
-    // get direction(): number
-    // {
-    //     return this._direction;
-    // }
-    // set direction(value: number)
-    // {
-    //     if (this._direction === value)
-    //     {
-    //         return;
-    //     }
-    //     this._direction = value;
-
-    //     const radians = value * DEG_TO_RAD;
-
-    //     this.uniforms.sinDir = Math.sin(radians);
-    //     this.uniforms.cosDir = Math.cos(radians);
-    // }
+    get direction(): number { return this.uniforms.uDirection / DEG_TO_RAD; }
+    set direction(value: number) { this.uniforms.uDirection = value * DEG_TO_RAD; }
 
     /**
      * Red channel offset.
-     *
-     * @member {Point|number[]}
+     * @default {x:0,y:0}
      */
-    // get red(): PointLike
-    // {
-    //     return this.uniforms.red;
-    // }
-    // set red(value: PointLike)
-    // {
-    //     this.uniforms.red = value;
-    // }
+    get red(): PointData { return this.uniforms.uRed; }
+    set red(value: PointData) { this.uniforms.uRed = value; }
 
     /**
      * Green channel offset.
-     *
-     * @member {Point|number[]}
+     * @default {x:0,y:0}
      */
-    // get green(): PointLike
-    // {
-    //     return this.uniforms.green;
-    // }
-    // set green(value: PointLike)
-    // {
-    //     this.uniforms.green = value;
-    // }
+    get green(): PointData { return this.uniforms.uGreen; }
+    set green(value: PointData) { this.uniforms.uGreen = value; }
 
     /**
      * Blue offset.
-     *
-     * @member {Point|number[]}
+     * @default {x:0,y:0}
      */
-    // get blue(): PointLike
-    // {
-    //     return this.uniforms.blue;
-    // }
-    // set blue(value: PointLike)
-    // {
-    //     this.uniforms.blue = value;
-    // }
+    get blue(): PointData { return this.uniforms.uBlue; }
+    set blue(value: PointData) { this.uniforms.uBlue = value; }
 
     /**
      * Removes all references
      */
     destroy(): void
     {
-        // this.texture?.destroy(true);
-        // this.texture
-        // = this._canvas
-        // = this.red
-        // = this.green
-        // = this.blue
-        // = this._sizes
-        // = this._offsets = null as any;
+        this.texture?.destroy(true);
+        this.texture
+        = this._canvas
+        = this.red
+        = this.green
+        = this.blue
+        = this._sizes
+        = this._offsets = null as any;
     }
 }
