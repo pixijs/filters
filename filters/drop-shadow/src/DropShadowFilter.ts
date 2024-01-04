@@ -1,26 +1,63 @@
 import { KawaseBlurFilter } from '@pixi/filter-kawase-blur';
-import { vertex } from '@tools/fragments';
-import fragment from './dropshadow.frag';
-import { Filter, DEG_TO_RAD, ObservablePoint, utils } from 'pixi.js';
-import type { IPoint, CLEAR_MODES, FilterSystem, RenderTexture, IPointData } from 'pixi.js';
+import { vertex, wgslVertex } from '@tools/fragments';
+import fragment from './drop-shadow.frag';
+import source from './drop-shadow.wgsl';
+import {
+    Filter,
+    GpuProgram,
+    TexturePool,
+    GlProgram,
+    FilterSystem,
+    PointData,
+    ColorSource,
+    Color,
+    RenderSurface,
+    Texture,
+} from 'pixi.js';
 
-type PixelSizeValue = number | number[] | IPoint;
-
-interface DropShadowFilterOptions
+export interface DropShadowFilterOptions
 {
-    /** @deprecated */
-    rotation?: number;
-    /** @deprecated */
-    distance?: number;
-    offset: IPointData;
-    color: number;
-    alpha: number;
-    shadowOnly: boolean;
-    blur: number;
-    quality: number;
-    kernels: number[] | null;
-    pixelSize: PixelSizeValue;
-    resolution: number;
+    /**
+     * Set the offset position of the drop-shadow relative to the original image.
+     * @default {x:4,y:4}
+     */
+    offset?: PointData;
+    /**
+     * The color value of shadow.
+     * @example [0.0, 0.0, 0.0] = 0x000000
+     * @default 0x000000
+     */
+    color?: ColorSource;
+    /**
+     * Coefficient for alpha multiplication.
+     * @default 1
+     */
+    alpha?: number;
+    /**
+     * Hide the contents, only show the shadow.
+     * @default false
+     */
+    shadowOnly?: boolean;
+    /**
+     * The strength of the shadow's blur.
+     * @default 2
+     */
+    blur?: number;
+    /**
+     * The quality of the Blur Filter.
+     * @default 4
+     */
+    quality?: number;
+    /**
+     * The kernel size of the blur filter.
+     * @default null
+     */
+    kernels?: number[];
+    /**
+     * Sets the pixelSize of the Kawase Blur filter
+     * @default {x:1,y:1}
+     */
+    pixelSize?: PointData;
 }
 
 /**
@@ -31,104 +68,239 @@ interface DropShadowFilterOptions
  * @see {@link https://www.npmjs.com/package/@pixi/filter-drop-shadow|@pixi/filter-drop-shadow}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
-class DropShadowFilter extends Filter
+export class DropShadowFilter extends Filter
 {
-    /** Default constructor options. */
-    public static readonly defaults: DropShadowFilterOptions = {
+    /** Default values for options. */
+    public static readonly DEFAULT_OPTIONS: DropShadowFilterOptions = {
         offset: { x: 4, y: 4 },
         color: 0x000000,
         alpha: 0.5,
         shadowOnly: false,
-        kernels: null,
+        kernels: undefined,
         blur: 2,
         quality: 3,
-        pixelSize: 1,
-        resolution: 1,
+        pixelSize: { x: 1, y: 1 },
     };
 
-    /** Hide the contents, only show the shadow. */
-    public shadowOnly: boolean;
+    public uniforms: {
+        uAlpha: number;
+        uColor: Color;
+        uOffset: PointData;
+    };
 
     /**
-     * Angle of the shadow in degrees
-     * @deprecated since 5.3.0
-     * @see DropShadowFilter#offset
+     * Hide the contents, only show the shadow.
+     * @default false
      */
-    public angle = 45;
+    public shadowOnly = false;
 
-    private _offset: ObservablePoint;
-    private _distance = 5;
-    private _tintFilter: Filter;
     private _blurFilter: KawaseBlurFilter;
-    protected _resolution = 1;
+    private _basePass: Filter;
+
+    constructor(options?: DropShadowFilterOptions)
+    {
+        options = { ...DropShadowFilter.DEFAULT_OPTIONS, ...options };
+
+        const gpuProgram = new GpuProgram({
+            vertex: {
+                source: wgslVertex,
+                entryPoint: 'mainVertex',
+            },
+            fragment: {
+                source,
+                entryPoint: 'mainFragment',
+            },
+        });
+
+        const glProgram = new GlProgram({
+            vertex,
+            fragment,
+            name: 'drop-shadow-filter',
+        });
+
+        super({
+            gpuProgram,
+            glProgram,
+            resources: {
+                dropShadowUniforms: {
+                    uAlpha: { value: options.alpha, type: 'f32' },
+                    uColor: { value: new Color(), type: 'vec3<f32>' },
+                    uOffset: { value: options.offset, type: 'vec2<f32>' },
+                }
+            }
+        });
+
+        this.uniforms = this.resources.dropShadowUniforms.uniforms;
+
+        this._blurFilter = new KawaseBlurFilter({
+            strength: options.kernels as [number, number] ?? options.blur,
+            quality: options.kernels ? undefined : options.quality,
+        });
+
+        this._basePass = new Filter({
+            gpuProgram: new GpuProgram({
+                vertex: {
+                    source: wgslVertex,
+                    entryPoint: 'mainVertex',
+                },
+                fragment: {
+                    source: `
+                    @group(0) @binding(1) var uSampler: texture_2d<f32>;
+                    @fragment
+                    fn mainFragment(
+                        @builtin(position) position: vec4<f32>,
+                        @location(0) uv : vec2<f32>
+                    ) -> @location(0) vec4<f32> {
+                        return textureSample(uSampler, uSampler, uv);
+                    }
+                    `,
+                    entryPoint: 'mainFragment',
+                },
+            }),
+            glProgram: new GlProgram({
+                vertex,
+                fragment: `
+                in vec2 vTextureCoord;
+                out vec4 finalColor;
+                uniform sampler2D uSampler;
+
+                void main(void){
+                    finalColor = texture(uSampler, vTextureCoord);
+                }
+                `,
+                name: 'drop-shadow-filter',
+            }),
+            resources: {},
+        });
+
+        Object.assign(this, options);
+    }
 
     /**
-     * @param {object} [options] - Filter options
-     * @param {number} [options.offset={x: 4, y: 4}] - Offset of the shadow
-     * @param {number} [options.color=0x000000] - Color of the shadow
-     * @param {number} [options.alpha=0.5] - Alpha of the shadow
-     * @param {boolean} [options.shadowOnly=false] - Whether render shadow only
-     * @param {number} [options.blur=2] - Sets the strength of the Blur properties simultaneously
-     * @param {number} [options.quality=3] - The quality of the Blur filter.
-     * @param {number[]} [options.kernels=null] - The kernels of the Blur filter.
-     * @param {number|number[]|Point} [options.pixelSize=1] - the pixelSize of the Blur filter.
-     * @param {number} [options.resolution=1] - The resolution of the Blur filter.
+     * Override existing apply method in `Filter`
+     * @override
+     * @ignore
      */
-    constructor(options?: Partial<DropShadowFilterOptions>)
+    public override apply(
+        filterManager: FilterSystem,
+        input: Texture,
+        output: RenderSurface,
+        clearMode: boolean,
+    ): void
     {
-        super();
+        const renderTarget = TexturePool.getSameSizeTexture(input);
 
-        const opt: DropShadowFilterOptions = options
-            ? { ...DropShadowFilter.defaults, ...options }
-            : DropShadowFilter.defaults;
+        filterManager.applyFilter(this, input, renderTarget, true);
+        this._blurFilter.apply(filterManager, renderTarget, output, clearMode);
 
-        const { kernels, blur, quality, pixelSize, resolution } = opt;
-
-        this._offset = new ObservablePoint(this._updatePadding, this);
-        this._tintFilter = new Filter(vertex, fragment);
-        this._tintFilter.uniforms.color = new Float32Array(4);
-        this._tintFilter.uniforms.shift = this._offset;
-        this._tintFilter.resolution = resolution;
-        this._blurFilter = kernels
-            ? new KawaseBlurFilter(kernels)
-            : new KawaseBlurFilter(blur, quality);
-
-        this.pixelSize = pixelSize;
-        this.resolution = resolution;
-
-        const { shadowOnly, rotation, distance, offset, alpha, color } = opt;
-
-        this.shadowOnly = shadowOnly;
-
-        // Check for deprecated options first
-        if (rotation !== undefined && distance !== undefined)
+        if (!this.shadowOnly)
         {
-            this.rotation = rotation;
-            this.distance = distance;
-        }
-        else
-        {
-            this.offset = offset;
+            filterManager.applyFilter(this._basePass, input, output, false);
         }
 
-        this.alpha = alpha;
-        this.color = color;
+        TexturePool.returnTexture(renderTarget);
     }
 
-    apply(filterManager: FilterSystem, input: Texture, output: RenderSurface, clear: boolean): void
+    /**
+     * Set the offset position of the drop-shadow relative to the original image.
+     * @default [4,4]
+     */
+    public get offset(): PointData { return this.uniforms.uOffset; }
+    public set offset(value: PointData)
     {
-        const target = filterManager.getFilterTexture();
-
-        this._tintFilter.apply(filterManager, input, target, 1);
-        this._blurFilter.apply(filterManager, target, output, clear);
-
-        if (this.shadowOnly !== true)
-        {
-            filterManager.applyFilter(this, input, output, 0);
-        }
-
-        filterManager.returnFilterTexture(target);
+        this.uniforms.uOffset = value;
+        this._updatePadding();
     }
+
+    /**
+     * Set the offset position of the drop-shadow relative to the original image on the `x` axis
+     * @default 4
+     */
+    get offsetX(): number { return this.offset.x; }
+    set offsetX(value: number)
+    {
+        this.offset.x = value;
+        this._updatePadding();
+    }
+
+    /**
+     * Set the offset position of the drop-shadow relative to the original image on the `y` axis
+     * @default 4
+     */
+    get offsetY(): number { return this.offset.y; }
+    set offsetY(value: number)
+    {
+        this.offset.y = value;
+        this._updatePadding();
+    }
+
+    /**
+     * The color value of shadow.
+     * @example [0.0, 0.0, 0.0] = 0x000000
+     * @default 0x000000
+     */
+    get color(): ColorSource { return this.uniforms.uColor.value as ColorSource; }
+    set color(value: ColorSource) { this.uniforms.uColor.setValue(value); }
+
+    /**
+     * Coefficient for alpha multiplication
+     * @default 1
+     */
+    get alpha(): number { return this.uniforms.uAlpha; }
+    set alpha(value: number) { this.uniforms.uAlpha = value; }
+
+    /**
+     * The strength of the shadow's blur.
+     * @default 2
+     */
+    get blur(): number { return this._blurFilter.strength; }
+    set blur(value: number)
+    {
+        this._blurFilter.strength = value;
+        this._updatePadding();
+    }
+
+    /**
+     * Sets the quality of the Blur Filter
+     * @default 4
+     */
+    get quality(): number { return this._blurFilter.quality; }
+    set quality(value: number)
+    {
+        this._blurFilter.quality = value;
+        this._updatePadding();
+    }
+
+    /** Sets the kernels of the Blur Filter */
+    get kernels(): number[] { return this._blurFilter.kernels; }
+    set kernels(value: number[]) { this._blurFilter.kernels = value; }
+
+    /**
+     * Sets the pixelSize of the Kawase Blur filter
+     * @default [1,1]
+     */
+    get pixelSize(): PointData
+    {
+        return this._blurFilter.pixelSize as PointData;
+    }
+    set pixelSize(value: PointData)
+    {
+        (this._blurFilter.pixelSize as PointData) = value;
+    }
+
+    /**
+     * Sets the pixelSize of the Kawase Blur filter on the `x` axis
+     * @default 1
+     */
+    get pixelSizeX(): number { return this._blurFilter.pixelSizeX; }
+    set pixelSizeX(value: number) { this._blurFilter.pixelSizeX = value; }
+
+    /**
+     * Sets the pixelSize of the Kawase Blur filter on the `y` axis
+     * @default 1
+     */
+    get pixelSizeY(): number { return this._blurFilter.pixelSizeY; }
+    set pixelSizeY(value: number) { this._blurFilter.pixelSizeY = value; }
 
     /**
      * Recalculate the proper padding amount.
@@ -137,177 +309,10 @@ class DropShadowFilter extends Filter
     private _updatePadding()
     {
         const offsetPadding = Math.max(
-            Math.abs(this._offset.x),
-            Math.abs(this._offset.y)
+            Math.abs(this.offsetX),
+            Math.abs(this.offsetY),
         );
 
-        this.padding = offsetPadding + (this.blur * 2);
-    }
-
-    /**
-     * Update the transform matrix of offset angle.
-     * @private
-     * @deprecated
-     */
-    private _updateShift()
-    {
-        this._tintFilter.uniforms.shift.set(
-            this.distance * Math.cos(this.angle),
-            this.distance * Math.sin(this.angle),
-        );
-    }
-
-    /**
-     * Set the offset position of the drop-shadow relative to the original image.
-     * @type {IPointData}
-     * @default {x: 4, y: 4}
-     */
-    public set offset(value: IPointData)
-    {
-        this._offset.copyFrom(value);
-        this._updatePadding();
-    }
-    public get offset(): ObservablePoint
-    {
-        return this._offset;
-    }
-
-    /**
-     * The resolution of the filter.
-     * @default 1
-     */
-    get resolution(): number
-    {
-        return this._resolution;
-    }
-    set resolution(value: number)
-    {
-        this._resolution = value;
-
-        if (this._tintFilter)
-        {
-            this._tintFilter.resolution = value;
-        }
-        if (this._blurFilter)
-        {
-            this._blurFilter.resolution = value;
-        }
-    }
-
-    /**
-     * Distance offset of the shadow
-     * @default 5
-     * @deprecated since 5.3.0
-     * @see DropShadowFilter#offset
-     */
-    get distance(): number
-    {
-        return this._distance;
-    }
-    set distance(value: number)
-    {
-        utils.deprecation('5.3.0', 'DropShadowFilter distance is deprecated, use offset');
-        this._distance = value;
-        this._updatePadding();
-        this._updateShift();
-    }
-
-    /**
-     * The angle of the shadow in degrees
-     * @deprecated since 5.3.0
-     * @see DropShadowFilter#offset
-     */
-    get rotation(): number
-    {
-        return this.angle / DEG_TO_RAD;
-    }
-    set rotation(value: number)
-    {
-        utils.deprecation('5.3.0', 'DropShadowFilter rotation is deprecated, use offset');
-        this.angle = value * DEG_TO_RAD;
-        this._updateShift();
-    }
-
-    /**
-     * The alpha of the shadow
-     * @default 1
-     */
-    get alpha(): number
-    {
-        return this._tintFilter.uniforms.alpha;
-    }
-    set alpha(value: number)
-    {
-        this._tintFilter.uniforms.alpha = value;
-    }
-
-    /**
-     * The color of the shadow.
-     * @default 0x000000
-     */
-    get color(): number
-    {
-        return utils.rgb2hex(this._tintFilter.uniforms.color);
-    }
-    set color(value: number)
-    {
-        utils.hex2rgb(value, this._tintFilter.uniforms.color);
-    }
-
-    /**
-     * Sets the kernels of the Blur Filter
-     */
-    get kernels(): number[]
-    {
-        return this._blurFilter.kernels;
-    }
-    set kernels(value: number[])
-    {
-        this._blurFilter.kernels = value;
-    }
-
-    /**
-     * The blur of the shadow
-     * @default 2
-     */
-    get blur(): number
-    {
-        return this._blurFilter.blur;
-    }
-    set blur(value: number)
-    {
-        this._blurFilter.blur = value;
-        this._updatePadding();
-    }
-
-    /**
-     * Sets the quality of the Blur Filter
-     * @default 4
-     */
-    get quality(): number
-    {
-        return this._blurFilter.quality;
-    }
-    set quality(value: number)
-    {
-        this._blurFilter.quality = value;
-    }
-
-    /**
-     * Sets the pixelSize of the Kawase Blur filter
-     *
-     * @member {number|number[]|Point}
-     * @default 1
-     */
-    get pixelSize(): PixelSizeValue
-    {
-        return this._blurFilter.pixelSize;
-    }
-    set pixelSize(value: PixelSizeValue)
-    {
-        this._blurFilter.pixelSize = value;
+        this.padding = offsetPadding + (this.blur * 2) + (this.quality * 4);
     }
 }
-
-export { DropShadowFilter };
-export type { DropShadowFilterOptions };
