@@ -163,10 +163,10 @@ export class DropShadowFilter extends Filter
                 fragment: `
                 in vec2 vTextureCoord;
                 out vec4 finalColor;
-                uniform sampler2D uSampler;
+                uniform sampler2D uTexture;
 
                 void main(void){
-                    finalColor = texture(uSampler, vTextureCoord);
+                    finalColor = texture(uTexture, vTextureCoord);
                 }
                 `,
                 name: 'drop-shadow-filter',

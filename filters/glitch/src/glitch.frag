@@ -2,7 +2,7 @@ precision highp float;
 in vec2 vTextureCoord;
 out vec4 finalColor;
 
-uniform sampler2D uSampler;
+uniform sampler2D uTexture;
 uniform sampler2D uDisplacementMap;
 uniform float uSeed;
 uniform vec2 uDimensions;
@@ -90,8 +90,8 @@ void main(void)
         }
     }
 
-    finalColor.r = texture(uSampler, coord + uRed * (1.0 - uSeed * 0.4) / uInputSize.xy).r;
-    finalColor.g = texture(uSampler, coord + uGreen * (1.0 - uSeed * 0.3) / uInputSize.xy).g;
-    finalColor.b = texture(uSampler, coord + uBlue * (1.0 - uSeed * 0.2) / uInputSize.xy).b;
-    finalColor.a = texture(uSampler, coord).a;
+    finalColor.r = texture(uTexture, coord + uRed * (1.0 - uSeed * 0.4) / uInputSize.xy).r;
+    finalColor.g = texture(uTexture, coord + uGreen * (1.0 - uSeed * 0.3) / uInputSize.xy).g;
+    finalColor.b = texture(uTexture, coord + uBlue * (1.0 - uSeed * 0.2) / uInputSize.xy).b;
+    finalColor.a = texture(uTexture, coord).a;
 }

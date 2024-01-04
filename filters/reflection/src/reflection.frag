@@ -2,7 +2,7 @@ precision highp float;
 in vec2 vTextureCoord;
 out vec4 finalColor;
 
-uniform sampler2D uSampler;
+uniform sampler2D uTexture;
 uniform float uMirror;
 uniform float uBoundary;
 uniform vec2 uAmplitude;
@@ -24,7 +24,7 @@ void main(void)
     vec2 coord = pixelCoord / uDimensions;
 
     if (coord.y < uBoundary) {
-        finalColor = texture(uSampler, vTextureCoord);
+        finalColor = texture(uTexture, vTextureCoord);
         return;
     }
 
@@ -40,7 +40,7 @@ void main(void)
     float x = vTextureCoord.x + cos(v * 6.28 / _waveLength - uTime) * _amplitude;
     x = clamp(x, uInputClamp.x, uInputClamp.z);
 
-    vec4 color = texture(uSampler, vec2(x, y));
+    vec4 color = texture(uTexture, vec2(x, y));
 
     finalColor = color * _alpha;
 }

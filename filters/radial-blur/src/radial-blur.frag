@@ -2,7 +2,7 @@ precision highp float;
 in vec2 vTextureCoord;
 out vec4 finalColor;
 
-uniform sampler2D uSampler;
+uniform sampler2D uTexture;
 uniform float uRadian;
 uniform vec2 uCenter;
 uniform float uRadius;
@@ -14,7 +14,7 @@ const int MAX_KERNEL_SIZE = 2048;
 
 void main(void)
 {
-    vec4 color = texture(uSampler, vTextureCoord);
+    vec4 color = texture(uTexture, vTextureCoord);
 
     if (uKernelSize == 0)
     {
@@ -60,7 +60,7 @@ void main(void)
         coord.y /= aspect;
         coord += center;
 
-        vec4 sample = texture(uSampler, coord);
+        vec4 sample = texture(uTexture, coord);
 
         // switch to pre-multiplied alpha to correctly blur transparent images
         // sample.rgb *= sample.a;

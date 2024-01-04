@@ -1,7 +1,7 @@
 in vec2 vTextureCoord;
 out vec4 finalColor;
 
-uniform sampler2D uSampler;
+uniform sampler2D uTexture;
 uniform vec2 uBlur;
 uniform vec2 uStart;
 uniform vec2 uEnd;
@@ -29,7 +29,7 @@ void main(void)
     {
         float percent = (t + offset - 0.5) / 30.0;
         float weight = 1.0 - abs(percent);
-        vec4 sample = texture(uSampler, vTextureCoord + uDelta / uTexSize * percent * radius);
+        vec4 sample = texture(uTexture, vTextureCoord + uDelta / uTexSize * percent * radius);
         sample.rgb *= sample.a;
         color += sample * weight;
         total += weight;

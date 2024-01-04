@@ -2,7 +2,7 @@ precision highp float;
 in vec2 vTextureCoord;
 out vec4 finalColor;
 
-uniform sampler2D uSampler;
+uniform sampler2D uTexture;
 uniform float uSize;
 uniform vec3 uColor;
 uniform float uReplaceColor;
@@ -58,7 +58,7 @@ void main()
     pixCoord = unmapCoord(pixCoord);
 
     // sample the color at grid position
-    vec4 color = texture(uSampler, pixCoord);
+    vec4 color = texture(uTexture, pixCoord);
 
     // brightness of the color as it's perceived by the human eye
     float gray = 0.3 * color.r + 0.59 * color.g + 0.11 * color.b;

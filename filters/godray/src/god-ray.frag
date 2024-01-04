@@ -2,7 +2,7 @@ precision highp float;
 in vec2 vTextureCoord;
 out vec4 finalColor;
 
-uniform sampler2D uSampler;
+uniform sampler2D uTexture;
 uniform vec2 uDimensions;
 uniform float uParallel;
 uniform vec2 uLight;
@@ -51,5 +51,5 @@ void main(void) {
     // apply user alpha
     mist *= alpha;
 
-    finalColor = texture(uSampler, vTextureCoord) + mist;
+    finalColor = texture(uTexture, vTextureCoord) + mist;
 }

@@ -2,7 +2,7 @@ precision highp float;
 in vec2 vTextureCoord;
 out vec4 finalColor;
 
-uniform sampler2D uSampler;
+uniform sampler2D uTexture;
 uniform vec4 uLine;
 uniform vec2 uNoise;
 uniform vec3 uVignette;
@@ -62,7 +62,7 @@ vec3 interlaceLines(vec3 co, vec2 coord)
 
 void main(void)
 {
-    finalColor = texture(uSampler, vTextureCoord);
+    finalColor = texture(uTexture, vTextureCoord);
     vec2 coord = vTextureCoord * uInputSize.xy / uDimensions;
 
     if (uNoise[0] > 0.0 && uNoise[1] > 0.0)

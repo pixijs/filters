@@ -1,7 +1,7 @@
 in vec2 vTextureCoord;
 out vec4 finalColor;
 
-uniform sampler2D uSampler;
+uniform sampler2D uTexture;
 uniform vec3 uHsl;
 uniform float uAlpha;
 uniform float uColorize;
@@ -27,7 +27,7 @@ vec3 hueShift(vec3 color, float angle) {
 
 void main()
 {
-    vec4 color = texture(uSampler, vTextureCoord);
+    vec4 color = texture(uTexture, vTextureCoord);
     vec3 resultRGB = color.rgb;
 
     float hue = uHsl[0];

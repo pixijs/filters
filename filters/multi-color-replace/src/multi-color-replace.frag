@@ -3,14 +3,14 @@ out vec4 finalColor;
 
 const int MAX_COLORS = ${MAX_COLORS};
 
-uniform sampler2D uSampler;
+uniform sampler2D uTexture;
 uniform vec3 uOriginalColors[MAX_COLORS];
 uniform vec3 uTargetColors[MAX_COLORS];
 uniform float uTolerance;
 
 void main(void)
 {
-    finalColor = texture(uSampler, vTextureCoord);
+    finalColor = texture(uTexture, vTextureCoord);
 
     float alpha = finalColor.a;
     if (alpha < 0.0001)

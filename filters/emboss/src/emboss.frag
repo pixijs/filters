@@ -2,7 +2,7 @@ precision highp float;
 in vec2 vTextureCoord;
 out vec4 finalColor;
 
-uniform sampler2D uSampler;
+uniform sampler2D uTexture;
 uniform float uStrength;
 
 uniform vec4 uInputSize;
@@ -15,12 +15,12 @@ void main(void)
 
 	color.rgb = vec3(0.5);
 
-	color -= texture(uSampler, vTextureCoord - onePixel) * uStrength;
-	color += texture(uSampler, vTextureCoord + onePixel) * uStrength;
+	color -= texture(uTexture, vTextureCoord - onePixel) * uStrength;
+	color += texture(uTexture, vTextureCoord + onePixel) * uStrength;
 
 	color.rgb = vec3((color.r + color.g + color.b) / 3.0);
 
-	float alpha = texture(uSampler, vTextureCoord).a;
+	float alpha = texture(uTexture, vTextureCoord).a;
 
 	finalColor = vec4(color.rgb * alpha, alpha);
 }

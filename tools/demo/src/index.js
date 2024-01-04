@@ -9,7 +9,7 @@ const main = async () =>
 
     app.enabledFilters = getEnabledFiltersFromQueryString();
 
-    await app.init();
+    await app.init({ preference: 'webgl' });
     await app.load([
         { alias: 'background', src: 'images/displacement_BG.jpg' },
         { alias: 'overlay', src: 'images/overlay.png' },

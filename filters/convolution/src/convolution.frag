@@ -1,23 +1,23 @@
 in vec2 vTextureCoord;
 out vec4 finalColor;
 
-uniform sampler2D uSampler;
+uniform sampler2D uTexture;
 uniform vec2 uTexelSize;
 uniform float uMatrix[9];
 
 void main(void)
 {
-    vec4 c11 = texture(uSampler, vTextureCoord - uTexelSize); // top left
-    vec4 c12 = texture(uSampler, vec2(vTextureCoord.x, vTextureCoord.y - uTexelSize.y)); // top center
-    vec4 c13 = texture(uSampler, vec2(vTextureCoord.x + uTexelSize.x, vTextureCoord.y - uTexelSize.y)); // top right
+    vec4 c11 = texture(uTexture, vTextureCoord - uTexelSize); // top left
+    vec4 c12 = texture(uTexture, vec2(vTextureCoord.x, vTextureCoord.y - uTexelSize.y)); // top center
+    vec4 c13 = texture(uTexture, vec2(vTextureCoord.x + uTexelSize.x, vTextureCoord.y - uTexelSize.y)); // top right
 
-    vec4 c21 = texture(uSampler, vec2(vTextureCoord.x - uTexelSize.x, vTextureCoord.y)); // mid left
-    vec4 c22 = texture(uSampler, vTextureCoord); // mid center
-    vec4 c23 = texture(uSampler, vec2(vTextureCoord.x + uTexelSize.x, vTextureCoord.y)); // mid right
+    vec4 c21 = texture(uTexture, vec2(vTextureCoord.x - uTexelSize.x, vTextureCoord.y)); // mid left
+    vec4 c22 = texture(uTexture, vTextureCoord); // mid center
+    vec4 c23 = texture(uTexture, vec2(vTextureCoord.x + uTexelSize.x, vTextureCoord.y)); // mid right
 
-    vec4 c31 = texture(uSampler, vec2(vTextureCoord.x - uTexelSize.x, vTextureCoord.y + uTexelSize.y)); // bottom left
-    vec4 c32 = texture(uSampler, vec2(vTextureCoord.x, vTextureCoord.y + uTexelSize.y)); // bottom center
-    vec4 c33 = texture(uSampler, vTextureCoord + uTexelSize); // bottom right
+    vec4 c31 = texture(uTexture, vec2(vTextureCoord.x - uTexelSize.x, vTextureCoord.y + uTexelSize.y)); // bottom left
+    vec4 c32 = texture(uTexture, vec2(vTextureCoord.x, vTextureCoord.y + uTexelSize.y)); // bottom center
+    vec4 c33 = texture(uTexture, vTextureCoord + uTexelSize); // bottom right
 
     finalColor =
         c11 * uMatrix[0] + c12 * uMatrix[1] + c13 * uMatrix[2] +

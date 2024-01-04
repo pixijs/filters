@@ -3,7 +3,7 @@ in vec2 vTextureCoord;
 out vec4 finalColor;
 
 uniform vec2 uSize;
-uniform sampler2D uSampler;
+uniform sampler2D uTexture;
 uniform vec4 uInputSize;
 
 vec2 mapCoord( vec2 coord )
@@ -32,5 +32,5 @@ void main(void)
     vec2 coord = mapCoord(vTextureCoord);
     coord = pixelate(coord, uSize);
     coord = unmapCoord(coord);
-    finalColor = texture(uSampler, coord);
+    finalColor = texture(uTexture, coord);
 }

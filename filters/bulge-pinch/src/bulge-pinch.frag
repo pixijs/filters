@@ -2,7 +2,7 @@ precision highp float;
 in vec2 vTextureCoord;
 out vec4 finalColor;
 
-uniform sampler2D uSampler;
+uniform sampler2D uTexture;
 uniform vec2 uDimensions;
 uniform vec2 uCenter;
 uniform float uRadius;
@@ -29,7 +29,7 @@ void main()
     coord += uCenter * uDimensions.xy;
     coord /= uInputSize.xy;
     vec2 clampedCoord = clamp(coord, uInputClamp.xy, uInputClamp.zw);
-    vec4 color = texture(uSampler, clampedCoord);
+    vec4 color = texture(uTexture, clampedCoord);
 
     if (coord != clampedCoord) {
         color *= max(0.0, 1.0 - length(coord - clampedCoord));

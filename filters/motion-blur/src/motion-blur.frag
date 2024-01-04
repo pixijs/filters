@@ -2,7 +2,7 @@ precision highp float;
 in vec2 vTextureCoord;
 out vec4 finalColor;
 
-uniform sampler2D uSampler;
+uniform sampler2D uTexture;
 uniform vec2 uVelocity;
 uniform int uKernelSize;
 uniform float uOffset;
@@ -19,7 +19,7 @@ const int MAX_KERNEL_SIZE = 2048;
 
 void main(void)
 {
-    vec4 color = texture(uSampler, vTextureCoord);
+    vec4 color = texture(uTexture, vTextureCoord);
 
     if (uKernelSize == 0)
     {
@@ -36,7 +36,7 @@ void main(void)
             break;
         }
         vec2 bias = velocity * (float(i) / float(k) + offset);
-        color += texture(uSampler, vTextureCoord + bias);
+        color += texture(uTexture, vTextureCoord + bias);
     }
     finalColor = color / float(uKernelSize);
 }

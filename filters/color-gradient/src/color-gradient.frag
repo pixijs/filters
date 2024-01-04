@@ -8,7 +8,7 @@ const int TYPE_RADIAL = 1;
 const int TYPE_CONIC = 2;
 const int MAX_STOPS = 32;
 
-uniform sampler2D uSampler;
+uniform sampler2D uTexture;
 uniform int uNumStops;
 uniform float uAlphas[3*MAX_STOPS];
 uniform vec3 uColors[MAX_STOPS];
@@ -66,7 +66,7 @@ float projectPosition(vec2 pos, int type, float angle) {
 
 void main(void) {
     // current/original color
-    vec4 currentColor = texture(uSampler, vTextureCoord);
+    vec4 currentColor = texture(uTexture, vTextureCoord);
 
     // skip calculations if gradient alpha is 0
     if (0.0 == uAlpha) {

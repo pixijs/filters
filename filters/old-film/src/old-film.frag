@@ -2,7 +2,7 @@ precision highp float;
 in vec2 vTextureCoord;
 out vec4 finalColor;
 
-uniform sampler2D uSampler;
+uniform sampler2D uTexture;
 uniform float uSepia;
 uniform vec2 uNoise;
 uniform vec3 uScratch;
@@ -31,7 +31,7 @@ vec3 Overlay(vec3 src, vec3 dst)
 
 void main()
 {
-    finalColor = texture(uSampler, vTextureCoord);
+    finalColor = texture(uTexture, vTextureCoord);
     vec3 color = finalColor.rgb;
 
     if (uSepia > 0.0)

@@ -2,7 +2,7 @@ precision highp float;
 in vec2 vTextureCoord;
 out vec4 finalColor;
 
-uniform sampler2D uSampler;
+uniform sampler2D uTexture;
 uniform vec2 uStrength;
 uniform vec3 uColor;
 uniform float uKnockout;
@@ -33,12 +33,12 @@ void main(void) {
 
       for (float curDistance = 0.; curDistance < DIST; curDistance++) {
           displaced = clamp(vTextureCoord + direction * (curDistance + 1.), uInputClamp.xy, uInputClamp.zw);
-          curColor = texture(uSampler, displaced);
+          curColor = texture(uTexture, displaced);
           totalAlpha += (DIST - curDistance) * curColor.a;
       }
     }
     
-    curColor = texture(uSampler, vTextureCoord);
+    curColor = texture(uTexture, vTextureCoord);
 
     vec4 glowColor = vec4(uColor, uAlpha);
     bool knockout = uKnockout > .5;

@@ -1,11 +1,11 @@
 in vec2 vTextureCoord;
 out vec4 finalColor;
 
-uniform sampler2D uSampler;
+uniform sampler2D uTexture;
 
 void main(void)
 {
-    float lum = length(texture(uSampler, vTextureCoord.xy).rgb);
+    float lum = length(texture(uTexture, vTextureCoord.xy).rgb);
 
     finalColor = vec4(1.0, 1.0, 1.0, 1.0);
 

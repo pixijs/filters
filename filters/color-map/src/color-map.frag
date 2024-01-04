@@ -1,7 +1,7 @@
 in vec2 vTextureCoord;
 out vec4 finalColor;
 
-uniform sampler2D uSampler;
+uniform sampler2D uTexture;
 uniform sampler2D uMapTexture;
 uniform float uMix;
 uniform float uSize;
@@ -10,7 +10,7 @@ uniform float uSlicePixelSize;
 uniform float uSliceInnerSize;
 
 void main() {
-    vec4 color = texture(uSampler, vTextureCoord.xy);
+    vec4 color = texture(uTexture, vTextureCoord.xy);
     vec4 adjusted;
 
     if (color.a > 0.0) {

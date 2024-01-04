@@ -2,7 +2,7 @@ precision highp float;
 in vec2 vTextureCoord;
 out vec4 finalColor;
 
-uniform sampler2D uSampler;
+uniform sampler2D uTexture;
 uniform vec2 uTwist;
 uniform vec2 uOffset;
 uniform vec4 uInputSize;
@@ -50,5 +50,5 @@ void main(void)
     vec2 coord = mapCoord(vTextureCoord);
     coord = twist(coord);
     coord = unmapCoord(coord);
-    finalColor = texture(uSampler, coord);
+    finalColor = texture(uTexture, coord);
 }

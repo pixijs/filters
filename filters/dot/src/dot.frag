@@ -2,7 +2,7 @@ precision highp float;
 in vec2 vTextureCoord;
 out vec4 finalColor;
 
-uniform sampler2D uSampler;
+uniform sampler2D uTexture;
 uniform float uAngle;
 uniform float uScale;
 uniform bool uGreyscale;
@@ -22,7 +22,7 @@ float pattern()
 
     void main()
     {
-    vec4 color = texture(uSampler, vTextureCoord);
+    vec4 color = texture(uTexture, vTextureCoord);
     vec3 colorRGB = vec3(color);
 
     if (uGreyscale)

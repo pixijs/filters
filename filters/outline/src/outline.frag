@@ -2,7 +2,7 @@ precision highp float;
 in vec2 vTextureCoord;
 out vec4 finalColor;
 
-uniform sampler2D uSampler;
+uniform sampler2D uTexture;
 uniform vec2 uThickness;
 uniform vec3 uColor;
 uniform float uAlpha;
@@ -25,7 +25,7 @@ float outlineMaxAlphaAtPos(vec2 pos) {
     for (float angle = 0.; angle <= DOUBLE_PI; angle += ANGLE_STEP) {
         displacedPos.x = vTextureCoord.x + uThickness.x * cos(angle);
         displacedPos.y = vTextureCoord.y + uThickness.y * sin(angle);
-        displacedColor = texture(uSampler, clamp(displacedPos, uInputClamp.xy, uInputClamp.zw));
+        displacedColor = texture(uTexture, clamp(displacedPos, uInputClamp.xy, uInputClamp.zw));
         maxAlpha = max(maxAlpha, displacedColor.a);
     }
 
@@ -33,7 +33,7 @@ float outlineMaxAlphaAtPos(vec2 pos) {
 }
 
 void main(void) {
-    vec4 sourceColor = texture(uSampler, vTextureCoord);
+    vec4 sourceColor = texture(uTexture, vTextureCoord);
     vec4 contentColor = sourceColor * float(uKnockout < 0.5);
     float outlineAlpha = uAlpha * outlineMaxAlphaAtPos(vTextureCoord.xy) * (1.-sourceColor.a);
     vec4 outlineColor = vec4(vec3(uColor) * outlineAlpha, outlineAlpha);

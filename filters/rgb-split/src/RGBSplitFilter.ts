@@ -1,27 +1,25 @@
 import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './rgb-split.frag';
 import source from './rgb-split.wgsl';
-import { Filter, GlProgram, GpuProgram, UniformGroup, Point } from 'pixi.js';
-
-type Offset = [number, number] | Point;
+import { Filter, GlProgram, GpuProgram, PointData } from 'pixi.js';
 
 export interface RGBSplitFilterOptions
 {
     /**
      * The amount of offset for the red channel.
-     * @default [-10,0]
+     * @default {x:-10,y:0}
      */
-    red: Offset;
+    red: PointData;
     /**
      * The amount of offset for the green channel.
-     * @default [0,10]
+     * @default {x:0,y:10}
      */
-    green: Offset;
+    green: PointData;
     /**
      * The amount of offset for the blue channel.
-     * @default [0,0]
+     * @default {x:0,y:0}
      */
-    blue: Offset;
+    blue: PointData;
 }
 
 /**
@@ -37,25 +35,20 @@ export class RGBSplitFilter extends Filter
 {
     /** Default values for options. */
     public static readonly DEFAULT_OPTIONS: RGBSplitFilterOptions = {
-        red: [-10, 0],
-        green: [0, 10],
-        blue: [0, 0],
+        red: { x: -10, y: 0 },
+        green: { x: 0, y: 10 },
+        blue: { x: 0, y: 0 },
     };
 
-    /**
-     * @param {Point | number[]} [red=[-10,0]] - Red channel offset
-     * @param {Point | number[]} [green=[0, 10]] - Green channel offset
-     * @param {Point | number[]} [blue=[0, 0]] - Blue channel offset
-     */
+    public uniforms: {
+        uRed: PointData;
+        uGreen: PointData;
+        uBlue: PointData;
+    };
+
     constructor(options?: RGBSplitFilterOptions)
     {
         options = { ...RGBSplitFilter.DEFAULT_OPTIONS, ...options };
-
-        const rgbSplitUniforms = new UniformGroup({
-            uRed: { value: new Float32Array(2), type: 'vec2<f32>' },
-            uGreen: { value: new Float32Array(2), type: 'vec2<f32>' },
-            uBlue: { value: new Float32Array(2), type: 'vec2<f32>' },
-        });
 
         const gpuProgram = new GpuProgram({
             vertex: {
@@ -78,108 +71,77 @@ export class RGBSplitFilter extends Filter
             gpuProgram,
             glProgram,
             resources: {
-                rgbSplitUniforms
+                rgbSplitUniforms: {
+                    uRed: { value: options.red, type: 'vec2<f32>' },
+                    uGreen: { value: options.green, type: 'vec2<f32>' },
+                    uBlue: { value: options.blue, type: 'vec2<f32>' },
+                }
             },
         });
 
-        this.red = options.red ?? [-10, 0];
-        this.green = options.green ?? [0, 10];
-        this.blue = options.blue ?? [0, 0];
+        this.uniforms = this.resources.rgbSplitUniforms.uniforms;
     }
 
     /**
      * Red channel offset.
-     * @default [-10,0]
+     * @default {x:-10,y:0}
      */
-    get red(): Offset { return this.resources.rgbSplitUniforms.uniforms.uRed; }
-    set red(value: Offset)
-    {
-        if (value instanceof Point)
-        {
-            this.redX = value.x;
-            this.redY = value.y;
-
-            return;
-        }
-
-        this.resources.rgbSplitUniforms.uniforms.uRed = value;
-    }
+    get red(): PointData { return this.uniforms.uRed; }
+    set red(value: PointData) { this.uniforms.uRed = value; }
 
     /**
      * Amount of x-axis offset for the red channel.
      * @default -10
      */
-    get redX(): number { return this.resources.rgbSplitUniforms.uniforms.uRed[0]; }
-    set redX(value: number) { this.resources.rgbSplitUniforms.uniforms.uRed[0] = value; }
+    get redX(): number { return this.red.x; }
+    set redX(value: number) { this.red.x = value; }
 
     /**
      * Amount of y-axis offset for the red channel.
      * @default 0
      */
-    get redY(): number { return this.resources.rgbSplitUniforms.uniforms.uRed[1]; }
-    set redY(value: number) { this.resources.rgbSplitUniforms.uniforms.uRed[1] = value; }
+    get redY(): number { return this.red.y; }
+    set redY(value: number) { this.red.y = value; }
 
     /**
      * Green channel offset.
-     * @default [0,10]
+     * @default {x:0,y:10}
      */
-    get green(): Offset { return this.resources.rgbSplitUniforms.uniforms.uGreen; }
-    set green(value: Offset)
-    {
-        if (value instanceof Point)
-        {
-            this.greenX = value.x;
-            this.greenY = value.y;
-
-            return;
-        }
-
-        this.resources.rgbSplitUniforms.uniforms.uGreen = value;
-    }
+    get green(): PointData { return this.uniforms.uGreen; }
+    set green(value: PointData) { this.uniforms.uGreen = value; }
 
     /**
      * Amount of x-axis offset for the green channel.
      * @default 0
      */
-    get greenX(): number { return this.resources.rgbSplitUniforms.uniforms.uGreen[0]; }
-    set greenX(value: number) { this.resources.rgbSplitUniforms.uniforms.uGreen[0] = value; }
+    get greenX(): number { return this.green.x; }
+    set greenX(value: number) { this.green.x = value; }
 
     /**
      * Amount of y-axis offset for the green channel.
      * @default 10
      */
-    get greenY(): number { return this.resources.rgbSplitUniforms.uniforms.uGreen[1]; }
-    set greenY(value: number) { this.resources.rgbSplitUniforms.uniforms.uGreen[1] = value; }
+    get greenY(): number { return this.green.y; }
+    set greenY(value: number) { this.green.y = value; }
 
     /**
      * Blue channel offset.
-     * @default [0,0]
+     * @default {x:0,y:0}
      */
-    get blue(): Offset { return this.resources.rgbSplitUniforms.uniforms.uBlue; }
-    set blue(value: Offset)
-    {
-        if (value instanceof Point)
-        {
-            this.blueX = value.x;
-            this.blueY = value.y;
-
-            return;
-        }
-
-        this.resources.rgbSplitUniforms.uniforms.uBlue = value;
-    }
+    get blue(): PointData { return this.uniforms.uBlue; }
+    set blue(value: PointData) { this.uniforms.uBlue = value; }
 
     /**
      * Amount of x-axis offset for the blue channel.
      * @default 0
      */
-    get blueX(): number { return this.resources.rgbSplitUniforms.uniforms.uBlue[0]; }
-    set blueX(value: number) { this.resources.rgbSplitUniforms.uniforms.uBlue[0] = value; }
+    get blueX(): number { return this.blue.x; }
+    set blueX(value: number) { this.blue.x = value; }
 
     /**
      * Amount of y-axis offset for the blue channel.
      * @default 0
      */
-    get blueY(): number { return this.resources.rgbSplitUniforms.uniforms.uBlue[1]; }
-    set blueY(value: number) { this.resources.rgbSplitUniforms.uniforms.uBlue[1] = value; }
+    get blueY(): number { return this.blue.y; }
+    set blueY(value: number) { this.blue.y = value; }
 }

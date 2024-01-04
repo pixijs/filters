@@ -2,7 +2,7 @@ precision highp float;
 in vec2 vTextureCoord;
 out vec4 finalColor;
 
-uniform sampler2D uSampler;
+uniform sampler2D uTexture;
 uniform float uStrength;
 uniform vec2 uCenter;
 uniform vec2 uRadii;
@@ -49,7 +49,7 @@ void main() {
         strength *= delta;
         if (countLimit < 1.0)
         {
-            gl_FragColor = texture(uSampler, vTextureCoord);
+            gl_FragColor = texture(uTexture, vTextureCoord);
             return;
         }
     }
@@ -66,7 +66,7 @@ void main() {
         float percent = (t + offset) / MAX_KERNEL_SIZE;
         float weight = 4.0 * (percent - percent * percent);
         vec2 p = vTextureCoord + dir * percent;
-        vec4 sample = texture(uSampler, p);
+        vec4 sample = texture(uTexture, p);
 
         // switch to pre-multiplied alpha to correctly blur transparent images
         // sample.rgb *= sample.a;

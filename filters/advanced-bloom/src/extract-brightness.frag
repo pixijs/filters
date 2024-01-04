@@ -2,11 +2,11 @@
 in vec2 vTextureCoord;
 out vec4 finalColor;
 
-uniform sampler2D uSampler;
+uniform sampler2D uTexture;
 uniform float uThreshold;
 
 void main() {
-    vec4 color = texture(uSampler, vTextureCoord);
+    vec4 color = texture(uTexture, vTextureCoord);
 
     // A simple & fast algorithm for getting brightness.
     // It's inaccuracy , but good enought for this feature.
