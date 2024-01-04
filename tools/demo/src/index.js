@@ -64,6 +64,7 @@ const main = async () =>
     filters.radialBlur.call(app);
     filters.glitch.call(app);
     filters.advancedBloom.call(app);
+    filters.oldFilm.call(app);
 
     // TODO: Re-enable this in place of the above once v8 conversion is complete
     // for (const i in filters)

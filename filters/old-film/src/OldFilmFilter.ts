@@ -1,19 +1,62 @@
-import { vertex } from '@tools/fragments';
+import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './old-film.frag';
-import { Filter, GlProgram } from 'pixi.js';
+import source from './old-film.wgsl';
+import { Filter, GlProgram, GpuProgram } from 'pixi.js';
 import type { FilterSystem, RenderSurface, Texture } from 'pixi.js';
 
 export interface OldFilmFilterOptions
 {
-    sepia: number;
-    noise: number;
-    noiseSize: number;
-    scratch: number;
-    scratchDensity: number;
-    scratchWidth: number;
-    vignetting: number;
-    vignettingAlpha: number;
-    vignettingBlur: number;
+    /**
+     * The amount of saturation of sepia effect,
+     * a value of `1` is more saturation and closer to `0` is less, and a value of `0` produces no sepia effect
+     * @default 0.3
+     */
+    sepia?: number;
+    /**
+     * Opacity/intensity of the noise effect between `0` and `1`
+     * @default 0.3
+     */
+    noise?: number;
+    /**
+     * The size of the noise particles
+     * @default 1
+     */
+    noiseSize?: number;
+    /**
+     * How often scratches appear
+     * @default 0.5
+     */
+    scratch?: number;
+    /**
+     * The density of the number of scratches
+     * @default 0.3
+     */
+    scratchDensity?: number;
+    /**
+     * The width of the scratches
+     * @default 1
+     */
+    scratchWidth?: number;
+    /**
+     * The radius of the vignette effect, smaller values produces a smaller vignette
+     * @default 0.3
+     */
+    vignette?: number;
+    /**
+     * Amount of opacity on the vignette
+     * @default 1
+     */
+    vignetteAlpha?: number;
+    /**
+     * Blur intensity of the vignette
+     * @default 1
+     */
+    vignetteBlur?: number;
+    /**
+     * A seed value to apply to the random noise generation
+     * @default 0
+     */
+    seed?: number;
 }
 
 /**
@@ -27,41 +70,50 @@ export interface OldFilmFilterOptions
  */
 export class OldFilmFilter extends Filter
 {
-    /** Default constructor options */
-    public static readonly defaults: OldFilmFilterOptions = {
+    /** Default values for options. */
+    public static readonly DEFAULT_OPTIONS: OldFilmFilterOptions = {
         sepia: 0.3,
         noise: 0.3,
-        noiseSize: 1.0,
+        noiseSize: 1,
         scratch: 0.5,
         scratchDensity: 0.3,
-        scratchWidth: 1.0,
-        vignetting: 0.3,
-        vignettingAlpha: 1.0,
-        vignettingBlur: 0.3,
+        scratchWidth: 1,
+        vignette: 0.3,
+        vignetteAlpha: 1,
+        vignetteBlur: 0.3,
+        seed: 0
     };
 
-    /** A see value to apply to the random noise generation */
-    public seed = 0;
+    public uniforms: {
+        uSepia: number;
+        uNoise: Float32Array;
+        uScratch: Float32Array;
+        uVignette: Float32Array;
+        uSeed: number;
+        uDimensions: Float32Array;
+    };
 
     /**
-     * @param {object|number} [options] - The optional parameters of old film effect.
-     *                        When options is a number , it will be `seed`
-     * @param {number} [options.sepia=0.3] - The amount of saturation of sepia effect,
-     *        a value of `1` is more saturation and closer to `0` is less, and a value of
-     *        `0` produces no sepia effect
-     * @param {number} [options.noise=0.3] - Opacity/intensity of the noise effect between `0` and `1`
-     * @param {number} [options.noiseSize=1.0] - The size of the noise particles
-     * @param {number} [options.scratch=0.5] - How often scratches appear
-     * @param {number} [options.scratchDensity=0.3] - The density of the number of scratches
-     * @param {number} [options.scratchWidth=1.0] - The width of the scratches
-     * @param {number} [options.vignetting=0.3] - The radius of the vignette effect, smaller
-     *        values produces a smaller vignette
-     * @param {number} [options.vignettingAlpha=1.0] - Amount of opacity of vignette
-     * @param {number} [options.vignettingBlur=0.3] - Blur intensity of the vignette
-     * @param {number} [seed=0] - A see value to apply to the random noise generation
+     * A seed value to apply to the random noise generation
+     * @default 0
      */
-    constructor(options?: Partial<OldFilmFilterOptions>, seed = 0)
+    public seed!: number;
+
+    constructor(options?: OldFilmFilterOptions)
     {
+        options = { ...OldFilmFilter.DEFAULT_OPTIONS, ...options };
+
+        const gpuProgram = new GpuProgram({
+            vertex: {
+                source: wgslVertex,
+                entryPoint: 'mainVertex',
+            },
+            fragment: {
+                source,
+                entryPoint: 'mainFragment',
+            },
+        });
+
         const glProgram = new GlProgram({
             vertex,
             fragment,
@@ -69,167 +121,105 @@ export class OldFilmFilter extends Filter
         });
 
         super({
+            gpuProgram,
             glProgram,
-            resources: {},
+            resources: {
+                oldFilmUniforms: {
+                    uSepia: { value: options.sepia, type: 'f32' },
+                    uNoise: { value: new Float32Array(2), type: 'vec2<f32>' },
+                    uScratch: { value: new Float32Array(3), type: 'vec3<f32>' },
+                    uVignette: { value: new Float32Array(3), type: 'vec3<f32>' },
+                    uSeed: { value: options.seed, type: 'f32' },
+                    uDimensions: { value: new Float32Array(2), type: 'vec2<f32>' },
+                }
+            },
         });
 
-        // this.uniforms.dimensions = new Float32Array(2);
+        this.uniforms = this.resources.oldFilmUniforms.uniforms;
 
-        if (typeof options === 'number')
-        {
-            this.seed = options;
-            options = undefined;
-        }
-        else
-        {
-            this.seed = seed;
-        }
-
-        Object.assign(this, OldFilmFilter.defaults, options);
+        Object.assign(this, options);
     }
 
     /**
-     * Override existing apply method in Filter
-     * @private
+     * Override existing apply method in `Filter`
+     * @override
+     * @ignore
      */
-    apply(filterManager: FilterSystem, input: Texture, output: RenderSurface, clear: boolean): void
+    public override apply(
+        filterManager: FilterSystem,
+        input: Texture,
+        output: RenderSurface,
+        clearMode: boolean
+    ): void
     {
-        // this.uniforms.dimensions[0] = input.filterFrame?.width;
-        // this.uniforms.dimensions[1] = input.filterFrame?.height;
+        this.uniforms.uDimensions[0] = input.frame.width;
+        this.uniforms.uDimensions[1] = input.frame.height;
+        this.uniforms.uSeed = this.seed;
 
-        // // named `seed` because in the most programming languages,
-        // // `random` used for "the function for generating random value".
-        // this.uniforms.seed = this.seed;
-
-        // filterManager.applyFilter(this, input, output, clear);
+        filterManager.applyFilter(this, input, output, clearMode);
     }
 
     /**
      * The amount of saturation of sepia effect,
-     * a value of `1` is more saturation and closer to `0` is less,
-     * and a value of `0` produces no sepia effect
-     * @default 0
+     * a value of `1` is more saturation and closer to `0` is less, and a value of `0` produces no sepia effect
+     * @default 0.3
      */
-    // set sepia(value: number)
-    // {
-    //     this.uniforms.sepia = value;
-    // }
-
-    // get sepia(): number
-    // {
-    //     return this.uniforms.sepia;
-    // }
+    get sepia(): number { return this.uniforms.uSepia; }
+    set sepia(value: number) { this.uniforms.uSepia = value; }
 
     /**
      * Opacity/intensity of the noise effect between `0` and `1`
-     * @default 0
+     * @default 0.3
      */
-    // set noise(value: number)
-    // {
-    //     this.uniforms.noise = value;
-    // }
-
-    // get noise(): number
-    // {
-    //     return this.uniforms.noise;
-    // }
+    get noise(): number { return this.uniforms.uNoise[0]; }
+    set noise(value: number) { this.uniforms.uNoise[0] = value; }
 
     /**
      * The size of the noise particles
-     * @default 0
+     * @default 1
      */
-    // set noiseSize(value: number)
-    // {
-    //     this.uniforms.noiseSize = value;
-    // }
-
-    // get noiseSize(): number
-    // {
-    //     return this.uniforms.noiseSize;
-    // }
+    get noiseSize(): number { return this.uniforms.uNoise[1]; }
+    set noiseSize(value: number) { this.uniforms.uNoise[1] = value; }
 
     /**
      * How often scratches appear
-     * @default 0
+     * @default 0.5
      */
-    // set scratch(value: number)
-    // {
-    //     this.uniforms.scratch = value;
-    // }
-
-    // get scratch(): number
-    // {
-    //     return this.uniforms.scratch;
-    // }
+    get scratch(): number { return this.uniforms.uScratch[0]; }
+    set scratch(value: number) { this.uniforms.uScratch[0] = value; }
 
     /**
      * The density of the number of scratches
-     * @default 0
+     * @default 0.3
      */
-    // set scratchDensity(value: number)
-    // {
-    //     this.uniforms.scratchDensity = value;
-    // }
-
-    // get scratchDensity(): number
-    // {
-    //     return this.uniforms.scratchDensity;
-    // }
+    get scratchDensity(): number { return this.uniforms.uScratch[1]; }
+    set scratchDensity(value: number) { this.uniforms.uScratch[1] = value; }
 
     /**
      * The width of the scratches
-     * @default 0
+     * @default 1
      */
-    // set scratchWidth(value: number)
-    // {
-    //     this.uniforms.scratchWidth = value;
-    // }
-
-    // get scratchWidth(): number
-    // {
-    //     return this.uniforms.scratchWidth;
-    // }
+    get scratchWidth(): number { return this.uniforms.uScratch[2]; }
+    set scratchWidth(value: number) { this.uniforms.uScratch[2] = value; }
 
     /**
-     * The radius of the vignette effect, smaller
-     * values produces a smaller vignette
-     * @default 0
+     * The radius of the vignette effect, smaller values produces a smaller vignette
+     * @default 0.3
      */
-    // set vignetting(value: number)
-    // {
-    //     this.uniforms.vignetting = value;
-    // }
-
-    // get vignetting(): number
-    // {
-    //     return this.uniforms.vignetting;
-    // }
+    get vignette(): number { return this.uniforms.uVignette[0]; }
+    set vignette(value: number) { this.uniforms.uVignette[0] = value; }
 
     /**
-     * Amount of opacity of vignette
-     * @default 0
+     * Amount of opacity on the vignette
+     * @default 1
      */
-    // set vignettingAlpha(value: number)
-    // {
-    //     this.uniforms.vignettingAlpha = value;
-    // }
-
-    // get vignettingAlpha(): number
-    // {
-    //     return this.uniforms.vignettingAlpha;
-    // }
+    get vignetteAlpha(): number { return this.uniforms.uVignette[1]; }
+    set vignetteAlpha(value: number) { this.uniforms.uVignette[1] = value; }
 
     /**
      * Blur intensity of the vignette
-     * @default 0
+     * @default 1
      */
-    // set vignettingBlur(value: number)
-    // {
-    //     this.uniforms.vignettingBlur = value;
-    // }
-
-    // get vignettingBlur(): number
-    // {
-    //     return this.uniforms.vignettingBlur;
-    // }
+    get vignetteBlur(): number { return this.uniforms.uVignette[2]; }
+    set vignetteBlur(value: number) { this.uniforms.uVignette[2] = value; }
 }
