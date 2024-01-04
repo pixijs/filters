@@ -121,8 +121,6 @@ export class OutlineFilter extends Filter
         this.color = options.color ?? 0x000000;
 
         Object.assign(this, options);
-
-        console.log(this);
     }
 
     /**
