@@ -1,21 +1,41 @@
 import { ExtractBrightnessFilter } from './ExtractBrightnessFilter';
 import { KawaseBlurFilter } from '@pixi/filter-kawase-blur';
-import { vertex } from '@tools/fragments';
+import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './advanced-bloom.frag';
-import { Filter, GlProgram } from 'pixi.js';
-import type { FilterSystem, RenderSurface, Texture } from 'pixi.js';
-import type { PixelSizeValue } from '@pixi/filter-kawase-blur';
+import source from './advanced-bloom.wgsl';
+import { Filter, GlProgram, GpuProgram, TexturePool, FilterSystem, PointData, RenderSurface, Texture  } from 'pixi.js';
 
-interface AdvancedBloomFilterOptions
+export interface AdvancedBloomFilterOptions
 {
-    threshold: number,
-    bloomScale: number,
-    brightness: number,
-    kernels: number[] | null,
-    blur: number,
-    quality: number,
-    pixelSize: PixelSizeValue,
-    resolution: number,
+    /**
+     * Defines how bright a color needs to be to affect bloom.
+     * @default 1
+     */
+    threshold?: number,
+    /**
+     * To adjust the strength of the bloom. Higher values is more intense brightness.
+     * @default 1
+     */
+    bloomScale?: number,
+    /**
+     * The brightness, lower value is more subtle brightness, higher value is blown-out.
+     * @default 1
+     */
+    brightness?: number,
+    /** Sets the strength of the Blur properties simultaneously */
+    blur?: number,
+    /**
+     * The kernel size of the blur filter.
+     * @default null
+     */
+    kernels?: number[] | null,
+    /** The quality of the Blur filter. */
+    quality?: number,
+    /**
+     * Sets the pixel size of the blur filter. Large size is blurrier. For advanced usage.
+     * @default {x:1,y:1}
+     */
+    pixelSize?: PointData,
 }
 
 /**
@@ -31,16 +51,20 @@ interface AdvancedBloomFilterOptions
  */
 export class AdvancedBloomFilter extends Filter
 {
-    /** Default construction options. */
-    public static readonly defaults: AdvancedBloomFilterOptions = {
+    /** Default values for options. */
+    public static readonly DEFAULT_OPTIONS: AdvancedBloomFilterOptions = {
         threshold: 0.5,
-        bloomScale: 1.0,
-        brightness: 1.0,
+        bloomScale: 1,
+        brightness: 1,
         kernels: null,
         blur: 8,
         quality: 4,
-        pixelSize: 1,
-        resolution: 1,
+        pixelSize: { x: 1, y: 1 },
+    };
+
+    public uniforms: {
+        uBloomScale: number;
+        uBrightness: number;
     };
 
     /** To adjust the strength of the bloom. Higher values is more intense brightness. */
@@ -51,24 +75,22 @@ export class AdvancedBloomFilter extends Filter
 
     private _extractFilter: ExtractBrightnessFilter;
     private _blurFilter: KawaseBlurFilter;
-    protected _resolution = 1;
 
-    /**
-     * @param {object|number} [options] - The optional parameters of advanced bloom filter.
-     *                        When options is a number , it will be `options.threshold`.
-     * @param {number} [options.threshold=0.5] - Defines how bright a color needs to be to affect bloom.
-     * @param {number} [options.bloomScale=1.0] - To adjust the strength of the bloom. Higher values is
-     *        more intense brightness.
-     * @param {number} [options.brightness=1.0] - The brightness, lower value is more subtle brightness,
-     *        higher value is blown-out.
-     * @param {number} [options.blur=8] - Sets the strength of the Blur properties simultaneously
-     * @param {number} [options.quality=4] - The quality of the Blur filter.
-     * @param {number[]} [options.kernels=null] - The kernels of the Blur filter.
-     * @param {number|number[]|Point} [options.pixelSize=1] - the pixelSize of the Blur filter.
-     * @param {number} [options.resolution=1] - The resolution of the Blur filter.
-     */
-    constructor(options?: Partial<AdvancedBloomFilterOptions>)
+    constructor(options?: AdvancedBloomFilterOptions)
     {
+        options = { ...AdvancedBloomFilter.DEFAULT_OPTIONS, ...options };
+
+        const gpuProgram = new GpuProgram({
+            vertex: {
+                source: wgslVertex,
+                entryPoint: 'mainVertex',
+            },
+            fragment: {
+                source,
+                entryPoint: 'mainFragment',
+            },
+        });
+
         const glProgram = new GlProgram({
             vertex,
             fragment,
@@ -76,144 +98,105 @@ export class AdvancedBloomFilter extends Filter
         });
 
         super({
+            gpuProgram,
             glProgram,
-            resources: {},
+            resources: {
+                advancedBloomUniforms: {
+                    uBloomScale: { value: options.bloomScale, type: 'f32' },
+                    uBrightness: { value: options.brightness, type: 'f32' },
+                },
+                uMapTexture: Texture.WHITE,
+            },
         });
 
-        if (typeof options === 'number')
-        {
-            options = { threshold: options };
-        }
+        this.uniforms = this.resources.advancedBloomUniforms.uniforms;
 
-        const opt:AdvancedBloomFilterOptions = Object.assign(AdvancedBloomFilter.defaults, options);
+        this._extractFilter = new ExtractBrightnessFilter({
+            threshold: options.threshold
+        });
 
-        this.bloomScale = opt.bloomScale;
-        this.brightness = opt.brightness;
+        this._blurFilter = new KawaseBlurFilter({
+            strength: options.kernels as [number, number] ?? options.blur,
+            quality: options.kernels ? undefined : options.quality,
+        });
 
-        const { kernels, blur, quality, pixelSize, resolution } = opt;
-
-        this._extractFilter = new ExtractBrightnessFilter(opt.threshold);
-        this._extractFilter.resolution = resolution;
-        this._blurFilter = kernels
-            ? new KawaseBlurFilter(kernels)
-            : new KawaseBlurFilter(blur, quality);
-        this.pixelSize = pixelSize;
-        this.resolution = resolution;
+        Object.assign(this, options);
     }
 
     /**
-     * Override existing apply method in Filter
-     *
-     * @private
-     */
-    apply(filterManager: FilterSystem, input: Texture, output: RenderSurface, clear: boolean): void
-    {
-        // const brightTarget = filterManager.getFilterTexture();
-
-        // this._extractFilter.apply(filterManager, input, brightTarget, 1, currentState);
-
-        // const bloomTarget = filterManager.getFilterTexture();
-
-        // this._blurFilter.apply(filterManager, brightTarget, bloomTarget, 1);
-
-        // this.uniforms.bloomScale = this.bloomScale;
-        // this.uniforms.brightness = this.brightness;
-        // this.uniforms.bloomTexture = bloomTarget;
-
-        // filterManager.applyFilter(this, input, output, clear);
-
-        // filterManager.returnFilterTexture(bloomTarget);
-        // filterManager.returnFilterTexture(brightTarget);
-    }
-
-    /**
-     * The resolution of the filter.
+     * Override existing apply method in `Filter`
+     * @override
      * @ignore
      */
-    // get resolution(): number
-    // {
-    //     return this._resolution;
-    // }
-    // set resolution(value: number)
-    // {
-    //     this._resolution = value;
+    public override apply(
+        filterManager: FilterSystem,
+        input: Texture,
+        output: RenderSurface,
+        clearMode: boolean
+    ): void
+    {
+        const brightTarget = TexturePool.getSameSizeTexture(input);
 
-    //     if (this._extractFilter)
-    //     {
-    //         this._extractFilter.resolution = value;
-    //     }
-    //     if (this._blurFilter)
-    //     {
-    //         this._blurFilter.resolution = value;
-    //     }
-    // }
+        this._extractFilter.apply(filterManager, input, brightTarget, true);
+
+        const bloomTarget = TexturePool.getSameSizeTexture(input);
+
+        this._blurFilter.apply(filterManager, brightTarget, bloomTarget, true);
+
+        this.uniforms.uBloomScale = this.bloomScale;
+        this.uniforms.uBrightness = this.brightness;
+
+        this.resources.uMapTexture = bloomTarget.source;
+
+        filterManager.applyFilter(this, input, output, clearMode);
+
+        TexturePool.returnTexture(bloomTarget);
+        TexturePool.returnTexture(brightTarget);
+    }
 
     /**
-     * Defines how bright a color needs to be to affect bloom.
-     *
+     * Defines how bright a color needs to be extracted.
      * @default 0.5
      */
-    get threshold(): number
-    {
-        return this._extractFilter.threshold;
-    }
-    set threshold(value: number)
-    {
-        this._extractFilter.threshold = value;
-    }
+    get threshold(): number { return this._extractFilter.threshold; }
+    set threshold(value: number) { this._extractFilter.threshold = value; }
 
-    /**
-     * Sets the kernels of the Blur Filter
-     */
-    get kernels(): number[]
-    {
-        return this._blurFilter.kernels;
-    }
-    set kernels(value: number[])
-    {
-        this._blurFilter.kernels = value;
-    }
+    /** Sets the kernels of the Blur Filter */
+    get kernels(): number[] { return this._blurFilter.kernels; }
+    set kernels(value: number[]) { this._blurFilter.kernels = value; }
 
     /**
      * Sets the strength of the Blur properties simultaneously
-     *
      * @default 2
      */
-    get blur(): number
-    {
-        return this._blurFilter.blur;
-    }
-    set blur(value: number)
-    {
-        this._blurFilter.blur = value;
-    }
+    get blur(): number { return this._blurFilter.strength; }
+    set blur(value: number) { this._blurFilter.strength = value; }
 
     /**
      * Sets the quality of the Blur Filter
-     *
      * @default 4
      */
-    get quality(): number
-    {
-        return this._blurFilter.quality;
-    }
-    set quality(value: number)
-    {
-        this._blurFilter.quality = value;
-    }
+    get quality(): number { return this._blurFilter.quality; }
+    set quality(value: number) { this._blurFilter.quality = value; }
 
     /**
      * Sets the pixelSize of the Kawase Blur filter
-     *
-     * @member {number|number[]|Point}
+     * @default {x:1,y:1}
+     */
+    get pixelSize(): PointData { return this._blurFilter.pixelSize; }
+    set pixelSize(value: PointData) { this._blurFilter.pixelSize = value; }
+
+    /**
+     * Sets the pixelSize of the Kawase Blur filter on the `x` axis
      * @default 1
      */
-    get pixelSize(): PixelSizeValue
-    {
-        return this._blurFilter.pixelSize;
-    }
-    set pixelSize(value: PixelSizeValue)
-    {
-        this._blurFilter.pixelSize = value;
-    }
+    get pixelSizeX(): number { return this._blurFilter.pixelSizeX; }
+    set pixelSizeX(value: number) { this._blurFilter.pixelSizeX = value; }
+
+    /**
+     * Sets the pixelSize of the Kawase Blur filter on the `y` axis
+     * @default 1
+     */
+    get pixelSizeY(): number { return this._blurFilter.pixelSizeY; }
+    set pixelSizeY(value: number) { this._blurFilter.pixelSizeY = value; }
 }

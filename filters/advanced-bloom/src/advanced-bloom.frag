@@ -1,14 +1,15 @@
-uniform sampler2D uSampler;
-varying vec2 vTextureCoord;
+in vec2 vTextureCoord;
+out vec4 finalColor;
 
-uniform sampler2D bloomTexture;
-uniform float bloomScale;
-uniform float brightness;
+uniform sampler2D uSampler;
+uniform sampler2D uMapTexture;
+uniform float uBloomScale;
+uniform float uBrightness;
 
 void main() {
-    vec4 color = texture2D(uSampler, vTextureCoord);
-    color.rgb *= brightness;
-    vec4 bloomColor = vec4(texture2D(bloomTexture, vTextureCoord).rgb, 0.0);
-    bloomColor.rgb *= bloomScale;
-    gl_FragColor = color + bloomColor;
+    vec4 color = texture(uSampler, vTextureCoord);
+    color.rgb *= uBrightness;
+    vec4 bloomColor = vec4(texture(uMapTexture, vTextureCoord).rgb, 0.0);
+    bloomColor.rgb *= uBloomScale;
+    finalColor = color + bloomColor;
 }

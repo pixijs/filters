@@ -1,19 +1,47 @@
-import { vertex } from '@tools/fragments';
+import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './extract-brightness.frag';
-import { Filter, GlProgram } from 'pixi.js';
+import source from './extract-brightness.wgsl';
+import { Filter, GlProgram, GpuProgram } from 'pixi.js';
+
+export interface ExtractBrightnessFilterOptions
+{
+    /**
+     * @param threshold Defines how bright a color needs to be extracted.
+     */
+    threshold?: number;
+}
 
 /**
- * Internal filter for AdvancedBloomFilter to get brightness.
+ * Internal filter for retrieving the brightness of the source image.
  * @class
  * @private
  */
 export class ExtractBrightnessFilter extends Filter
 {
-    /**
-     * @param {number} [threshold] - Defines how bright a color needs to be extracted.
-     */
-    constructor(threshold = 0.5)
+    /** Default values for options. */
+    public static readonly DEFAULT_OPTIONS: ExtractBrightnessFilterOptions = {
+        threshold: 0.5
+    };
+
+    public uniforms: {
+        uThreshold: number;
+    };
+
+    constructor(options?: ExtractBrightnessFilterOptions)
     {
+        options = { ...ExtractBrightnessFilter.DEFAULT_OPTIONS, ...options };
+
+        const gpuProgram = new GpuProgram({
+            vertex: {
+                source: wgslVertex,
+                entryPoint: 'mainVertex',
+            },
+            fragment: {
+                source,
+                entryPoint: 'mainFragment',
+            },
+        });
+
         const glProgram = new GlProgram({
             vertex,
             fragment,
@@ -21,24 +49,22 @@ export class ExtractBrightnessFilter extends Filter
         });
 
         super({
+            gpuProgram,
             glProgram,
-            resources: {},
+            resources: {
+                extractBrightnessUniforms: {
+                    uThreshold: { value: options.threshold, type: 'f32' },
+                }
+            },
         });
 
-        // this.threshold = threshold;
+        this.uniforms = this.resources.extractBrightnessUniforms.uniforms;
     }
 
     /**
      * Defines how bright a color needs to be extracted.
-     *
      * @default 0.5
      */
-    // get threshold(): number
-    // {
-    //     return this.uniforms.threshold;
-    // }
-    // set threshold(value: number)
-    // {
-    //     this.uniforms.threshold = value;
-    // }
+    get threshold(): number { return this.uniforms.uThreshold; }
+    set threshold(value: number) { this.uniforms.uThreshold = value; }
 }

@@ -1,11 +1,12 @@
 
-uniform sampler2D uSampler;
-varying vec2 vTextureCoord;
+in vec2 vTextureCoord;
+out vec4 finalColor;
 
-uniform float threshold;
+uniform sampler2D uSampler;
+uniform float uThreshold;
 
 void main() {
-    vec4 color = texture2D(uSampler, vTextureCoord);
+    vec4 color = texture(uSampler, vTextureCoord);
 
     // A simple & fast algorithm for getting brightness.
     // It's inaccuracy , but good enought for this feature.
@@ -13,9 +14,9 @@ void main() {
     float _min = min(min(color.r, color.g), color.b);
     float brightness = (_max + _min) * 0.5;
 
-    if(brightness > threshold) {
-        gl_FragColor = color;
+    if(brightness > uThreshold) {
+        finalColor = color;
     } else {
-        gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);
+        finalColor = vec4(0.0, 0.0, 0.0, 0.0);
     }
 }
