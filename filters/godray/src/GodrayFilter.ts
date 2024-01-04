@@ -23,7 +23,7 @@ export interface GodrayFilterOptions
      * Focal point for non-parallel rays, to use this `parallel` must be set to `false`.
      * This should be a size 2 array or an object containing `x` and `y` values, you cannot change types
      * once defined in the constructor
-     * @default [0,0]
+     * @default {x:0,y:0}
      */
     center?: PointData;
     /**
@@ -186,7 +186,7 @@ export class GodrayFilter extends Filter
 
     /**
      * Focal point for non-parallel rays, to use this `parallel` must be set to `false`.
-     * @default [0,0]
+     * @default {x:0,y:0}
      */
     get center(): PointData { return this._center; }
     set center(value: PointData) { this._center = value; }

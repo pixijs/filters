@@ -1,7 +1,7 @@
 import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './convolution.frag';
 import source from './convolution.wgsl';
-import { Filter, GlProgram, GpuProgram, UniformGroup } from 'pixi.js';
+import { Filter, GlProgram, GpuProgram } from 'pixi.js';
 
 type FixedArray<T, L extends number> = [ T, ...Array<T> ] & { length: L };
 
@@ -51,17 +51,17 @@ export class ConvolutionFilter extends Filter
         height: 200,
     };
 
+    public uniforms: {
+        uMatrix: ConvolutionMatrix;
+        uTexelSize: [number, number];
+    };
+
     constructor(options?: ConvolutionFilterOptions)
     {
         options = { ...ConvolutionFilter.DEFAULT_OPTIONS, ...options };
 
         const width = options.width ?? 200;
         const height = options.height ?? 200;
-
-        const convolutionUniforms = new UniformGroup({
-            uMatrix: { value: options.matrix, type: 'vec3<f32>', size: 3 },
-            uTexelSize: { value: [1 / width, 1 / height], type: 'vec2<f32>' },
-        });
 
         const gpuProgram = new GpuProgram({
             vertex: {
@@ -84,9 +84,14 @@ export class ConvolutionFilter extends Filter
             gpuProgram,
             glProgram,
             resources: {
-                convolutionUniforms,
+                convolutionUniforms: {
+                    uMatrix: { value: options.matrix, type: 'vec3<f32>', size: 3 },
+                    uTexelSize: { value: [1 / width, 1 / height], type: 'vec2<f32>' },
+                },
             },
         });
+
+        this.uniforms = this.resources.convolutionUniforms.uniforms;
 
         this.width = width;
         this.height = height;
@@ -99,12 +104,12 @@ export class ConvolutionFilter extends Filter
      * const matrix = [0,0.5,0,0.5,1,0.5,0,0.5,0];
      * @default [0,0,0,0,0,0,0,0,0]
      */
-    get matrix(): ConvolutionMatrix { return this.resources.convolutionUniforms.uniforms.uMatrix; }
+    get matrix(): ConvolutionMatrix { return this.uniforms.uMatrix; }
     set matrix(matrix: ConvolutionMatrix)
     {
         matrix.forEach((v, i) =>
         {
-            this.resources.convolutionUniforms.uniforms.uMatrix[i] = v;
+            this.uniforms.uMatrix[i] = v;
         });
     }
 
@@ -112,13 +117,13 @@ export class ConvolutionFilter extends Filter
      * Width of the object you are transforming
      * @default 200
      */
-    get width(): number { return 1 / this.resources.convolutionUniforms.uniforms.uTexelSize[0]; }
-    set width(value: number) { this.resources.convolutionUniforms.uniforms.uTexelSize[0] = 1 / value; }
+    get width(): number { return 1 / this.uniforms.uTexelSize[0]; }
+    set width(value: number) { this.uniforms.uTexelSize[0] = 1 / value; }
 
     /**
      * Height of the object you are transforming
      * @default 200
      */
-    get height(): number { return 1 / this.resources.convolutionUniforms.uniforms.uTexelSize[1]; }
-    set height(value: number) { this.resources.convolutionUniforms.uniforms.uTexelSize[1] = 1 / value; }
+    get height(): number { return 1 / this.uniforms.uTexelSize[1]; }
+    set height(value: number) { this.uniforms.uTexelSize[1] = 1 / value; }
 }

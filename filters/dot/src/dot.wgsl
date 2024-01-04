@@ -1,7 +1,7 @@
 struct DotUniforms {
   uScale:f32,
   uAngle:f32,
-  uGreyScale:f32,
+  uGrayScale:f32,
 };
 
 struct GlobalFilterUniforms {
@@ -25,9 +25,9 @@ fn mainFragment(
   @builtin(position) position: vec4<f32>
 ) -> @location(0) vec4<f32> {
   let color: vec4<f32> = textureSample(uTexture, uSampler, uv);
-  let grey: vec3<f32> = vec3<f32>(dot(color.rgb, vec3<f32>(0.299, 0.587, 0.114)));
-  // dotUniforms.uGreyScale == 1 doesn't ever pass so it is converted to a float and compared to 0.5 instead 
-  let finalColor: vec3<f32> = select(color.rgb, grey, f32(dotUniforms.uGreyScale) >= 0.5);
+  let gray: vec3<f32> = vec3<f32>(dot(color.rgb, vec3<f32>(0.299, 0.587, 0.114)));
+  // dotUniforms.uGrayScale == 1 doesn't ever pass so it is converted to a float and compared to 0.5 instead 
+  let finalColor: vec3<f32> = select(color.rgb, gray, f32(dotUniforms.uGrayScale) >= 0.5);
 
   return vec4<f32>(finalColor * 10.0 - 5.0 + pattern(uv), color.a);
 }

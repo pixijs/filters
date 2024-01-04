@@ -1,7 +1,7 @@
 import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './multi-color-replace.frag';
 import source from './multi-color-replace.wgsl';
-import { Color, ColorSource, Filter, FilterOptions, GlProgram, GpuProgram } from 'pixi.js';
+import { Color, ColorSource, Filter, GlProgram, GpuProgram } from 'pixi.js';
 
 export interface MultiColorReplaceFilterOptions
 {
@@ -58,8 +58,7 @@ export interface MultiColorReplaceFilterOptions
 export class MultiColorReplaceFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: MultiColorReplaceFilterOptions & Partial<FilterOptions> = {
-        ...Filter.defaultOptions,
+    public static readonly DEFAULT_OPTIONS: MultiColorReplaceFilterOptions = {
         replacements: [[0xff0000, 0x0000ff]],
         tolerance: 0.05,
         maxColors: undefined,

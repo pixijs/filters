@@ -3,7 +3,6 @@ import fragment from './shockwave.frag';
 import source from './shockwave.wgsl';
 import {
     Filter,
-    FilterOptions,
     FilterSystem,
     GlProgram,
     GpuProgram,
@@ -61,8 +60,7 @@ export interface ShockwaveFilterOptions
 export class ShockwaveFilter extends Filter
 {
     /** Default shockwave filter options */
-    public static readonly defaultOptions: ShockwaveFilterOptions & Partial<FilterOptions> = {
-        ...Filter.defaultOptions,
+    public static readonly DEFAULT_OPTIONS: ShockwaveFilterOptions = {
         /** The `x` and `y` center coordinates to change the position of the center of the circle of effect. */
         center: { x: 0, y: 0 },
         /** The speed about the shockwave ripples out. The unit is `pixel-per-second` */
@@ -90,9 +88,9 @@ export class ShockwaveFilter extends Filter
     /**
      * @param options
      */
-    constructor(options: ShockwaveFilterOptions = {})
+    constructor(options?: ShockwaveFilterOptions)
     {
-        options = { ...ShockwaveFilter.defaultOptions, ...options };
+        options = { ...ShockwaveFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = new GpuProgram({
             vertex: {

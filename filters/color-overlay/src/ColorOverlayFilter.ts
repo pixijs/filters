@@ -1,7 +1,7 @@
 import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './color-overlay.frag';
 import source from './color-overlay.wgsl';
-import { Color, ColorSource, Filter, FilterOptions, GlProgram, GpuProgram, UniformGroup } from 'pixi.js';
+import { Color, ColorSource, Filter, GlProgram, GpuProgram, UniformGroup } from 'pixi.js';
 
 export interface ColorOverlayFilterOptions
 {
@@ -28,8 +28,7 @@ export interface ColorOverlayFilterOptions
 export class ColorOverlayFilter extends Filter
 {
     /** Default shockwave filter options */
-    public static readonly defaultOptions: ColorOverlayFilterOptions & Partial<FilterOptions> = {
-        ...Filter.defaultOptions,
+    public static readonly DEFAULT_OPTIONS: ColorOverlayFilterOptions = {
         /** The color of the overlay */
         color: 0x000000,
         /** The alpha of the overlay */
@@ -37,11 +36,9 @@ export class ColorOverlayFilter extends Filter
     };
 
     public uniforms: {
-        uColor: Float32Array;
+        uColor: Color;
         uAlpha: number;
     };
-
-    private _color: Color;
 
     /**
      * @param {number|Array<number>} [color=0x000000] - The resulting color, as a 3 component RGB e.g. [1.0, 0.5, 1.0]
@@ -49,7 +46,7 @@ export class ColorOverlayFilter extends Filter
      */
     constructor(options: ColorOverlayFilterOptions = {})
     {
-        options = { ...ColorOverlayFilter.defaultOptions, ...options };
+        options = { ...ColorOverlayFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = new GpuProgram({
             vertex: {
@@ -73,15 +70,13 @@ export class ColorOverlayFilter extends Filter
             glProgram,
             resources: {
                 colorOverlayUniforms: new UniformGroup({
-                    uColor: { value: new Float32Array(3), type: 'vec3<f32>' },
+                    uColor: { value: new Color(options.color), type: 'vec3<f32>' },
                     uAlpha: { value: options.alpha, type: 'f32' },
                 })
             },
         });
 
         this.uniforms = this.resources.colorOverlayUniforms.uniforms;
-        this._color = new Color();
-        this.color = options.color ?? 0x000000;
     }
 
     /**
@@ -89,16 +84,8 @@ export class ColorOverlayFilter extends Filter
      * @member {number|Array<number>|Float32Array}
      * @default 0x000000
      */
-    get color(): ColorSource { return this._color.value as ColorSource; }
-    set color(value: ColorSource)
-    {
-        this._color.setValue(value);
-        const [r, g, b] = this._color.toArray();
-
-        this.uniforms.uColor[0] = r;
-        this.uniforms.uColor[1] = g;
-        this.uniforms.uColor[2] = b;
-    }
+    get color(): ColorSource { return this.uniforms.uColor.value as ColorSource; }
+    set color(value: ColorSource) { this.uniforms.uColor.setValue(value); }
 
     /**
      * The alpha value of the color

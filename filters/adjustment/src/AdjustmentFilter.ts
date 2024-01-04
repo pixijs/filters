@@ -1,7 +1,7 @@
 import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './adjustment.frag';
 import source from './adjustment.wgsl';
-import { Filter, GlProgram, GpuProgram, UniformGroup } from 'pixi.js';
+import { Filter, GlProgram, GpuProgram } from 'pixi.js';
 
 export interface AdjustmentFilterOptions
 {
@@ -73,25 +73,17 @@ export class AdjustmentFilter extends Filter
         alpha: 1,
     };
 
+    public uniforms: {
+        uGamma: number;
+        uContrast: number;
+        uSaturation: number;
+        uBrightness: number;
+        uColor: Float32Array;
+    };
+
     constructor(options?: AdjustmentFilterOptions)
     {
         options = { ...AdjustmentFilter.DEFAULT_OPTIONS, ...options };
-
-        const adjustmentUniforms = new UniformGroup({
-            uGamma: { value: options.gamma, type: 'f32' },
-            uContrast: { value: options.contrast, type: 'f32' },
-            uSaturation: { value: options.saturation, type: 'f32' },
-            uBrightness: { value: options.brightness, type: 'f32' },
-            uColor: {
-                value: [
-                    options.red,
-                    options.green,
-                    options.blue,
-                    options.alpha,
-                ],
-                type: 'vec4<f32>',
-            },
-        });
 
         const gpuProgram = new GpuProgram({
             vertex: {
@@ -114,64 +106,80 @@ export class AdjustmentFilter extends Filter
             gpuProgram,
             glProgram,
             resources: {
-                adjustmentUniforms
+                adjustmentUniforms: {
+                    uGamma: { value: options.gamma, type: 'f32' },
+                    uContrast: { value: options.contrast, type: 'f32' },
+                    uSaturation: { value: options.saturation, type: 'f32' },
+                    uBrightness: { value: options.brightness, type: 'f32' },
+                    uColor: {
+                        value: [
+                            options.red,
+                            options.green,
+                            options.blue,
+                            options.alpha,
+                        ],
+                        type: 'vec4<f32>',
+                    },
+                }
             },
         });
+
+        this.uniforms = this.resources.adjustmentUniforms.uniforms;
     }
 
     /**
      * Amount of luminance
      * @default 1
      */
-    get gamma(): number { return this.resources.adjustmentUniforms.uniforms.uGamma; }
-    set gamma(value: number) { this.resources.adjustmentUniforms.uniforms.uGamma = value; }
+    get gamma(): number { return this.uniforms.uGamma; }
+    set gamma(value: number) { this.uniforms.uGamma = value; }
 
     /**
      * Amount of contrast
      * @default 1
      */
-    get contrast(): number { return this.resources.adjustmentUniforms.uniforms.uContrast; }
-    set contrast(value: number) { this.resources.adjustmentUniforms.uniforms.uContrast = value; }
+    get contrast(): number { return this.uniforms.uContrast; }
+    set contrast(value: number) { this.uniforms.uContrast = value; }
 
     /**
      * Amount of color saturation
      * @default 1
      */
-    get saturation(): number { return this.resources.adjustmentUniforms.uniforms.uSaturation; }
-    set saturation(value: number) { this.resources.adjustmentUniforms.uniforms.uSaturation = value; }
+    get saturation(): number { return this.uniforms.uSaturation; }
+    set saturation(value: number) { this.uniforms.uSaturation = value; }
 
     /**
      * The overall brightness
      * @default 1
      */
-    get brightness(): number { return this.resources.adjustmentUniforms.uniforms.uBrightness; }
-    set brightness(value: number) { this.resources.adjustmentUniforms.uniforms.uBrightness = value; }
+    get brightness(): number { return this.uniforms.uBrightness; }
+    set brightness(value: number) { this.uniforms.uBrightness = value; }
 
     /**
      * The multiplied red channel
      * @default 1
      */
-    get red(): number { return this.resources.adjustmentUniforms.uniforms.uColor[0]; }
-    set red(value: number) { this.resources.adjustmentUniforms.uniforms.uColor[0] = value; }
+    get red(): number { return this.uniforms.uColor[0]; }
+    set red(value: number) { this.uniforms.uColor[0] = value; }
 
     /**
      * The multiplied blue channel
      * @default 1
      */
-    get green(): number { return this.resources.adjustmentUniforms.uniforms.uColor[1]; }
-    set green(value: number) { this.resources.adjustmentUniforms.uniforms.uColor[1] = value; }
+    get green(): number { return this.uniforms.uColor[1]; }
+    set green(value: number) { this.uniforms.uColor[1] = value; }
 
     /**
      * The multiplied green channel
      * @default 1
      */
-    get blue(): number { return this.resources.adjustmentUniforms.uniforms.uColor[2]; }
-    set blue(value: number) { this.resources.adjustmentUniforms.uniforms.uColor[2] = value; }
+    get blue(): number { return this.uniforms.uColor[2]; }
+    set blue(value: number) { this.uniforms.uColor[2] = value; }
 
     /**
      * The overall alpha channel
      * @default 1
      */
-    get alpha(): number { return this.resources.adjustmentUniforms.uniforms.uColor[3]; }
-    set alpha(value: number) { this.resources.adjustmentUniforms.uniforms.uColor[3] = value; }
+    get alpha(): number { return this.uniforms.uColor[3]; }
+    set alpha(value: number) { this.uniforms.uColor[3] = value; }
 }

@@ -1,7 +1,7 @@
 import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './glow.frag';
 import source from './glow.wgsl';
-import { Color, ColorSource, Filter, GlProgram, GpuProgram, UniformGroup } from 'pixi.js';
+import { Color, ColorSource, Filter, GlProgram, GpuProgram } from 'pixi.js';
 
 /**
  * This WebGPU filter has been ported from the WebGL renderer that was originally created by mishaa
@@ -75,7 +75,14 @@ export class GlowFilter extends Filter
         knockout: false,
     };
 
-    private _color: Color;
+    public uniforms: {
+        uDistance: number;
+        uStrength: Float32Array;
+        uColor: Color;
+        uAlpha: number;
+        uQuality: number;
+        uKnockout: number;
+    };
 
     constructor(options?: GlowFilterOptions)
     {
@@ -83,15 +90,6 @@ export class GlowFilter extends Filter
 
         const distance = options.distance ?? 10;
         const quality = options.quality ?? 0.1;
-
-        const glowUniforms = new UniformGroup({
-            uDistance: { value: distance, type: 'f32' },
-            uStrength: { value: [options.innerStrength, options.outerStrength], type: 'vec2<f32>' },
-            uColor: { value: new Float32Array(3), type: 'vec3<f32>' },
-            uAlpha: { value: options.alpha, type: 'f32' },
-            uQuality: { value: quality, type: 'f32' },
-            uKnockout: { value: (options?.knockout ?? false) ? 1 : 0, type: 'f32' },
-        });
 
         const gpuProgram = new GpuProgram({
             vertex: {
@@ -121,13 +119,19 @@ export class GlowFilter extends Filter
             gpuProgram,
             glProgram,
             resources: {
-                glowUniforms
+                glowUniforms: {
+                    uDistance: { value: distance, type: 'f32' },
+                    uStrength: { value: [options.innerStrength, options.outerStrength], type: 'vec2<f32>' },
+                    uColor: { value: new Color(options.color), type: 'vec3<f32>' },
+                    uAlpha: { value: options.alpha, type: 'f32' },
+                    uQuality: { value: quality, type: 'f32' },
+                    uKnockout: { value: (options?.knockout ?? false) ? 1 : 0, type: 'f32' },
+                }
             },
             padding: distance,
         });
 
-        this._color = new Color();
-        this.color = options.color ?? 0xffffff;
+        this.uniforms = this.resources.glowUniforms.uniforms;
     }
 
     /**
@@ -155,12 +159,8 @@ export class GlowFilter extends Filter
     * The color of the glow.
     * @default 0xFFFFFF
     */
-    get color(): ColorSource { return this._color.value as ColorSource; }
-    set color(value: ColorSource)
-    {
-        this._color.setValue(value);
-        this.resources.glowUniforms.uniforms.uColor = this._color.toArray().slice(0, 3);
-    }
+    get color(): ColorSource { return this.uniforms.uColor.value as ColorSource; }
+    set color(value: ColorSource) { this.uniforms.uColor.setValue(value); }
 
     /**
     * The alpha of the glow

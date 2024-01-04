@@ -146,7 +146,7 @@ export class DropShadowFilter extends Filter
                 fragment: {
                     source: `
                     @group(0) @binding(1) var uTexture: texture_2d<f32>; 
-@group(0) @binding(2) var uSampler: sampler;
+                    @group(0) @binding(2) var uSampler: sampler;
                     @fragment
                     fn mainFragment(
                         @builtin(position) position: vec4<f32>,

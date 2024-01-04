@@ -5,7 +5,7 @@ out vec4 finalColor;
 uniform sampler2D uTexture;
 uniform float uAngle;
 uniform float uScale;
-uniform bool uGreyscale;
+uniform bool uGrayScale;
 
 uniform vec4 uInputSize;
 
@@ -25,7 +25,7 @@ float pattern()
     vec4 color = texture(uTexture, vTextureCoord);
     vec3 colorRGB = vec3(color);
 
-    if (uGreyscale)
+    if (uGrayScale)
     {
         colorRGB = vec3(color.r + color.g + color.b) / 3.0;
     }

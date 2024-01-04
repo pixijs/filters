@@ -1,4 +1,4 @@
-import { Filter, GlProgram, GpuProgram, UniformGroup } from 'pixi.js';
+import { Filter, GlProgram, GpuProgram } from 'pixi.js';
 import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './hsladjustment.frag';
 import source from './hsladjustment.wgsl';
@@ -53,17 +53,17 @@ export class HslAdjustmentFilter extends Filter
         alpha: 1,
     };
 
+    public uniforms: {
+        uHsl: Float32Array;
+        uColorize: number;
+        uAlpha: number;
+    };
+
     private _hue: number;
 
     constructor(options?: HslAdjustmentFilterOptions)
     {
         options = { ...HslAdjustmentFilter.DEFAULT_OPTIONS, ...options };
-
-        const hslUniforms = new UniformGroup({
-            uHsl: { value: new Float32Array(3), type: 'vec3<f32>' },
-            uColorize: { value: options.colorize ? 1 : 0, type: 'f32' },
-            uAlpha: { value: options.alpha, type: 'f32' },
-        });
 
         const gpuProgram = new GpuProgram({
             vertex: {
@@ -86,10 +86,15 @@ export class HslAdjustmentFilter extends Filter
             gpuProgram,
             glProgram,
             resources: {
-                hslUniforms,
+                hslUniforms: {
+                    uHsl: { value: new Float32Array(3), type: 'vec3<f32>' },
+                    uColorize: { value: options.colorize ? 1 : 0, type: 'f32' },
+                    uAlpha: { value: options.alpha, type: 'f32' },
+                },
             },
         });
 
+        this.uniforms = this.resources.hslUniforms.uniforms;
         this._hue = options.hue;
     }
 

@@ -171,13 +171,9 @@ export class ColorMapFilter extends Filter
      * @param destroyBase Whether to destroy the base texture of colorMap as well
      * @default false
      */
-    // TODO: Implement destroy functionality
-    // destroy(): void
-    // {
-    // if (this._colorMap)
-    // {
-    //     this._colorMap.destroy(destroyBase);
-    // }
-    // super.destroy();
-    // }
+    destroy(): void
+    {
+        this._colorMap?.destroy(/** true | TODO: Should base texture be destroyed? **/);
+        super.destroy();
+    }
 }

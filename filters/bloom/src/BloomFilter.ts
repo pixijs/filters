@@ -1,14 +1,12 @@
-import { AlphaFilter, BlurFilterPass, FilterSystem, Point, RenderSurface, Texture, TexturePool } from 'pixi.js';
-
-type BlurValue = number | Point | [number, number];
+import { AlphaFilter, BlurFilterPass, FilterSystem, PointData, RenderSurface, Texture, TexturePool } from 'pixi.js';
 
 export interface BloomFilterOptions
 {
     /**
      * Sets the strength of the blur. If only a number is provided, it will assign to both x and y.
-     * @default [2,2]
+     * @default {x:2,y:2}
      */
-    strength?: BlurValue;
+    strength?: PointData | number;
     /**
      * The quality of the blur.
      * @default 4
@@ -35,14 +33,14 @@ export class BloomFilter extends AlphaFilter
 {
     /** Default values for options. */
     public static readonly DEFAULT_OPTIONS: BloomFilterOptions = {
-        strength: [2, 2],
+        strength: { x: 2, y: 2 },
         quality: 4,
         kernelSize: 5
     };
 
     private _blurXFilter: BlurFilterPass;
     private _blurYFilter: BlurFilterPass;
-    private _strength: BlurValue;
+    private _strength: PointData;
 
     constructor(options?: BloomFilterOptions)
     {
@@ -50,38 +48,37 @@ export class BloomFilter extends AlphaFilter
 
         super();
 
-        this._strength = options.strength ?? 2;
-        let strengthX;
-        let strengthY;
+        this._strength = { x: 2, y: 2 };
 
-        if (Array.isArray(this._strength))
+        if (options.strength)
         {
-            strengthX = this._strength[0];
-            strengthY = this._strength[1];
-        }
-        else if (this._strength instanceof Point)
-        {
-            strengthX = this._strength.x;
-            strengthY = this._strength.y;
-        }
-        else
-        {
-            strengthX = strengthY = this._strength;
+            if (typeof options.strength === 'number')
+            {
+                this._strength.x = options.strength;
+                this._strength.y = options.strength;
+            }
+            else
+            {
+                this._strength.x = options.strength.x;
+                this._strength.y = options.strength.y;
+            }
         }
 
         this._blurXFilter = new BlurFilterPass({
             ...options,
             horizontal: true,
-            strength: strengthX
+            strength: this.strengthX,
         });
 
         this._blurYFilter = new BlurFilterPass({
             ...options,
             horizontal: false,
-            strength: strengthY
+            strength: this.strengthY,
         });
 
         this._blurYFilter.blendMode = 'screen';
+
+        Object.assign(this, options);
     }
 
     /**
@@ -89,13 +86,19 @@ export class BloomFilter extends AlphaFilter
      * @override
      * @ignore
      */
-    public override apply(filterManager: FilterSystem, input: Texture, output: RenderSurface, clear: boolean): void
+    public override apply(
+        filterManager: FilterSystem,
+        input: Texture,
+        output: RenderSurface,
+        clear: boolean,
+    ): void
     {
         const renderTarget = TexturePool.getSameSizeTexture(input);
 
         filterManager.applyFilter(this, input, output, clear);
-        filterManager.applyFilter(this._blurXFilter, input, renderTarget, true);
-        filterManager.applyFilter(this._blurYFilter, renderTarget, output, false);
+        this._blurXFilter.apply(filterManager, input, renderTarget, true);
+        this._blurYFilter.apply(filterManager, renderTarget, output, false);
+
         TexturePool.returnTexture(renderTarget);
     }
 
@@ -103,11 +106,10 @@ export class BloomFilter extends AlphaFilter
      * Sets the strength of both the blurX and blurY properties simultaneously
      * @default 2
      */
-    get strength(): BlurValue { return this._strength; }
-    set strength(value: BlurValue)
+    get strength(): PointData { return this._strength; }
+    set strength(value: PointData | number)
     {
-        if (value === this._strength) return;
-        this._strength = value;
+        this._strength = typeof value === 'number' ? { x: value, y: value } : value;
         this._updateStrength();
     }
 
@@ -115,38 +117,28 @@ export class BloomFilter extends AlphaFilter
      * Sets the strength of the blur on the `x` axis
      * @default 2
      */
-    get strengthX(): number { return this._blurXFilter.strength; }
-    set strengthX(value: number) { this._blurXFilter.strength = value; }
+    get strengthX(): number { return this.strength.x; }
+    set strengthX(value: number)
+    {
+        this.strength.x = value;
+        this._updateStrength();
+    }
 
     /**
      * Sets the strength of the blur on the `y` axis
      * @default 2
      */
-    get strengthY(): number { return this._blurYFilter.strength; }
-    set strengthY(value: number) { this._blurYFilter.strength = value; }
+    get strengthY(): number { return this.strength.y; }
+    set strengthY(value: number)
+    {
+        this.strength.y = value;
+        this._updateStrength();
+    }
 
     private _updateStrength()
     {
-        let strengthX;
-        let strengthY;
-
-        if (Array.isArray(this._strength))
-        {
-            strengthX = this._strength[0];
-            strengthY = this._strength[1];
-        }
-        else if (this._strength instanceof Point)
-        {
-            strengthX = this._strength.x;
-            strengthY = this._strength.y;
-        }
-        else
-        {
-            strengthX = strengthY = this._strength;
-        }
-
-        this._blurXFilter.strength = strengthX;
-        this._blurYFilter.strength = strengthY;
+        this._blurXFilter.blur = this.strengthX;
+        this._blurYFilter.blur = this.strengthY;
     }
 }
 

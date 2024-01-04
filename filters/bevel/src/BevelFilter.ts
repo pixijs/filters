@@ -61,17 +61,15 @@ export class BevelFilter extends Filter
     };
 
     public uniforms: {
-        uLightColor: Float32Array;
+        uLightColor: Color;
         uLightAlpha: number;
-        uShadowColor: Float32Array;
+        uShadowColor: Color;
         uShadowAlpha: number;
         uTransform: Float32Array;
     };
 
     private _thickness!: number;
     private _rotation!: number;
-    private _LightColor: Color;
-    private _shadowColor: Color;
 
     constructor(options?: BevelFilterOptions)
     {
@@ -101,9 +99,9 @@ export class BevelFilter extends Filter
             glProgram,
             resources: {
                 bevelUniforms: {
-                    uLightColor: { value: new Float32Array(3), type: 'vec3<f32>' },
+                    uLightColor: { value: new Color(), type: 'vec3<f32>' },
                     uLightAlpha: { value: options.lightAlpha, type: 'f32' },
-                    uShadowColor: { value: new Float32Array(3), type: 'vec3<f32>' },
+                    uShadowColor: { value: new Color(), type: 'vec3<f32>' },
                     uShadowAlpha: { value: options.shadowAlpha, type: 'f32' },
                     uTransform: { value: new Float32Array(2), type: 'vec2<f32>' },
                 }
@@ -115,9 +113,6 @@ export class BevelFilter extends Filter
         });
 
         this.uniforms = this.resources.bevelUniforms.uniforms;
-
-        this._LightColor = new Color();
-        this._shadowColor = new Color();
 
         Object.assign(this, options, { rotation });
     }
@@ -149,16 +144,9 @@ export class BevelFilter extends Filter
      * @example [1.0, 1.0, 1.0] = 0xffffff
      * @default 0xffffff
      */
-    get lightColor(): ColorSource { return this._LightColor.value as ColorSource; }
+    get lightColor(): ColorSource { return this.uniforms.uLightColor.value as ColorSource; }
     set lightColor(value: ColorSource)
-    {
-        this._LightColor.setValue(value);
-        const [r, g, b] = this._LightColor.toArray();
-
-        this.uniforms.uLightColor[0] = r;
-        this.uniforms.uLightColor[1] = g;
-        this.uniforms.uLightColor[2] = b;
-    }
+    { this.uniforms.uLightColor.setValue(value); }
 
     /**
      * The alpha value of the left & top bevel.
@@ -171,21 +159,12 @@ export class BevelFilter extends Filter
      * The color value of the right & bottom bevel.
      * @default 0xffffff
      */
-    get shadowColor(): ColorSource { return this._shadowColor.value as ColorSource; }
-    set shadowColor(value: ColorSource)
-    {
-        this._shadowColor.setValue(value);
-        const [r, g, b] = this._shadowColor.toArray();
-
-        this.uniforms.uShadowColor[0] = r;
-        this.uniforms.uShadowColor[1] = g;
-        this.uniforms.uShadowColor[2] = b;
-    }
+    get shadowColor(): ColorSource { return this.uniforms.uShadowColor.value as ColorSource; }
+    set shadowColor(value: ColorSource) { this.uniforms.uShadowColor.setValue(value); }
 
     /**
-     * The color value of the right & bottom bevel.
-     * @example [1.0, 1.0, 1.0] = 0xffffff
-     * @default 0x000000
+     * The alpha value of the right & bottom bevel.
+     * @default 0.7
      */
     get shadowAlpha(): number { return this.uniforms.uShadowAlpha; }
     set shadowAlpha(value: number) { this.uniforms.uShadowAlpha = value; }

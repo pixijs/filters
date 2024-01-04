@@ -26,9 +26,8 @@ export interface AdvancedBloomFilterOptions
     blur?: number,
     /**
      * The kernel size of the blur filter.
-     * @default null
      */
-    kernels?: number[] | null,
+    kernels?: number[],
     /** The quality of the Blur filter. */
     quality?: number,
     /**
@@ -56,7 +55,6 @@ export class AdvancedBloomFilter extends Filter
         threshold: 0.5,
         bloomScale: 1,
         brightness: 1,
-        kernels: null,
         blur: 8,
         quality: 4,
         pixelSize: { x: 1, y: 1 },

@@ -1,7 +1,7 @@
 import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './color-replace.frag';
 import source from './color-replace.wgsl';
-import { Color, ColorSource, Filter, FilterOptions, GlProgram, GpuProgram } from 'pixi.js';
+import { Color, ColorSource, Filter, GlProgram, GpuProgram } from 'pixi.js';
 
 /**
  * This WebGPU filter has been ported from the WebGL renderer that was originally created by mishaa, updated by timetocode
@@ -59,23 +59,19 @@ export interface ColorReplaceFilterOptions
 export class ColorReplaceFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: ColorReplaceFilterOptions & Partial<FilterOptions> = {
-        ...Filter.defaultOptions,
+    public static readonly DEFAULT_OPTIONS: ColorReplaceFilterOptions = {
         originalColor: 0xff0000,
         targetColor: 0x000000,
         tolerance: 0.4
     };
 
     public uniforms: {
-        uOriginalColor: Float32Array,
-        uTargetColor: Float32Array,
+        uOriginalColor: Color,
+        uTargetColor: Color,
         uTolerance: number,
     };
 
-    private _originalColor: Color;
-    private _targetColor: Color;
-
-    constructor(options: ColorReplaceFilterOptions = {})
+    constructor(options?: ColorReplaceFilterOptions)
     {
         options = { ...ColorReplaceFilter.DEFAULT_OPTIONS, ...options };
 
@@ -101,17 +97,14 @@ export class ColorReplaceFilter extends Filter
             glProgram,
             resources: {
                 colorReplaceUniforms: {
-                    uOriginalColor: { value: new Float32Array(3), type: 'vec3<f32>' },
-                    uTargetColor: { value: new Float32Array(3), type: 'vec3<f32>' },
+                    uOriginalColor: { value: new Color(), type: 'vec3<f32>' },
+                    uTargetColor: { value: new Color(), type: 'vec3<f32>' },
                     uTolerance: { value: options.tolerance, type: 'f32' },
                 }
             },
         });
 
         this.uniforms = this.resources.colorReplaceUniforms.uniforms;
-
-        this._originalColor = new Color();
-        this._targetColor = new Color();
 
         Object.assign(this, options);
     }
@@ -121,32 +114,16 @@ export class ColorReplaceFilter extends Filter
      * @example [1.0, 1.0, 1.0] = 0xffffff
      * @default 0xff0000
      */
-    get originalColor(): ColorSource { return this._originalColor.value as ColorSource; }
-    set originalColor(value: ColorSource)
-    {
-        this._originalColor.setValue(value);
-        const [r, g, b] = this._originalColor.toArray();
-
-        this.uniforms.uOriginalColor[0] = r;
-        this.uniforms.uOriginalColor[1] = g;
-        this.uniforms.uOriginalColor[2] = b;
-    }
+    get originalColor(): ColorSource { return this.uniforms.uOriginalColor.value as ColorSource; }
+    set originalColor(value: ColorSource) { this.uniforms.uOriginalColor.setValue(value); }
 
     /**
       * The resulting color.
       * @example [1.0, 1.0, 1.0] = 0xffffff
       * @default 0x000000
       */
-    get targetColor(): ColorSource { return this._targetColor.value as ColorSource; }
-    set targetColor(value: ColorSource)
-    {
-        this._targetColor.setValue(value);
-        const [r, g, b] = this._targetColor.toArray();
-
-        this.uniforms.uTargetColor[0] = r;
-        this.uniforms.uTargetColor[1] = g;
-        this.uniforms.uTargetColor[2] = b;
-    }
+    get targetColor(): ColorSource { return this.uniforms.uTargetColor.value as ColorSource; }
+    set targetColor(value: ColorSource) { this.uniforms.uTargetColor.setValue(value); }
 
     /**
       * Tolerance/sensitivity of the floating-point comparison between colors (lower = more exact, higher = more inclusive)

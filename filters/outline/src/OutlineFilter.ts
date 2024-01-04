@@ -67,13 +67,12 @@ export class OutlineFilter extends Filter
 
     public uniforms: {
         uThickness: Float32Array,
-        uColor: Float32Array,
+        uColor: Color,
         uAlpha: number;
         uAngleStep: number,
         uKnockout: number,
     };
 
-    private _color: Color;
     private _thickness!: number;
     private _quality!: number;
 
@@ -106,7 +105,7 @@ export class OutlineFilter extends Filter
             resources: {
                 outlineUniforms: {
                     uThickness: { value: new Float32Array(2), type: 'vec2<f32>' },
-                    uColor: { value: new Float32Array(3), type: 'vec3<f32>' },
+                    uColor: { value: new Color(options.color), type: 'vec3<f32>' },
                     uAlpha: { value: options.alpha, type: 'f32' },
                     uAngleStep: { value: 0, type: 'f32' },
                     uKnockout: { value: options.knockout ? 1 : 0, type: 'i32' },
@@ -116,9 +115,6 @@ export class OutlineFilter extends Filter
 
         this.uniforms = this.resources.outlineUniforms.uniforms;
         this.uniforms.uAngleStep = OutlineFilter.getAngleStep(quality);
-
-        this._color = new Color();
-        this.color = options.color ?? 0x000000;
 
         Object.assign(this, options);
     }
@@ -167,16 +163,8 @@ export class OutlineFilter extends Filter
      * @example [1.0, 1.0, 1.0] = 0xffffff
      * @default 0x000000
      */
-    get color(): ColorSource { return this._color.value as ColorSource; }
-    set color(value: ColorSource)
-    {
-        this._color.setValue(value);
-        const [r, g, b] = this._color.toArray();
-
-        this.uniforms.uColor[0] = r;
-        this.uniforms.uColor[1] = g;
-        this.uniforms.uColor[2] = b;
-    }
+    get color(): ColorSource { return this.uniforms.uColor.value as ColorSource; }
+    set color(value: ColorSource) { this.uniforms.uColor.setValue(value); }
 
     /**
      * Coefficient for alpha multiplication

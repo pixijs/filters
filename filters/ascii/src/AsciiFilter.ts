@@ -46,19 +46,17 @@ export class AsciiFilter extends Filter
         replaceColor: false,
     };
 
-    private _color: Color;
+    public uniforms: {
+        uSize: number;
+        uColor: Color;
+        uReplaceColor: number;
+    };
 
     constructor(options?: AsciiFilterOptions)
     {
         const replaceColor = options?.color && options.replaceColor !== false;
 
         options = { ...AsciiFilter.DEFAULT_OPTIONS, ...options } as AsciiFilterOptions;
-
-        const asciiUniforms = {
-            uSize: { value: options.size, type: 'f32' },
-            uColor: { value: new Float32Array(3), type: 'vec3<f32>' },
-            uReplaceColor: { value: Number(replaceColor), type: 'f32' },
-        };
 
         const gpuProgram = new GpuProgram({
             vertex: {
@@ -81,36 +79,35 @@ export class AsciiFilter extends Filter
             gpuProgram,
             glProgram,
             resources: {
-                asciiUniforms,
+                asciiUniforms: {
+                    uSize: { value: options.size, type: 'f32' },
+                    uColor: { value: new Color(options.color), type: 'vec3<f32>' },
+                    uReplaceColor: { value: Number(replaceColor), type: 'f32' },
+                },
             },
         });
 
-        this._color = new Color();
-        this.color = options.color ?? 0xffffff;
+        this.uniforms = this.resources.asciiUniforms.uniforms;
     }
 
     /**
      * The pixel size used by the filter.
      * @default 8
      */
-    get size(): number { return this.resources.asciiUniforms.uniforms.uSize; }
-    set size(value: number) { this.resources.asciiUniforms.uniforms.uSize = value; }
+    get size(): number { return this.uniforms.uSize; }
+    set size(value: number) { this.uniforms.uSize = value; }
 
     /**
      * The resulting color of the ascii characters, as a 3 component RGB or numerical hex
      * @example [1.0, 1.0, 1.0] = 0xffffff
      * @default 0xffffff
      */
-    get color(): ColorSource { return this._color.value as ColorSource; }
-    set color(value: ColorSource)
-    {
-        this._color.setValue(value);
-        this.resources.asciiUniforms.uniforms.uColor = this._color.toArray().slice(0, 3);
-    }
+    get color(): ColorSource { return this.uniforms.uColor.value as ColorSource; }
+    set color(value: ColorSource) { this.uniforms.uColor.setValue(value); }
 
     /**
      * Determine whether or not to replace the source colors with the provided.
      */
-    get replaceColor(): boolean { return this.resources.asciiUniforms.uniforms.uReplaceColor > 0.5; }
-    set replaceColor(value: boolean) { this.resources.asciiUniforms.uniforms.uReplaceColor = value ? 1 : 0; }
+    get replaceColor(): boolean { return this.uniforms.uReplaceColor > 0.5; }
+    set replaceColor(value: boolean) { this.uniforms.uReplaceColor = value ? 1 : 0; }
 }

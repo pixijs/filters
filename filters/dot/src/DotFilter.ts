@@ -24,10 +24,10 @@ export interface DotFilterOptions
      */
     angle?: number;
     /**
-     * Whether to rendering it in grey scale
+     * Whether to rendering it in gray scale
      * @default true
      */
-    greyscale?: boolean;
+    grayscale?: boolean;
 }
 
 /**
@@ -46,7 +46,7 @@ export class DotFilter extends Filter
     public static readonly DEFAULT_OPTIONS: DotFilterOptions = {
         scale: 1,
         angle: 5,
-        greyscale: true
+        grayscale: true
     };
 
     constructor(options?: DotFilterOptions)
@@ -56,7 +56,7 @@ export class DotFilter extends Filter
         const dotUniforms = {
             uScale: { value: options.scale, type: 'f32' },
             uAngle: { value: options.angle, type: 'f32' },
-            uGreyScale: { value: options.greyscale ? 1 : 0, type: 'f32' },
+            uGrayScale: { value: options.grayscale ? 1 : 0, type: 'f32' },
         };
 
         const gpuProgram = new GpuProgram({
@@ -100,9 +100,9 @@ export class DotFilter extends Filter
     set angle(value: number) { this.resources.dotUniforms.uniforms.uAngle = value; }
 
     /**
-    * Whether to rendering it in grey scale.
+    * Whether to rendering it in gray scale.
     * @default true
     */
-    get greyscale(): boolean { return this.resources.dotUniforms.uniforms.uGreyScale === 1; }
-    set greyscale(value: boolean) { this.resources.dotUniforms.uniforms.uGreyScale = value ? 1 : 0; }
+    get grayscale(): boolean { return this.resources.dotUniforms.uniforms.uGrayScale === 1; }
+    set grayscale(value: boolean) { this.resources.dotUniforms.uniforms.uGrayScale = value ? 1 : 0; }
 }
