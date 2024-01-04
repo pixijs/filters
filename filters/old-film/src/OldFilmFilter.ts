@@ -1,7 +1,8 @@
-import { vertex, wgslVertex } from '@tools/fragments';
+import { Filter, GlProgram, GpuProgram } from 'pixi.js';
 import fragment from './old-film.frag';
 import source from './old-film.wgsl';
-import { Filter, GlProgram, GpuProgram } from 'pixi.js';
+import { vertex, wgslVertex } from '@tools/fragments';
+
 import type { FilterSystem, RenderSurface, Texture } from 'pixi.js';
 
 export interface OldFilmFilterOptions

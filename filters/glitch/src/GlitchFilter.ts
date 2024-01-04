@@ -1,7 +1,8 @@
-import { vertex, wgslVertex } from '@tools/fragments';
+import { DEG_TO_RAD, Filter, getCanvasTexture, GlProgram, GpuProgram, Texture } from 'pixi.js';
 import fragment from './glitch.frag';
 import source from './glitch.wgsl';
-import { Filter, Texture, DEG_TO_RAD, GlProgram, GpuProgram, getCanvasTexture } from 'pixi.js';
+import { vertex, wgslVertex } from '@tools/fragments';
+
 import type { FilterSystem, PointData, RenderSurface } from 'pixi.js';
 
 /**
@@ -146,7 +147,7 @@ export class GlitchFilter extends Filter
                     uSeed: { value: options?.seed ?? 0, type: 'f32' },
                     uDimensions: { value: new Float32Array(2), type: 'vec2<f32>' },
                     uAspect: { value: 1, type: 'f32' },
-                    uFillMode: { value: options?.fillMode ?? 0, type: 'u32' },
+                    uFillMode: { value: options?.fillMode ?? 0, type: 'i32' },
                     uOffset: { value: options?.offset ?? 100, type: 'f32' },
                     uDirection: { value: options?.direction ?? 0, type: 'f32' },
                     uRed: { value: new Float32Array(2), type: 'vec2<f32>' },
@@ -207,7 +208,7 @@ export class GlitchFilter extends Filter
             for (let i = 0; i < last; i++)
             {
                 const averageWidth = rest / (count - i);
-                const w =  Math.max(averageWidth * (1 - (Math.random() * 0.6)), min);
+                const w = Math.max(averageWidth * (1 - (Math.random() * 0.6)), min);
 
                 arr[i] = w;
                 rest -= w;

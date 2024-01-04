@@ -53,6 +53,11 @@ fn mainFragment(
 
 const SQRT_2: f32 = 1.414213;
 
+fn modulo(x: f32, y: f32) -> f32
+{
+  return x - y * floor(x/y);
+}
+
 fn rand(co: vec2<f32>) -> f32
 {
   return fract(sin(dot(co, vec2<f32>(12.9898, 78.233))) * 43758.5453);

@@ -3,7 +3,7 @@ struct OutlineUniforms {
   uColor:vec3<f32>,
   uAlpha:f32,
   uAngleStep:f32,
-  uKnockout:i32,
+  uKnockout:f32,
 };
 
 struct GlobalFilterUniforms {
@@ -27,7 +27,7 @@ fn mainFragment(
   @location(0) uv : vec2<f32>
 ) -> @location(0) vec4<f32> {
   let sourceColor: vec4<f32> = textureSample(uTexture, uSampler, uv);
-  let contentColor: vec4<f32> = sourceColor * f32(1 - outlineUniforms.uKnockout);
+  let contentColor: vec4<f32> = sourceColor * (1. - outlineUniforms.uKnockout);
   
   let outlineAlpha: f32 = outlineUniforms.uAlpha * outlineMaxAlphaAtPos(uv) * (1. - sourceColor.a);
   let outlineColor: vec4<f32> = vec4<f32>(vec3<f32>(outlineUniforms.uColor) * outlineAlpha, outlineAlpha);

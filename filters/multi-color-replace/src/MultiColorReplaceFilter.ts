@@ -1,7 +1,7 @@
-import { vertex, wgslVertex } from '@tools/fragments';
+import { Color, ColorSource, Filter, GlProgram, GpuProgram } from 'pixi.js';
 import fragment from './multi-color-replace.frag';
 import source from './multi-color-replace.wgsl';
-import { Color, ColorSource, Filter, GlProgram, GpuProgram } from 'pixi.js';
+import { vertex, wgslVertex } from '@tools/fragments';
 
 export interface MultiColorReplaceFilterOptions
 {
@@ -81,18 +81,18 @@ export class MultiColorReplaceFilter extends Filter
 
         const gpuProgram = new GpuProgram({
             vertex: {
-                source: wgslVertex.replace(/\${MAX_COLORS}/g, (maxColors).toFixed(0)),
+                source: wgslVertex,
                 entryPoint: 'mainVertex',
             },
             fragment: {
-                source,
+                source: source.replace(/\$\{MAX_COLORS\}/g, (maxColors).toFixed(0)),
                 entryPoint: 'mainFragment',
             },
         });
 
         const glProgram = new GlProgram({
             vertex,
-            fragment: fragment.replace(/\${MAX_COLORS}/g, (maxColors).toFixed(0)),
+            fragment: fragment.replace(/\$\{MAX_COLORS\}/g, (maxColors).toFixed(0)),
             name: 'multi-color-replace-filter',
         });
 

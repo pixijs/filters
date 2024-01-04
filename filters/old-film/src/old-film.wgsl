@@ -61,6 +61,10 @@ fn mainFragment(
 const SQRT_2: f32 = 1.414213;
 const SEPIA_RGB: vec3<f32> = vec3<f32>(112.0 / 255.0, 66.0 / 255.0, 20.0 / 255.0);
 
+fn modulo(x: f32, y: f32) -> f32
+{
+  return x - y * floor(x/y);
+}
 
 fn rand(co: vec2<f32>) -> f32
 {

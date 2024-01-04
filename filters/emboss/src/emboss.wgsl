@@ -15,7 +15,7 @@ struct GlobalFilterUniforms {
 
 @group(0) @binding(1) var uTexture: texture_2d<f32>; 
 @group(0) @binding(2) var uSampler: sampler;
-@group(2) @binding(0) var<uniform> embossUniforms : EmbossUniforms;
+@group(1) @binding(0) var<uniform> embossUniforms : EmbossUniforms;
 
 @fragment
 fn mainFragment(

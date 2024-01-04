@@ -1,7 +1,8 @@
-import { vertex, wgslVertex } from '@tools/fragments';
+import { Color, Filter, GlProgram, GpuProgram } from 'pixi.js';
 import fragment from './outline.frag';
 import source from './outline.wgsl';
-import { Color, Filter, GlProgram, GpuProgram } from 'pixi.js';
+import { vertex, wgslVertex } from '@tools/fragments';
+
 import type { ColorSource, FilterSystem, RenderSurface, Texture } from 'pixi.js';
 
 export interface OutlineFilterOptions
@@ -108,7 +109,7 @@ export class OutlineFilter extends Filter
                     uColor: { value: new Color(options.color), type: 'vec3<f32>' },
                     uAlpha: { value: options.alpha, type: 'f32' },
                     uAngleStep: { value: 0, type: 'f32' },
-                    uKnockout: { value: options.knockout ? 1 : 0, type: 'i32' },
+                    uKnockout: { value: options.knockout ? 1 : 0, type: 'f32' },
                 }
             },
         });

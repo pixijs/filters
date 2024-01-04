@@ -1,7 +1,7 @@
-import { vertex, wgslVertex } from '@tools/fragments';
+import { Filter, GlProgram, GpuProgram } from 'pixi.js';
 import fragment from './emboss.frag';
 import source from './emboss.wgsl';
-import { Filter, GlProgram, GpuProgram } from 'pixi.js';
+import { vertex, wgslVertex } from '@tools/fragments';
 
 export interface EmbossFilterOptions
 {

@@ -31,7 +31,7 @@ fn mainFragment(
 
   let diffuseColor: vec4<f32> = textureSample(uTexture, uSampler, uv);
   let lightCoord: vec2<f32> = (uv * gfu.uInputSize.xy) / simpleLightmapUniforms.uDimensions;
-  let light: vec4<f32> = textureSample(uMapTexture, uSampler, position);
+  let light: vec4<f32> = textureSample(uMapTexture, uSampler, lightCoord);
   let ambient: vec3<f32> = uColor * uAlpha;
   let intensity: vec3<f32> = ambient + light.rgb;
   let finalColor: vec3<f32> = diffuseColor.rgb * intensity;

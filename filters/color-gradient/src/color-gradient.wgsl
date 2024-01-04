@@ -1,10 +1,13 @@
 struct ColorGradientUniforms {
-  uDistance: f32,
-  uStrength: vec2<f32>,
-  uColor: vec3<f32>,
+  uType: i32,
+  uAngle: f32,
   uAlpha: f32,
-  uQuality: f32,
-  uKnockout: f32,
+  uColors: array<vec3<f32>, 20>,
+  uOffsets: array<f32, 20>,
+  uAlphas: array<f32, 20>,
+  uNumStops: f32,
+  uMaxColors: f32,
+  uReplace: f32,
 };
 
 struct GlobalFilterUniforms {
@@ -23,10 +26,10 @@ struct GlobalFilterUniforms {
 @group(1) @binding(0) var<uniform> colorGradientUniforms : ColorGradientUniforms;
 
 struct VSOutput {
-    @builtin(position) position: vec4<f32>,
-    @location(0) uv : vec2<f32>
-    @location(1) coord : vec2<f32>
-  };
+  @builtin(position) position: vec4<f32>,
+  @location(0) uv : vec2<f32>,
+  @location(1) coord : vec2<f32>
+};
 
 fn filterVertexPosition(aPosition:vec2<f32>) -> vec4<f32>
 {
@@ -45,7 +48,7 @@ fn filterTextureCoord( aPosition:vec2<f32> ) -> vec2<f32>
 
 fn filterCoord( vTextureCoord:vec2<f32> ) -> vec2<f32>
 {
-    return vTextureCoord * gfu.uInputSize.sy / gfu.uOutputFrame.zw;
+    return vTextureCoord * gfu.uInputSize.xy / gfu.uOutputFrame.zw;
 }
 
 fn globalTextureCoord( aPosition:vec2<f32> ) -> vec2<f32>
@@ -71,9 +74,9 @@ fn mainVertex(
 }
 
 struct ColorStop {
-  offset: f32;
-  color: vec3<f32>;
-  alpha: f32;
+  offset: f32,
+  color: vec3<f32>,
+  alpha: f32,
 };
 
 fn rotate2d(angle: f32) -> mat2x2<f32>{
@@ -97,15 +100,15 @@ fn projectRadialPosition(pos: vec2<f32>) -> f32 {
 fn projectAnglePosition(pos: vec2<f32>, angle: f32) -> f32 {
   var center: vec2<f32> = pos - vec2<f32>(0.5, 0.5);
   var polarAngle: f32 = atan2(-center.y, center.x);
-  return fmod(polarAngle + angle, PI_2) / PI_2;
+  return ((polarAngle + angle) % PI_2) / PI_2;
 }
 
-fn projectPosition(pos: vec2<f32>, int type, angle: f32) -> f32 {
-  if (type == TYPE_LINEAR) {
+fn projectPosition(pos: vec2<f32>, gradientType: i32, angle: f32) -> f32 {
+  if (gradientType == TYPE_LINEAR) {
       return projectLinearPosition(pos, angle);
-  } else if (type == TYPE_RADIAL) {
+  } else if (gradientType == TYPE_RADIAL) {
       return projectRadialPosition(pos);
-  } else if (type == TYPE_CONIC) {
+  } else if (gradientType == TYPE_CONIC) {
       return projectAnglePosition(pos, angle);
   }
 
@@ -115,64 +118,64 @@ fn projectPosition(pos: vec2<f32>, int type, angle: f32) -> f32 {
 @fragment
 fn mainFragment(
   @builtin(position) position: vec4<f32>,
-  @location(0) uv : vec2<f32>
+  @location(0) uv : vec2<f32>,
   @location(1) coord : vec2<f32>
 ) -> @location(0) vec4<f32> {
   // current/original color
   var currentColor: vec4<f32> = textureSample(uTexture, uSampler, uv);
 
   // skip calculations if gradient alpha is 0
-  if (uAlpha == 0.0) { return currentColor; }
+  if (colorGradientUniforms.uAlpha == 0.0) { return currentColor; }
 
   // project position
-  var y: f32 = projectPosition(coord, uType, radians(uAngle));
+  var y: f32 = projectPosition(coord, colorGradientUniforms.uType, radians(colorGradientUniforms.uAngle));
 
   // check gradient bounds
-  var offsetMin: f32 = uOffsets[0];
+  var offsetMin: f32 = colorGradientUniforms.uOffsets[0];
   var offsetMax: f32 = 0.0;
 
   for (var i: i32 = 0; i < MAX_STOPS; i = i + 1) {
-      if (i == uNumStops - 1) { // last index
-          offsetMax = uOffsets[i];
+      if (i == colorGradientUniforms.uNumStops - 1) { // last index
+          offsetMax = colorGradientUniforms.uOffsets[i];
       }
   }
 
   if (y  < offsetMin || y > offsetMax) { return currentColor; }
 
   // limit colors
-  if (uMaxColors > 0) {
-      var stepSize: f32 = 1.0 / f32(uMaxColors);
+  if (colorGradientUniforms.uMaxColors > 0) {
+      var stepSize: f32 = 1.0 / f32(colorGradientUniforms.uMaxColors);
       var stepNumber: f32 = floor(y / stepSize);
       y = stepSize * (stepNumber + 0.5); // offset by 0.5 to use color from middle of segment
   }
 
   // find color stops
-  var from: ColorStop;
-  var to: ColorStop;
+  var stopFrom: ColorStop;
+  var stopTo: ColorStop;
 
   for (var i: i32 = 0; i < MAX_STOPS; i = i + 1) {
-      if (y >= uOffsets[i]) {
-          from = ColorStop(uOffsets[i], uColors[i], uAlphas[i]);
-          to = ColorStop(uOffsets[i + 1], uColors[i + 1], uAlphas[i + 1]);
+      if (y >= colorGradientUniforms.uOffsets[i]) {
+          stopFrom = ColorStop(colorGradientUniforms.uOffsets[i], colorGradientUniforms.uColors[i], colorGradientUniforms.uAlphas[i]);
+          stopTo = ColorStop(colorGradientUniforms.uOffsets[i + 1], colorGradientUniforms.uColors[i + 1], colorGradientUniforms.uAlphas[i + 1]);
       }
 
-      if (i == uNumStops - 1) { // last index
+      if (i == colorGradientUniforms.uNumStops - 1) { // last index
           break;
       }
   }
 
   // mix colors from stops
-  var colorFrom: vec4<f32> = vec4<f32>(from.color * from.alpha, from.alpha);
-  var colorTo: vec4<f32> = vec4<f32>(to.color * to.alpha, to.alpha);
+  var colorFrom: vec4<f32> = vec4<f32>(stopFrom.color * stopFrom.alpha, stopFrom.alpha);
+  var colorTo: vec4<f32> = vec4<f32>(stopTo.color * stopTo.alpha, stopTo.alpha);
 
-  var segmentHeight: f32 = to.offset - from.offset;
-  var relativePos: f32 = y - from.offset; // position from 0 to [segmentHeight]
+  var segmentHeight: f32 = stopTo.offset - stopFrom.offset;
+  var relativePos: f32 = y - stopFrom.offset; // position from 0 to [segmentHeight]
   var relativePercent: f32 = relativePos / segmentHeight; // position in percent between [from.offset] and [to.offset].
 
-  var gradientAlpha: f32 = uAlpha * currentColor.a;
+  var gradientAlpha: f32 = colorGradientUniforms.uAlpha * currentColor.a;
   var gradientColor: vec4<f32> = mix(colorFrom, colorTo, relativePercent) * gradientAlpha;
 
-  if (uReplace == false) {
+  if (colorGradientUniforms.uReplace == false) {
       // mix resulting color with current color
       return gradientColor + currentColor * (1.0 - gradientColor.a);
   } else {

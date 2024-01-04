@@ -24,9 +24,9 @@ fn mainFragment(
     @builtin(position) position: vec4<f32>,
     @location(0) uv : vec2<f32>
 ) -> @location(0) vec4<f32> {
-    let r = textureSample(uTexture, uSampler, vTextureCoord + rgbSplitUniforms.uRed/uInputSize.xy).r;
-    let g = textureSample(uTexture, uSampler, vTextureCoord + rgbSplitUniforms.uGreen/uInputSize.xy).g;
-    let b = textureSample(uTexture, uSampler, vTextureCoord + rgbSplitUniforms.uBlue/uInputSize.xy).b;
-    let a = textureSample(uTexture, uSampler, vTextureCoord).a;
+    let r = textureSample(uTexture, uSampler, uv + vec2<f32>(rgbSplitUniforms.uRed.x / gfu.uInputSize.x, rgbSplitUniforms.uRed.y / gfu.uInputSize.y)).r;
+    let g = textureSample(uTexture, uSampler, uv + vec2<f32>(rgbSplitUniforms.uGreen.x / gfu.uInputSize.x, rgbSplitUniforms.uGreen.y / gfu.uInputSize.y)).g;
+    let b = textureSample(uTexture, uSampler, uv + vec2<f32>(rgbSplitUniforms.uBlue.x / gfu.uInputSize.x, rgbSplitUniforms.uBlue.y / gfu.uInputSize.y)).b;
+    let a = textureSample(uTexture, uSampler, uv).a;
     return vec4<f32>(r, g, b, a);
 }

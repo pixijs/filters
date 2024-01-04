@@ -94,6 +94,11 @@ fn mainFragment(
   return select(color, textureSample(uTexture, uSampler, uv), returnColorOnly);
 }
 
+fn modulo(x: f32, y: f32) -> f32
+{
+  return x - y * floor(x/y);
+}
+
 // author: http://byteblacksmith.com/improvements-to-the-canonical-one-liner-glsl-rand-for-opengl-es-2-0/
 fn rand(co: vec2<f32>, seed: f32) -> f32
 {

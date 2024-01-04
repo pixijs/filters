@@ -1,7 +1,7 @@
-import { vertex, wgslVertex } from '@tools/fragments';
+import { Color, ColorSource, DEG_TO_RAD, Filter, GlProgram, GpuProgram } from 'pixi.js';
 import fragment from './bevel.frag';
 import source from './bevel.wgsl';
-import { Filter, DEG_TO_RAD, GlProgram, ColorSource, GpuProgram, Color } from 'pixi.js';
+import { vertex, wgslVertex } from '@tools/fragments';
 
 export interface BevelFilterOptions
 {

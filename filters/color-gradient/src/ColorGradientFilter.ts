@@ -1,7 +1,7 @@
+import { Color, ColorSource, Filter, GlProgram, GpuProgram } from 'pixi.js';
 import fragment from './color-gradient.frag';
 import vertex from './color-gradient.vert';
 import source from './color-gradient.wgsl';
-import { Color, ColorSource, Filter, GlProgram, GpuProgram } from 'pixi.js';
 import { parseCssGradient } from './CssGradientParser';
 
 export type ColorStop = {
@@ -124,7 +124,7 @@ export class ColorGradientFilter extends Filter
             glProgram,
             resources: {
                 colorGradientUniforms: {
-                    uType: { value: options.type, type: 'f32' },
+                    uType: { value: options.type, type: 'i32' },
                     uAngle: { value: options.angle ?? ANGLE_OFFSET, type: 'f32' },
                     uAlpha: { value: options.alpha, type: 'f32' },
                     uReplace: { value: options.replace ? 1 : 0, type: 'f32' },

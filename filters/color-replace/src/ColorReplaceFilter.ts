@@ -1,7 +1,7 @@
-import { vertex, wgslVertex } from '@tools/fragments';
+import { Color, ColorSource, Filter, GlProgram, GpuProgram } from 'pixi.js';
 import fragment from './color-replace.frag';
 import source from './color-replace.wgsl';
-import { Color, ColorSource, Filter, GlProgram, GpuProgram } from 'pixi.js';
+import { vertex, wgslVertex } from '@tools/fragments';
 
 /**
  * This WebGPU filter has been ported from the WebGL renderer that was originally created by mishaa, updated by timetocode

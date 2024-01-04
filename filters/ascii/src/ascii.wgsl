@@ -92,18 +92,28 @@ fn character(n: f32, p: vec2<f32>) -> f32
     return 0.0;
 }
 
+fn modulo(x: f32, y: f32) -> f32
+{
+  return x - y * floor(x/y);
+}
+
+fn moduloVec2(x: vec2<f32>, y: vec2<f32>) -> vec2<f32>
+{
+  return x - y * floor(x/y);
+}
+
 fn mapCoord(coord: vec2<f32> ) -> vec2<f32>
 {
     var mappedCoord: vec2<f32> = coord;
     mappedCoord *= gfu.uInputSize.xy;
-    mappedCoord += gfu.outputFrame.xy;
+    mappedCoord += gfu.uOutputFrame.xy;
     return mappedCoord;
 }
 
 fn unmapCoord(coord: vec2<f32> ) -> vec2<f32>
 {
     var mappedCoord: vec2<f32> = coord;
-    mappedCoord -= gfu.outputFrame.xy;
+    mappedCoord -= gfu.uOutputFrame.xy;
     mappedCoord /= gfu.uInputSize.xy;
     return mappedCoord;
 }

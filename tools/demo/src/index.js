@@ -1,7 +1,7 @@
-import './ga';
 import DemoApplication from './DemoApplication';
 import * as filters from './filters';
 import { getEnabledFiltersFromQueryString } from './utils';
+import './ga';
 
 const main = async () =>
 {
@@ -9,7 +9,7 @@ const main = async () =>
 
     app.enabledFilters = getEnabledFiltersFromQueryString();
 
-    await app.init({ preference: 'webgl' });
+    await app.init();
     await app.load([
         { alias: 'background', src: 'images/displacement_BG.jpg' },
         { alias: 'overlay', src: 'images/overlay.png' },

@@ -42,3 +42,8 @@ fn mainFragment(
 
     return vec4<f32>(1.0);
 }
+
+fn modulo(x: f32, y: f32) -> f32
+{
+  return x - y * floor(x/y);
+}

@@ -1,7 +1,7 @@
-import { vertex, wgslVertex } from '@tools/fragments';
+import { Filter, GlProgram, GpuProgram, Point, UniformGroup } from 'pixi.js';
 import fragment from './pixelate.frag';
 import source from './pixelate.wgsl';
-import { Filter, GlProgram, GpuProgram, UniformGroup, Point } from 'pixi.js';
+import { vertex, wgslVertex } from '@tools/fragments';
 
 type Size = number | number[] | Point;
 

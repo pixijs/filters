@@ -1,7 +1,7 @@
-import { vertex, wgslVertex } from '@tools/fragments';
+import { Color, ColorSource, Filter, GlProgram, GpuProgram, UniformGroup } from 'pixi.js';
 import fragment from './color-overlay.frag';
 import source from './color-overlay.wgsl';
-import { Color, ColorSource, Filter, GlProgram, GpuProgram, UniformGroup } from 'pixi.js';
+import { vertex, wgslVertex } from '@tools/fragments';
 
 export interface ColorOverlayFilterOptions
 {

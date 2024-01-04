@@ -31,7 +31,7 @@ fn mainFragment(
   let distance = glowUniforms.uDistance;
 
   let dist: f32 = glowUniforms.uDistance;
-  let angleStepSize: f32 = min(1 / quality / distance, PI * 2.0);
+  let angleStepSize: f32 = min(1. / quality / distance, PI * 2.0);
   let angleStepNum: f32 = ceil(PI * 2.0 / angleStepSize);
 
   let px: vec2<f32> = vec2<f32>(1.0 / gfu.uInputSize.xy);
@@ -46,12 +46,12 @@ fn mainFragment(
     direction = vec2<f32>(cos(angle), sin(angle)) * px;
     for (var curDistance = 0.0; curDistance < dist; curDistance+=1) {
       displaced = vec2<f32>(clamp(uv + direction * (curDistance + 1.0), gfu.uInputClamp.xy, gfu.uInputClamp.zw));
-      curColor = textureSample(iTexture, iSampler, displaced);
+      curColor = textureSample(uTexture, uSampler, displaced);
       totalAlpha += (dist - curDistance) * curColor.a;
     }
   }
     
-  curColor = textureSample(iTexture, iSampler, uv);
+  curColor = textureSample(uTexture, uSampler, uv);
 
   let glowColorRGB = glowUniforms.uColor;
   let glowAlpha = glowUniforms.uAlpha;

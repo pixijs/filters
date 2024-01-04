@@ -16,7 +16,7 @@ fn mainFragment(
   var color = textureSample(uTexture, uSampler, uv);
   color = vec4<f32>(color.rgb * advancedBloomUniforms.uBrightness, color.a);
 
-  var bloomColor = vec4<f32>(textureSample(uMapTexture, iSampler, uv).rgb, 0.0);
+  var bloomColor = vec4<f32>(textureSample(uMapTexture, uSampler, uv).rgb, 0.0);
   bloomColor = vec4<f32>(bloomColor.rgb * advancedBloomUniforms.uBloomScale, bloomColor.a);
   
   return color + bloomColor;

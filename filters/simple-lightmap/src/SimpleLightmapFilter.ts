@@ -1,7 +1,7 @@
-import { vertex, wgslVertex } from '@tools/fragments';
+import { Color, ColorSource, Filter, FilterSystem, GlProgram, GpuProgram, RenderSurface, Texture } from 'pixi.js';
 import fragment from './simple-lightmap.frag';
 import source from './simple-lightmap.wgsl';
-import { Color, Filter, GlProgram, GpuProgram, Texture, FilterSystem, RenderSurface, ColorSource } from 'pixi.js';
+import { vertex, wgslVertex } from '@tools/fragments';
 
 export interface SimpleLightmapFilterOptions
 {

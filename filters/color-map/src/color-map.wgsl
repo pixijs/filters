@@ -28,8 +28,8 @@ fn mainFragment(
   let s0: f32 = xOffset + (zSlice0 * colorMapUniforms.uSliceSize);
   let s1: f32 = xOffset + (zSlice1 * colorMapUniforms.uSliceSize);
   let yOffset: f32 = colorMapUniforms.uSliceSize * 0.5 + color.g * (1.0 - colorMapUniforms.uSliceSize);
-  let slice0Color: vec4<f32> = textureSample(uMapTexture, iSampler, vec2(s0,yOffset));
-  let slice1Color: vec4<f32> = textureSample(uMapTexture, iSampler, vec2(s1,yOffset));
+  let slice0Color: vec4<f32> = textureSample(uMapTexture, uSampler, vec2(s0,yOffset));
+  let slice1Color: vec4<f32> = textureSample(uMapTexture, uSampler, vec2(s1,yOffset));
   let zOffset: f32 = fract(color.b * innerWidth);
   adjusted = mix(slice0Color, slice1Color, zOffset);
   altColor = vec4<f32>(color.rgb * color.a, color.a);

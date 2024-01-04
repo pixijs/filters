@@ -51,7 +51,7 @@ fn mainFragment(
 
   let amplitude: f32 = ((uAmplitude.y - uAmplitude.x) * k + uAmplitude.x ) / gfu.uInputSize.x;
   let waveLength: f32 = ((uWavelength.y - uWavelength.x) * k + uWavelength.x) / gfu.uInputSize.y;
-  let alpha: f32 = (uAlpha.y - uAlpha.x) * k + uAlpha.x;
+  let alpha: f32 = select((uAlpha.y - uAlpha.x) * k + uAlpha.x, 1., returnColorOnly);
 
   var x: f32 = uv.x + cos(v * 6.28 / waveLength - uTime) * amplitude;
   x = clamp(x, gfu.uInputClamp.x, gfu.uInputClamp.z);
