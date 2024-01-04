@@ -1,12 +1,12 @@
-varying vec2 vTextureCoord;
+in vec2 vTextureCoord;
+out vec4 finalColor;
 
 uniform sampler2D uSampler;
-uniform float blur;
-uniform float gradientBlur;
-uniform vec2 start;
-uniform vec2 end;
-uniform vec2 delta;
-uniform vec2 texSize;
+uniform vec2 uBlur;
+uniform vec2 uStart;
+uniform vec2 uEnd;
+uniform vec2 uDelta;
+uniform vec2 uTexSize;
 
 float random(vec3 scale, float seed)
 {
@@ -18,15 +18,18 @@ void main(void)
     vec4 color = vec4(0.0);
     float total = 0.0;
 
+    float blur = uBlur[0];
+    float gradientBlur = uBlur[1];
+
     float offset = random(vec3(12.9898, 78.233, 151.7182), 0.0);
-    vec2 normal = normalize(vec2(start.y - end.y, end.x - start.x));
-    float radius = smoothstep(0.0, 1.0, abs(dot(vTextureCoord * texSize - start, normal)) / gradientBlur) * blur;
+    vec2 normal = normalize(vec2(uStart.y - uEnd.y, uEnd.x - uStart.x));
+    float radius = smoothstep(0.0, 1.0, abs(dot(vTextureCoord * uTexSize - uStart, normal)) / gradientBlur) * blur;
 
     for (float t = -30.0; t <= 30.0; t++)
     {
         float percent = (t + offset - 0.5) / 30.0;
         float weight = 1.0 - abs(percent);
-        vec4 sample = texture2D(uSampler, vTextureCoord + delta / texSize * percent * radius);
+        vec4 sample = texture(uSampler, vTextureCoord + uDelta / uTexSize * percent * radius);
         sample.rgb *= sample.a;
         color += sample * weight;
         total += weight;
@@ -35,5 +38,5 @@ void main(void)
     color /= total;
     color.rgb /= color.a + 0.00001;
 
-    gl_FragColor = color;
+    finalColor = color;
 }

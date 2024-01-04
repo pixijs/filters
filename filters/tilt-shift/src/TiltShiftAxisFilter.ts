@@ -1,6 +1,7 @@
-import { vertex } from '@tools/fragments';
+import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './tilt-shift.frag';
-import { Filter, GlProgram, Point } from 'pixi.js';
+import source from './tilt-shift.wgsl';
+import { Filter, GlProgram, GpuProgram, PointData } from 'pixi.js';
 
 // @author Vico @vicocotea
 // original filter https://github.com/evanw/glfx.js/blob/master/src/filters/blur/tiltshift.js
@@ -9,16 +10,18 @@ import { Filter, GlProgram, Point } from 'pixi.js';
 /**
  * Options for creating filter.
  */
-export interface TiltShiftFilterOptions
+interface TiltShiftAxisFilterOptions
 {
     /** The strength of the blur. */
-    blur: number;
+    blur?: number;
     /** The strength of the blur gradient */
-    gradientBlur: number;
+    gradientBlur?: number;
     /** The position to start the effect at. */
-    start?: Point | undefined;
+    start?: PointData;
     /** The position to end the effect at. */
-    end?: Point | undefined;
+    end?: PointData;
+    /** The axis that the filter is calculating for. */
+    axis?: 'vertical' | 'horizontal';
 }
 
 /**
@@ -30,8 +33,43 @@ export interface TiltShiftFilterOptions
  */
 export class TiltShiftAxisFilter extends Filter
 {
-    constructor(options: TiltShiftFilterOptions)
+    /** Default values for options. */
+    public static readonly DEFAULT_OPTIONS: TiltShiftAxisFilterOptions = {
+        /** The strength of the blur. */
+        blur: 100,
+        /** The strength of the blur gradient */
+        gradientBlur: 600,
+        /** The position to start the effect at. */
+        start: { x: 0, y: window.innerHeight / 2 },
+        /** The position to end the effect at. */
+        end: { x: 600, y: window.innerHeight / 2 },
+    };
+
+    public uniforms: {
+        uBlur: Float32Array;
+        uStart: PointData
+        uEnd: PointData;
+        uDelta: Float32Array;
+        uTexSize: Float32Array;
+    };
+
+    private _tiltAxis: TiltShiftAxisFilterOptions['axis'];
+
+    constructor(options?: TiltShiftAxisFilterOptions)
     {
+        options = { ...TiltShiftAxisFilter.DEFAULT_OPTIONS, ...options } as TiltShiftAxisFilterOptions;
+
+        const gpuProgram = new GpuProgram({
+            vertex: {
+                source: wgslVertex,
+                entryPoint: 'mainVertex',
+            },
+            fragment: {
+                source,
+                entryPoint: 'mainFragment',
+            },
+        });
+
         const glProgram = new GlProgram({
             vertex,
             fragment,
@@ -39,87 +77,101 @@ export class TiltShiftAxisFilter extends Filter
         });
 
         super({
+            gpuProgram,
             glProgram,
-            resources: {},
+            resources: {
+                tiltShiftUniforms: {
+                    uBlur: { value: new Float32Array([
+                        options.blur ?? 100,
+                        options.gradientBlur ?? 600
+                    ]), type: 'vec2<f32>' },
+                    uStart: { value: options.start, type: 'vec2<f32>' },
+                    uEnd: { value: options.end, type: 'vec2<f32>' },
+                    uDelta: { value: new Float32Array([30, 30]), type: 'vec2<f32>' },
+                    uTexSize: { value: new Float32Array([window.innerWidth, window.innerHeight]), type: 'vec2<f32>' },
+                },
+            },
         });
 
-        // this.uniforms.blur = options.blur;
-        // this.uniforms.gradientBlur = options.gradientBlur;
-        // this.uniforms.start = options.start ?? new Point(0, window.innerHeight / 2);
-        // this.uniforms.end = options.end ?? new Point(600, window.innerHeight / 2);
-        // this.uniforms.delta = new Point(30, 30);
-        // this.uniforms.texSize = new Point(window.innerWidth, window.innerHeight);
+        this.uniforms = this.resources.tiltShiftUniforms.uniforms;
+        this._tiltAxis = options.axis;
         this.updateDelta();
     }
 
-    /**
-     * Updates the filter delta values.
-     * This is overridden in the X and Y filters, does nothing for this class.
-     *
-     */
+    /** Updates the filter delta values. */
     protected updateDelta(): void
     {
-        // this.uniforms.delta.x = 0;
-        // this.uniforms.delta.y = 0;
+        this.uniforms.uDelta[0] = 0;
+        this.uniforms.uDelta[1] = 0;
+
+        if (this._tiltAxis === undefined) return;
+
+        const end = this.uniforms.uEnd;
+        const start = this.uniforms.uStart;
+
+        const dx = end.x - start.x;
+        const dy = end.y - start.y;
+        const d = Math.sqrt((dx * dx) + (dy * dy));
+
+        const isVert = this._tiltAxis === 'vertical';
+
+        this.uniforms.uDelta[0] = !isVert ? dx / d : -dy / d;
+        this.uniforms.uDelta[1] = !isVert ? dy / d : dx / d;
     }
 
-    /**
-     * The strength of the blur.
-     *
-     * @memberof TiltShiftAxisFilter#
-     */
-    // get blur(): number
-    // {
-    //     return this.uniforms.blur;
-    // }
-    // set blur(value: number)
-    // {
-    //     this.uniforms.blur = value;
-    // }
+    // /** The strength of the blur. */
+    // get blur(): number { return this.uniforms.uBlur[0]; }
+    // set blur(value: number) { this.uniforms.uBlur[0] = value; }
 
-    /**
-     * The strength of the gradient blur.
-     *
-     * @memberof TiltShiftAxisFilter#
-     */
-    // get gradientBlur(): number
-    // {
-    //     return this.uniforms.gradientBlur;
-    // }
-    // set gradientBlur(value: number)
-    // {
-    //     this.uniforms.gradientBlur = value;
-    // }
+    // /** The strength of the gradient blur. */
+    // get gradientBlur(): number { return this.uniforms.uBlur[1]; }
+    // set gradientBlur(value: number) { this.uniforms.uBlur[1] = value; }
 
-    /**
-     * The X value to start the effect at.
-     *
-     * @member {Point}
-     * @memberof TiltShiftAxisFilter#
-     */
-    // get start(): Point
+    // /** The start position of the effect. */
+    // get start(): PointData { return this.uniforms.uStart; }
+    // set start(value: PointData)
     // {
-    //     return this.uniforms.start;
-    // }
-    // set start(value: Point)
-    // {
-    //     this.uniforms.start = value;
+    //     this.uniforms.uStart = value;
     //     this.updateDelta();
     // }
 
-    /**
-     * The X value to end the effect at.
-     *
-     * @member {Point}
-     * @memberof TiltShiftAxisFilter#
-     */
-    // get end(): Point
+    // /** The start position of the effect on the `x` axis. */
+    // get startX(): number { return this.start.x; }
+    // set startX(value: number)
     // {
-    //     return this.uniforms.end;
+    //     this.start.x = value;
+    //     this.updateDelta();
     // }
-    // set end(value: Point)
+
+    // /** The start position of the effect on the `y` axis. */
+    // get startY(): number { return this.startY; }
+    // set startY(value: number)
     // {
-    //     this.uniforms.end = value;
+    //     this.start.y = value;
+    //     this.updateDelta();
+    // }
+
+    // /** The end position of the effect. */
+    // get end(): PointData { return this.uniforms.uEnd; }
+    // set end(value: PointData)
+    // {
+    //     this.uniforms.uEnd = value;
+    //     this.updateDelta();
+    // }
+
+    // /** The end position of the effect on the `x` axis. */
+    // get endX(): number { return this.end.x; }
+    // set endX(value: number)
+    // {
+    //     this.end.x = value;
+    //     this.updateDelta();
+    // }
+
+    // /** The end position of the effect on the `y` axis. */
+    // get endY(): number { return this.end.y; }
+    // set endY(value: number)
+    // {
+    //     this.end.y = value;
     //     this.updateDelta();
     // }
 }
