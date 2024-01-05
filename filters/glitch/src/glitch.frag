@@ -7,7 +7,7 @@ uniform sampler2D uDisplacementMap;
 uniform float uSeed;
 uniform vec2 uDimensions;
 uniform float uAspect;
-uniform int uFillMode;
+uniform float uFillMode;
 uniform float uOffset;
 uniform float uDirection;
 uniform vec2 uRed;
@@ -50,41 +50,43 @@ void main(void)
 
     coord = vTextureCoord + vec2(cosDir * displacement, sinDir * displacement * uAspect);
 
-    if (uFillMode == CLAMP) {
+    int fillMode = int(uFillMode);
+
+    if (fillMode == CLAMP) {
         coord = clamp(coord, uInputClamp.xy, uInputClamp.zw);
     } else {
         if( coord.x > uInputClamp.z ) {
-            if (uFillMode == TRANSPARENT) {
+            if (fillMode == TRANSPARENT) {
                 discard;
-            } else if (uFillMode == LOOP) {
+            } else if (fillMode == LOOP) {
                 coord.x -= uInputClamp.z;
-            } else if (uFillMode == MIRROR) {
+            } else if (fillMode == MIRROR) {
                 coord.x = uInputClamp.z * 2.0 - coord.x;
             }
         } else if( coord.x < uInputClamp.x ) {
-            if (uFillMode == TRANSPARENT) {
+            if (fillMode == TRANSPARENT) {
                 discard;
-            } else if (uFillMode == LOOP) {
+            } else if (fillMode == LOOP) {
                 coord.x += uInputClamp.z;
-            } else if (uFillMode == MIRROR) {
+            } else if (fillMode == MIRROR) {
                 coord.x *= -uInputClamp.z;
             }
         }
 
         if( coord.y > uInputClamp.w ) {
-            if (uFillMode == TRANSPARENT) {
+            if (fillMode == TRANSPARENT) {
                 discard;
-            } else if (uFillMode == LOOP) {
+            } else if (fillMode == LOOP) {
                 coord.y -= uInputClamp.w;
-            } else if (uFillMode == MIRROR) {
+            } else if (fillMode == MIRROR) {
                 coord.y = uInputClamp.w * 2.0 - coord.y;
             }
         } else if( coord.y < uInputClamp.y ) {
-            if (uFillMode == TRANSPARENT) {
+            if (fillMode == TRANSPARENT) {
                 discard;
-            } else if (uFillMode == LOOP) {
+            } else if (fillMode == LOOP) {
                 coord.y += uInputClamp.w;
-            } else if (uFillMode == MIRROR) {
+            } else if (fillMode == MIRROR) {
                 coord.y *= -uInputClamp.w;
             }
         }

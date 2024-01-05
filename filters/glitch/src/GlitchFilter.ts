@@ -78,7 +78,7 @@ export class GlitchFilter extends Filter
 
     public uniforms: {
         uSeed: number
-        uDimensions: PointData,
+        uDimensions: Float32Array,
         uAspect: number,
         uFillMode: number,
         uOffset: number,
@@ -139,6 +139,13 @@ export class GlitchFilter extends Filter
             name: 'glitch-filter',
         });
 
+        const canvas = document.createElement('canvas');
+
+        canvas.width = 4;
+        canvas.height = options.sampleSize ?? 512;
+
+        const texture = getCanvasTexture(canvas, { style: { scaleMode: 'nearest' } });
+
         super({
             gpuProgram,
             glProgram,
@@ -147,23 +154,22 @@ export class GlitchFilter extends Filter
                     uSeed: { value: options?.seed ?? 0, type: 'f32' },
                     uDimensions: { value: new Float32Array(2), type: 'vec2<f32>' },
                     uAspect: { value: 1, type: 'f32' },
-                    uFillMode: { value: options?.fillMode ?? 0, type: 'i32' },
+                    uFillMode: { value: options?.fillMode ?? 0, type: 'f32' },
                     uOffset: { value: options?.offset ?? 100, type: 'f32' },
                     uDirection: { value: options?.direction ?? 0, type: 'f32' },
-                    uRed: { value: new Float32Array(2), type: 'vec2<f32>' },
-                    uGreen: { value: new Float32Array(2), type: 'vec2<f32>' },
-                    uBlue: { value: new Float32Array(2), type: 'vec2<f32>' },
+                    uRed: { value: options.red, type: 'vec2<f32>' },
+                    uGreen: { value: options.green, type: 'vec2<f32>' },
+                    uBlue: { value: options.blue, type: 'vec2<f32>' },
                 },
-                uDisplacementMap: Texture.WHITE,
+                uDisplacementMap: texture.source,
+                uDisplacementSampler: texture.source.style,
             },
         });
 
         this.uniforms = this.resources.glitchUniforms.uniforms;
 
-        this._canvas = document.createElement('canvas');
-        this._canvas.width = 4;
-        this._canvas.height = this.sampleSize;
-        this.texture = getCanvasTexture(this._canvas, { style: { scaleMode: 'nearest' } });
+        this._canvas = canvas;
+        this.texture = texture;
 
         Object.assign(this, options);
     }
@@ -181,8 +187,8 @@ export class GlitchFilter extends Filter
     {
         const { width, height } = input.frame;
 
-        this.uniforms.uDimensions.x = width;
-        this.uniforms.uDimensions.y = height;
+        this.uniforms.uDimensions[0] = width;
+        this.uniforms.uDimensions[1] = height;
         this.uniforms.uAspect = height / width;
 
         filterManager.applyFilter(this, input, output, clearMode);
@@ -302,7 +308,6 @@ export class GlitchFilter extends Filter
         }
 
         texture.source.update();
-        this.resources.uDisplacementMap = texture;
     }
 
     /**

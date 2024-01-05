@@ -86,7 +86,8 @@ export class SimpleLightmapFilter extends Filter
                     uAlpha: { value: options.alpha, type: 'f32' },
                     uDimensions: { value: new Float32Array(2), type: 'vec2<f32>' },
                 },
-                uMapTexture: options.lightMap,
+                uMapTexture: options.lightMap.source,
+                uMapSampler: options.lightMap.source.style,
             },
         });
 
@@ -120,6 +121,7 @@ export class SimpleLightmapFilter extends Filter
     {
         this._lightMap = value;
         this.resources.uMapTexture = value.source;
+        this.resources.uMapSampler = value.source.style;
     }
 
     /**

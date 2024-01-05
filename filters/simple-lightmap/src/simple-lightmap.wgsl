@@ -19,6 +19,7 @@ struct GlobalFilterUniforms {
 @group(0) @binding(2) var uSampler: sampler;
 @group(1) @binding(0) var<uniform> simpleLightmapUniforms : SimpleLightmapUniforms;
 @group(1) @binding(1) var uMapTexture: texture_2d<f32>;
+@group(1) @binding(2) var uMapSampler: sampler;
 
 @fragment
 fn mainFragment(
@@ -31,7 +32,7 @@ fn mainFragment(
 
   let diffuseColor: vec4<f32> = textureSample(uTexture, uSampler, uv);
   let lightCoord: vec2<f32> = (uv * gfu.uInputSize.xy) / simpleLightmapUniforms.uDimensions;
-  let light: vec4<f32> = textureSample(uMapTexture, uSampler, lightCoord);
+  let light: vec4<f32> = textureSample(uMapTexture, uMapSampler, lightCoord);
   let ambient: vec3<f32> = uColor * uAlpha;
   let intensity: vec3<f32> = ambient + light.rgb;
   let finalColor: vec3<f32> = diffuseColor.rgb * intensity;

@@ -135,8 +135,6 @@ export class OutlineFilter extends Filter
         this.uniforms.uThickness[0] = this.thickness / input.source.width;
         this.uniforms.uThickness[1] = this.thickness / input.source.height;
 
-        this.resources.outlineUniforms.update();
-
         filterManager.applyFilter(this, input, output, clearMode);
     }
 

@@ -1,5 +1,3 @@
-import { logDebugTexture } from 'pixi.js';
-
 export default function ()
 {
     const app = this;
