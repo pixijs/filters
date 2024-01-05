@@ -62,15 +62,10 @@ export class ColorGradientFilter extends Filter
     };
 
     public uniforms: {
-        uType: number;
-        uAngle: number;
-        uAlpha: number;
+        uOptions: Float32Array;
+        uCounts: Float32Array;
         uColors: Float32Array;
-        uOffsets: Float32Array;
-        uAlphas: Float32Array;
-        uNumStops: number;
-        uMaxColors: number;
-        uReplace: number;
+        uStops: Float32Array;
     };
 
     private _stops: ColorStop[] = [];
@@ -124,17 +119,33 @@ export class ColorGradientFilter extends Filter
             glProgram,
             resources: {
                 colorGradientUniforms: {
-                    uType: { value: options.type, type: 'i32' },
-                    uAngle: { value: options.angle ?? ANGLE_OFFSET, type: 'f32' },
-                    uAlpha: { value: options.alpha, type: 'f32' },
-                    uReplace: { value: options.replace ? 1 : 0, type: 'f32' },
+                    uOptions: {
+                        value: [
+                            // Gradient Type
+                            options.type,
+                            // Gradient Angle
+                            options.angle ?? ANGLE_OFFSET,
+                            // Master Alpha
+                            options.alpha,
+                            // Replace Base Color
+                            options.replace ? 1 : 0,
+                        ],
+                        type: 'vec4<f32>',
+                    },
+                    uCounts: {
+                        value: [
+                            // Number of Stops
+                            options.stops.length,
+                            // Max Gradient Colors
+                            options.maxColors,
+                        ],
+                        type: 'vec2<f32>',
+                    },
 
                     uColors: { value: new Float32Array(maxStops * 3), type: 'vec3<f32>', size: maxStops },
-                    uOffsets: { value: new Float32Array(maxStops), type: 'f32', size: maxStops },
-                    uAlphas: { value: new Float32Array(maxStops * 3), type: 'f32', size: maxStops * 3 },
-                    uNumStops: { value: options.stops.length, type: 'f32' },
 
-                    uMaxColors: { value: options.maxColors, type: 'f32' },
+                    // We only need vec2, but we need to pad to eliminate the WGSL warning, TODO: @Mat ?
+                    uStops: { value: new Float32Array(maxStops * 4), type: 'vec4<f32>', size: maxStops },
                 },
             },
         });
@@ -153,7 +164,6 @@ export class ColorGradientFilter extends Filter
     {
         const sortedStops = sortColorStops(stops);
         const color = new Color();
-        const colors = new Float32Array(sortedStops.length * 3);
         let r;
         let g;
         let b;
@@ -164,15 +174,15 @@ export class ColorGradientFilter extends Filter
             const indexStart = i * 3;
 
             [r, g, b] = color.toArray();
-            colors[indexStart] = r;
-            colors[indexStart + 1] = g;
-            colors[indexStart + 2] = b;
+            this.uniforms.uColors[indexStart] = r;
+            this.uniforms.uColors[indexStart + 1] = g;
+            this.uniforms.uColors[indexStart + 2] = b;
+
+            this.uniforms.uStops[i * 4] = sortedStops[i].offset;
+            this.uniforms.uStops[(i * 4) + 1] = sortedStops[i].alpha;
         }
 
-        this.uniforms.uColors = colors;
-        this.uniforms.uOffsets.set(sortedStops.map((s) => s.offset));
-        this.uniforms.uAlphas.set(sortedStops.map((s) => s.alpha));
-        this.uniforms.uNumStops = sortedStops.length;
+        this.uniforms.uCounts[0] = sortedStops.length;
         this._stops = sortedStops;
     }
 
@@ -180,36 +190,36 @@ export class ColorGradientFilter extends Filter
    * The type of gradient
    * @default ColorGradientFilter.LINEAR
    */
-    get type(): number { return this.uniforms.uType; }
-    set type(value: number) { this.uniforms.uType = value; }
+    get type(): number { return this.uniforms.uOptions[0]; }
+    set type(value: number) { this.uniforms.uOptions[0] = value; }
 
     /**
    * The angle of the gradient in degrees
    * @default 90
    */
-    get angle(): number { return this.uniforms.uAngle + ANGLE_OFFSET; }
-    set angle(value: number) { this.uniforms.uAngle = value - ANGLE_OFFSET; }
+    get angle(): number { return this.uniforms.uOptions[1] + ANGLE_OFFSET; }
+    set angle(value: number) { this.uniforms.uOptions[1] = value - ANGLE_OFFSET; }
 
     /**
    * The alpha value of the gradient (0-1)
    * @default 1
    */
-    get alpha(): number { return this.uniforms.uAlpha; }
-    set alpha(value: number) { this.uniforms.uAlpha = value; }
+    get alpha(): number { return this.uniforms.uOptions[2]; }
+    set alpha(value: number) { this.uniforms.uOptions[2] = value; }
 
     /**
    * The maximum number of colors to render (0 = no limit)
    * @default 0
    */
-    get maxColors(): number { return this.uniforms.uMaxColors; }
-    set maxColors(value: number) { this.uniforms.uMaxColors = value; }
+    get maxColors(): number { return this.uniforms.uCounts[1]; }
+    set maxColors(value: number) { this.uniforms.uCounts[1] = value; }
 
     /**
      * If true, the gradient will replace the existing color, otherwise it
      * will be multiplied with it
      * @default false
      */
-    get replace(): boolean { return this.uniforms.uReplace > 0.5; }
-    set replace(value: boolean) { this.uniforms.uReplace = value ? 1 : 0; }
+    get replace(): boolean { return this.uniforms.uOptions[3] > 0.5; }
+    set replace(value: boolean) { this.uniforms.uOptions[3] = value ? 1 : 0; }
 }
 

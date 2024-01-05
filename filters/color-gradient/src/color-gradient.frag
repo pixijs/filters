@@ -9,15 +9,10 @@ const int TYPE_CONIC = 2;
 const int MAX_STOPS = 32;
 
 uniform sampler2D uTexture;
-uniform int uNumStops;
-uniform float uAlphas[3*MAX_STOPS];
+uniform vec4 uOptions;
+uniform vec2 uCounts;
 uniform vec3 uColors[MAX_STOPS];
-uniform float uOffsets[MAX_STOPS];
-uniform int uType;
-uniform float uAngle;
-uniform float uAlpha;
-uniform int uMaxColors;
-uniform bool uReplace;
+uniform vec4 uStops[MAX_STOPS];
 
 const float PI = 3.1415926538;
 const float PI_2 = PI*2.;
@@ -65,6 +60,14 @@ float projectPosition(vec2 pos, int type, float angle) {
 }
 
 void main(void) {
+    int uType = int(uOptions[0]);
+    float uAngle = uOptions[1];
+    float uAlpha = uOptions[2];
+    float uReplace = uOptions[3];
+
+    int uNumStops = int(uCounts[0]);
+    float uMaxColors = uCounts[1];
+
     // current/original color
     vec4 currentColor = texture(uTexture, vTextureCoord);
 
@@ -75,15 +78,17 @@ void main(void) {
     }
 
     // project position
-    float y = projectPosition(vFilterCoord, uType, radians(uAngle));
+    float y = projectPosition(vFilterCoord, int(uType), radians(uAngle));
 
     // check gradient bounds
-    float offsetMin = uOffsets[0];
+    float offsetMin = uStops[0][0];
     float offsetMax = 0.0;
 
+    int numStops = int(uNumStops);
+
     for (int i = 0; i < MAX_STOPS; i++) {
-        if (i == uNumStops-1){ // last index
-            offsetMax = uOffsets[i];
+        if (i == numStops-1){ // last index
+            offsetMax = uStops[i][0];
         }
     }
 
@@ -93,8 +98,8 @@ void main(void) {
     }
 
     // limit colors
-    if (uMaxColors > 0) {
-        float stepSize = 1./float(uMaxColors);
+    if (uMaxColors > 0.) {
+        float stepSize = 1./uMaxColors;
         float stepNumber = float(floor(y/stepSize));
         y = stepSize * (stepNumber + 0.5);// offset by 0.5 to use color from middle of segment
     }
@@ -104,12 +109,12 @@ void main(void) {
     ColorStop to;
 
     for (int i = 0; i < MAX_STOPS; i++) {
-        if (y >= uOffsets[i]) {
-            from = ColorStop(uOffsets[i], uColors[i], uAlphas[i]);
-            to = ColorStop(uOffsets[i+1], uColors[i+1], uAlphas[i+1]);
+        if (y >= uStops[i][0]) {
+            from = ColorStop(uStops[i][0], uColors[i], uStops[i][1]);
+            to = ColorStop(uStops[i+1][0], uColors[i+1], uStops[i+1][1]);
         }
 
-        if (i == uNumStops-1){ // last index
+        if (i == numStops-1){ // last index
             break;
         }
     }
@@ -125,7 +130,7 @@ void main(void) {
     float gradientAlpha = uAlpha * currentColor.a;
     vec4 gradientColor = mix(colorFrom, colorTo, relativePercent) * gradientAlpha;
 
-    if (uReplace == false) {
+    if (uReplace < 0.5) {
         // mix resulting color with current color
         finalColor = gradientColor + currentColor*(1.-gradientColor.a);
     } else {

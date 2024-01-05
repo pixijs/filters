@@ -1,13 +1,8 @@
 struct ColorGradientUniforms {
-  uType: i32,
-  uAngle: f32,
-  uAlpha: f32,
-  uColors: array<vec3<f32>, 20>,
-  uOffsets: array<f32, 20>,
-  uAlphas: array<f32, 20>,
-  uNumStops: f32,
-  uMaxColors: f32,
-  uReplace: f32,
+  uOptions: vec4<f32>,
+  uCounts: vec2<f32>,
+  uColors: array<vec3<f32>, MAX_STOPS>,
+  uStops: array<vec4<f32>, MAX_STOPS>,
 };
 
 struct GlobalFilterUniforms {
@@ -121,30 +116,40 @@ fn mainFragment(
   @location(0) uv : vec2<f32>,
   @location(1) coord : vec2<f32>
 ) -> @location(0) vec4<f32> {
+  let uType: i32 = i32(colorGradientUniforms.uOptions[0]);
+  let uAngle: f32 = colorGradientUniforms.uOptions[1];
+  let uAlpha: f32 = colorGradientUniforms.uOptions[2];
+  let uReplace: f32 = colorGradientUniforms.uOptions[3];
+
+  let uNumStops: i32 = i32(colorGradientUniforms.uCounts[0]);
+  let uMaxColors: f32 = colorGradientUniforms.uCounts[1];
+
   // current/original color
   var currentColor: vec4<f32> = textureSample(uTexture, uSampler, uv);
 
   // skip calculations if gradient alpha is 0
-  if (colorGradientUniforms.uAlpha == 0.0) { return currentColor; }
+  if (uAlpha == 0.0) { return currentColor; }
 
   // project position
-  var y: f32 = projectPosition(coord, colorGradientUniforms.uType, radians(colorGradientUniforms.uAngle));
+  var y: f32 = projectPosition(coord, uType, radians(uAngle));
 
   // check gradient bounds
-  var offsetMin: f32 = colorGradientUniforms.uOffsets[0];
+  var offsetMin: f32 = colorGradientUniforms.uStops[0][0];
   var offsetMax: f32 = 0.0;
 
+  let numStops: i32 = uNumStops;
+
   for (var i: i32 = 0; i < MAX_STOPS; i = i + 1) {
-      if (i == colorGradientUniforms.uNumStops - 1) { // last index
-          offsetMax = colorGradientUniforms.uOffsets[i];
+      if (i == numStops - 1) { // last index
+          offsetMax = colorGradientUniforms.uStops[i][0];
       }
   }
 
   if (y  < offsetMin || y > offsetMax) { return currentColor; }
 
   // limit colors
-  if (colorGradientUniforms.uMaxColors > 0) {
-      var stepSize: f32 = 1.0 / f32(colorGradientUniforms.uMaxColors);
+  if (uMaxColors > 0.0) {
+      var stepSize: f32 = 1.0 / uMaxColors;
       var stepNumber: f32 = floor(y / stepSize);
       y = stepSize * (stepNumber + 0.5); // offset by 0.5 to use color from middle of segment
   }
@@ -154,12 +159,12 @@ fn mainFragment(
   var stopTo: ColorStop;
 
   for (var i: i32 = 0; i < MAX_STOPS; i = i + 1) {
-      if (y >= colorGradientUniforms.uOffsets[i]) {
-          stopFrom = ColorStop(colorGradientUniforms.uOffsets[i], colorGradientUniforms.uColors[i], colorGradientUniforms.uAlphas[i]);
-          stopTo = ColorStop(colorGradientUniforms.uOffsets[i + 1], colorGradientUniforms.uColors[i + 1], colorGradientUniforms.uAlphas[i + 1]);
+      if (y >= colorGradientUniforms.uStops[i][0]) {
+          stopFrom = ColorStop(colorGradientUniforms.uStops[i][0], colorGradientUniforms.uColors[i], colorGradientUniforms.uStops[i][1]);
+          stopTo = ColorStop(colorGradientUniforms.uStops[i + 1][0], colorGradientUniforms.uColors[i + 1], colorGradientUniforms.uStops[i + 1][1]);
       }
 
-      if (i == colorGradientUniforms.uNumStops - 1) { // last index
+      if (i == numStops - 1) { // last index
           break;
       }
   }
@@ -172,10 +177,10 @@ fn mainFragment(
   var relativePos: f32 = y - stopFrom.offset; // position from 0 to [segmentHeight]
   var relativePercent: f32 = relativePos / segmentHeight; // position in percent between [from.offset] and [to.offset].
 
-  var gradientAlpha: f32 = colorGradientUniforms.uAlpha * currentColor.a;
+  var gradientAlpha: f32 = uAlpha * currentColor.a;
   var gradientColor: vec4<f32> = mix(colorFrom, colorTo, relativePercent) * gradientAlpha;
 
-  if (colorGradientUniforms.uReplace == false) {
+  if (uReplace < 0.5) {
       // mix resulting color with current color
       return gradientColor + currentColor * (1.0 - gradientColor.a);
   } else {
