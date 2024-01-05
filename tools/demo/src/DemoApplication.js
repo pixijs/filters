@@ -1,13 +1,13 @@
-import * as filters from 'pixi-filters';
 import PixiFilters, {
     Application,
+    Assets,
     Container,
+    EventEmitter,
     Rectangle,
     Sprite,
-    TilingSprite,
-    Assets,
-    EventEmitter
+    TilingSprite
 } from 'pixi.js';
+import * as filters from 'pixi-filters';
 
 /* global lil,ga*/
 /**
@@ -33,7 +33,6 @@ export default class DemoApplication extends Application
             height: initHeight,
             autoStart: false,
             backgroundColor: 0xFF0000,
-            preference: 'webgl',
         });
 
         this.domElement = domElement;

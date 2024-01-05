@@ -1,10 +1,10 @@
-import { GL_WRAP_MODES, Sprite } from 'pixi.js';
+import { Sprite } from 'pixi.js';
 
 export default function ()
 {
     const app = this;
 
-    this.resources.map.baseTexture.wrapMode = GL_WRAP_MODES.REPEAT;
+    this.resources.map.baseTexture.wrapMode = 'repeat';
     const displacementSprite = new Sprite(this.resources.map);
 
     this.addFilter('DisplacementFilter', {

@@ -1,7 +1,7 @@
-import { vertex, wgslVertex } from '@tools/fragments';
+import { Filter, GlProgram, GpuProgram, SCALE_MODE, Texture, TextureSource } from 'pixi.js';
 import fragment from './color-map.frag';
 import source from './color-map.wgsl';
-import { Filter, Texture, TextureSource, GlProgram, GpuProgram, SCALE_MODE } from 'pixi.js';
+import { vertex, wgslVertex } from '@tools/fragments';
 
 type ColorMapTexture = TextureSource | Texture;
 
@@ -89,7 +89,8 @@ export class ColorMapFilter extends Filter
                     uSlicePixelSize: { value: 0, type: 'f32' },
                     uSliceInnerSize: { value: 0, type: 'f32' },
                 },
-                uMapTexture: options.colorMap,
+                uMapTexture: options.colorMap.source,
+                uMapSampler: options.colorMap.source.style,
             },
         });
 
@@ -144,7 +145,7 @@ export class ColorMapFilter extends Filter
 
         if (texture && texture.source)
         {
-            texture.source.style.scaleMode = this._scaleMode;
+            texture.source.scaleMode = this._scaleMode;
             texture.source.autoGenerateMipmaps = false;
             texture.source.style.update();
             texture.source.update();
