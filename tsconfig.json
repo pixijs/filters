@@ -20,7 +20,8 @@
             ]
         },
         "outDir": "./out",
-        "declaration": true
+        "declaration": true,
+        "skipLibCheck": true,
     },
     "exclude": [
         "node_modules",

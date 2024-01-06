@@ -144,7 +144,7 @@ export class GlitchFilter extends Filter
         canvas.width = 4;
         canvas.height = options.sampleSize ?? 512;
 
-        const texture = getCanvasTexture(canvas, { style: { scaleMode: 'nearest' } });
+        const texture = getCanvasTexture(canvas, { scaleMode: 'nearest' });
 
         super({
             gpuProgram,
