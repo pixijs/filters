@@ -205,8 +205,10 @@ export default class DemoApplication extends Application
      * Animate the fish, overlay and filters (if applicable)
      * @param {number} delta - % difference in time from last frame render
      */
-    animate(delta)
+    animate(time)
     {
+        const delta = time.deltaTime;
+
         this.animateTimer += delta;
 
         const { bounds, animateTimer, overlay } = this;
