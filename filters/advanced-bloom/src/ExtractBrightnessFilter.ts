@@ -1,7 +1,7 @@
-import { vertex, wgslVertex } from '@tools/fragments';
+import { Filter, GlProgram, GpuProgram } from 'pixi.js';
 import fragment from './extract-brightness.frag';
 import source from './extract-brightness.wgsl';
-import { Filter, GlProgram, GpuProgram } from 'pixi.js';
+import { vertex, wgslVertex } from '@tools/fragments';
 
 export interface ExtractBrightnessFilterOptions
 {

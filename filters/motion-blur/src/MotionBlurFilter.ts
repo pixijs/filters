@@ -1,7 +1,8 @@
-import { vertex, wgslVertex } from '@tools/fragments';
+import { Filter, GlProgram, GpuProgram } from 'pixi.js';
 import fragment from './motion-blur.frag';
 import source from './motion-blur.wgsl';
-import { Filter, GlProgram, GpuProgram } from 'pixi.js';
+import { vertex, wgslVertex } from '@tools/fragments';
+
 import type { PointData } from 'pixi.js';
 
 export interface MotionBlurFilterOptions

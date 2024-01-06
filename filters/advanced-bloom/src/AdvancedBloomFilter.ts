@@ -1,9 +1,9 @@
-import { ExtractBrightnessFilter } from './ExtractBrightnessFilter';
+import { Filter, FilterSystem, GlProgram, GpuProgram, PointData, RenderSurface, Texture, TexturePool } from 'pixi.js';
 import { KawaseBlurFilter } from '@pixi/filter-kawase-blur';
-import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './advanced-bloom.frag';
 import source from './advanced-bloom.wgsl';
-import { Filter, GlProgram, GpuProgram, TexturePool, FilterSystem, PointData, RenderSurface, Texture  } from 'pixi.js';
+import { ExtractBrightnessFilter } from './ExtractBrightnessFilter';
+import { vertex, wgslVertex } from '@tools/fragments';
 
 export interface AdvancedBloomFilterOptions
 {

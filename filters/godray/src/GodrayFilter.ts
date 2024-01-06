@@ -1,9 +1,10 @@
-import { vertex, wgslVertex } from '@tools/fragments';
-import perlin from './perlin.frag';
-import sourcePerlin from './perlin.wgsl';
+import { DEG_TO_RAD, Filter, GlProgram, GpuProgram } from 'pixi.js';
 import fragment from './god-ray.frag';
 import source from './god-ray.wgsl';
-import { Filter, DEG_TO_RAD, GlProgram, GpuProgram } from 'pixi.js';
+import perlin from './perlin.frag';
+import sourcePerlin from './perlin.wgsl';
+import { vertex, wgslVertex } from '@tools/fragments';
+
 import type { FilterSystem, PointData, RenderSurface, Texture } from 'pixi.js';
 
 export interface GodrayFilterOptions

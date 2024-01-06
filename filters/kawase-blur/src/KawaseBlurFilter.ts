@@ -1,9 +1,10 @@
-import { vertex, wgslVertex } from '@tools/fragments';
-import fragment from './kawase-blur.frag';
-import fragmentClamp from './kawase-blur-clamp.frag';
-import source from './kawase-blur.wgsl';
-import sourceClamp from './kawase-blur-clamp.wgsl';
 import { Filter, GlProgram, GpuProgram, TexturePool } from 'pixi.js';
+import fragment from './kawase-blur.frag';
+import source from './kawase-blur.wgsl';
+import fragmentClamp from './kawase-blur-clamp.frag';
+import sourceClamp from './kawase-blur-clamp.wgsl';
+import { vertex, wgslVertex } from '@tools/fragments';
+
 import type { FilterSystem, PointData, RenderSurface, Texture } from 'pixi.js';
 
 export interface KawaseBlurFilterOptions

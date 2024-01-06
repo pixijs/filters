@@ -1,6 +1,7 @@
 import { FilterSystem, TexturePool } from 'pixi.js';
-import type { PointData, RenderSurface, Texture } from 'pixi.js';
 import { TiltShiftAxisFilter } from './TiltShiftAxisFilter';
+
+import type { PointData, RenderSurface, Texture } from 'pixi.js';
 
 // @author Vico @vicocotea
 // original filter https://github.com/evanw/glfx.js/blob/master/src/filters/blur/tiltshift.js

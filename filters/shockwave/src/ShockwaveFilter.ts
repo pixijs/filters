@@ -1,6 +1,3 @@
-import { vertex, wgslVertex } from '@tools/fragments';
-import fragment from './shockwave.frag';
-import source from './shockwave.wgsl';
 import {
     Filter,
     FilterSystem,
@@ -11,6 +8,9 @@ import {
     Texture,
     UniformGroup,
 } from 'pixi.js';
+import fragment from './shockwave.frag';
+import source from './shockwave.wgsl';
+import { vertex, wgslVertex } from '@tools/fragments';
 
 /**
  * Options for ShockwaveFilter

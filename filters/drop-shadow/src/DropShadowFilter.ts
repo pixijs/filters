@@ -1,19 +1,19 @@
-import { KawaseBlurFilter } from '@pixi/filter-kawase-blur';
-import { vertex, wgslVertex } from '@tools/fragments';
-import fragment from './drop-shadow.frag';
-import source from './drop-shadow.wgsl';
 import {
-    Filter,
-    GpuProgram,
-    TexturePool,
-    GlProgram,
-    FilterSystem,
-    PointData,
-    ColorSource,
     Color,
+    ColorSource,
+    Filter,
+    FilterSystem,
+    GlProgram,
+    GpuProgram,
+    PointData,
     RenderSurface,
     Texture,
+    TexturePool,
 } from 'pixi.js';
+import { KawaseBlurFilter } from '@pixi/filter-kawase-blur';
+import fragment from './drop-shadow.frag';
+import source from './drop-shadow.wgsl';
+import { vertex, wgslVertex } from '@tools/fragments';
 
 export interface DropShadowFilterOptions
 {

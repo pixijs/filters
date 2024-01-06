@@ -1,7 +1,8 @@
-import { vertex, wgslVertex } from '@tools/fragments';
+import { Filter, GlProgram, GpuProgram } from 'pixi.js';
 import fragment from './radial-blur.frag';
 import source from './radial-blur.wgsl';
-import { Filter, GlProgram, GpuProgram } from 'pixi.js';
+import { vertex, wgslVertex } from '@tools/fragments';
+
 import type { PointData } from 'pixi.js';
 
 export interface RadialBlurFilterOptions

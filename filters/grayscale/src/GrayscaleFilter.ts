@@ -1,7 +1,7 @@
 import { Filter, GlProgram, GpuProgram } from 'pixi.js';
-import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './grayscale.frag';
 import source from './grayscale.wgsl';
+import { vertex, wgslVertex } from '@tools/fragments';
 
 /**
  * This filter applies a grayscale effect.<br>

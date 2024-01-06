@@ -1,5 +1,6 @@
 import esbuild from 'rollup-plugin-esbuild';
 import resolve from '@rollup/plugin-node-resolve';
+
 const globals = {
     'pixi.js': 'PIXI',
 };

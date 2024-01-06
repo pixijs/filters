@@ -1,8 +1,9 @@
-import { vertex, wgslVertex } from '@tools/fragments';
+import { Filter, GlProgram, GpuProgram } from 'pixi.js';
 import fragment from './bulge-pinch.frag';
 import source from './bulge-pinch.wgsl';
-import { Filter, GlProgram, GpuProgram } from 'pixi.js';
-import type { FilterSystem, Texture, RenderSurface, PointData } from 'pixi.js';
+import { vertex, wgslVertex } from '@tools/fragments';
+
+import type { FilterSystem, PointData, RenderSurface, Texture } from 'pixi.js';
 
 // This WebGPU filter has been ported from the WebGL renderer that was originally created by Julien CLEREL (@JuloxRox)
 

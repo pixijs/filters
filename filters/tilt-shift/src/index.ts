@@ -1,2 +1,2 @@
-export * from './TiltShiftFilter';
 export * from './TiltShiftAxisFilter';
+export * from './TiltShiftFilter';

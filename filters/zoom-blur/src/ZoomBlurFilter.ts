@@ -1,7 +1,7 @@
-import { vertex, wgslVertex } from '@tools/fragments';
+import { Filter, GlProgram, GpuProgram, PointData } from 'pixi.js';
 import fragment from './zoom-blur.frag';
 import source from './zoom-blur.wgsl';
-import { Filter, GlProgram, GpuProgram, PointData } from 'pixi.js';
+import { vertex, wgslVertex } from '@tools/fragments';
 
 export interface ZoomBlurFilterOptions
 {

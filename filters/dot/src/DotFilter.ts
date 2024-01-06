@@ -1,7 +1,7 @@
-import { vertex, wgslVertex } from '@tools/fragments';
+import { Filter, GlProgram, GpuProgram } from 'pixi.js';
 import fragment from './dot.frag';
 import source from './dot.wgsl';
-import { Filter, GlProgram, GpuProgram } from 'pixi.js';
+import { vertex, wgslVertex } from '@tools/fragments';
 
 // @author Mat Groves http://matgroves.com/ @Doormat23
 // original filter: https://github.com/evanw/glfx.js/blob/master/src/filters/fun/dotscreen.js

@@ -1,7 +1,7 @@
 import { Filter, GlProgram, GpuProgram } from 'pixi.js';
-import { vertex, wgslVertex } from '@tools/fragments';
 import fragment from './hsladjustment.frag';
 import source from './hsladjustment.wgsl';
+import { vertex, wgslVertex } from '@tools/fragments';
 
 // This WebGPU filter has been ported from the WebGL renderer that was originally created by Viktor Persson (@vikpe)
 

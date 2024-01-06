@@ -1,16 +1,15 @@
-import { describe, expect, jest, test } from '@jest/globals';
 import { ColorStop as CssColorStop, parse } from 'gradient-parser';
+import { Color, ColorSource } from 'pixi.js';
+import { ColorStop } from '../src';
 import {
     angleFromCssOrientation,
     angleFromDirectionalValue,
-    colorAsNormalizedRgbaFromCssStop,
     offsetsFromCssColorStops,
     parseCssGradient,
     trimCssGradient,
     typeFromCssType,
 } from '../src/CssGradientParser';
-
-import { ColorStop } from '../src';
+import { describe, expect, jest, test } from '@jest/globals';
 
 jest.mock('./../src/colorGradient.frag', () => '');
 jest.mock('./../src/colorGradient.vert', () => '');
@@ -124,10 +123,11 @@ describe('CssGradientParser', () =>
     for (let i = 0; i < testCases.length; i++)
     {
         const { stop, expectedValue } = testCases[i];
+        const color = new Color();
 
         test(`${stop.value} = ${expectedValue}`, () =>
         {
-            expect(colorAsNormalizedRgbaFromCssStop(stop)).toEqual(expectedValue);
+            expect(color.setValue(stop.value as ColorSource)).toEqual(expectedValue);
         });
     }
     });

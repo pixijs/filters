@@ -1,7 +1,7 @@
-import { vertex, wgslVertex } from '@tools/fragments';
+import { Filter, GlProgram, GpuProgram, PointData } from 'pixi.js';
 import fragment from './tilt-shift.frag';
 import source from './tilt-shift.wgsl';
-import { Filter, GlProgram, GpuProgram, PointData } from 'pixi.js';
+import { vertex, wgslVertex } from '@tools/fragments';
 
 // @author Vico @vicocotea
 // original filter https://github.com/evanw/glfx.js/blob/master/src/filters/blur/tiltshift.js
@@ -81,10 +81,12 @@ export class TiltShiftAxisFilter extends Filter
             glProgram,
             resources: {
                 tiltShiftUniforms: {
-                    uBlur: { value: new Float32Array([
-                        options.blur ?? 100,
-                        options.gradientBlur ?? 600
-                    ]), type: 'vec2<f32>' },
+                    uBlur: {
+                        value: new Float32Array([
+                            options.blur ?? 100,
+                            options.gradientBlur ?? 600
+                        ]), type: 'vec2<f32>'
+                    },
                     uStart: { value: options.start, type: 'vec2<f32>' },
                     uEnd: { value: options.end, type: 'vec2<f32>' },
                     uDelta: { value: new Float32Array([30, 30]), type: 'vec2<f32>' },

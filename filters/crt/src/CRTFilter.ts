@@ -1,7 +1,8 @@
-import { vertex, wgslVertex } from '@tools/fragments';
+import { Filter, GlProgram, GpuProgram } from 'pixi.js';
 import fragment from './crt.frag';
 import source from './crt.wgsl';
-import { Filter, GlProgram, GpuProgram } from 'pixi.js';
+import { vertex, wgslVertex } from '@tools/fragments';
+
 import type { FilterSystem, RenderSurface, Texture } from 'pixi.js';
 
 export interface CRTFilterOptions

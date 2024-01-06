@@ -8,9 +8,8 @@ import {
     parse,
     ShapeNode
 } from 'gradient-parser';
-
-import { ColorStop } from './ColorGradientFilter';
 import { Color } from 'pixi.js';
+import { ColorStop } from './ColorGradientFilter';
 
 export type ParseResult = {
     type: number;
