@@ -78,11 +78,13 @@ export class GlowFilter extends Filter
     public uniforms: {
         uDistance: number;
         uStrength: Float32Array;
-        uColor: Color;
+        uColor: Float32Array;
         uAlpha: number;
         uQuality: number;
         uKnockout: number;
     };
+
+    private _color!: Color;
 
     constructor(options?: GlowFilterOptions)
     {
@@ -122,7 +124,7 @@ export class GlowFilter extends Filter
                 glowUniforms: {
                     uDistance: { value: distance, type: 'f32' },
                     uStrength: { value: [options.innerStrength, options.outerStrength], type: 'vec2<f32>' },
-                    uColor: { value: new Color(options.color), type: 'vec3<f32>' },
+                    uColor: { value: new Float32Array(3), type: 'vec3<f32>' },
                     uAlpha: { value: options.alpha, type: 'f32' },
                     uQuality: { value: quality, type: 'f32' },
                     uKnockout: { value: (options?.knockout ?? false) ? 1 : 0, type: 'f32' },
@@ -132,54 +134,64 @@ export class GlowFilter extends Filter
         });
 
         this.uniforms = this.resources.glowUniforms.uniforms;
+        this._color = new Color();
+        this.color = options.color ?? 0xffffff;
     }
 
     /**
      * Only draw the glow, not the texture itself
      * @default false
      */
-    get distance(): number { return this.resources.glowUniforms.uniforms.uDistance; }
-    set distance(value: number) { this.resources.glowUniforms.uniforms.uDistance = this.padding = value; }
+    get distance(): number { return this.uniforms.uDistance; }
+    set distance(value: number) { this.uniforms.uDistance = this.padding = value; }
 
     /**
     * The strength of the glow inward from the edge of the sprite.
     * @default 0
     */
-    get innerStrength(): number { return this.resources.glowUniforms.uniforms.uStrength[0]; }
-    set innerStrength(value: number) { this.resources.glowUniforms.uniforms.uStrength[0] = value; }
+    get innerStrength(): number { return this.uniforms.uStrength[0]; }
+    set innerStrength(value: number) { this.uniforms.uStrength[0] = value; }
 
     /**
     * The strength of the glow outward from the edge of the sprite.
     * @default 4
     */
-    get outerStrength(): number { return this.resources.glowUniforms.uniforms.uStrength[1]; }
-    set outerStrength(value: number) { this.resources.glowUniforms.uniforms.uStrength[1] = value; }
+    get outerStrength(): number { return this.uniforms.uStrength[1]; }
+    set outerStrength(value: number) { this.uniforms.uStrength[1] = value; }
 
     /**
     * The color of the glow.
     * @default 0xFFFFFF
     */
-    get color(): ColorSource { return this.uniforms.uColor.value as ColorSource; }
-    set color(value: ColorSource) { this.uniforms.uColor.setValue(value); }
+    get color(): ColorSource { return this._color.value as ColorSource; }
+    set color(value: ColorSource)
+    {
+        this._color.setValue(value);
+        const [r, g, b] = this._color.toArray();
+
+        this.uniforms.uColor[0] = r;
+        this.uniforms.uColor[1] = g;
+        this.uniforms.uColor[2] = b;
+    }
 
     /**
     * The alpha of the glow
     * @default 1
     */
-    get alpha(): number { return this.resources.glowUniforms.uniforms.uAlpha; }
-    set alpha(value: number) { this.resources.glowUniforms.uniforms.uAlpha = value; }
+    get alpha(): number { return this.uniforms.uAlpha; }
+    set alpha(value: number) { this.uniforms.uAlpha = value; }
 
     /**
     * A number between 0 and 1 that describes the quality of the glow. The higher the number the less performant
     * @default 0.1
     */
-    get quality(): number { return this.resources.glowUniforms.uniforms.uQuality; }
-    set quality(value: number) { this.resources.glowUniforms.uniforms.uQuality = value; }
+    get quality(): number { return this.uniforms.uQuality; }
+    set quality(value: number) { this.uniforms.uQuality = value; }
 
     /**
     * Only draw the glow, not the texture itself
     * @default false
     */
-    get knockout(): boolean { return this.resources.glowUniforms.uniforms.uKnockout === 1; }
-    set knockout(value: boolean) { this.resources.glowUniforms.uniforms.uKnockout = value ? 1 : 0; }
+    get knockout(): boolean { return this.uniforms.uKnockout === 1; }
+    set knockout(value: boolean) { this.uniforms.uKnockout = value ? 1 : 0; }
 }

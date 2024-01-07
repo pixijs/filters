@@ -48,9 +48,11 @@ export class AsciiFilter extends Filter
 
     public uniforms: {
         uSize: number;
-        uColor: Color;
+        uColor: Float32Array;
         uReplaceColor: number;
     };
+
+    private _color!: Color;
 
     constructor(options?: AsciiFilterOptions)
     {
@@ -81,13 +83,15 @@ export class AsciiFilter extends Filter
             resources: {
                 asciiUniforms: {
                     uSize: { value: options.size, type: 'f32' },
-                    uColor: { value: new Color(options.color), type: 'vec3<f32>' },
+                    uColor: { value: new Float32Array(3), type: 'vec3<f32>' },
                     uReplaceColor: { value: Number(replaceColor), type: 'f32' },
                 },
             },
         });
 
         this.uniforms = this.resources.asciiUniforms.uniforms;
+        this._color = new Color();
+        this.color = options.color ?? 0xffffff;
     }
 
     /**
@@ -102,8 +106,16 @@ export class AsciiFilter extends Filter
      * @example [1.0, 1.0, 1.0] = 0xffffff
      * @default 0xffffff
      */
-    get color(): ColorSource { return this.uniforms.uColor.value as ColorSource; }
-    set color(value: ColorSource) { this.uniforms.uColor.setValue(value); }
+    get color(): ColorSource { return this._color.value as ColorSource; }
+    set color(value: ColorSource)
+    {
+        this._color.setValue(value);
+        const [r, g, b] = this._color.toArray();
+
+        this.uniforms.uColor[0] = r;
+        this.uniforms.uColor[1] = g;
+        this.uniforms.uColor[2] = b;
+    }
 
     /**
      * Determine whether or not to replace the source colors with the provided.

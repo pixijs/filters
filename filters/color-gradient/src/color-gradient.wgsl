@@ -1,6 +1,9 @@
-struct ColorGradientUniforms {
+struct BaseUniforms {
   uOptions: vec4<f32>,
   uCounts: vec2<f32>,
+};
+
+struct StopsUniforms {
   uColors: array<vec3<f32>, MAX_STOPS>,
   uStops: array<vec4<f32>, MAX_STOPS>,
 };
@@ -18,7 +21,8 @@ struct GlobalFilterUniforms {
 
 @group(0) @binding(1) var uTexture: texture_2d<f32>; 
 @group(0) @binding(2) var uSampler: sampler;
-@group(1) @binding(0) var<uniform> colorGradientUniforms : ColorGradientUniforms;
+@group(1) @binding(0) var<uniform> baseUniforms : BaseUniforms;
+@group(1) @binding(1) var<uniform> stopsUniforms : StopsUniforms;
 
 struct VSOutput {
   @builtin(position) position: vec4<f32>,
@@ -116,13 +120,13 @@ fn mainFragment(
   @location(0) uv : vec2<f32>,
   @location(1) coord : vec2<f32>
 ) -> @location(0) vec4<f32> {
-  let uType: i32 = i32(colorGradientUniforms.uOptions[0]);
-  let uAngle: f32 = colorGradientUniforms.uOptions[1];
-  let uAlpha: f32 = colorGradientUniforms.uOptions[2];
-  let uReplace: f32 = colorGradientUniforms.uOptions[3];
+  let uType: i32 = i32(baseUniforms.uOptions[0]);
+  let uAngle: f32 = baseUniforms.uOptions[1];
+  let uAlpha: f32 = baseUniforms.uOptions[2];
+  let uReplace: f32 = baseUniforms.uOptions[3];
 
-  let uNumStops: i32 = i32(colorGradientUniforms.uCounts[0]);
-  let uMaxColors: f32 = colorGradientUniforms.uCounts[1];
+  let uNumStops: i32 = i32(baseUniforms.uCounts[0]);
+  let uMaxColors: f32 = baseUniforms.uCounts[1];
 
   // current/original color
   var currentColor: vec4<f32> = textureSample(uTexture, uSampler, uv);
@@ -134,14 +138,14 @@ fn mainFragment(
   var y: f32 = projectPosition(coord, uType, radians(uAngle));
 
   // check gradient bounds
-  var offsetMin: f32 = colorGradientUniforms.uStops[0][0];
+  var offsetMin: f32 = stopsUniforms.uStops[0][0];
   var offsetMax: f32 = 0.0;
 
   let numStops: i32 = uNumStops;
 
   for (var i: i32 = 0; i < MAX_STOPS; i = i + 1) {
       if (i == numStops - 1) { // last index
-          offsetMax = colorGradientUniforms.uStops[i][0];
+          offsetMax = stopsUniforms.uStops[i][0];
       }
   }
 
@@ -159,9 +163,9 @@ fn mainFragment(
   var stopTo: ColorStop;
 
   for (var i: i32 = 0; i < MAX_STOPS; i = i + 1) {
-      if (y >= colorGradientUniforms.uStops[i][0]) {
-          stopFrom = ColorStop(colorGradientUniforms.uStops[i][0], colorGradientUniforms.uColors[i], colorGradientUniforms.uStops[i][1]);
-          stopTo = ColorStop(colorGradientUniforms.uStops[i + 1][0], colorGradientUniforms.uColors[i + 1], colorGradientUniforms.uStops[i + 1][1]);
+      if (y >= stopsUniforms.uStops[i][0]) {
+          stopFrom = ColorStop(stopsUniforms.uStops[i][0], stopsUniforms.uColors[i], stopsUniforms.uStops[i][1]);
+          stopTo = ColorStop(stopsUniforms.uStops[i + 1][0], stopsUniforms.uColors[i + 1], stopsUniforms.uStops[i + 1][1]);
       }
 
       if (i == numStops - 1) { // last index

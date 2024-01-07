@@ -84,7 +84,7 @@ export class DropShadowFilter extends Filter
 
     public uniforms: {
         uAlpha: number;
-        uColor: Color;
+        uColor: Float32Array;
         uOffset: PointData;
     };
 
@@ -94,6 +94,7 @@ export class DropShadowFilter extends Filter
      */
     public shadowOnly = false;
 
+    private _color!: Color;
     private _blurFilter: KawaseBlurFilter;
     private _basePass: Filter;
 
@@ -124,13 +125,15 @@ export class DropShadowFilter extends Filter
             resources: {
                 dropShadowUniforms: {
                     uAlpha: { value: options.alpha, type: 'f32' },
-                    uColor: { value: new Color(), type: 'vec3<f32>' },
+                    uColor: { value: new Float32Array(3), type: 'vec3<f32>' },
                     uOffset: { value: options.offset, type: 'vec2<f32>' },
                 }
             }
         });
 
         this.uniforms = this.resources.dropShadowUniforms.uniforms;
+        this._color = new Color();
+        this.color = options.color ?? 0x000000;
 
         this._blurFilter = new KawaseBlurFilter({
             strength: options.kernels as [number, number] ?? options.blur,
@@ -240,8 +243,16 @@ export class DropShadowFilter extends Filter
      * @example [0.0, 0.0, 0.0] = 0x000000
      * @default 0x000000
      */
-    get color(): ColorSource { return this.uniforms.uColor.value as ColorSource; }
-    set color(value: ColorSource) { this.uniforms.uColor.setValue(value); }
+    get color(): ColorSource { return this._color.value as ColorSource; }
+    set color(value: ColorSource)
+    {
+        this._color.setValue(value);
+        const [r, g, b] = this._color.toArray();
+
+        this.uniforms.uColor[0] = r;
+        this.uniforms.uColor[1] = g;
+        this.uniforms.uColor[2] = b;
+    }
 
     /**
      * Coefficient for alpha multiplication

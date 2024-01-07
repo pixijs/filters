@@ -61,9 +61,12 @@ export class ColorGradientFilter extends Filter
         replace: false,
     };
 
-    public uniforms: {
+    public baseUniforms: {
         uOptions: Float32Array;
         uCounts: Float32Array;
+    };
+
+    public stopsUniforms: {
         uColors: Float32Array;
         uStops: Float32Array;
     };
@@ -118,7 +121,7 @@ export class ColorGradientFilter extends Filter
             gpuProgram,
             glProgram,
             resources: {
-                colorGradientUniforms: {
+                baseUniforms: {
                     uOptions: {
                         value: [
                             // Gradient Type
@@ -141,16 +144,18 @@ export class ColorGradientFilter extends Filter
                         ],
                         type: 'vec2<f32>',
                     },
-
+                },
+                stopsUniforms: {
                     uColors: { value: new Float32Array(maxStops * 3), type: 'vec3<f32>', size: maxStops },
 
                     // We only need vec2, but we need to pad to eliminate the WGSL warning, TODO: @Mat ?
                     uStops: { value: new Float32Array(maxStops * 4), type: 'vec4<f32>', size: maxStops },
-                },
+                }
             },
         });
 
-        this.uniforms = this.resources.colorGradientUniforms.uniforms;
+        this.baseUniforms = this.resources.baseUniforms.uniforms;
+        this.stopsUniforms = this.resources.stopsUniforms.uniforms;
 
         Object.assign(this, options);
     }
@@ -174,15 +179,15 @@ export class ColorGradientFilter extends Filter
             const indexStart = i * 3;
 
             [r, g, b] = color.toArray();
-            this.uniforms.uColors[indexStart] = r;
-            this.uniforms.uColors[indexStart + 1] = g;
-            this.uniforms.uColors[indexStart + 2] = b;
+            this.stopsUniforms.uColors[indexStart] = r;
+            this.stopsUniforms.uColors[indexStart + 1] = g;
+            this.stopsUniforms.uColors[indexStart + 2] = b;
 
-            this.uniforms.uStops[i * 4] = sortedStops[i].offset;
-            this.uniforms.uStops[(i * 4) + 1] = sortedStops[i].alpha;
+            this.stopsUniforms.uStops[i * 4] = sortedStops[i].offset;
+            this.stopsUniforms.uStops[(i * 4) + 1] = sortedStops[i].alpha;
         }
 
-        this.uniforms.uCounts[0] = sortedStops.length;
+        this.baseUniforms.uCounts[0] = sortedStops.length;
         this._stops = sortedStops;
     }
 
@@ -190,36 +195,36 @@ export class ColorGradientFilter extends Filter
    * The type of gradient
    * @default ColorGradientFilter.LINEAR
    */
-    get type(): number { return this.uniforms.uOptions[0]; }
-    set type(value: number) { this.uniforms.uOptions[0] = value; }
+    get type(): number { return this.baseUniforms.uOptions[0]; }
+    set type(value: number) { this.baseUniforms.uOptions[0] = value; }
 
     /**
    * The angle of the gradient in degrees
    * @default 90
    */
-    get angle(): number { return this.uniforms.uOptions[1] + ANGLE_OFFSET; }
-    set angle(value: number) { this.uniforms.uOptions[1] = value - ANGLE_OFFSET; }
+    get angle(): number { return this.baseUniforms.uOptions[1] + ANGLE_OFFSET; }
+    set angle(value: number) { this.baseUniforms.uOptions[1] = value - ANGLE_OFFSET; }
 
     /**
    * The alpha value of the gradient (0-1)
    * @default 1
    */
-    get alpha(): number { return this.uniforms.uOptions[2]; }
-    set alpha(value: number) { this.uniforms.uOptions[2] = value; }
+    get alpha(): number { return this.baseUniforms.uOptions[2]; }
+    set alpha(value: number) { this.baseUniforms.uOptions[2] = value; }
 
     /**
    * The maximum number of colors to render (0 = no limit)
    * @default 0
    */
-    get maxColors(): number { return this.uniforms.uCounts[1]; }
-    set maxColors(value: number) { this.uniforms.uCounts[1] = value; }
+    get maxColors(): number { return this.baseUniforms.uCounts[1]; }
+    set maxColors(value: number) { this.baseUniforms.uCounts[1] = value; }
 
     /**
      * If true, the gradient will replace the existing color, otherwise it
      * will be multiplied with it
      * @default false
      */
-    get replace(): boolean { return this.uniforms.uOptions[3] > 0.5; }
-    set replace(value: boolean) { this.uniforms.uOptions[3] = value ? 1 : 0; }
+    get replace(): boolean { return this.baseUniforms.uOptions[3] > 0.5; }
+    set replace(value: boolean) { this.baseUniforms.uOptions[3] = value ? 1 : 0; }
 }
 

@@ -48,11 +48,12 @@ export class SimpleLightmapFilter extends Filter
     };
 
     public uniforms: {
-        uColor: Color;
+        uColor: Float32Array;
         uAlpha: number;
         uDimensions: Float32Array;
     };
 
+    private _color!: Color;
     private _lightMap!: Texture;
 
     constructor(options: SimpleLightmapFilterOptions)
@@ -82,7 +83,7 @@ export class SimpleLightmapFilter extends Filter
             glProgram,
             resources: {
                 simpleLightmapUniforms: {
-                    uColor: { value: new Color(options.color), type: 'vec3<f32>' },
+                    uColor: { value: new Float32Array(3), type: 'vec3<f32>' },
                     uAlpha: { value: options.alpha, type: 'f32' },
                     uDimensions: { value: new Float32Array(2), type: 'vec2<f32>' },
                 },
@@ -92,6 +93,8 @@ export class SimpleLightmapFilter extends Filter
         });
 
         this.uniforms = this.resources.simpleLightmapUniforms.uniforms;
+        this._color = new Color();
+        this.color = options.color ?? 0x000000;
 
         Object.assign(this, options);
     }
@@ -129,8 +132,16 @@ export class SimpleLightmapFilter extends Filter
      * @example [1.0, 1.0, 1.0] = 0xffffff
      * @default 0x000000
      */
-    get color(): ColorSource { return this.uniforms.uColor.value as ColorSource; }
-    set color(value: ColorSource) { this.uniforms.uColor.setValue(value); }
+    get color(): ColorSource { return this._color.value as ColorSource; }
+    set color(value: ColorSource)
+    {
+        this._color.setValue(value);
+        const [r, g, b] = this._color.toArray();
+
+        this.uniforms.uColor[0] = r;
+        this.uniforms.uColor[1] = g;
+        this.uniforms.uColor[2] = b;
+    }
 
     /**
      * Coefficient for alpha multiplication
