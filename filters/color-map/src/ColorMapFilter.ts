@@ -169,7 +169,6 @@ export class ColorMapFilter extends Filter
 
     /**
      * Destroys this filter
-     * @param destroyBase Whether to destroy the base texture of colorMap as well
      * @default false
      */
     destroy(): void

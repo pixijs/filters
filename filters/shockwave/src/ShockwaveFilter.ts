@@ -12,10 +12,6 @@ import fragment from './shockwave.frag';
 import source from './shockwave.wgsl';
 import { vertex, wgslVertex } from '@tools/fragments';
 
-/**
- * Options for ShockwaveFilter
- * @memberof filters
- */
 export interface ShockwaveFilterOptions
 {
     /**
@@ -54,7 +50,6 @@ export interface ShockwaveFilterOptions
  * A Noise effect filter.
  *
  * original filter: https://github.com/evanw/glfx.js/blob/master/src/filters/adjust/noise.js
- * @memberof filters
  * @author Vico @vicocotea
  */
 export class ShockwaveFilter extends Filter

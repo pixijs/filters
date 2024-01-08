@@ -6,7 +6,7 @@ import { vertex, wgslVertex } from '@tools/fragments';
 export interface ExtractBrightnessFilterOptions
 {
     /**
-     * @param threshold Defines how bright a color needs to be extracted.
+     * Defines how bright a color needs to be extracted.
      */
     threshold?: number;
 }
