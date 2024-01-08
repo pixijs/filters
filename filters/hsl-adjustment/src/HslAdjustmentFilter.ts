@@ -59,7 +59,7 @@ export class HslAdjustmentFilter extends Filter
         uAlpha: number;
     };
 
-    private _hue: number;
+    private _hue!: number;
 
     constructor(options?: HslAdjustmentFilterOptions)
     {
@@ -95,7 +95,7 @@ export class HslAdjustmentFilter extends Filter
         });
 
         this.uniforms = this.resources.hslUniforms.uniforms;
-        this._hue = options.hue;
+        this.hue = options.hue;
     }
 
     /**
