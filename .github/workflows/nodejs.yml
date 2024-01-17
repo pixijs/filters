@@ -48,7 +48,7 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          ./bundle/dist/browser/*
+          ./dist/**/*
 
     # Examples:
     # 1) PR feature/acme merged into dev

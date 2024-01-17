@@ -4,9 +4,9 @@ node_modules
 *.log
 docs
 dist
+lib
 tools/demo/index.js
 tools/demo/index.js.map
 .DS_Store
 /out
-filters/*/index.d.ts
-bundle/index.d.ts
+example.api.*
