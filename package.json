@@ -1,59 +1,6 @@
 {
   "name": "pixi-filters",
   "version": "8.0.0",
-  "main": "lib/index.js",
-  "module": "lib/index.mjs",
-  "types": "lib/index.d.ts",
-  "scripts": {
-    "clean": "xs clean",
-    "prestart": "npm run build", 
-    "start": "xs serve",
-    "watch": "xs watch",
-    "lint": "xs lint",
-    "lint:fix": "xs lint --fix",
-    "types": "xs types",
-    "build": "xs build",
-    "docs": "xs docs",
-    "deploy:ci": "xs build,docs",
-    "postdeploy:ci": "mkdirp deploy && copyfiles \"{dist,examples,docs}/**\" deploy && copyfiles -f dist/* deploy",
-    "deploy": "xs deploy",
-    "release": "xs release"
-  },
-  "pre-commit": [
-    "lint",
-    "types"
-  ],
-  "peerDependencies": {
-    "pixi.js": "^8.0.0.0"
-  },
-  "devDependencies": {
-    "gradient-parser": "^1.0.2",
-    "@types/gradient-parser": "^0.1.2",
-    "@pixi/eslint-config": "^4.0.1",
-    "@pixi/extension-scripts": "2.0.2",
-    "@pixi/webdoc-template": "^1.5.5",
-    "@webdoc/cli": "^2.2.0",
-    "copyfiles": "^2.4.1",
-    "cross-env": "^7.0.3",
-    "eslint": "^8.32.0",
-    "http-server": "^14.1.1",
-    "magic-string": "^0.27.0",
-    "npm-run-all": "^4.1.5",
-    "open-cli": "^7.1.0",
-    "pixi.js": "^8.0.0-rc.4",
-    "pre-commit": "^1.2.2",
-    "rimraf": "^4.1.1",
-    "tslib": "^2.0.3",
-    "typescript": "^4.8.0"
-  },
-  "extensionConfig": {
-    "docsName": "PixiJS Filters",
-    "docsCopyright": "PixiJS Copyright © 2013-2024 PixiJS.",
-    "docsGoogleAnalytics": "UA-103772589-3",
-    "docsTitle": "PixiJS Filters API Documentation",
-    "docsDescription": "Documentation for PixiJS Filters library",
-    "docsKeyword": "docs, documentation, pixi, pixijs, filters, webgl, ascii, bloom, convolution, cross-hatch, dotfilter, emboss, pixelate, twist, tiltshift"
-  },
   "exports": {
     ".": {
       "import": "./lib/index.mjs",
@@ -235,5 +182,68 @@
       "require": "./lib/zoom-blur.js",
       "types": "./lib/zoom-blur.d.js"
     }
+  },
+  "main": "lib/index.js",
+  "module": "lib/index.mjs",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "clean": "xs clean",
+    "prestart": "npm run build",
+    "start": "xs serve",
+    "watch": "xs watch",
+    "lint": "xs lint",
+    "lint:fix": "xs lint --fix",
+    "types": "xs types",
+    "build": "npm run build:screenshots && npm run build:demo && xs build",
+    "build:screenshots": "electron main.js",
+    "build:demo": "rollup -c rollup.config.demo.js",
+    "docs": "xs docs",
+    "deploy:ci": "xs build,docs",
+    "postdeploy:ci": "mkdirp deploy && copyfiles \"{dist,examples,docs}/**\" deploy && copyfiles -f dist/* deploy",
+    "deploy": "xs deploy",
+    "release": "xs release"
+  },
+  "pre-commit": [
+    "lint",
+    "types"
+  ],
+  "devDependencies": {
+    "@pixi/eslint-config": "^4.0.1",
+    "@pixi/extension-scripts": "2.0.2",
+    "@pixi/webdoc-template": "^1.5.5",
+    "@types/gradient-parser": "^0.1.2",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-commonjs": "^24.0.0",
+    "@webdoc/cli": "^2.2.0",
+    "base64-to-image": "^1.0.2",
+    "copyfiles": "^2.4.1",
+    "cross-env": "^7.0.3",
+    "electron": "^12.0.0",
+    "eslint": "^8.32.0",
+    "fs-extra": "^7.0.1",
+    "gifencoder": "^2.0.1",
+    "gradient-parser": "^1.0.2",
+    "http-server": "^14.1.1",
+    "magic-string": "^0.27.0",
+    "npm-run-all": "^4.1.5",
+    "open-cli": "^7.1.0",
+    "pixi.js": "^8.0.0-rc.4",
+    "pre-commit": "^1.2.2",
+    "rimraf": "^4.1.1",
+    "rollup-plugin-esbuild": "^5.0.0",
+    "tslib": "^2.0.3",
+    "typescript": "^4.8.0"
+  },
+  "peerDependencies": {
+    "pixi.js": "^8.0.0.0"
+  },
+  "extensionConfig": {
+    "serve": "tools/demo",
+    "docsName": "PixiJS Filters",
+    "docsCopyright": "PixiJS Copyright © 2013-2024 PixiJS.",
+    "docsGoogleAnalytics": "UA-103772589-3",
+    "docsTitle": "PixiJS Filters API Documentation",
+    "docsDescription": "Documentation for PixiJS Filters library",
+    "docsKeyword": "docs, documentation, pixi, pixijs, filters, webgl, ascii, bloom, convolution, cross-hatch, dotfilter, emboss, pixelate, twist, tiltshift"
   }
 }

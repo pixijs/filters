@@ -1,4 +1,4 @@
-import { ColorGradientFilter } from '@pixi/filter-color-gradient';
+import { ColorGradientFilter } from '../../../../lib/index.mjs';
 
 const deepCopy = (value) => JSON.parse(JSON.stringify(value));
 

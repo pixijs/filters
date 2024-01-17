@@ -1,4 +1,5 @@
 import esbuild from 'rollup-plugin-esbuild';
+import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 
 const globals = {
@@ -7,13 +8,14 @@ const globals = {
 
 export default {
     external: Object.keys(globals),
-    input: 'src/index.js',
+    input: 'tools/demo/src/index.js',
     output: {
         globals,
         format: 'iife',
-        file: 'index.js',
+        file: 'tools/demo/index.js'
     },
     plugins: [
+        commonjs(),
         resolve(),
         esbuild({
             target: 'ES2017',

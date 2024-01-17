@@ -1,7 +1,7 @@
 const PIXI = require('pixi.js');
 
 window.PIXI = PIXI;
-const filters = require('pixi-filters');
+const filters = require('../../src/index');
 const assert = require('assert');
 const config = require('./config.json');
 const base64ToImage = require('base64-to-image');

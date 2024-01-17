@@ -7,7 +7,7 @@ import PixiFilters, {
     Sprite,
     TilingSprite
 } from 'pixi.js';
-import * as filters from 'pixi-filters';
+import * as filters from '../../../lib';
 
 /* global lil,ga*/
 /**
