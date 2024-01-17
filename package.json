@@ -1,6 +1,6 @@
 {
-  "name": "pixi-filters-monorepo",
-  "private": true,
+  "name": "pixi-filters",
+  "version": "8.0.0",
   "workspaces": [
     "bundle",
     "filters/*",
@@ -9,7 +9,7 @@
   "scripts": {
     "start": "run-p watch watch:tools demo",
     "clean": "git clean -fxd",
-    "clean:build": "rimraf \"{filters,tools}/*/dist\" \"bundle/dist\"",
+    "clean:build": "rimraf \"{filters,tools}/*/dist\" \"filters/*/node_modules\" \"filters/*/package.json\" \"filters/*/LICENSE\" \"bundle/dist\"",
     "copy:bundle": "copyfiles -f \"bundle/dist/browser/*\" dist",
     "copy:screenshots": "copyfiles tools/screenshots/dist/* dist",
     "copy:demo": "copyfiles -f tools/demo/index.* dist/demo",

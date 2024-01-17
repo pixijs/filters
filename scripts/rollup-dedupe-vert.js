@@ -1,6 +1,6 @@
-import path from 'path';
 import fs from 'fs';
 import MagicString from 'magic-string';
+import path from 'path';
 
 /**
  * This plugin is a filesize optimization for the pixi-filters bundle
@@ -9,7 +9,8 @@ import MagicString from 'magic-string';
  * @function dedupeDefaultVert
  * @private
  */
-function dedupeDefaultVert() {
+function dedupeDefaultVert()
+{
     const defaultVert = path.resolve('tools/fragments/default.vert');
     const fragment = fs.readFileSync(defaultVert, 'utf8')
         .replace(/\n/g, '\\\\n')
@@ -19,22 +20,26 @@ function dedupeDefaultVert() {
 
     return {
         name: 'dedupeDefaultVert',
-        renderChunk(code) {
+        renderChunk(code)
+        {
             const matches = [];
             let match;
 
-            while ((match = pattern.exec(code)) !== null) {
+            while ((match = pattern.exec(code)) !== null)
+            {
                 matches.push(match);
             }
 
-            if (matches.length <= 1) {
+            if (matches.length <= 1)
+            {
                 return null;
             }
 
             const str = new MagicString(code);
             const key = matches[0][2];
 
-            for (let i = 1; i < matches.length; i++) {
+            for (let i = 1; i < matches.length; i++)
+            {
                 const match = matches[i];
                 const start = code.indexOf(match[0]);
 

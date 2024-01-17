@@ -23,6 +23,6 @@
     "rollup-plugin-esbuild": "^4.10.1"
   },
   "dependencies": {
-    "pixi.js": "^8.0.0-X"
+    "pixi.js": "^8.0.0-0"
   }
 }
