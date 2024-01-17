@@ -76,10 +76,10 @@ jobs:
 
     # Publish to NPM
     - name: Publish Latest Release
-      if: github.event.release.prerelease == false && env.NODE_AUTH_TOKEN != ''
+      if: github.event_name == 'release' && github.event.release.prerelease == false && env.NODE_AUTH_TOKEN != ''
       run: npm run publish-ci
 
     # Publish to NPM with prerelease dist-tag
     - name: Publish Latest Prerelease
-      if: github.event.release.prerelease && env.NODE_AUTH_TOKEN != ''
-      run: npm run publish-ci -- --dist-tag prerelease
+      if: github.event_name == 'release' && github.event.release.prerelease && env.NODE_AUTH_TOKEN != ''
+      run: npm run publish-ci -- --tag prerelease
