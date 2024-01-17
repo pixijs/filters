@@ -215,11 +215,9 @@
   ],
   "devDependencies": {
     "@pixi/eslint-config": "^4.0.1",
-    "@pixi/extension-scripts": "2.0.2",
+    "@pixi/extension-scripts": "2.1.0",
     "@pixi/webdoc-template": "^1.5.5",
     "@types/gradient-parser": "^0.1.2",
-    "@rollup/plugin-node-resolve": "^15.0.1",
-    "@rollup/plugin-commonjs": "^24.0.0",
     "@webdoc/cli": "^2.2.0",
     "base64-to-image": "^1.0.2",
     "copyfiles": "^2.4.1",
@@ -236,12 +234,11 @@
     "pixi.js": "^8.0.0-rc.4",
     "pre-commit": "^1.2.2",
     "rimraf": "^4.1.1",
-    "rollup-plugin-esbuild": "^5.0.0",
     "tslib": "^2.0.3",
     "typescript": "^4.8.0"
   },
   "peerDependencies": {
-    "pixi.js": "^8.0.0.0"
+    "pixi.js": ">=8.0.0-0"
   },
   "extensionConfig": {
     "serve": "tools/demo",
