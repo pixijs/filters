@@ -194,14 +194,15 @@
     "lint": "xs lint",
     "lint:fix": "xs lint --fix",
     "types": "xs types",
-    "build": "npm run build:screenshots && npm run build:demo && xs build",
+    "build": "xs build && npm run build:demo && npm run build:screenshots",
     "build:screenshots": "electron main.js",
     "build:demo": "rollup -c rollup.config.demo.js",
     "docs": "xs docs",
     "deploy:ci": "xs build,docs",
-    "postdeploy:ci": "mkdirp deploy && copyfiles \"{dist,examples,docs}/**\" deploy && copyfiles -f dist/* deploy",
+    "postdeploy:ci": "mkdirp deploy && copyfiles \"{dist,tools,docs}/**\" deploy && copyfiles -f dist/* deploy",
     "deploy": "xs deploy",
-    "release": "xs release"
+    "release": "xs release",
+    "publish-ci": "npm publish"
   },
   "pre-commit": [
     "lint",
