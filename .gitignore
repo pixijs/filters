@@ -5,6 +5,7 @@ node_modules
 docs
 dist
 lib
+deploy
 tools/demo/index.js
 tools/demo/index.js.map
 .DS_Store
