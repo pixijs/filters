@@ -201,7 +201,7 @@
     "deploy:ci": "npm run build && xs docs",
     "postdeploy:ci": "mkdirp deploy && run-s copy:*",
     "copy:dist": "copyfiles -u 1 \"dist/**/*\" deploy/",
-    "copy:docs": "copyfiles \"{docs}/**\" deploy",
+    "copy:docs": "copyfiles \"docs/**/*\" deploy",
     "copy:screenshots": "copyfiles tools/screenshots/dist/* deploy",
     "copy:demo": "copyfiles -f tools/demo/index.* deploy/demo",
     "copy:demoimages": "copyfiles -f tools/demo/images/* deploy/demo/images",
