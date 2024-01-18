@@ -213,6 +213,10 @@
     "lint",
     "types"
   ],
+  "files": [
+    "lib",
+    "dist"
+  ],
   "eslintConfig": {
     "extends": "@pixi/eslint-config"
   },
