@@ -8,184 +8,184 @@
       "types": "./lib/index.d.ts"
     },
     "./adjustment": {
-      "import": "./lib/adjustment.mjs",
-      "require": "./lib/adjustment.js",
-      "types": "./lib/adjustment.d.ts"
+      "import": "./lib/adjustment/index.mjs",
+      "require": "./lib/adjustment/index.js",
+      "types": "./lib/adjustment/index.d.ts"
     },
     "./advanced-bloom": {
-      "import": "./lib/advanced-bloom.mjs",
-      "require": "./lib/advanced-bloom.js",
-      "types": "./lib/advanced-bloom.d.ts"
+      "import": "./lib/advanced-bloom/index.mjs",
+      "require": "./lib/advanced-bloom/index.js",
+      "types": "./lib/advanced-bloom/index.d.ts"
     },
     "./ascii": {
-      "import": "./lib/ascii.mjs",
-      "require": "./lib/ascii.js",
-      "types": "./lib/ascii.d.ts"
+      "import": "./lib/ascii/index.mjs",
+      "require": "./lib/ascii/index.js",
+      "types": "./lib/ascii/index.d.ts"
     },
     "./bevel": {
-      "import": "./lib/bevel.mjs",
-      "require": "./lib/bevel.js",
-      "types": "./lib/bevel.d.ts"
+      "import": "./lib/bevel/index.mjs",
+      "require": "./lib/bevel/index.js",
+      "types": "./lib/bevel/index.d.ts"
     },
     "./bloom": {
-      "import": "./lib/bloom.mjs",
-      "require": "./lib/bloom.js",
-      "types": "./lib/bloom.d.ts"
+      "import": "./lib/bloom/index.mjs",
+      "require": "./lib/bloom/index.js",
+      "types": "./lib/bloom/index.d.ts"
     },
     "./bulge-pinch": {
-      "import": "./lib/bulge-pinch.mjs",
-      "require": "./lib/bulge-pinch.js",
-      "types": "./lib/bulge-pinch.d.ts"
+      "import": "./lib/bulge-pinch/index.mjs",
+      "require": "./lib/bulge-pinch/index.js",
+      "types": "./lib/bulge-pinch/index.d.ts"
     },
     "./color-gradient": {
-      "import": "./lib/color-gradient.mjs",
-      "require": "./lib/color-gradient.js",
-      "types": "./lib/color-gradient.d.ts"
+      "import": "./lib/color-gradient/index.mjs",
+      "require": "./lib/color-gradient/index.js",
+      "types": "./lib/color-gradient/index.d.ts"
     },
     "./color-map": {
-      "import": "./lib/color-map.mjs",
-      "require": "./lib/color-map.js",
-      "types": "./lib/color-map.d.ts"
+      "import": "./lib/color-map/index.mjs",
+      "require": "./lib/color-map/index.js",
+      "types": "./lib/color-map/index.d.ts"
     },
     "./color-overlay": {
-      "import": "./lib/color-overlay.mjs",
-      "require": "./lib/color-overlay.js",
-      "types": "./lib/color-overlay.d.ts"
+      "import": "./lib/color-overlay/index.mjs",
+      "require": "./lib/color-overlay/index.js",
+      "types": "./lib/color-overlay/index.d.ts"
     },
     "./color-replace": {
-      "import": "./lib/color-replace.mjs",
-      "require": "./lib/color-replace.js",
-      "types": "./lib/color-replace.d.ts"
+      "import": "./lib/color-replace/index.mjs",
+      "require": "./lib/color-replace/index.js",
+      "types": "./lib/color-replace/index.d.ts"
     },
     "./convolution": {
-      "import": "./lib/convolution.mjs",
-      "require": "./lib/convolution.js",
-      "types": "./lib/convolution.d.ts"
+      "import": "./lib/convolution/index.mjs",
+      "require": "./lib/convolution/index.js",
+      "types": "./lib/convolution/index.d.ts"
     },
     "./cross-hatch": {
-      "import": "./lib/cross-hatch.mjs",
-      "require": "./lib/cross-hatch.js",
-      "types": "./lib/cross-hatch.d.ts"
+      "import": "./lib/cross-hatch/index.mjs",
+      "require": "./lib/cross-hatch/index.js",
+      "types": "./lib/cross-hatch/index.d.ts"
     },
     "./crt": {
-      "import": "./lib/crt.mjs",
-      "require": "./lib/crt.js",
-      "types": "./lib/crt.d.ts"
+      "import": "./lib/crt/index.mjs",
+      "require": "./lib/crt/index.js",
+      "types": "./lib/crt/index.d.ts"
     },
     "./dot": {
-      "import": "./lib/dot.mjs",
-      "require": "./lib/dot.js",
-      "types": "./lib/dot.d.ts"
+      "import": "./lib/dot/index.mjs",
+      "require": "./lib/dot/index.js",
+      "types": "./lib/dot/index.d.ts"
     },
     "./drop-shadow": {
-      "import": "./lib/drop-shadow.mjs",
-      "require": "./lib/drop-shadow.js",
-      "types": "./lib/drop-shadow.d.ts"
+      "import": "./lib/drop-shadow/index.mjs",
+      "require": "./lib/drop-shadow/index.js",
+      "types": "./lib/drop-shadow/index.d.ts"
     },
     "./emboss": {
-      "import": "./lib/emboss.mjs",
-      "require": "./lib/emboss.js",
-      "types": "./lib/emboss.d.ts"
+      "import": "./lib/emboss/index.mjs",
+      "require": "./lib/emboss/index.js",
+      "types": "./lib/emboss/index.d.ts"
     },
     "./glitch": {
-      "import": "./lib/glitch.mjs",
-      "require": "./lib/glitch.js",
-      "types": "./lib/glitch.d.ts"
+      "import": "./lib/glitch/index.mjs",
+      "require": "./lib/glitch/index.js",
+      "types": "./lib/glitch/index.d.ts"
     },
     "./glow": {
-      "import": "./lib/glow.mjs",
-      "require": "./lib/glow.js",
-      "types": "./lib/glow.d.ts"
+      "import": "./lib/glow/index.mjs",
+      "require": "./lib/glow/index.js",
+      "types": "./lib/glow/index.d.ts"
     },
     "./godray": {
-      "import": "./lib/godray.mjs",
-      "require": "./lib/godray.js",
-      "types": "./lib/godray.d.ts"
+      "import": "./lib/godray/index.mjs",
+      "require": "./lib/godray/index.js",
+      "types": "./lib/godray/index.d.ts"
     },
     "./grayscale": {
-      "import": "./lib/grayscale.mjs",
-      "require": "./lib/grayscale.js",
-      "types": "./lib/grayscale.d.ts"
+      "import": "./lib/grayscale/index.mjs",
+      "require": "./lib/grayscale/index.js",
+      "types": "./lib/grayscale/index.d.ts"
     },
     "./hsl-adjustment": {
-      "import": "./lib/hsl-adjustment.mjs",
-      "require": "./lib/hsl-adjustment.js",
-      "types": "./lib/hsl-adjustment.d.ts"
+      "import": "./lib/hsl-adjustment/index.mjs",
+      "require": "./lib/hsl-adjustment/index.js",
+      "types": "./lib/hsl-adjustment/index.d.ts"
     },
     "./kawase-blur": {
-      "import": "./lib/kawase-blur.mjs",
-      "require": "./lib/kawase-blur.js",
-      "types": "./lib/kawase-blur.d.ts"
+      "import": "./lib/kawase-blur/index.mjs",
+      "require": "./lib/kawase-blur/index.js",
+      "types": "./lib/kawase-blur/index.d.ts"
     },
     "./motion-blur": {
-      "import": "./lib/motion-blur.mjs",
-      "require": "./lib/motion-blur.js",
-      "types": "./lib/motion-blur.d.ts"
+      "import": "./lib/motion-blur/index.mjs",
+      "require": "./lib/motion-blur/index.js",
+      "types": "./lib/motion-blur/index.d.ts"
     },
     "./multi-color-replace": {
-      "import": "./lib/multi-color-replace.mjs",
-      "require": "./lib/multi-color-replace.js",
-      "types": "./lib/multi-color-replace.d.ts"
+      "import": "./lib/multi-color-replace/index.mjs",
+      "require": "./lib/multi-color-replace/index.js",
+      "types": "./lib/multi-color-replace/index.d.ts"
     },
     "./old-film": {
-      "import": "./lib/old-film.mjs",
-      "require": "./lib/old-film.js",
-      "types": "./lib/old-film.d.ts"
+      "import": "./lib/old-film/index.mjs",
+      "require": "./lib/old-film/index.js",
+      "types": "./lib/old-film/index.d.ts"
     },
     "./outline": {
-      "import": "./lib/outline.mjs",
-      "require": "./lib/outline.js",
-      "types": "./lib/outline.d.ts"
+      "import": "./lib/outline/index.mjs",
+      "require": "./lib/outline/index.js",
+      "types": "./lib/outline/index.d.ts"
     },
     "./pixelate": {
-      "import": "./lib/pixelate.mjs",
-      "require": "./lib/pixelate.js",
-      "types": "./lib/pixelate.d.ts"
+      "import": "./lib/pixelate/index.mjs",
+      "require": "./lib/pixelate/index.js",
+      "types": "./lib/pixelate/index.d.ts"
     },
     "./radial-blur": {
-      "import": "./lib/radial-blur.mjs",
-      "require": "./lib/radial-blur.js",
-      "types": "./lib/radial-blur.d.ts"
+      "import": "./lib/radial-blur/index.mjs",
+      "require": "./lib/radial-blur/index.js",
+      "types": "./lib/radial-blur/index.d.ts"
     },
     "./reflection": {
-      "import": "./lib/reflection.mjs",
-      "require": "./lib/reflection.js",
-      "types": "./lib/reflection.d.ts"
+      "import": "./lib/reflection/index.mjs",
+      "require": "./lib/reflection/index.js",
+      "types": "./lib/reflection/index.d.ts"
     },
     "./rgb-split": {
-      "import": "./lib/rgb-split.mjs",
-      "require": "./lib/rgb-split.js",
-      "types": "./lib/rgb-split.d.ts"
+      "import": "./lib/rgb-split/index.mjs",
+      "require": "./lib/rgb-split/index.js",
+      "types": "./lib/rgb-split/index.d.ts"
     },
     "./shockwave": {
-      "import": "./lib/shockwave.mjs",
-      "require": "./lib/shockwave.js",
-      "types": "./lib/shockwave.d.ts"
+      "import": "./lib/shockwave/index.mjs",
+      "require": "./lib/shockwave/index.js",
+      "types": "./lib/shockwave/index.d.ts"
     },
     "./simple-lightmap": {
-      "import": "./lib/simple-lightmap.mjs",
-      "require": "./lib/simple-lightmap.js",
-      "types": "./lib/simple-lightmap.d.ts"
+      "import": "./lib/simple-lightmap/index.mjs",
+      "require": "./lib/simple-lightmap/index.js",
+      "types": "./lib/simple-lightmap/index.d.ts"
     },
     "./tilt-shift": {
-      "import": "./lib/tilt-shift.mjs",
-      "require": "./lib/tilt-shift.js",
-      "types": "./lib/tilt-shift.d.ts"
+      "import": "./lib/tilt-shift/index.mjs",
+      "require": "./lib/tilt-shift/index.js",
+      "types": "./lib/tilt-shift/index.d.ts"
     },
     "./twist": {
-      "import": "./lib/twist.mjs",
-      "require": "./lib/twist.js",
-      "types": "./lib/twist.d.ts"
+      "import": "./lib/twist/index.mjs",
+      "require": "./lib/twist/index.js",
+      "types": "./lib/twist/index.d.ts"
     },
     "./zoom-blur": {
-      "import": "./lib/zoom-blur.mjs",
-      "require": "./lib/zoom-blur.js",
-      "types": "./lib/zoom-blur.d.ts"
+      "import": "./lib/zoom-blur/index.mjs",
+      "require": "./lib/zoom-blur/index.js",
+      "types": "./lib/zoom-blur/index.d.ts"
     },
     "./defaults": {
-      "import": "./lib/defaults.mjs",
-      "require": "./lib/defaults.js",
-      "types": "./lib/defaults.d.ts"
+      "import": "./lib/defaults/index.mjs",
+      "require": "./lib/defaults/index.js",
+      "types": "./lib/defaults/index.d.ts"
     }
   },
   "main": "lib/index.js",
@@ -228,7 +228,7 @@
   },
   "devDependencies": {
     "@pixi/eslint-config": "^4.0.1",
-    "@pixi/extension-scripts": "^2.2.0",
+    "@pixi/extension-scripts": "^2.3.0",
     "@pixi/webdoc-template": "^1.5.5",
     "@types/gradient-parser": "^0.1.2",
     "@webdoc/cli": "^2.2.0",
@@ -261,6 +261,13 @@
     "docsTitle": "PixiJS Filters API Documentation",
     "docsDescription": "Documentation for PixiJS Filters library",
     "docsKeyword": "docs, documentation, pixi, pixijs, filters, webgl, ascii, bloom, convolution, cross-hatch, dotfilter, emboss, pixelate, twist, tiltshift",
-    "lint": ["src",  "examples", "scripts", "tools/demo/src", "tools/screenshots/*.js"]
+    "lint": [
+      "src",
+      "examples",
+      "scripts",
+      "tools/demo/src",
+      "tools/screenshots/*.js"
+    ],
+    "moduleSource": "src/{,*/}index.ts"
   }
 }

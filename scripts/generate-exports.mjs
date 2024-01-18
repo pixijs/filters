@@ -24,9 +24,9 @@ fs.readdirSync(filtersDirPath, { withFileTypes: true })
         const dirName = dirent.name;
 
         packageJson.exports[`./${dirName}`] = {
-            import: `./lib/${dirName}.mjs`,
-            require: `./lib/${dirName}.js`,
-            types: `./lib/${dirName}.d.ts`,
+            import: `./lib/${dirName}/index.mjs`,
+            require: `./lib/${dirName}/index.js`,
+            types: `./lib/${dirName}/index.d.ts`,
         };
     });
 
