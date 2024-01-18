@@ -29,8 +29,8 @@ jobs:
     - name: Install Dependencies
       run: npm ci
 
-    - name: Prepare Deploy
-      run: npm run deploy:ci
+    - name: Build for Distribution
+      run: xvfb-run --auto-servernum npm run deploy:ci
 
     # All the below are deploy-related steps
     - name: Extract Branch Name
