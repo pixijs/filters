@@ -222,7 +222,7 @@
   },
   "devDependencies": {
     "@pixi/eslint-config": "^4.0.1",
-    "@pixi/extension-scripts": "2.1.0",
+    "@pixi/extension-scripts": "^2.2.0",
     "@pixi/webdoc-template": "^1.5.5",
     "@types/gradient-parser": "^0.1.2",
     "@webdoc/cli": "^2.2.0",
