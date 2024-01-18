@@ -1,1 +1,1 @@
-export * from './MotionBlurFilter.js';
+export * from './MotionBlurFilter';

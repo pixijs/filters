@@ -1,1 +1,1 @@
-export * from './AdjustmentFilter.js';
+export * from './AdjustmentFilter';

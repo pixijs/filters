@@ -1,1 +1,1 @@
-export * from './KawaseBlurFilter.js';
+export * from './KawaseBlurFilter';

@@ -1,1 +1,1 @@
-export * from './GlitchFilter.js';
+export * from './GlitchFilter';

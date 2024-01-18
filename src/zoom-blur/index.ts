@@ -1,1 +1,1 @@
-export * from './ZoomBlurFilter.js';
+export * from './ZoomBlurFilter';

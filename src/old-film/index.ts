@@ -1,1 +1,1 @@
-export * from './OldFilmFilter.js';
+export * from './OldFilmFilter';

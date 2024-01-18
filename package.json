@@ -181,6 +181,11 @@
       "import": "./lib/zoom-blur.mjs",
       "require": "./lib/zoom-blur.js",
       "types": "./lib/zoom-blur.d.ts"
+    },
+    "./defaults": {
+      "import": "./lib/defaults.mjs",
+      "require": "./lib/defaults.js",
+      "types": "./lib/defaults.d.ts"
     }
   },
   "main": "lib/index.js",
@@ -207,7 +212,8 @@
     "copy:demoimages": "copyfiles -f tools/demo/images/* deploy/demo/images",
     "deploy": "xs deploy",
     "release": "xs bump,test,deploy,git-push",
-    "publish-ci": "xs publish"
+    "publish-ci": "xs publish",
+    "generate-exports": "node --no-warnings=ExperimentalWarning scripts/generate-exports.mjs"
   },
   "pre-commit": [
     "lint",
@@ -254,6 +260,7 @@
     "docsGoogleAnalytics": "UA-103772589-3",
     "docsTitle": "PixiJS Filters API Documentation",
     "docsDescription": "Documentation for PixiJS Filters library",
-    "docsKeyword": "docs, documentation, pixi, pixijs, filters, webgl, ascii, bloom, convolution, cross-hatch, dotfilter, emboss, pixelate, twist, tiltshift"
+    "docsKeyword": "docs, documentation, pixi, pixijs, filters, webgl, ascii, bloom, convolution, cross-hatch, dotfilter, emboss, pixelate, twist, tiltshift",
+    "lint": ["src",  "examples", "scripts", "tools/demo/src", "tools/screenshots/*.js"]
   }
 }

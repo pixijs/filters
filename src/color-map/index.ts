@@ -1,1 +1,1 @@
-export * from './ColorMapFilter.js';
+export * from './ColorMapFilter';

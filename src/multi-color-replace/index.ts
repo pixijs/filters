@@ -1,1 +1,1 @@
-export * from './MultiColorReplaceFilter.js';
+export * from './MultiColorReplaceFilter';

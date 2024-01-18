@@ -1,1 +1,1 @@
-export * from './RadialBlurFilter.js';
+export * from './RadialBlurFilter';

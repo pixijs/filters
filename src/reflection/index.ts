@@ -1,1 +1,1 @@
-export * from './ReflectionFilter.js';
+export * from './ReflectionFilter';
