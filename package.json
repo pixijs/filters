@@ -198,7 +198,7 @@
     "build:screenshots": "electron tools/screenshots/main.js",
     "build:demo": "rollup -c rollup.config.demo.js",
     "docs": "xs docs",
-    "deploy:ci": "xs build,docs",
+    "deploy:ci": "npm run build && xs docs",
     "postdeploy:ci": "mkdirp deploy && run-s copy:*",
     "copy:dist": "copyfiles -u 1 \"dist/**/*\" deploy/",
     "copy:docs": "copyfiles \"{docs}/**\" deploy",
