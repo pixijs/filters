@@ -206,8 +206,8 @@
     "copy:demo": "copyfiles -f tools/demo/index.* deploy/demo",
     "copy:demoimages": "copyfiles -f tools/demo/images/* deploy/demo/images",
     "deploy": "xs deploy",
-    "release": "xs release",
-    "publish-ci": "npm publish"
+    "release": "xs bump,test,deploy,git-push",
+    "publish-ci": "xs publish"
   },
   "pre-commit": [
     "lint",
