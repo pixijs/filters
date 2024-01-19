@@ -7,7 +7,7 @@ import PixiFilters, {
     Sprite,
     TilingSprite
 } from 'pixi.js';
-import * as filters from 'pixi-filters';
+import * as filters from '../../../lib';
 
 /* global lil,ga*/
 /**
@@ -215,6 +215,8 @@ export default class DemoApplication extends Application
 
         this.events.emit('animate', delta, animateTimer);
 
+        this.pond.filters = this.pondFilters;
+
         if (!this.animating)
         {
             return;
@@ -229,7 +231,7 @@ export default class DemoApplication extends Application
             const fish = this.fishes[i];
 
             fish.direction += fish.turnSpeed * 0.01;
-
+            fish.filters = this.fishFilters;
             fish.x += Math.sin(fish.direction) * fish.speed;
             fish.y += Math.cos(fish.direction) * fish.speed;
 
