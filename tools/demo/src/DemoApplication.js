@@ -28,12 +28,7 @@ export default class DemoApplication extends Application
         const initWidth = domElement.offsetWidth;
         const initHeight = domElement.offsetHeight;
 
-        super({
-            width: initWidth,
-            height: initHeight,
-            autoStart: false,
-            backgroundColor: 0xFF0000,
-        });
+        super();
 
         this.domElement = domElement;
         this.resources = null;
@@ -79,6 +74,17 @@ export default class DemoApplication extends Application
             });
         this.gui.add(this, 'animating')
             .name('&bull; Animating');
+    }
+
+    /** override init */
+    init()
+    {
+        return super.init({
+            hello: true,
+            width: this.initWidth,
+            height: this.initHeight,
+            autoStart: false,
+        });
     }
 
     /**

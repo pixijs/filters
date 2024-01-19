@@ -196,6 +196,7 @@
     "prestart": "npm run build",
     "start": "xs serve",
     "watch": "xs watch",
+    "watch:demo": "npm run build:demo -- --watch",
     "lint": "xs lint",
     "lint:fix": "xs lint --fix",
     "types": "xs types",

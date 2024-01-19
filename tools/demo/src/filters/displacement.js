@@ -4,7 +4,7 @@ export default function ()
 {
     const app = this;
 
-    this.resources.map.baseTexture.wrapMode = 'repeat';
+    this.resources.map.source.addressMode = 'repeat';
     const displacementSprite = new Sprite(this.resources.map);
 
     this.addFilter('DisplacementFilter', {
