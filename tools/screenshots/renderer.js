@@ -61,21 +61,11 @@ app.init({
         colormap = resources.colormap;
         displacement = new PIXI.Sprite(resources.displacement);
 
-        const appCenter = { x: app.view.width / 2, y: app.view.height / 2 };
-        const spriteScale = {
-            x: (outputOptions.width - (2 * outputOptions.border.width)) / sourceAssetSize.width,
-            y: (outputOptions.height - (2 * outputOptions.border.width)) / sourceAssetSize.height,
-        };
-
         fishes = new PIXI.Sprite(resources.previewFishes);
         bg = new PIXI.Sprite(resources.previewBackground);
 
-        [fishes, bg].forEach((sprite) =>
-        {
-            sprite.anchor.set(0.5);
-            sprite.scale.set(spriteScale.x, spriteScale.y);
-            sprite.position.set(appCenter.x, appCenter.y);
-        });
+        fishes.scale.set(outputOptions.width / sourceAssetSize.width);
+        bg.scale.set(outputOptions.width / sourceAssetSize.width);
 
         preview = new PIXI.Container();
         preview.addChild(bg, fishes);
@@ -170,7 +160,7 @@ app.init({
                 const context = canvas.getContext('2d');
 
                 context.scale(1, -1);
-                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                const imageData = context.getImageData(0, 0, outputOptions.width, outputOptions.height);
 
                 frames[obj.frame] = imageData.data;
             }
@@ -192,7 +182,7 @@ app.init({
 
         if (anim)
         {
-            const encoder = new GIFEncoder(app.width, app.height);
+            const encoder = new GIFEncoder(outputOptions.width, outputOptions.height);
 
             // Stream output
             encoder.createReadStream().pipe(fs.createWriteStream(
