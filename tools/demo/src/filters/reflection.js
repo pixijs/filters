@@ -29,12 +29,12 @@ export default function ()
 
             folder.add(this, 'mirror');
             folder.add(this, 'boundary', 0, 1);
-            folder.add(this.amplitude, '0', 0, 50).name('amplitude.start');
-            folder.add(this.amplitude, '1', 0, 50).name('amplitude.end');
-            folder.add(this.waveLength, '0', 10, 200).name('waveLength.start');
-            folder.add(this.waveLength, '1', 10, 200).name('waveLength.end');
-            folder.add(this.alpha, '0', 0, 1).name('alpha.start');
-            folder.add(this.alpha, '1', 0, 1).name('alpha.end');
+            folder.add(this, 'amplitudeStart', 0, 50).name('amplitude.start');
+            folder.add(this, 'amplitudeEnd', 0, 50).name('amplitude.end');
+            folder.add(this, 'wavelengthStart', 10, 200).name('waveLength.start');
+            folder.add(this, 'wavelengthEnd', 10, 200).name('waveLength.end');
+            folder.add(this, 'alphaStart', 0, 1).name('alpha.start');
+            folder.add(this, 'alphaEnd', 0, 1).name('alpha.end');
             folder.add(this, 'time', 0, 20);
         },
     });

@@ -1,7 +1,7 @@
-import './ga';
 import DemoApplication from './DemoApplication';
 import * as filters from './filters';
 import { getEnabledFiltersFromQueryString } from './utils';
+import './ga';
 
 const main = async () =>
 {
@@ -23,20 +23,10 @@ const main = async () =>
         { alias: 'colormap', src: 'images/colormap.png' },
     ]);
 
-    filters.alpha.call(app);
-    filters.blur.call(app);
-    filters.colorMatrix.call(app);
-    filters.displacement.call(app);
-    filters.noise.call(app);
-
-    // TODO: https://github.com/orgs/pixijs/projects/2/views/4?pane=issue&itemId=48586590
-    // filters.shockwave.call(app);
-
-    // TODO: Re-enable this in place of the above once v8 conversion is complete
-    // for (const i in filters)
-    // {
-    //     filters[i].call(app);
-    // }
+    for (const i in filters)
+    {
+        filters[i].call(app);
+    }
 };
 
 main();

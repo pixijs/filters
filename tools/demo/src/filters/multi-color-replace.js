@@ -7,7 +7,7 @@ export default function ()
     ];
 
     this.addFilter('MultiColorReplaceFilter', {
-        args: [replacements, 0.2],
+        args: { replacements, tolerance: 0.2 },
         oncreate(folder)
         {
             const refresh = this.refresh.bind(this);
@@ -18,7 +18,7 @@ export default function ()
             folder.addColor(replacements[1], '1').name('target 1').onChange(refresh);
             folder.addColor(replacements[2], '0').name('original 2').onChange(refresh);
             folder.addColor(replacements[2], '1').name('target 2').onChange(refresh);
-            folder.add(this, 'epsilon', 0, 1);
+            folder.add(this, 'tolerance', 0, 1);
         },
     });
 }

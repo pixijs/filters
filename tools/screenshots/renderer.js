@@ -1,7 +1,7 @@
 const PIXI = require('pixi.js');
 
 window.PIXI = PIXI;
-const filters = require('pixi-filters');
+const filters = require('../../lib');
 const assert = require('assert');
 const config = require('./config.json');
 const base64ToImage = require('base64-to-image');
@@ -46,13 +46,13 @@ app.init({
     let lightmap;
     let colormap;
 
-    PIXI.Assets.addBundle('assets', {
-        previewBackground: path.join(__dirname, 'assets', 'preview_background.png'),
-        previewFishes: path.join(__dirname, 'assets', 'preview_fishes.png'),
-        lightmap: path.join(__dirname, 'assets', 'lightmap.png'),
-        displacement: path.join(__dirname, 'assets', 'displacement.png'),
-        colormap: path.join(__dirname, 'assets', 'colormap.png'),
-    });
+    PIXI.Assets.addBundle('assets', [
+        { alias: 'previewBackground', src: path.join(__dirname, 'assets', 'preview_background.png') },
+        { alias: 'previewFishes', src: path.join(__dirname, 'assets', 'preview_fishes.png') },
+        { alias: 'lightmap', src: path.join(__dirname, 'assets', 'lightmap.png') },
+        { alias: 'displacement', src: path.join(__dirname, 'assets', 'displacement.png') },
+        { alias: 'colormap', src: path.join(__dirname, 'assets', 'colormap.png') },
+    ]);
 
     // Load image
     PIXI.Assets.loadBundle('assets').then((resources) =>
@@ -85,7 +85,7 @@ app.init({
         next();
     });
 
-    function next()
+    async function next()
     {
         const obj = config.images[++index];
 
@@ -99,15 +99,15 @@ app.init({
             switch (obj.name)
             {
                 case 'DisplacementFilter': {
-                    filter = new FilterClass(displacement, 50);
+                    filter = new FilterClass({ sprite: displacement, scale: 50 });
                     break;
                 }
                 case 'SimpleLightmapFilter': {
-                    filter = new FilterClass(lightmap);
+                    filter = new FilterClass({ lightMap: lightmap });
                     break;
                 }
                 case 'ColorMapFilter': {
-                    filter = new FilterClass(colormap, false);
+                    filter = new FilterClass({ colorMap: colormap, nearest: false });
                     break;
                 }
                 default: {
@@ -115,7 +115,7 @@ app.init({
 
                     if (args)
                     {
-                        filter = new FilterClass(...args);
+                        filter = new FilterClass(args);
                     }
                     else
                     {
@@ -153,10 +153,11 @@ app.init({
 
             if (obj.filename)
             {
+                const base64 = await app.renderer.extract.base64(app.stage);
+
                 // Save image
-                app.render();
                 base64ToImage(
-                    app.renderer.extract.base64(),
+                    base64,
                     outputOptions.path + path.sep, {
                         fileName: obj.filename,
                         type: 'png',
@@ -165,8 +166,7 @@ app.init({
             }
             else if (obj.frame)
             {
-                app.render();
-                const canvas = app.renderer.plugins.extract.canvas();
+                const canvas = app.renderer.extract.canvas(app.stage);
                 const context = canvas.getContext('2d');
 
                 context.scale(1, -1);
@@ -192,7 +192,7 @@ app.init({
 
         if (anim)
         {
-            const encoder = new GIFEncoder(app.view.width, app.view.height);
+            const encoder = new GIFEncoder(app.width, app.height);
 
             // Stream output
             encoder.createReadStream().pipe(fs.createWriteStream(

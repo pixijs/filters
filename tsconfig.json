@@ -8,19 +8,10 @@
         "strict": true,
         "sourceMap": true,
         "inlineSources": true,
-        "typeRoots": [
-          "node_modules/@types",
-          "typings"
-        ],
         "baseUrl": "./",
-        "paths": {
-            "@pixi/filter-*": [
-                "filters/*/src",
-                "node_modules/@pixi/filter-*"
-            ]
-        },
-        "outDir": "./out",
-        "declaration": true
+        "outDir": "./lib",
+        "declaration": true,
+        "skipLibCheck": true
     },
     "exclude": [
         "node_modules",
@@ -32,8 +23,7 @@
         "rollup.config.js"
     ],
     "include": [
-        "filters",
-        "bundle",
+        "src",
         "./global.d.ts"
     ]
 }

@@ -4,7 +4,6 @@ export default function ()
 
     this.addFilter('ShockwaveFilter', {
         enabled: false,
-        global: true,
         args: { center: { x: app.initWidth / 2, y: app.initHeight / 2 } },
         oncreate(folder)
         {
@@ -31,7 +30,7 @@ export default function ()
             });
 
             folder.add(this, 'animating').name('(animating)');
-            folder.add(this, 'time', 0, maxTime);
+            folder.add(this, 'speed', 500, 2000);
             folder.add(this, 'amplitude', 1, 100);
             folder.add(this, 'wavelength', 2, 400);
             folder.add(this, 'brightness', 0.2, 2.0);

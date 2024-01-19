@@ -124,10 +124,8 @@
             "name": "PixelateFilter",
             "filename": "pixelate",
             "options": {
-                "size": {
-                    "x": 8,
-                    "y": 8
-                }
+                "sizeX": 8,
+                "sizeY": 8
             }
         },
         {
@@ -325,15 +323,13 @@
         {
             "name": "GlowFilter",
             "filename": "glow",
-            "arguments": [
-                {
-                    "distance": 20,
-                    "outerStrength": 2,
-                    "innerStrength": 2,
-                    "color": 16711680,
-                    "quality": 0.5
-                }
-            ],
+            "arguments": {
+                "distance": 20,
+                "outerStrength": 2,
+                "innerStrength": 2,
+                "color": 16711680,
+                "quality": 0.5
+            },
             "fishOnly": true
         },
         {
@@ -356,14 +352,14 @@
         {
             "name": "MultiColorReplaceFilter",
             "filename": "multi-color-replace",
-            "arguments": [
-                [
+            "arguments": {
+                "replacements": [
                     [405551, 0],
                     [7563943, 65280],
                     [16737851, 16711680]
                 ],
-                0.4
-            ]
+                "tolerance": 0.4
+            }
         },
         {
             "name": "ColorMatrixFilter",
@@ -490,44 +486,44 @@
         {
             "name": "MotionBlurFilter",
             "filename": "motion-blur",
-            "arguments": [
-                [40, 40],
-                15,
-                0
-            ]
+            "arguments": {
+                "velocity": { "x": 40, "y": 40 },
+                "kernelSize": 15,
+                "offset": 0
+            }
         },
         {
             "name": "RadialBlurFilter",
             "filename": "radial-blur",
-            "arguments": [
-                30,
-                [130, 80],
-                15,
-                60
-            ]
+            "arguments": {
+                "angle": 30,
+                "center": { "x": 130, "y": 80 },
+                "kernelSize": 15,
+                "radius": 60
+            }
         },
         {
             "name": "GlitchFilter",
             "filename": "glitch",
-            "arguments": [{
+            "arguments": {
                 "slices": 6,
                 "offset": 50,
                 "direction": 0
-            }]
+            }
         },
         {
             "name": "ReflectionFilter",
             "filename": "reflection",
-            "arguments": [{
+            "arguments": {
                 "alpha": [0.7, 1],
                 "amplitude": [0, 10],
                 "waveLength": [10, 50]
-            }]
+            }
         },
         {
             "name": "AdjustmentFilter",
             "filename": "adjustment",
-            "arguments": [{
+            "arguments": {
                 "gamma": 1.5,
                 "saturation": 1.5,
                 "contrast": 1.5,
@@ -536,17 +532,17 @@
                 "green": 1.5,
                 "blue": 1.5,
                 "alpha": 0.75
-            }]
+            }
         },
         {
             "name": "CRTFilter",
             "filename": "crt",
-            "arguments": [{
+            "arguments": {
                 "lineWidth": 1.5,
                 "lineContrast": 0.3,
                 "noise": 0.3,
                 "noiseSize": 1.0
-            }]
+            }
         },
         {
             "name": "ColorMapFilter",
@@ -559,15 +555,15 @@
         {
             "name": "HslAdjustmentFilter",
             "filename": "hsl-adjustment",
-            "arguments": [{
+            "arguments": {
                 "hue": 180
-            }]
+            }
         },
         {
             "name": "ColorGradientFilter",
             "filename": "color-gradient",
             "fishOnly": true,
-            "arguments": [{
+            "arguments": {
                 "type": 0,
                 "stops": [
                     {"offset": 0.00, "color": 16711680, "alpha": 1.0},
@@ -575,7 +571,7 @@
                     {"offset": 1.00, "color": 255, "alpha": 1.0}
                 ],
                 "alpha": 0.8
-            }]
+            }
         }
     ]
 }

@@ -3,7 +3,7 @@ export default function ()
     this.addFilter('OutlineFilter', {
         enabled: false,
         fishOnly: true,
-        args: [4, 0x0, 0.25, 1.0, false],
+        args: { thickness: 4, color: 0x0, quality: 0.25, alpha: 1.0, knockout: false },
         oncreate(folder)
         {
             folder.add(this, 'thickness', 0, 10);

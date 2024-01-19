@@ -1,7 +1,7 @@
 export default function ()
 {
     this.addFilter('ConvolutionFilter', {
-        args: [[0, 0.5, 0, 0.5, 1, 0.5, 0, 0.5, 0], 300, 300],
+        args: { matrix: [0, 0.5, 0, 0.5, 1, 0.5, 0, 0.5, 0], width: 300, height: 300 },
         oncreate(folder)
         {
             folder.add(this, 'width', 0, 500);

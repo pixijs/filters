@@ -1,13 +1,13 @@
-import * as filters from 'pixi-filters';
 import PixiFilters, {
     Application,
+    Assets,
     Container,
+    EventEmitter,
     Rectangle,
     Sprite,
-    TilingSprite,
-    Assets,
-    EventEmitter
+    TilingSprite
 } from 'pixi.js';
+import * as filters from '../../../lib';
 
 /* global lil,ga*/
 /**
@@ -33,7 +33,6 @@ export default class DemoApplication extends Application
             height: initHeight,
             autoStart: false,
             backgroundColor: 0xFF0000,
-            preference: 'webgl',
         });
 
         this.domElement = domElement;
@@ -206,13 +205,17 @@ export default class DemoApplication extends Application
      * Animate the fish, overlay and filters (if applicable)
      * @param {number} delta - % difference in time from last frame render
      */
-    animate(delta)
+    animate(time)
     {
+        const delta = time.deltaTime;
+
         this.animateTimer += delta;
 
         const { bounds, animateTimer, overlay } = this;
 
         this.events.emit('animate', delta, animateTimer);
+
+        this.pond.filters = this.pondFilters;
 
         if (!this.animating)
         {
@@ -228,7 +231,7 @@ export default class DemoApplication extends Application
             const fish = this.fishes[i];
 
             fish.direction += fish.turnSpeed * 0.01;
-
+            fish.filters = this.fishFilters;
             fish.x += Math.sin(fish.direction) * fish.speed;
             fish.y += Math.cos(fish.direction) * fish.speed;
 
