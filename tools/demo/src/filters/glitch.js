@@ -4,17 +4,17 @@ export default function ()
     const fillMode = 2; // LOOP
 
     app.addFilter('GlitchFilter', {
-        args: [{
+        args: {
             slices: 10,
             offset: 100,
             direction: 0,
             fillMode,
             average: false,
-            red: [2, 2],
-            green: [-10, 4],
-            blue: [10, -4],
+            red: { x: 2, y: 2 },
+            green: { x: -10, y: 4 },
+            blue: { x: 10, y: -4 },
             seed: 0.5,
-        }, 0],
+        },
         oncreate(folder)
         {
             this.animating = true;
@@ -46,12 +46,12 @@ export default function ()
 
             folder.add(this, 'fillMode', fillModeOptions);
 
-            folder.add(this.red, '0', -50, 50).name('red.x');
-            folder.add(this.red, '1', -50, 50).name('red.y');
-            folder.add(this.blue, '0', -50, 50).name('blue.x');
-            folder.add(this.blue, '1', -50, 50).name('blue.y');
-            folder.add(this.green, '0', -50, 50).name('green.x');
-            folder.add(this.green, '1', -50, 50).name('green.y');
+            folder.add(this.red, 'x', -50, 50).name('red.x');
+            folder.add(this.red, 'y', -50, 50).name('red.y');
+            folder.add(this.blue, 'x', -50, 50).name('blue.x');
+            folder.add(this.blue, 'y', -50, 50).name('blue.y');
+            folder.add(this.green, 'x', -50, 50).name('green.x');
+            folder.add(this.green, 'y', -50, 50).name('green.y');
             folder.add(this, 'refresh');
         },
     });

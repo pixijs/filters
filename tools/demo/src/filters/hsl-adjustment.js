@@ -3,7 +3,6 @@ export default function ()
     this.addFilter('HslAdjustmentFilter', {
         enabled: false,
         fishOnly: false,
-        args: [],
         oncreate(folder)
         {
             folder.add(this, 'hue', -180, 180);

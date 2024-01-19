@@ -12,7 +12,7 @@ export default function ()
             folder.add(this, 'polaroid');
             folder.add(this, 'desaturate');
             folder.add({ contrast: this.contrast.bind(this, 1) }, 'contrast');
-            folder.add({ greyscale: this.greyscale.bind(this, 1) }, 'greyscale');
+            folder.add({ grayscale: this.grayscale.bind(this, 1) }, 'grayscale');
             folder.add({ predator: this.predator.bind(this, 1) }, 'predator');
             folder.add({ saturate: this.saturate.bind(this, 1) }, 'saturate');
         },

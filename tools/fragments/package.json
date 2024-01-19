@@ -1,7 +1,0 @@
-{
-    "name": "@tools/fragments",
-    "private": true,
-    "version": "5.0.0",
-    "module": "index.js",
-    "types": "index.d.ts"
-}

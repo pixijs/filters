@@ -1,7 +1,7 @@
 const PIXI = require('pixi.js');
 
 window.PIXI = PIXI;
-const filters = require('pixi-filters');
+const filters = require('../../lib');
 const assert = require('assert');
 const config = require('./config.json');
 const base64ToImage = require('base64-to-image');
@@ -21,213 +21,216 @@ const outputOptions = {
     },
 };
 
-const app = new PIXI.Application({
+const app = new PIXI.Application();
+
+app.init({
     width: outputOptions.width,
     height: outputOptions.height,
     backgroundColor: outputOptions.border.color,
     autoStart: false,
-});
-
-const frames = {};
-
-// Make sure directory exists
-fs.ensureDirSync(outputOptions.path);
-
-// Empty the directory
-fs.emptyDirSync(outputOptions.path);
-
-let index = -1;
-let preview;
-let bg;
-let fishes;
-let displacement;
-let lightmap;
-let colormap;
-
-PIXI.Assets.addBundle('assets', {
-    previewBackground: path.join(__dirname, 'assets', 'preview_background.png'),
-    previewFishes: path.join(__dirname, 'assets', 'preview_fishes.png'),
-    lightmap: path.join(__dirname, 'assets', 'lightmap.png'),
-    displacement: path.join(__dirname, 'assets', 'displacement.png'),
-    colormap: path.join(__dirname, 'assets', 'colormap.png'),
-});
-
-// Load image
-PIXI.Assets.loadBundle('assets').then((resources) =>
+}).then(() =>
 {
-    lightmap = resources.lightmap;
-    colormap = resources.colormap;
-    displacement = new PIXI.Sprite(resources.displacement);
+    const frames = {};
 
-    const appCenter = { x: app.view.width / 2, y: app.view.height / 2 };
-    const spriteScale = {
-        x: (outputOptions.width - (2 * outputOptions.border.width)) / sourceAssetSize.width,
-        y: (outputOptions.height - (2 * outputOptions.border.width)) / sourceAssetSize.height,
-    };
+    // Make sure directory exists
+    fs.ensureDirSync(outputOptions.path);
 
-    fishes = new PIXI.Sprite(resources.previewFishes);
-    bg = new PIXI.Sprite(resources.previewBackground);
+    // Empty the directory
+    fs.emptyDirSync(outputOptions.path);
 
-    [fishes, bg].forEach((sprite) =>
+    let index = -1;
+    let preview;
+    let bg;
+    let fishes;
+    let displacement;
+    let lightmap;
+    let colormap;
+
+    PIXI.Assets.addBundle('assets', [
+        { alias: 'previewBackground', src: path.join(__dirname, 'assets', 'preview_background.png') },
+        { alias: 'previewFishes', src: path.join(__dirname, 'assets', 'preview_fishes.png') },
+        { alias: 'lightmap', src: path.join(__dirname, 'assets', 'lightmap.png') },
+        { alias: 'displacement', src: path.join(__dirname, 'assets', 'displacement.png') },
+        { alias: 'colormap', src: path.join(__dirname, 'assets', 'colormap.png') },
+    ]);
+
+    // Load image
+    PIXI.Assets.loadBundle('assets').then((resources) =>
     {
-        sprite.anchor.set(0.5);
-        sprite.scale.set(spriteScale.x, spriteScale.y);
-        sprite.position.set(appCenter.x, appCenter.y);
+        lightmap = resources.lightmap;
+        colormap = resources.colormap;
+        displacement = new PIXI.Sprite(resources.displacement);
+
+        const appCenter = { x: app.view.width / 2, y: app.view.height / 2 };
+        const spriteScale = {
+            x: (outputOptions.width - (2 * outputOptions.border.width)) / sourceAssetSize.width,
+            y: (outputOptions.height - (2 * outputOptions.border.width)) / sourceAssetSize.height,
+        };
+
+        fishes = new PIXI.Sprite(resources.previewFishes);
+        bg = new PIXI.Sprite(resources.previewBackground);
+
+        [fishes, bg].forEach((sprite) =>
+        {
+            sprite.anchor.set(0.5);
+            sprite.scale.set(spriteScale.x, spriteScale.y);
+            sprite.position.set(appCenter.x, appCenter.y);
+        });
+
+        preview = new PIXI.Container();
+        preview.addChild(bg, fishes);
+
+        app.stage.addChild(preview);
+        document.body.appendChild(app.canvas);
+        next();
     });
 
-    preview = new PIXI.Container();
-    preview.addChild(bg, fishes);
-
-    app.stage.addChild(preview);
-    document.body.appendChild(app.view);
-    next();
-});
-
-function next()
-{
-    const obj = config.images[++index];
-
-    if (obj)
+    async function next()
     {
-        const FilterClass = filters[obj.name] || PIXI.filters[obj.name];
+        const obj = config.images[++index];
 
-        assert(!!FilterClass, `Filter ${obj.name} does not exist`);
-        let filter;
-
-        switch (obj.name)
+        if (obj)
         {
-            case 'DisplacementFilter': {
-                filter = new FilterClass(displacement, 50);
-                break;
-            }
-            case 'SimpleLightmapFilter': {
-                filter = new FilterClass(lightmap);
-                break;
-            }
-            case 'ColorMapFilter': {
-                filter = new FilterClass(colormap, false);
-                break;
-            }
-            default: {
-                const args = obj.arguments;
+            const FilterClass = filters[obj.name] || PIXI[obj.name];
 
-                if (args)
-                {
-                    filter = new FilterClass(...args);
-                }
-                else
-                {
-                    filter = new FilterClass();
-                }
-            }
-        }
+            assert(!!FilterClass, `Filter ${obj.name} does not exist`);
+            let filter;
 
-        if (obj.options)
-        {
-            for (const i in obj.options)
+            switch (obj.name)
             {
-                filter[i] = obj.options[i];
+                case 'DisplacementFilter': {
+                    filter = new FilterClass({ sprite: displacement, scale: 50 });
+                    break;
+                }
+                case 'SimpleLightmapFilter': {
+                    filter = new FilterClass({ lightMap: lightmap });
+                    break;
+                }
+                case 'ColorMapFilter': {
+                    filter = new FilterClass({ colorMap: colormap, nearest: false });
+                    break;
+                }
+                default: {
+                    const args = obj.arguments;
+
+                    if (args)
+                    {
+                        filter = new FilterClass(args);
+                    }
+                    else
+                    {
+                        filter = new FilterClass();
+                    }
+                }
             }
-        }
 
-        // Call function
-        if (obj.func && filter[obj.func])
-        {
-            filter[obj.func].apply(filter, obj.args);
-        }
+            if (obj.options)
+            {
+                for (const i in obj.options)
+                {
+                    filter[i] = obj.options[i];
+                }
+            }
 
-        // Render the filter
-        fishes.filters = [];
-        preview.filters = [];
+            // Call function
+            if (obj.func && filter[obj.func])
+            {
+                filter[obj.func].apply(filter, obj.args);
+            }
 
-        if (obj.fishOnly)
-        {
-            fishes.filters = [filter];
+            // Render the filter
+            fishes.filters = [];
+            preview.filters = [];
+
+            if (obj.fishOnly)
+            {
+                fishes.filters = [filter];
+            }
+            else
+            {
+                preview.filters = [filter];
+            }
+
+            if (obj.filename)
+            {
+                const base64 = await app.renderer.extract.base64(app.stage);
+
+                // Save image
+                base64ToImage(
+                    base64,
+                    outputOptions.path + path.sep, {
+                        fileName: obj.filename,
+                        type: 'png',
+                    },
+                );
+            }
+            else if (obj.frame)
+            {
+                const canvas = app.renderer.extract.canvas(app.stage);
+                const context = canvas.getContext('2d');
+
+                context.scale(1, -1);
+                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+
+                frames[obj.frame] = imageData.data;
+            }
+
+            // Wait for next stack to render next filter
+            setTimeout(next, 0);
         }
         else
         {
-            preview.filters = [filter];
+            index = -1;
+            nextAnim();
         }
+    }
 
-        if (obj.filename)
+    // Combine a bunch of frames
+    function nextAnim()
+    {
+        const anim = config.animations[++index];
+
+        if (anim)
         {
-            // Save image
-            app.render();
-            base64ToImage(
-                app.renderer.extract.base64(),
-                outputOptions.path + path.sep, {
-                    fileName: obj.filename,
-                    type: 'png',
-                },
-            );
+            const encoder = new GIFEncoder(app.width, app.height);
+
+            // Stream output
+            encoder.createReadStream().pipe(fs.createWriteStream(
+                path.join(outputOptions.path, `${anim.filename}.gif`),
+            ));
+
+            encoder.start();
+            encoder.setRepeat(0); // 0 for repeat, -1 for no-repeat
+            encoder.setDelay(anim.delay || 500); // frame delay in ms
+            encoder.setQuality(10); // image quality. 10 is default.
+
+            // Add the frames
+            anim.frames.forEach((frame) =>
+            {
+                encoder.addFrame(frames[frame]);
+                delete frames[frame];
+            });
+
+            encoder.finish();
+
+            // Wait for next stack to render next animation
+            setTimeout(nextAnim, 0);
         }
-        else if (obj.frame)
+        else
         {
-            app.render();
-            const canvas = app.renderer.plugins.extract.canvas();
-            const context = canvas.getContext('2d');
-
-            context.scale(1, -1);
-            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-
-            frames[obj.frame] = imageData.data;
+            complete();
         }
-
-        // Wait for next stack to render next filter
-        setTimeout(next, 0);
     }
-    else
+
+    function complete()
     {
-        index = -1;
-        nextAnim();
-    }
-}
-
-// Combine a bunch of frames
-function nextAnim()
-{
-    const anim = config.animations[++index];
-
-    if (anim)
-    {
-        const encoder = new GIFEncoder(app.view.width, app.view.height);
-
-        // Stream output
-        encoder.createReadStream().pipe(fs.createWriteStream(
-            path.join(outputOptions.path, `${anim.filename}.gif`),
-        ));
-
-        encoder.start();
-        encoder.setRepeat(0); // 0 for repeat, -1 for no-repeat
-        encoder.setDelay(anim.delay || 500); // frame delay in ms
-        encoder.setQuality(10); // image quality. 10 is default.
-
-        // Add the frames
-        anim.frames.forEach((frame) =>
+        // Only close if debug is off
+        if (document.location.search.indexOf('debug') === -1)
         {
-            encoder.addFrame(frames[frame]);
-            delete frames[frame];
-        });
+            // close window
+            const browserWindow = remote.getCurrentWindow();
 
-        encoder.finish();
-
-        // Wait for next stack to render next animation
-        setTimeout(nextAnim, 0);
+            browserWindow.close();
+        }
     }
-    else
-    {
-        complete();
-    }
-}
-
-function complete()
-{
-    // Only close if debug is off
-    if (document.location.search.indexOf('debug') === -1)
-    {
-        // close window
-        const browserWindow = remote.getCurrentWindow();
-
-        browserWindow.close();
-    }
-}
+});

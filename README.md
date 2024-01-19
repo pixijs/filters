@@ -4,49 +4,48 @@
 
 ## Demo
 
-[View the PixiJS Filters Demo](https://pixijs.io/filters/tools/demo/) to interactively play with filters to see how they work.
+[View the PixiJS Filters Demo](https://pixijs.io/filters/examples/) to interactively play with filters to see how they work.
 
 ## Filters
 
-All filters work with PixiJS v7.
+All filters work with PixiJS v8.
 
 | Filter                                                                                                   | Preview                                                                                                         |
 |----------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
-| **AdjustmentFilter**<br>_@pixi/filter-adjustment_<br>[View demo][Adjustment_demo]                        | ![adjustment](https://filters.pixijs.download/main/tools/screenshots/dist/adjustment.png?v=2)                   |
-| **AdvancedBloomFilter**<br>_@pixi/filter-advanced-bloom_<br>[View demo][AdvancedBloom_demo]              | ![advanced-bloom](https://filters.pixijs.download/main/tools/screenshots/dist/advanced-bloom.png?v=2)           |
-| **AsciiFilter**<br>_@pixi/filter-ascii_<br>[View demo][Ascii_demo]                                       | ![ascii](https://filters.pixijs.download/main/tools/screenshots/dist/ascii.png?v=2)                             |
-| **BevelFilter**<br>_@pixi/filter-bevel_<br>[View demo][Bevel_demo]                                       | ![bevel](https://filters.pixijs.download/main/tools/screenshots/dist/bevel.png?v=2)                             |
-| **BloomFilter**<br>_@pixi/filter-bloom_<br>[View demo][Bloom_demo]                                       | ![bloom](https://filters.pixijs.download/main/tools/screenshots/dist/bloom.png?v=2)                             |
-| **BulgePinchFilter**<br>_@pixi/filter-bulge-pinch_<br>[View demo][BulgePinch_demo]                       | ![bulge-pinch](https://filters.pixijs.download/main/tools/screenshots/dist/bulge-pinch.gif?v=2)                 |
-| **ColorGradientFilter**<br>_@pixi/filter-color-gradient_<br>[View demo][ColorGradient_demo]              | ![color-gradient](https://filters.pixijs.download/main/tools/screenshots/dist/color-gradient.png?v=2)           |
-| **ColorMapFilter**<br>_@pixi/filter-color-map_<br>[View demo][ColorMap_demo]                             | ![color-map](https://filters.pixijs.download/main/tools/screenshots/dist/color-map.png?v=2)                     |
-| **ColorOverlayFilter**<br>_@pixi/filter-color-overlay_<br>[View demo][ColorOverlay_demo]                 | ![color-overlay](https://filters.pixijs.download/main/tools/screenshots/dist/color-overlay.png?v=2)             |
-| **ColorReplaceFilter**<br>_@pixi/filter-color-replace_<br>[View demo][ColorReplace_demo]                 | ![color-replace](https://filters.pixijs.download/main/tools/screenshots/dist/color-replace.png?v=2)             |
-| **ConvolutionFilter**<br>_@pixi/filter-convolution_<br>[View demo][Convolution_demo]                     | ![convolution](https://filters.pixijs.download/main/tools/screenshots/dist/convolution.png?v=2)                 |
-| **CrossHatchFilter**<br>_@pixi/filter-cross-hatch_<br>[View demo][CrossHatch_demo]                       | ![cross-hatch](https://filters.pixijs.download/main/tools/screenshots/dist/cross-hatch.png?v=2)                 |
-| **CRTFilter**<br>_@pixi/filter-crt_<br>[View demo][CRT_demo]                                             | ![crt](https://filters.pixijs.download/main/tools/screenshots/dist/crt.png?v=2)                                 |
-| **DotFilter**<br>_@pixi/filter-dot_<br>[View demo][Dot_demo]                                             | ![dot](https://filters.pixijs.download/main/tools/screenshots/dist/dot.png?v=2)                                 |
-| **DropShadowFilter**<br>_@pixi/filter-drop-shadow_<br>[View demo][DropShadow_demo]                       | ![drop-shadow](https://filters.pixijs.download/main/tools/screenshots/dist/drop-shadow.png?v=2)                 |
-| **EmbossFilter**<br>_@pixi/filter-emboss_<br>[View demo][Emboss_demo]                                    | ![emboss](https://filters.pixijs.download/main/tools/screenshots/dist/emboss.png?v=2)                           |
-| **GlitchFilter**<br>_@pixi/filter-glitch_<br>[View demo][Glitch_demo]                                    | ![glitch](https://filters.pixijs.download/main/tools/screenshots/dist/glitch.png?v=1)                           |
-| **GlowFilter**<br>_@pixi/filter-glow_<br>[View demo][Glow_demo]                                          | ![glow](https://filters.pixijs.download/main/tools/screenshots/dist/glow.png?v=2)                               |
-| **GodrayFilter**<br>_@pixi/filter-godray_<br>[View demo][Godray_demo]                                    | ![godray](https://filters.pixijs.download/main/tools/screenshots/dist/godray.gif?v=2)                           |
-| **GrayscaleFilter**<br>_@pixi/filter-grayscale_<br>[View demo][Grayscale_demo]                           | ![grayscale](https://filters.pixijs.download/main/tools/screenshots/dist/grayscale.png?v=1)                     |
-| **HslAdjustmentFilter**<br>_@pixi/filter-hsl-adjustment_<br>[View demo][HslAdjustment_demo]              | ![hsl-adjustment](https://filters.pixijs.download/main/tools/screenshots/dist/hsl-adjustment.png?v=1)           |
-| **KawaseBlurFilter**<br>_@pixi/filter-kawase-blur_<br>[View demo][KawaseBlur_demo]                       | ![kawase-blur](https://filters.pixijs.download/main/tools/screenshots/dist/kawase-blur.png?v=1)                 |
-| **MotionBlurFilter**<br>_@pixi/filter-motion-blur_<br>[View demo][MotionBlur_demo]                       | ![motion-blur](https://filters.pixijs.download/main/tools/screenshots/dist/motion-blur.png?v=1)                 |
-| **MultiColorReplaceFilter**<br>_@pixi/filter-multi-color-replace_<br>[View demo][MultiColorReplace_demo] | ![multi-color-replace](https://filters.pixijs.download/main/tools/screenshots/dist/multi-color-replace.png?v=1) |
-| **OldFilmFilter**<br>_@pixi/filter-old-film_<br>[View demo][OldFilm_demo]                                | ![old-film](https://filters.pixijs.download/main/tools/screenshots/dist/old-film.gif?v=2)                       |
-| **OutlineFilter**<br>_@pixi/filter-outline_<br>[View demo][Outline_demo]                                 | ![outline](https://filters.pixijs.download/main/tools/screenshots/dist/outline.png?v=2)                         |
-| **PixelateFilter**<br>_@pixi/filter-pixelate_<br>[View demo][Pixelate_demo]                              | ![pixelate](https://filters.pixijs.download/main/tools/screenshots/dist/pixelate.png?v=2)                       |
-| **RadialBlurFilter**<br>_@pixi/filter-radial-blur_<br>[View demo][RadialBlur_demo]                       | ![radial-blur](https://filters.pixijs.download/main/tools/screenshots/dist/radial-blur.png?v=2)                 |
-| **ReflectionFilter**<br>_@pixi/filter-reflection_<br>[View demo][Reflection_demo]                        | ![reflection](https://filters.pixijs.download/main/tools/screenshots/dist/reflection.png?v=2)                   |
-| **RGBSplitFilter**<br>_@pixi/filter-rgb-split_<br>[View demo][RGBSplit_demo]                             | ![rgb split](https://filters.pixijs.download/main/tools/screenshots/dist/rgb.png?v=2)                           |
-| **ShockwaveFilter**<br>_@pixi/filter-shockwave_<br>[View demo][Shockwave_demo]                           | ![shockwave](https://filters.pixijs.download/main/tools/screenshots/dist/shockwave.gif?v=3)                     |
-| **SimpleLightmapFilter**<br>_@pixi/filter-simple-lightmap_<br>[View demo][SimpleLightmap_demo]           | ![simple-lightmap](https://filters.pixijs.download/main/tools/screenshots/dist/simple-lightmap.png?v=2)         |
-| **TiltShiftFilter**<br>_@pixi/filter-tilt-shift_<br>[View demo][TiltShift_demo]                          | ![tilt-shift](https://filters.pixijs.download/main/tools/screenshots/dist/tilt-shift.png?v=2)                   |
-| **TwistFilter**<br>_@pixi/filter-twist_<br>[View demo][Twist_demo]                                       | ![twist](https://filters.pixijs.download/main/tools/screenshots/dist/twist.png?v=2)                             |
-| **ZoomBlurFilter**<br>_@pixi/filter-zoom-blur_<br>[View demo][ZoomBlur_demo]                             | ![zoom-blur](https://filters.pixijs.download/main/tools/screenshots/dist/zoom-blur.png?v=4)                     |
+| **AdjustmentFilter**<br>pixi-filters/adjustment_<br>[View demo][Adjustment_demo]                        | ![adjustment](https://filters.pixijs.download/main/tools/screenshots/dist/adjustment.png?v=2)                   |
+| **AdvancedBloomFilter**<br>pixi-filters/advanced-bloom_<br>[View demo][AdvancedBloom_demo]              | ![advanced-bloom](https://filters.pixijs.download/main/tools/screenshots/dist/advanced-bloom.png?v=2)           |
+| **AsciiFilter**<br>pixi-filters/ascii_<br>[View demo][Ascii_demo]                                       | ![ascii](https://filters.pixijs.download/main/tools/screenshots/dist/ascii.png?v=2)                             |
+| **BevelFilter**<br>pixi-filters/bevel_<br>[View demo][Bevel_demo]                                       | ![bevel](https://filters.pixijs.download/main/tools/screenshots/dist/bevel.png?v=2)                             |
+| **BloomFilter**<br>pixi-filters/bloom_<br>[View demo][Bloom_demo]                                       | ![bloom](https://filters.pixijs.download/main/tools/screenshots/dist/bloom.png?v=2)                             |
+| **BulgePinchFilter**<br>pixi-filters/bulge-pinch_<br>[View demo][BulgePinch_demo]                       | ![bulge-pinch](https://filters.pixijs.download/main/tools/screenshots/dist/bulge-pinch.gif?v=2)                 |
+| **ColorGradientFilter**<br>pixi-filters/color-gradient_<br>[View demo][ColorGradient_demo]              | ![color-gradient](https://filters.pixijs.download/main/tools/screenshots/dist/color-gradient.png?v=2)           |
+| **ColorMapFilter**<br>pixi-filters/color-map_<br>[View demo][ColorMap_demo]                             | ![color-map](https://filters.pixijs.download/main/tools/screenshots/dist/color-map.png?v=2)                     |
+| **ColorOverlayFilter**<br>pixi-filters/color-overlay_<br>[View demo][ColorOverlay_demo]                 | ![color-overlay](https://filters.pixijs.download/main/tools/screenshots/dist/color-overlay.png?v=2)             |
+| **ColorReplaceFilter**<br>pixi-filters/color-replace_<br>[View demo][ColorReplace_demo]                 | ![color-replace](https://filters.pixijs.download/main/tools/screenshots/dist/color-replace.png?v=2)             |
+| **ConvolutionFilter**<br>pixi-filters/convolution_<br>[View demo][Convolution_demo]                     | ![convolution](https://filters.pixijs.download/main/tools/screenshots/dist/convolution.png?v=2)                 |
+| **CrossHatchFilter**<br>pixi-filters/cross-hatch_<br>[View demo][CrossHatch_demo]                       | ![cross-hatch](https://filters.pixijs.download/main/tools/screenshots/dist/cross-hatch.png?v=2)                 |
+| **CRTFilter**<br>pixi-filters/crt_<br>[View demo][CRT_demo]                                             | ![crt](https://filters.pixijs.download/main/tools/screenshots/dist/crt.png?v=2)                                 |
+| **DotFilter**<br>pixi-filters/dot_<br>[View demo][Dot_demo]                                             | ![dot](https://filters.pixijs.download/main/tools/screenshots/dist/dot.png?v=2)                                 |
+| **DropShadowFilter**<br>pixi-filters/drop-shadow_<br>[View demo][DropShadow_demo]                       | ![drop-shadow](https://filters.pixijs.download/main/tools/screenshots/dist/drop-shadow.png?v=2)                 |
+| **EmbossFilter**<br>pixi-filters/emboss_<br>[View demo][Emboss_demo]                                    | ![emboss](https://filters.pixijs.download/main/tools/screenshots/dist/emboss.png?v=2)                           |
+| **GlitchFilter**<br>pixi-filters/glitch_<br>[View demo][Glitch_demo]                                    | ![glitch](https://filters.pixijs.download/main/tools/screenshots/dist/glitch.png?v=1)                           |
+| **GlowFilter**<br>pixi-filters/glow_<br>[View demo][Glow_demo]                                          | ![glow](https://filters.pixijs.download/main/tools/screenshots/dist/glow.png?v=2)                               |
+| **GodrayFilter**<br>pixi-filters/godray_<br>[View demo][Godray_demo]                                    | ![godray](https://filters.pixijs.download/main/tools/screenshots/dist/godray.gif?v=2)                           |
+| **GrayscaleFilter**<br>pixi-filters/grayscale_<br>[View demo][Grayscale_demo]                           | ![grayscale](https://filters.pixijs.download/main/tools/screenshots/dist/grayscale.png?v=1)                     |
+| **HslAdjustmentFilter**<br>pixi-filters/hsl-adjustment_<br>[View demo][HslAdjustment_demo]              | ![hsl-adjustment](https://filters.pixijs.download/main/tools/screenshots/dist/hsl-adjustment.png?v=1)           |
+| **KawaseBlurFilter**<br>pixi-filters/kawase-blur_<br>[View demo][KawaseBlur_demo]                       | ![kawase-blur](https://filters.pixijs.download/main/tools/screenshots/dist/kawase-blur.png?v=1)                 |
+| **MotionBlurFilter**<br>pixi-filters/motion-blur_<br>[View demo][MotionBlur_demo]                       | ![motion-blur](https://filters.pixijs.download/main/tools/screenshots/dist/motion-blur.png?v=1)                 |
+| **MultiColorReplaceFilter**<br>pixi-filters/multi-color-replace_<br>[View demo][MultiColorReplace_demo] | ![multi-color-replace](https://filters.pixijs.download/main/tools/screenshots/dist/multi-color-replace.png?v=1) |
+| **OldFilmFilter**<br>pixi-filters/old-film_<br>[View demo][OldFilm_demo]                                | ![old-film](https://filters.pixijs.download/main/tools/screenshots/dist/old-film.gif?v=2)                       |
+| **OutlineFilter**<br>pixi-filters/outline_<br>[View demo][Outline_demo]                                 | ![outline](https://filters.pixijs.download/main/tools/screenshots/dist/outline.png?v=2)                         |
+| **PixelateFilter**<br>pixi-filters/pixelate_<br>[View demo][Pixelate_demo]                              | ![pixelate](https://filters.pixijs.download/main/tools/screenshots/dist/pixelate.png?v=2)                       |
+| **RadialBlurFilter**<br>pixi-filters/radial-blur_<br>[View demo][RadialBlur_demo]                       | ![radial-blur](https://filters.pixijs.download/main/tools/screenshots/dist/radial-blur.png?v=2)                 |
+| **ReflectionFilter**<br>pixi-filters/reflection_<br>[View demo][Reflection_demo]                        | ![reflection](https://filters.pixijs.download/main/tools/screenshots/dist/reflection.png?v=2)                   |
+| **RGBSplitFilter**<br>pixi-filters/rgb-split_<br>[View demo][RGBSplit_demo]                             | ![rgb split](https://filters.pixijs.download/main/tools/screenshots/dist/rgb.png?v=2)                           |                  |
+| **SimpleLightmapFilter**<br>pixi-filters/simple-lightmap_<br>[View demo][SimpleLightmap_demo]           | ![simple-lightmap](https://filters.pixijs.download/main/tools/screenshots/dist/simple-lightmap.png?v=2)         |
+| **TiltShiftFilter**<br>pixi-filters/tilt-shift_<br>[View demo][TiltShift_demo]                          | ![tilt-shift](https://filters.pixijs.download/main/tools/screenshots/dist/tilt-shift.png?v=2)                   |
+| **TwistFilter**<br>pixi-filters/twist_<br>[View demo][Twist_demo]                                       | ![twist](https://filters.pixijs.download/main/tools/screenshots/dist/twist.png?v=2)                             |
+| **ZoomBlurFilter**<br>pixi-filters/zoom-blur_<br>[View demo][ZoomBlur_demo]                             | ![zoom-blur](https://filters.pixijs.download/main/tools/screenshots/dist/zoom-blur.png?v=4)                     |
 
 ## Built-In Filters
 
@@ -139,7 +138,6 @@ API documention can be found [here](http://pixijs.io/filters/docs/).
 [RadialBlur_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=RadialBlurFilter
 [Reflection_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=ReflectionFilter
 [RGBSplit_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=RGBSplitFilter
-[Shockwave_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=ShockwaveFilter
 [SimpleLightmap_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=SimpleLightmapFilter
 [TiltShift_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=TiltShiftFilter
 [Twist_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=TwistFilter

@@ -1,81 +1,273 @@
 {
-  "name": "pixi-filters-monorepo",
-  "private": true,
-  "workspaces": [
-    "bundle",
-    "filters/*",
-    "tools/*"
-  ],
-  "scripts": {
-    "start": "run-p watch watch:tools demo",
-    "clean": "git clean -fxd",
-    "clean:build": "rimraf \"{filters,tools}/*/dist\" \"bundle/dist\"",
-    "copy:bundle": "copyfiles -f \"bundle/dist/browser/*\" dist",
-    "copy:screenshots": "copyfiles tools/screenshots/dist/* dist",
-    "copy:demo": "copyfiles -f tools/demo/index.* dist/demo",
-    "copy:demoimages": "copyfiles -f tools/demo/images/* dist/demo/images",
-    "predist": "rimraf dist/*",
-    "dist": "run-s build build:types docs copy:*",
-    "predocs": "rimraf dist/docs/*",
-    "docs": "webdoc -R README.md",
-    "lint": "eslint --ext .js --ext .ts filters bundle tools --ignore-path .gitignore --max-warnings 0",
-    "types": "tsc -noEmit",
-    "lint:fix": "npm run lint -- --fix",
-    "demo": "open-cli http://localhost:8080/tools/demo/index.html && http-server . -s -c-1",
-    "examples": "run-s demo",
-    "prebuild": "run-s lint types clean:build",
-    "prebuild:types": "rimraf out",
-    "build:types": "tsc && api-extractor-lerna-monorepo",
-    "postbuild:types": "rimraf out",
-    "build": "run-s build:prod build:tools",
-    "build:dev": "rollup -c",
-    "build:prod": "cross-env NODE_ENV=production rollup -c",
-    "build:tools": "workspaces-run --only=\"@tools/{demo,screenshots}\" -- npm run build",
-    "watch:tools": "workspaces-run --parallel --only=\"@tools/demo\" -- npm run watch",
-    "watch:build": "rollup -cw",
-    "watch": "run-p watch:*",
-    "prerelease": "run-s build",
-    "release": "lerna version --exact",
-    "version": "npx --yes npm@7.20.2 i --package-lock-only && git add package-lock.json",
-    "publish-ci": "lerna publish from-package --yes --no-verify-access"
+  "name": "pixi-filters",
+  "version": "8.0.0",
+  "exports": {
+    ".": {
+      "import": "./lib/index.mjs",
+      "require": "./lib/index.js",
+      "types": "./lib/index.d.ts"
+    },
+    "./adjustment": {
+      "import": "./lib/adjustment/index.mjs",
+      "require": "./lib/adjustment/index.js",
+      "types": "./lib/adjustment/index.d.ts"
+    },
+    "./advanced-bloom": {
+      "import": "./lib/advanced-bloom/index.mjs",
+      "require": "./lib/advanced-bloom/index.js",
+      "types": "./lib/advanced-bloom/index.d.ts"
+    },
+    "./ascii": {
+      "import": "./lib/ascii/index.mjs",
+      "require": "./lib/ascii/index.js",
+      "types": "./lib/ascii/index.d.ts"
+    },
+    "./bevel": {
+      "import": "./lib/bevel/index.mjs",
+      "require": "./lib/bevel/index.js",
+      "types": "./lib/bevel/index.d.ts"
+    },
+    "./bloom": {
+      "import": "./lib/bloom/index.mjs",
+      "require": "./lib/bloom/index.js",
+      "types": "./lib/bloom/index.d.ts"
+    },
+    "./bulge-pinch": {
+      "import": "./lib/bulge-pinch/index.mjs",
+      "require": "./lib/bulge-pinch/index.js",
+      "types": "./lib/bulge-pinch/index.d.ts"
+    },
+    "./color-gradient": {
+      "import": "./lib/color-gradient/index.mjs",
+      "require": "./lib/color-gradient/index.js",
+      "types": "./lib/color-gradient/index.d.ts"
+    },
+    "./color-map": {
+      "import": "./lib/color-map/index.mjs",
+      "require": "./lib/color-map/index.js",
+      "types": "./lib/color-map/index.d.ts"
+    },
+    "./color-overlay": {
+      "import": "./lib/color-overlay/index.mjs",
+      "require": "./lib/color-overlay/index.js",
+      "types": "./lib/color-overlay/index.d.ts"
+    },
+    "./color-replace": {
+      "import": "./lib/color-replace/index.mjs",
+      "require": "./lib/color-replace/index.js",
+      "types": "./lib/color-replace/index.d.ts"
+    },
+    "./convolution": {
+      "import": "./lib/convolution/index.mjs",
+      "require": "./lib/convolution/index.js",
+      "types": "./lib/convolution/index.d.ts"
+    },
+    "./cross-hatch": {
+      "import": "./lib/cross-hatch/index.mjs",
+      "require": "./lib/cross-hatch/index.js",
+      "types": "./lib/cross-hatch/index.d.ts"
+    },
+    "./crt": {
+      "import": "./lib/crt/index.mjs",
+      "require": "./lib/crt/index.js",
+      "types": "./lib/crt/index.d.ts"
+    },
+    "./dot": {
+      "import": "./lib/dot/index.mjs",
+      "require": "./lib/dot/index.js",
+      "types": "./lib/dot/index.d.ts"
+    },
+    "./drop-shadow": {
+      "import": "./lib/drop-shadow/index.mjs",
+      "require": "./lib/drop-shadow/index.js",
+      "types": "./lib/drop-shadow/index.d.ts"
+    },
+    "./emboss": {
+      "import": "./lib/emboss/index.mjs",
+      "require": "./lib/emboss/index.js",
+      "types": "./lib/emboss/index.d.ts"
+    },
+    "./glitch": {
+      "import": "./lib/glitch/index.mjs",
+      "require": "./lib/glitch/index.js",
+      "types": "./lib/glitch/index.d.ts"
+    },
+    "./glow": {
+      "import": "./lib/glow/index.mjs",
+      "require": "./lib/glow/index.js",
+      "types": "./lib/glow/index.d.ts"
+    },
+    "./godray": {
+      "import": "./lib/godray/index.mjs",
+      "require": "./lib/godray/index.js",
+      "types": "./lib/godray/index.d.ts"
+    },
+    "./grayscale": {
+      "import": "./lib/grayscale/index.mjs",
+      "require": "./lib/grayscale/index.js",
+      "types": "./lib/grayscale/index.d.ts"
+    },
+    "./hsl-adjustment": {
+      "import": "./lib/hsl-adjustment/index.mjs",
+      "require": "./lib/hsl-adjustment/index.js",
+      "types": "./lib/hsl-adjustment/index.d.ts"
+    },
+    "./kawase-blur": {
+      "import": "./lib/kawase-blur/index.mjs",
+      "require": "./lib/kawase-blur/index.js",
+      "types": "./lib/kawase-blur/index.d.ts"
+    },
+    "./motion-blur": {
+      "import": "./lib/motion-blur/index.mjs",
+      "require": "./lib/motion-blur/index.js",
+      "types": "./lib/motion-blur/index.d.ts"
+    },
+    "./multi-color-replace": {
+      "import": "./lib/multi-color-replace/index.mjs",
+      "require": "./lib/multi-color-replace/index.js",
+      "types": "./lib/multi-color-replace/index.d.ts"
+    },
+    "./old-film": {
+      "import": "./lib/old-film/index.mjs",
+      "require": "./lib/old-film/index.js",
+      "types": "./lib/old-film/index.d.ts"
+    },
+    "./outline": {
+      "import": "./lib/outline/index.mjs",
+      "require": "./lib/outline/index.js",
+      "types": "./lib/outline/index.d.ts"
+    },
+    "./pixelate": {
+      "import": "./lib/pixelate/index.mjs",
+      "require": "./lib/pixelate/index.js",
+      "types": "./lib/pixelate/index.d.ts"
+    },
+    "./radial-blur": {
+      "import": "./lib/radial-blur/index.mjs",
+      "require": "./lib/radial-blur/index.js",
+      "types": "./lib/radial-blur/index.d.ts"
+    },
+    "./reflection": {
+      "import": "./lib/reflection/index.mjs",
+      "require": "./lib/reflection/index.js",
+      "types": "./lib/reflection/index.d.ts"
+    },
+    "./rgb-split": {
+      "import": "./lib/rgb-split/index.mjs",
+      "require": "./lib/rgb-split/index.js",
+      "types": "./lib/rgb-split/index.d.ts"
+    },
+    "./shockwave": {
+      "import": "./lib/shockwave/index.mjs",
+      "require": "./lib/shockwave/index.js",
+      "types": "./lib/shockwave/index.d.ts"
+    },
+    "./simple-lightmap": {
+      "import": "./lib/simple-lightmap/index.mjs",
+      "require": "./lib/simple-lightmap/index.js",
+      "types": "./lib/simple-lightmap/index.d.ts"
+    },
+    "./tilt-shift": {
+      "import": "./lib/tilt-shift/index.mjs",
+      "require": "./lib/tilt-shift/index.js",
+      "types": "./lib/tilt-shift/index.d.ts"
+    },
+    "./twist": {
+      "import": "./lib/twist/index.mjs",
+      "require": "./lib/twist/index.js",
+      "types": "./lib/twist/index.d.ts"
+    },
+    "./zoom-blur": {
+      "import": "./lib/zoom-blur/index.mjs",
+      "require": "./lib/zoom-blur/index.js",
+      "types": "./lib/zoom-blur/index.d.ts"
+    },
+    "./defaults": {
+      "import": "./lib/defaults/index.mjs",
+      "require": "./lib/defaults/index.js",
+      "types": "./lib/defaults/index.d.ts"
+    }
   },
-  "engines": {
-    "node": ">=16",
-    "yarn": "please-use-npm",
-    "npm": ">=7"
+  "main": "lib/index.js",
+  "module": "lib/index.mjs",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "clean": "xs clean",
+    "prestart": "npm run build",
+    "start": "xs serve",
+    "watch": "xs watch",
+    "lint": "xs lint",
+    "lint:fix": "xs lint --fix",
+    "types": "xs types",
+    "build": "xs build && npm run build:demo && npm run build:screenshots",
+    "build:screenshots": "electron tools/screenshots/main.js",
+    "build:demo": "rollup -c rollup.config.demo.js",
+    "docs": "xs docs",
+    "deploy:ci": "npm run build && xs docs",
+    "postdeploy:ci": "mkdirp deploy && run-s copy:*",
+    "copy:dist": "copyfiles -u 1 \"dist/**/*\" deploy/",
+    "copy:docs": "copyfiles \"docs/**/*\" deploy",
+    "copy:screenshots": "copyfiles tools/screenshots/dist/* deploy",
+    "copy:demo": "copyfiles -f tools/demo/index.* deploy/demo",
+    "copy:demoimages": "copyfiles -f tools/demo/images/* deploy/demo/images",
+    "deploy": "xs deploy",
+    "release": "xs bump,test,deploy,git-push",
+    "publish-ci": "xs publish",
+    "generate-exports": "node --no-warnings=ExperimentalWarning scripts/generate-exports.mjs"
   },
   "pre-commit": [
     "lint",
     "types"
   ],
+  "files": [
+    "lib",
+    "dist"
+  ],
+  "eslintConfig": {
+    "extends": "@pixi/eslint-config"
+  },
   "devDependencies": {
-    "@microsoft/api-extractor": "~7.20.0",
-    "@rollup/plugin-commonjs": "^11.0.0",
-    "@pixi-build-tools/api-extractor-lerna-monorepo": "^1.1.0",
     "@pixi/eslint-config": "^4.0.1",
+    "@pixi/extension-scripts": "^2.3.0",
     "@pixi/webdoc-template": "^1.5.5",
-    "@rollup/plugin-node-resolve": "^11.0.1",
+    "@types/gradient-parser": "^0.1.2",
     "@webdoc/cli": "^2.2.0",
+    "base64-to-image": "^1.0.2",
     "copyfiles": "^2.4.1",
     "cross-env": "^7.0.3",
+    "electron": "^12.0.0",
     "eslint": "^8.32.0",
+    "fs-extra": "^7.0.1",
+    "gifencoder": "^2.0.1",
+    "gradient-parser": "^1.0.2",
     "http-server": "^14.1.1",
-    "lerna": "^3.13.4",
     "magic-string": "^0.27.0",
     "npm-run-all": "^4.1.5",
     "open-cli": "^7.1.0",
+    "pixi.js": "^8.0.0-X",
     "pre-commit": "^1.2.2",
     "rimraf": "^4.1.1",
-    "rollup": "^2.35.1",
-    "rollup-plugin-esbuild": "^4.10.1",
-    "rollup-plugin-string": "^3.0.0",
     "tslib": "^2.0.3",
-    "typescript": "^4.8.0",
-    "workspaces-run": "^1.0.1"
+    "typescript": "^4.8.0"
   },
-  "eslintConfig": {
-    "extends": [
-      "@pixi/eslint-config"
-    ]
+  "peerDependencies": {
+    "pixi.js": ">=8.0.0-0"
+  },
+  "extensionConfig": {
+    "serve": "tools/demo",
+    "docsName": "PixiJS Filters",
+    "docsCopyright": "PixiJS Copyright © 2013-2024 PixiJS.",
+    "docsGoogleAnalytics": "UA-103772589-3",
+    "docsTitle": "PixiJS Filters API Documentation",
+    "docsDescription": "Documentation for PixiJS Filters library",
+    "docsKeyword": "docs, documentation, pixi, pixijs, filters, webgl, ascii, bloom, convolution, cross-hatch, dotfilter, emboss, pixelate, twist, tiltshift",
+    "lint": [
+      "src",
+      "examples",
+      "scripts",
+      "tools/demo/src",
+      "tools/screenshots/*.js"
+    ],
+    "moduleSource": "src/{,*/}index.ts"
   }
 }

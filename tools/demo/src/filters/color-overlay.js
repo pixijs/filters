@@ -2,7 +2,7 @@ export default function ()
 {
     this.addFilter('ColorOverlayFilter', {
         fishOnly: true,
-        args: [0xff0000, 1],
+        args: { color: 0xff0000, alpha: 1 },
         oncreate(folder)
         {
             folder.addColor(this, 'color');

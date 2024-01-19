@@ -1,8 +1,6 @@
 export default function ()
 {
-    const app = this;
-
-    app.addFilter('AdjustmentFilter', {
+    this.addFilter('AdjustmentFilter', {
         oncreate(folder)
         {
             folder.add(this, 'gamma', 0, 5);

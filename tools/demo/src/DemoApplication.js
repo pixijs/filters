@@ -1,22 +1,19 @@
-import * as filters from 'pixi-filters';
-import {
+import PixiFilters, {
     Application,
-    settings,
+    Assets,
     Container,
+    EventEmitter,
     Rectangle,
     Sprite,
-    TilingSprite,
-    Assets,
-    utils,
-    filters as externalFilters } from 'pixi.js';
-
-const { EventEmitter } = utils;
+    TilingSprite
+} from 'pixi.js';
+import * as filters from '../../../lib';
 
 /* global lil,ga*/
 /**
  * Demo show a bunch of fish and a lil-gui controls
  * @class
- * @extends PIXI.Application
+ * @extends Application
  */
 export default class DemoApplication extends Application
 {
@@ -32,14 +29,11 @@ export default class DemoApplication extends Application
         const initHeight = domElement.offsetHeight;
 
         super({
-            view: document.querySelector('#stage'),
             width: initWidth,
             height: initHeight,
             autoStart: false,
-            backgroundColor: 0x000000,
+            backgroundColor: 0xFF0000,
         });
-
-        settings.PRECISION_FRAGMENT = 'highp';
 
         this.domElement = domElement;
         this.resources = null;
@@ -55,6 +49,7 @@ export default class DemoApplication extends Application
         this.fishes = [];
         this.fishFilters = [];
         this.pondFilters = [];
+
         this.filterArea = new Rectangle();
         this.padding = 100;
         this.bounds = new Rectangle(
@@ -94,15 +89,14 @@ export default class DemoApplication extends Application
     {
         Assets.addBundle('bundle', manifest);
         this.resources = await Assets.loadBundle('bundle');
-        this.init();
+        this.setup();
         this.start();
     }
 
-    /**
-     * Called when the load is completed
-     */
-    init()
+    setup()
     {
+        document.body.appendChild(this.canvas);
+
         const { resources } = this;
         const { bounds, initWidth, initHeight } = this;
 
@@ -140,11 +134,11 @@ export default class DemoApplication extends Application
         }
 
         // Setup the tiling sprite
-        this.overlay = new TilingSprite(
-            resources.overlay,
-            initWidth,
-            initHeight,
-        );
+        this.overlay = new TilingSprite({
+            texture: resources.overlay,
+            width: initWidth,
+            height: initHeight,
+        });
 
         // Add the overlay
         this.pond.addChild(this.overlay);
@@ -211,13 +205,17 @@ export default class DemoApplication extends Application
      * Animate the fish, overlay and filters (if applicable)
      * @param {number} delta - % difference in time from last frame render
      */
-    animate(delta)
+    animate(time)
     {
+        const delta = time.deltaTime;
+
         this.animateTimer += delta;
 
         const { bounds, animateTimer, overlay } = this;
 
         this.events.emit('animate', delta, animateTimer);
+
+        this.pond.filters = this.pondFilters;
 
         if (!this.animating)
         {
@@ -233,7 +231,7 @@ export default class DemoApplication extends Application
             const fish = this.fishes[i];
 
             fish.direction += fish.turnSpeed * 0.01;
-
+            fish.filters = this.fishFilters;
             fish.x += Math.sin(fish.direction) * fish.speed;
             fish.y += Math.cos(fish.direction) * fish.speed;
 
@@ -262,14 +260,14 @@ export default class DemoApplication extends Application
      * Add a new filter
      * @param {string} id Class name
      * @param {object|function} options The class name of filter or options
-     * @param {string} [options.id] The name of the PIXI.filters class
+     * @param {string} [options.id] The name of the filter class
      * @param {boolean} [options.global] Filter is in pixi.js
      * @param {array} [options.args] Constructor arguments
      * @param {boolean} [options.fishOnly=false] Apply to fish only, not whole scene
      * @param {boolean} [options.enabled=false] Filter is enabled by default
      * @param {function} [oncreate] Function takes filter and gui folder as
      *        arguments and is scoped to the Demo application.
-     * @return {PIXI.Filter} Instance of new filter
+     * @return {Filter} Instance of new filter
      */
     addFilter(id, options)
     {
@@ -295,23 +293,53 @@ export default class DemoApplication extends Application
 
         const app = this;
         const folder = this.gui.addFolder(options.name).close();
-        const ClassRef = filters[id] || externalFilters[id];
+        const ClassRef = filters[id] || PixiFilters[id];
 
         if (!ClassRef)
         {
             throw new Error(`Unable to find class name with "${id}"`);
         }
 
-        const filter = new ClassRef(...(options.args || []));
+        const filter = new ClassRef(options.args);
 
         // Set enabled status
         filter.enabled = (options.enabled && this.enabledFilters.length === 0) || this.enabledFilters.includes(id);
+
+        // TODO: This is a hack for the issue with the 'enabled' toggling
+        // https://github.com/orgs/pixijs/projects/2/views/4?pane=issue&itemId=48582986
+        const toggleFilter = (enabled) =>
+        {
+            if (enabled)
+            {
+                if (options.fishOnly)
+                {
+                    this.fishFilters.push(filter);
+                }
+                else
+                {
+                    this.pondFilters.push(filter);
+                }
+            }
+            else if (options.fishOnly)
+            {
+                const index = this.fishFilters.indexOf(filter);
+
+                if (index !== -1) this.fishFilters.splice(index, 1);
+            }
+            else
+            {
+                const index = this.pondFilters.indexOf(filter);
+
+                if (index !== -1) this.pondFilters.splice(index, 1);
+            }
+        };
 
         // Track enabled change with analytics
         folder.add(filter, 'enabled').onChange((enabled) =>
         {
             ga('send', 'event', id, enabled ? 'enabled' : 'disabled');
 
+            toggleFilter(enabled);
             app.events.emit('enable', enabled);
 
             this.render();
@@ -336,14 +364,7 @@ export default class DemoApplication extends Application
             options.oncreate.call(filter, folder);
         }
 
-        if (options.fishOnly)
-        {
-            this.fishFilters.push(filter);
-        }
-        else
-        {
-            this.pondFilters.push(filter);
-        }
+        toggleFilter(filter.enabled);
 
         return filter;
     }
