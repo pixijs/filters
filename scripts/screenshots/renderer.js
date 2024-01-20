@@ -12,7 +12,7 @@ const GIFEncoder = require('gifencoder');
 
 const sourceAssetSize = { width: 640, height: 320 };
 const outputOptions = {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, '..', '..', 'screenshots'),
     width: 280,
     height: 140,
     border: {

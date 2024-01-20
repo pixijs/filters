@@ -5,7 +5,7 @@ import source from './grayscale.wgsl';
 
 /**
  * This filter applies a grayscale effect.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/grayscale.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/grayscale.png)
  *
  * @class
  * @extends Filter

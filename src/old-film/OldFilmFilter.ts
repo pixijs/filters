@@ -62,7 +62,7 @@ export interface OldFilmFilterOptions
 
 /**
  * The OldFilmFilter applies a Old film effect to an object.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/old-film.gif)
+ * ![original](../screenshots/original.png)![filter](../screenshots/old-film.gif)
  *
  * @class
  * @extends Filter

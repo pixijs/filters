@@ -22,7 +22,7 @@ export interface BloomFilterOptions
 /**
  * The BloomFilter applies a Gaussian blur to an object.
  * The strength of the blur can be set for x- and y-axis separately.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/bloom.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/bloom.png)
  *
  * @class
  * @extends Filter

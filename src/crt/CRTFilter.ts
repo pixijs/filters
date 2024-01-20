@@ -68,7 +68,7 @@ export interface CRTFilterOptions
 
 /**
  * The CRTFilter applies a CRT effect to an object.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/crt.gif)
+ * ![original](../screenshots/original.png)![filter](../screenshots/crt.gif)
  *
  * @class
  * @extends Filter

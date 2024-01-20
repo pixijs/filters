@@ -37,7 +37,7 @@ export interface ZoomBlurFilterOptions
 
 /**
  * The ZoomFilter applies a Zoom blur to an object.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/zoom-blur.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/zoom-blur.png)
  *
  * @class
  * @extends Filter

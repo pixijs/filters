@@ -33,7 +33,7 @@ export interface DotFilterOptions
 /**
  * This filter applies a dotscreen effect making display objects appear to be made out of
  * black and white halftone dots like an old printer.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/dot.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/dot.png)
  *
  * @class
  * @extends Filter

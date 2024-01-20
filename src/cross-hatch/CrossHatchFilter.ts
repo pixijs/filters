@@ -5,7 +5,7 @@ import source from './crosshatch.wgsl';
 
 /**
  * A Cross Hatch effect filter.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/cross-hatch.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/cross-hatch.png)
  *
  * @class
  * @extends Filter

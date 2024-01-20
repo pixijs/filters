@@ -40,7 +40,7 @@ export interface OutlineFilterOptions
  * OutlineFilter, originally by mishaa
  * http://www.html5gamedevs.com/topic/10640-outline-a-sprite-change-certain-colors/?p=69966
  * http://codepen.io/mishaa/pen/emGNRB<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/outline.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/outline.png)
  *
  * @class
  * @extends Filter

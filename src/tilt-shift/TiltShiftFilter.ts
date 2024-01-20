@@ -21,7 +21,7 @@ export interface TiltShiftFilterOptions
 
 /**
  * A TiltShift Filter. Manages the pass of both a TiltShiftXFilter and TiltShiftYFilter.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/tilt-shift.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/tilt-shift.png)
  *
  * @class
  * @extends Filter

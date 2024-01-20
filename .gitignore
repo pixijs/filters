@@ -10,4 +10,5 @@ tools/demo/index.js
 tools/demo/index.js.map
 .DS_Store
 /out
+/screenshots
 example.api.*

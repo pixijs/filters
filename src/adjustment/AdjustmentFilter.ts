@@ -52,7 +52,7 @@ export interface AdjustmentFilterOptions
  * This is a faster and much simpler to use than
  * {@link http://pixijs.download/release/docs/ColorMatrixFilter.html ColorMatrixFilter}
  * because it does not use a matrix.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/adjustment.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/adjustment.png)
  *
  * @class
  * @extends Filter

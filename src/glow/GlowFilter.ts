@@ -50,7 +50,7 @@ export interface GlowFilterOptions
 /**
  * GlowFilter, originally by mishaa
  * [codepen]{@link http://codepen.io/mishaa/pen/raKzrm}.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/glow.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/glow.png)
  * @class
  *
  * @extends Filter

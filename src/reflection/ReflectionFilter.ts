@@ -45,7 +45,7 @@ export interface ReflectionFilterOptions
 
 /**
  * Applies a reflection effect to simulate the reflection on water with waves.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/reflection.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/reflection.png)
  *
  * @class
  * @extends Filter

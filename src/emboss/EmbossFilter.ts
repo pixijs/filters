@@ -14,7 +14,7 @@ export interface EmbossFilterOptions
 
 /**
  * An RGB Split Filter.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/emboss.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/emboss.png)
  *
  * @class
  * @extends Filter
