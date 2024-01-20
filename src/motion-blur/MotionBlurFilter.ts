@@ -28,7 +28,7 @@ export interface MotionBlurFilterOptions
 
 /**
  * The MotionBlurFilter applies a Motion blur to an object.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/motion-blur.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/motion-blur.png)
  *
  * @class
  * @extends Filter

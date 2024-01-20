@@ -24,7 +24,7 @@ export interface RGBSplitFilterOptions
 
 /**
  * An RGB Split Filter.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/rgb.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/rgb.png)
  *
  * @class
  * @extends Filter

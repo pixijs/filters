@@ -52,7 +52,7 @@ export interface GlitchFilterOptions
 
 /**
  * The GlitchFilter applies a glitch effect to an object.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/glitch.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/glitch.png)
  *
  * @class
  * @extends Filter

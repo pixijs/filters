@@ -31,7 +31,7 @@ export interface TwistFilterOptions
 
 /**
  * This filter applies a twist effect making display objects appear twisted in the given direction.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/twist.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/twist.png)
  *
  * @class
  * @extends Filter

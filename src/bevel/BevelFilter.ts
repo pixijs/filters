@@ -41,7 +41,7 @@ export interface BevelFilterOptions
 
 /**
  * Bevel Filter.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/bevel.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/bevel.png)
  *
  * @class
  * @extends Filter

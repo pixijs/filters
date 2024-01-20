@@ -62,7 +62,7 @@ export interface DropShadowFilterOptions
 
 /**
  * Drop shadow filter.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/drop-shadow.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/drop-shadow.png)
  * @class
  * @extends Filter
  * @see {@link https://www.npmjs.com/package/@pixi/filter-drop-shadow|@pixi/filter-drop-shadow}

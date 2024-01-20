@@ -28,7 +28,7 @@ export interface BulgePinchFilterOptions
 
 /**
  * Bulges or pinches the image in a circle.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/bulge-pinch.gif)
+ * ![original](../screenshots/original.png)![filter](../screenshots/bulge-pinch.gif)
  *
  * @class
  * @extends Filter

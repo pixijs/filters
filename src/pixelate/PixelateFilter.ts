@@ -7,7 +7,7 @@ type Size = number | number[] | Point;
 
 /**
  * This filter applies a pixelate effect making display objects appear 'blocky'.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/pixelate.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/pixelate.png)
  *
  * @class
  * @extends Filter

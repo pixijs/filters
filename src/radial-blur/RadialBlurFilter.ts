@@ -33,7 +33,7 @@ export interface RadialBlurFilterOptions
 
 /**
  * The RadialBlurFilter applies a Motion blur to an object.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/radial-blur.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/radial-blur.png)
  *
  * @class
  * @extends Filter

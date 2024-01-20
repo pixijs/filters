@@ -29,7 +29,7 @@ export interface MultiColorReplaceFilterOptions
 /**
  * Filter for replacing a color with another color. Similar to ColorReplaceFilter, but support multiple
  * colors.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/multi-color-replace.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/multi-color-replace.png)
  * @class
  * @extends Filter
  * @see {@link https://www.npmjs.com/package/@pixi/filter-multi-color-replace|@pixi/filter-multi-color-replace}

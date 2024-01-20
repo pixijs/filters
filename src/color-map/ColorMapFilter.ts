@@ -23,7 +23,7 @@ export interface ColorMapFilterOptions
 
 /**
  * The ColorMapFilter applies a color-map effect to an object.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/color-map.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/color-map.png)
  *
  * @class
  * @extends Filter

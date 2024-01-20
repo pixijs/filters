@@ -1,10 +1,10 @@
-const { app, BrowserWindow } = require('electron');
-const path = require('path');
-const url = require('url');
+const { app, BrowserWindow, ipcMain } = require('electron');
+const path = require('node:path');
+const url = require('node:url');
 
-const debug = process.argv.indexOf('--debug') > -1;
+const debug = !!process.env.DEBUG_SCREENSHOTS;
 
-app.on('ready', () =>
+app.whenReady().then(() =>
 {
     const main = new BrowserWindow({
         width: 800,
@@ -23,6 +23,8 @@ app.on('ready', () =>
         search: debug ? 'debug' : '',
         slashes: true,
     }));
+
+    ipcMain.once('screenshots-done', () => main.close());
 });
 
 // Quit when all windows are closed.

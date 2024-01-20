@@ -30,7 +30,7 @@ export interface AsciiFilterOptions
 
 /**
  * An ASCII filter.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/ascii.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/ascii.png)
  *
  * @class
  * @extends Filter

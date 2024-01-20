@@ -29,7 +29,7 @@ export interface SimpleLightmapFilterOptions
 * You may have to use it with `filter.dontFit = true`,
 *  until we rewrite this using same approach as for DisplacementFilter.
 *
-* ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/simple-lightmap.png)
+* ![original](../screenshots/original.png)![filter](../screenshots/simple-lightmap.png)
 * @class
 * @extends Filter
 * @see {@link https://www.npmjs.com/package/@pixi/filter-simple-lightmap|@pixi/filter-simple-lightmap}

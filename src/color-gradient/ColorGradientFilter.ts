@@ -34,7 +34,7 @@ function sortColorStops(stops: ColorStop[]): ColorStop[]
 
 /**
  * Render a colored gradient.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/color-gradient.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/color-gradient.png)
  *
  * @class
  * @extends Filter

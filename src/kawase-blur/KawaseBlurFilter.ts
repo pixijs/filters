@@ -34,7 +34,7 @@ export interface KawaseBlurFilterOptions
 
 /**
  * A much faster blur than Gaussian blur, but more complicated to use.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/kawase-blur.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/kawase-blur.png)
  *
  * @see https://software.intel.com/en-us/blogs/2014/07/15/an-investigation-of-fast-real-time-gpu-based-image-blur-algorithms
  * @class

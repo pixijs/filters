@@ -35,7 +35,7 @@ export interface ConvolutionFilterOptions
  * A wide variety of image effects can be achieved through convolutions, including blurring, edge
  * detection, sharpening, embossing, and beveling. The matrix should be specified as a 9 point Array.
  * See https://docs.gimp.org/2.10/en/gimp-filter-convolution-matrix.html for more info.<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/convolution.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/convolution.png)
  *
  * @class
  * @extends Filter

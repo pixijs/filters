@@ -35,7 +35,7 @@ export interface HslAdjustmentFilterOptions
 }
 
 /**
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/hsl-adjustment.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/hsl-adjustment.png)
  *
  * @class
  * @extends Filter

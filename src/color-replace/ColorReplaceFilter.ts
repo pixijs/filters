@@ -32,7 +32,7 @@ export interface ColorReplaceFilterOptions
 /**
  * ColorReplaceFilter, originally by mishaa, updated by timetocode
  * http://www.html5gamedevs.com/topic/10640-outline-a-sprite-change-certain-colors/?p=69966<br>
- * ![original](../tools/screenshots/dist/original.png)![filter](../tools/screenshots/dist/color-replace.png)
+ * ![original](../screenshots/original.png)![filter](../screenshots/color-replace.png)
  *
  * @class
  * @extends Filter
