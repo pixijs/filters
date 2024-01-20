@@ -1,13 +1,11 @@
-const PIXI = require('pixi.js');
-
-window.PIXI = PIXI;
+const { Application, Assets, Container, Sprite, ...PIXI } = require('pixi.js');
 const filters = require('../../lib');
 const assert = require('assert');
 const config = require('./config.json');
 const base64ToImage = require('base64-to-image');
-const { remote } = require('electron');
+const { ipcRenderer } = require('electron');
 const fs = require('fs-extra');
-const path = require('path');
+const path = require('node:path');
 const GIFEncoder = require('gifencoder');
 
 const sourceAssetSize = { width: 640, height: 320 };
@@ -21,13 +19,14 @@ const outputOptions = {
     },
 };
 
-const app = new PIXI.Application();
+const app = new Application();
 
 app.init({
     width: outputOptions.width,
     height: outputOptions.height,
     backgroundColor: outputOptions.border.color,
     autoStart: false,
+    preference: 'webgl',
 }).then(() =>
 {
     const frames = {};
@@ -46,7 +45,7 @@ app.init({
     let lightmap;
     let colormap;
 
-    PIXI.Assets.addBundle('assets', [
+    Assets.addBundle('assets', [
         { alias: 'previewBackground', src: path.join(__dirname, 'assets', 'preview_background.png') },
         { alias: 'previewFishes', src: path.join(__dirname, 'assets', 'preview_fishes.png') },
         { alias: 'lightmap', src: path.join(__dirname, 'assets', 'lightmap.png') },
@@ -55,19 +54,19 @@ app.init({
     ]);
 
     // Load image
-    PIXI.Assets.loadBundle('assets').then((resources) =>
+    Assets.loadBundle('assets').then((resources) =>
     {
         lightmap = resources.lightmap;
         colormap = resources.colormap;
-        displacement = new PIXI.Sprite(resources.displacement);
+        displacement = new Sprite(resources.displacement);
 
-        fishes = new PIXI.Sprite(resources.previewFishes);
-        bg = new PIXI.Sprite(resources.previewBackground);
+        fishes = new Sprite(resources.previewFishes);
+        bg = new Sprite(resources.previewBackground);
 
         fishes.scale.set(outputOptions.width / sourceAssetSize.width);
         bg.scale.set(outputOptions.width / sourceAssetSize.width);
 
-        preview = new PIXI.Container();
+        preview = new Container();
         preview.addChild(bg, fishes);
 
         app.stage.addChild(preview);
@@ -143,6 +142,7 @@ app.init({
 
             if (obj.filename)
             {
+                app.render();
                 const base64 = await app.renderer.extract.base64(app.stage);
 
                 // Save image
@@ -156,6 +156,7 @@ app.init({
             }
             else if (obj.frame)
             {
+                app.render();
                 const canvas = app.renderer.extract.canvas(app.stage);
                 const context = canvas.getContext('2d');
 
@@ -166,7 +167,7 @@ app.init({
             }
 
             // Wait for next stack to render next filter
-            setTimeout(next, 0);
+            requestAnimationFrame(next);
         }
         else
         {
@@ -204,7 +205,7 @@ app.init({
             encoder.finish();
 
             // Wait for next stack to render next animation
-            setTimeout(nextAnim, 0);
+            requestAnimationFrame(nextAnim);
         }
         else
         {
@@ -217,10 +218,7 @@ app.init({
         // Only close if debug is off
         if (document.location.search.indexOf('debug') === -1)
         {
-            // close window
-            const browserWindow = remote.getCurrentWindow();
-
-            browserWindow.close();
+            ipcRenderer.send('screenshots-done');
         }
     }
 });
