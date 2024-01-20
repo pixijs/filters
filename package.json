@@ -193,26 +193,25 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "clean": "xs clean",
-    "prestart": "npm run build",
-    "start": "xs serve",
     "watch": "xs watch",
     "watch:demo": "npm run build:demo -- --watch",
     "lint": "xs lint",
     "lint:fix": "xs lint --fix",
     "types": "xs types",
-    "build": "xs build && npm run build:demo && npm run build:screenshots",
+    "build": "xs build && run-s build:*",
     "build:screenshots": "electron tools/screenshots/main.js",
     "build:demo": "rollup -c rollup.config.demo.js",
     "docs": "xs docs",
-    "deploy:ci": "npm run build && xs docs",
+    "deploy:ci": "run-s build && xs docs",
     "postdeploy:ci": "mkdirp deploy && run-s copy:*",
     "copy:dist": "copyfiles -u 1 \"dist/**/*\" deploy/",
     "copy:docs": "copyfiles \"docs/**/*\" deploy",
     "copy:screenshots": "copyfiles tools/screenshots/dist/* deploy",
     "copy:demo": "copyfiles -f tools/demo/index.* deploy/demo",
     "copy:demoimages": "copyfiles -f tools/demo/images/* deploy/demo/images",
-    "deploy": "xs deploy",
-    "release": "xs bump,test,deploy,git-push",
+    "predeploy": "run-s clean build docs copy:*",
+    "deploy": "xs upload",
+    "release": "xs bump,test && run-s deploy && xs git-push",
     "publish-ci": "xs publish",
     "generate-exports": "node --no-warnings=ExperimentalWarning scripts/generate-exports.mjs"
   },
@@ -229,7 +228,7 @@
   },
   "devDependencies": {
     "@pixi/eslint-config": "^4.0.1",
-    "@pixi/extension-scripts": "^2.3.0",
+    "@pixi/extension-scripts": "^2.4.0",
     "@pixi/webdoc-template": "^1.5.5",
     "@types/gradient-parser": "^0.1.2",
     "@webdoc/cli": "^2.2.0",
@@ -269,6 +268,8 @@
       "tools/demo/src",
       "tools/screenshots/*.js"
     ],
+    "deployFiles": "**",
+    "deployRoot": "deploy",
     "moduleSource": "src/{,*/}index.ts"
   }
 }
