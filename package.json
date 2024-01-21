@@ -263,7 +263,7 @@
       "examples",
       "scripts"
     ],
-    "deployFiles": "{dist,screenshots,examples,docs}/**",
+    "deployFiles": "{dist,screenshots,examples,docs,demo}/**",
     "moduleSource": "src/{,*/}index.ts"
   }
 }
