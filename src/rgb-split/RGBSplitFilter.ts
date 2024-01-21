@@ -28,7 +28,6 @@ export interface RGBSplitFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-rgb-split|@pixi/filter-rgb-split}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class RGBSplitFilter extends Filter

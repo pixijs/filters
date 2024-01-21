@@ -44,7 +44,6 @@ export interface OutlineFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-outline|@pixi/filter-outline}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters} *
  * @example
  *  someSprite.filters = [new OutlineFilter(2, 0x99ff99)];

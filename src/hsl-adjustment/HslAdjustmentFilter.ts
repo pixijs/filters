@@ -39,7 +39,6 @@ export interface HslAdjustmentFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-hsl-adjustment|@pixi/filter-hsl-adjustment}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class HslAdjustmentFilter extends Filter

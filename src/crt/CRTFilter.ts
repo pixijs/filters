@@ -72,7 +72,6 @@ export interface CRTFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-crt|@pixi/filter-crt}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class CRTFilter extends Filter

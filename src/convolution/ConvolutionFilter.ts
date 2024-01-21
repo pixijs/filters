@@ -39,7 +39,6 @@ export interface ConvolutionFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-convolution|@pixi/filter-convolution}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class ConvolutionFilter extends Filter

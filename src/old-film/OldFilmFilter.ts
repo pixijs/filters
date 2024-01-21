@@ -66,7 +66,6 @@ export interface OldFilmFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-old-film|@pixi/filter-old-film}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class OldFilmFilter extends Filter

@@ -56,7 +56,6 @@ export interface GlitchFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-glitch|@pixi/filter-glitch}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class GlitchFilter extends Filter

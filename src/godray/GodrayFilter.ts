@@ -58,7 +58,6 @@ export interface GodrayFilterOptions
  * ![original](../screenshots/original.png)![filter](../screenshots/godray.gif)
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-godray|@pixi/filter-godray}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  *
  * @example

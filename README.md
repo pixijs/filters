@@ -2,13 +2,21 @@
 
 [![Node.js CI](https://github.com/pixijs/filters/workflows/Node.js%20CI/badge.svg)](https://github.com/pixijs/filters/actions/workflows/nodejs.yml?query=branch%3Amain) [![npm version](https://badge.fury.io/js/pixi-filters.svg)](https://www.npmjs.com/package/pixi-filters)
 
+## Compatibility
+
+Depending on your version of PixiJS, you'll need to figure out which major version of PixiJS Filters to use.
+
+| PixiJS      | PixiJS Filters |
+|-------------|----------------|
+| v5.x        | v4.x           |
+| v6.x - v7.x | v5.x           |
+| v8.x        | v6.x           |
+
 ## Demo
 
 [View the PixiJS Filters Demo](https://pixijs.io/filters/examples/) to interactively play with filters to see how they work.
 
 ## Filters
-
-All filters work with PixiJS v8.
 
 | Filter                                                                                                   | Preview                                                                                                         |
 |----------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|

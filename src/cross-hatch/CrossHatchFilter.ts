@@ -9,7 +9,6 @@ import source from './crosshatch.wgsl';
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-cross-hatch|@pixi/filter-cross-hatch}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class CrossHatchFilter extends Filter

@@ -49,7 +49,6 @@ export interface ReflectionFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-reflection|@pixi/filter-reflection}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class ReflectionFilter extends Filter

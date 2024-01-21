@@ -38,7 +38,6 @@ function sortColorStops(stops: ColorStop[]): ColorStop[]
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-color-gradient|@pixi/filter-color-gradient}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class ColorGradientFilter extends Filter

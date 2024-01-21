@@ -45,7 +45,6 @@ export interface BevelFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-bevel|@pixi/filter-bevel}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class BevelFilter extends Filter

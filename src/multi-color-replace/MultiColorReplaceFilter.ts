@@ -32,7 +32,6 @@ export interface MultiColorReplaceFilterOptions
  * ![original](../screenshots/original.png)![filter](../screenshots/multi-color-replace.png)
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-multi-color-replace|@pixi/filter-multi-color-replace}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  *
  * @example

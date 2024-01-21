@@ -32,7 +32,6 @@ export interface BulgePinchFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-bulge-pinch|@pixi/filter-bulge-pinch}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class BulgePinchFilter extends Filter

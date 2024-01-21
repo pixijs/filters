@@ -9,7 +9,6 @@ import source from './grayscale.wgsl';
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-grayscale|@pixi/filter-grayscale}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class GrayscaleFilter extends Filter

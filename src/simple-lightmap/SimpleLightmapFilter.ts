@@ -32,7 +32,6 @@ export interface SimpleLightmapFilterOptions
 * ![original](../screenshots/original.png)![filter](../screenshots/simple-lightmap.png)
 * @class
 * @extends Filter
-* @see {@link https://www.npmjs.com/package/@pixi/filter-simple-lightmap|@pixi/filter-simple-lightmap}
 * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
 *
 * @example

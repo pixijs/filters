@@ -18,7 +18,6 @@ export interface EmbossFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-emboss|@pixi/filter-emboss}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class EmbossFilter extends Filter

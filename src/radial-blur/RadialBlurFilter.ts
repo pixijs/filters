@@ -37,7 +37,6 @@ export interface RadialBlurFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-radial-blur|@pixi/filter-radial-blur}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class RadialBlurFilter extends Filter

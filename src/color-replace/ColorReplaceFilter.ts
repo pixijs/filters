@@ -36,7 +36,6 @@ export interface ColorReplaceFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-color-replace|@pixi/filter-color-replace}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  *
  * @example

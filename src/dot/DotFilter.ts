@@ -37,7 +37,6 @@ export interface DotFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-dot|@pixi/filter-dot}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class DotFilter extends Filter

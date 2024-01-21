@@ -35,7 +35,6 @@ export interface TwistFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-twist|@pixi/filter-twist}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class TwistFilter extends Filter

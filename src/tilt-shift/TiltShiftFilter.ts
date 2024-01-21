@@ -25,7 +25,6 @@ export interface TiltShiftFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-tilt-shift|@pixi/filter-tilt-shift}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class TiltShiftFilter extends TiltShiftAxisFilter

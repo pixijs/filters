@@ -54,7 +54,6 @@ export interface GlowFilterOptions
  * @class
  *
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-glow|@pixi/filter-glow}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  *
  * @example

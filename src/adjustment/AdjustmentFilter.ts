@@ -56,7 +56,6 @@ export interface AdjustmentFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-adjustment|@pixi/filter-adjustment}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class AdjustmentFilter extends Filter

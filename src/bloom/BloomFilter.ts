@@ -26,7 +26,6 @@ export interface BloomFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-bloom|@pixi/filter-bloom}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class BloomFilter extends AlphaFilter

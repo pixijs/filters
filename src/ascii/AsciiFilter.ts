@@ -34,7 +34,6 @@ export interface AsciiFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-ascii|@pixi/filter-ascii}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class AsciiFilter extends Filter

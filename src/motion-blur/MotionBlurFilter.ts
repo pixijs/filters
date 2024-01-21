@@ -32,7 +32,6 @@ export interface MotionBlurFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-motion-blur|@pixi/filter-motion-blur}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class MotionBlurFilter extends Filter

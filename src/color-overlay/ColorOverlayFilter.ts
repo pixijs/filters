@@ -22,7 +22,6 @@ export interface ColorOverlayFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-color-overlay|@pixi/filter-color-overlay}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class ColorOverlayFilter extends Filter

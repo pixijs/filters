@@ -27,7 +27,6 @@ export interface ColorMapFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-color-map|@pixi/filter-color-map}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class ColorMapFilter extends Filter

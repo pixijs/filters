@@ -39,7 +39,6 @@ export interface KawaseBlurFilterOptions
  * @see https://software.intel.com/en-us/blogs/2014/07/15/an-investigation-of-fast-real-time-gpu-based-image-blur-algorithms
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/@pixi/filter-kawase-blur|@pixi/filter-kawase-blur}
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class KawaseBlurFilter extends Filter
