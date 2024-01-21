@@ -2,7 +2,7 @@
 
 > PixiJS filter to apply and animate atmospheric light rays.
 
-[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=GodrayFilter)
+[View demo](https://filters.pixijs.download/main/examples/index.html?enabled=GodrayFilter)
 
 ## Installation
 

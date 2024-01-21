@@ -2,7 +2,7 @@
 
 > PixiJS filter to render a color gradient.
 
-[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=ColorGradientFilter)
+[View demo](https://filters.pixijs.download/main/examples/index.html?enabled=ColorGradientFilter)
 
 ## Installation
 

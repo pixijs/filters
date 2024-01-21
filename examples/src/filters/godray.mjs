@@ -1,5 +1,3 @@
-import { Point } from 'pixi.js';
-
 export default function ()
 {
     const app = this;
@@ -23,7 +21,7 @@ export default function ()
                 }
             });
 
-            app.events.on('animate', () =>
+            app.events.on('animate', function ()
             {
                 if (this.animating)
                 {

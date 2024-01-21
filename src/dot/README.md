@@ -2,7 +2,7 @@
 
 > PixiJS filter to apply a black and white dot effect.
 
-[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=DotFilter)
+[View demo](https://filters.pixijs.download/main/examples/index.html?enabled=DotFilter)
 
 ## Installation
 

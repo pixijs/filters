@@ -2,7 +2,7 @@
 
 > PixiJS filter to apply a twist effect to a DisplayObject.
 
-[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=TwistFilter)
+[View demo](https://filters.pixijs.download/main/examples/index.html?enabled=TwistFilter)
 
 ## Installation
 

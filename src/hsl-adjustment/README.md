@@ -2,7 +2,7 @@
 
 > PixiJS filter to apply a HSL adjustment.
 
-[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=HslAdjustmentFilter)
+[View demo](https://filters.pixijs.download/main/examples/index.html?enabled=HslAdjustmentFilter)
 
 ## Installation
 

@@ -1,6 +1,5 @@
-import { ColorGradientFilter } from '../../../../lib/index.mjs';
-
 const deepCopy = (value) => JSON.parse(JSON.stringify(value));
+const { ColorGradientFilter } = PIXI.filters;
 
 export default function ()
 {

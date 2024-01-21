@@ -2,7 +2,7 @@
 
 > PixiJS filter to apply an emboss effect.
 
-[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=EmbossFilter)
+[View demo](https://filters.pixijs.download/main/examples/index.html?enabled=EmbossFilter)
 
 ## Installation
 

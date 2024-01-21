@@ -2,7 +2,7 @@
 
 > PixiJS filter to render DisplayObject as ASCII text.
 
-[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=AsciiFilter)
+[View demo](https://filters.pixijs.download/main/examples/index.html?enabled=AsciiFilter)
 
 ## Installation
 

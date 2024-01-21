@@ -1,0 +1,10 @@
+{
+    "globals": {
+        "PIXI": true,
+        "lil": true,
+        "ga": true
+    },
+    "rules": {
+        "func-names": "off"
+    }
+}

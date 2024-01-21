@@ -2,7 +2,7 @@
 
 > PixiJS filter to apply an alternative, fast blur effect to Gaussian.
 
-[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=KawaseBlurFilter)
+[View demo](https://filters.pixijs.download/main/examples/index.html?enabled=KawaseBlurFilter)
 
 ## Installation
 

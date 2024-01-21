@@ -2,7 +2,7 @@
 
 > PixiJS filter to overlay all colors with single color.
 
-[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=ColorOverlayFilter)
+[View demo](https://filters.pixijs.download/main/examples/index.html?enabled=ColorOverlayFilter)
 
 ## Installation
 

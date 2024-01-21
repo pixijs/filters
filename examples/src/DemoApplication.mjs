@@ -1,21 +1,5 @@
-import PixiFilters, {
-    Application,
-    Assets,
-    Container,
-    EventEmitter,
-    Rectangle,
-    Sprite,
-    TilingSprite
-} from 'pixi.js';
-import * as filters from '../../../lib';
-
-/* global lil,ga*/
-/**
- * Demo show a bunch of fish and a lil-gui controls
- * @class
- * @extends Application
- */
-export default class DemoApplication extends Application
+/** Demo show a bunch of fish and a lil-gui controls */
+export default class DemoApplication extends PIXI.Application
 {
     constructor()
     {
@@ -36,7 +20,7 @@ export default class DemoApplication extends Application
         this.initHeight = initHeight;
         this.animating = true;
         this.rendering = true;
-        this.events = new EventEmitter();
+        this.events = new PIXI.EventEmitter();
         this.animateTimer = 0;
         this.bg = null;
         this.pond = null;
@@ -45,9 +29,9 @@ export default class DemoApplication extends Application
         this.fishFilters = [];
         this.pondFilters = [];
 
-        this.filterArea = new Rectangle();
+        this.filterArea = new PIXI.Rectangle();
         this.padding = 100;
-        this.bounds = new Rectangle(
+        this.bounds = new PIXI.Rectangle(
             -this.padding,
             -this.padding,
             initWidth + (this.padding * 2),
@@ -93,8 +77,8 @@ export default class DemoApplication extends Application
      */
     async load(manifest)
     {
-        Assets.addBundle('bundle', manifest);
-        this.resources = await Assets.loadBundle('bundle');
+        PIXI.Assets.addBundle('bundle', manifest);
+        this.resources = await PIXI.Assets.loadBundle('bundle');
         this.setup();
         this.start();
     }
@@ -107,13 +91,13 @@ export default class DemoApplication extends Application
         const { bounds, initWidth, initHeight } = this;
 
         // Setup the container
-        this.pond = new Container();
+        this.pond = new PIXI.Container();
         this.pond.filterArea = this.filterArea;
         this.pond.filters = this.pondFilters;
         this.stage.addChild(this.pond);
 
         // Setup the background image
-        this.bg = new Sprite(resources.background);
+        this.bg = new PIXI.Sprite(resources.background);
         this.pond.addChild(this.bg);
 
         // Create and add the fish
@@ -122,7 +106,7 @@ export default class DemoApplication extends Application
         for (let i = 0; i < this.fishCount; i++)
         {
             const id = `fish${(i % fishVariations) + 1}`;
-            const fish = new Sprite(resources[id]);
+            const fish = new PIXI.Sprite(resources[id]);
 
             fish.anchor.set(0.5);
             fish.filters = this.fishFilters;
@@ -140,7 +124,7 @@ export default class DemoApplication extends Application
         }
 
         // Setup the tiling sprite
-        this.overlay = new TilingSprite({
+        this.overlay = new PIXI.TilingSprite({
             texture: resources.overlay,
             width: initWidth,
             height: initHeight,
@@ -299,7 +283,7 @@ export default class DemoApplication extends Application
 
         const app = this;
         const folder = this.gui.addFolder(options.name).close();
-        const ClassRef = filters[id] || PixiFilters[id];
+        const ClassRef = PIXI.filters[id] || PIXI[id];
 
         if (!ClassRef)
         {
