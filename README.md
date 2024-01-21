@@ -12,6 +12,22 @@ Depending on your version of PixiJS, you'll need to figure out which major versi
 | v6.x - v7.x | v5.x           |
 | v8.x        | v6.x           |
 
+## Installation
+
+Installation is available using NPM:
+
+```bash
+npm install pixi-filters
+```
+
+Alternatively, you can use a CDN such as JSDelivr:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/pixi-filters@latest/dist/browser/pixi-filters.min.js"></script>
+```
+
+If all else failes, you can manually download the bundled file from the [releases](https://github.com/pixijs/filters/releases) section and include it in your project.
+
 ## Demo
 
 [View the PixiJS Filters Demo](https://pixijs.io/filters/examples/) to interactively play with filters to see how they work.
@@ -75,22 +91,6 @@ PixiJS has a handful of core filters that are built-in to the PixiJS library.
 | **ColorMatrixFilter** (sepia)<br>[View demo][ColorMatrix_demo]      | ![color-matrix-sepia](https://filters.pixijs.download/main/screenshots/color-matrix-sepia.png?v=3)           |
 | **DisplacementFilter**<br>[View demo][Displacement_demo]        | ![displacement](https://filters.pixijs.download/main/screenshots/displacement.png?v=3)                       |
 | **NoiseFilter**<br>[View demo][Noise_demo]                      | ![noise](https://filters.pixijs.download/main/screenshots/noise.png?v=3)                                     |
-
-## Installation
-
-Installation is available using NPM:
-
-```bash
-npm install pixi-filters
-```
-
-Alternatively, you can use a CDN such as JSDelivr:
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/pixi-filters@latest/dist/browser/pixi-filters.min.js"></script>
-```
-
-If all else failes, you can manually download the bundled file from the [releases](https://github.com/pixijs/filters/releases) section and include it in your project.
 
 ## Building
 
