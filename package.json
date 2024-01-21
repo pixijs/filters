@@ -205,7 +205,7 @@
     "dist": "xs build,docs",
     "postdist": "run-s screenshots copy:*",
     "copy:dist": "copyfiles -u 1 dist/* deploy",
-    "copy:assets": "copyfiles \"{dist,docs,screenshots,examples}/**\" deploy",
+    "copy:assets": "copyfiles \"{dist,docs,screenshots,examples,demo}/**\" deploy",
     "deploy": "xs clean,build,docs && run-s screenshots && xs upload",
     "release": "xs bump,test && run-s deploy && xs git-push",
     "publish-ci": "xs publish",
@@ -250,7 +250,10 @@
     "pixi.js": ">=8.0.0-0"
   },
   "extensionConfig": {
-    "clean": ["screenshots"],
+    "clean": [
+      "screenshots",
+      "deploy"
+    ],
     "namespace": "PIXI.filters",
     "docsName": "PixiJS Filters",
     "docsCopyright": "PixiJS Copyright © 2013-2024 PixiJS.",
