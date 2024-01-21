@@ -27,6 +27,7 @@ app.init({
     backgroundColor: outputOptions.border.color,
     autoStart: false,
     preference: 'webgl',
+    hello: true,
 }).then(() =>
 {
     const frames = {};
@@ -70,7 +71,6 @@ app.init({
         preview.addChild(bg, fishes);
 
         app.stage.addChild(preview);
-        document.body.appendChild(app.canvas);
         next();
     });
 
@@ -144,6 +144,9 @@ app.init({
             {
                 app.render();
                 const base64 = await app.renderer.extract.base64(app.stage);
+                const img = new Image();
+                img.src = base64;
+                document.body.appendChild(img);
 
                 // Save image
                 base64ToImage(
@@ -158,6 +161,7 @@ app.init({
             {
                 app.render();
                 const canvas = app.renderer.extract.canvas(app.stage);
+                document.body.appendChild(canvas);
                 const context = canvas.getContext('2d');
 
                 context.scale(1, -1);

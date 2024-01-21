@@ -240,7 +240,7 @@
     "magic-string": "^0.27.0",
     "npm-run-all": "^4.1.5",
     "open-cli": "^7.1.0",
-    "pixi.js": "^8.0.0-X",
+    "pixi.js": "8.0.0-rc.4",
     "pre-commit": "^1.2.2",
     "rimraf": "^4.1.1",
     "tslib": "^2.0.3",
