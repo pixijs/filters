@@ -2,7 +2,7 @@
 
 > PixiJS filter to apply an old film effect with grain and scratches.
 
-[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=OldFilmFilter)
+[View demo](https://filters.pixijs.download/main/examples/index.html?enabled=OldFilmFilter)
 
 ## Installation
 

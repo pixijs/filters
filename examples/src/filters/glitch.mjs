@@ -19,7 +19,7 @@ export default function ()
         {
             this.animating = true;
 
-            app.events.on('animate', () =>
+            app.events.on('animate', function ()
             {
                 if (this.animating)
                 {

@@ -194,22 +194,19 @@
   "scripts": {
     "clean": "xs clean",
     "watch": "xs watch",
-    "watch:demo": "npm run build:demo -- --watch",
+    "start": "xs serve",
     "lint": "xs lint",
     "lint:fix": "xs lint --fix",
     "types": "xs types",
-    "build": "xs build && run-s build:*",
-    "build:screenshots": "electron scripts/screenshots",
-    "build:screenshots:debug": "DEBUG_SCREENSHOTS=1 run-s build:screenshots",
-    "build:demo": "rollup -c rollup.config.demo.js",
+    "build": "xs build",
+    "screenshots": "electron scripts/screenshots",
+    "screenshots:debug": "DEBUG_SCREENSHOTS=1 run-s screenshots",
     "docs": "xs docs",
-    "deploy:ci": "run-s build && xs docs",
-    "postdeploy:ci": "mkdirp deploy && run-s copy:*",
+    "dist": "xs build,docs",
+    "postdist": "run-s screenshots copy:*",
     "copy:dist": "copyfiles -u 1 dist/* deploy",
-    "copy:docs": "copyfiles \"{docs,screenshots}/**\" deploy",
-    "copy:demo": "copyfiles -u 1 \"tools/demo/**\" -e \"tools/demo/src/**\" deploy",
-    "predeploy": "run-s clean build docs copy:*",
-    "deploy": "xs upload",
+    "copy:assets": "copyfiles \"{dist,docs,screenshots,examples}/**\" deploy",
+    "deploy": "xs clean,build,docs && run-s screenshots && xs upload",
     "release": "xs bump,test && run-s deploy && xs git-push",
     "publish-ci": "xs publish",
     "generate-exports": "node --no-warnings=ExperimentalWarning scripts/generate-exports.mjs"
@@ -253,7 +250,8 @@
     "pixi.js": ">=8.0.0-0"
   },
   "extensionConfig": {
-    "serve": "tools/demo",
+    "clean": ["screenshots"],
+    "namespace": "PIXI.filters",
     "docsName": "PixiJS Filters",
     "docsCopyright": "PixiJS Copyright © 2013-2024 PixiJS.",
     "docsGoogleAnalytics": "UA-103772589-3",
@@ -263,12 +261,9 @@
     "lint": [
       "src",
       "examples",
-      "scripts",
-      "tools/demo/src",
-      "tools/screenshots/*.js"
+      "scripts"
     ],
-    "deployFiles": "**",
-    "deployRoot": "deploy",
+    "deployFiles": "{dist,screenshots,examples,docs}/**",
     "moduleSource": "src/{,*/}index.ts"
   }
 }

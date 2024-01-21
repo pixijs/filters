@@ -1,7 +1,7 @@
-import DemoApplication from './DemoApplication';
-import * as filters from './filters';
-import { getEnabledFiltersFromQueryString } from './utils';
-import './ga';
+import DemoApplication from './DemoApplication.mjs';
+import * as filters from './filters/index.mjs';
+import { getEnabledFiltersFromQueryString } from './utils.mjs';
+import './ga.mjs';
 
 const main = async () =>
 {

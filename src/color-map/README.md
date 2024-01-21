@@ -2,7 +2,7 @@
 
 > PixiJS filter to apply a color-map effect.
 
-[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=ColorMapFilter)
+[View demo](https://filters.pixijs.download/main/examples/index.html?enabled=ColorMapFilter)
 
 ## Installation
 

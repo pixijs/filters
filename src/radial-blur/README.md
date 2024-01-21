@@ -2,7 +2,7 @@
 
 > PixiJS filter to apply a radial blur effect.
 
-[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=RadialBlurFilter)
+[View demo](https://filters.pixijs.download/main/examples/index.html?enabled=RadialBlurFilter)
 
 ## Installation
 

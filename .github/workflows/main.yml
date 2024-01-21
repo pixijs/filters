@@ -29,7 +29,7 @@ jobs:
       run: npm ci
 
     - name: Build for Distribution
-      run: xvfb-run --auto-servernum npm run deploy:ci
+      run: xvfb-run --auto-servernum npm run dist
 
     # All the below are deploy-related steps
     - name: Extract Branch Name

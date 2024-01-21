@@ -8,7 +8,7 @@ export default function ()
             folder.add(this, 'alpha', 0, 1);
 
             // eslint-disable-next-line no-empty-function
-            this._noop = () => {};
+            this._noop = function () {};
             folder.add(this, '_noop').name('<img src="./images/lightmap.png" width="220" height="13">');
         },
     });

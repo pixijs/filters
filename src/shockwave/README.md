@@ -2,7 +2,7 @@
 
 > PixiJS filter to apply a shockwave-type effect.
 
-[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=ShockwaveFilter)
+[View demo](https://filters.pixijs.download/main/examples/index.html?enabled=ShockwaveFilter)
 
 ## Installation
 

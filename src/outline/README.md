@@ -2,7 +2,7 @@
 
 > PixiJS filter to apply an outline/stroke effect.
 
-[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=OutlineFilter)
+[View demo](https://filters.pixijs.download/main/examples/index.html?enabled=OutlineFilter)
 
 ## Installation
 

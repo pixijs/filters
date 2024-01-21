@@ -2,7 +2,7 @@
 
 > PixiJS filter to dynamically replace multiple colors.
 
-[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=MultiColorReplaceFilter)
+[View demo](https://filters.pixijs.download/main/examples/index.html?enabled=MultiColorReplaceFilter)
 
 ## Installation
 

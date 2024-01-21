@@ -2,7 +2,7 @@
 
 > PixiJS filter to split and shift red, green or blue channels.
 
-[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=RGBSplitFilter)
+[View demo](https://filters.pixijs.download/main/examples/index.html?enabled=RGBSplitFilter)
 
 ## Installation
 

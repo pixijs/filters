@@ -2,7 +2,7 @@
 
 > PixiJS filter to apply a convolution effect.
 
-[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=ConvolutionFilter)
+[View demo](https://filters.pixijs.download/main/examples/index.html?enabled=ConvolutionFilter)
 
 ## Installation
 

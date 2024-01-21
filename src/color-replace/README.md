@@ -2,7 +2,7 @@
 
 > PixiJS filter to replace a single color.
 
-[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=ColorReplaceFilter)
+[View demo](https://filters.pixijs.download/main/examples/index.html?enabled=ColorReplaceFilter)
 
 ## Installation
 

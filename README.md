@@ -4,7 +4,7 @@
 
 ## Demo
 
-[View the PixiJS Filters Demo](https://pixijs.io/filters/demo/) to interactively play with filters to see how they work.
+[View the PixiJS Filters Demo](https://pixijs.io/filters/examples/) to interactively play with filters to see how they work.
 
 ## Filters
 
@@ -109,43 +109,43 @@ npm run watch
 API documention can be found [here](http://pixijs.io/filters/docs/).
 
 <!-- references -->
-[Adjustment_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=AdjustmentFilter
-[AdvancedBloom_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=AdvancedBloomFilter
-[Ascii_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=AsciiFilter
-[Bevel_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=BevelFilter
-[Bloom_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=BloomFilter
-[BulgePinch_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=BulgePinchFilter
-[ColorGradient_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=ColorGradientFilter
-[ColorMap_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=ColorMapFilter
-[ColorOverlay_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=ColorOverlayFilter
-[ColorReplace_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=ColorReplaceFilter
-[Convolution_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=ConvolutionFilter
-[CrossHatch_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=CrossHatchFilter
-[CRT_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=CRTFilter
-[Dot_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=DotFilter
-[DropShadow_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=DropShadowFilter
-[Emboss_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=EmbossFilter
-[Glitch_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=GlitchFilter
-[Glow_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=GlowFilter
-[Godray_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=GodrayFilter
-[Grayscale_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=GrayscaleFilter
-[HslAdjustment_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=HslAdjustmentFilter
-[KawaseBlur_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=KawaseBlurFilter
-[MotionBlur_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=MotionBlurFilter
-[MultiColorReplace_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=MultiColorReplaceFilter
-[OldFilm_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=OldFilmFilter
-[Outline_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=OutlineFilter
-[Pixelate_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=PixelateFilter
-[RadialBlur_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=RadialBlurFilter
-[Reflection_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=ReflectionFilter
-[RGBSplit_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=RGBSplitFilter
-[Shockwave_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=ShockwaveFilter
-[SimpleLightmap_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=SimpleLightmapFilter
-[TiltShift_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=TiltShiftFilter
-[Twist_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=TwistFilter
-[ZoomBlur_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=ZoomBlurFilter
-[Alpha_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=AlphaFilter
-[Blur_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=BlurFilter
-[ColorMatrix_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=ColorMatrixFilter
-[Displacement_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=DisplacementFilter
-[Noise_demo]: https://filters.pixijs.download/main/demo/index.html?enabled=NoiseFilter
+[Adjustment_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=AdjustmentFilter
+[AdvancedBloom_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=AdvancedBloomFilter
+[Ascii_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=AsciiFilter
+[Bevel_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=BevelFilter
+[Bloom_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=BloomFilter
+[BulgePinch_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=BulgePinchFilter
+[ColorGradient_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=ColorGradientFilter
+[ColorMap_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=ColorMapFilter
+[ColorOverlay_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=ColorOverlayFilter
+[ColorReplace_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=ColorReplaceFilter
+[Convolution_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=ConvolutionFilter
+[CrossHatch_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=CrossHatchFilter
+[CRT_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=CRTFilter
+[Dot_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=DotFilter
+[DropShadow_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=DropShadowFilter
+[Emboss_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=EmbossFilter
+[Glitch_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=GlitchFilter
+[Glow_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=GlowFilter
+[Godray_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=GodrayFilter
+[Grayscale_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=GrayscaleFilter
+[HslAdjustment_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=HslAdjustmentFilter
+[KawaseBlur_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=KawaseBlurFilter
+[MotionBlur_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=MotionBlurFilter
+[MultiColorReplace_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=MultiColorReplaceFilter
+[OldFilm_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=OldFilmFilter
+[Outline_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=OutlineFilter
+[Pixelate_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=PixelateFilter
+[RadialBlur_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=RadialBlurFilter
+[Reflection_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=ReflectionFilter
+[RGBSplit_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=RGBSplitFilter
+[Shockwave_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=ShockwaveFilter
+[SimpleLightmap_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=SimpleLightmapFilter
+[TiltShift_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=TiltShiftFilter
+[Twist_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=TwistFilter
+[ZoomBlur_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=ZoomBlurFilter
+[Alpha_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=AlphaFilter
+[Blur_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=BlurFilter
+[ColorMatrix_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=ColorMatrixFilter
+[Displacement_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=DisplacementFilter
+[Noise_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=NoiseFilter

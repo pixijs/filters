@@ -2,7 +2,7 @@
 
 > PixiJS filter to apply zoom blur effect.
 
-[View demo](https://filters.pixijs.download/main/demo/index.html?enabled=ZoomBlurFilter)
+[View demo](https://filters.pixijs.download/main/examples/index.html?enabled=ZoomBlurFilter)
 
 ## Installation
 
