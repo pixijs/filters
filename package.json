@@ -230,21 +230,16 @@
     "@webdoc/cli": "^2.2.0",
     "base64-to-image": "^1.0.2",
     "copyfiles": "^2.4.1",
-    "cross-env": "^7.0.3",
     "electron": "^28.0.0",
-    "eslint": "^8.32.0",
     "fs-extra": "^7.0.1",
     "gifencoder": "^2.0.1",
     "gradient-parser": "^1.0.2",
-    "http-server": "^14.1.1",
-    "magic-string": "^0.27.0",
     "npm-run-all": "^4.1.5",
-    "open-cli": "^7.1.0",
     "pixi.js": "8.0.0-rc.4",
     "pre-commit": "^1.2.2",
     "rimraf": "^4.1.1",
-    "tslib": "^2.0.3",
-    "typescript": "^4.8.0"
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3"
   },
   "peerDependencies": {
     "pixi.js": ">=8.0.0-0"
