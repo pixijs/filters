@@ -145,6 +145,7 @@ app.init({
                 app.render();
                 const base64 = await app.renderer.extract.base64(app.stage);
                 const img = new Image();
+
                 img.src = base64;
                 document.body.appendChild(img);
 
@@ -161,6 +162,7 @@ app.init({
             {
                 app.render();
                 const canvas = app.renderer.extract.canvas(app.stage);
+
                 document.body.appendChild(canvas);
                 const context = canvas.getContext('2d');
 

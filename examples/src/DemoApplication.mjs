@@ -63,11 +63,14 @@ export default class DemoApplication extends PIXI.Application
     /** override init */
     init()
     {
+        const preference = (new URLSearchParams(window.location.search)).get('preference') || 'webgpu';
+
         return super.init({
             hello: true,
             width: this.initWidth,
             height: this.initHeight,
             autoStart: false,
+            preference,
         });
     }
 
