@@ -1,5 +1,5 @@
 struct ConvolutionUniforms {
-    uMatrix: array<vec3<f32>, 3>,
+    uMatrix: mat3x3<f32>,
     uTexelSize: vec2<f32>,
 };
 

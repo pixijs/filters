@@ -6,7 +6,7 @@ uniform sampler2D uTexture;
 uniform float uSepia;
 uniform vec2 uNoise;
 uniform vec3 uScratch;
-uniform vec3 uVignette;
+uniform vec3 uVignetting;
 uniform float uSeed;
 uniform vec2 uDimensions;
 
@@ -46,9 +46,9 @@ void main()
 
     vec2 coord = vTextureCoord * uInputSize.xy / uDimensions.xy;
 
-    float vignette = uVignette[0];
-    float vignetteAlpha = uVignette[1];
-    float vignetteBlur = uVignette[2];
+    float vignette = uVignetting[0];
+    float vignetteAlpha = uVignetting[1];
+    float vignetteBlur = uVignetting[2];
 
     if (vignette > 0.0)
     {

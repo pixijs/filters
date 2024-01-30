@@ -1,7 +1,10 @@
-import { Filter, GlProgram, GpuProgram, PointData } from 'pixi.js';
+// eslint-disable-next-line camelcase
+import { deprecation, Filter, GlProgram, GpuProgram, PointData, v8_0_0 } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './rgb-split.frag';
 import source from './rgb-split.wgsl';
+
+type DeprecatedOffset = [number, number] | PointData;
 
 export interface RGBSplitFilterOptions
 {
@@ -9,17 +12,17 @@ export interface RGBSplitFilterOptions
      * The amount of offset for the red channel.
      * @default {x:-10,y:0}
      */
-    red: PointData;
+    red?: PointData;
     /**
      * The amount of offset for the green channel.
      * @default {x:0,y:10}
      */
-    green: PointData;
+    green?: PointData;
     /**
      * The amount of offset for the blue channel.
      * @default {x:0,y:0}
      */
-    blue: PointData;
+    blue?: PointData;
 }
 
 /**
@@ -45,8 +48,36 @@ export class RGBSplitFilter extends Filter
         uBlue: PointData;
     };
 
-    constructor(options?: RGBSplitFilterOptions)
+    constructor(options?: RGBSplitFilterOptions);
+    /**
+     * @deprecated since 8.0.0
+     *
+     * @param {PIXI.PointData | number[]} [red=[-10,0]] - Red channel offset
+     * @param {PIXI.PointData | number[]} [green=[0, 10]] - Green channel offset
+     * @param {PIXI.PointData | number[]} [blue=[0, 0]] - Blue channel offset
+     */
+    constructor(red?: DeprecatedOffset, green?: DeprecatedOffset, blue?: DeprecatedOffset);
+    constructor(...args: [RGBSplitFilterOptions?] | [DeprecatedOffset?, DeprecatedOffset?, DeprecatedOffset?])
     {
+        let options = args[0] ?? {};
+
+        if (Array.isArray(options) || ('x' in options && 'y' in options))
+        {
+            // eslint-disable-next-line max-len
+            deprecation(v8_0_0, 'RGBSplitFilter constructor params are now options object. See params: { red, green, blue }');
+
+            options = { red: convertDeprecatedOffset(options) };
+
+            if (args[1])
+            {
+                options.green = convertDeprecatedOffset(args[1]);
+            }
+            if (args[2])
+            {
+                options.blue = convertDeprecatedOffset(args[2]);
+            }
+        }
+
         options = { ...RGBSplitFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = new GpuProgram({
@@ -86,7 +117,16 @@ export class RGBSplitFilter extends Filter
      * @default {x:-10,y:0}
      */
     get red(): PointData { return this.uniforms.uRed; }
-    set red(value: PointData) { this.uniforms.uRed = value; }
+    set red(value: PointData | DeprecatedOffset)
+    {
+        if (Array.isArray(value))
+        {
+            deprecation(v8_0_0, 'RGBSplitFilter.red now only accepts {x,y} PointData.');
+            value = convertDeprecatedOffset(value);
+        }
+
+        this.uniforms.uRed = value;
+    }
 
     /**
      * Amount of x-axis offset for the red channel.
@@ -107,7 +147,16 @@ export class RGBSplitFilter extends Filter
      * @default {x:0,y:10}
      */
     get green(): PointData { return this.uniforms.uGreen; }
-    set green(value: PointData) { this.uniforms.uGreen = value; }
+    set green(value: PointData | DeprecatedOffset)
+    {
+        if (Array.isArray(value))
+        {
+            deprecation(v8_0_0, 'RGBSplitFilter.green now only accepts {x,y} PointData.');
+            value = convertDeprecatedOffset(value);
+        }
+
+        this.uniforms.uGreen = value;
+    }
 
     /**
      * Amount of x-axis offset for the green channel.
@@ -128,7 +177,16 @@ export class RGBSplitFilter extends Filter
      * @default {x:0,y:0}
      */
     get blue(): PointData { return this.uniforms.uBlue; }
-    set blue(value: PointData) { this.uniforms.uBlue = value; }
+    set blue(value: PointData | DeprecatedOffset)
+    {
+        if (Array.isArray(value))
+        {
+            deprecation(v8_0_0, 'RGBSplitFilter.blue now only accepts {x,y} PointData.');
+            value = convertDeprecatedOffset(value);
+        }
+
+        this.uniforms.uBlue = value;
+    }
 
     /**
      * Amount of x-axis offset for the blue channel.
@@ -143,4 +201,14 @@ export class RGBSplitFilter extends Filter
      */
     get blueY(): number { return this.blue.y; }
     set blueY(value: number) { this.blue.y = value; }
+}
+
+function convertDeprecatedOffset(value: DeprecatedOffset): PointData
+{
+    if (Array.isArray(value))
+    {
+        return { x: value[0], y: value[1] };
+    }
+
+    return value;
 }

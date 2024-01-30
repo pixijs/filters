@@ -1,4 +1,18 @@
-import { AlphaFilter, BlurFilterPass, FilterSystem, PointData, RenderSurface, Texture, TexturePool } from 'pixi.js';
+/* eslint-disable max-len */
+import {
+    AlphaFilter,
+    BlurFilterPass,
+    deprecation,
+    FilterSystem,
+    PointData,
+    RenderSurface,
+    Texture,
+    TexturePool,
+    // eslint-disable-next-line camelcase
+    v8_0_0,
+} from 'pixi.js';
+
+type DeprecatedBlurValue = number | PointData | number[];
 
 export interface BloomFilterOptions
 {
@@ -12,6 +26,11 @@ export interface BloomFilterOptions
      * @default 4
      */
     quality?: number;
+    /**
+     * The resolution of the blurX & blurY filter.
+     * @default 1
+     */
+    resolution?: number;
     /**
      * The kernel size of the blur filter. Must be an odd number between 5 and 15 (inclusive).
      * @default 5
@@ -34,6 +53,7 @@ export class BloomFilter extends AlphaFilter
     public static readonly DEFAULT_OPTIONS: BloomFilterOptions = {
         strength: { x: 2, y: 2 },
         quality: 4,
+        resolution: 1,
         kernelSize: 5
     };
 
@@ -41,9 +61,33 @@ export class BloomFilter extends AlphaFilter
     private _blurYFilter: BlurFilterPass;
     private _strength: PointData;
 
-    constructor(options?: BloomFilterOptions)
+    constructor(options?: BloomFilterOptions);
+    /**
+    * @deprecated since 8.0.0
+    *
+    * @param {number|PIXI.PointData|number[]} [blur=2] - Sets the strength of both the blurX and blurY properties simultaneously
+    * @param {number} [quality=4] - The quality of the blurX & blurY filter.
+    * @param {number} [resolution=1] - The resolution of the blurX & blurY filter.
+    * @param {number} [kernelSize=5] - The kernelSize of the blurX & blurY filter.Options: 5, 7, 9, 11, 13, 15.
+    */
+    constructor(blur?: DeprecatedBlurValue, quality?: number, resolution?: number, kernelSize?: number);
+    constructor(...args: [BloomFilterOptions?] | [DeprecatedBlurValue?, number?, number?, number?])
     {
-        options = { ...BloomFilter.DEFAULT_OPTIONS, ...options };
+        let options = args[0] ?? {};
+
+        if (typeof options === 'number' || Array.isArray(options) || ('x' in options && 'y' in options))
+        {
+            // eslint-disable-next-line max-len
+            deprecation(v8_0_0, 'BloomFilter constructor params are now options object. See params: { strength, quality, resolution, kernelSize }');
+
+            options = { strength: convertDeprecatedBlurValue(options) };
+
+            if (args[1]) options.quality = args[1];
+            if (args[2]) options.resolution = args[2];
+            if (args[3]) options.kernelSize = args[3];
+        }
+
+        options = { ...BloomFilter.DEFAULT_OPTIONS, ...options } as BloomFilterOptions;
 
         super();
 
@@ -139,5 +183,68 @@ export class BloomFilter extends AlphaFilter
         this._blurXFilter.blur = this.strengthX;
         this._blurYFilter.blur = this.strengthY;
     }
+
+    /**
+     * @deprecated since 8.0.0
+     *
+     * The strength of both the blurX and blurY properties simultaneously
+     * @default 2
+     */
+    get blur(): number
+    {
+        deprecation(v8_0_0, 'BloomFilter.blur is deprecated, please use BloomFilter.strength instead');
+
+        return this.strengthX;
+    }
+    set blur(value: number)
+    {
+        deprecation(v8_0_0, 'BloomFilter.blur is deprecated, please use BloomFilter.strength instead');
+
+        this.strength = value;
+    }
+
+    /**
+     * @deprecated since 8.0.0
+     *
+     * The strength of the blurX property
+     * @default 2
+     */
+    get blurX(): number
+    {
+        deprecation(v8_0_0, 'BloomFilter.blurX is deprecated, please use BloomFilter.strengthX instead');
+
+        return this.strengthX;
+    }
+    set blurX(value: number)
+    {
+        deprecation(v8_0_0, 'BloomFilter.blurX is deprecated, please use BloomFilter.strengthX instead');
+
+        this.strengthX = value;
+    }
+
+    /**
+     * @deprecated since 8.0.0
+     *
+     * The strength of the blurY property
+     * @default 2
+     */
+    get blurY(): number
+    {
+        deprecation(v8_0_0, 'BloomFilter.blurY is deprecated, please use BloomFilter.strengthY instead');
+
+        return this.strengthY;
+    }
+    set blurY(value: number)
+    {
+        deprecation(v8_0_0, 'BloomFilter.blurY is deprecated, please use BloomFilter.strengthY instead');
+
+        this.strengthY = value;
+    }
 }
 
+function convertDeprecatedBlurValue(value: DeprecatedBlurValue): PointData | number
+{
+    if (typeof value === 'number' || ('x' in value && 'y' in value)) return value;
+
+    return { x: value[0], y: value[1] };
+}

@@ -15,16 +15,11 @@ type Size = number | number[] | Point;
  */
 export class PixelateFilter extends Filter
 {
-    /** Default values for options. */
-    public static readonly DEFAULT_SIZE: Size = 10;
-
     /**
      * @param {Point|Array<number>|number} [size=10] - Either the width/height of the size of the pixels, or square size
      */
-    constructor(size: Size)
+    constructor(size: Size = 10)
     {
-        size = size ?? PixelateFilter.DEFAULT_SIZE;
-
         const pixelateUniforms = new UniformGroup({
             uSize: { value: new Float32Array(2), type: 'vec2<f32>' },
         });
