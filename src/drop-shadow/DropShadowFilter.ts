@@ -1,6 +1,7 @@
 import {
     Color,
     ColorSource,
+    deprecation,
     Filter,
     FilterSystem,
     GlProgram,
@@ -9,16 +10,33 @@ import {
     RenderSurface,
     Texture,
     TexturePool,
+    // eslint-disable-next-line camelcase
+    v8_0_0,
 } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import { KawaseBlurFilter } from '../kawase-blur/KawaseBlurFilter';
 import fragment from './drop-shadow.frag';
 import source from './drop-shadow.wgsl';
 
+type DeprecatedPixelSizeValue = PointData | number[] | number;
+
+interface DeprecatedDropShadowFilterOptions
+{
+    offset: PointData;
+    color: ColorSource;
+    alpha: number;
+    shadowOnly: boolean;
+    blur: number;
+    quality: number;
+    kernels: number[] | null;
+    pixelSize: DeprecatedPixelSizeValue;
+    resolution: number;
+}
+
 export interface DropShadowFilterOptions
 {
     /**
-     * Set the offset position of the drop-shadow relative to the original image.
+     * The offset position of the drop-shadow relative to the original image.
      * @default {x:4,y:4}
      */
     offset?: PointData;
@@ -54,10 +72,15 @@ export interface DropShadowFilterOptions
      */
     kernels?: number[];
     /**
-     * Sets the pixelSize of the Kawase Blur filter
+     * The pixelSize of the Kawase Blur filter
      * @default {x:1,y:1}
      */
     pixelSize?: PointData;
+    /**
+     * The resolution of the Kawase Blur filter
+     * @default 1
+     */
+    resolution?: number;
 }
 
 /**
@@ -79,6 +102,7 @@ export class DropShadowFilter extends Filter
         blur: 2,
         quality: 3,
         pixelSize: { x: 1, y: 1 },
+        resolution: 1,
     };
 
     public uniforms: {
@@ -97,8 +121,30 @@ export class DropShadowFilter extends Filter
     private _blurFilter: KawaseBlurFilter;
     private _basePass: Filter;
 
-    constructor(options?: DropShadowFilterOptions)
+    constructor(options?: DropShadowFilterOptions);
+    /**
+     * @deprecated since 8.0.0
+     *
+     * @param {object} [options] - Filter options
+     * @param {PIXI.PointData} [options.offset={x: 4, y: 4}] - Offset of the shadow
+     * @param {number} [options.color=0x000000] - Color of the shadow
+     * @param {number} [options.alpha=0.5] - Alpha of the shadow
+     * @param {boolean} [options.shadowOnly=false] - Whether render shadow only
+     * @param {number} [options.blur=2] - Sets the strength of the Blur properties simultaneously
+     * @param {number} [options.quality=3] - The quality of the Blur filter.
+     * @param {number[]} [options.kernels=null] - The kernels of the Blur filter.
+     * @param {number|number[]|PIXI.PointData} [options.pixelSize=1] - the pixelSize of the Blur filter.
+     * @param {number} [options.resolution=1] - The resolution of the Blur filter.
+     */
+    constructor(options?: Partial<DeprecatedDropShadowFilterOptions>);
+    constructor(options?: DropShadowFilterOptions | Partial<DeprecatedDropShadowFilterOptions>)
     {
+        if (typeof options?.pixelSize === 'number' || Array.isArray(options?.pixelSize))
+        {
+            deprecation(v8_0_0, 'DropShadowFilterOptions.pixelSize now only accepts {x, y} PointData type.');
+            options.pixelSize = convertDeprecatedPixelSizeValue(options.pixelSize);
+        }
+
         options = { ...DropShadowFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = new GpuProgram({
@@ -127,7 +173,8 @@ export class DropShadowFilter extends Filter
                     uColor: { value: new Float32Array(3), type: 'vec3<f32>' },
                     uOffset: { value: options.offset, type: 'vec2<f32>' },
                 }
-            }
+            },
+            resolution: options.resolution,
         });
 
         this.uniforms = this.resources.dropShadowUniforms.uniforms;
@@ -140,7 +187,7 @@ export class DropShadowFilter extends Filter
         });
 
         this._basePass = new Filter({
-            gpuProgram: new GpuProgram({
+            gpuProgram: GpuProgram.from({
                 vertex: {
                     source: wgslVertex,
                     entryPoint: 'mainVertex',
@@ -160,7 +207,7 @@ export class DropShadowFilter extends Filter
                     entryPoint: 'mainFragment',
                 },
             }),
-            glProgram: new GlProgram({
+            glProgram: GlProgram.from({
                 vertex,
                 fragment: `
                 in vec2 vTextureCoord;
@@ -294,9 +341,17 @@ export class DropShadowFilter extends Filter
     {
         return this._blurFilter.pixelSize as PointData;
     }
-    set pixelSize(value: PointData)
+    set pixelSize(value: PointData | DeprecatedPixelSizeValue)
     {
-        (this._blurFilter.pixelSize as PointData) = value;
+        if (typeof value === 'number' || Array.isArray(value))
+        {
+            deprecation(v8_0_0, 'KawaseBlurFilter.pixelSize now only accepts {x, y} PointData.');
+            this._blurFilter.pixelSize = convertDeprecatedPixelSizeValue(value);
+
+            return;
+        }
+
+        this._blurFilter.pixelSize = value;
     }
 
     /**
@@ -326,4 +381,19 @@ export class DropShadowFilter extends Filter
 
         this.padding = offsetPadding + (this.blur * 2) + (this.quality * 4);
     }
+}
+
+function convertDeprecatedPixelSizeValue(value: DeprecatedPixelSizeValue): PointData
+{
+    if (typeof value === 'number')
+    {
+        return { x: value, y: value };
+    }
+
+    if (Array.isArray(value))
+    {
+        return { x: value[0], y: value[1] };
+    }
+
+    return value;
 }
