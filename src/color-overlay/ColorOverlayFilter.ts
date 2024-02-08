@@ -1,7 +1,10 @@
-import { Color, ColorSource, Filter, GlProgram, GpuProgram, UniformGroup } from 'pixi.js';
+// eslint-disable-next-line camelcase
+import { Color, ColorSource, deprecation, Filter, GlProgram, GpuProgram, UniformGroup, v8_0_0 } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './color-overlay.frag';
 import source from './color-overlay.wgsl';
+
+type DeprecatedColor = number | number[] | Float32Array;
 
 export interface ColorOverlayFilterOptions
 {
@@ -41,11 +44,31 @@ export class ColorOverlayFilter extends Filter
 
     private _color: Color;
 
-    constructor(options: ColorOverlayFilterOptions = {})
+    constructor(options?: ColorOverlayFilterOptions);
+    /**
+     * @deprecated since 8.0.0
+     *
+     * @param {number|Array<number>} [color=0x000000] - The resulting color, as a 3 component RGB e.g. [1.0, 0.5, 1.0]
+     * @param {number} [alpha=1] - The alpha value of the color
+     */
+    constructor(color?: DeprecatedColor, alpha?: number);
+    constructor(...args: [ColorOverlayFilterOptions?] | [DeprecatedColor?, number?])
     {
+        let options = args[0] ?? {};
+
+        if (typeof options === 'number' || Array.isArray(options) || options instanceof Float32Array)
+        {
+            // eslint-disable-next-line max-len
+            deprecation(v8_0_0, 'ColorOverlayFilter constructor params are now options object. See params: { color, alpha }');
+
+            options = { color: options };
+
+            if (args[1]) options.alpha = args[1];
+        }
+
         options = { ...ColorOverlayFilter.DEFAULT_OPTIONS, ...options };
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -56,7 +79,7 @@ export class ColorOverlayFilter extends Filter
             },
         });
 
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment,
             name: 'color-overlay-filter',
@@ -66,10 +89,10 @@ export class ColorOverlayFilter extends Filter
             gpuProgram,
             glProgram,
             resources: {
-                colorOverlayUniforms: new UniformGroup({
+                colorOverlayUniforms: {
                     uColor: { value: new Float32Array(3), type: 'vec3<f32>' },
                     uAlpha: { value: options.alpha, type: 'f32' },
-                })
+                },
             },
         });
 
