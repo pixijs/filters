@@ -1,4 +1,5 @@
-import { Color, ColorSource, Filter, GlProgram, GpuProgram } from 'pixi.js';
+// eslint-disable-next-line camelcase
+import { Color, ColorSource, deprecation, Filter, GlProgram, GpuProgram, v8_0_0 } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './color-replace.frag';
 import source from './color-replace.wgsl';
@@ -7,6 +8,8 @@ import source from './color-replace.wgsl';
  * This WebGPU filter has been ported from the WebGL renderer that was originally created by mishaa, updated by timetocode
  * http://www.html5gamedevs.com/topic/10640-outline-a-sprite-change-certain-colors/?p=69966
  */
+
+type DeprecatedColor = number | number[] | Float32Array;
 
 export interface ColorReplaceFilterOptions
 {
@@ -73,11 +76,36 @@ export class ColorReplaceFilter extends Filter
     private _originalColor: Color;
     private _targetColor: Color;
 
-    constructor(options?: ColorReplaceFilterOptions)
+    constructor(options?: ColorReplaceFilterOptions);
+    /**
+     * @deprecated since 8.0.0
+     *
+     * @param {number|Array<number>|Float32Array} [originalColor=0xFF0000] - The color that will be changed,
+     *        as a 3 component RGB e.g. `[1.0, 1.0, 1.0]`
+     * @param {number|Array<number>|Float32Array} [newColor=0x000000] - The resulting color, as a 3 component
+     *        RGB e.g. `[1.0, 0.5, 1.0]`
+     * @param {number} [epsilon=0.4] - Tolerance/sensitivity of the floating-point comparison between colors
+     *        (lower = more exact, higher = more inclusive)
+     */
+    constructor(originalColor?: number, newColor?: number, epsilon?: number);
+    constructor(...args: [ColorReplaceFilterOptions?] | [DeprecatedColor?, DeprecatedColor?, number?])
     {
+        let options = args[0] ?? {};
+
+        if (typeof options === 'number' || Array.isArray(options) || options instanceof Float32Array)
+        {
+            // eslint-disable-next-line max-len
+            deprecation(v8_0_0, 'ColorReplaceFilter constructor params are now options object. See params: { originalColor, targetColor, tolerance }');
+
+            options = { originalColor: options };
+
+            if (args[1]) options.targetColor = args[1];
+            if (args[2]) options.tolerance = args[2];
+        }
+
         options = { ...ColorReplaceFilter.DEFAULT_OPTIONS, ...options };
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -88,7 +116,7 @@ export class ColorReplaceFilter extends Filter
             },
         });
 
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment,
             name: 'color-replace-filter',
@@ -154,4 +182,43 @@ export class ColorReplaceFilter extends Filter
       */
     get tolerance(): number { return this.uniforms.uTolerance; }
     set tolerance(value: number) { this.uniforms.uTolerance = value; }
+
+    /**
+     * @deprecated since 8.0.0
+     *
+     * The resulting color, as a 3 component RGB e.g. [1.0, 0.5, 1.0]
+     * @member {number|Array<number>|Float32Array}
+     * @default 0x000000
+     */
+    set newColor(value: DeprecatedColor)
+    {
+        deprecation(v8_0_0, 'ColorReplaceFilter.newColor is deprecated, please use ColorReplaceFilter.targetColor instead');
+
+        this.targetColor = value;
+    }
+    get newColor(): DeprecatedColor
+    {
+        deprecation(v8_0_0, 'ColorReplaceFilter.newColor is deprecated, please use ColorReplaceFilter.targetColor instead');
+
+        return this.targetColor as DeprecatedColor;
+    }
+
+    /**
+     * @deprecated since 8.0.0
+     *
+     * Tolerance/sensitivity of the floating-point comparison between colors (lower = more exact, higher = more inclusive)
+     * @default 0.4
+     */
+    set epsilon(value: number)
+    {
+        deprecation(v8_0_0, 'ColorReplaceFilter.epsilon is deprecated, please use ColorReplaceFilter.tolerance instead');
+
+        this.tolerance = value;
+    }
+    get epsilon(): number
+    {
+        deprecation(v8_0_0, 'ColorReplaceFilter.epsilon is deprecated, please use ColorReplaceFilter.tolerance instead');
+
+        return this.tolerance;
+    }
 }
