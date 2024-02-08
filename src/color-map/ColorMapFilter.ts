@@ -1,4 +1,5 @@
-import { Filter, GlProgram, GpuProgram, SCALE_MODE, Texture, TextureSource } from 'pixi.js';
+// eslint-disable-next-line camelcase
+import { deprecation, Filter, GlProgram, GpuProgram, SCALE_MODE, Texture, TextureSource, v8_0_0 } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './color-map.frag';
 import source from './color-map.wgsl';
@@ -54,13 +55,36 @@ export class ColorMapFilter extends Filter
     private _scaleMode: SCALE_MODE = 'linear';
     private _colorMap!: ColorMapTexture;
 
-    constructor(options: ColorMapFilterOptions)
+    constructor(options: ColorMapFilterOptions);
+    /**
+     * @deprecated since 8.0.0
+     *
+     * @param {HTMLImageElement|HTMLCanvasElement|PIXI.BaseTexture|PIXI.Texture} [colorMap] - The
+     *        colorMap texture of the filter.
+     * @param {boolean} [nearest=false] - Whether use NEAREST for colorMap texture.
+     * @param {number} [mix=1] - The mix from 0 to 1, where 0 is the original image and 1 is the color mapped image.
+     */
+    constructor(colorMap: ColorMapTexture, nearest?: boolean, mix?: number);
+    constructor(...args: [ColorMapFilterOptions] | [ColorMapTexture, boolean?, number?])
     {
+        let options = args[0] ?? {};
+
+        if (options instanceof Texture || options instanceof TextureSource)
+        {
+            // eslint-disable-next-line max-len
+            deprecation(v8_0_0, 'ColorMapFilter constructor params are now options object. See params: { colorMap, nearest, mix }');
+
+            options = { colorMap: options };
+
+            if (args[1]) options.nearest = args[1];
+            if (args[2]) options.mix = args[2];
+        }
+
         options = { ...ColorMapFilter.DEFAULT_OPTIONS, ...options };
 
         if (!options.colorMap) throw Error('No color map texture source was provided to ColorMapFilter');
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -71,7 +95,7 @@ export class ColorMapFilter extends Filter
             },
         });
 
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment,
             name: 'color-map-filter',
