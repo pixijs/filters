@@ -1,4 +1,5 @@
-import { DEG_TO_RAD, Filter, GlProgram, GpuProgram } from 'pixi.js';
+// eslint-disable-next-line camelcase
+import { DEG_TO_RAD, deprecation, Filter, GlProgram, GpuProgram, v8_0_0 } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './god-ray.frag';
 import source from './god-ray.wgsl';
@@ -6,6 +7,17 @@ import perlin from './perlin.frag';
 import sourcePerlin from './perlin.wgsl';
 
 import type { FilterSystem, PointData, RenderSurface, Texture } from 'pixi.js';
+
+interface DeprecatedGodrayFilterOptions
+{
+    angle: number;
+    gain: number;
+    lacunarity: number;
+    parallel: boolean;
+    time: number;
+    center: number[] | PointData;
+    alpha: number;
+}
 
 export interface GodrayFilterOptions
 {
@@ -95,11 +107,32 @@ export class GodrayFilter extends Filter
     private _angle = 0;
     private _center!: PointData;
 
-    constructor(options?: GodrayFilterOptions)
+    constructor(options?: GodrayFilterOptions);
+    /**
+     * @deprecated since 8.0.0
+     *
+     * @param {object} [options] - Filter options
+     * @param {number} [options.angle=30] - Angle/Light-source of the rays.
+     * @param {number} [options.gain=0.5] - General intensity of the effect.
+     * @param {number} [options.lacunarity=2.5] - The density of the fractal noise.
+     * @param {boolean} [options.parallel=true] - `true` to use `angle`, `false` to use `center`
+     * @param {number} [options.time=0] - The current time position.
+     * @param {PIXI.PointData|number[]} [options.center=[0,0]] - Focal point for non-parallel rays,
+     *        to use this `parallel` must be set to `false`.
+     * @param {number} [options.alpha=1.0] - the alpha, defaults to 1, affects transparency of rays
+     */
+    constructor(options?: Partial<DeprecatedGodrayFilterOptions>);
+    constructor(options?: GodrayFilterOptions | Partial<DeprecatedGodrayFilterOptions>)
     {
+        if (Array.isArray(options?.center))
+        {
+            deprecation(v8_0_0, 'GodrayFilterOptions.center now only accepts {x, y} PointData type.');
+            options.center = { x: options.center[0], y: options.center[1] };
+        }
+
         options = { ...GodrayFilter.DEFAULT_OPTIONS, ...options };
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -109,7 +142,7 @@ export class GodrayFilter extends Filter
                 entryPoint: 'mainFragment',
             },
         });
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment: fragment.replace('${PERLIN}', perlin),
             name: 'god-ray-filter',
