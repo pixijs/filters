@@ -1,4 +1,5 @@
 import {
+    deprecation,
     Filter,
     FilterSystem,
     GlProgram,
@@ -6,11 +7,23 @@ import {
     PointData,
     RenderSurface,
     Texture,
-    UniformGroup,
+    // eslint-disable-next-line camelcase
+    v8_0_0,
 } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './shockwave.frag';
 import source from './shockwave.wgsl';
+
+type DeprecatedPointLike = PointData | number[];
+
+interface DeprecatedShockwaveFilterOptions
+{
+    amplitude: number;
+    wavelength: number;
+    speed: number;
+    brightness: number;
+    radius: number;
+}
 
 export interface ShockwaveFilterOptions
 {
@@ -44,6 +57,11 @@ export interface ShockwaveFilterOptions
      * @default -1
      */
     radius?: number;
+    /**
+     * Sets the elapsed time of the shockwave.
+     * @default 0
+     */
+    time?: number;
 }
 
 /**
@@ -83,11 +101,41 @@ export class ShockwaveFilter extends Filter
     /**
      * @param options
      */
-    constructor(options?: ShockwaveFilterOptions)
+    constructor(options?: ShockwaveFilterOptions);
+    /**
+     * @deprecated since 8.0.0
+     *
+     * @param {PIXI.PointData|number[]} [center=[0.5, 0.5]] - See `center` property.
+     * @param {object} [options] - The optional parameters of shockwave filter.
+     * @param {number} [options.amplitude=0.5] - See `amplitude`` property.
+     * @param {number} [options.wavelength=1.0] - See `wavelength` property.
+     * @param {number} [options.speed=500.0] - See `speed` property.
+     * @param {number} [options.brightness=8] - See `brightness` property.
+     * @param {number} [options.radius=4] - See `radius` property.
+     * @param {number} [time=0] - See `time` property.
+     */
+    constructor(center?: DeprecatedPointLike, options?: Partial<DeprecatedShockwaveFilterOptions>, time?: number);
+    // eslint-disable-next-line max-len
+    constructor(...args: [ShockwaveFilterOptions?] | [DeprecatedPointLike?, Partial<DeprecatedShockwaveFilterOptions>?, number?])
     {
+        let options = args[0] ?? {};
+
+        if (Array.isArray(options) || ('x' in options && 'y' in options))
+        {
+            // eslint-disable-next-line max-len
+            deprecation(v8_0_0, 'ShockwaveFilter constructor params are now options object. See params: { center, speed, amplitude, wavelength, brightness, radius, time }');
+
+            const x = 'x' in options ? options.x : options[0];
+            const y = 'y' in options ? options.y : options[1];
+
+            options = { center: { x, y }, ...args[1] };
+
+            if (args[2]) options.time = args[2];
+        }
+
         options = { ...ShockwaveFilter.DEFAULT_OPTIONS, ...options };
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -98,7 +146,7 @@ export class ShockwaveFilter extends Filter
             },
         });
 
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment,
             name: 'shockwave-filter'
@@ -108,12 +156,12 @@ export class ShockwaveFilter extends Filter
             gpuProgram,
             glProgram,
             resources: {
-                shockwaveUniforms: new UniformGroup({
-                    uTime: { value: 0, type: 'f32' },
+                shockwaveUniforms: {
+                    uTime: { value: options.time, type: 'f32' },
                     uCenter: { value: options.center, type: 'vec2<f32>' },
                     uSpeed: { value: options.speed, type: 'f32' },
                     uWave: { value: new Float32Array(4), type: 'vec4<f32>' },
-                })
+                },
             },
         });
 
@@ -143,7 +191,16 @@ export class ShockwaveFilter extends Filter
      * @default [0,0]
      */
     get center(): PointData { return this.uniforms.uCenter; }
-    set center(value: PointData) { this.uniforms.uCenter = value; }
+    set center(value: PointData | DeprecatedPointLike)
+    {
+        if (Array.isArray(value))
+        {
+            deprecation(v8_0_0, 'ShockwaveFilter.center now only accepts {x,y} PointData.');
+            value = { x: value[0], y: value[1] };
+        }
+
+        this.uniforms.uCenter = value;
+    }
 
     /**
      * Sets the center of the effect in normalized screen coords on the `x` axis
