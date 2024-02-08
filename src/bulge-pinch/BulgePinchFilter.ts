@@ -1,4 +1,5 @@
-import { Filter, GlProgram, GpuProgram } from 'pixi.js';
+// eslint-disable-next-line camelcase
+import { deprecation, Filter, GlProgram, GpuProgram, v8_0_0 } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './bulge-pinch.frag';
 import source from './bulge-pinch.wgsl';
@@ -6,6 +7,15 @@ import source from './bulge-pinch.wgsl';
 import type { FilterSystem, PointData, RenderSurface, Texture } from 'pixi.js';
 
 // This WebGPU filter has been ported from the WebGL renderer that was originally created by Julien CLEREL (@JuloxRox)
+
+type DeprecatedPointLike = PointData | number[];
+
+interface DeprecatedBulgePinchFilterOptions
+{
+    center: DeprecatedPointLike;
+    radius: number;
+    strength: number;
+}
 
 export interface BulgePinchFilterOptions
 {
@@ -50,11 +60,28 @@ export class BulgePinchFilter extends Filter
         uStrength: number;
     };
 
-    constructor(options?: BulgePinchFilterOptions)
+    constructor(options?: BulgePinchFilterOptions);
+    /**
+     * @deprecated since 8.0.0
+     *
+     * @param {object} [options] - Options to use for filter.
+     * @param {PIXI.PointData|Array<number>} [options.center=[0,0]] - The x and y coordinates of the center
+     *        of the circle of effect.
+     * @param {number} [options.radius=100] - The radius of the circle of effect.
+     * @param {number} [options.strength=1] - -1 to 1 (-1 is strong pinch, 0 is no effect, 1 is strong bulge)
+     */
+    constructor(options?: Partial<DeprecatedBulgePinchFilterOptions>);
+    constructor(options?: BulgePinchFilterOptions | Partial<DeprecatedBulgePinchFilterOptions>)
     {
+        if (Array.isArray(options?.center))
+        {
+            deprecation(v8_0_0, 'BulgePinchFilterOptions.center now only accepts {x, y} PointData type.');
+            options.center = convertDeprecatedPointLike(options.center);
+        }
+
         options = { ...BulgePinchFilter.DEFAULT_OPTIONS, ...options };
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -64,7 +91,7 @@ export class BulgePinchFilter extends Filter
                 entryPoint: 'mainFragment',
             },
         });
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment,
             name: 'bulge-pinch-filter',
@@ -112,7 +139,16 @@ export class BulgePinchFilter extends Filter
      * @default {x:0.5,y:0.5}
      */
     get center(): PointData { return this.uniforms.uCenter; }
-    set center(value: PointData) { this.uniforms.uCenter = value; }
+    set center(value: PointData | DeprecatedPointLike)
+    {
+        if (Array.isArray(value))
+        {
+            deprecation(v8_0_0, 'BulgePinchFilter.center now only accepts {x, y} PointData type.');
+            value = convertDeprecatedPointLike(value);
+        }
+
+        this.uniforms.uCenter = value;
+    }
 
     /**
      * Sets the center of the effect in normalized screen coords on the `x` axis
@@ -141,4 +177,14 @@ export class BulgePinchFilter extends Filter
      */
     get strength(): number { return this.uniforms.uStrength; }
     set strength(value: number) { this.uniforms.uStrength = value; }
+}
+
+function convertDeprecatedPointLike(value: DeprecatedPointLike): PointData
+{
+    if (Array.isArray(value))
+    {
+        return { x: value[0], y: value[1] };
+    }
+
+    return value;
 }
