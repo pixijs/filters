@@ -42,17 +42,17 @@ export interface OldFilmFilterOptions
      * The radius of the vignette effect, smaller values produces a smaller vignette
      * @default 0.3
      */
-    vignette?: number;
+    vignetting?: number;
     /**
      * Amount of opacity on the vignette
      * @default 1
      */
-    vignetteAlpha?: number;
+    vignettingAlpha?: number;
     /**
      * Blur intensity of the vignette
      * @default 1
      */
-    vignetteBlur?: number;
+    vignettingBlur?: number;
     /**
      * A seed value to apply to the random noise generation
      * @default 0
@@ -78,9 +78,9 @@ export class OldFilmFilter extends Filter
         scratch: 0.5,
         scratchDensity: 0.3,
         scratchWidth: 1,
-        vignette: 0.3,
-        vignetteAlpha: 1,
-        vignetteBlur: 0.3,
+        vignetting: 0.3,
+        vignettingAlpha: 1,
+        vignettingBlur: 0.3,
         seed: 0
     };
 
@@ -88,7 +88,7 @@ export class OldFilmFilter extends Filter
         uSepia: number;
         uNoise: Float32Array;
         uScratch: Float32Array;
-        uVignette: Float32Array;
+        uVignetting: Float32Array;
         uSeed: number;
         uDimensions: Float32Array;
     };
@@ -103,7 +103,7 @@ export class OldFilmFilter extends Filter
     {
         options = { ...OldFilmFilter.DEFAULT_OPTIONS, ...options };
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -114,7 +114,7 @@ export class OldFilmFilter extends Filter
             },
         });
 
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment,
             name: 'old-film-filter',
@@ -128,7 +128,7 @@ export class OldFilmFilter extends Filter
                     uSepia: { value: options.sepia, type: 'f32' },
                     uNoise: { value: new Float32Array(2), type: 'vec2<f32>' },
                     uScratch: { value: new Float32Array(3), type: 'vec3<f32>' },
-                    uVignette: { value: new Float32Array(3), type: 'vec3<f32>' },
+                    uVignetting: { value: new Float32Array(3), type: 'vec3<f32>' },
                     uSeed: { value: options.seed, type: 'f32' },
                     uDimensions: { value: new Float32Array(2), type: 'vec2<f32>' },
                 }
@@ -206,20 +206,20 @@ export class OldFilmFilter extends Filter
      * The radius of the vignette effect, smaller values produces a smaller vignette
      * @default 0.3
      */
-    get vignette(): number { return this.uniforms.uVignette[0]; }
-    set vignette(value: number) { this.uniforms.uVignette[0] = value; }
+    get vignetting(): number { return this.uniforms.uVignetting[0]; }
+    set vignetting(value: number) { this.uniforms.uVignetting[0] = value; }
 
     /**
      * Amount of opacity on the vignette
      * @default 1
      */
-    get vignetteAlpha(): number { return this.uniforms.uVignette[1]; }
-    set vignetteAlpha(value: number) { this.uniforms.uVignette[1] = value; }
+    get vignettingAlpha(): number { return this.uniforms.uVignetting[1]; }
+    set vignettingAlpha(value: number) { this.uniforms.uVignetting[1] = value; }
 
     /**
      * Blur intensity of the vignette
      * @default 1
      */
-    get vignetteBlur(): number { return this.uniforms.uVignette[2]; }
-    set vignetteBlur(value: number) { this.uniforms.uVignette[2] = value; }
+    get vignettingBlur(): number { return this.uniforms.uVignetting[2]; }
+    set vignettingBlur(value: number) { this.uniforms.uVignetting[2] = value; }
 }

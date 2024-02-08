@@ -2,7 +2,7 @@ struct OldFilmUniforms {
     uSepia: f32,
     uNoise: vec2<f32>,
     uScratch: vec3<f32>,
-    uVignette: vec3<f32>,
+    uVignetting: vec3<f32>,
     uSeed: f32,
     uDimensions: vec2<f32>,
 };
@@ -36,7 +36,7 @@ fn mainFragment(
 
   let coord: vec2<f32> = uv * gfu.uInputSize.xy / oldFilmUniforms.uDimensions;
 
-  if (oldFilmUniforms.uVignette[0] > 0.)
+  if (oldFilmUniforms.uVignetting[0] > 0.)
   {
     color *= vec4<f32>(vec3<f32>(vignette(color.rgb, coord)), color.a);
   }
@@ -93,14 +93,14 @@ fn sepia(co: vec3<f32>) -> vec3<f32>
 
 fn vignette(co: vec3<f32>, coord: vec2<f32>) -> f32
 {
-  let uVignette = oldFilmUniforms.uVignette;
+  let uVignetting = oldFilmUniforms.uVignetting;
   let uDimensions = oldFilmUniforms.uDimensions;
   
-  let outter: f32 = SQRT_2 - uVignette[0] * SQRT_2;
+  let outter: f32 = SQRT_2 - uVignetting[0] * SQRT_2;
   var dir: vec2<f32> = vec2<f32>(vec2<f32>(0.5) - coord);
   dir.y *= uDimensions.y / uDimensions.x;
-  let darker: f32 = clamp((outter - length(dir) * SQRT_2) / ( 0.00001 + uVignette[2] * SQRT_2), 0.0, 1.0);
-  return darker + (1.0 - darker) * (1.0 - uVignette[1]);
+  let darker: f32 = clamp((outter - length(dir) * SQRT_2) / ( 0.00001 + uVignetting[2] * SQRT_2), 0.0, 1.0);
+  return darker + (1.0 - darker) * (1.0 - uVignetting[1]);
 }
 
 fn scratch(co: vec3<f32>, coord: vec2<f32>) -> vec3<f32>
