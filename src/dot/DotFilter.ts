@@ -1,4 +1,5 @@
-import { Filter, GlProgram, GpuProgram } from 'pixi.js';
+// eslint-disable-next-line camelcase
+import { deprecation, Filter, GlProgram, GpuProgram, v8_0_0 } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './dot.frag';
 import source from './dot.wgsl';
@@ -48,8 +49,30 @@ export class DotFilter extends Filter
         grayscale: true
     };
 
-    constructor(options?: DotFilterOptions)
+    constructor(options?: DotFilterOptions);
+    /**
+     * @deprecated since 8.0.0
+     *
+     * @param {number} [scale=1] - The scale of the effect.
+     * @param {number} [angle=5] - The radius of the effect.
+     * @param {boolean} [grayscale=true] - Render as grayscale.
+     */
+    constructor(scale?: number, angle?: number, grayscale?: boolean);
+    constructor(...args: [DotFilterOptions?] | [number?, number?, boolean?])
     {
+        let options = args[0] ?? {};
+
+        if (typeof options === 'number')
+        {
+            // eslint-disable-next-line max-len
+            deprecation(v8_0_0, 'DotFilter constructor params are now options object. See params: { scale, angle, grayscale }');
+
+            options = { scale: options };
+
+            if (args[1]) options.angle = args[1];
+            if (args[2]) options.grayscale = args[2];
+        }
+
         options = { ...DotFilter.DEFAULT_OPTIONS, ...options };
 
         const dotUniforms = {
@@ -58,7 +81,7 @@ export class DotFilter extends Filter
             uGrayScale: { value: options.grayscale ? 1 : 0, type: 'f32' },
         };
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -69,7 +92,7 @@ export class DotFilter extends Filter
             },
         });
 
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment,
             name: 'dot-filter',
