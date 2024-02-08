@@ -1,4 +1,5 @@
-import { Filter, GlProgram, GpuProgram } from 'pixi.js';
+// eslint-disable-next-line camelcase
+import { deprecation, Filter, GlProgram, GpuProgram, PointData, v8_0_0 } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './convolution.frag';
 import source from './convolution.wgsl';
@@ -52,17 +53,40 @@ export class ConvolutionFilter extends Filter
 
     public uniforms: {
         uMatrix: ConvolutionMatrix;
-        uTexelSize: [number, number];
+        uTexelSize: PointData;
     };
 
-    constructor(options?: ConvolutionFilterOptions)
+    constructor(options?: ConvolutionFilterOptions);
+    /**
+     * @deprecated since 8.0.0
+     *
+     * @param {number[]} [matrix=[0,0,0,0,0,0,0,0,0]] - An array of values used for matrix transformation.
+     *        Specified as a 9 point Array.
+     * @param {number} [width=200] - Width of the object you are transforming
+     * @param {number} [height=200] - Height of the object you are transforming
+     */
+    constructor(matrix: number[], width?: number, height?: number);
+    constructor(...args: [ConvolutionFilterOptions?] | [number[], number?, number?])
     {
+        let options = args[0] ?? {};
+
+        if (Array.isArray(options))
+        {
+            // eslint-disable-next-line max-len
+            deprecation(v8_0_0, 'ConvolutionFilter constructor params are now options object. See params: { matrix, width, height }');
+
+            options = { matrix: options as ConvolutionMatrix };
+
+            if (args[1]) options.width = args[1];
+            if (args[2]) options.height = args[2];
+        }
+
         options = { ...ConvolutionFilter.DEFAULT_OPTIONS, ...options };
 
         const width = options.width ?? 200;
         const height = options.height ?? 200;
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -73,7 +97,7 @@ export class ConvolutionFilter extends Filter
             },
         });
 
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment,
             name: 'convolution-filter',
@@ -84,8 +108,8 @@ export class ConvolutionFilter extends Filter
             glProgram,
             resources: {
                 convolutionUniforms: {
-                    uMatrix: { value: options.matrix, type: 'vec3<f32>', size: 3 },
-                    uTexelSize: { value: [1 / width, 1 / height], type: 'vec2<f32>' },
+                    uMatrix: { value: options.matrix, type: 'mat3x3<f32>' },
+                    uTexelSize: { value: { x: 1 / width, y: 1 / height }, type: 'vec2<f32>' },
                 },
             },
         });
@@ -116,13 +140,13 @@ export class ConvolutionFilter extends Filter
      * Width of the object you are transforming
      * @default 200
      */
-    get width(): number { return 1 / this.uniforms.uTexelSize[0]; }
-    set width(value: number) { this.uniforms.uTexelSize[0] = 1 / value; }
+    get width(): number { return 1 / this.uniforms.uTexelSize.x; }
+    set width(value: number) { this.uniforms.uTexelSize.x = 1 / value; }
 
     /**
      * Height of the object you are transforming
      * @default 200
      */
-    get height(): number { return 1 / this.uniforms.uTexelSize[1]; }
-    set height(value: number) { this.uniforms.uTexelSize[1] = 1 / value; }
+    get height(): number { return 1 / this.uniforms.uTexelSize.y; }
+    set height(value: number) { this.uniforms.uTexelSize.y = 1 / value; }
 }

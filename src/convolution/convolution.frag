@@ -3,7 +3,7 @@ out vec4 finalColor;
 
 uniform sampler2D uTexture;
 uniform vec2 uTexelSize;
-uniform float uMatrix[9];
+uniform mat3 uMatrix;
 
 void main(void)
 {
@@ -20,9 +20,9 @@ void main(void)
     vec4 c33 = texture(uTexture, vTextureCoord + uTexelSize); // bottom right
 
     finalColor =
-        c11 * uMatrix[0] + c12 * uMatrix[1] + c13 * uMatrix[2] +
-        c21 * uMatrix[3] + c22 * uMatrix[4] + c23 * uMatrix[5] +
-        c31 * uMatrix[6] + c32 * uMatrix[7] + c33 * uMatrix[8];
+        c11 * uMatrix[0][0] + c12 * uMatrix[0][1] + c13 * uMatrix[0][2] +
+        c21 * uMatrix[1][0] + c22 * uMatrix[1][1] + c23 * uMatrix[1][2] +
+        c31 * uMatrix[2][0] + c32 * uMatrix[2][1] + c33 * uMatrix[2][2];
 
     finalColor.a = c22.a;
 }
