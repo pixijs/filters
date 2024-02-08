@@ -1,7 +1,10 @@
-import { Color, ColorSource, Filter, GlProgram, GpuProgram } from 'pixi.js';
+// eslint-disable-next-line camelcase
+import { Color, ColorSource, deprecation, Filter, GlProgram, GpuProgram, v8_0_0 } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './multi-color-replace.frag';
 import source from './multi-color-replace.wgsl';
+
+type DeprecatedColor = number | number[] | Float32Array;
 
 export interface MultiColorReplaceFilterOptions
 {
@@ -72,13 +75,40 @@ export class MultiColorReplaceFilter extends Filter
     private _replacements: Array<[ColorSource, ColorSource]> = [];
     private _maxColors: number;
 
-    constructor(options?: MultiColorReplaceFilterOptions)
+    constructor(options?: MultiColorReplaceFilterOptions);
+    /**
+     * @deprecated since 8.0.0
+     *
+     * @param {Array<Array>} replacements - The collection of replacement items. Each item is color-pair
+     *        (an array length is 2). In the pair, the first value is original color , the second value
+     *        is target color.
+     * @param {number} [epsilon=0.05] - Tolerance of the floating-point comparison between colors
+     *        (lower = more exact, higher = more inclusive)
+     * @param {number} [maxColors] - The maximum number of replacements filter is able to use. Because the
+     *        fragment is only compiled once, this cannot be changed after construction.
+     *        If omitted, the default value is the length of `replacements`.
+     */
+    constructor(replacements: Array<[DeprecatedColor, DeprecatedColor]>, epsilon?: number, maxColors?: number);
+    constructor(...args: [MultiColorReplaceFilterOptions?] | [Array<[DeprecatedColor, DeprecatedColor]>, number?, number?])
     {
+        let options = args[0] ?? {} as MultiColorReplaceFilterOptions;
+
+        if (Array.isArray(options))
+        {
+            // eslint-disable-next-line max-len
+            deprecation(v8_0_0, 'MultiColorReplaceFilter constructor params are now options object. See params: { replacements, tolerance, maxColors }');
+
+            options = { replacements: options };
+
+            if (args[1]) options.tolerance = args[1];
+            if (args[2]) options.maxColors = args[2];
+        }
+
         options = { ...MultiColorReplaceFilter.DEFAULT_OPTIONS, ...options };
 
         const maxColors = options.maxColors ?? options.replacements.length;
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -89,7 +119,7 @@ export class MultiColorReplaceFilter extends Filter
             },
         });
 
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment: fragment.replace(/\$\{MAX_COLORS\}/g, (maxColors).toFixed(0)),
             name: 'multi-color-replace-filter',
@@ -199,4 +229,24 @@ export class MultiColorReplaceFilter extends Filter
       */
     get tolerance(): number { return this.uniforms.uTolerance; }
     set tolerance(value: number) { this.uniforms.uTolerance = value; }
+
+    /**
+     * @deprecated since 8.0.0
+     *
+     * Tolerance of the floating-point comparison between colors (lower = more exact, higher = more inclusive)
+     * @default 0.05
+     */
+    set epsilon(value: number)
+    {
+        // eslint-disable-next-line max-len
+        deprecation(v8_0_0, 'MultiColorReplaceFilter.epsilon is deprecated, please use MultiColorReplaceFilter.tolerance instead');
+        this.tolerance = value;
+    }
+    get epsilon(): number
+    {
+        // eslint-disable-next-line max-len
+        deprecation(v8_0_0, 'MultiColorReplaceFilter.epsilon is deprecated, please use MultiColorReplaceFilter.tolerance instead');
+
+        return this.tolerance;
+    }
 }
