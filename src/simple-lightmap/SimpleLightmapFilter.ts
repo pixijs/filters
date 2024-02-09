@@ -61,7 +61,7 @@ export class SimpleLightmapFilter extends Filter
 
         if (!options.lightMap) throw Error('No light map texture source was provided to SimpleLightmapFilter');
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -71,7 +71,7 @@ export class SimpleLightmapFilter extends Filter
                 entryPoint: 'mainFragment',
             },
         });
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment,
             name: 'simple-lightmap-filter',

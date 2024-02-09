@@ -60,7 +60,7 @@ export class ColorMapFilter extends Filter
 
         if (!options.colorMap) throw Error('No color map texture source was provided to ColorMapFilter');
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -71,7 +71,7 @@ export class ColorMapFilter extends Filter
             },
         });
 
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment,
             name: 'color-map-filter',
