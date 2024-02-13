@@ -55,7 +55,7 @@ export class MotionBlurFilter extends Filter
     {
         options = { ...MotionBlurFilter.DEFAULT_OPTIONS, ...options };
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -66,7 +66,7 @@ export class MotionBlurFilter extends Filter
             },
         });
 
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment,
             name: 'motion-blur-filter',
