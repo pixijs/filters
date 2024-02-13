@@ -1,5 +1,4 @@
 import {
-    deprecation,
     Filter,
     FilterSystem,
     GlProgram,
@@ -8,28 +7,12 @@ import {
     RenderSurface,
     Texture,
     TexturePool,
-    // eslint-disable-next-line camelcase
-    v8_0_0,
 } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import { KawaseBlurFilter } from '../kawase-blur/KawaseBlurFilter';
 import fragment from './advanced-bloom.frag';
 import source from './advanced-bloom.wgsl';
 import { ExtractBrightnessFilter } from './ExtractBrightnessFilter';
-
-type DeprecatedPixelSizeValue = PointData | number[] | number;
-
-interface DeprecatedAdvancedBloomFilterOptions
-{
-    threshold: number,
-    bloomScale: number,
-    brightness: number,
-    kernels: number[] | null,
-    blur: number,
-    quality: number,
-    pixelSize: DeprecatedPixelSizeValue,
-    resolution: number,
-}
 
 export interface AdvancedBloomFilterOptions
 {
@@ -60,7 +43,7 @@ export interface AdvancedBloomFilterOptions
      * The pixel size of the blur filter. Large size is blurrier. For advanced usage.
      * @default {x:1,y:1}
      */
-    pixelSize?: PointData,
+    pixelSize?: PointData | number[] | number,
 }
 
 /**
@@ -99,32 +82,8 @@ export class AdvancedBloomFilter extends Filter
     private _extractFilter: ExtractBrightnessFilter;
     private _blurFilter: KawaseBlurFilter;
 
-    constructor(options?: AdvancedBloomFilterOptions);
-    /**
-     * @deprecated since 8.0.0
-     *
-     * @param {object|number} [options] - The optional parameters of advanced bloom filter.
-     *                        When options is a number , it will be `options.threshold`.
-     * @param {number} [options.threshold=0.5] - Defines how bright a color needs to be to affect bloom.
-     * @param {number} [options.bloomScale=1.0] - To adjust the strength of the bloom. Higher values is
-     *        more intense brightness.
-     * @param {number} [options.brightness=1.0] - The brightness, lower value is more subtle brightness,
-     *        higher value is blown-out.
-     * @param {number} [options.blur=8] - Sets the strength of the Blur properties simultaneously
-     * @param {number} [options.quality=4] - The quality of the Blur filter.
-     * @param {number[]} [options.kernels=null] - The kernels of the Blur filter.
-     * @param {number|number[]|PIXI.PointData} [options.pixelSize=1] - the pixelSize of the Blur filter.
-     * @param {number} [options.resolution=PIXI.settings.FILTER_RESOLUTION] - The resolution of the Blur filter.
-     */
-    constructor(options?: Partial<DeprecatedAdvancedBloomFilterOptions>);
-    constructor(options?: AdvancedBloomFilterOptions | Partial<DeprecatedAdvancedBloomFilterOptions>)
+    constructor(options?: AdvancedBloomFilterOptions)
     {
-        if (typeof options?.pixelSize === 'number' || Array.isArray(options?.pixelSize))
-        {
-            deprecation(v8_0_0, 'AdvancedBloomFilterOptions.pixelSize now only accepts {x, y} PointData type.');
-            options.pixelSize = convertDeprecatedPixelSize(options.pixelSize);
-        }
-
         options = { ...AdvancedBloomFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
@@ -231,14 +190,19 @@ export class AdvancedBloomFilter extends Filter
      * @default {x:1,y:1}
      */
     get pixelSize(): PointData { return this._blurFilter.pixelSize; }
-    set pixelSize(value: PointData | DeprecatedPixelSizeValue)
+    set pixelSize(value: PointData | number[] | number)
     {
         if (typeof value === 'number' || Array.isArray(value))
         {
-            deprecation(v8_0_0, 'AdvancedBloomFilter.pixelSize now only accepts {x, y} PointData type.');
-            this._blurFilter.pixelSize = convertDeprecatedPixelSize(value);
+            if (typeof value === 'number')
+            {
+                value = { x: value, y: value };
+            }
 
-            return;
+            if (Array.isArray(value))
+            {
+                value = { x: value[0], y: value[1] };
+            }
         }
 
         this._blurFilter.pixelSize = value;
@@ -257,19 +221,4 @@ export class AdvancedBloomFilter extends Filter
      */
     get pixelSizeY(): number { return this._blurFilter.pixelSizeY; }
     set pixelSizeY(value: number) { this._blurFilter.pixelSizeY = value; }
-}
-
-function convertDeprecatedPixelSize(value: DeprecatedPixelSizeValue): PointData
-{
-    if (typeof value === 'number')
-    {
-        return { x: value, y: value };
-    }
-
-    if (Array.isArray(value))
-    {
-        return { x: value[0], y: value[1] };
-    }
-
-    return value;
 }
