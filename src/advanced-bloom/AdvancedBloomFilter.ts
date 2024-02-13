@@ -192,17 +192,14 @@ export class AdvancedBloomFilter extends Filter
     get pixelSize(): PointData { return this._blurFilter.pixelSize; }
     set pixelSize(value: PointData | number[] | number)
     {
-        if (typeof value === 'number' || Array.isArray(value))
+        if (typeof value === 'number')
         {
-            if (typeof value === 'number')
-            {
-                value = { x: value, y: value };
-            }
+            value = { x: value, y: value };
+        }
 
-            if (Array.isArray(value))
-            {
-                value = { x: value[0], y: value[1] };
-            }
+        if (Array.isArray(value))
+        {
+            value = { x: value[0], y: value[1] };
         }
 
         this._blurFilter.pixelSize = value;
