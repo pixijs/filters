@@ -63,7 +63,7 @@ export class BloomFilter extends AlphaFilter
 
     constructor(options?: BloomFilterOptions);
     /**
-    * @deprecated since 8.0.0
+    * @deprecated since 6.0.0
     *
     * @param {number|PIXI.PointData|number[]} [blur=2] - Sets the strength of both the blurX and blurY properties simultaneously
     * @param {number} [quality=4] - The quality of the blurX & blurY filter.
@@ -80,7 +80,11 @@ export class BloomFilter extends AlphaFilter
             // eslint-disable-next-line max-len
             deprecation(v8_0_0, 'BloomFilter constructor params are now options object. See params: { strength, quality, resolution, kernelSize }');
 
-            options = { strength: convertDeprecatedBlurValue(options) };
+            let strength = options;
+
+            if (Array.isArray(strength)) strength = { x: strength[0], y: strength[1] };
+
+            options = { strength };
 
             if (args[1]) options.quality = args[1];
             if (args[2]) options.resolution = args[2];
@@ -240,11 +244,4 @@ export class BloomFilter extends AlphaFilter
 
         this.strengthY = value;
     }
-}
-
-function convertDeprecatedBlurValue(value: DeprecatedBlurValue): PointData | number
-{
-    if (typeof value === 'number' || ('x' in value && 'y' in value)) return value;
-
-    return { x: value[0], y: value[1] };
 }
