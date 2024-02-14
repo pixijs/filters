@@ -29,7 +29,7 @@ export class PixelateFilter extends Filter
             uSize: { value: new Float32Array(2), type: 'vec2<f32>' },
         });
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -40,7 +40,7 @@ export class PixelateFilter extends Filter
             },
         });
 
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment,
             name: 'pixelate-filter',
