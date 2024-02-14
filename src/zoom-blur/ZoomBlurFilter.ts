@@ -1,19 +1,7 @@
-// eslint-disable-next-line camelcase
-import { deprecation, Filter, GlProgram, GpuProgram, PointData, v8_0_0 } from 'pixi.js';
+import { Filter, GlProgram, GpuProgram, PointData } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './zoom-blur.frag';
 import source from './zoom-blur.wgsl';
-
-type DeprecatedPointLike = PointData | number[];
-
-interface DeprecatedZoomBlurFilterOptions
-{
-    strength: number;
-    center: DeprecatedPointLike;
-    innerRadius: number;
-    radius: number;
-    maxKernelSize: number;
-}
 
 export interface ZoomBlurFilterOptions
 {
@@ -28,7 +16,7 @@ export interface ZoomBlurFilterOptions
      * once defined in the constructor
      * @default {x:0,y:0}
      */
-    center?: PointData;
+    center?: PointData | number[];
     /**
      * The inner radius of zoom. The part in inner circle won't apply zoom blur effect
      * @default 0
@@ -72,30 +60,8 @@ export class ZoomBlurFilter extends Filter
         uRadii: Float32Array
     };
 
-    constructor(options?: ZoomBlurFilterOptions);
-    /**
-     * @deprecated since 8.0.0
-     *
-     * @param {object} [options] - Filter options to use.
-     * @param {number} [options.strength=0.1] - Sets the strength of the zoom blur effect
-     * @param {PIXI.PointData|number[]} [options.center=[0,0]] - The center of the zoom.
-     * @param {number} [options.innerRadius=0] - The inner radius of zoom. The part in inner circle won't apply
-     *        zoom blur effect.
-     * @param {number} [options.radius=-1] - See `radius` property.
-     * @param {number} [options.maxKernelSize=32] - On older iOS devices, it's better to not go above `13.0`.
-     *        Decreasing this value will produce a lower-quality blur effect with more dithering.
-     */
-    constructor(options?: DeprecatedZoomBlurFilterOptions);
-    constructor(options?: ZoomBlurFilterOptions | DeprecatedZoomBlurFilterOptions)
+    constructor(options?: ZoomBlurFilterOptions)
     {
-        if (Array.isArray(options?.center))
-        {
-            // eslint-disable-next-line max-len
-            deprecation(v8_0_0, 'ZoomBlurFilter options [center] parameter now only accepts {x, y} PointData type.');
-
-            options.center = { x: options.center[0], y: options.center[1] };
-        }
-
         options = { ...ZoomBlurFilter.DEFAULT_OPTIONS, ...options };
 
         const kernelSize = options.maxKernelSize ?? 32;
@@ -146,11 +112,10 @@ export class ZoomBlurFilter extends Filter
      * @default [0,0]
      */
     get center(): PointData { return this.uniforms.uCenter; }
-    set center(value: PointData | DeprecatedPointLike)
+    set center(value: PointData | number[])
     {
         if (Array.isArray(value))
         {
-            deprecation(v8_0_0, 'ZoomBlurFilter.center now only accepts {x,y} PointData.');
             value = { x: value[0], y: value[1] };
         }
 
