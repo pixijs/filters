@@ -1,4 +1,4 @@
-import { Color, Filter, GlProgram, GpuProgram } from 'pixi.js';
+import { Color, deprecation, Filter, GlProgram, GpuProgram } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './outline.frag';
 import source from './outline.wgsl';
@@ -77,8 +77,35 @@ export class OutlineFilter extends Filter
     private _quality!: number;
     private _color!: Color;
 
-    constructor(options?: OutlineFilterOptions)
+    constructor(options?: OutlineFilterOptions);
+    /**
+     * @deprecated since 6.0.0
+     *
+     * @param {number} [thickness=1] - The tickness of the outline. Make it 2 times more for resolution 2
+     * @param {number} [color=0x000000] - The color of the outline.
+     * @param {number} [quality=0.1] - The quality of the outline from `0` to `1`, using a higher quality
+     *        setting will result in slower performance and more accuracy.
+     * @param {number} [alpha=1.0] - The alpha of the outline.
+     * @param {boolean} [knockout=false] - Only render outline, not the contents.
+     */
+    constructor(thickness?: number, color?: number, quality?: number, alpha?: number, knockout?: boolean);
+    constructor(...args: [OutlineFilterOptions?] | [number?, number?, number?, number?, boolean?])
     {
+        let options = args[0] ?? {};
+
+        if (typeof options === 'number')
+        {
+            // eslint-disable-next-line max-len
+            deprecation('6.0.0', 'OutlineFilter constructor params are now options object. See params: { thickness, color, quality, alpha, knockout }');
+
+            options = { thickness: options };
+
+            if (args[1] !== undefined) options.color = args[1];
+            if (args[2] !== undefined) options.quality = args[2];
+            if (args[3] !== undefined) options.alpha = args[3];
+            if (args[4] !== undefined) options.knockout = args[4];
+        }
+
         options = { ...OutlineFilter.DEFAULT_OPTIONS, ...options };
 
         const quality = options.quality ?? 0.1;
