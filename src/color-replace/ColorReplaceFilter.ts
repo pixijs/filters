@@ -1,5 +1,4 @@
-// eslint-disable-next-line camelcase
-import { Color, ColorSource, deprecation, Filter, GlProgram, GpuProgram, v8_0_0 } from 'pixi.js';
+import { Color, ColorSource, deprecation, Filter, GlProgram, GpuProgram } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './color-replace.frag';
 import source from './color-replace.wgsl';
@@ -78,7 +77,7 @@ export class ColorReplaceFilter extends Filter
 
     constructor(options?: ColorReplaceFilterOptions);
     /**
-     * @deprecated since 8.0.0
+     * @deprecated since 6.0.0
      *
      * @param {number|Array<number>|Float32Array} [originalColor=0xFF0000] - The color that will be changed,
      *        as a 3 component RGB e.g. `[1.0, 1.0, 1.0]`
@@ -95,12 +94,12 @@ export class ColorReplaceFilter extends Filter
         if (typeof options === 'number' || Array.isArray(options) || options instanceof Float32Array)
         {
             // eslint-disable-next-line max-len
-            deprecation(v8_0_0, 'ColorReplaceFilter constructor params are now options object. See params: { originalColor, targetColor, tolerance }');
+            deprecation('6.0.0', 'ColorReplaceFilter constructor params are now options object. See params: { originalColor, targetColor, tolerance }');
 
             options = { originalColor: options };
 
-            if (args[1]) options.targetColor = args[1];
-            if (args[2]) options.tolerance = args[2];
+            if (args[1] !== undefined) options.targetColor = args[1];
+            if (args[2] !== undefined) options.tolerance = args[2];
         }
 
         options = { ...ColorReplaceFilter.DEFAULT_OPTIONS, ...options };
@@ -192,13 +191,13 @@ export class ColorReplaceFilter extends Filter
      */
     set newColor(value: DeprecatedColor)
     {
-        deprecation(v8_0_0, 'ColorReplaceFilter.newColor is deprecated, please use ColorReplaceFilter.targetColor instead');
+        deprecation('6.0.0', 'ColorReplaceFilter.newColor is deprecated, please use ColorReplaceFilter.targetColor instead');
 
         this.targetColor = value;
     }
     get newColor(): DeprecatedColor
     {
-        deprecation(v8_0_0, 'ColorReplaceFilter.newColor is deprecated, please use ColorReplaceFilter.targetColor instead');
+        deprecation('6.0.0', 'ColorReplaceFilter.newColor is deprecated, please use ColorReplaceFilter.targetColor instead');
 
         return this.targetColor as DeprecatedColor;
     }
@@ -211,13 +210,13 @@ export class ColorReplaceFilter extends Filter
      */
     set epsilon(value: number)
     {
-        deprecation(v8_0_0, 'ColorReplaceFilter.epsilon is deprecated, please use ColorReplaceFilter.tolerance instead');
+        deprecation('6.0.0', 'ColorReplaceFilter.epsilon is deprecated, please use ColorReplaceFilter.tolerance instead');
 
         this.tolerance = value;
     }
     get epsilon(): number
     {
-        deprecation(v8_0_0, 'ColorReplaceFilter.epsilon is deprecated, please use ColorReplaceFilter.tolerance instead');
+        deprecation('6.0.0', 'ColorReplaceFilter.epsilon is deprecated, please use ColorReplaceFilter.tolerance instead');
 
         return this.tolerance;
     }
