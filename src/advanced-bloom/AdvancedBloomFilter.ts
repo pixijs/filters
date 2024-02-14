@@ -1,4 +1,13 @@
-import { Filter, FilterSystem, GlProgram, GpuProgram, PointData, RenderSurface, Texture, TexturePool } from 'pixi.js';
+import {
+    Filter,
+    FilterSystem,
+    GlProgram,
+    GpuProgram,
+    PointData,
+    RenderSurface,
+    Texture,
+    TexturePool,
+} from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import { KawaseBlurFilter } from '../kawase-blur/KawaseBlurFilter';
 import fragment from './advanced-bloom.frag';
@@ -22,7 +31,7 @@ export interface AdvancedBloomFilterOptions
      * @default 1
      */
     brightness?: number,
-    /** Sets the strength of the Blur properties simultaneously */
+    /** The strength of the Blur properties simultaneously */
     blur?: number,
     /**
      * The kernel size of the blur filter.
@@ -31,10 +40,10 @@ export interface AdvancedBloomFilterOptions
     /** The quality of the Blur filter. */
     quality?: number,
     /**
-     * Sets the pixel size of the blur filter. Large size is blurrier. For advanced usage.
+     * The pixel size of the blur filter. Large size is blurrier. For advanced usage.
      * @default {x:1,y:1}
      */
-    pixelSize?: PointData,
+    pixelSize?: PointData | number[] | number,
 }
 
 /**
@@ -158,40 +167,53 @@ export class AdvancedBloomFilter extends Filter
     get threshold(): number { return this._extractFilter.threshold; }
     set threshold(value: number) { this._extractFilter.threshold = value; }
 
-    /** Sets the kernels of the Blur Filter */
+    /** The kernels of the Blur Filter */
     get kernels(): number[] { return this._blurFilter.kernels; }
     set kernels(value: number[]) { this._blurFilter.kernels = value; }
 
     /**
-     * Sets the strength of the Blur properties simultaneously
+     * The strength of the Blur properties simultaneously
      * @default 2
      */
     get blur(): number { return this._blurFilter.strength; }
     set blur(value: number) { this._blurFilter.strength = value; }
 
     /**
-     * Sets the quality of the Blur Filter
+     * The quality of the Blur Filter
      * @default 4
      */
     get quality(): number { return this._blurFilter.quality; }
     set quality(value: number) { this._blurFilter.quality = value; }
 
     /**
-     * Sets the pixelSize of the Kawase Blur filter
+     * The pixel size of the Kawase Blur filter
      * @default {x:1,y:1}
      */
     get pixelSize(): PointData { return this._blurFilter.pixelSize; }
-    set pixelSize(value: PointData) { this._blurFilter.pixelSize = value; }
+    set pixelSize(value: PointData | number[] | number)
+    {
+        if (typeof value === 'number')
+        {
+            value = { x: value, y: value };
+        }
+
+        if (Array.isArray(value))
+        {
+            value = { x: value[0], y: value[1] };
+        }
+
+        this._blurFilter.pixelSize = value;
+    }
 
     /**
-     * Sets the pixelSize of the Kawase Blur filter on the `x` axis
+     * The horizontal pixelSize of the Kawase Blur filter
      * @default 1
      */
     get pixelSizeX(): number { return this._blurFilter.pixelSizeX; }
     set pixelSizeX(value: number) { this._blurFilter.pixelSizeX = value; }
 
     /**
-     * Sets the pixelSize of the Kawase Blur filter on the `y` axis
+     * The vertical pixel size of the Kawase Blur filter
      * @default 1
      */
     get pixelSizeY(): number { return this._blurFilter.pixelSizeY; }
