@@ -1,30 +1,9 @@
-import { DEG_TO_RAD, Filter, getCanvasTexture, GlProgram, GpuProgram, Texture } from 'pixi.js';
+import { DEG_TO_RAD, Filter, GlProgram, GpuProgram, ImageSource, Texture } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './glitch.frag';
 import source from './glitch.wgsl';
 
 import type { FilterSystem, PointData, RenderSurface } from 'pixi.js';
-
-/**
- * @param {object} [options] - The more optional parameters of the filter.
- * @param {number} [options.slices=5] - The maximum number of slices.
- * @param {number} [options.offset=100] - The maximum offset amount of slices.
- * @param {number} [options.direction=0] - The angle in degree of the offset of slices.
- * @param {number} [options.fillMode=0] - The fill mode of the space after the offset. Acceptable values:
- *  - `0` {@link GlitchFilter.TRANSPARENT TRANSPARENT}
- *  - `1` {@link GlitchFilter.ORIGINAL ORIGINAL}
- *  - `2` {@link GlitchFilter.LOOP LOOP}
- *  - `3` {@link GlitchFilter.CLAMP CLAMP}
- *  - `4` {@link GlitchFilter.MIRROR MIRROR}
- * @param {number} [options.seed=0] - A seed value for randomizing glitch effect.
- * @param {boolean} [options.average=false] - `true` will divide the bands roughly based on equal amounts
- *                 where as setting to `false` will vary the band sizes dramatically (more random looking).
- * @param {number} [options.minSize=8] - Minimum size of individual slice. Segment of total `sampleSize`
- * @param {number} [options.sampleSize=512] - The resolution of the displacement map texture.
- * @param {number[]} [options.red=[0,0]] - Red channel offset
- * @param {number[]} [options.green=[0,0]] - Green channel offset.
- * @param {number[]} [options.blue=[0,0]] - Blue channel offset.
- */
 
 enum FILL_MODES
     {
@@ -37,17 +16,62 @@ enum FILL_MODES
 
 export interface GlitchFilterOptions
 {
+    /**
+     * The count of glitch slices.
+     * @default 5
+     */
     slices?: number;
+    /**
+     * The maximum offset amount of slices.
+     * @default 100
+     */
     offset?: number;
+    /**
+     * The angle in degree of the offset of slices.
+     * @default 0
+     */
     direction?: number;
+    /**
+     * The fill mode of the space after the offset.
+     * @default FILL_MODES.TRANSPARENT
+     */
     fillMode?: number;
+    /**
+     * A seed value for randomizing glitch effect.
+     * @default 0
+     */
     seed?: number;
+    /**
+     * `true` will divide the bands roughly based on equal amounts
+     * where as setting to `false` will vary the band sizes dramatically (more random looking).
+     * @default false
+     */
     average?: boolean;
+    /**
+     * Minimum size of slices as a portion of the `sampleSize`
+     * @default 8
+     */
     minSize?: number;
+    /**
+     * Height of the displacement map canvas.
+     * @default 512
+     */
     sampleSize?: number;
-    red?: PointData;
-    green?: PointData;
-    blue?: PointData;
+    /**
+     * Red channel offset.
+     * @default {x:0,y:0}
+     */
+    red?: PointData | number[];
+    /**
+     * Green channel offset.
+     * @default {x:0,y:0}
+     */
+    green?: PointData | number[];
+    /**
+     * Blue offset.
+     * @default {x:0,y:0}
+     */
+    blue?: PointData | number[];
 }
 
 /**
@@ -143,7 +167,9 @@ export class GlitchFilter extends Filter
         canvas.width = 4;
         canvas.height = options.sampleSize ?? 512;
 
-        const texture = getCanvasTexture(canvas, { scaleMode: 'nearest' });
+        const texture = new Texture({
+            source: new ImageSource({ resource: canvas })
+        });
 
         super({
             gpuProgram,
@@ -393,21 +419,45 @@ export class GlitchFilter extends Filter
      * @default {x:0,y:0}
      */
     get red(): PointData { return this.uniforms.uRed; }
-    set red(value: PointData) { this.uniforms.uRed = value; }
+    set red(value: PointData | number[])
+    {
+        if (Array.isArray(value))
+        {
+            value = { x: value[0], y: value[1] };
+        }
+
+        this.uniforms.uRed = value;
+    }
 
     /**
      * Green channel offset.
      * @default {x:0,y:0}
      */
     get green(): PointData { return this.uniforms.uGreen; }
-    set green(value: PointData) { this.uniforms.uGreen = value; }
+    set green(value: PointData | number[])
+    {
+        if (Array.isArray(value))
+        {
+            value = { x: value[0], y: value[1] };
+        }
+
+        this.uniforms.uGreen = value;
+    }
 
     /**
      * Blue offset.
      * @default {x:0,y:0}
      */
     get blue(): PointData { return this.uniforms.uBlue; }
-    set blue(value: PointData) { this.uniforms.uBlue = value; }
+    set blue(value: PointData | number[])
+    {
+        if (Array.isArray(value))
+        {
+            value = { x: value[0], y: value[1] };
+        }
+
+        this.uniforms.uBlue = value;
+    }
 
     /**
      * Removes all references
