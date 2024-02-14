@@ -1,7 +1,9 @@
-import { Filter, GlProgram, GpuProgram, PointData } from 'pixi.js';
+import { deprecation, Filter, GlProgram, GpuProgram, PointData } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './rgb-split.frag';
 import source from './rgb-split.wgsl';
+
+type OffsetType = PointData | [number, number];
 
 export interface RGBSplitFilterOptions
 {
@@ -9,17 +11,17 @@ export interface RGBSplitFilterOptions
      * The amount of offset for the red channel.
      * @default {x:-10,y:0}
      */
-    red: PointData;
+    red?: OffsetType;
     /**
      * The amount of offset for the green channel.
      * @default {x:0,y:10}
      */
-    green: PointData;
+    green?: OffsetType;
     /**
      * The amount of offset for the blue channel.
      * @default {x:0,y:0}
      */
-    blue: PointData;
+    blue?: OffsetType;
 }
 
 /**
@@ -45,8 +47,30 @@ export class RGBSplitFilter extends Filter
         uBlue: PointData;
     };
 
-    constructor(options?: RGBSplitFilterOptions)
+    constructor(options?: RGBSplitFilterOptions);
+    /**
+     * @deprecated since 6.0.0
+     *
+     * @param {PIXI.PointData | number[]} [red=[-10,0]] - Red channel offset
+     * @param {PIXI.PointData | number[]} [green=[0, 10]] - Green channel offset
+     * @param {PIXI.PointData | number[]} [blue=[0, 0]] - Blue channel offset
+     */
+    constructor(red?: OffsetType, green?: OffsetType, blue?: OffsetType);
+    constructor(...args: [RGBSplitFilterOptions?] | [OffsetType?, OffsetType?, OffsetType?])
     {
+        let options = args[0] ?? {};
+
+        if (Array.isArray(options) || ('x' in options && 'y' in options))
+        {
+            // eslint-disable-next-line max-len
+            deprecation('6.0.0', 'RGBSplitFilter constructor params are now options object. See params: { red, green, blue }');
+
+            options = { red: options };
+
+            if (args[1] !== undefined) options.green = args[1];
+            if (args[2] !== undefined) options.blue = args[2];
+        }
+
         options = { ...RGBSplitFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
@@ -79,6 +103,8 @@ export class RGBSplitFilter extends Filter
         });
 
         this.uniforms = this.resources.rgbSplitUniforms.uniforms;
+
+        Object.assign(this, options);
     }
 
     /**
@@ -86,7 +112,15 @@ export class RGBSplitFilter extends Filter
      * @default {x:-10,y:0}
      */
     get red(): PointData { return this.uniforms.uRed; }
-    set red(value: PointData) { this.uniforms.uRed = value; }
+    set red(value: OffsetType)
+    {
+        if (Array.isArray(value))
+        {
+            value = { x: value[0], y: value[1] };
+        }
+
+        this.uniforms.uRed = value;
+    }
 
     /**
      * Amount of x-axis offset for the red channel.
@@ -107,7 +141,15 @@ export class RGBSplitFilter extends Filter
      * @default {x:0,y:10}
      */
     get green(): PointData { return this.uniforms.uGreen; }
-    set green(value: PointData) { this.uniforms.uGreen = value; }
+    set green(value: OffsetType)
+    {
+        if (Array.isArray(value))
+        {
+            value = { x: value[0], y: value[1] };
+        }
+
+        this.uniforms.uGreen = value;
+    }
 
     /**
      * Amount of x-axis offset for the green channel.
@@ -128,7 +170,15 @@ export class RGBSplitFilter extends Filter
      * @default {x:0,y:0}
      */
     get blue(): PointData { return this.uniforms.uBlue; }
-    set blue(value: PointData) { this.uniforms.uBlue = value; }
+    set blue(value: OffsetType)
+    {
+        if (Array.isArray(value))
+        {
+            value = { x: value[0], y: value[1] };
+        }
+
+        this.uniforms.uBlue = value;
+    }
 
     /**
      * Amount of x-axis offset for the blue channel.
