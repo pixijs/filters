@@ -15,7 +15,7 @@ export class GrayscaleFilter extends Filter
 {
     constructor()
     {
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -26,7 +26,7 @@ export class GrayscaleFilter extends Filter
             },
         });
 
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment,
             name: 'grayscale-filter',
