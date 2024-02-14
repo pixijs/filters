@@ -92,7 +92,7 @@ export class GlowFilter extends Filter
         const distance = options.distance ?? 10;
         const quality = options.quality ?? 0.1;
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -108,7 +108,7 @@ export class GlowFilter extends Filter
          * since we hard-assign them during creation to allow
          * for the values to be used in GLSL loops
          */
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment: fragment
                 .replace(/__ANGLE_STEP_SIZE__/gi, `${(1 / quality / distance).toFixed(7)}`)

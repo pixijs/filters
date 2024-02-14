@@ -78,7 +78,7 @@ export class MultiColorReplaceFilter extends Filter
 
         const maxColors = options.maxColors ?? options.replacements.length;
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -89,7 +89,7 @@ export class MultiColorReplaceFilter extends Filter
             },
         });
 
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment: fragment.replace(/\$\{MAX_COLORS\}/g, (maxColors).toFixed(0)),
             name: 'multi-color-replace-filter',
