@@ -1,5 +1,4 @@
-// eslint-disable-next-line camelcase
-import { Color, ColorSource, deprecation, Filter, GlProgram, GpuProgram, UniformGroup, v8_0_0 } from 'pixi.js';
+import { Color, ColorSource, deprecation, Filter, GlProgram, GpuProgram } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './color-overlay.frag';
 import source from './color-overlay.wgsl';
@@ -46,7 +45,7 @@ export class ColorOverlayFilter extends Filter
 
     constructor(options?: ColorOverlayFilterOptions);
     /**
-     * @deprecated since 8.0.0
+     * @deprecated since 6.0.0
      *
      * @param {number|Array<number>} [color=0x000000] - The resulting color, as a 3 component RGB e.g. [1.0, 0.5, 1.0]
      * @param {number} [alpha=1] - The alpha value of the color
@@ -59,11 +58,11 @@ export class ColorOverlayFilter extends Filter
         if (typeof options === 'number' || Array.isArray(options) || options instanceof Float32Array)
         {
             // eslint-disable-next-line max-len
-            deprecation(v8_0_0, 'ColorOverlayFilter constructor params are now options object. See params: { color, alpha }');
+            deprecation('6.0.0', 'ColorOverlayFilter constructor params are now options object. See params: { color, alpha }');
 
             options = { color: options };
 
-            if (args[1]) options.alpha = args[1];
+            if (args[1] !== undefined) options.alpha = args[1];
         }
 
         options = { ...ColorOverlayFilter.DEFAULT_OPTIONS, ...options };
