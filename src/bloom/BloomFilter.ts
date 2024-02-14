@@ -84,9 +84,9 @@ export class BloomFilter extends AlphaFilter
 
             options = { strength };
 
-            if (args[1]) options.quality = args[1];
-            if (args[2]) options.resolution = args[2];
-            if (args[3]) options.kernelSize = args[3];
+            if (args[1] !== undefined) options.quality = args[1];
+            if (args[2] !== undefined) options.resolution = args[2];
+            if (args[3] !== undefined) options.kernelSize = args[3];
         }
 
         options = { ...BloomFilter.DEFAULT_OPTIONS, ...options } as BloomFilterOptions;
