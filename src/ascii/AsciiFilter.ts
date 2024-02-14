@@ -1,5 +1,4 @@
-// eslint-disable-next-line camelcase
-import { Color, ColorSource, deprecation, Filter, GlProgram, GpuProgram, v8_0_0 } from 'pixi.js';
+import { Color, ColorSource, deprecation, Filter, GlProgram, GpuProgram } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './ascii.frag';
 import source from './ascii.wgsl';
@@ -56,7 +55,7 @@ export class AsciiFilter extends Filter
 
     constructor(options?: AsciiFilterOptions);
     /**
-     * @deprecated since 8.0.0
+     * @deprecated since 6.0.0
      *
      * @param {number} [size=8] - Size of the font
      */
@@ -68,7 +67,7 @@ export class AsciiFilter extends Filter
         if (typeof options === 'number')
         {
             // eslint-disable-next-line max-len
-            deprecation(v8_0_0, 'AsciiFilter constructor params are now options object. See params: { size, color, replaceColor }');
+            deprecation('6.0.0', 'AsciiFilter constructor params are now options object. See params: { size, color, replaceColor }');
 
             options = { size: options };
         }
