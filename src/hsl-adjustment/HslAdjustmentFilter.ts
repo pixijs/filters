@@ -64,7 +64,7 @@ export class HslAdjustmentFilter extends Filter
     {
         options = { ...HslAdjustmentFilter.DEFAULT_OPTIONS, ...options };
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -75,7 +75,7 @@ export class HslAdjustmentFilter extends Filter
             },
         });
 
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment,
             name: 'hsl-adjustment-filter',
