@@ -1,9 +1,8 @@
-import { Filter, GlProgram, GpuProgram } from 'pixi.js';
+/* eslint-disable max-len */
+import { deprecation, Filter, GlProgram, GpuProgram, ObservablePoint, PointData } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './motion-blur.frag';
 import source from './motion-blur.wgsl';
-
-import type { PointData } from 'pixi.js';
 
 export interface MotionBlurFilterOptions
 {
@@ -13,7 +12,7 @@ export interface MotionBlurFilterOptions
      * once defined in the constructor
      * @default {x:0,y:0}
      */
-    velocity?: PointData;
+    velocity?: PointData | number[];
     /**
      * The kernelSize of the blur filter. Must be odd number >= 5
      * @default 5
@@ -51,8 +50,33 @@ export class MotionBlurFilter extends Filter
 
     private _kernelSize!: number;
 
-    constructor(options?: MotionBlurFilterOptions)
+    constructor(options?: MotionBlurFilterOptions);
+    /**
+     * @deprecated since 8.0.0
+     *
+     * @param {PIXI.ObservablePoint|PIXI.PointData|number[]} [velocity=[0, 0]] - Sets the velocity of the motion for blur effect.
+     * @param {number} [kernelSize=5] - The kernelSize of the blur filter. Must be odd number >= 5
+     * @param {number} [offset=0] - The offset of the blur filter.
+     */
+    constructor(velocity?: number[] | PointData | ObservablePoint, kernelSize?: number, offset?: number);
+    constructor(...args: [MotionBlurFilterOptions?] | [(number[] | PointData | ObservablePoint)?, number?, number?])
     {
+        let options = args[0] ?? {};
+
+        if (Array.isArray(options) || ('x' in options && 'y' in options) || options instanceof ObservablePoint)
+        {
+            // eslint-disable-next-line max-len
+            deprecation('6.0.0', 'MotionBlurFilter constructor params are now options object. See params: { velocity, kernelSize, offset }');
+
+            const x = 'x' in options ? options.x : options[0];
+            const y = 'y' in options ? options.y : options[1];
+
+            options = { velocity: { x, y } };
+
+            if (args[1] !== undefined) options.kernelSize = args[1];
+            if (args[2] !== undefined) options.offset = args[2];
+        }
+
         options = { ...MotionBlurFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
@@ -96,8 +120,13 @@ export class MotionBlurFilter extends Filter
      * @default {x:0,y:0}
      */
     get velocity(): PointData { return this.uniforms.uVelocity; }
-    set velocity(value: PointData)
+    set velocity(value: PointData | number[])
     {
+        if (Array.isArray(value))
+        {
+            value = { x: value[0], y: value[1] };
+        }
+
         this.uniforms.uVelocity = value;
         this._updateDirty();
     }
