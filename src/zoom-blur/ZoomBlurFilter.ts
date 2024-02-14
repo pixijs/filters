@@ -66,7 +66,7 @@ export class ZoomBlurFilter extends Filter
 
         const kernelSize = options.maxKernelSize ?? 32;
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -77,7 +77,7 @@ export class ZoomBlurFilter extends Filter
             },
         });
 
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment: fragment.replace('${MAX_KERNEL_SIZE}', kernelSize.toFixed(1)),
             name: 'zoom-blur-filter',
