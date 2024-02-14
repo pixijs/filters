@@ -8,8 +8,6 @@ import {
     GpuProgram,
     RenderSurface,
     Texture,
-    // eslint-disable-next-line camelcase
-    v8_0_0,
 } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './simple-lightmap.frag';
@@ -71,7 +69,7 @@ export class SimpleLightmapFilter extends Filter
 
     constructor(options: SimpleLightmapFilterOptions);
     /**
-     * @deprecated since 8.0.0
+     * @deprecated since 6.0.0
      *
      * @param {PIXI.Texture} texture - a texture where your lightmap is rendered
      * @param {Array<number>|number} [color=0x000000] - An RGBA array of the ambient color
@@ -85,12 +83,12 @@ export class SimpleLightmapFilter extends Filter
         if (options instanceof Texture)
         {
             // eslint-disable-next-line max-len
-            deprecation(v8_0_0, 'SimpleLightmapFilter constructor params are now options object. See params: { lightMap, color, alpha }');
+            deprecation('6.0.0', 'SimpleLightmapFilter constructor params are now options object. See params: { lightMap, color, alpha }');
 
             options = { lightMap: options };
 
-            if (args[1]) options.color = args[1];
-            if (args[2]) options.alpha = args[2];
+            if (args[1] !== undefined) options.color = args[1];
+            if (args[2] !== undefined) options.alpha = args[2];
         }
 
         options = { ...SimpleLightmapFilter.DEFAULT_OPTIONS, ...options };
