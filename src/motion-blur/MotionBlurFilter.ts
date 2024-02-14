@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
-// eslint-disable-next-line camelcase
-import { deprecation, Filter, GlProgram, GpuProgram, ObservablePoint, PointData, v8_0_0 } from 'pixi.js';
+import { deprecation, Filter, GlProgram, GpuProgram, ObservablePoint, PointData } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './motion-blur.frag';
 import source from './motion-blur.wgsl';
@@ -13,7 +12,7 @@ export interface MotionBlurFilterOptions
      * once defined in the constructor
      * @default {x:0,y:0}
      */
-    velocity?: PointData;
+    velocity?: PointData | number[];
     /**
      * The kernelSize of the blur filter. Must be odd number >= 5
      * @default 5
@@ -67,15 +66,15 @@ export class MotionBlurFilter extends Filter
         if (Array.isArray(options) || ('x' in options && 'y' in options) || options instanceof ObservablePoint)
         {
             // eslint-disable-next-line max-len
-            deprecation(v8_0_0, 'MotionBlurFilter constructor params are now options object. See params: { velocity, kernelSize, offset }');
+            deprecation('6.0.0', 'MotionBlurFilter constructor params are now options object. See params: { velocity, kernelSize, offset }');
 
             const x = 'x' in options ? options.x : options[0];
             const y = 'y' in options ? options.y : options[1];
 
             options = { velocity: { x, y } };
 
-            if (args[1]) options.kernelSize = args[1];
-            if (args[2]) options.offset = args[2];
+            if (args[1] !== undefined) options.kernelSize = args[1];
+            if (args[2] !== undefined) options.offset = args[2];
         }
 
         options = { ...MotionBlurFilter.DEFAULT_OPTIONS, ...options };
@@ -125,7 +124,6 @@ export class MotionBlurFilter extends Filter
     {
         if (Array.isArray(value))
         {
-            deprecation(v8_0_0, 'MotionBlurFilter.velocity now only accepts {x, y} PointData type.');
             value = { x: value[0], y: value[1] };
         }
 
