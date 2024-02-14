@@ -59,7 +59,7 @@ export class TiltShiftAxisFilter extends Filter
     {
         options = { ...TiltShiftAxisFilter.DEFAULT_OPTIONS, ...options } as TiltShiftAxisFilterOptions;
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -70,7 +70,7 @@ export class TiltShiftAxisFilter extends Filter
             },
         });
 
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment,
             name: 'tilt-shift-axis-filter',
