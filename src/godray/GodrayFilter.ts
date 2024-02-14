@@ -26,7 +26,7 @@ export interface GodrayFilterOptions
      * once defined in the constructor
      * @default {x:0,y:0}
      */
-    center?: PointData;
+    center?: PointData | number[];
     /**
      * General intensity of the effect. A value closer to 1 will produce a more intense effect,
      * where a value closer to 0 will produce a subtler effect.
@@ -189,7 +189,15 @@ export class GodrayFilter extends Filter
      * @default {x:0,y:0}
      */
     get center(): PointData { return this._center; }
-    set center(value: PointData) { this._center = value; }
+    set center(value: PointData | number[])
+    {
+        if (Array.isArray(value))
+        {
+            value = { x: value[0], y: value[1] };
+        }
+
+        this._center = value;
+    }
 
     /**
      * Focal point for non-parallel rays on the `x` axis, to use this `parallel` must be set to `false`.
