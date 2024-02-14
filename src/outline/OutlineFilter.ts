@@ -83,7 +83,7 @@ export class OutlineFilter extends Filter
 
         const quality = options.quality ?? 0.1;
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -94,7 +94,7 @@ export class OutlineFilter extends Filter
             },
         });
 
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment: fragment.replace(/\$\{ANGLE_STEP\}/, OutlineFilter.getAngleStep(quality).toFixed(7)),
             name: 'outline-filter',

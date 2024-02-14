@@ -58,7 +58,7 @@ export class DotFilter extends Filter
             uGrayScale: { value: options.grayscale ? 1 : 0, type: 'f32' },
         };
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -69,7 +69,7 @@ export class DotFilter extends Filter
             },
         });
 
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment,
             name: 'dot-filter',
