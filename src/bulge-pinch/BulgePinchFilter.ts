@@ -54,7 +54,7 @@ export class BulgePinchFilter extends Filter
     {
         options = { ...BulgePinchFilter.DEFAULT_OPTIONS, ...options };
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -64,7 +64,7 @@ export class BulgePinchFilter extends Filter
                 entryPoint: 'mainFragment',
             },
         });
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment,
             name: 'bulge-pinch-filter',
