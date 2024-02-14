@@ -7,14 +7,10 @@ import {
     PointData,
     RenderSurface,
     Texture,
-    // eslint-disable-next-line camelcase
-    v8_0_0,
 } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './shockwave.frag';
 import source from './shockwave.wgsl';
-
-type DeprecatedPointLike = PointData | number[];
 
 interface DeprecatedShockwaveFilterOptions
 {
@@ -103,7 +99,7 @@ export class ShockwaveFilter extends Filter
      */
     constructor(options?: ShockwaveFilterOptions);
     /**
-     * @deprecated since 8.0.0
+     * @deprecated since 6.0.0
      *
      * @param {PIXI.PointData|number[]} [center=[0.5, 0.5]] - See `center` property.
      * @param {object} [options] - The optional parameters of shockwave filter.
@@ -114,23 +110,20 @@ export class ShockwaveFilter extends Filter
      * @param {number} [options.radius=4] - See `radius` property.
      * @param {number} [time=0] - See `time` property.
      */
-    constructor(center?: DeprecatedPointLike, options?: Partial<DeprecatedShockwaveFilterOptions>, time?: number);
+    constructor(center?: PointData | number[], options?: Partial<DeprecatedShockwaveFilterOptions>, time?: number);
     // eslint-disable-next-line max-len
-    constructor(...args: [ShockwaveFilterOptions?] | [DeprecatedPointLike?, Partial<DeprecatedShockwaveFilterOptions>?, number?])
+    constructor(...args: [ShockwaveFilterOptions?] | [(PointData | number[])?, Partial<DeprecatedShockwaveFilterOptions>?, number?])
     {
         let options = args[0] ?? {};
 
         if (Array.isArray(options) || ('x' in options && 'y' in options))
         {
             // eslint-disable-next-line max-len
-            deprecation(v8_0_0, 'ShockwaveFilter constructor params are now options object. See params: { center, speed, amplitude, wavelength, brightness, radius, time }');
+            deprecation('6.0.0', 'ShockwaveFilter constructor params are now options object. See params: { center, speed, amplitude, wavelength, brightness, radius, time }');
 
-            const x = 'x' in options ? options.x : options[0];
-            const y = 'y' in options ? options.y : options[1];
+            options = { center: options, ...args[1] } as ShockwaveFilterOptions;
 
-            options = { center: { x, y }, ...args[1] };
-
-            if (args[2]) options.time = args[2];
+            if (args[2] !== undefined) options.time = args[2];
         }
 
         options = { ...ShockwaveFilter.DEFAULT_OPTIONS, ...options };
@@ -191,11 +184,10 @@ export class ShockwaveFilter extends Filter
      * @default [0,0]
      */
     get center(): PointData { return this.uniforms.uCenter; }
-    set center(value: PointData | DeprecatedPointLike)
+    set center(value: PointData | number[])
     {
         if (Array.isArray(value))
         {
-            deprecation(v8_0_0, 'ShockwaveFilter.center now only accepts {x,y} PointData.');
             value = { x: value[0], y: value[1] };
         }
 
