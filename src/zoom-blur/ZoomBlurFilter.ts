@@ -16,7 +16,7 @@ export interface ZoomBlurFilterOptions
      * once defined in the constructor
      * @default {x:0,y:0}
      */
-    center?: PointData;
+    center?: PointData | number[];
     /**
      * The inner radius of zoom. The part in inner circle won't apply zoom blur effect
      * @default 0
@@ -112,7 +112,15 @@ export class ZoomBlurFilter extends Filter
      * @default [0,0]
      */
     get center(): PointData { return this.uniforms.uCenter; }
-    set center(value: PointData) { this.uniforms.uCenter = value; }
+    set center(value: PointData | number[])
+    {
+        if (Array.isArray(value))
+        {
+            value = { x: value[0], y: value[1] };
+        }
+
+        this.uniforms.uCenter = value;
+    }
 
     /**
      * Sets the center of the effect in normalized screen coords on the `x` axis
