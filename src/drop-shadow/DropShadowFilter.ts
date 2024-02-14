@@ -1,7 +1,6 @@
 import {
     Color,
     ColorSource,
-    deprecation,
     Filter,
     FilterSystem,
     GlProgram,
@@ -10,28 +9,11 @@ import {
     RenderSurface,
     Texture,
     TexturePool,
-    // eslint-disable-next-line camelcase
-    v8_0_0,
 } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import { KawaseBlurFilter } from '../kawase-blur/KawaseBlurFilter';
 import fragment from './drop-shadow.frag';
 import source from './drop-shadow.wgsl';
-
-type DeprecatedPixelSizeValue = PointData | number[] | number;
-
-interface DeprecatedDropShadowFilterOptions
-{
-    offset: PointData;
-    color: ColorSource;
-    alpha: number;
-    shadowOnly: boolean;
-    blur: number;
-    quality: number;
-    kernels: number[] | null;
-    pixelSize: DeprecatedPixelSizeValue;
-    resolution: number;
-}
 
 export interface DropShadowFilterOptions
 {
@@ -75,7 +57,7 @@ export interface DropShadowFilterOptions
      * The pixelSize of the Kawase Blur filter
      * @default {x:1,y:1}
      */
-    pixelSize?: PointData;
+    pixelSize?: PointData | number[] | number;
     /**
      * The resolution of the Kawase Blur filter
      * @default 1
@@ -121,30 +103,8 @@ export class DropShadowFilter extends Filter
     private _blurFilter: KawaseBlurFilter;
     private _basePass: Filter;
 
-    constructor(options?: DropShadowFilterOptions);
-    /**
-     * @deprecated since 8.0.0
-     *
-     * @param {object} [options] - Filter options
-     * @param {PIXI.PointData} [options.offset={x: 4, y: 4}] - Offset of the shadow
-     * @param {number} [options.color=0x000000] - Color of the shadow
-     * @param {number} [options.alpha=0.5] - Alpha of the shadow
-     * @param {boolean} [options.shadowOnly=false] - Whether render shadow only
-     * @param {number} [options.blur=2] - Sets the strength of the Blur properties simultaneously
-     * @param {number} [options.quality=3] - The quality of the Blur filter.
-     * @param {number[]} [options.kernels=null] - The kernels of the Blur filter.
-     * @param {number|number[]|PIXI.PointData} [options.pixelSize=1] - the pixelSize of the Blur filter.
-     * @param {number} [options.resolution=1] - The resolution of the Blur filter.
-     */
-    constructor(options?: Partial<DeprecatedDropShadowFilterOptions>);
-    constructor(options?: DropShadowFilterOptions | Partial<DeprecatedDropShadowFilterOptions>)
+    constructor(options?: DropShadowFilterOptions)
     {
-        if (typeof options?.pixelSize === 'number' || Array.isArray(options?.pixelSize))
-        {
-            deprecation(v8_0_0, 'DropShadowFilterOptions.pixelSize now only accepts {x, y} PointData type.');
-            options.pixelSize = convertDeprecatedPixelSizeValue(options.pixelSize);
-        }
-
         options = { ...DropShadowFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
@@ -341,14 +301,16 @@ export class DropShadowFilter extends Filter
     {
         return this._blurFilter.pixelSize as PointData;
     }
-    set pixelSize(value: PointData | DeprecatedPixelSizeValue)
+    set pixelSize(value: PointData | number[] | number)
     {
-        if (typeof value === 'number' || Array.isArray(value))
+        if (typeof value === 'number')
         {
-            deprecation(v8_0_0, 'KawaseBlurFilter.pixelSize now only accepts {x, y} PointData.');
-            this._blurFilter.pixelSize = convertDeprecatedPixelSizeValue(value);
+            value = { x: value, y: value };
+        }
 
-            return;
+        if (Array.isArray(value))
+        {
+            value = { x: value[0], y: value[1] };
         }
 
         this._blurFilter.pixelSize = value;
@@ -381,19 +343,4 @@ export class DropShadowFilter extends Filter
 
         this.padding = offsetPadding + (this.blur * 2) + (this.quality * 4);
     }
-}
-
-function convertDeprecatedPixelSizeValue(value: DeprecatedPixelSizeValue): PointData
-{
-    if (typeof value === 'number')
-    {
-        return { x: value, y: value };
-    }
-
-    if (Array.isArray(value))
-    {
-        return { x: value[0], y: value[1] };
-    }
-
-    return value;
 }
