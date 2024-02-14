@@ -8,8 +8,6 @@ import {
     RenderSurface,
     Texture,
     TexturePool,
-    // eslint-disable-next-line camelcase
-    v8_0_0,
 } from 'pixi.js';
 
 type DeprecatedBlurValue = number | PointData | number[];
@@ -78,7 +76,7 @@ export class BloomFilter extends AlphaFilter
         if (typeof options === 'number' || Array.isArray(options) || ('x' in options && 'y' in options))
         {
             // eslint-disable-next-line max-len
-            deprecation(v8_0_0, 'BloomFilter constructor params are now options object. See params: { strength, quality, resolution, kernelSize }');
+            deprecation('6.0.0', 'BloomFilter constructor params are now options object. See params: { strength, quality, resolution, kernelSize }');
 
             let strength = options;
 
@@ -196,13 +194,13 @@ export class BloomFilter extends AlphaFilter
      */
     get blur(): number
     {
-        deprecation(v8_0_0, 'BloomFilter.blur is deprecated, please use BloomFilter.strength instead');
+        deprecation('6.0.0', 'BloomFilter.blur is deprecated, please use BloomFilter.strength instead');
 
         return this.strengthX;
     }
     set blur(value: number)
     {
-        deprecation(v8_0_0, 'BloomFilter.blur is deprecated, please use BloomFilter.strength instead');
+        deprecation('6.0.0', 'BloomFilter.blur is deprecated, please use BloomFilter.strength instead');
 
         this.strength = value;
     }
@@ -215,13 +213,13 @@ export class BloomFilter extends AlphaFilter
      */
     get blurX(): number
     {
-        deprecation(v8_0_0, 'BloomFilter.blurX is deprecated, please use BloomFilter.strengthX instead');
+        deprecation('6.0.0', 'BloomFilter.blurX is deprecated, please use BloomFilter.strengthX instead');
 
         return this.strengthX;
     }
     set blurX(value: number)
     {
-        deprecation(v8_0_0, 'BloomFilter.blurX is deprecated, please use BloomFilter.strengthX instead');
+        deprecation('6.0.0', 'BloomFilter.blurX is deprecated, please use BloomFilter.strengthX instead');
 
         this.strengthX = value;
     }
@@ -234,13 +232,13 @@ export class BloomFilter extends AlphaFilter
      */
     get blurY(): number
     {
-        deprecation(v8_0_0, 'BloomFilter.blurY is deprecated, please use BloomFilter.strengthY instead');
+        deprecation('6.0.0', 'BloomFilter.blurY is deprecated, please use BloomFilter.strengthY instead');
 
         return this.strengthY;
     }
     set blurY(value: number)
     {
-        deprecation(v8_0_0, 'BloomFilter.blurY is deprecated, please use BloomFilter.strengthY instead');
+        deprecation('6.0.0', 'BloomFilter.blurY is deprecated, please use BloomFilter.strengthY instead');
 
         this.strengthY = value;
     }
