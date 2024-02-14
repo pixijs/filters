@@ -230,7 +230,7 @@ export class MultiColorReplaceFilter extends Filter
     set tolerance(value: number) { this.uniforms.uTolerance = value; }
 
     /**
-     * @deprecated since 8.0.0
+     * @deprecated since 6.0.0
      *
      * Tolerance of the floating-point comparison between colors (lower = more exact, higher = more inclusive)
      * @default 0.05
