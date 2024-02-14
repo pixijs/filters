@@ -1,5 +1,4 @@
-// eslint-disable-next-line camelcase
-import { deprecation, Filter, GlProgram, GpuProgram, v8_0_0 } from 'pixi.js';
+import { deprecation, Filter, GlProgram, GpuProgram } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './dot.frag';
 import source from './dot.wgsl';
@@ -51,7 +50,7 @@ export class DotFilter extends Filter
 
     constructor(options?: DotFilterOptions);
     /**
-     * @deprecated since 8.0.0
+     * @deprecated since 6.0.0
      *
      * @param {number} [scale=1] - The scale of the effect.
      * @param {number} [angle=5] - The radius of the effect.
@@ -65,12 +64,12 @@ export class DotFilter extends Filter
         if (typeof options === 'number')
         {
             // eslint-disable-next-line max-len
-            deprecation(v8_0_0, 'DotFilter constructor params are now options object. See params: { scale, angle, grayscale }');
+            deprecation('6.0.0', 'DotFilter constructor params are now options object. See params: { scale, angle, grayscale }');
 
             options = { scale: options };
 
-            if (args[1]) options.angle = args[1];
-            if (args[2]) options.grayscale = args[2];
+            if (args[1] !== undefined) options.angle = args[1];
+            if (args[2] !== undefined) options.grayscale = args[2];
         }
 
         options = { ...DotFilter.DEFAULT_OPTIONS, ...options };
