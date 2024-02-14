@@ -183,7 +183,7 @@ export class ColorReplaceFilter extends Filter
     set tolerance(value: number) { this.uniforms.uTolerance = value; }
 
     /**
-     * @deprecated since 8.0.0
+     * @deprecated since 6.0.0
      *
      * The resulting color, as a 3 component RGB e.g. [1.0, 0.5, 1.0]
      * @member {number|Array<number>|Float32Array}
@@ -203,7 +203,7 @@ export class ColorReplaceFilter extends Filter
     }
 
     /**
-     * @deprecated since 8.0.0
+     * @deprecated since 6.0.0
      *
      * Tolerance/sensitivity of the floating-point comparison between colors (lower = more exact, higher = more inclusive)
      * @default 0.4
