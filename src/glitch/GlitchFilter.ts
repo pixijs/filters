@@ -1,12 +1,9 @@
-// eslint-disable-next-line camelcase
-import { DEG_TO_RAD, deprecation, Filter, GlProgram, GpuProgram, ImageSource, Texture, v8_0_0 } from 'pixi.js';
+import { DEG_TO_RAD, Filter, GlProgram, GpuProgram, ImageSource, Texture } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './glitch.frag';
 import source from './glitch.wgsl';
 
 import type { FilterSystem, PointData, RenderSurface } from 'pixi.js';
-
-type DeprecatedPointLike = PointData | number[];
 
 enum FILL_MODES
     {
@@ -15,21 +12,6 @@ enum FILL_MODES
     LOOP = 2,
     CLAMP = 3,
     MIRROR = 4,
-}
-
-interface DeprecatedGlitchFilterOptions
-{
-    slices: number;
-    offset: number;
-    direction: number;
-    fillMode: number;
-    seed: number;
-    average: boolean;
-    minSize: number;
-    sampleSize: number;
-    red: DeprecatedPointLike;
-    green: DeprecatedPointLike;
-    blue: DeprecatedPointLike;
 }
 
 export interface GlitchFilterOptions
@@ -79,17 +61,17 @@ export interface GlitchFilterOptions
      * Red channel offset.
      * @default {x:0,y:0}
      */
-    red?: PointData;
+    red?: PointData | number[];
     /**
      * Green channel offset.
      * @default {x:0,y:0}
      */
-    green?: PointData;
+    green?: PointData | number[];
     /**
      * Blue offset.
      * @default {x:0,y:0}
      */
-    blue?: PointData;
+    blue?: PointData | number[];
 }
 
 /**
@@ -159,50 +141,8 @@ export class GlitchFilter extends Filter
     private _sizes: Float32Array = new Float32Array(1);
     private _offsets: Float32Array = new Float32Array(1);
 
-    constructor(options?: GlitchFilterOptions);
-    /**
-     * @deprecated since 8.0.0
-     *
-     * @param {object} [options] - The more optional parameters of the filter.
-     * @param {number} [options.slices=5] - The maximum number of slices.
-     * @param {number} [options.offset=100] - The maximum offset amount of slices.
-     * @param {number} [options.direction=0] - The angle in degree of the offset of slices.
-     * @param {number} [options.fillMode=0] - The fill mode of the space after the offset. Acceptable values:
-     *  - `0` {@link GlitchFilter.TRANSPARENT TRANSPARENT}
-     *  - `1` {@link GlitchFilter.ORIGINAL ORIGINAL}
-     *  - `2` {@link GlitchFilter.LOOP LOOP}
-     *  - `3` {@link GlitchFilter.CLAMP CLAMP}
-     *  - `4` {@link GlitchFilter.MIRROR MIRROR}
-     * @param {number} [options.seed=0] - A seed value for randomizing glitch effect.
-     * @param {boolean} [options.average=false] - `true` will divide the bands roughly based on equal amounts
-     *                 where as setting to `false` will vary the band sizes dramatically (more random looking).
-     * @param {number} [options.minSize=8] - Minimum size of individual slice. Segment of total `sampleSize`
-     * @param {number} [options.sampleSize=512] - The resolution of the displacement map texture.
-     * @param {number[]} [options.red=[0,0]] - Red channel offset
-     * @param {number[]} [options.green=[0,0]] - Green channel offset.
-     * @param {number[]} [options.blue=[0,0]] - Blue channel offset.
-     */
-    constructor(options?: Partial<DeprecatedGlitchFilterOptions>);
-    constructor(options?: GlitchFilterOptions | Partial<DeprecatedGlitchFilterOptions>)
+    constructor(options?: GlitchFilterOptions)
     {
-        if (Array.isArray(options?.red))
-        {
-            deprecation(v8_0_0, 'GlitchFilterOptions.red is now of an {x,y} PointData type.');
-            options.red = convertDeprecatedPointLike(options.red);
-        }
-
-        if (Array.isArray(options?.green))
-        {
-            deprecation(v8_0_0, 'GlitchFilterOptions.green is now of an {x,y} PointData type.');
-            options.green = convertDeprecatedPointLike(options.green);
-        }
-
-        if (Array.isArray(options?.blue))
-        {
-            deprecation(v8_0_0, 'GlitchFilterOptions.blue is now of an {x,y} PointData type.');
-            options.blue = convertDeprecatedPointLike(options.blue);
-        }
-
         options = { ...GlitchFilter.defaults, ...options };
 
         const gpuProgram = GpuProgram.from({
@@ -479,12 +419,11 @@ export class GlitchFilter extends Filter
      * @default {x:0,y:0}
      */
     get red(): PointData { return this.uniforms.uRed; }
-    set red(value: PointData | DeprecatedPointLike)
+    set red(value: PointData | number[])
     {
         if (Array.isArray(value))
         {
-            deprecation(v8_0_0, 'GlitchFilter.red is now of an {x,y} PointData type.');
-            value = convertDeprecatedPointLike(value);
+            value = { x: value[0], y: value[1] };
         }
 
         this.uniforms.uRed = value;
@@ -495,12 +434,11 @@ export class GlitchFilter extends Filter
      * @default {x:0,y:0}
      */
     get green(): PointData { return this.uniforms.uGreen; }
-    set green(value: PointData | DeprecatedPointLike)
+    set green(value: PointData | number[])
     {
         if (Array.isArray(value))
         {
-            deprecation(v8_0_0, 'GlitchFilter.green is now of an {x,y} PointData type.');
-            value = convertDeprecatedPointLike(value);
+            value = { x: value[0], y: value[1] };
         }
 
         this.uniforms.uGreen = value;
@@ -511,12 +449,11 @@ export class GlitchFilter extends Filter
      * @default {x:0,y:0}
      */
     get blue(): PointData { return this.uniforms.uBlue; }
-    set blue(value: PointData | DeprecatedPointLike)
+    set blue(value: PointData | number[])
     {
         if (Array.isArray(value))
         {
-            deprecation(v8_0_0, 'GlitchFilter.blue is now of an {x,y} PointData type.');
-            value = convertDeprecatedPointLike(value);
+            value = { x: value[0], y: value[1] };
         }
 
         this.uniforms.uBlue = value;
@@ -536,14 +473,4 @@ export class GlitchFilter extends Filter
         = this._sizes
         = this._offsets = null as any;
     }
-}
-
-function convertDeprecatedPointLike(value: DeprecatedPointLike): PointData
-{
-    if (Array.isArray(value))
-    {
-        return { x: value[0], y: value[1] };
-    }
-
-    return value;
 }
