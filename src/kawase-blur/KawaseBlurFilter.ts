@@ -65,7 +65,7 @@ export class KawaseBlurFilter extends Filter
     {
         options = { ...KawaseBlurFilter.DEFAULT_OPTIONS, ...options };
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -75,7 +75,7 @@ export class KawaseBlurFilter extends Filter
                 entryPoint: 'mainFragment',
             },
         });
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment: options?.clamp ? fragmentClamp : fragment,
             name: 'kawase-blur-filter',

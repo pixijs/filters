@@ -99,7 +99,7 @@ export class GodrayFilter extends Filter
     {
         options = { ...GodrayFilter.DEFAULT_OPTIONS, ...options };
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -109,7 +109,7 @@ export class GodrayFilter extends Filter
                 entryPoint: 'mainFragment',
             },
         });
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment: fragment.replace('${PERLIN}', perlin),
             name: 'god-ray-filter',
