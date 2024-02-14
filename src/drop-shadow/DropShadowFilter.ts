@@ -18,7 +18,7 @@ import source from './drop-shadow.wgsl';
 export interface DropShadowFilterOptions
 {
     /**
-     * Set the offset position of the drop-shadow relative to the original image.
+     * The offset position of the drop-shadow relative to the original image.
      * @default {x:4,y:4}
      */
     offset?: PointData;
@@ -54,10 +54,15 @@ export interface DropShadowFilterOptions
      */
     kernels?: number[];
     /**
-     * Sets the pixelSize of the Kawase Blur filter
+     * The pixelSize of the Kawase Blur filter
      * @default {x:1,y:1}
      */
-    pixelSize?: PointData;
+    pixelSize?: PointData | number[] | number;
+    /**
+     * The resolution of the Kawase Blur filter
+     * @default 1
+     */
+    resolution?: number;
 }
 
 /**
@@ -79,6 +84,7 @@ export class DropShadowFilter extends Filter
         blur: 2,
         quality: 3,
         pixelSize: { x: 1, y: 1 },
+        resolution: 1,
     };
 
     public uniforms: {
@@ -127,7 +133,8 @@ export class DropShadowFilter extends Filter
                     uColor: { value: new Float32Array(3), type: 'vec3<f32>' },
                     uOffset: { value: options.offset, type: 'vec2<f32>' },
                 }
-            }
+            },
+            resolution: options.resolution,
         });
 
         this.uniforms = this.resources.dropShadowUniforms.uniforms;
@@ -294,9 +301,19 @@ export class DropShadowFilter extends Filter
     {
         return this._blurFilter.pixelSize as PointData;
     }
-    set pixelSize(value: PointData)
+    set pixelSize(value: PointData | number[] | number)
     {
-        (this._blurFilter.pixelSize as PointData) = value;
+        if (typeof value === 'number')
+        {
+            value = { x: value, y: value };
+        }
+
+        if (Array.isArray(value))
+        {
+            value = { x: value[0], y: value[1] };
+        }
+
+        this._blurFilter.pixelSize = value;
     }
 
     /**
