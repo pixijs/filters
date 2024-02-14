@@ -1,4 +1,4 @@
-import { Color, ColorSource, Filter, GlProgram, GpuProgram } from 'pixi.js';
+import { Color, ColorSource, deprecation, Filter, GlProgram, GpuProgram } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './ascii.frag';
 import source from './ascii.wgsl';
@@ -53,8 +53,25 @@ export class AsciiFilter extends Filter
 
     private _color!: Color;
 
-    constructor(options?: AsciiFilterOptions)
+    constructor(options?: AsciiFilterOptions);
+    /**
+     * @deprecated since 6.0.0
+     *
+     * @param {number} [size=8] - Size of the font
+     */
+    constructor(size: number);
+    constructor(...args: [AsciiFilterOptions?] | [number])
     {
+        let options = args[0] ?? {};
+
+        if (typeof options === 'number')
+        {
+            // eslint-disable-next-line max-len
+            deprecation('6.0.0', 'AsciiFilter constructor params are now options object. See params: { size, color, replaceColor }');
+
+            options = { size: options };
+        }
+
         const replaceColor = options?.color && options.replaceColor !== false;
 
         options = { ...AsciiFilter.DEFAULT_OPTIONS, ...options } as AsciiFilterOptions;
