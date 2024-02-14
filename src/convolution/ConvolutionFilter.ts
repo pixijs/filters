@@ -62,7 +62,7 @@ export class ConvolutionFilter extends Filter
         const width = options.width ?? 200;
         const height = options.height ?? 200;
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -73,7 +73,7 @@ export class ConvolutionFilter extends Filter
             },
         });
 
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment,
             name: 'convolution-filter',

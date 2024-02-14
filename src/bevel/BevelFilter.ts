@@ -78,7 +78,7 @@ export class BevelFilter extends Filter
 
         const rotation = (options.rotation ?? 45) * DEG_TO_RAD;
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -89,7 +89,7 @@ export class BevelFilter extends Filter
             },
         });
 
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment,
             name: 'bevel-filter',
