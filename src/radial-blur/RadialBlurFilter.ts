@@ -63,7 +63,7 @@ export class RadialBlurFilter extends Filter
     {
         options = { ...RadialBlurFilter.DEFAULT_OPTIONS, ...options };
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -74,7 +74,7 @@ export class RadialBlurFilter extends Filter
             },
         });
 
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment,
             name: 'radial-blur-filter',
