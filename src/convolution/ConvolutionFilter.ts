@@ -1,5 +1,4 @@
-// eslint-disable-next-line camelcase
-import { deprecation, Filter, GlProgram, GpuProgram, PointData, v8_0_0 } from 'pixi.js';
+import { deprecation, Filter, GlProgram, GpuProgram, PointData } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './convolution.frag';
 import source from './convolution.wgsl';
@@ -58,7 +57,7 @@ export class ConvolutionFilter extends Filter
 
     constructor(options?: ConvolutionFilterOptions);
     /**
-     * @deprecated since 8.0.0
+     * @deprecated since 6.0.0
      *
      * @param {number[]} [matrix=[0,0,0,0,0,0,0,0,0]] - An array of values used for matrix transformation.
      *        Specified as a 9 point Array.
@@ -73,12 +72,12 @@ export class ConvolutionFilter extends Filter
         if (Array.isArray(options))
         {
             // eslint-disable-next-line max-len
-            deprecation(v8_0_0, 'ConvolutionFilter constructor params are now options object. See params: { matrix, width, height }');
+            deprecation('6.0.0', 'ConvolutionFilter constructor params are now options object. See params: { matrix, width, height }');
 
             options = { matrix: options as ConvolutionMatrix };
 
-            if (args[1]) options.width = args[1];
-            if (args[2]) options.height = args[2];
+            if (args[1] !== undefined) options.width = args[1];
+            if (args[2] !== undefined) options.height = args[2];
         }
 
         options = { ...ConvolutionFilter.DEFAULT_OPTIONS, ...options };
