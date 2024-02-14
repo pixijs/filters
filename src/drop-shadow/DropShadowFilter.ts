@@ -101,7 +101,7 @@ export class DropShadowFilter extends Filter
     {
         options = { ...DropShadowFilter.DEFAULT_OPTIONS, ...options };
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -112,7 +112,7 @@ export class DropShadowFilter extends Filter
             },
         });
 
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment,
             name: 'drop-shadow-filter',
@@ -140,7 +140,7 @@ export class DropShadowFilter extends Filter
         });
 
         this._basePass = new Filter({
-            gpuProgram: new GpuProgram({
+            gpuProgram: GpuProgram.from({
                 vertex: {
                     source: wgslVertex,
                     entryPoint: 'mainVertex',
@@ -160,7 +160,7 @@ export class DropShadowFilter extends Filter
                     entryPoint: 'mainFragment',
                 },
             }),
-            glProgram: new GlProgram({
+            glProgram: GlProgram.from({
                 vertex,
                 fragment: `
                 in vec2 vTextureCoord;
