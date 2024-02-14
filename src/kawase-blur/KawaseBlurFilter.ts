@@ -1,5 +1,4 @@
-// eslint-disable-next-line camelcase
-import { deprecation, Filter, GlProgram, GpuProgram, TexturePool, v8_0_0 } from 'pixi.js';
+import { deprecation, Filter, GlProgram, GpuProgram, TexturePool } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './kawase-blur.frag';
 import source from './kawase-blur.wgsl';
@@ -7,8 +6,6 @@ import fragmentClamp from './kawase-blur-clamp.frag';
 import sourceClamp from './kawase-blur-clamp.wgsl';
 
 import type { FilterSystem, PointData, RenderSurface, Texture } from 'pixi.js';
-
-type DeprecatedPixelSizeValue = PointData | number[] | number;
 
 export interface KawaseBlurFilterOptions
 {
@@ -32,7 +29,7 @@ export interface KawaseBlurFilterOptions
      * Sets the pixel size of the filter. Large size is blurrier. For advanced usage.
      * @default {x:1,y:1}
      */
-    pixelSize?: PointData;
+    pixelSize?: PointData | number[] | number;
 }
 
 /**
@@ -66,7 +63,7 @@ export class KawaseBlurFilter extends Filter
 
     constructor(options?: KawaseBlurFilterOptions);
     /**
-     * @deprecated since 8.0.0
+     * @deprecated since 6.0.0
      *
      * @param {number|number[]} [blur=4] - The blur of the filter. Should be greater than `0`. If
      *        value is an Array, setting kernels.
@@ -82,12 +79,12 @@ export class KawaseBlurFilter extends Filter
         if (typeof options === 'number' || Array.isArray(options))
         {
             // eslint-disable-next-line max-len
-            deprecation(v8_0_0, 'KawaseBlurFilter constructor params are now options object. See params: { strength, quality, clamp, pixelSize }');
+            deprecation('6.0.0', 'KawaseBlurFilter constructor params are now options object. See params: { strength, quality, clamp, pixelSize }');
 
             options = { strength: options as number | [number, number] };
 
-            if (args[1]) options.quality = args[1];
-            if (args[2]) options.clamp = args[2];
+            if (args[1] !== undefined) options.quality = args[1];
+            if (args[2] !== undefined) options.clamp = args[2];
         }
 
         options = { ...KawaseBlurFilter.DEFAULT_OPTIONS, ...options };
@@ -120,7 +117,7 @@ export class KawaseBlurFilter extends Filter
 
         this.uniforms = this.resources.kawaseBlurUniforms.uniforms;
 
-        this._pixelSize = options.pixelSize ?? { x: 1, y: 1 };
+        this.pixelSize = options.pixelSize ?? { x: 1, y: 1 };
 
         if (Array.isArray(options.strength))
         {
@@ -237,19 +234,17 @@ export class KawaseBlurFilter extends Filter
       * @default {x:1,y:1}
       */
     get pixelSize(): PointData { return this._pixelSize; }
-    set pixelSize(value: PointData | DeprecatedPixelSizeValue)
+    set pixelSize(value: PointData | number[] | number)
     {
-        if (typeof value === 'number' || Array.isArray(value))
+        if (typeof value === 'number')
         {
-            deprecation(v8_0_0, 'KawaseBlurFilter.pixelSize now only accepts {x, y} PointData.');
+            this.pixelSizeX = this.pixelSizeY = value;
 
-            if (typeof value === 'number')
-            {
-                this.pixelSizeX = this.pixelSizeY = value;
+            return;
+        }
 
-                return;
-            }
-
+        if (Array.isArray(value))
+        {
             this.pixelSizeX = value[0];
             this.pixelSizeY = value[1];
 
