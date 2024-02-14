@@ -225,7 +225,7 @@ export class BloomFilter extends AlphaFilter
     }
 
     /**
-     * @deprecated since 8.0.0
+     * @deprecated since 6.0.0
      *
      * The strength of the blurY property
      * @default 2
