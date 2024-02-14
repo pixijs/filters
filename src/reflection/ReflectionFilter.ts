@@ -6,7 +6,7 @@ import source from './reflection.wgsl';
 import type { FilterSystem, RenderSurface, Texture } from 'pixi.js';
 
 /** [MIN, MAX] */
-type Range = [number, number];
+type Range = [number, number] | Float32Array;
 
 export interface ReflectionFilterOptions
 {
