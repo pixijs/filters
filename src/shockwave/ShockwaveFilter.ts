@@ -12,15 +12,6 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './shockwave.frag';
 import source from './shockwave.wgsl';
 
-interface DeprecatedShockwaveFilterOptions
-{
-    amplitude: number;
-    wavelength: number;
-    speed: number;
-    brightness: number;
-    radius: number;
-}
-
 export interface ShockwaveFilterOptions
 {
     /**
@@ -110,9 +101,9 @@ export class ShockwaveFilter extends Filter
      * @param {number} [options.radius=4] - See `radius` property.
      * @param {number} [time=0] - See `time` property.
      */
-    constructor(center?: PointData | number[], options?: Partial<DeprecatedShockwaveFilterOptions>, time?: number);
+    constructor(center?: PointData | number[], options?: Omit<ShockwaveFilterOptions, 'time' | 'center'>, time?: number);
     // eslint-disable-next-line max-len
-    constructor(...args: [ShockwaveFilterOptions?] | [(PointData | number[])?, Partial<DeprecatedShockwaveFilterOptions>?, number?])
+    constructor(...args: [ShockwaveFilterOptions?] | [(PointData | number[])?, Omit<ShockwaveFilterOptions, 'time' | 'center'>?, number?])
     {
         let options = args[0] ?? {};
 
