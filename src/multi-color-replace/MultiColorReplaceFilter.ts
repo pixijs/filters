@@ -1,5 +1,4 @@
-// eslint-disable-next-line camelcase
-import { Color, ColorSource, deprecation, Filter, GlProgram, GpuProgram, v8_0_0 } from 'pixi.js';
+import { Color, ColorSource, deprecation, Filter, GlProgram, GpuProgram } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './multi-color-replace.frag';
 import source from './multi-color-replace.wgsl';
@@ -77,7 +76,7 @@ export class MultiColorReplaceFilter extends Filter
 
     constructor(options?: MultiColorReplaceFilterOptions);
     /**
-     * @deprecated since 8.0.0
+     * @deprecated since 6.0.0
      *
      * @param {Array<Array>} replacements - The collection of replacement items. Each item is color-pair
      *        (an array length is 2). In the pair, the first value is original color , the second value
@@ -96,7 +95,7 @@ export class MultiColorReplaceFilter extends Filter
         if (Array.isArray(options))
         {
             // eslint-disable-next-line max-len
-            deprecation(v8_0_0, 'MultiColorReplaceFilter constructor params are now options object. See params: { replacements, tolerance, maxColors }');
+            deprecation('6.0.0', 'MultiColorReplaceFilter constructor params are now options object. See params: { replacements, tolerance, maxColors }');
 
             options = { replacements: options };
 
@@ -239,13 +238,13 @@ export class MultiColorReplaceFilter extends Filter
     set epsilon(value: number)
     {
         // eslint-disable-next-line max-len
-        deprecation(v8_0_0, 'MultiColorReplaceFilter.epsilon is deprecated, please use MultiColorReplaceFilter.tolerance instead');
+        deprecation('6.0.0', 'MultiColorReplaceFilter.epsilon is deprecated, please use MultiColorReplaceFilter.tolerance instead');
         this.tolerance = value;
     }
     get epsilon(): number
     {
         // eslint-disable-next-line max-len
-        deprecation(v8_0_0, 'MultiColorReplaceFilter.epsilon is deprecated, please use MultiColorReplaceFilter.tolerance instead');
+        deprecation('6.0.0', 'MultiColorReplaceFilter.epsilon is deprecated, please use MultiColorReplaceFilter.tolerance instead');
 
         return this.tolerance;
     }
