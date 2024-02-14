@@ -1,5 +1,4 @@
-// eslint-disable-next-line camelcase
-import { deprecation, Filter, GlProgram, GpuProgram, SCALE_MODE, Texture, TextureSource, v8_0_0 } from 'pixi.js';
+import { deprecation, Filter, GlProgram, GpuProgram, SCALE_MODE, Texture, TextureSource } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './color-map.frag';
 import source from './color-map.wgsl';
@@ -57,7 +56,7 @@ export class ColorMapFilter extends Filter
 
     constructor(options: ColorMapFilterOptions);
     /**
-     * @deprecated since 8.0.0
+     * @deprecated since 6.0.0
      *
      * @param {HTMLImageElement|HTMLCanvasElement|PIXI.BaseTexture|PIXI.Texture} [colorMap] - The
      *        colorMap texture of the filter.
@@ -72,12 +71,12 @@ export class ColorMapFilter extends Filter
         if (options instanceof Texture || options instanceof TextureSource)
         {
             // eslint-disable-next-line max-len
-            deprecation(v8_0_0, 'ColorMapFilter constructor params are now options object. See params: { colorMap, nearest, mix }');
+            deprecation('6.0.0', 'ColorMapFilter constructor params are now options object. See params: { colorMap, nearest, mix }');
 
             options = { colorMap: options };
 
-            if (args[1]) options.nearest = args[1];
-            if (args[2]) options.mix = args[2];
+            if (args[1] !== undefined) options.nearest = args[1];
+            if (args[2] !== undefined) options.mix = args[2];
         }
 
         options = { ...ColorMapFilter.DEFAULT_OPTIONS, ...options };
