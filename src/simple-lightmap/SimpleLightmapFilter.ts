@@ -1,7 +1,19 @@
-import { Color, ColorSource, Filter, FilterSystem, GlProgram, GpuProgram, RenderSurface, Texture } from 'pixi.js';
+import {
+    Color,
+    ColorSource,
+    deprecation,
+    Filter,
+    FilterSystem,
+    GlProgram,
+    GpuProgram,
+    RenderSurface,
+    Texture,
+} from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './simple-lightmap.frag';
 import source from './simple-lightmap.wgsl';
+
+type DeprecatedColor = number | number[];
 
 export interface SimpleLightmapFilterOptions
 {
@@ -55,8 +67,30 @@ export class SimpleLightmapFilter extends Filter
     private _color!: Color;
     private _lightMap!: Texture;
 
-    constructor(options: SimpleLightmapFilterOptions)
+    constructor(options: SimpleLightmapFilterOptions);
+    /**
+     * @deprecated since 6.0.0
+     *
+     * @param {PIXI.Texture} texture - a texture where your lightmap is rendered
+     * @param {Array<number>|number} [color=0x000000] - An RGBA array of the ambient color
+     * @param {number} [alpha=1] - Default alpha set independent of color (if it's a number, not array).
+     */
+    constructor(texture: Texture, color?: DeprecatedColor, alpha?: number);
+    constructor(...args: [SimpleLightmapFilterOptions] | [Texture, DeprecatedColor?, number?])
     {
+        let options = args[0] ?? {};
+
+        if (options instanceof Texture)
+        {
+            // eslint-disable-next-line max-len
+            deprecation('6.0.0', 'SimpleLightmapFilter constructor params are now options object. See params: { lightMap, color, alpha }');
+
+            options = { lightMap: options };
+
+            if (args[1] !== undefined) options.color = args[1];
+            if (args[2] !== undefined) options.alpha = args[2];
+        }
+
         options = { ...SimpleLightmapFilter.DEFAULT_OPTIONS, ...options };
 
         if (!options.lightMap) throw Error('No light map texture source was provided to SimpleLightmapFilter');
