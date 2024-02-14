@@ -273,7 +273,7 @@ export default class DemoApplication extends PIXI.Application
             name: id,
             enabled: false,
             opened: false,
-            args: null,
+            args: undefined,
             fishOnly: false,
             global: false,
             oncreate: null,
