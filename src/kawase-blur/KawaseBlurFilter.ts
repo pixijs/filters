@@ -1,4 +1,4 @@
-import { Filter, GlProgram, GpuProgram, TexturePool } from 'pixi.js';
+import { deprecation, Filter, GlProgram, GpuProgram, TexturePool } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './kawase-blur.frag';
 import source from './kawase-blur.wgsl';
@@ -29,7 +29,7 @@ export interface KawaseBlurFilterOptions
      * Sets the pixel size of the filter. Large size is blurrier. For advanced usage.
      * @default {x:1,y:1}
      */
-    pixelSize?: PointData;
+    pixelSize?: PointData | number[] | number;
 }
 
 /**
@@ -61,8 +61,32 @@ export class KawaseBlurFilter extends Filter
     private _blur!: number;
     private _quality!: number;
 
-    constructor(options?: KawaseBlurFilterOptions)
+    constructor(options?: KawaseBlurFilterOptions);
+    /**
+     * @deprecated since 6.0.0
+     *
+     * @param {number|number[]} [blur=4] - The blur of the filter. Should be greater than `0`. If
+     *        value is an Array, setting kernels.
+     * @param {number} [quality=3] - The quality of the filter. Should be an integer greater than `1`.
+     * @param {boolean} [clamp=false] - Clamp edges, useful for removing dark edges
+     *        from fullscreen filters or bleeding to the edge of filterArea.
+     */
+    constructor(blur?: number | number[], quality?: number, clamp?: boolean);
+    constructor(...args: [KawaseBlurFilterOptions?] | [(number | number[])?, number?, boolean?])
     {
+        let options = args[0] ?? {};
+
+        if (typeof options === 'number' || Array.isArray(options))
+        {
+            // eslint-disable-next-line max-len
+            deprecation('6.0.0', 'KawaseBlurFilter constructor params are now options object. See params: { strength, quality, clamp, pixelSize }');
+
+            options = { strength: options as number | [number, number] };
+
+            if (args[1] !== undefined) options.quality = args[1];
+            if (args[2] !== undefined) options.clamp = args[2];
+        }
+
         options = { ...KawaseBlurFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
@@ -93,7 +117,7 @@ export class KawaseBlurFilter extends Filter
 
         this.uniforms = this.resources.kawaseBlurUniforms.uniforms;
 
-        this._pixelSize = options.pixelSize ?? { x: 1, y: 1 };
+        this.pixelSize = options.pixelSize ?? { x: 1, y: 1 };
 
         if (Array.isArray(options.strength))
         {
@@ -210,7 +234,25 @@ export class KawaseBlurFilter extends Filter
       * @default {x:1,y:1}
       */
     get pixelSize(): PointData { return this._pixelSize; }
-    set pixelSize(value: PointData) { this._pixelSize = value; }
+    set pixelSize(value: PointData | number[] | number)
+    {
+        if (typeof value === 'number')
+        {
+            this.pixelSizeX = this.pixelSizeY = value;
+
+            return;
+        }
+
+        if (Array.isArray(value))
+        {
+            this.pixelSizeX = value[0];
+            this.pixelSizeY = value[1];
+
+            return;
+        }
+
+        this._pixelSize = value;
+    }
 
     /**
       * The size of the pixels on the `x` axis. Large size is blurrier. For advanced usage.
