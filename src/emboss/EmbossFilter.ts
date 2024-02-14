@@ -3,15 +3,6 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './emboss.frag';
 import source from './emboss.wgsl';
 
-export interface EmbossFilterOptions
-{
-    /**
-     * Strength of the emboss
-     * @default 5
-     */
-    strength?: number;
-}
-
 /**
  * An RGB Split Filter.<br>
  * ![original](../screenshots/original.png)![filter](../screenshots/emboss.png)
@@ -22,19 +13,15 @@ export interface EmbossFilterOptions
  */
 export class EmbossFilter extends Filter
 {
-    /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: EmbossFilterOptions = {
-        strength: 5,
-    };
-
     public uniforms: {
         uStrength: number;
     };
 
-    constructor(options?: EmbossFilterOptions)
+    /**
+     * @param {number} [strength=5] - Strength of the emboss.
+     */
+    constructor(strength = 5)
     {
-        options = { ...EmbossFilter.DEFAULT_OPTIONS, ...options };
-
         const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
@@ -57,7 +44,7 @@ export class EmbossFilter extends Filter
             glProgram,
             resources: {
                 embossUniforms: {
-                    uStrength: { value: options.strength, type: 'f32' },
+                    uStrength: { value: strength, type: 'f32' },
                 }
             },
         });
