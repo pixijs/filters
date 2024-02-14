@@ -1,4 +1,4 @@
-import { Filter, GlProgram, GpuProgram } from 'pixi.js';
+import { deprecation, Filter, GlProgram, GpuProgram } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './radial-blur.frag';
 import source from './radial-blur.wgsl';
@@ -18,7 +18,7 @@ export interface RadialBlurFilterOptions
      * once defined in the constructor
      * @default {x:0,y:0}
      */
-    center?: PointData;
+    center?: PointData | number[];
     /**
      * The kernelSize of the blur filter. Must be odd number >= 3
      * @default 5
@@ -59,8 +59,38 @@ export class RadialBlurFilter extends Filter
     private _angle!: number;
     private _kernelSize!: number;
 
-    constructor(options?: RadialBlurFilterOptions)
+    constructor(options?: RadialBlurFilterOptions);
+    /**
+     * @deprecated since 6.0.0
+     *
+     * @param {number} [angle=0] - Sets the angle of the motion for blur effect.
+     * @param {PIXI.Point|number[]} [center=[0,0]] - The center of the radial.
+     * @param {number} [kernelSize=5] - The kernelSize of the blur filter. Must be odd number >= 3
+     * @param {number} [radius=-1] - The maximum size of the blur radius, `-1` is infinite
+     */
+    constructor(angle?: number, center?: PointData | number[], kernelSize?: number, radius?: number);
+    constructor(...args: [RadialBlurFilterOptions?] | [number?, (PointData | number[])?, number?, number?])
     {
+        let options = args[0] ?? {};
+
+        if (typeof options === 'number')
+        {
+            // eslint-disable-next-line max-len
+            deprecation('6.0.0', 'RadialBlurFilter constructor params are now options object. See params: { angle, center, kernelSize, radius }');
+
+            options = { angle: options };
+
+            if (args[1])
+            {
+                const x = 'x' in args[1] ? args[1].x : args[1][0];
+                const y = 'y' in args[1] ? args[1].y : args[1][1];
+
+                options.center = { x, y };
+            }
+            if (args[2]) options.kernelSize = args[2];
+            if (args[3]) options.radius = args[3];
+        }
+
         options = { ...RadialBlurFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
@@ -87,7 +117,7 @@ export class RadialBlurFilter extends Filter
                 radialBlurUniforms: {
                     uRadian: { value: 0, type: 'f32' },
                     uCenter: { value: options.center, type: 'vec2<f32>' },
-                    uKernelSize: { value: options.kernelSize, type: 'f32' },
+                    uKernelSize: { value: options.kernelSize, type: 'i32' },
                     uRadius: { value: options.radius, type: 'f32' },
                 }
             },
@@ -122,7 +152,15 @@ export class RadialBlurFilter extends Filter
      * @default {x:0,y:0}
      */
     get center(): PointData { return this.uniforms.uCenter; }
-    set center(value: PointData) { this.uniforms.uCenter = value; }
+    set center(value: PointData | number[])
+    {
+        if (Array.isArray(value))
+        {
+            value = { x: value[0], y: value[1] };
+        }
+
+        this.uniforms.uCenter = value;
+    }
 
     /**
      * Sets the velocity of the motion for blur effect on the `x` axis
