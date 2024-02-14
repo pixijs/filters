@@ -13,7 +13,7 @@ export interface BulgePinchFilterOptions
      * Offset coordinates to change the position of the center of the circle of effect.
      * @default {x:0,y:0}
      */
-    center?: PointData;
+    center?: PointData | number[] | number;
     /**
      * The radius of the circle of effect
      * @default 100
@@ -112,7 +112,20 @@ export class BulgePinchFilter extends Filter
      * @default {x:0.5,y:0.5}
      */
     get center(): PointData { return this.uniforms.uCenter; }
-    set center(value: PointData) { this.uniforms.uCenter = value; }
+    set center(value: PointData | number[] | number)
+    {
+        if (typeof value === 'number')
+        {
+            value = { x: value, y: value };
+        }
+
+        if (Array.isArray(value))
+        {
+            value = { x: value[0], y: value[1] };
+        }
+
+        this.uniforms.uCenter = value;
+    }
 
     /**
      * Sets the center of the effect in normalized screen coords on the `x` axis
