@@ -97,7 +97,7 @@ export class ColorGradientFilter extends Filter
             throw new Error('ColorGradientFilter requires at least 2 color stops.');
         }
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source,
                 entryPoint: 'mainVertex',
@@ -108,7 +108,7 @@ export class ColorGradientFilter extends Filter
             },
         });
 
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment,
             name: 'color-gradient-filter',

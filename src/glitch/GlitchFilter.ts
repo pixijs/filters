@@ -121,7 +121,7 @@ export class GlitchFilter extends Filter
     {
         options = { ...GlitchFilter.defaults, ...options };
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -132,7 +132,7 @@ export class GlitchFilter extends Filter
             },
         });
 
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment,
             name: 'glitch-filter',

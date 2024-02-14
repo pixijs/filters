@@ -103,7 +103,7 @@ export class OldFilmFilter extends Filter
     {
         options = { ...OldFilmFilter.DEFAULT_OPTIONS, ...options };
 
-        const gpuProgram = new GpuProgram({
+        const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
                 entryPoint: 'mainVertex',
@@ -114,7 +114,7 @@ export class OldFilmFilter extends Filter
             },
         });
 
-        const glProgram = new GlProgram({
+        const glProgram = GlProgram.from({
             vertex,
             fragment,
             name: 'old-film-filter',
