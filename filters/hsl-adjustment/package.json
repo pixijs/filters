@@ -1,6 +1,6 @@
 {
   "name": "@pixi/filter-hsl-adjustment",
-  "version": "5.2.0",
+  "version": "5.3.0",
   "main": "./dist/filter-hsl-adjustment.js",
   "description": "PixiJS filter to apply a HSL adjustment",
   "author": "Viktor Persson",

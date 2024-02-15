@@ -1,6 +1,6 @@
 {
   "name": "pixi-filters",
-  "version": "5.2.1",
+  "version": "5.3.0",
   "description": "PixiJS v7 optional display filters",
   "author": "Mat Groves <mat@goodboydigital.com>",
   "contributors": [
@@ -41,7 +41,7 @@
     "@pixi/filter-bevel": "5.1.1",
     "@pixi/filter-bloom": "5.1.1",
     "@pixi/filter-bulge-pinch": "5.1.1",
-    "@pixi/filter-color-gradient": "5.2.0",
+    "@pixi/filter-color-gradient": "5.3.0",
     "@pixi/filter-color-map": "5.1.1",
     "@pixi/filter-color-overlay": "5.1.1",
     "@pixi/filter-color-replace": "5.1.1",
@@ -55,7 +55,7 @@
     "@pixi/filter-glow": "5.2.1",
     "@pixi/filter-godray": "5.1.1",
     "@pixi/filter-grayscale": "5.1.1",
-    "@pixi/filter-hsl-adjustment": "5.2.0",
+    "@pixi/filter-hsl-adjustment": "5.3.0",
     "@pixi/filter-kawase-blur": "5.1.1",
     "@pixi/filter-motion-blur": "5.1.1",
     "@pixi/filter-multi-color-replace": "5.1.1",
