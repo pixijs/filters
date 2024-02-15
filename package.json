@@ -1,6 +1,6 @@
 {
   "name": "pixi-filters",
-  "version": "5.3.0",
+  "version": "6.0.0-rc",
   "exports": {
     ".": {
       "import": "./lib/index.mjs",
