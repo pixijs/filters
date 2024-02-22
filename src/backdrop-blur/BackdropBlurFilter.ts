@@ -15,7 +15,7 @@ export type BackdropBlurFilterOptions = BlurFilterOptions;
 
 export class BackdropBlurFilter extends BlurFilter
 {
-    private _basePass: Filter;
+    private _blendPass: Filter;
 
     /**
      * @param options - The options of the blur filter.
@@ -33,7 +33,7 @@ export class BackdropBlurFilter extends BlurFilter
         this.blendRequired = true;
         this.padding = 0;
 
-        this._basePass = new Filter({
+        this._blendPass = new Filter({
             gpuProgram: GpuProgram.from({
                 vertex: {
                     source: wgslVertex,
@@ -115,8 +115,8 @@ export class BackdropBlurFilter extends BlurFilter
 
         super.apply(filterManager, backTexture, blurredBackground, true);
 
-        this._basePass.resources.uBackground = blurredBackground.source;
-        this._basePass.apply(filterManager, input, output, clearMode);
+        this._blendPass.resources.uBackground = blurredBackground.source;
+        this._blendPass.apply(filterManager, input, output, clearMode);
 
         TexturePool.returnTexture(blurredBackground);
     }
