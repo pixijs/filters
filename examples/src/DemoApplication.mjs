@@ -71,6 +71,7 @@ export default class DemoApplication extends PIXI.Application
             height: this.initHeight,
             autoStart: false,
             preference,
+            useBackBuffer: true,
         });
     }
 
