@@ -13,6 +13,13 @@ import { vertex, wgslVertex } from '../defaults';
 
 export type BackdropBlurFilterOptions = BlurFilterOptions;
 
+/**
+ * The BackdropBlurFilter applies a Gaussian blur to everything behind an object, and then draws the object on top of it.
+ *
+ * @class
+ * @extends BlurFilter
+ * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
+ */
 export class BackdropBlurFilter extends BlurFilter
 {
     private _blendPass: Filter;
