@@ -30,12 +30,9 @@ export class BackdropBlurFilter extends BlurFilter
      * @param options.quality - The quality of the blur filter.
      * @param options.kernelSize - The kernelSize of the blur filter.Options: 5, 7, 9, 11, 13, 15.
      */
-    constructor(options?: BackdropBlurFilterOptions);
-    /** @deprecated since 8.0.0 */
-    constructor(strength?: number, quality?: number, resolution?: number, kernelSize?: number);
-    constructor(...args: [BackdropBlurFilterOptions?] | [number?, number?, number?, number?])
+    constructor(options?: BackdropBlurFilterOptions)
     {
-        super(...(args as ConstructorParameters<typeof BlurFilter>));
+        super(options);
 
         this.blendRequired = true;
         this.padding = 0;
