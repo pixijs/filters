@@ -99,12 +99,10 @@ export class BackdropBlurFilter extends BlurFilter
     }
 
     /**
-   * Applies the filter.
-   * @param filterManager - The manager.
-   * @param input - The input target.
-   * @param output - The output target.
-   * @param clearMode - How to clear
-   */
+     * Override existing apply method in `Filter`
+     * @override
+     * @ignore
+     */
     public apply(
         filterManager: FilterSystem,
         input: Texture,
