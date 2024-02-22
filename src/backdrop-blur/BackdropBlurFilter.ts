@@ -10,6 +10,8 @@ import {
     TexturePool,
 } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
+import fragment from './backdrop-blur-blend.frag';
+import wgslFragment from './backdrop-blur-blend.wgsl';
 
 export type BackdropBlurFilterOptions = BlurFilterOptions;
 
@@ -44,52 +46,13 @@ export class BackdropBlurFilter extends BlurFilter
                     entryPoint: 'mainVertex',
                 },
                 fragment: {
-                    source: `
-                    @group(0) @binding(1) var uTexture: texture_2d<f32>; 
-                    @group(0) @binding(2) var uSampler: sampler;
-                    @group(1) @binding(0) var uBackground: texture_2d<f32>; 
-
-                    @fragment
-                    fn mainFragment(
-                        @builtin(position) position: vec4<f32>,
-                        @location(0) uv : vec2<f32>
-                    ) -> @location(0) vec4<f32> {
-                        var front: vec4<f32> = textureSample(uTexture, uSampler, uv);
-                        var back: vec4<f32> = textureSample(uBackground, uSampler, uv);
-                        
-                        if (front.a == 0.0) {
-                            discard;
-                        }
-
-                        var color: vec3<f32> = mix(back.rgb, front.rgb / front.a, front.a);
-
-                        return vec4<f32>(color, 1.0);
-                    }
-                    `,
+                    source: wgslFragment,
                     entryPoint: 'mainFragment',
                 },
             }),
             glProgram: GlProgram.from({
                 vertex,
-                fragment: `
-                in vec2 vTextureCoord;
-                out vec4 finalColor;
-                uniform sampler2D uTexture;
-                uniform sampler2D uBackground;
-
-                void main(void){
-                    vec4 front = texture(uTexture, vTextureCoord);
-                    vec4 back = texture(uBackground, vTextureCoord);
-
-                    if (front.a == 0.0) {
-                        discard;
-                    }
-                    
-                    vec3 color = mix(back.rgb, front.rgb / front.a, front.a);
-                
-                    finalColor = vec4(color, 1.0);
-                }
-                `,
+                fragment,
                 name: 'drop-shadow-filter',
             }),
             resources: {
