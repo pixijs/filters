@@ -313,7 +313,8 @@ export default class DemoApplication extends PIXI.Application
                     if (index !== -1) fishFilters.splice(index, 1);
                 }
                 this.fishFilters = fishFilters;
-                this.fishes.forEach((fish) => { 
+                this.fishes.forEach((fish) =>
+                {
                     fish.filters = fishFilters;
                 });
             }
