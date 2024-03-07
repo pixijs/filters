@@ -5,6 +5,7 @@ import source from './rgb-split.wgsl';
 
 type OffsetType = PointData | [number, number];
 
+/** Options for the RGBSplitFilter constructor. */
 export interface RGBSplitFilterOptions
 {
     /**
@@ -30,7 +31,6 @@ export interface RGBSplitFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class RGBSplitFilter extends Filter
 {
@@ -47,6 +47,9 @@ export class RGBSplitFilter extends Filter
         uBlue: PointData;
     };
 
+    /**
+     * @param options - Options for the RGBSplitFilter constructor.
+     */
     constructor(options?: RGBSplitFilterOptions);
     /**
      * @deprecated since 6.0.0
@@ -56,6 +59,7 @@ export class RGBSplitFilter extends Filter
      * @param {PIXI.PointData | number[]} [blue=[0, 0]] - Blue channel offset
      */
     constructor(red?: OffsetType, green?: OffsetType, blue?: OffsetType);
+    /** @ignore */
     constructor(...args: [RGBSplitFilterOptions?] | [OffsetType?, OffsetType?, OffsetType?])
     {
         let options = args[0] ?? {};

@@ -5,6 +5,7 @@ import source from './crt.wgsl';
 
 import type { FilterSystem, RenderSurface, Texture } from 'pixi.js';
 
+/** Options for the CRTFilter constructor. */
 export interface CRTFilterOptions
 {
     /**
@@ -72,7 +73,6 @@ export interface CRTFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class CRTFilter extends Filter
 {
@@ -112,6 +112,9 @@ export class CRTFilter extends Filter
      */
     public time!: number;
 
+    /**
+     * @param options - Options for the CRTFilter constructor.
+     */
     constructor(options?: CRTFilterOptions)
     {
         options = { ...CRTFilter.DEFAULT_OPTIONS, ...options };

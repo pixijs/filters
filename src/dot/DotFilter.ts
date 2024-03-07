@@ -11,6 +11,7 @@ import source from './dot.wgsl';
  * Original filter: https://github.com/evanw/glfx.js/blob/master/src/filters/fun/dotscreen.js
  */
 
+/** Options for the DotFilter constructor. */
 export interface DotFilterOptions
 {
     /**
@@ -37,7 +38,6 @@ export interface DotFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class DotFilter extends Filter
 {
@@ -48,6 +48,9 @@ export class DotFilter extends Filter
         grayscale: true
     };
 
+    /**
+     * @param options - Options for the DotFilter constructor.
+     */
     constructor(options?: DotFilterOptions);
     /**
      * @deprecated since 6.0.0
@@ -57,6 +60,7 @@ export class DotFilter extends Filter
      * @param {boolean} [grayscale=true] - Render as grayscale.
      */
     constructor(scale?: number, angle?: number, grayscale?: boolean);
+    /** @ignore */
     constructor(...args: [DotFilterOptions?] | [number?, number?, boolean?])
     {
         let options = args[0] ?? {};

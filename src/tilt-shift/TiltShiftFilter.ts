@@ -3,10 +3,7 @@ import { TiltShiftAxisFilter } from './TiltShiftAxisFilter';
 
 import type { PointData, RenderSurface, Texture } from 'pixi.js';
 
-// @author Vico @vicocotea
-// original filter https://github.com/evanw/glfx.js/blob/master/src/filters/blur/tiltshift.js
-// by Evan Wallace : http://madebyevan.com/
-
+/** Options for the TiltShiftFilter constructor. */
 export interface TiltShiftFilterOptions
 {
     /** The strength of the blur. */
@@ -23,14 +20,20 @@ export interface TiltShiftFilterOptions
  * A TiltShift Filter. Manages the pass of both a TiltShiftXFilter and TiltShiftYFilter.<br>
  * ![original](../screenshots/original.png)![filter](../screenshots/tilt-shift.png)
  *
+ * author Vico @vicocotea
+ * {@link https://github.com/evanw/glfx.js/blob/master/src/filters/blur/tiltshift.js original filter }
+ * by {@link http://madebyevan.com/ Evan Wallace }
+ *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class TiltShiftFilter extends TiltShiftAxisFilter
 {
     private _tiltShiftYFilter: TiltShiftAxisFilter;
 
+    /**
+     * @param options - Options for the TiltShiftFilter constructor.
+     */
     constructor(options?: TiltShiftFilterOptions)
     {
         options = { ...TiltShiftAxisFilter.DEFAULT_OPTIONS, ...options };

@@ -5,6 +5,7 @@ import source from './radial-blur.wgsl';
 
 import type { PointData } from 'pixi.js';
 
+/** Options for the RadialBlurFilter constructor. */
 export interface RadialBlurFilterOptions
 {
     /**
@@ -37,7 +38,6 @@ export interface RadialBlurFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class RadialBlurFilter extends Filter
 {
@@ -59,6 +59,9 @@ export class RadialBlurFilter extends Filter
     private _angle!: number;
     private _kernelSize!: number;
 
+    /**
+     * @param options - Options for the RadialBlurFilter constructor.
+     */
     constructor(options?: RadialBlurFilterOptions);
     /**
      * @deprecated since 6.0.0
@@ -69,6 +72,7 @@ export class RadialBlurFilter extends Filter
      * @param {number} [radius=-1] - The maximum size of the blur radius, `-1` is infinite
      */
     constructor(angle?: number, center?: PointData | number[], kernelSize?: number, radius?: number);
+    /** @ignore */
     constructor(...args: [RadialBlurFilterOptions?] | [number?, (PointData | number[])?, number?, number?])
     {
         let options = args[0] ?? {};

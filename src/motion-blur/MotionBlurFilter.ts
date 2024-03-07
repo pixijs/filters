@@ -4,6 +4,7 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './motion-blur.frag';
 import source from './motion-blur.wgsl';
 
+/** Options for the MotionBlurFilter constructor. */
 export interface MotionBlurFilterOptions
 {
     /**
@@ -31,7 +32,6 @@ export interface MotionBlurFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class MotionBlurFilter extends Filter
 {
@@ -50,6 +50,9 @@ export class MotionBlurFilter extends Filter
 
     private _kernelSize!: number;
 
+    /**
+     * @param options - Options for the MotionBlurFilter constructor.
+     */
     constructor(options?: MotionBlurFilterOptions);
     /**
      * @deprecated since 8.0.0
@@ -59,6 +62,7 @@ export class MotionBlurFilter extends Filter
      * @param {number} [offset=0] - The offset of the blur filter.
      */
     constructor(velocity?: number[] | PointData | ObservablePoint, kernelSize?: number, offset?: number);
+    /** @ignore */
     constructor(...args: [MotionBlurFilterOptions?] | [(number[] | PointData | ObservablePoint)?, number?, number?])
     {
         let options = args[0] ?? {};

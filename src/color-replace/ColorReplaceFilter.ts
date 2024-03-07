@@ -10,6 +10,7 @@ import source from './color-replace.wgsl';
 
 type DeprecatedColor = number | number[] | Float32Array;
 
+/** Options for the ColorReplaceFilter constructor. */
 export interface ColorReplaceFilterOptions
 {
     /**
@@ -38,7 +39,6 @@ export interface ColorReplaceFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  *
  * @example
  *  // replaces true red with true blue
@@ -75,6 +75,9 @@ export class ColorReplaceFilter extends Filter
     private _originalColor: Color;
     private _targetColor: Color;
 
+    /**
+     * @param options - Options for the ColorReplaceFilter constructor.
+     */
     constructor(options?: ColorReplaceFilterOptions);
     /**
      * @deprecated since 6.0.0
@@ -87,6 +90,7 @@ export class ColorReplaceFilter extends Filter
      *        (lower = more exact, higher = more inclusive)
      */
     constructor(originalColor?: number, newColor?: number, epsilon?: number);
+    /** @ignore */
     constructor(...args: [ColorReplaceFilterOptions?] | [DeprecatedColor?, DeprecatedColor?, number?])
     {
         let options = args[0] ?? {};
@@ -188,6 +192,7 @@ export class ColorReplaceFilter extends Filter
      * The resulting color, as a 3 component RGB e.g. [1.0, 0.5, 1.0]
      * @member {number|Array<number>|Float32Array}
      * @default 0x000000
+     * @see ColorReplaceFilter#targetColor
      */
     set newColor(value: DeprecatedColor)
     {
@@ -207,6 +212,7 @@ export class ColorReplaceFilter extends Filter
      *
      * Tolerance/sensitivity of the floating-point comparison between colors (lower = more exact, higher = more inclusive)
      * @default 0.4
+     * @see ColorReplaceFilter#tolerance
      */
     set epsilon(value: number)
     {

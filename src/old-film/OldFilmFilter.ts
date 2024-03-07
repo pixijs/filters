@@ -5,6 +5,7 @@ import source from './old-film.wgsl';
 
 import type { FilterSystem, RenderSurface, Texture } from 'pixi.js';
 
+/** Options for the OldFilmFilter constructor. */
 export interface OldFilmFilterOptions
 {
     /**
@@ -66,7 +67,6 @@ export interface OldFilmFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class OldFilmFilter extends Filter
 {
@@ -99,6 +99,9 @@ export class OldFilmFilter extends Filter
      */
     public seed!: number;
 
+    /**
+     * @param options - Options for the OldFilmFilter constructor.
+     */
     constructor(options?: OldFilmFilterOptions)
     {
         options = { ...OldFilmFilter.DEFAULT_OPTIONS, ...options };

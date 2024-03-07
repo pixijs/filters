@@ -4,10 +4,8 @@ import fragment from './glow.frag';
 import source from './glow.wgsl';
 
 /**
- * This WebGPU filter has been ported from the WebGL renderer that was originally created by mishaa
- * http://codepen.io/mishaa/pen/raKzrm
+ * Options for the GlowFilter constructor.
  */
-
 export interface GlowFilterOptions
 {
     /**
@@ -54,7 +52,6 @@ export interface GlowFilterOptions
  * @class
  *
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  *
  * @example
  *  someSprite.filters = [
@@ -85,6 +82,9 @@ export class GlowFilter extends Filter
 
     private _color!: Color;
 
+    /**
+     * @param options - Options for the GlowFilter constructor.
+     */
     constructor(options?: GlowFilterOptions)
     {
         options = { ...GlowFilter.DEFAULT_OPTIONS, ...options };
@@ -103,11 +103,9 @@ export class GlowFilter extends Filter
             },
         });
 
-        /**
-         * Altering uDistance and uQuality won't have any affect on WebGL
-         * since we hard-assign them during creation to allow
-         * for the values to be used in GLSL loops
-         */
+        // Altering uDistance and uQuality won't have any affect on WebGL
+        // since we hard-assign them during creation to allow
+        // for the values to be used in GLSL loops
         const glProgram = GlProgram.from({
             vertex,
             fragment: fragment

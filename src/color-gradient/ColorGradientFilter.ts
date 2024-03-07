@@ -4,26 +4,62 @@ import vertex from './color-gradient.vert';
 import source from './color-gradient.wgsl';
 import { parseCssGradient } from './CssGradientParser';
 
-export type ColorStop = {
+/** Color stop object. */
+export interface ColorStop
+{
     offset: number;
     color: ColorSource;
     alpha: number;
-};
+}
 
-export type DefaultOptions = {
+/** Options for ColorGradientFilter constructor. */
+export interface ColorGradientFilterOptions
+{
+    /**
+     * Linear = 0, Radial = 1, Conic = 2
+     * @default ColorGradientFilter.LINEAR
+     */
     type: number;
+    /** Collection of stops, must be 2+ */
     stops: ColorStop[];
+    /**
+     * Angle for linear gradients, in degrees.
+     * @default 90
+     */
     angle?: number;
+    /**
+     * Alpha value for the gradient.
+     * @default 1
+     */
     alpha?: number;
+    /**
+     * Maximum number of colors to render (0 = no limit)
+     * @default 0
+     */
     maxColors?: number;
+    /**
+     * If true, the gradient will replace the existing color, otherwise it will be multiplied with it
+     * @default false
+     */
     replace?: boolean;
-};
+}
 
-export type CssOptions = {
+/** Options for CSS-style gradient for use with constructor. */
+export interface ColorGradientFilterCSSOptions
+{
+    /** CSS-style gradient string */
     css: string;
+    /**
+     * Alpha value for the gradient.
+     * @default 1
+     */
     alpha?: number;
+    /**
+     * Maximum number of colors to render (0 = no limit)
+     * @default 0
+     */
     maxColors?: number;
-};
+}
 
 const ANGLE_OFFSET = 90; // align degrees with CSS
 
@@ -38,7 +74,6 @@ function sortColorStops(stops: ColorStop[]): ColorStop[]
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class ColorGradientFilter extends Filter
 {
@@ -48,7 +83,7 @@ export class ColorGradientFilter extends Filter
     static readonly CONIC = 2;
 
     /** Default constructor options */
-    public static readonly defaults: DefaultOptions = {
+    public static readonly defaults: ColorGradientFilterOptions = {
         type: ColorGradientFilter.LINEAR,
         stops: [
             { offset: 0.0, color: 0xff0000, alpha: 1.0 },
@@ -73,11 +108,9 @@ export class ColorGradientFilter extends Filter
     private _stops: ColorStop[] = [];
 
     /**
-   * @param {DefaultOptions | CssOptions} [options]
-   * @param {number} [options.alpha=1.0] - Alpha value
-   * @param {number} [options.maxColors=0] - Maximum number of colors to render (0 = disabled)
-   */
-    constructor(options?: DefaultOptions | CssOptions)
+     * @param options - Options for the ColorGradientFilter constructor.
+     */
+    constructor(options?: ColorGradientFilterOptions | ColorGradientFilterCSSOptions)
     {
         if (options && 'css' in options)
         {

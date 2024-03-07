@@ -7,6 +7,7 @@ import type { FilterSystem, PointData, RenderSurface, Texture } from 'pixi.js';
 
 // This WebGPU filter has been ported from the WebGL renderer that was originally created by Julien CLEREL (@JuloxRox)
 
+/** Options for the BulgePinchFilter constructor. */
 export interface BulgePinchFilterOptions
 {
     /**
@@ -32,7 +33,6 @@ export interface BulgePinchFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class BulgePinchFilter extends Filter
 {
@@ -50,6 +50,9 @@ export class BulgePinchFilter extends Filter
         uStrength: number;
     };
 
+    /**
+     * @param options - Options for the BulgePinchFilter constructor.
+     */
     constructor(options?: BulgePinchFilterOptions)
     {
         options = { ...BulgePinchFilter.DEFAULT_OPTIONS, ...options };

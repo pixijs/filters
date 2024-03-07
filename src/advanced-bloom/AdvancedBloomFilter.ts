@@ -14,6 +14,7 @@ import fragment from './advanced-bloom.frag';
 import source from './advanced-bloom.wgsl';
 import { ExtractBrightnessFilter } from './ExtractBrightnessFilter';
 
+/** Options for the AdvancedBloomFilter constructor. */
 export interface AdvancedBloomFilterOptions
 {
     /**
@@ -54,7 +55,6 @@ export interface AdvancedBloomFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class AdvancedBloomFilter extends Filter
 {
@@ -82,6 +82,9 @@ export class AdvancedBloomFilter extends Filter
     private _extractFilter: ExtractBrightnessFilter;
     private _blurFilter: KawaseBlurFilter;
 
+    /**
+     * @param options - Options for the AdvancedBloomFilter constructor.
+     */
     constructor(options?: AdvancedBloomFilterOptions)
     {
         options = { ...AdvancedBloomFilter.DEFAULT_OPTIONS, ...options };

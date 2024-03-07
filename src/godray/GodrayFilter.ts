@@ -7,6 +7,7 @@ import sourcePerlin from './perlin.wgsl';
 
 import type { FilterSystem, PointData, RenderSurface, Texture } from 'pixi.js';
 
+/** Options for the GodrayFilter constructor. */
 export interface GodrayFilterOptions
 {
     /**
@@ -58,7 +59,6 @@ export interface GodrayFilterOptions
  * ![original](../screenshots/original.png)![filter](../screenshots/godray.gif)
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  *
  * @example
  *  displayObject.filters = [new GodrayFilter()];
@@ -95,6 +95,9 @@ export class GodrayFilter extends Filter
     private _angle = 0;
     private _center!: PointData;
 
+    /**
+     * @param options - Options for the GodrayFilter constructor.
+     */
     constructor(options?: GodrayFilterOptions)
     {
         options = { ...GodrayFilter.DEFAULT_OPTIONS, ...options };

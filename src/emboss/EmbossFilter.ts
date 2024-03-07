@@ -9,7 +9,6 @@ import source from './emboss.wgsl';
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class EmbossFilter extends Filter
 {

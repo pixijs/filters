@@ -5,6 +5,7 @@ import source from './multi-color-replace.wgsl';
 
 type DeprecatedColor = number | number[] | Float32Array;
 
+/** Options for the MultiColorReplaceFilter constructor. */
 export interface MultiColorReplaceFilterOptions
 {
     /**
@@ -34,7 +35,6 @@ export interface MultiColorReplaceFilterOptions
  * ![original](../screenshots/original.png)![filter](../screenshots/multi-color-replace.png)
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  *
  * @example
  *  // replaces pure red with pure blue, and replaces pure green with pure white
@@ -74,6 +74,9 @@ export class MultiColorReplaceFilter extends Filter
     private _replacements: Array<[ColorSource, ColorSource]> = [];
     private _maxColors: number;
 
+    /**
+     * @param options - Options for the MultiColorReplaceFilter constructor.
+     */
     constructor(options?: MultiColorReplaceFilterOptions);
     /**
      * @deprecated since 6.0.0
@@ -88,6 +91,7 @@ export class MultiColorReplaceFilter extends Filter
      *        If omitted, the default value is the length of `replacements`.
      */
     constructor(replacements: Array<[DeprecatedColor, DeprecatedColor]>, epsilon?: number, maxColors?: number);
+    /** @ignore */
     constructor(...args: [MultiColorReplaceFilterOptions?] | [Array<[DeprecatedColor, DeprecatedColor]>, number?, number?])
     {
         let options = args[0] ?? {} as MultiColorReplaceFilterOptions;

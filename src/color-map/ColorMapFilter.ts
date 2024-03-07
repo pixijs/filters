@@ -5,6 +5,7 @@ import source from './color-map.wgsl';
 
 type ColorMapTexture = TextureSource | Texture;
 
+/** Options for the ColorMapFilter constructor. */
 export interface ColorMapFilterOptions
 {
     /** The colorMap texture of the filter. */
@@ -27,7 +28,6 @@ export interface ColorMapFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class ColorMapFilter extends Filter
 {
@@ -54,6 +54,9 @@ export class ColorMapFilter extends Filter
     private _scaleMode: SCALE_MODE = 'linear';
     private _colorMap!: ColorMapTexture;
 
+    /**
+     * @param options - Options for the ColorMapFilter constructor.
+     */
     constructor(options: ColorMapFilterOptions);
     /**
      * @deprecated since 6.0.0
@@ -64,6 +67,7 @@ export class ColorMapFilter extends Filter
      * @param {number} [mix=1] - The mix from 0 to 1, where 0 is the original image and 1 is the color mapped image.
      */
     constructor(colorMap: ColorMapTexture, nearest?: boolean, mix?: number);
+    /** @ignore */
     constructor(...args: [ColorMapFilterOptions] | [ColorMapTexture, boolean?, number?])
     {
         let options = args[0] ?? {};
