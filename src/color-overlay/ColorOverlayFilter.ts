@@ -5,6 +5,7 @@ import source from './color-overlay.wgsl';
 
 type DeprecatedColor = number | number[] | Float32Array;
 
+/** Options for the ColorOverlayFilter constructor. */
 export interface ColorOverlayFilterOptions
 {
     /**
@@ -24,7 +25,6 @@ export interface ColorOverlayFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class ColorOverlayFilter extends Filter
 {
@@ -43,6 +43,9 @@ export class ColorOverlayFilter extends Filter
 
     private _color: Color;
 
+    /**
+     * @param options - Options for the ColorOverlayFilter constructor.
+     */
     constructor(options?: ColorOverlayFilterOptions);
     /**
      * @deprecated since 6.0.0
@@ -51,6 +54,7 @@ export class ColorOverlayFilter extends Filter
      * @param {number} [alpha=1] - The alpha value of the color
      */
     constructor(color?: DeprecatedColor, alpha?: number);
+    /** @ignore */
     constructor(...args: [ColorOverlayFilterOptions?] | [DeprecatedColor?, number?])
     {
         let options = args[0] ?? {};

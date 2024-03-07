@@ -12,6 +12,7 @@ import {
 
 type DeprecatedBlurValue = number | PointData | number[];
 
+/** Options for the BloomFilter constructor. */
 export interface BloomFilterOptions
 {
     /**
@@ -43,7 +44,6 @@ export interface BloomFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class BloomFilter extends AlphaFilter
 {
@@ -59,6 +59,9 @@ export class BloomFilter extends AlphaFilter
     private _blurYFilter: BlurFilterPass;
     private _strength: PointData;
 
+    /**
+     * @param {BloomFilterOptions} options - Options for the BloomFilter constructor.
+     */
     constructor(options?: BloomFilterOptions);
     /**
     * @deprecated since 6.0.0
@@ -69,6 +72,7 @@ export class BloomFilter extends AlphaFilter
     * @param {number} [kernelSize=5] - The kernelSize of the blurX & blurY filter.Options: 5, 7, 9, 11, 13, 15.
     */
     constructor(blur?: DeprecatedBlurValue, quality?: number, resolution?: number, kernelSize?: number);
+    /** @ignore */
     constructor(...args: [BloomFilterOptions?] | [DeprecatedBlurValue?, number?, number?, number?])
     {
         let options = args[0] ?? {};
@@ -191,6 +195,7 @@ export class BloomFilter extends AlphaFilter
      *
      * The strength of both the blurX and blurY properties simultaneously
      * @default 2
+     * @see BloomFilter#strength
      */
     get blur(): number
     {
@@ -210,6 +215,7 @@ export class BloomFilter extends AlphaFilter
      *
      * The strength of the blurX property
      * @default 2
+     * @see BloomFilter#strengthX
      */
     get blurX(): number
     {
@@ -229,6 +235,7 @@ export class BloomFilter extends AlphaFilter
      *
      * The strength of the blurY property
      * @default 2
+     * @see BloomFilter#strengthY
      */
     get blurY(): number
     {

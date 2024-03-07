@@ -225,7 +225,7 @@
   "devDependencies": {
     "@pixi/eslint-config": "^4.0.1",
     "@pixi/extension-scripts": "^2.4.0",
-    "@pixi/webdoc-template": "^1.5.5",
+    "@pixi/webdoc-template": "^2.2.3",
     "@types/gradient-parser": "^0.1.2",
     "@webdoc/cli": "^2.2.0",
     "base64-to-image": "^1.0.2",

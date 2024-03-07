@@ -13,14 +13,12 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './backdrop-blur-blend.frag';
 import wgslFragment from './backdrop-blur-blend.wgsl';
 
-export type BackdropBlurFilterOptions = BlurFilterOptions;
-
 /**
- * The BackdropBlurFilter applies a Gaussian blur to everything behind an object, and then draws the object on top of it.
+ * The BackdropBlurFilter applies a Gaussian blur to everything behind an object, and then draws the object on top of it.<br>
+ * ![original](../screenshots/original.png)![filter](../screenshots/backdrop-blur.png)
  *
  * @class
  * @extends BlurFilter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class BackdropBlurFilter extends BlurFilter
 {
@@ -28,11 +26,8 @@ export class BackdropBlurFilter extends BlurFilter
 
     /**
      * @param options - The options of the blur filter.
-     * @param options.strength - The strength of the blur filter.
-     * @param options.quality - The quality of the blur filter.
-     * @param options.kernelSize - The kernelSize of the blur filter.Options: 5, 7, 9, 11, 13, 15.
      */
-    constructor(options?: BackdropBlurFilterOptions)
+    constructor(options?: BlurFilterOptions)
     {
         super(options);
 

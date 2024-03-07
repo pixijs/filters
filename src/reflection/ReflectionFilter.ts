@@ -8,6 +8,7 @@ import type { FilterSystem, RenderSurface, Texture } from 'pixi.js';
 /** [MIN, MAX] */
 type Range = [number, number] | Float32Array;
 
+/** Options for the ReflectionFilter constructor. */
 export interface ReflectionFilterOptions
 {
     /**
@@ -49,7 +50,6 @@ export interface ReflectionFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class ReflectionFilter extends Filter
 {
@@ -74,11 +74,14 @@ export class ReflectionFilter extends Filter
     };
 
     /**
- * Time for animating position of waves
- * @default 0
- */
+     * Time for animating position of waves
+     * @default 0
+     */
     public time = 0;
 
+    /**
+     * @param options - Options for the ReflectionFilter constructor.
+     */
     constructor(options?: ReflectionFilterOptions)
     {
         options = { ...ReflectionFilter.DEFAULT_OPTIONS, ...options };

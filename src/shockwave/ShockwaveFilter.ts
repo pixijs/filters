@@ -12,6 +12,7 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './shockwave.frag';
 import source from './shockwave.wgsl';
 
+/** Options for the ShockwaveFilter constructor. */
 export interface ShockwaveFilterOptions
 {
     /**
@@ -52,9 +53,10 @@ export interface ShockwaveFilterOptions
 }
 
 /**
- * A Noise effect filter.
+ * Create a visual wrinkle effect by like a pond or blast wave.<br />
+ * ![original](../screenshots/original.png)![filter](../screenshots/shockwave.gif)
  *
- * original filter: https://github.com/evanw/glfx.js/blob/master/src/filters/adjust/noise.js
+ * {@link https://github.com/evanw/glfx.js/blob/master/src/filters/adjust/noise.js original filter}
  * @author Vico @vicocotea
  */
 export class ShockwaveFilter extends Filter
@@ -86,7 +88,7 @@ export class ShockwaveFilter extends Filter
     public time: number;
 
     /**
-     * @param options
+     * @param options - Options for the ShockwaveFilter constructor.
      */
     constructor(options?: ShockwaveFilterOptions);
     /**
@@ -102,6 +104,7 @@ export class ShockwaveFilter extends Filter
      * @param {number} [time=0] - See `time` property.
      */
     constructor(center?: PointData | number[], options?: Omit<ShockwaveFilterOptions, 'time' | 'center'>, time?: number);
+    /** @ignore */
     // eslint-disable-next-line max-len
     constructor(...args: [ShockwaveFilterOptions?] | [(PointData | number[])?, Omit<ShockwaveFilterOptions, 'time' | 'center'>?, number?])
     {

@@ -5,6 +5,7 @@ import source from './ascii.wgsl';
 
 // This WebGPU filter has been ported from the WebGL renderer that was originally created by Vico (@vicocotea)
 
+/** Options for AsciiFilter constructor. */
 export interface AsciiFilterOptions
 {
     /**
@@ -34,7 +35,6 @@ export interface AsciiFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class AsciiFilter extends Filter
 {
@@ -53,6 +53,10 @@ export class AsciiFilter extends Filter
 
     private _color!: Color;
 
+    /**
+     * Constructor.
+     * @param {AsciiFilterOptions} options - The options of the ASCII filter.
+     */
     constructor(options?: AsciiFilterOptions);
     /**
      * @deprecated since 6.0.0
@@ -60,6 +64,7 @@ export class AsciiFilter extends Filter
      * @param {number} [size=8] - Size of the font
      */
     constructor(size: number);
+    /** @ignore */
     constructor(...args: [AsciiFilterOptions?] | [number])
     {
         let options = args[0] ?? {};

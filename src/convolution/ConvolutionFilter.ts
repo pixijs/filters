@@ -7,6 +7,7 @@ type FixedArray<T, L extends number> = [ T, ...Array<T> ] & { length: L };
 
 export type ConvolutionMatrix = Float32Array | FixedArray<number, 9>;
 
+/** Options for the ConvolutionFilter constructor. */
 export interface ConvolutionFilterOptions
 {
     /**
@@ -39,7 +40,6 @@ export interface ConvolutionFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class ConvolutionFilter extends Filter
 {
@@ -55,6 +55,9 @@ export class ConvolutionFilter extends Filter
         uTexelSize: PointData;
     };
 
+    /**
+     * @param options - Options for the ConvolutionFilter constructor.
+     */
     constructor(options?: ConvolutionFilterOptions);
     /**
      * @deprecated since 6.0.0
@@ -65,6 +68,7 @@ export class ConvolutionFilter extends Filter
      * @param {number} [height=200] - Height of the object you are transforming
      */
     constructor(matrix: number[], width?: number, height?: number);
+    /** @ignore */
     constructor(...args: [ConvolutionFilterOptions?] | [number[], number?, number?])
     {
         let options = args[0] ?? {};

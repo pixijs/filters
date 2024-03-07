@@ -3,6 +3,7 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './bevel.frag';
 import source from './bevel.wgsl';
 
+/** Options for the BevelFilter constructor. */
 export interface BevelFilterOptions
 {
     /**
@@ -45,7 +46,6 @@ export interface BevelFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class BevelFilter extends Filter
 {
@@ -72,6 +72,9 @@ export class BevelFilter extends Filter
     private _lightColor: Color;
     private _shadowColor: Color;
 
+    /**
+     * @param options - Options for the BevelFilter constructor.
+     */
     constructor(options?: BevelFilterOptions)
     {
         options = { ...BevelFilter.DEFAULT_OPTIONS, ...options };

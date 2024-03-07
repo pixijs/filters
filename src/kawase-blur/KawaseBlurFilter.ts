@@ -7,6 +7,7 @@ import sourceClamp from './kawase-blur-clamp.wgsl';
 
 import type { FilterSystem, PointData, RenderSurface, Texture } from 'pixi.js';
 
+/** Options for the KawaseBlurFilter constructor. */
 export interface KawaseBlurFilterOptions
 {
     /**
@@ -39,7 +40,6 @@ export interface KawaseBlurFilterOptions
  * @see https://software.intel.com/en-us/blogs/2014/07/15/an-investigation-of-fast-real-time-gpu-based-image-blur-algorithms
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class KawaseBlurFilter extends Filter
 {
@@ -61,6 +61,9 @@ export class KawaseBlurFilter extends Filter
     private _blur!: number;
     private _quality!: number;
 
+    /**
+     * @param options - Options for the KawaseBlurFilter constructor.
+     */
     constructor(options?: KawaseBlurFilterOptions);
     /**
      * @deprecated since 6.0.0
@@ -72,6 +75,7 @@ export class KawaseBlurFilter extends Filter
      *        from fullscreen filters or bleeding to the edge of filterArea.
      */
     constructor(blur?: number | number[], quality?: number, clamp?: boolean);
+    /** @ignore */
     constructor(...args: [KawaseBlurFilterOptions?] | [(number | number[])?, number?, boolean?])
     {
         let options = args[0] ?? {};

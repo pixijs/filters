@@ -3,6 +3,7 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './adjustment.frag';
 import source from './adjustment.wgsl';
 
+/** Options for the AdjustmentFilter constructor */
 export interface AdjustmentFilterOptions
 {
     /**
@@ -56,7 +57,6 @@ export interface AdjustmentFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class AdjustmentFilter extends Filter
 {
@@ -80,6 +80,9 @@ export class AdjustmentFilter extends Filter
         uColor: Float32Array;
     };
 
+    /**
+     * @param options - The options of the adjustment filter.
+     */
     constructor(options?: AdjustmentFilterOptions)
     {
         options = { ...AdjustmentFilter.DEFAULT_OPTIONS, ...options };

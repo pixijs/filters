@@ -5,6 +5,7 @@ import source from './outline.wgsl';
 
 import type { ColorSource, FilterSystem, RenderSurface, Texture } from 'pixi.js';
 
+/** Options for the OutlineFilter constructor. */
 export interface OutlineFilterOptions
 {
     /**
@@ -43,8 +44,7 @@ export interface OutlineFilterOptions
  * ![original](../screenshots/original.png)![filter](../screenshots/outline.png)
  *
  * @class
- * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters} *
+ * @extends Filter *
  * @example
  *  someSprite.filters = [new OutlineFilter(2, 0x99ff99)];
  */
@@ -77,6 +77,9 @@ export class OutlineFilter extends Filter
     private _quality!: number;
     private _color!: Color;
 
+    /**
+     * @param options - Options for the OutlineFilter constructor.
+     */
     constructor(options?: OutlineFilterOptions);
     /**
      * @deprecated since 6.0.0
@@ -89,6 +92,7 @@ export class OutlineFilter extends Filter
      * @param {boolean} [knockout=false] - Only render outline, not the contents.
      */
     constructor(thickness?: number, color?: number, quality?: number, alpha?: number, knockout?: boolean);
+    /** @ignore */
     constructor(...args: [OutlineFilterOptions?] | [number?, number?, number?, number?, boolean?])
     {
         let options = args[0] ?? {};

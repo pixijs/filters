@@ -15,6 +15,7 @@ import { KawaseBlurFilter } from '../kawase-blur/KawaseBlurFilter';
 import fragment from './drop-shadow.frag';
 import source from './drop-shadow.wgsl';
 
+/** Options for the DropShadowFilter constructor. */
 export interface DropShadowFilterOptions
 {
     /**
@@ -70,7 +71,6 @@ export interface DropShadowFilterOptions
  * ![original](../screenshots/original.png)![filter](../screenshots/drop-shadow.png)
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class DropShadowFilter extends Filter
 {
@@ -103,6 +103,9 @@ export class DropShadowFilter extends Filter
     private _blurFilter: KawaseBlurFilter;
     private _basePass: Filter;
 
+    /**
+     * @param options - Options for the DropShadowFilter constructor.
+     */
     constructor(options?: DropShadowFilterOptions)
     {
         options = { ...DropShadowFilter.DEFAULT_OPTIONS, ...options };

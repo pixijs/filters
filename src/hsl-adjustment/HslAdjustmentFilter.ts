@@ -3,8 +3,9 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './hsladjustment.frag';
 import source from './hsladjustment.wgsl';
 
-// This WebGPU filter has been ported from the WebGL renderer that was originally created by Viktor Persson (@vikpe)
-
+/**
+ * Options for the HslAdjustmentFilter constructor.
+ */
 export interface HslAdjustmentFilterOptions
 {
     /**
@@ -37,9 +38,10 @@ export interface HslAdjustmentFilterOptions
 /**
  * ![original](../screenshots/original.png)![filter](../screenshots/hsl-adjustment.png)
  *
+ * This WebGPU filter has been ported from the WebGL renderer that was originally created by Viktor Persson (@vikpe)
+ *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class HslAdjustmentFilter extends Filter
 {
@@ -60,6 +62,9 @@ export class HslAdjustmentFilter extends Filter
 
     private _hue!: number;
 
+    /**
+     * @param options - Options for the HslAdjustmentFilter constructor.
+     */
     constructor(options?: HslAdjustmentFilterOptions)
     {
         options = { ...HslAdjustmentFilter.DEFAULT_OPTIONS, ...options };

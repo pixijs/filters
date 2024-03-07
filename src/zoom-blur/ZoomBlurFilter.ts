@@ -3,6 +3,7 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './zoom-blur.frag';
 import source from './zoom-blur.wgsl';
 
+/** Options for the ZoomBlurFilter constructor. */
 export interface ZoomBlurFilterOptions
 {
     /**
@@ -41,7 +42,6 @@ export interface ZoomBlurFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class ZoomBlurFilter extends Filter
 {
@@ -60,6 +60,9 @@ export class ZoomBlurFilter extends Filter
         uRadii: Float32Array
     };
 
+    /**
+     * @param options - Options for the ZoomBlurFilter constructor.
+     */
     constructor(options?: ZoomBlurFilterOptions)
     {
         options = { ...ZoomBlurFilter.DEFAULT_OPTIONS, ...options };

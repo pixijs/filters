@@ -3,6 +3,7 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './twist.frag';
 import source from './twist.wgsl';
 
+/** Options for the TwistFilter constructor. */
 export interface TwistFilterOptions
 {
     /**
@@ -35,7 +36,6 @@ export interface TwistFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class TwistFilter extends Filter
 {
@@ -52,6 +52,9 @@ export class TwistFilter extends Filter
         uOffset: PointData;
     };
 
+    /**
+     * @param options - Options for the TwistFilter constructor.
+     */
     constructor(options?: Partial<TwistFilterOptions>)
     {
         options = { ...TwistFilter.DEFAULT_OPTIONS, ...options };

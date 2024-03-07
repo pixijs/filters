@@ -14,6 +14,7 @@ enum FILL_MODES
     MIRROR = 4,
 }
 
+/** Options for the GlitchFilter constructor. */
 export interface GlitchFilterOptions
 {
     /**
@@ -80,7 +81,6 @@ export interface GlitchFilterOptions
  *
  * @class
  * @extends Filter
- * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
  */
 export class GlitchFilter extends Filter
 {
@@ -141,6 +141,9 @@ export class GlitchFilter extends Filter
     private _sizes: Float32Array = new Float32Array(1);
     private _offsets: Float32Array = new Float32Array(1);
 
+    /**
+     * @param options - Options for the GlitchFilter constructor.
+     */
     constructor(options?: GlitchFilterOptions)
     {
         options = { ...GlitchFilter.defaults, ...options };

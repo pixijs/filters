@@ -15,6 +15,7 @@ import source from './simple-lightmap.wgsl';
 
 type DeprecatedColor = number | number[];
 
+/** Options for the SimpleLightmapFilter constructor. */
 export interface SimpleLightmapFilterOptions
 {
     /** A texture where your lightmap is rendered */
@@ -34,8 +35,8 @@ export interface SimpleLightmapFilterOptions
 
 /**
 * SimpleLightmap, originally by Oza94
-* http://www.html5gamedevs.com/topic/20027-pixijs-simple-lightmapping/
-* http://codepen.io/Oza94/pen/EPoRxj
+* {@link http://www.html5gamedevs.com/topic/20027-pixijs-simple-lightmapping/}
+* {@link http://codepen.io/Oza94/pen/EPoRxj}
 *
 * You have to specify filterArea, or suffer consequences.
 * You may have to use it with `filter.dontFit = true`,
@@ -67,6 +68,9 @@ export class SimpleLightmapFilter extends Filter
     private _color!: Color;
     private _lightMap!: Texture;
 
+    /**
+     * @param options - Options for the SimpleLightmapFilter constructor.
+     */
     constructor(options: SimpleLightmapFilterOptions);
     /**
      * @deprecated since 6.0.0
@@ -76,6 +80,7 @@ export class SimpleLightmapFilter extends Filter
      * @param {number} [alpha=1] - Default alpha set independent of color (if it's a number, not array).
      */
     constructor(texture: Texture, color?: DeprecatedColor, alpha?: number);
+    /** @ignore */
     constructor(...args: [SimpleLightmapFilterOptions] | [Texture, DeprecatedColor?, number?])
     {
         let options = args[0] ?? {};
