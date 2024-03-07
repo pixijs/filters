@@ -71,7 +71,9 @@ fn mainFragment(
         clampedColor *= max(0.0, 1.0 - length(coord - clampedCoord));
     }
     // No clamp :
-    return select(clampedColor * vec4<f32>(vec3<f32>(1.0 + (uBrightness - 1.0) * p * fade), clampedColor.a), textureSample(uTexture, uSampler, uv), returnColorOnly);
+    var finalColor = clampedColor;
+
+    return select(finalColor, textureSample(uTexture, uSampler, uv), returnColorOnly);
 }
 
 fn boolVec2(x: vec2<f32>, y: vec2<f32>) -> bool
