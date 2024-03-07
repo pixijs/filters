@@ -4,6 +4,7 @@ export { default as adjustment } from './adjustment.mjs';
 export { default as advancedBloom } from './advanced-bloom.mjs';
 export { default as alpha } from './alpha.mjs';
 export { default as ascii } from './ascii.mjs';
+export { default as backdropBlur } from './backdropBlur.mjs';
 export { default as bevel } from './bevel.mjs';
 export { default as bloom } from './bloom.mjs';
 export { default as blur } from './blur.mjs';

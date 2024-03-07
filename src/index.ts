@@ -1,6 +1,7 @@
 export * from './adjustment';
 export * from './advanced-bloom';
 export * from './ascii';
+export * from './backdrop-blur';
 export * from './bevel';
 export * from './bloom';
 export * from './bulge-pinch';

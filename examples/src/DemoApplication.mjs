@@ -71,6 +71,7 @@ export default class DemoApplication extends PIXI.Application
             height: this.initHeight,
             autoStart: false,
             preference,
+            useBackBuffer: true,
         });
     }
 
@@ -96,7 +97,6 @@ export default class DemoApplication extends PIXI.Application
         // Setup the container
         this.pond = new PIXI.Container();
         this.pond.filterArea = this.filterArea;
-        this.pond.filters = this.pondFilters;
         this.stage.addChild(this.pond);
 
         // Setup the background image
@@ -208,8 +208,6 @@ export default class DemoApplication extends PIXI.Application
 
         this.events.emit('animate', delta, animateTimer);
 
-        this.pond.filters = this.pondFilters;
-
         if (!this.animating)
         {
             return;
@@ -224,7 +222,6 @@ export default class DemoApplication extends PIXI.Application
             const fish = this.fishes[i];
 
             fish.direction += fish.turnSpeed * 0.01;
-            fish.filters = this.fishFilters;
             fish.x += Math.sin(fish.direction) * fish.speed;
             fish.y += Math.cos(fish.direction) * fish.speed;
 
@@ -302,28 +299,45 @@ export default class DemoApplication extends PIXI.Application
         // https://github.com/orgs/pixijs/projects/2/views/4?pane=issue&itemId=48582986
         const toggleFilter = (enabled) =>
         {
-            if (enabled)
+            if (options.fishOnly)
             {
-                if (options.fishOnly)
+                const fishFilters = [...this.fishFilters];
+
+                if (enabled)
                 {
-                    this.fishFilters.push(filter);
+                    fishFilters.push(filter);
                 }
                 else
                 {
-                    this.pondFilters.push(filter);
-                }
-            }
-            else if (options.fishOnly)
-            {
-                const index = this.fishFilters.indexOf(filter);
+                    const index = fishFilters.indexOf(filter);
 
-                if (index !== -1) this.fishFilters.splice(index, 1);
+                    if (index !== -1) fishFilters.splice(index, 1);
+                }
+                this.fishFilters = fishFilters;
+                this.fishes.forEach((fish) =>
+                {
+                    fish.filters = fishFilters;
+                });
             }
             else
             {
-                const index = this.pondFilters.indexOf(filter);
+                const pondFilters = [...this.pondFilters];
 
-                if (index !== -1) this.pondFilters.splice(index, 1);
+                if (enabled)
+                {
+                    pondFilters.push(filter);
+                }
+                else
+                {
+                    const index = pondFilters.indexOf(filter);
+
+                    if (index !== -1) pondFilters.splice(index, 1);
+                }
+
+                this.pondFilters = pondFilters;
+                // TODO: seems like a bug, requiring invalidation
+                this.pond.filters = [];
+                this.pond.filters = pondFilters;
             }
         };
 
