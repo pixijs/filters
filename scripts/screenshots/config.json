@@ -572,6 +572,18 @@
                 ],
                 "alpha": 0.8
             }
+        },
+        {
+            "name": "BackdropBlurFilter",
+            "filename": "backdrop-blur",
+            "overlayOnly": true,
+            "overlayOptions": {
+                "alpha": 0.2,
+                "tint": "white"
+            },
+            "arguments": {
+                "strength": 4
+            }
         }
     ]
 }

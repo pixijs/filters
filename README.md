@@ -39,6 +39,7 @@ If all else failes, you can manually download the bundled file from the [release
 | **AdjustmentFilter**<br>_pixi-filters/adjustment_<br>[View demo][Adjustment_demo]                        | ![adjustment](https://filters.pixijs.download/main/screenshots/adjustment.png?v=3)                   |
 | **AdvancedBloomFilter**<br>_pixi-filters/advanced-bloom_<br>[View demo][AdvancedBloom_demo]              | ![advanced-bloom](https://filters.pixijs.download/main/screenshots/advanced-bloom.png?v=3)           |
 | **AsciiFilter**<br>_pixi-filters/ascii_<br>[View demo][Ascii_demo]                                       | ![ascii](https://filters.pixijs.download/main/screenshots/ascii.png?v=3)                             |
+| **BackdropBlurFilter**<br>_pixi-filters/backdrop-blur_<br>[View demo][BackdropBlur_demo]                 | ![backdrop-blur](https://filters.pixijs.download/main/screenshots/backdrop-blur.png?v=3)                             |
 | **BevelFilter**<br>_pixi-filters/bevel_<br>[View demo][Bevel_demo]                                       | ![bevel](https://filters.pixijs.download/main/screenshots/bevel.png?v=3)                             |
 | **BloomFilter**<br>_pixi-filters/bloom_<br>[View demo][Bloom_demo]                                       | ![bloom](https://filters.pixijs.download/main/screenshots/bloom.png?v=3)                             |
 | **BulgePinchFilter**<br>_pixi-filters/bulge-pinch_<br>[View demo][BulgePinch_demo]                       | ![bulge-pinch](https://filters.pixijs.download/main/screenshots/bulge-pinch.gif?v=3)                 |
@@ -120,6 +121,7 @@ API documention can be found [here](http://pixijs.io/filters/docs/).
 [Adjustment_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=AdjustmentFilter
 [AdvancedBloom_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=AdvancedBloomFilter
 [Ascii_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=AsciiFilter
+[BackdropBlur_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=BackdropBlurFilter
 [Bevel_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=BevelFilter
 [Bloom_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=BloomFilter
 [BulgePinch_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=BulgePinchFilter

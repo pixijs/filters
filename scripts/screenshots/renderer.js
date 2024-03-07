@@ -1,4 +1,4 @@
-const { Application, Assets, Container, Sprite, ...PIXI } = require('pixi.js');
+const { Application, Assets, Container, Sprite, Texture, ...PIXI } = require('pixi.js');
 const filters = require('../../lib');
 const assert = require('assert');
 const config = require('./config.json');
@@ -19,8 +19,6 @@ const outputOptions = {
     },
 };
 
-const indexCount = 0;
-
 const app = new Application();
 
 app.init({
@@ -29,6 +27,7 @@ app.init({
     backgroundColor: outputOptions.border.color,
     autoStart: false,
     preference: 'webgpu',
+    useBackBuffer: true,
     hello: true,
 }).then(() =>
 {
@@ -44,6 +43,7 @@ app.init({
     let preview;
     let bg;
     let fishes;
+    let overlay;
     let displacement;
     let lightmap;
     let colormap;
@@ -65,20 +65,39 @@ app.init({
 
         fishes = new Sprite(resources.previewFishes);
         bg = new Sprite(resources.previewBackground);
+        overlay = new Sprite(Texture.WHITE);
 
         fishes.scale.set(outputOptions.width / sourceAssetSize.width);
         bg.scale.set(outputOptions.width / sourceAssetSize.width);
+        overlay.setSize(outputOptions.width - 60, outputOptions.height - 60);
+        overlay.filterArea = new PIXI.Rectangle(
+            -overlay.width / 2,
+            -overlay.height / 2,
+            overlay.width,
+            overlay.height,
+        );
+        overlay.anchor.set(0.5);
+        overlay.x = outputOptions.width / 2;
+        overlay.y = outputOptions.height / 2;
 
         preview = new Container();
-        preview.addChild(bg, fishes);
+        preview.addChild(bg, fishes, overlay);
 
         app.stage.addChild(preview);
         next();
     });
 
+    const onlyImages = config.images.filter((obj) => obj.only);
+    const images = onlyImages.length ? onlyImages : config.images;
+
+    if (onlyImages.length)
+    {
+        document.body.classList.add('only');
+    }
+
     async function next()
     {
-        const obj = config.images[++index];
+        const obj = images[++index];
 
         if (obj)
         {
@@ -130,10 +149,18 @@ app.init({
             }
 
             // Render the filter
-            fishes.filters = [];
-            preview.filters = [];
+            fishes.filters = null;
+            preview.filters = null;
+            overlay.filters = null;
+            overlay.visible = false;
 
-            if (obj.fishOnly)
+            if (obj.overlayOnly)
+            {
+                overlay.filters = [filter];
+                overlay.visible = true;
+                Object.assign(overlay, obj.overlayOptions);
+            }
+            else if (obj.fishOnly)
             {
                 fishes.filters = [filter];
             }
