@@ -27,7 +27,7 @@ export interface DotFilterOptions
  * This filter applies a dotscreen effect making display objects appear to be made out of
  * black and white halftone dots like an old printer.<br>
  * ![original](../screenshots/original.png)![filter](../screenshots/dot.png)
- * 
+ *
  * {@link https://github.com/evanw/glfx.js/blob/master/src/filters/fun/dotscreen.js Original filter}
  *
  * @class
