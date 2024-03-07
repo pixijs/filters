@@ -53,7 +53,8 @@ export interface ShockwaveFilterOptions
 }
 
 /**
- * A Noise effect filter.
+ * Create a visual wrinkle effect by like a pond or blast wave.<br />
+ * ![original](../screenshots/original.png)![filter](../screenshots/shockwave.gif)
  *
  * {@link https://github.com/evanw/glfx.js/blob/master/src/filters/adjust/noise.js original filter}
  * @author Vico @vicocotea
