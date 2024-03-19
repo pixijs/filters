@@ -6,11 +6,12 @@
 
 Depending on your version of PixiJS, you'll need to figure out which major version of PixiJS Filters to use.
 
-| PixiJS      | PixiJS Filters |
-|-------------|----------------|
-| v5.x        | v4.x           |
-| v6.x - v7.x | v5.x           |
-| v8.x        | v6.x           |
+| PixiJS | PixiJS Filters |
+|--------|----------------|
+| v5.x   | v3.x           |
+| v6.x   | v4.x           |
+| v7.x   | v5.x           |
+| v8.x   | v6.x           |
 
 ## Installation
 
