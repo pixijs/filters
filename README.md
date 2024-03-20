@@ -95,7 +95,7 @@ PixiJS has a handful of core filters that are built-in to the PixiJS library.
 
 ## Building
 
-PixiJS Filters uses [Lerna](https://github.com/lerna/lerna) under-the-hood to build all of the filters separately. Install all dependencies by simply running the following.
+Install all dependencies by simply running the following.
 
 ```bash
 npm install
