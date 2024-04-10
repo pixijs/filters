@@ -66,18 +66,6 @@ jobs:
         args: --acl public-read --follow-symlinks --delete --cache-control "max-age=1209600"
       env:
         DEST_DIR: 'latest'
-
-    # Publish to NPM
-    - name: Publish Latest Release
-      if: github.event_name == 'release' && github.event.release.prerelease == false && env.NODE_AUTH_TOKEN != ''
-      run: npm run publish-ci
-
-    # Publish to NPM with prerelease dist-tag
-    - name: Publish Latest Prerelease
-      if: github.event_name == 'release' && github.event.release.prerelease && env.NODE_AUTH_TOKEN != ''
-      run: npm run publish-ci
-      env:
-        XS_PUBLISH_TAG: prerelease
     
     # Automatically attach browser files to release
     - name: Upload to Release
