@@ -222,11 +222,13 @@
   "eslintConfig": {
     "extends": "@pixi/eslint-config"
   },
+  "dependencies": {
+    "@types/gradient-parser": "^0.1.2"
+  },
   "devDependencies": {
     "@pixi/eslint-config": "^4.0.1",
     "@pixi/extension-scripts": "^2.4.0",
     "@pixi/webdoc-template": "^2.2.3",
-    "@types/gradient-parser": "^0.1.2",
     "@webdoc/cli": "^2.2.0",
     "base64-to-image": "^1.0.2",
     "copyfiles": "^2.4.1",
