@@ -79,8 +79,6 @@ export class BevelFilter extends Filter
     {
         options = { ...BevelFilter.DEFAULT_OPTIONS, ...options };
 
-        const rotation = (options.rotation ?? 45) * DEG_TO_RAD;
-
         const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
@@ -122,7 +120,7 @@ export class BevelFilter extends Filter
         this.lightColor = options.lightColor ?? 0xffffff;
         this.shadowColor = options.shadowColor ?? 0x000000;
 
-        Object.assign(this, options, { rotation });
+        Object.assign(this, options);
     }
 
     /**
