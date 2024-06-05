@@ -106,7 +106,7 @@ export class MotionBlurFilter extends Filter
             resources: {
                 motionBlurUniforms: {
                     uVelocity: { value: options.velocity, type: 'vec2<f32>' },
-                    uKernelSize: { value: Math.trunc(options.kernelSize ?? 5), type: 'f32' },
+                    uKernelSize: { value: Math.trunc(options.kernelSize ?? 5), type: 'i32' },
                     uOffset: { value: options.offset, type: 'f32' },
                 }
             },
