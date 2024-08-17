@@ -99,7 +99,7 @@ export class HslAdjustmentFilter extends Filter
         });
 
         this.uniforms = this.resources.hslUniforms.uniforms;
-        this.hue = options.hue;
+        Object.assign(this, options);
     }
 
     /**
@@ -110,34 +110,34 @@ export class HslAdjustmentFilter extends Filter
     set hue(value: number)
     {
         this._hue = value;
-        this.resources.hslUniforms.uniforms.uHsl[0] = value * (Math.PI / 180);
+        this.uniforms.uHsl[0] = value * (Math.PI / 180);
     }
 
     /**
      * The amount of lightness (-1 to 1)
      * @default 0
      */
-    get saturation(): number { return this.resources.hslUniforms.uniforms.uHsl[1]; }
-    set saturation(value: number) { this.resources.hslUniforms.uniforms.uHsl[1] = value; }
+    get saturation(): number { return this.uniforms.uHsl[1]; }
+    set saturation(value: number) { this.uniforms.uHsl[1] = value; }
 
     /**
      * The amount of lightness (-1 to 1)
      * @default 0
      */
-    get lightness(): number { return this.resources.hslUniforms.uniforms.uHsl[2]; }
-    set lightness(value: number) { this.resources.hslUniforms.uniforms.uHsl[2] = value; }
+    get lightness(): number { return this.uniforms.uHsl[2]; }
+    set lightness(value: number) { this.uniforms.uHsl[2] = value; }
 
     /**
      * Whether to colorize the image
      * @default false
      */
-    get colorize(): boolean { return this.resources.hslUniforms.uniforms.uColorize === 1; }
-    set colorize(value: boolean) { this.resources.hslUniforms.uniforms.uColorize = value ? 1 : 0; }
+    get colorize(): boolean { return this.uniforms.uColorize === 1; }
+    set colorize(value: boolean) { this.uniforms.uColorize = value ? 1 : 0; }
 
     /**
      * The amount of alpha (0 to 1)
      * @default 1
      */
-    get alpha(): number { return this.resources.hslUniforms.uniforms.uAlpha; }
-    set alpha(value: number) { this.resources.hslUniforms.uniforms.uAlpha = value; }
+    get alpha(): number { return this.uniforms.uAlpha; }
+    set alpha(value: number) { this.uniforms.uAlpha = value; }
 }
