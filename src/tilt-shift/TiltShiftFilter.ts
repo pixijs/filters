@@ -41,6 +41,8 @@ export class TiltShiftFilter extends TiltShiftAxisFilter
         super({ ...options, axis: 'horizontal' });
         this._tiltShiftYFilter = new TiltShiftAxisFilter({ ...options, axis: 'vertical' });
 
+        this.updateDelta();
+
         Object.assign(this, options);
     }
 
@@ -58,10 +60,20 @@ export class TiltShiftFilter extends TiltShiftAxisFilter
     {
         const renderTarget = TexturePool.getSameSizeTexture(input);
 
+        this.updateDimensions(input);
+        this._tiltShiftYFilter.updateDimensions(input);
+
         filterManager.applyFilter(this, input, renderTarget, true);
         filterManager.applyFilter(this._tiltShiftYFilter, renderTarget, output, clearMode);
 
         TexturePool.returnTexture(renderTarget);
+    }
+
+    /** @ignore */
+    public override updateDelta(): void
+    {
+        super.updateDelta();
+        this._tiltShiftYFilter.updateDelta();
     }
 
     /** The strength of the blur. */
@@ -74,26 +86,50 @@ export class TiltShiftFilter extends TiltShiftAxisFilter
 
     /** The position to start the effect at. */
     get start(): PointData { return this.uniforms.uStart; }
-    set start(value: PointData) { this.uniforms.uStart = this._tiltShiftYFilter.uniforms.uStart = value; }
+    set start(value: PointData)
+    {
+        this.uniforms.uStart = this._tiltShiftYFilter.uniforms.uStart = value;
+        this.updateDelta();
+    }
 
     /** The position to start the effect at on the `x` axis. */
     get startX(): number { return this.start.x; }
-    set startX(value: number) { this.start.x = value; }
+    set startX(value: number)
+    {
+        this.start.x = value;
+        this.updateDelta();
+    }
 
     /** The position to start the effect at on the `x` axis. */
     get startY(): number { return this.start.y; }
-    set startY(value: number) { this.start.y = value; }
+    set startY(value: number)
+    {
+        this.start.y = value;
+        this.updateDelta();
+    }
 
     /** The position to end the effect at. */
     get end(): PointData { return this.uniforms.uEnd; }
-    set end(value: PointData) { this.uniforms.uEnd = this._tiltShiftYFilter.uniforms.uEnd = value; }
+    set end(value: PointData)
+    {
+        this.uniforms.uEnd = this._tiltShiftYFilter.uniforms.uEnd = value;
+        this.updateDelta();
+    }
 
     /** The position to end the effect at on the `x` axis. */
     get endX(): number { return this.end.x; }
-    set endX(value: number) { this.end.x = value; }
+    set endX(value: number)
+    {
+        this.end.x = value;
+        this.updateDelta();
+    }
 
     /** The position to end the effect at on the `y` axis. */
     get endY(): number { return this.end.y; }
-    set endY(value: number) { this.end.y = value; }
+    set endY(value: number)
+    {
+        this.end.y = value;
+        this.updateDelta();
+    }
 }
 
