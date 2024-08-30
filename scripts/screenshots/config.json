@@ -132,9 +132,10 @@
             "name": "TiltShiftFilter",
             "filename": "tilt-shift",
             "options": {
-                "blur": 50,
-                "gradientBlur": 200
-
+                "blur": 100,
+                "gradientBlur": 400,
+                "start": {"x": 0, "y": 35},
+                "end": {"x": 280, "y": 35}
             }
         },
         {
