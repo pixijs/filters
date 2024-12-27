@@ -3,10 +3,12 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './rgb-split.frag';
 import source from './rgb-split.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 type OffsetType = PointData | [number, number];
 
 /** Options for the RGBSplitFilter constructor. */
-export interface RGBSplitFilterOptions
+export interface RGBSplitFilterOptions extends FilterOptions
 {
     /**
      * The amount of offset for the red channel.

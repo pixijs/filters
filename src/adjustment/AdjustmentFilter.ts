@@ -3,8 +3,10 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './adjustment.frag';
 import source from './adjustment.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 /** Options for the AdjustmentFilter constructor */
-export interface AdjustmentFilterOptions
+export interface AdjustmentFilterOptions extends FilterOptions
 {
     /**
      * The amount of luminance

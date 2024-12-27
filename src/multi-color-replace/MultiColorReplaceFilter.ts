@@ -3,10 +3,12 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './multi-color-replace.frag';
 import source from './multi-color-replace.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 type DeprecatedColor = number | number[] | Float32Array;
 
 /** Options for the MultiColorReplaceFilter constructor. */
-export interface MultiColorReplaceFilterOptions
+export interface MultiColorReplaceFilterOptions extends FilterOptions
 {
     /**
      * The collection of replacement items. Each item is color-pair

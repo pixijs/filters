@@ -3,12 +3,14 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './convolution.frag';
 import source from './convolution.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 type FixedArray<T, L extends number> = [ T, ...Array<T> ] & { length: L };
 
 export type ConvolutionMatrix = Float32Array | FixedArray<number, 9>;
 
 /** Options for the ConvolutionFilter constructor. */
-export interface ConvolutionFilterOptions
+export interface ConvolutionFilterOptions extends FilterOptions
 {
     /**
      * An array of values used for matrix transformation, specified as a 9 point Array

@@ -3,13 +3,13 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './reflection.frag';
 import source from './reflection.wgsl';
 
-import type { FilterSystem, RenderSurface, Texture } from 'pixi.js';
+import type { FilterOptions, FilterSystem, RenderSurface, Texture } from 'pixi.js';
 
 /** [MIN, MAX] */
 type Range = [number, number] | Float32Array;
 
 /** Options for the ReflectionFilter constructor. */
-export interface ReflectionFilterOptions
+export interface ReflectionFilterOptions extends FilterOptions
 {
     /**
      * `true` to reflect the image, `false` for waves-only

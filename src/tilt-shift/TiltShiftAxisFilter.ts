@@ -3,6 +3,8 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './tilt-shift.frag';
 import source from './tilt-shift.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 // @author Vico @vicocotea
 // original filter https://github.com/evanw/glfx.js/blob/master/src/filters/blur/tiltshift.js
 // by Evan Wallace : http://madebyevan.com/
@@ -10,7 +12,7 @@ import source from './tilt-shift.wgsl';
 /**
  * Options for creating filter.
  */
-interface TiltShiftAxisFilterOptions
+interface TiltShiftAxisFilterOptions extends FilterOptions
 {
     /** The strength of the blur. */
     blur?: number;

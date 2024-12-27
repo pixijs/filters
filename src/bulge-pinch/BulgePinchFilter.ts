@@ -3,12 +3,12 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './bulge-pinch.frag';
 import source from './bulge-pinch.wgsl';
 
-import type { FilterSystem, PointData, RenderSurface, Texture } from 'pixi.js';
+import type { FilterOptions, FilterSystem, PointData, RenderSurface, Texture } from 'pixi.js';
 
 // This WebGPU filter has been ported from the WebGL renderer that was originally created by Julien CLEREL (@JuloxRox)
 
 /** Options for the BulgePinchFilter constructor. */
-export interface BulgePinchFilterOptions
+export interface BulgePinchFilterOptions extends FilterOptions
 {
     /**
      * Offset coordinates to change the position of the center of the circle of effect.

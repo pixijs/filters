@@ -3,10 +3,10 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './outline.frag';
 import source from './outline.wgsl';
 
-import type { ColorSource, FilterSystem, RenderSurface, Texture } from 'pixi.js';
+import type { ColorSource, FilterOptions, FilterSystem, RenderSurface, Texture } from 'pixi.js';
 
 /** Options for the OutlineFilter constructor. */
-export interface OutlineFilterOptions
+export interface OutlineFilterOptions extends FilterOptions
 {
     /**
      * The thickness of the outline

@@ -3,10 +3,10 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './old-film.frag';
 import source from './old-film.wgsl';
 
-import type { FilterSystem, RenderSurface, Texture } from 'pixi.js';
+import type { FilterOptions, FilterSystem, RenderSurface, Texture } from 'pixi.js';
 
 /** Options for the OldFilmFilter constructor. */
-export interface OldFilmFilterOptions
+export interface OldFilmFilterOptions extends FilterOptions
 {
     /**
      * The amount of saturation of sepia effect,

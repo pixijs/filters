@@ -14,8 +14,10 @@ import fragment from './advanced-bloom.frag';
 import source from './advanced-bloom.wgsl';
 import { ExtractBrightnessFilter } from './ExtractBrightnessFilter';
 
+import type { FilterOptions } from 'pixi.js';
+
 /** Options for the AdvancedBloomFilter constructor. */
-export interface AdvancedBloomFilterOptions
+export interface AdvancedBloomFilterOptions extends FilterOptions
 {
     /**
      * Defines how bright a color needs to be to affect bloom.

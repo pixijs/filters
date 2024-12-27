@@ -3,10 +3,10 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './crt.frag';
 import source from './crt.wgsl';
 
-import type { FilterSystem, RenderSurface, Texture } from 'pixi.js';
+import type { FilterOptions, FilterSystem, RenderSurface, Texture } from 'pixi.js';
 
 /** Options for the CRTFilter constructor. */
-export interface CRTFilterOptions
+export interface CRTFilterOptions extends FilterOptions
 {
     /**
      * Bend of interlaced lines, higher value means more bend

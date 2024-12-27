@@ -3,7 +3,9 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './extract-brightness.frag';
 import source from './extract-brightness.wgsl';
 
-export interface ExtractBrightnessFilterOptions
+import type { FilterOptions } from 'pixi.js';
+
+export interface ExtractBrightnessFilterOptions extends FilterOptions
 {
     /**
      * Defines how bright a color needs to be extracted.

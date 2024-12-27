@@ -13,10 +13,12 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './simple-lightmap.frag';
 import source from './simple-lightmap.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 type DeprecatedColor = number | number[];
 
 /** Options for the SimpleLightmapFilter constructor. */
-export interface SimpleLightmapFilterOptions
+export interface SimpleLightmapFilterOptions extends FilterOptions
 {
     /** A texture where your lightmap is rendered */
     lightMap: Texture;

@@ -3,10 +3,12 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './color-map.frag';
 import source from './color-map.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 type ColorMapTexture = TextureSource | Texture;
 
 /** Options for the ColorMapFilter constructor. */
-export interface ColorMapFilterOptions
+export interface ColorMapFilterOptions extends FilterOptions
 {
     /** The colorMap texture of the filter. */
     colorMap: ColorMapTexture;

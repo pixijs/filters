@@ -5,10 +5,10 @@ import source from './god-ray.wgsl';
 import perlin from './perlin.frag';
 import sourcePerlin from './perlin.wgsl';
 
-import type { FilterSystem, PointData, RenderSurface, Texture } from 'pixi.js';
+import type { FilterOptions, FilterSystem, PointData, RenderSurface, Texture } from 'pixi.js';
 
 /** Options for the GodrayFilter constructor. */
-export interface GodrayFilterOptions
+export interface GodrayFilterOptions extends FilterOptions
 {
     /**
      * The angle/light-source of the rays in degrees. For instance,

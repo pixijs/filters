@@ -12,8 +12,10 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './shockwave.frag';
 import source from './shockwave.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 /** Options for the ShockwaveFilter constructor. */
-export interface ShockwaveFilterOptions
+export interface ShockwaveFilterOptions extends FilterOptions
 {
     /**
      * The `x` and `y` center coordinates to change the position of the center of the circle of effect.

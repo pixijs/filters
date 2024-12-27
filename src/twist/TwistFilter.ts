@@ -3,8 +3,10 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './twist.frag';
 import source from './twist.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 /** Options for the TwistFilter constructor. */
-export interface TwistFilterOptions
+export interface TwistFilterOptions extends FilterOptions
 {
     /**
      * Padding for the filter area

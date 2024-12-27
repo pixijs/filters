@@ -4,8 +4,10 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './motion-blur.frag';
 import source from './motion-blur.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 /** Options for the MotionBlurFilter constructor. */
-export interface MotionBlurFilterOptions
+export interface MotionBlurFilterOptions extends FilterOptions
 {
     /**
      * Sets the velocity of the motion for blur effect

@@ -3,10 +3,10 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './radial-blur.frag';
 import source from './radial-blur.wgsl';
 
-import type { PointData } from 'pixi.js';
+import type { FilterOptions, PointData } from 'pixi.js';
 
 /** Options for the RadialBlurFilter constructor. */
-export interface RadialBlurFilterOptions
+export interface RadialBlurFilterOptions extends FilterOptions
 {
     /**
      * Sets the angle of the motion for blur effect

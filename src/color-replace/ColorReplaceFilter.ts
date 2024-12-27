@@ -3,6 +3,8 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './color-replace.frag';
 import source from './color-replace.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 /**
  * This WebGPU filter has been ported from the WebGL renderer that was originally created by mishaa, updated by timetocode
  * http://www.html5gamedevs.com/topic/10640-outline-a-sprite-change-certain-colors/?p=69966
@@ -11,7 +13,7 @@ import source from './color-replace.wgsl';
 type DeprecatedColor = number | number[] | Float32Array;
 
 /** Options for the ColorReplaceFilter constructor. */
-export interface ColorReplaceFilterOptions
+export interface ColorReplaceFilterOptions extends FilterOptions
 {
     /**
      * The color that will be changed.

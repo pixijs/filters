@@ -3,8 +3,10 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './bevel.frag';
 import source from './bevel.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 /** Options for the BevelFilter constructor. */
-export interface BevelFilterOptions
+export interface BevelFilterOptions extends FilterOptions
 {
     /**
      * The angle of the light in degrees

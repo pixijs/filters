@@ -3,10 +3,12 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './glow.frag';
 import source from './glow.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 /**
  * Options for the GlowFilter constructor.
  */
-export interface GlowFilterOptions
+export interface GlowFilterOptions extends FilterOptions
 {
     /**
      * The distance of the glow

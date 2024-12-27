@@ -3,8 +3,10 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './dot.frag';
 import source from './dot.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 /** Options for the DotFilter constructor. */
-export interface DotFilterOptions
+export interface DotFilterOptions extends FilterOptions
 {
     /**
      * The scale of the effect

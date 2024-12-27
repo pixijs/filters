@@ -3,10 +3,12 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './hsladjustment.frag';
 import source from './hsladjustment.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 /**
  * Options for the HslAdjustmentFilter constructor.
  */
-export interface HslAdjustmentFilterOptions
+export interface HslAdjustmentFilterOptions extends FilterOptions
 {
     /**
      * The amount of hue in degrees (-180 to 180)

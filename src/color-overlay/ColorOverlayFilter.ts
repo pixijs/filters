@@ -3,10 +3,12 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './color-overlay.frag';
 import source from './color-overlay.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 type DeprecatedColor = number | number[] | Float32Array;
 
 /** Options for the ColorOverlayFilter constructor. */
-export interface ColorOverlayFilterOptions
+export interface ColorOverlayFilterOptions extends FilterOptions
 {
     /**
      * The color of the overlay

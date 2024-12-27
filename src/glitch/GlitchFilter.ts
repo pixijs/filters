@@ -3,7 +3,7 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './glitch.frag';
 import source from './glitch.wgsl';
 
-import type { FilterSystem, PointData, RenderSurface } from 'pixi.js';
+import type { FilterOptions, FilterSystem, PointData, RenderSurface } from 'pixi.js';
 
 enum FILL_MODES
     {
@@ -15,7 +15,7 @@ enum FILL_MODES
 }
 
 /** Options for the GlitchFilter constructor. */
-export interface GlitchFilterOptions
+export interface GlitchFilterOptions extends FilterOptions
 {
     /**
      * The count of glitch slices.

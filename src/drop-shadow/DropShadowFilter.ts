@@ -15,8 +15,10 @@ import { KawaseBlurFilter } from '../kawase-blur/KawaseBlurFilter';
 import fragment from './drop-shadow.frag';
 import source from './drop-shadow.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 /** Options for the DropShadowFilter constructor. */
-export interface DropShadowFilterOptions
+export interface DropShadowFilterOptions extends FilterOptions
 {
     /**
      * The offset position of the drop-shadow relative to the original image.

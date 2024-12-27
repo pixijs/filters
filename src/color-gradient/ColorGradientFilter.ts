@@ -4,6 +4,8 @@ import vertex from './color-gradient.vert';
 import source from './color-gradient.wgsl';
 import { parseCssGradient } from './CssGradientParser';
 
+import type { FilterOptions } from 'pixi.js';
+
 /** Color stop object. */
 export interface ColorStop
 {
@@ -13,7 +15,7 @@ export interface ColorStop
 }
 
 /** Options for ColorGradientFilter constructor. */
-export interface ColorGradientFilterOptions
+export interface ColorGradientFilterOptions extends FilterOptions
 {
     /**
      * Linear = 0, Radial = 1, Conic = 2

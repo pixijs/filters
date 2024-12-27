@@ -3,10 +3,12 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './ascii.frag';
 import source from './ascii.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 // This WebGPU filter has been ported from the WebGL renderer that was originally created by Vico (@vicocotea)
 
 /** Options for AsciiFilter constructor. */
-export interface AsciiFilterOptions
+export interface AsciiFilterOptions extends FilterOptions
 {
     /**
      * The pixel size used by the filter

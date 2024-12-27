@@ -5,10 +5,10 @@ import source from './kawase-blur.wgsl';
 import fragmentClamp from './kawase-blur-clamp.frag';
 import sourceClamp from './kawase-blur-clamp.wgsl';
 
-import type { FilterSystem, PointData, RenderSurface, Texture } from 'pixi.js';
+import type { FilterOptions, FilterSystem, PointData, RenderSurface, Texture } from 'pixi.js';
 
 /** Options for the KawaseBlurFilter constructor. */
-export interface KawaseBlurFilterOptions
+export interface KawaseBlurFilterOptions extends FilterOptions
 {
     /**
      * The blur of the filter. Should be greater than `0`.

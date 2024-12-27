@@ -10,10 +10,12 @@ import {
     TexturePool,
 } from 'pixi.js';
 
+import type { AlphaFilterOptions } from 'pixi.js';
+
 type DeprecatedBlurValue = number | PointData | number[];
 
 /** Options for the BloomFilter constructor. */
-export interface BloomFilterOptions
+export interface BloomFilterOptions extends Partial<AlphaFilterOptions>
 {
     /**
      * Sets the strength of the blur. If only a number is provided, it will assign to both x and y.
