@@ -32,6 +32,7 @@ export * from './reflection';
 export * from './rgb-split';
 export * from './shockwave';
 export * from './simple-lightmap';
+export * from './simplex-noise';
 export * from './tilt-shift';
 export * from './twist';
 export * from './zoom-blur';
