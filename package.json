@@ -167,6 +167,11 @@
       "require": "./lib/simple-lightmap/index.js",
       "types": "./lib/simple-lightmap/index.d.ts"
     },
+    "./simplex-noise": {
+      "import": "./lib/simplex-noise/index.mjs",
+      "require": "./lib/simplex-noise/index.js",
+      "types": "./lib/simplex-noise/index.d.ts"
+    },
     "./tilt-shift": {
       "import": "./lib/tilt-shift/index.mjs",
       "require": "./lib/tilt-shift/index.js",
