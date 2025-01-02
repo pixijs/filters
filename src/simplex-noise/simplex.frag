@@ -46,18 +46,16 @@ float simplex_noise(vec3 p)
 
 void main(void)
 {
-    vec3 noise = vec3(
-        simplex_noise(
-            vec3(vTextureCoord*uNoiseScale+vec2(uOffsetX, uOffsetY), uOffsetZ)
-        )
-    ) * 0.5 + 0.5;
+    float noise = simplex_noise(
+                    vec3(vTextureCoord*uNoiseScale+vec2(uOffsetX, uOffsetY), uOffsetZ)
+                ) * 0.5 + 0.5;
 
     noise += 2.0 * uStrength - 1.0;
     noise = clamp(noise, 0.0, 1.0);
 
     if (uStep > 0.0) {  //step > 0.5
-        noise = 1.0 - step(noise, vec3(uStep));
+        noise = 1.0 - step(noise, uStep);
     }
 
-    finalColor = vec4(noise, 1.0) * texture(uTexture, vTextureCoord);
+    finalColor = texture(uTexture, vTextureCoord) * noise;
 }

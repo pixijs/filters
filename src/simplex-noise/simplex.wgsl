@@ -27,13 +27,13 @@ fn mainFragment(
   @location(0) uv: vec2<f32>,
   @builtin(position) position: vec4<f32>
 ) -> @location(0) vec4<f32> {
-  var noise: vec3<f32> = vec3<f32>(simplex_noise(vec3<f32>(uv * simplexUniforms.uNoiseScale + vec2<f32>(simplexUniforms.uOffsetX, simplexUniforms.uOffsetY), simplexUniforms.uOffsetZ))) * 0.5 + 0.5;
+  var noise: f32 = simplex_noise(vec3<f32>(uv * simplexUniforms.uNoiseScale + vec2<f32>(simplexUniforms.uOffsetX, simplexUniforms.uOffsetY), simplexUniforms.uOffsetZ)) * 0.5 + 0.5;
 	noise = noise + (2. * simplexUniforms.uStrength - 1.);
-	noise = clamp(noise, vec3<f32>(0.0), vec3<f32>(1.0));
+	noise = clamp(noise, 0.0, 1.0);
 	if (simplexUniforms.uStep > 0.0) {
-		noise = 1. - step(noise, vec3<f32>(simplexUniforms.uStep));
+		noise = 1. - step(noise, simplexUniforms.uStep);
 	}
-	return vec4<f32>(noise, 1.) * textureSample(uTexture, uSampler, uv);
+	return textureSample(uTexture, uSampler, uv) * noise;
 }
 
 const MOD3: vec3<f32> = vec3<f32>(0.1031, 0.11369, 0.13787);
