@@ -41,7 +41,7 @@ export interface SimplexNoiseFilterOptions
 
 /**
  * The SimplexNoiseFilter multiplies simplex noise with the current texture data. <br>
- * 
+ * ![original](../screenshots/original.png)![filter](../screenshots/simplex-noise.png)
  * @class
  * @extends Filter
  * @see {@link https://www.npmjs.com/package/pixi-filters|pixi-filters}
