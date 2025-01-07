@@ -7,6 +7,7 @@ uniform vec2 uStart;
 uniform vec2 uEnd;
 uniform vec2 uDelta;
 uniform vec2 uDimensions;
+uniform highp vec4 uInputSize;
 
 float random(vec3 scale, float seed)
 {
@@ -15,6 +16,7 @@ float random(vec3 scale, float seed)
 
 void main(void)
 {
+    vec2 adjustedStart =  uStart * uDimensions / uInputSize.xy;
     vec4 color = vec4(0.0);
     float total = 0.0;
 
@@ -23,7 +25,7 @@ void main(void)
 
     float offset = random(vec3(12.9898, 78.233, 151.7182), 0.0);
     vec2 normal = normalize(vec2(uStart.y - uEnd.y, uEnd.x - uStart.x));
-    float radius = smoothstep(0.0, 1.0, abs(dot(vTextureCoord * uDimensions - uStart, normal)) / gradientBlur) * blur;
+    float radius = smoothstep(0.0, 1.0, abs(dot(vTextureCoord * uDimensions - adjustedStart, normal)) / gradientBlur) * blur;
 
     for (float t = -30.0; t <= 30.0; t++)
     {
