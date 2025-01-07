@@ -38,6 +38,7 @@ export { default as reflection } from './reflection.mjs';
 export { default as rgb } from './rgb.mjs';
 export { default as shockwave } from './shockwave.mjs';
 export { default as simpleLightmap } from './lightmap.mjs';
+export { default as simplexNoise } from './simplex-noise.mjs';
 export { default as tiltShift } from './tilt-shift.mjs';
 export { default as twist } from './twist.mjs';
 export { default as zoomBlur } from './zoom-blur.mjs';
