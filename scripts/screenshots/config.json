@@ -585,6 +585,14 @@
             "arguments": {
                 "strength": 4
             }
+        },
+        {
+            "name": "SimplexNoiseFilter",
+            "filename": "simplex-noise",
+            "arguments": {
+                "strength": 0.5,
+                "noiseScale": 10
+            }
         }
     ]
 }

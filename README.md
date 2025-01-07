@@ -70,6 +70,7 @@ If all else failes, you can manually download the bundled file from the [release
 | **RGBSplitFilter**<br>_pixi-filters/rgb-split_<br>[View demo][RGBSplit_demo]                             | ![rgb split](https://filters.pixijs.download/main/screenshots/rgb.png?v=3)                           |                  |
 | **ShockwaveFilter**<br>_pixi-filters/shockwave_<br>[View demo][Shockwave_demo]           | ![shockwave](https://filters.pixijs.download/main/screenshots/shockwave.gif?v=3)         |
 | **SimpleLightmapFilter**<br>_pixi-filters/simple-lightmap_<br>[View demo][SimpleLightmap_demo]           | ![simple-lightmap](https://filters.pixijs.download/main/screenshots/simple-lightmap.png?v=3)         |
+| **SimplexNoiseFilter**<br>_pixi-filters/simplex-noise_<br>[View demo][SimplexNoise_demo]                 | ![simplex-noise](https://filters.pixijs.download/main/screenshots/simplex-noise.png?v=3)             |
 | **TiltShiftFilter**<br>_pixi-filters/tilt-shift_<br>[View demo][TiltShift_demo]                          | ![tilt-shift](https://filters.pixijs.download/main/screenshots/tilt-shift.png?v=3)                   |
 | **TwistFilter**<br>_pixi-filters/twist_<br>[View demo][Twist_demo]                                       | ![twist](https://filters.pixijs.download/main/screenshots/twist.png?v=3)                             |
 | **ZoomBlurFilter**<br>_pixi-filters/zoom-blur_<br>[View demo][ZoomBlur_demo]                             | ![zoom-blur](https://filters.pixijs.download/main/screenshots/zoom-blur.png?v=4)                     |
@@ -152,6 +153,7 @@ API documention can be found [here](http://pixijs.io/filters/docs/).
 [RGBSplit_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=RGBSplitFilter
 [Shockwave_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=ShockwaveFilter
 [SimpleLightmap_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=SimpleLightmapFilter
+[SimplexNoise_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=SimplexNoiseFilter
 [TiltShift_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=TiltShiftFilter
 [Twist_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=TwistFilter
 [ZoomBlur_demo]: https://filters.pixijs.download/main/examples/index.html?enabled=ZoomBlurFilter
