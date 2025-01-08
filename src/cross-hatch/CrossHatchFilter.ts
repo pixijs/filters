@@ -3,6 +3,8 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './crosshatch.frag';
 import source from './crosshatch.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 /**
  * A Cross Hatch effect filter.<br>
  * ![original](../screenshots/original.png)![filter](../screenshots/cross-hatch.png)
@@ -12,7 +14,7 @@ import source from './crosshatch.wgsl';
  */
 export class CrossHatchFilter extends Filter
 {
-    constructor()
+    constructor(options: FilterOptions)
     {
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -35,6 +37,7 @@ export class CrossHatchFilter extends Filter
             gpuProgram,
             glProgram,
             resources: {},
+            ...options
         });
     }
 }
