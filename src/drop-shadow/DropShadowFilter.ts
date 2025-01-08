@@ -111,6 +111,16 @@ export class DropShadowFilter extends Filter
     constructor(options?: DropShadowFilterOptions)
     {
         options = { ...DropShadowFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            offset,
+            color,
+            alpha,
+            kernels,
+            blur,
+            quality,
+            resolution,
+            ...rest
+        } = options;
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -134,21 +144,22 @@ export class DropShadowFilter extends Filter
             glProgram,
             resources: {
                 dropShadowUniforms: {
-                    uAlpha: { value: options.alpha, type: 'f32' },
+                    uAlpha: { value: alpha, type: 'f32' },
                     uColor: { value: new Float32Array(3), type: 'vec3<f32>' },
-                    uOffset: { value: options.offset, type: 'vec2<f32>' },
+                    uOffset: { value: offset, type: 'vec2<f32>' },
                 }
             },
-            resolution: options.resolution,
+            resolution,
+            ...rest
         });
 
         this.uniforms = this.resources.dropShadowUniforms.uniforms;
         this._color = new Color();
-        this.color = options.color ?? 0x000000;
+        this.color = color ?? 0x000000;
 
         this._blurFilter = new KawaseBlurFilter({
-            strength: options.kernels as [number, number] ?? options.blur,
-            quality: options.kernels ? undefined : options.quality,
+            strength: kernels as [number, number] ?? blur,
+            quality: kernels ? undefined : quality,
         });
 
         this._basePass = new Filter({

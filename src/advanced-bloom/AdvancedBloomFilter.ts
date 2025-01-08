@@ -91,6 +91,15 @@ export class AdvancedBloomFilter extends Filter
     {
         options = { ...AdvancedBloomFilter.DEFAULT_OPTIONS, ...options };
 
+        const {
+            threshold,
+            bloomScale,
+            brightness,
+            blur,
+            quality,
+            ...rest
+        } = options;
+
         const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
@@ -113,22 +122,23 @@ export class AdvancedBloomFilter extends Filter
             glProgram,
             resources: {
                 advancedBloomUniforms: {
-                    uBloomScale: { value: options.bloomScale, type: 'f32' },
-                    uBrightness: { value: options.brightness, type: 'f32' },
+                    uBloomScale: { value: bloomScale, type: 'f32' },
+                    uBrightness: { value: brightness, type: 'f32' },
                 },
                 uMapTexture: Texture.WHITE,
             },
+            ...rest
         });
 
         this.uniforms = this.resources.advancedBloomUniforms.uniforms;
 
         this._extractFilter = new ExtractBrightnessFilter({
-            threshold: options.threshold
+            threshold
         });
 
         this._blurFilter = new KawaseBlurFilter({
-            strength: options.kernels as [number, number] ?? options.blur,
-            quality: options.kernels ? undefined : options.quality,
+            strength: options.kernels as [number, number] ?? blur,
+            quality: options.kernels ? undefined : quality,
         });
 
         Object.assign(this, options);

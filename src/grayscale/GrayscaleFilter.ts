@@ -3,6 +3,8 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './grayscale.frag';
 import source from './grayscale.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 /**
  * This filter applies a grayscale effect.<br>
  * ![original](../screenshots/original.png)![filter](../screenshots/grayscale.png)
@@ -12,7 +14,7 @@ import source from './grayscale.wgsl';
  */
 export class GrayscaleFilter extends Filter
 {
-    constructor()
+    constructor(options?: FilterOptions)
     {
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -35,6 +37,7 @@ export class GrayscaleFilter extends Filter
             gpuProgram,
             glProgram,
             resources: {},
+            ...options
         });
     }
 }

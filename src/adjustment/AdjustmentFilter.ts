@@ -87,7 +87,17 @@ export class AdjustmentFilter extends Filter
      */
     constructor(options?: AdjustmentFilterOptions)
     {
-        options = { ...AdjustmentFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            gamma,
+            contrast,
+            saturation,
+            brightness,
+            red,
+            green,
+            blue,
+            alpha,
+            ...rest
+        } = { ...AdjustmentFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -111,21 +121,17 @@ export class AdjustmentFilter extends Filter
             glProgram,
             resources: {
                 adjustmentUniforms: {
-                    uGamma: { value: options.gamma, type: 'f32' },
-                    uContrast: { value: options.contrast, type: 'f32' },
-                    uSaturation: { value: options.saturation, type: 'f32' },
-                    uBrightness: { value: options.brightness, type: 'f32' },
+                    uGamma: { value: gamma, type: 'f32' },
+                    uContrast: { value: contrast, type: 'f32' },
+                    uSaturation: { value: saturation, type: 'f32' },
+                    uBrightness: { value: brightness, type: 'f32' },
                     uColor: {
-                        value: [
-                            options.red,
-                            options.green,
-                            options.blue,
-                            options.alpha,
-                        ],
+                        value: [red, green, blue, alpha],
                         type: 'vec4<f32>',
                     },
                 }
             },
+            ...rest
         });
 
         this.uniforms = this.resources.adjustmentUniforms.uniforms;

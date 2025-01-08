@@ -100,7 +100,16 @@ export class GodrayFilter extends Filter
      */
     constructor(options?: GodrayFilterOptions)
     {
-        options = { ...GodrayFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            angle,
+            gain,
+            lacunarity,
+            parallel,
+            time,
+            center,
+            alpha,
+            ...rest
+        } = { ...GodrayFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -126,11 +135,12 @@ export class GodrayFilter extends Filter
                     uLight: { value: new Float32Array(2), type: 'vec2<f32>' },
                     uParallel: { value: 0, type: 'f32' },
                     uAspect: { value: 0, type: 'f32' },
-                    uTime: { value: options.time, type: 'f32' },
+                    uTime: { value: time, type: 'f32' },
                     uRay: { value: new Float32Array(3), type: 'vec3<f32>' },
                     uDimensions: { value: new Float32Array(2), type: 'vec2<f32>' },
                 }
             },
+            ...rest
         });
 
         this.uniforms = this.resources.godrayUniforms.uniforms;

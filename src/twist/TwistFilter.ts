@@ -59,7 +59,12 @@ export class TwistFilter extends Filter
      */
     constructor(options?: Partial<TwistFilterOptions>)
     {
-        options = { ...TwistFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            radius,
+            angle,
+            offset,
+            ...rest
+        } = { ...TwistFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -84,16 +89,16 @@ export class TwistFilter extends Filter
             resources: {
                 twistUniforms: {
                     uTwist: {
-                        value: [options.radius ?? 0, options.angle ?? 0],
+                        value: [radius ?? 0, angle ?? 0],
                         type: 'vec2<f32>'
                     },
                     uOffset: {
-                        value: options.offset,
+                        value: offset,
                         type: 'vec2<f32>'
                     },
                 }
             },
-            ...options,
+            ...rest,
         });
 
         this.uniforms = this.resources.twistUniforms.uniforms;

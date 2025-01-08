@@ -95,7 +95,13 @@ export class RadialBlurFilter extends Filter
             if (args[3]) options.radius = args[3];
         }
 
-        options = { ...RadialBlurFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            angle,
+            center,
+            kernelSize,
+            radius,
+            ...rest
+        } = { ...RadialBlurFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -120,11 +126,12 @@ export class RadialBlurFilter extends Filter
             resources: {
                 radialBlurUniforms: {
                     uRadian: { value: 0, type: 'f32' },
-                    uCenter: { value: options.center, type: 'vec2<f32>' },
-                    uKernelSize: { value: options.kernelSize, type: 'i32' },
-                    uRadius: { value: options.radius, type: 'f32' },
+                    uCenter: { value: center, type: 'vec2<f32>' },
+                    uKernelSize: { value: kernelSize, type: 'i32' },
+                    uRadius: { value: radius, type: 'f32' },
                 }
             },
+            ...rest
         });
 
         this.uniforms = this.resources.radialBlurUniforms.uniforms;

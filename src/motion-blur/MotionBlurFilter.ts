@@ -83,7 +83,12 @@ export class MotionBlurFilter extends Filter
             if (args[2] !== undefined) options.offset = args[2];
         }
 
-        options = { ...MotionBlurFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            velocity,
+            kernelSize,
+            offset,
+            ...rest
+        } = { ...MotionBlurFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -107,11 +112,12 @@ export class MotionBlurFilter extends Filter
             glProgram,
             resources: {
                 motionBlurUniforms: {
-                    uVelocity: { value: options.velocity, type: 'vec2<f32>' },
-                    uKernelSize: { value: Math.trunc(options.kernelSize ?? 5), type: 'i32' },
-                    uOffset: { value: options.offset, type: 'f32' },
+                    uVelocity: { value: velocity, type: 'vec2<f32>' },
+                    uKernelSize: { value: Math.trunc(kernelSize ?? 5), type: 'i32' },
+                    uOffset: { value: offset, type: 'f32' },
                 }
             },
+            ...rest
         });
 
         this.uniforms = this.resources.motionBlurUniforms.uniforms;

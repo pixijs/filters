@@ -55,7 +55,12 @@ export class BulgePinchFilter extends Filter
      */
     constructor(options?: BulgePinchFilterOptions)
     {
-        options = { ...BulgePinchFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            center,
+            radius,
+            strength,
+            ...rest
+        } = { ...BulgePinchFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -79,11 +84,12 @@ export class BulgePinchFilter extends Filter
             resources: {
                 bulgePinchUniforms: {
                     uDimensions: { value: [0, 0], type: 'vec2<f32>' },
-                    uCenter: { value: options.center, type: 'vec2<f32>' },
-                    uRadius: { value: options.radius, type: 'f32' },
-                    uStrength: { value: options.strength, type: 'f32' },
+                    uCenter: { value: center, type: 'vec2<f32>' },
+                    uRadius: { value: radius, type: 'f32' },
+                    uStrength: { value: strength, type: 'f32' },
                 }
             },
+            ...rest
         });
 
         this.uniforms = this.resources.bulgePinchUniforms.uniforms;

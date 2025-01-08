@@ -63,7 +63,7 @@ export interface GlowFilterOptions extends FilterOptions
 export class GlowFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: GlowFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         distance: 10,
         outerStrength: 4,
         innerStrength: 0,
@@ -89,10 +89,16 @@ export class GlowFilter extends Filter
      */
     constructor(options?: GlowFilterOptions)
     {
-        options = { ...GlowFilter.DEFAULT_OPTIONS, ...options };
-
-        const distance = options.distance ?? 10;
-        const quality = options.quality ?? 0.1;
+        const {
+            distance,
+            outerStrength,
+            innerStrength,
+            color,
+            alpha,
+            quality,
+            knockout,
+            ...rest
+        } = { ...GlowFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -122,19 +128,20 @@ export class GlowFilter extends Filter
             resources: {
                 glowUniforms: {
                     uDistance: { value: distance, type: 'f32' },
-                    uStrength: { value: [options.innerStrength, options.outerStrength], type: 'vec2<f32>' },
+                    uStrength: { value: [innerStrength, outerStrength], type: 'vec2<f32>' },
                     uColor: { value: new Float32Array(3), type: 'vec3<f32>' },
-                    uAlpha: { value: options.alpha, type: 'f32' },
+                    uAlpha: { value: alpha, type: 'f32' },
                     uQuality: { value: quality, type: 'f32' },
-                    uKnockout: { value: (options?.knockout ?? false) ? 1 : 0, type: 'f32' },
+                    uKnockout: { value: knockout ? 1 : 0, type: 'f32' },
                 }
             },
             padding: distance,
+            ...rest
         });
 
         this.uniforms = this.resources.glowUniforms.uniforms;
         this._color = new Color();
-        this.color = options.color ?? 0xffffff;
+        this.color = color;
     }
 
     /**

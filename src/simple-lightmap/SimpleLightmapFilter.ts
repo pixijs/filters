@@ -98,9 +98,14 @@ export class SimpleLightmapFilter extends Filter
             if (args[2] !== undefined) options.alpha = args[2];
         }
 
-        options = { ...SimpleLightmapFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            lightMap,
+            color,
+            alpha,
+            ...rest
+        } = { ...SimpleLightmapFilter.DEFAULT_OPTIONS, ...options };
 
-        if (!options.lightMap) throw Error('No light map texture source was provided to SimpleLightmapFilter');
+        if (!lightMap) throw Error('No light map texture source was provided to SimpleLightmapFilter');
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -124,17 +129,18 @@ export class SimpleLightmapFilter extends Filter
             resources: {
                 simpleLightmapUniforms: {
                     uColor: { value: new Float32Array(3), type: 'vec3<f32>' },
-                    uAlpha: { value: options.alpha, type: 'f32' },
+                    uAlpha: { value: alpha, type: 'f32' },
                     uDimensions: { value: new Float32Array(2), type: 'vec2<f32>' },
                 },
-                uMapTexture: options.lightMap.source,
-                uMapSampler: options.lightMap.source.style,
+                uMapTexture: lightMap.source,
+                uMapSampler: lightMap.source.style,
             },
+            ...rest
         });
 
         this.uniforms = this.resources.simpleLightmapUniforms.uniforms;
         this._color = new Color();
-        this.color = options.color ?? 0x000000;
+        this.color = color ?? 0x000000;
 
         Object.assign(this, options);
     }

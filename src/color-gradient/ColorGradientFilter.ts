@@ -127,7 +127,17 @@ export class ColorGradientFilter extends Filter
             options = { ...ColorGradientFilter.defaults, ...options };
         }
 
-        if (!options.stops || options.stops.length < 2)
+        const {
+            type,
+            angle,
+            alpha,
+            replace,
+            stops,
+            maxColors,
+            ...rest
+        } = options;
+
+        if (!stops || stops.length < 2)
         {
             throw new Error('ColorGradientFilter requires at least 2 color stops.');
         }
@@ -159,22 +169,22 @@ export class ColorGradientFilter extends Filter
                     uOptions: {
                         value: [
                             // Gradient Type
-                            options.type,
+                            type,
                             // Gradient Angle
-                            options.angle ?? ANGLE_OFFSET,
+                            angle ?? ANGLE_OFFSET,
                             // Master Alpha
-                            options.alpha,
+                            alpha,
                             // Replace Base Color
-                            options.replace ? 1 : 0,
+                            replace ? 1 : 0,
                         ],
                         type: 'vec4<f32>',
                     },
                     uCounts: {
                         value: [
                             // Number of Stops
-                            options.stops.length,
+                            stops.length,
                             // Max Gradient Colors
-                            options.maxColors,
+                            maxColors,
                         ],
                         type: 'vec2<f32>',
                     },
@@ -184,8 +194,9 @@ export class ColorGradientFilter extends Filter
 
                     // We only need vec2, but we need to pad to eliminate the WGSL warning, TODO: @Mat ?
                     uStops: { value: new Float32Array(maxStops * 4), type: 'vec4<f32>', size: maxStops },
-                }
+                },
             },
+            ...rest
         });
 
         this.baseUniforms = this.resources.baseUniforms.uniforms;

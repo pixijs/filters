@@ -79,9 +79,12 @@ export class AsciiFilter extends Filter
             options = { size: options };
         }
 
-        const replaceColor = options?.color && options.replaceColor !== false;
-
-        options = { ...AsciiFilter.DEFAULT_OPTIONS, ...options } as AsciiFilterOptions;
+        const {
+            size,
+            color,
+            replaceColor,
+            ...rest
+        } = { ...AsciiFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -105,16 +108,17 @@ export class AsciiFilter extends Filter
             glProgram,
             resources: {
                 asciiUniforms: {
-                    uSize: { value: options.size, type: 'f32' },
+                    uSize: { value: size, type: 'f32' },
                     uColor: { value: new Float32Array(3), type: 'vec3<f32>' },
                     uReplaceColor: { value: Number(replaceColor), type: 'f32' },
                 },
             },
+            ...rest
         });
 
         this.uniforms = this.resources.asciiUniforms.uniforms;
         this._color = new Color();
-        this.color = options.color ?? 0xffffff;
+        this.color = color ?? 0xffffff;
     }
 
     /**

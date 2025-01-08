@@ -84,7 +84,15 @@ export class ReflectionFilter extends Filter
      */
     constructor(options?: ReflectionFilterOptions)
     {
-        options = { ...ReflectionFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            mirror,
+            boundary,
+            amplitude,
+            waveLength,
+            alpha,
+            time,
+            ...rest
+        } = { ...ReflectionFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -107,15 +115,16 @@ export class ReflectionFilter extends Filter
             glProgram,
             resources: {
                 reflectionUniforms: {
-                    uMirror: { value: options.mirror ? 1 : 0, type: 'f32' },
-                    uBoundary: { value: options.boundary, type: 'f32' },
-                    uAmplitude: { value: options.amplitude, type: 'vec2<f32>' },
-                    uWavelength: { value: options.waveLength, type: 'vec2<f32>' },
-                    uAlpha: { value: options.alpha, type: 'vec2<f32>' },
-                    uTime: { value: options.time, type: 'f32' },
+                    uMirror: { value: mirror ? 1 : 0, type: 'f32' },
+                    uBoundary: { value: boundary, type: 'f32' },
+                    uAmplitude: { value: amplitude, type: 'vec2<f32>' },
+                    uWavelength: { value: waveLength, type: 'vec2<f32>' },
+                    uAlpha: { value: alpha, type: 'vec2<f32>' },
+                    uTime: { value: time, type: 'f32' },
                     uDimensions: { value: new Float32Array(2), type: 'vec2<f32>' },
                 }
             },
+            ...rest
         });
 
         this.uniforms = this.resources.reflectionUniforms.uniforms;

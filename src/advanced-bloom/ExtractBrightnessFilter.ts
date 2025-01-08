@@ -31,7 +31,10 @@ export class ExtractBrightnessFilter extends Filter
 
     constructor(options?: ExtractBrightnessFilterOptions)
     {
-        options = { ...ExtractBrightnessFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            threshold,
+            ...rest
+        } = { ...ExtractBrightnessFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -55,9 +58,10 @@ export class ExtractBrightnessFilter extends Filter
             glProgram,
             resources: {
                 extractBrightnessUniforms: {
-                    uThreshold: { value: options.threshold, type: 'f32' },
+                    uThreshold: { value: threshold, type: 'f32' },
                 }
             },
+            ...rest
         });
 
         this.uniforms = this.resources.extractBrightnessUniforms.uniforms;

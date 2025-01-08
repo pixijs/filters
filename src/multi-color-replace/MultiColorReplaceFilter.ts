@@ -109,9 +109,14 @@ export class MultiColorReplaceFilter extends Filter
             if (args[2]) options.maxColors = args[2];
         }
 
-        options = { ...MultiColorReplaceFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            replacements,
+            tolerance,
+            maxColors,
+            ...rest
+        } = { ...MultiColorReplaceFilter.DEFAULT_OPTIONS, ...options };
 
-        const maxColors = options.maxColors ?? options.replacements.length;
+        const maxColorsValue = maxColors ?? replacements.length;
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -119,14 +124,14 @@ export class MultiColorReplaceFilter extends Filter
                 entryPoint: 'mainVertex',
             },
             fragment: {
-                source: source.replace(/\$\{MAX_COLORS\}/g, (maxColors).toFixed(0)),
+                source: source.replace(/\$\{MAX_COLORS\}/g, (maxColorsValue).toFixed(0)),
                 entryPoint: 'mainFragment',
             },
         });
 
         const glProgram = GlProgram.from({
             vertex,
-            fragment: fragment.replace(/\$\{MAX_COLORS\}/g, (maxColors).toFixed(0)),
+            fragment: fragment.replace(/\$\{MAX_COLORS\}/g, (maxColorsValue).toFixed(0)),
             name: 'multi-color-replace-filter',
         });
 
@@ -136,25 +141,26 @@ export class MultiColorReplaceFilter extends Filter
             resources: {
                 multiColorReplaceUniforms: {
                     uOriginalColors: {
-                        value: new Float32Array(3 * maxColors),
+                        value: new Float32Array(3 * maxColorsValue),
                         type: 'vec3<f32>',
-                        size: maxColors
+                        size: maxColorsValue
                     },
                     uTargetColors: {
-                        value: new Float32Array(3 * maxColors),
+                        value: new Float32Array(3 * maxColorsValue),
                         type: 'vec3<f32>',
-                        size: maxColors
+                        size: maxColorsValue
                     },
-                    uTolerance: { value: options.tolerance, type: 'f32' },
+                    uTolerance: { value: tolerance, type: 'f32' },
                 }
             },
+            ...rest
         });
 
-        this._maxColors = maxColors;
+        this._maxColors = maxColorsValue;
 
         this.uniforms = this.resources.multiColorReplaceUniforms.uniforms;
 
-        this.replacements = options.replacements;
+        this.replacements = replacements;
     }
 
     /**

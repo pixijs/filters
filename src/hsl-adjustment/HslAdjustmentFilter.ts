@@ -69,7 +69,14 @@ export class HslAdjustmentFilter extends Filter
      */
     constructor(options?: HslAdjustmentFilterOptions)
     {
-        options = { ...HslAdjustmentFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            hue,
+            saturation,
+            lightness,
+            colorize,
+            alpha,
+            ...rest
+        } = { ...HslAdjustmentFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -94,10 +101,11 @@ export class HslAdjustmentFilter extends Filter
             resources: {
                 hslUniforms: {
                     uHsl: { value: new Float32Array(3), type: 'vec3<f32>' },
-                    uColorize: { value: options.colorize ? 1 : 0, type: 'f32' },
-                    uAlpha: { value: options.alpha, type: 'f32' },
+                    uColorize: { value: colorize ? 1 : 0, type: 'f32' },
+                    uAlpha: { value: alpha, type: 'f32' },
                 },
             },
+            ...rest
         });
 
         this.uniforms = this.resources.hslUniforms.uniforms;

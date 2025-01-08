@@ -97,21 +97,25 @@ export class BloomFilter extends AlphaFilter
 
         options = { ...BloomFilter.DEFAULT_OPTIONS, ...options } as BloomFilterOptions;
 
-        super();
+        const {
+            strength,
+        } = options;
+
+        super({ alpha: options?.alpha ?? 1 });
 
         this._strength = { x: 2, y: 2 };
 
-        if (options.strength)
+        if (strength)
         {
-            if (typeof options.strength === 'number')
+            if (typeof strength === 'number')
             {
-                this._strength.x = options.strength;
-                this._strength.y = options.strength;
+                this._strength.x = strength;
+                this._strength.y = strength;
             }
             else
             {
-                this._strength.x = options.strength.x;
-                this._strength.y = options.strength.y;
+                this._strength.x = strength.x;
+                this._strength.y = strength.y;
             }
         }
 

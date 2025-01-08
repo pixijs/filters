@@ -104,7 +104,19 @@ export class OldFilmFilter extends Filter
      */
     constructor(options?: OldFilmFilterOptions)
     {
-        options = { ...OldFilmFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            sepia,
+            noise,
+            noiseSize,
+            scratch,
+            scratchDensity,
+            scratchWidth,
+            vignetting,
+            vignettingAlpha,
+            vignettingBlur,
+            seed,
+            ...rest
+        } = { ...OldFilmFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -128,14 +140,15 @@ export class OldFilmFilter extends Filter
             glProgram,
             resources: {
                 oldFilmUniforms: {
-                    uSepia: { value: options.sepia, type: 'f32' },
+                    uSepia: { value: sepia, type: 'f32' },
                     uNoise: { value: new Float32Array(2), type: 'vec2<f32>' },
                     uScratch: { value: new Float32Array(3), type: 'vec3<f32>' },
                     uVignetting: { value: new Float32Array(3), type: 'vec3<f32>' },
-                    uSeed: { value: options.seed, type: 'f32' },
+                    uSeed: { value: seed, type: 'f32' },
                     uDimensions: { value: new Float32Array(2), type: 'vec2<f32>' },
                 }
             },
+            ...rest
         });
 
         this.uniforms = this.resources.oldFilmUniforms.uniforms;

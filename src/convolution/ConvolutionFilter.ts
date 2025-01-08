@@ -88,8 +88,14 @@ export class ConvolutionFilter extends Filter
 
         options = { ...ConvolutionFilter.DEFAULT_OPTIONS, ...options };
 
-        const width = options.width ?? 200;
-        const height = options.height ?? 200;
+        options.width = options?.width ?? 200;
+        options.height = options?.height ?? 200;
+        const {
+            matrix,
+            width,
+            height,
+            ...rest
+        } = options;
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -113,10 +119,11 @@ export class ConvolutionFilter extends Filter
             glProgram,
             resources: {
                 convolutionUniforms: {
-                    uMatrix: { value: options.matrix, type: 'mat3x3<f32>' },
-                    uTexelSize: { value: { x: 1 / width, y: 1 / height }, type: 'vec2<f32>' },
+                    uMatrix: { value: matrix, type: 'mat3x3<f32>' },
+                    uTexelSize: { value: { x: 1 / (width ?? 200), y: 1 / (height ?? 200) }, type: 'vec2<f32>' },
                 },
             },
+            ...rest
         });
 
         this.uniforms = this.resources.convolutionUniforms.uniforms;

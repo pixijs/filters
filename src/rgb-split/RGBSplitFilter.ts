@@ -79,6 +79,13 @@ export class RGBSplitFilter extends Filter
 
         options = { ...RGBSplitFilter.DEFAULT_OPTIONS, ...options };
 
+        const {
+            red,
+            green,
+            blue,
+            ...rest
+        } = options;
+
         const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
@@ -101,11 +108,12 @@ export class RGBSplitFilter extends Filter
             glProgram,
             resources: {
                 rgbSplitUniforms: {
-                    uRed: { value: options.red, type: 'vec2<f32>' },
-                    uGreen: { value: options.green, type: 'vec2<f32>' },
-                    uBlue: { value: options.blue, type: 'vec2<f32>' },
+                    uRed: { value: red, type: 'vec2<f32>' },
+                    uGreen: { value: green, type: 'vec2<f32>' },
+                    uBlue: { value: blue, type: 'vec2<f32>' },
                 }
             },
+            ...rest,
         });
 
         this.uniforms = this.resources.rgbSplitUniforms.uniforms;

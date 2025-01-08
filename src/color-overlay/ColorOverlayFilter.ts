@@ -73,6 +73,10 @@ export class ColorOverlayFilter extends Filter
 
         options = { ...ColorOverlayFilter.DEFAULT_OPTIONS, ...options };
 
+        options.color = options?.color ?? 0x000000;
+
+        const { color, alpha, ...rest } = options;
+
         const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
@@ -96,15 +100,16 @@ export class ColorOverlayFilter extends Filter
             resources: {
                 colorOverlayUniforms: {
                     uColor: { value: new Float32Array(3), type: 'vec3<f32>' },
-                    uAlpha: { value: options.alpha, type: 'f32' },
+                    uAlpha: { value: alpha, type: 'f32' },
                 },
             },
+            ...rest
         });
 
         this.uniforms = this.resources.colorOverlayUniforms.uniforms;
 
         this._color = new Color();
-        this.color = options.color ?? 0x000000;
+        this.color = color;
     }
 
     /**
