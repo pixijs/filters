@@ -4,8 +4,13 @@ struct TiltShiftUniforms {
   uEnd: vec2<f32>,
   uDelta: vec2<f32>,
   uDimensions: vec2<f32>,
-  uInputSize: vec4<f32>,
 };
+
+struct GlobalFilterUniforms {
+  uInputSize:vec4<f32>,
+};
+
+@group(0) @binding(0) var<uniform> gfu: GlobalFilterUniforms;
 
 @group(0) @binding(1) var uTexture: texture_2d<f32>; 
 @group(0) @binding(2) var uSampler: sampler;
@@ -28,13 +33,13 @@ fn mainFragment(
 
   let offset: f32 = random(position, vec3<f32>(12.9898, 78.233, 151.7182), 0.0);
   let normal: vec2<f32> = normalize(vec2<f32>(uStart.y - uEnd.y, uEnd.x - uStart.x));
-  let radius: f32 = smoothstep(0.0, 1.0, abs(dot(uv * uInputSize.xy - uStart, normal)) / uBlurGradient) * uBlur;
+  let radius: f32 = smoothstep(0.0, 1.0, abs(dot(uv * gfu.uInputSize.xy - uStart, normal)) / uBlurGradient) * uBlur;
 
   for (var t: f32 = -30.0; t <= 30.0; t += 1.0)
   {
     var percent: f32 = (t + offset - 0.5) / 30.0;
     var weight: f32 = 1.0 - abs(percent);
-    var sample: vec4<f32> = textureSample(uTexture, uSampler, uv + uDelta / uInputSize.xy * percent * radius);
+    var sample: vec4<f32> = textureSample(uTexture, uSampler, uv + uDelta / gfu.uInputSize.xy * percent * radius);
     sample = vec4<f32>(sample.xyz * sample.a, sample.a); // multiply sample.rgb with sample.a
     color += sample * weight;
     total += weight;
