@@ -1,6 +1,7 @@
 {
   "name": "pixi-filters",
-  "version": "6.0.5",
+  "version": "6.0.6",
+  "sideEffects": false,
   "exports": {
     ".": {
       "import": "./lib/index.mjs",
@@ -166,6 +167,11 @@
       "import": "./lib/simple-lightmap/index.mjs",
       "require": "./lib/simple-lightmap/index.js",
       "types": "./lib/simple-lightmap/index.d.ts"
+    },
+    "./simplex-noise": {
+      "import": "./lib/simplex-noise/index.mjs",
+      "require": "./lib/simplex-noise/index.js",
+      "types": "./lib/simplex-noise/index.d.ts"
     },
     "./tilt-shift": {
       "import": "./lib/tilt-shift/index.mjs",
