@@ -1,4 +1,4 @@
-import { Filter, GlProgram, GpuProgram, PointData, Texture, ViewSystem } from 'pixi.js';
+import { Filter, GlProgram, GpuProgram, PointData, ViewSystem } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './tilt-shift.frag';
 import source from './tilt-shift.wgsl';
@@ -48,7 +48,6 @@ export class TiltShiftAxisFilter extends Filter
         uStart: PointData
         uEnd: PointData;
         uDelta: Float32Array;
-        uDimensions: Float32Array;
     };
 
     private _tiltAxis: TiltShiftAxisFilterOptions['axis'];
@@ -104,7 +103,6 @@ export class TiltShiftAxisFilter extends Filter
                     uStart: { value: start, type: 'vec2<f32>' },
                     uEnd: { value: end, type: 'vec2<f32>' },
                     uDelta: { value: new Float32Array([0, 0]), type: 'vec2<f32>' },
-                    uDimensions: { value: new Float32Array([width, height]), type: 'vec2<f32>' },
                 },
             },
             ...rest,
@@ -112,18 +110,6 @@ export class TiltShiftAxisFilter extends Filter
 
         this.uniforms = this.resources.tiltShiftUniforms.uniforms;
         this._tiltAxis = axis;
-    }
-
-    /**
-     * Update the dimensions
-     * @ignore
-    */
-    public updateDimensions(input: Texture): void
-    {
-        const { uDimensions } = this.uniforms;
-
-        uDimensions[0] = input.frame.width;
-        uDimensions[1] = input.frame.height;
     }
 
     /**
