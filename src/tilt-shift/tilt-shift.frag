@@ -7,7 +7,6 @@ uniform vec2 uBlur;
 uniform vec2 uStart;
 uniform vec2 uEnd;
 uniform vec2 uDelta;
-uniform vec2 uDimensions;
 uniform vec4 uInputSize;
 
 float random(vec3 scale, float seed)

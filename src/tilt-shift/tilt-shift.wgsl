@@ -3,7 +3,6 @@ struct TiltShiftUniforms {
   uStart: vec2<f32>,
   uEnd: vec2<f32>,
   uDelta: vec2<f32>,
-  uDimensions: vec2<f32>,
 };
 
 struct GlobalFilterUniforms {
@@ -26,7 +25,6 @@ fn mainFragment(
   let uStart = tiltShiftUniforms.uStart;
   let uEnd = tiltShiftUniforms.uEnd;
   let uDelta = tiltShiftUniforms.uDelta;
-  let uDimensions = tiltShiftUniforms.uDimensions;
 
   var color: vec4<f32> = vec4<f32>(0.0);
   var total: f32 = 0.0;

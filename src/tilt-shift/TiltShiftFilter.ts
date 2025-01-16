@@ -60,9 +60,6 @@ export class TiltShiftFilter extends TiltShiftAxisFilter
     {
         const renderTarget = TexturePool.getSameSizeTexture(input);
 
-        this.updateDimensions(input);
-        this._tiltShiftYFilter.updateDimensions(input);
-
         filterManager.applyFilter(this, input, renderTarget, true);
         filterManager.applyFilter(this._tiltShiftYFilter, renderTarget, output, clearMode);
 
