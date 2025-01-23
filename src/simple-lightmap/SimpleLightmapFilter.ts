@@ -55,7 +55,7 @@ export interface SimpleLightmapFilterOptions extends FilterOptions
 export class SimpleLightmapFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: SimpleLightmapFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         lightMap: Texture.WHITE,
         color: 0x000000,
         alpha: 1

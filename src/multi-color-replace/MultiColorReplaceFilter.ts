@@ -61,7 +61,7 @@ export interface MultiColorReplaceFilterOptions extends FilterOptions
 export class MultiColorReplaceFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: MultiColorReplaceFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         replacements: [[0xff0000, 0x0000ff]],
         tolerance: 0.05,
         maxColors: undefined,

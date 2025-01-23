@@ -44,7 +44,7 @@ export interface KawaseBlurFilterOptions extends FilterOptions
 export class KawaseBlurFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: KawaseBlurFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         strength: 4,
         quality: 3,
         clamp: false,

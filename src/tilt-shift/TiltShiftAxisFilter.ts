@@ -36,7 +36,7 @@ interface TiltShiftAxisFilterOptions extends FilterOptions
 export class TiltShiftAxisFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: TiltShiftAxisFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         /** The strength of the blur. */
         blur: 100,
         /** The strength of the blur gradient */

@@ -34,7 +34,7 @@ export interface ColorMapFilterOptions extends FilterOptions
 export class ColorMapFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: ColorMapFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         colorMap: Texture.WHITE,
         nearest: false,
         mix: 1

@@ -31,7 +31,7 @@ export interface ColorOverlayFilterOptions extends FilterOptions
 export class ColorOverlayFilter extends Filter
 {
     /** Default shockwave filter options */
-    public static readonly DEFAULT_OPTIONS: ColorOverlayFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         /** The color of the overlay */
         color: 0x000000,
         /** The alpha of the overlay */

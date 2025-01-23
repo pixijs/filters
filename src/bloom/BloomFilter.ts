@@ -50,7 +50,7 @@ export interface BloomFilterOptions extends Partial<AlphaFilterOptions>
 export class BloomFilter extends AlphaFilter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: BloomFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         strength: { x: 2, y: 2 },
         quality: 4,
         resolution: 1,

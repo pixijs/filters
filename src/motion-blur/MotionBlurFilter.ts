@@ -38,7 +38,7 @@ export interface MotionBlurFilterOptions extends FilterOptions
 export class MotionBlurFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: MotionBlurFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         velocity: { x: 0, y: 0 },
         kernelSize: 5,
         offset: 0,

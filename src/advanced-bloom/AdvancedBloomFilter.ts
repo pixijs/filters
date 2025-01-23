@@ -61,7 +61,7 @@ export interface AdvancedBloomFilterOptions extends FilterOptions
 export class AdvancedBloomFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: AdvancedBloomFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         threshold: 0.5,
         bloomScale: 1,
         brightness: 1,

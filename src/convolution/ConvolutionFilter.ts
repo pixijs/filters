@@ -46,7 +46,7 @@ export interface ConvolutionFilterOptions extends FilterOptions
 export class ConvolutionFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: ConvolutionFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         matrix: new Float32Array(9),
         width: 200,
         height: 200,

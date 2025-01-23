@@ -63,7 +63,7 @@ export interface AdjustmentFilterOptions extends FilterOptions
 export class AdjustmentFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: AdjustmentFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         gamma: 1,
         contrast: 1,
         saturation: 1,

@@ -64,7 +64,7 @@ export interface ShockwaveFilterOptions extends FilterOptions
 export class ShockwaveFilter extends Filter
 {
     /** Default shockwave filter options */
-    public static readonly DEFAULT_OPTIONS: ShockwaveFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         /** The `x` and `y` center coordinates to change the position of the center of the circle of effect. */
         center: { x: 0, y: 0 },
         /** The speed about the shockwave ripples out. The unit is `pixel-per-second` */

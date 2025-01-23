@@ -71,7 +71,7 @@ export interface OldFilmFilterOptions extends FilterOptions
 export class OldFilmFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: OldFilmFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         sepia: 0.3,
         noise: 0.3,
         noiseSize: 1,

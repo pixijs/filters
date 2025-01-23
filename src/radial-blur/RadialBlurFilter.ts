@@ -42,7 +42,7 @@ export interface RadialBlurFilterOptions extends FilterOptions
 export class RadialBlurFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: RadialBlurFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         angle: 0,
         center: { x: 0, y: 0 },
         kernelSize: 5,

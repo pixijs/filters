@@ -41,7 +41,7 @@ export interface AsciiFilterOptions extends FilterOptions
 export class AsciiFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: AsciiFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         size: 8,
         color: 0xffffff,
         replaceColor: false,

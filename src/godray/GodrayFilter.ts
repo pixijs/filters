@@ -66,7 +66,7 @@ export interface GodrayFilterOptions extends FilterOptions
 export class GodrayFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: GodrayFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         angle: 30,
         gain: 0.5,
         lacunarity: 2.5,

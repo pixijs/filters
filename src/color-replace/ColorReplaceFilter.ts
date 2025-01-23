@@ -62,7 +62,7 @@ export interface ColorReplaceFilterOptions extends FilterOptions
 export class ColorReplaceFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: ColorReplaceFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         originalColor: 0xff0000,
         targetColor: 0x000000,
         tolerance: 0.4

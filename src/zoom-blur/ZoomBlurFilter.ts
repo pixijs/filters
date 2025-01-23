@@ -46,7 +46,7 @@ export interface ZoomBlurFilterOptions
 export class ZoomBlurFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: ZoomBlurFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         strength: 0.1,
         center: { x: 0, y: 0 },
         innerRadius: 0,

@@ -77,7 +77,7 @@ export interface CRTFilterOptions extends FilterOptions
 export class CRTFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: CRTFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         curvature: 1.0,
         lineWidth: 1.0,
         lineContrast: 0.25,

@@ -54,7 +54,7 @@ export interface ReflectionFilterOptions extends FilterOptions
 export class ReflectionFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: ReflectionFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         mirror: true,
         boundary: 0.5,
         amplitude: [0, 20],

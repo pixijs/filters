@@ -77,7 +77,7 @@ export interface DropShadowFilterOptions extends FilterOptions
 export class DropShadowFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: DropShadowFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         offset: { x: 4, y: 4 },
         color: 0x000000,
         alpha: 0.5,

@@ -42,7 +42,7 @@ export interface TwistFilterOptions extends FilterOptions
 export class TwistFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: TwistFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         padding: 20,
         radius: 200,
         angle: 4,

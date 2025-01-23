@@ -38,7 +38,7 @@ export interface DotFilterOptions extends FilterOptions
 export class DotFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: DotFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         scale: 1,
         angle: 5,
         grayscale: true

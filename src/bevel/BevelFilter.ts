@@ -52,7 +52,7 @@ export interface BevelFilterOptions extends FilterOptions
 export class BevelFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: BevelFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         rotation: 45,
         thickness: 2,
         lightColor: 0xffffff,

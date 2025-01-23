@@ -21,7 +21,7 @@ export interface ExtractBrightnessFilterOptions extends FilterOptions
 export class ExtractBrightnessFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: ExtractBrightnessFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         threshold: 0.5
     };
 

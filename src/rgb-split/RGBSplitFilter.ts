@@ -37,7 +37,7 @@ export interface RGBSplitFilterOptions extends FilterOptions
 export class RGBSplitFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: RGBSplitFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         red: { x: -10, y: 0 },
         green: { x: 0, y: 10 },
         blue: { x: 0, y: 0 },

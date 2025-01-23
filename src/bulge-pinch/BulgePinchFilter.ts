@@ -37,7 +37,7 @@ export interface BulgePinchFilterOptions extends FilterOptions
 export class BulgePinchFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: BulgePinchFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         center: { x: 0.5, y: 0.5 },
         radius: 100,
         strength: 1

@@ -48,7 +48,7 @@ export interface HslAdjustmentFilterOptions extends FilterOptions
 export class HslAdjustmentFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: HslAdjustmentFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         hue: 0,
         saturation: 0,
         lightness: 0,
