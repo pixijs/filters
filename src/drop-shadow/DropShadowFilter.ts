@@ -115,9 +115,11 @@ export class DropShadowFilter extends Filter
             offset,
             color,
             alpha,
-            kernels,
+            shadowOnly,
             blur,
             quality,
+            kernels,
+            pixelSize,
             resolution,
             ...rest
         } = options;
@@ -199,7 +201,7 @@ export class DropShadowFilter extends Filter
             resources: {},
         });
 
-        Object.assign(this, options);
+        Object.assign(this, { offset, color, alpha, shadowOnly, blur, quality, kernels, pixelSize, resolution });
     }
 
     /**

@@ -108,7 +108,7 @@ export class ZoomBlurFilter extends Filter
 
         this.uniforms = this.resources.zoomBlurUniforms.uniforms;
 
-        Object.assign(this, options);
+        Object.assign(this, { strength, center, innerRadius, radius, maxKernelSize });
     }
 
     /**

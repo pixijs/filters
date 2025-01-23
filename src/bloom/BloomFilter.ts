@@ -99,6 +99,9 @@ export class BloomFilter extends AlphaFilter
 
         const {
             strength,
+            quality,
+            resolution,
+            kernelSize
         } = options;
 
         super({ alpha: options?.alpha ?? 1 });
@@ -133,7 +136,7 @@ export class BloomFilter extends AlphaFilter
 
         this._blurYFilter.blendMode = 'screen';
 
-        Object.assign(this, options);
+        Object.assign(this, { strength, quality, resolution, kernelSize });
     }
 
     /**

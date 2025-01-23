@@ -119,6 +119,15 @@ export class CRTFilter extends Filter
     {
         options = { ...CRTFilter.DEFAULT_OPTIONS, ...options };
         const {
+            curvature,
+            lineWidth,
+            lineContrast,
+            verticalLine,
+            noise,
+            noiseSize,
+            vignetting,
+            vignettingAlpha,
+            vignettingBlur,
             time,
             seed,
             ...rest
@@ -159,7 +168,19 @@ export class CRTFilter extends Filter
 
         this.uniforms = this.resources.crtUniforms.uniforms;
 
-        Object.assign(this, options);
+        Object.assign(this, {
+            curvature,
+            lineWidth,
+            lineContrast,
+            verticalLine,
+            noise,
+            noiseSize,
+            vignetting,
+            vignettingAlpha,
+            vignettingBlur,
+            time,
+            seed
+        });
     }
 
     /**

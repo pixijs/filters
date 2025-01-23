@@ -142,7 +142,7 @@ export class SimpleLightmapFilter extends Filter
         this._color = new Color();
         this.color = color ?? 0x000000;
 
-        Object.assign(this, options);
+        Object.assign(this, { lightMap, color, alpha });
     }
 
     /**

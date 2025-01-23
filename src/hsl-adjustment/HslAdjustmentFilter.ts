@@ -109,7 +109,7 @@ export class HslAdjustmentFilter extends Filter
         });
 
         this.uniforms = this.resources.hslUniforms.uniforms;
-        Object.assign(this, options);
+        Object.assign(this, { hue, saturation, lightness, colorize, alpha });
     }
 
     /**

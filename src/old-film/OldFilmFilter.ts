@@ -153,7 +153,18 @@ export class OldFilmFilter extends Filter
 
         this.uniforms = this.resources.oldFilmUniforms.uniforms;
 
-        Object.assign(this, options);
+        Object.assign(this, {
+            sepia,
+            noise,
+            noiseSize,
+            scratch,
+            scratchDensity,
+            scratchWidth,
+            vignetting,
+            vignettingAlpha,
+            vignettingBlur,
+            seed
+        });
     }
 
     /**

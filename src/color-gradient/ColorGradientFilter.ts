@@ -202,7 +202,7 @@ export class ColorGradientFilter extends Filter
         this.baseUniforms = this.resources.baseUniforms.uniforms;
         this.stopsUniforms = this.resources.stopsUniforms.uniforms;
 
-        Object.assign(this, options);
+        Object.assign(this, { type, angle, alpha, replace, stops, maxColors });
     }
 
     get stops(): ColorStop[]

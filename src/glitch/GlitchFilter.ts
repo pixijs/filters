@@ -213,7 +213,19 @@ export class GlitchFilter extends Filter
         this._canvas = canvas;
         this.texture = texture;
 
-        Object.assign(this, options);
+        Object.assign(this, {
+            slices,
+            offset,
+            direction,
+            fillMode,
+            average,
+            seed,
+            red,
+            green,
+            blue,
+            minSize,
+            sampleSize
+        });
     }
 
     /**

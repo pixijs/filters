@@ -145,7 +145,7 @@ export class GodrayFilter extends Filter
 
         this.uniforms = this.resources.godrayUniforms.uniforms;
 
-        Object.assign(this, options);
+        Object.assign(this, { angle, gain, lacunarity, parallel, time, center, alpha });
     }
 
     /**

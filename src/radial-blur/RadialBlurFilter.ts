@@ -136,7 +136,7 @@ export class RadialBlurFilter extends Filter
 
         this.uniforms = this.resources.radialBlurUniforms.uniforms;
 
-        Object.assign(this, options);
+        Object.assign(this, { angle, center, kernelSize, radius });
     }
 
     private _updateKernelSize()

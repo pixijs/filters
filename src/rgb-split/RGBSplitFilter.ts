@@ -118,7 +118,7 @@ export class RGBSplitFilter extends Filter
 
         this.uniforms = this.resources.rgbSplitUniforms.uniforms;
 
-        Object.assign(this, options);
+        Object.assign(this, { red, green, blue });
     }
 
     /**

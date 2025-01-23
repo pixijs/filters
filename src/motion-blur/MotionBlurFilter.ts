@@ -122,7 +122,7 @@ export class MotionBlurFilter extends Filter
 
         this.uniforms = this.resources.motionBlurUniforms.uniforms;
 
-        Object.assign(this, options);
+        Object.assign(this, { velocity, kernelSize, offset });
     }
 
     /**

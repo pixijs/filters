@@ -49,7 +49,7 @@ export class TiltShiftFilter extends TiltShiftAxisFilter
 
         this.updateDelta();
 
-        Object.assign(this, options);
+        Object.assign(this, { blur, gradientBlur, start, end });
     }
 
     /**

@@ -168,7 +168,7 @@ export class ShockwaveFilter extends Filter
 
         this.uniforms = this.resources.shockwaveUniforms.uniforms;
 
-        Object.assign(this, options);
+        Object.assign(this, { center, speed, amplitude, wavelength, brightness, radius, time });
     }
 
     public override apply(

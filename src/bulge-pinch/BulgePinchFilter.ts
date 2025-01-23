@@ -94,7 +94,7 @@ export class BulgePinchFilter extends Filter
 
         this.uniforms = this.resources.bulgePinchUniforms.uniforms;
 
-        Object.assign(this, options);
+        Object.assign(this, { center, radius, strength });
     }
 
     /**

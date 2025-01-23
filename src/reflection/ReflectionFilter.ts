@@ -129,7 +129,7 @@ export class ReflectionFilter extends Filter
 
         this.uniforms = this.resources.reflectionUniforms.uniforms;
 
-        Object.assign(this, options);
+        Object.assign(this, { mirror, boundary, amplitude, waveLength, alpha, time });
     }
 
     /**

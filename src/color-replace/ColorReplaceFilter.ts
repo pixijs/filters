@@ -110,9 +110,6 @@ export class ColorReplaceFilter extends Filter
 
         options = { ...ColorReplaceFilter.DEFAULT_OPTIONS, ...options };
 
-        options.originalColor = options?.originalColor ?? 0xff0000;
-        options.targetColor = options?.originalColor ?? 0x000000;
-
         const {
             originalColor,
             targetColor,
@@ -154,10 +151,9 @@ export class ColorReplaceFilter extends Filter
 
         this._originalColor = new Color();
         this._targetColor = new Color();
-        this.originalColor = originalColor;
-        this.targetColor = targetColor;
-
-        Object.assign(this, options);
+        this.originalColor = originalColor ?? 0xff0000;
+        this.targetColor = targetColor ?? 0x000000;
+        this.tolerance = tolerance ?? 0.4;
     }
 
     /**

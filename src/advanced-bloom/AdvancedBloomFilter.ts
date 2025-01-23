@@ -97,6 +97,8 @@ export class AdvancedBloomFilter extends Filter
             brightness,
             blur,
             quality,
+            kernels,
+            pixelSize,
             ...rest
         } = options;
 
@@ -141,7 +143,7 @@ export class AdvancedBloomFilter extends Filter
             quality: options.kernels ? undefined : quality,
         });
 
-        Object.assign(this, options);
+        Object.assign(this, { threshold, bloomScale, brightness, blur, quality, kernels, pixelSize });
     }
 
     /**
