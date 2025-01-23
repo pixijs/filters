@@ -46,7 +46,7 @@ export interface ZoomBlurFilterOptions
 export class ZoomBlurFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: ZoomBlurFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         strength: 0.1,
         center: { x: 0, y: 0 },
         innerRadius: 0,
@@ -65,9 +65,16 @@ export class ZoomBlurFilter extends Filter
      */
     constructor(options?: ZoomBlurFilterOptions)
     {
-        options = { ...ZoomBlurFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            strength,
+            center,
+            innerRadius,
+            radius,
+            maxKernelSize,
+            ...rest
+        } = { ...ZoomBlurFilter.DEFAULT_OPTIONS, ...options };
 
-        const kernelSize = options.maxKernelSize ?? 32;
+        const kernelSize = maxKernelSize ?? 32;
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -91,16 +98,17 @@ export class ZoomBlurFilter extends Filter
             glProgram,
             resources: {
                 zoomBlurUniforms: {
-                    uStrength: { value: options.strength, type: 'f32' },
-                    uCenter: { value: options.center, type: 'vec2<f32>' },
+                    uStrength: { value: strength, type: 'f32' },
+                    uCenter: { value: center, type: 'vec2<f32>' },
                     uRadii: { value: new Float32Array(2), type: 'vec2<f32>' },
                 }
             },
+            ...rest
         });
 
         this.uniforms = this.resources.zoomBlurUniforms.uniforms;
 
-        Object.assign(this, options);
+        Object.assign(this, { strength, center, innerRadius, radius, maxKernelSize });
     }
 
     /**

@@ -3,8 +3,10 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './adjustment.frag';
 import source from './adjustment.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 /** Options for the AdjustmentFilter constructor */
-export interface AdjustmentFilterOptions
+export interface AdjustmentFilterOptions extends FilterOptions
 {
     /**
      * The amount of luminance
@@ -61,7 +63,7 @@ export interface AdjustmentFilterOptions
 export class AdjustmentFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: AdjustmentFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         gamma: 1,
         contrast: 1,
         saturation: 1,
@@ -85,7 +87,17 @@ export class AdjustmentFilter extends Filter
      */
     constructor(options?: AdjustmentFilterOptions)
     {
-        options = { ...AdjustmentFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            gamma,
+            contrast,
+            saturation,
+            brightness,
+            red,
+            green,
+            blue,
+            alpha,
+            ...rest
+        } = { ...AdjustmentFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -109,21 +121,17 @@ export class AdjustmentFilter extends Filter
             glProgram,
             resources: {
                 adjustmentUniforms: {
-                    uGamma: { value: options.gamma, type: 'f32' },
-                    uContrast: { value: options.contrast, type: 'f32' },
-                    uSaturation: { value: options.saturation, type: 'f32' },
-                    uBrightness: { value: options.brightness, type: 'f32' },
+                    uGamma: { value: gamma, type: 'f32' },
+                    uContrast: { value: contrast, type: 'f32' },
+                    uSaturation: { value: saturation, type: 'f32' },
+                    uBrightness: { value: brightness, type: 'f32' },
                     uColor: {
-                        value: [
-                            options.red,
-                            options.green,
-                            options.blue,
-                            options.alpha,
-                        ],
+                        value: [red, green, blue, alpha],
                         type: 'vec4<f32>',
                     },
                 }
             },
+            ...rest
         });
 
         this.uniforms = this.resources.adjustmentUniforms.uniforms;

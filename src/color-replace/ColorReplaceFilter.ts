@@ -3,6 +3,8 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './color-replace.frag';
 import source from './color-replace.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 /**
  * This WebGPU filter has been ported from the WebGL renderer that was originally created by mishaa, updated by timetocode
  * http://www.html5gamedevs.com/topic/10640-outline-a-sprite-change-certain-colors/?p=69966
@@ -11,7 +13,7 @@ import source from './color-replace.wgsl';
 type DeprecatedColor = number | number[] | Float32Array;
 
 /** Options for the ColorReplaceFilter constructor. */
-export interface ColorReplaceFilterOptions
+export interface ColorReplaceFilterOptions extends FilterOptions
 {
     /**
      * The color that will be changed.
@@ -60,7 +62,7 @@ export interface ColorReplaceFilterOptions
 export class ColorReplaceFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: ColorReplaceFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         originalColor: 0xff0000,
         targetColor: 0x000000,
         tolerance: 0.4
@@ -108,6 +110,13 @@ export class ColorReplaceFilter extends Filter
 
         options = { ...ColorReplaceFilter.DEFAULT_OPTIONS, ...options };
 
+        const {
+            originalColor,
+            targetColor,
+            tolerance,
+            ...rest
+        } = options;
+
         const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
@@ -132,19 +141,19 @@ export class ColorReplaceFilter extends Filter
                 colorReplaceUniforms: {
                     uOriginalColor: { value: new Float32Array(3), type: 'vec3<f32>' },
                     uTargetColor: { value: new Float32Array(3), type: 'vec3<f32>' },
-                    uTolerance: { value: options.tolerance, type: 'f32' },
+                    uTolerance: { value: tolerance, type: 'f32' },
                 }
             },
+            ...rest
         });
 
         this.uniforms = this.resources.colorReplaceUniforms.uniforms;
 
         this._originalColor = new Color();
         this._targetColor = new Color();
-        this.originalColor = options.originalColor ?? 0xff0000;
-        this.targetColor = options.targetColor ?? 0x000000;
-
-        Object.assign(this, options);
+        this.originalColor = originalColor ?? 0xff0000;
+        this.targetColor = targetColor ?? 0x000000;
+        this.tolerance = tolerance ?? 0.4;
     }
 
     /**

@@ -3,7 +3,7 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './glitch.frag';
 import source from './glitch.wgsl';
 
-import type { FilterSystem, PointData, RenderSurface } from 'pixi.js';
+import type { FilterOptions, FilterSystem, PointData, RenderSurface } from 'pixi.js';
 
 enum FILL_MODES
     {
@@ -15,7 +15,7 @@ enum FILL_MODES
 }
 
 /** Options for the GlitchFilter constructor. */
-export interface GlitchFilterOptions
+export interface GlitchFilterOptions extends FilterOptions
 {
     /**
      * The count of glitch slices.
@@ -146,7 +146,20 @@ export class GlitchFilter extends Filter
      */
     constructor(options?: GlitchFilterOptions)
     {
-        options = { ...GlitchFilter.defaults, ...options };
+        const {
+            slices,
+            offset,
+            direction,
+            fillMode,
+            average,
+            seed,
+            red,
+            green,
+            blue,
+            minSize,
+            sampleSize,
+            ...rest
+        } = { ...GlitchFilter.defaults, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -168,7 +181,7 @@ export class GlitchFilter extends Filter
         const canvas = document.createElement('canvas');
 
         canvas.width = 4;
-        canvas.height = options.sampleSize ?? 512;
+        canvas.height = sampleSize ?? 512;
 
         const texture = new Texture({
             source: new ImageSource({ resource: canvas })
@@ -179,19 +192,20 @@ export class GlitchFilter extends Filter
             glProgram,
             resources: {
                 glitchUniforms: {
-                    uSeed: { value: options?.seed ?? 0, type: 'f32' },
+                    uSeed: { value: seed ?? 0, type: 'f32' },
                     uDimensions: { value: new Float32Array(2), type: 'vec2<f32>' },
                     uAspect: { value: 1, type: 'f32' },
-                    uFillMode: { value: options?.fillMode ?? 0, type: 'f32' },
-                    uOffset: { value: options?.offset ?? 100, type: 'f32' },
-                    uDirection: { value: options?.direction ?? 0, type: 'f32' },
-                    uRed: { value: options.red, type: 'vec2<f32>' },
-                    uGreen: { value: options.green, type: 'vec2<f32>' },
-                    uBlue: { value: options.blue, type: 'vec2<f32>' },
+                    uFillMode: { value: fillMode ?? 0, type: 'f32' },
+                    uOffset: { value: offset ?? 100, type: 'f32' },
+                    uDirection: { value: direction ?? 0, type: 'f32' },
+                    uRed: { value: red, type: 'vec2<f32>' },
+                    uGreen: { value: green, type: 'vec2<f32>' },
+                    uBlue: { value: blue, type: 'vec2<f32>' },
                 },
                 uDisplacementMap: texture.source,
                 uDisplacementSampler: texture.source.style,
             },
+            ...rest
         });
 
         this.uniforms = this.resources.glitchUniforms.uniforms;
@@ -199,7 +213,19 @@ export class GlitchFilter extends Filter
         this._canvas = canvas;
         this.texture = texture;
 
-        Object.assign(this, options);
+        Object.assign(this, {
+            slices,
+            offset,
+            direction,
+            fillMode,
+            average,
+            seed,
+            red,
+            green,
+            blue,
+            minSize,
+            sampleSize
+        });
     }
 
     /**

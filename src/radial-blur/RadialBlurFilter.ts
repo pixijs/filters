@@ -3,10 +3,10 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './radial-blur.frag';
 import source from './radial-blur.wgsl';
 
-import type { PointData } from 'pixi.js';
+import type { FilterOptions, PointData } from 'pixi.js';
 
 /** Options for the RadialBlurFilter constructor. */
-export interface RadialBlurFilterOptions
+export interface RadialBlurFilterOptions extends FilterOptions
 {
     /**
      * Sets the angle of the motion for blur effect
@@ -42,7 +42,7 @@ export interface RadialBlurFilterOptions
 export class RadialBlurFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: RadialBlurFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         angle: 0,
         center: { x: 0, y: 0 },
         kernelSize: 5,
@@ -95,7 +95,13 @@ export class RadialBlurFilter extends Filter
             if (args[3]) options.radius = args[3];
         }
 
-        options = { ...RadialBlurFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            angle,
+            center,
+            kernelSize,
+            radius,
+            ...rest
+        } = { ...RadialBlurFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -120,16 +126,17 @@ export class RadialBlurFilter extends Filter
             resources: {
                 radialBlurUniforms: {
                     uRadian: { value: 0, type: 'f32' },
-                    uCenter: { value: options.center, type: 'vec2<f32>' },
-                    uKernelSize: { value: options.kernelSize, type: 'i32' },
-                    uRadius: { value: options.radius, type: 'f32' },
+                    uCenter: { value: center, type: 'vec2<f32>' },
+                    uKernelSize: { value: kernelSize, type: 'i32' },
+                    uRadius: { value: radius, type: 'f32' },
                 }
             },
+            ...rest
         });
 
         this.uniforms = this.resources.radialBlurUniforms.uniforms;
 
-        Object.assign(this, options);
+        Object.assign(this, { angle, center, kernelSize, radius });
     }
 
     private _updateKernelSize()

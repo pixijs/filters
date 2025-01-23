@@ -5,10 +5,10 @@ import source from './kawase-blur.wgsl';
 import fragmentClamp from './kawase-blur-clamp.frag';
 import sourceClamp from './kawase-blur-clamp.wgsl';
 
-import type { FilterSystem, PointData, RenderSurface, Texture } from 'pixi.js';
+import type { FilterOptions, FilterSystem, PointData, RenderSurface, Texture } from 'pixi.js';
 
 /** Options for the KawaseBlurFilter constructor. */
-export interface KawaseBlurFilterOptions
+export interface KawaseBlurFilterOptions extends FilterOptions
 {
     /**
      * The blur of the filter. Should be greater than `0`.
@@ -44,7 +44,7 @@ export interface KawaseBlurFilterOptions
 export class KawaseBlurFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: KawaseBlurFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         strength: 4,
         quality: 3,
         clamp: false,
@@ -91,7 +91,13 @@ export class KawaseBlurFilter extends Filter
             if (args[2] !== undefined) options.clamp = args[2];
         }
 
-        options = { ...KawaseBlurFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            strength,
+            quality,
+            clamp,
+            pixelSize,
+            ...rest
+        } = { ...KawaseBlurFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -99,13 +105,13 @@ export class KawaseBlurFilter extends Filter
                 entryPoint: 'mainVertex',
             },
             fragment: {
-                source: options?.clamp ? sourceClamp : source,
+                source: clamp ? sourceClamp : source,
                 entryPoint: 'mainFragment',
             },
         });
         const glProgram = GlProgram.from({
             vertex,
-            fragment: options?.clamp ? fragmentClamp : fragment,
+            fragment: clamp ? fragmentClamp : fragment,
             name: 'kawase-blur-filter',
         });
 
@@ -117,23 +123,24 @@ export class KawaseBlurFilter extends Filter
                     uOffset: { value: new Float32Array(2), type: 'vec2<f32>' },
                 }
             },
+            ...rest,
         });
 
         this.uniforms = this.resources.kawaseBlurUniforms.uniforms;
 
-        this.pixelSize = options.pixelSize ?? { x: 1, y: 1 };
+        this.pixelSize = pixelSize ?? { x: 1, y: 1 };
 
-        if (Array.isArray(options.strength))
+        if (Array.isArray(strength))
         {
-            this.kernels = options.strength;
+            this.kernels = strength;
         }
-        else if (typeof options.strength === 'number')
+        else if (typeof strength === 'number')
         {
-            this._blur = options.strength;
-            this.quality = options.quality ?? 3;
+            this._blur = strength;
+            this.quality = quality ?? 3;
         }
 
-        this._clamp = !!options.clamp;
+        this._clamp = !!clamp;
     }
 
     /**
