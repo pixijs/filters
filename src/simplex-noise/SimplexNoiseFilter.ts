@@ -63,7 +63,15 @@ export class SimplexNoiseFilter extends Filter
      */
     constructor(options?: SimplexNoiseFilterOptions)
     {
-        options = { ...SimplexNoiseFilter.defaults, ...options };
+        const {
+            strength,
+            noiseScale,
+            offsetX,
+            offsetY,
+            offsetZ,
+            step,
+            ...rest
+        } = { ...SimplexNoiseFilter.defaults, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -87,14 +95,15 @@ export class SimplexNoiseFilter extends Filter
             glProgram,
             resources: {
                 simplexUniforms: {
-                    uStrength: { value: options?.strength ?? 0, type: 'f32' },
-                    uNoiseScale: { value: options?.noiseScale ?? 0, type: 'f32' },
-                    uOffsetX: { value: options?.offsetX ?? 0, type: 'f32' },
-                    uOffsetY: { value: options?.offsetY ?? 0, type: 'f32' },
-                    uOffsetZ: { value: options?.offsetZ ?? 0, type: 'f32' },
-                    uStep: { value: options?.step ?? 0, type: 'f32' },
+                    uStrength: { value: strength ?? 0, type: 'f32' },
+                    uNoiseScale: { value: noiseScale ?? 0, type: 'f32' },
+                    uOffsetX: { value: offsetX ?? 0, type: 'f32' },
+                    uOffsetY: { value: offsetY ?? 0, type: 'f32' },
+                    uOffsetZ: { value: offsetZ ?? 0, type: 'f32' },
+                    uStep: { value: step ?? 0, type: 'f32' },
                 }
-            }
+            },
+            ...rest
         });
     }
 

@@ -15,8 +15,10 @@ import { KawaseBlurFilter } from '../kawase-blur/KawaseBlurFilter';
 import fragment from './drop-shadow.frag';
 import source from './drop-shadow.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 /** Options for the DropShadowFilter constructor. */
-export interface DropShadowFilterOptions
+export interface DropShadowFilterOptions extends FilterOptions
 {
     /**
      * The offset position of the drop-shadow relative to the original image.
@@ -75,7 +77,7 @@ export interface DropShadowFilterOptions
 export class DropShadowFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: DropShadowFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         offset: { x: 4, y: 4 },
         color: 0x000000,
         alpha: 0.5,
@@ -109,6 +111,18 @@ export class DropShadowFilter extends Filter
     constructor(options?: DropShadowFilterOptions)
     {
         options = { ...DropShadowFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            offset,
+            color,
+            alpha,
+            shadowOnly,
+            blur,
+            quality,
+            kernels,
+            pixelSize,
+            resolution,
+            ...rest
+        } = options;
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -132,21 +146,22 @@ export class DropShadowFilter extends Filter
             glProgram,
             resources: {
                 dropShadowUniforms: {
-                    uAlpha: { value: options.alpha, type: 'f32' },
+                    uAlpha: { value: alpha, type: 'f32' },
                     uColor: { value: new Float32Array(3), type: 'vec3<f32>' },
-                    uOffset: { value: options.offset, type: 'vec2<f32>' },
+                    uOffset: { value: offset, type: 'vec2<f32>' },
                 }
             },
-            resolution: options.resolution,
+            resolution,
+            ...rest
         });
 
         this.uniforms = this.resources.dropShadowUniforms.uniforms;
         this._color = new Color();
-        this.color = options.color ?? 0x000000;
+        this.color = color ?? 0x000000;
 
         this._blurFilter = new KawaseBlurFilter({
-            strength: options.kernels as [number, number] ?? options.blur,
-            quality: options.kernels ? undefined : options.quality,
+            strength: kernels as [number, number] ?? blur,
+            quality: kernels ? undefined : quality,
         });
 
         this._basePass = new Filter({
@@ -186,7 +201,7 @@ export class DropShadowFilter extends Filter
             resources: {},
         });
 
-        Object.assign(this, options);
+        Object.assign(this, { offset, color, alpha, shadowOnly, blur, quality, kernels, pixelSize, resolution });
     }
 
     /**

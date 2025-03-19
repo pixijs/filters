@@ -3,10 +3,12 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './ascii.frag';
 import source from './ascii.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 // This WebGPU filter has been ported from the WebGL renderer that was originally created by Vico (@vicocotea)
 
 /** Options for AsciiFilter constructor. */
-export interface AsciiFilterOptions
+export interface AsciiFilterOptions extends FilterOptions
 {
     /**
      * The pixel size used by the filter
@@ -39,7 +41,7 @@ export interface AsciiFilterOptions
 export class AsciiFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: AsciiFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         size: 8,
         color: 0xffffff,
         replaceColor: false,
@@ -77,9 +79,12 @@ export class AsciiFilter extends Filter
             options = { size: options };
         }
 
-        const replaceColor = options?.color && options.replaceColor !== false;
-
-        options = { ...AsciiFilter.DEFAULT_OPTIONS, ...options } as AsciiFilterOptions;
+        const {
+            size,
+            color,
+            replaceColor,
+            ...rest
+        } = { ...AsciiFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -103,16 +108,17 @@ export class AsciiFilter extends Filter
             glProgram,
             resources: {
                 asciiUniforms: {
-                    uSize: { value: options.size, type: 'f32' },
+                    uSize: { value: size, type: 'f32' },
                     uColor: { value: new Float32Array(3), type: 'vec3<f32>' },
                     uReplaceColor: { value: Number(replaceColor), type: 'f32' },
                 },
             },
+            ...rest
         });
 
         this.uniforms = this.resources.asciiUniforms.uniforms;
         this._color = new Color();
-        this.color = options.color ?? 0xffffff;
+        this.color = color ?? 0xffffff;
     }
 
     /**

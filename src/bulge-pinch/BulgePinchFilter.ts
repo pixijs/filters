@@ -3,12 +3,12 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './bulge-pinch.frag';
 import source from './bulge-pinch.wgsl';
 
-import type { FilterSystem, PointData, RenderSurface, Texture } from 'pixi.js';
+import type { FilterOptions, FilterSystem, PointData, RenderSurface, Texture } from 'pixi.js';
 
 // This WebGPU filter has been ported from the WebGL renderer that was originally created by Julien CLEREL (@JuloxRox)
 
 /** Options for the BulgePinchFilter constructor. */
-export interface BulgePinchFilterOptions
+export interface BulgePinchFilterOptions extends FilterOptions
 {
     /**
      * Offset coordinates to change the position of the center of the circle of effect.
@@ -37,7 +37,7 @@ export interface BulgePinchFilterOptions
 export class BulgePinchFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: BulgePinchFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         center: { x: 0.5, y: 0.5 },
         radius: 100,
         strength: 1
@@ -55,7 +55,12 @@ export class BulgePinchFilter extends Filter
      */
     constructor(options?: BulgePinchFilterOptions)
     {
-        options = { ...BulgePinchFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            center,
+            radius,
+            strength,
+            ...rest
+        } = { ...BulgePinchFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -79,16 +84,17 @@ export class BulgePinchFilter extends Filter
             resources: {
                 bulgePinchUniforms: {
                     uDimensions: { value: [0, 0], type: 'vec2<f32>' },
-                    uCenter: { value: options.center, type: 'vec2<f32>' },
-                    uRadius: { value: options.radius, type: 'f32' },
-                    uStrength: { value: options.strength, type: 'f32' },
+                    uCenter: { value: center, type: 'vec2<f32>' },
+                    uRadius: { value: radius, type: 'f32' },
+                    uStrength: { value: strength, type: 'f32' },
                 }
             },
+            ...rest
         });
 
         this.uniforms = this.resources.bulgePinchUniforms.uniforms;
 
-        Object.assign(this, options);
+        Object.assign(this, { center, radius, strength });
     }
 
     /**

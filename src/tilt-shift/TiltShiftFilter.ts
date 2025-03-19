@@ -36,14 +36,20 @@ export class TiltShiftFilter extends TiltShiftAxisFilter
      */
     constructor(options?: TiltShiftFilterOptions)
     {
-        options = { ...TiltShiftAxisFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            blur,
+            gradientBlur,
+            start,
+            end,
+            ...rest
+        } = { ...TiltShiftAxisFilter.DEFAULT_OPTIONS, ...options };
 
-        super({ ...options, axis: 'horizontal' });
-        this._tiltShiftYFilter = new TiltShiftAxisFilter({ ...options, axis: 'vertical' });
+        super({ blur, gradientBlur, start, end, axis: 'horizontal', ...rest });
+        this._tiltShiftYFilter = new TiltShiftAxisFilter({ blur, gradientBlur, start, end, axis: 'vertical', ...rest });
 
         this.updateDelta();
 
-        Object.assign(this, options);
+        Object.assign(this, { blur, gradientBlur, start, end });
     }
 
     /**
