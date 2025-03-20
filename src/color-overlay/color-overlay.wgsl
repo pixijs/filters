@@ -13,5 +13,5 @@ fn mainFragment(
     @location(0) uv : vec2<f32>
 ) -> @location(0) vec4<f32> {
     let c = textureSample(uTexture, uSampler, uv);
-    return vec4<f32>(mix(c.rgb, colorOverlayUniforms.uColor.rgb, colorOverlayUniforms.uAlpha), c.a);
+    return vec4<f32>(mix(c.rgb, colorOverlayUniforms.uColor.rgb * c.a, colorOverlayUniforms.uAlpha), c.a);
 }

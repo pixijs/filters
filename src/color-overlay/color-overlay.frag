@@ -7,5 +7,5 @@ uniform float uAlpha;
 
 void main(void) {
     vec4 c = texture(uTexture, vTextureCoord);
-    finalColor = vec4(mix(c.rgb, uColor.rgb, uAlpha), c.a);
+    finalColor = vec4(mix(c.rgb, uColor * c.a, uAlpha), c.a);
 }
