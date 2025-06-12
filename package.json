@@ -216,6 +216,14 @@
     "release": "xs bump,test && run-s deploy && xs publish,git-push",
     "generate-exports": "node --no-warnings=ExperimentalWarning scripts/generate-exports.mjs"
   },
+  "author": "PixiJS Team",
+  "homepage": "http://pixijs.com/",
+  "bugs": "https://github.com/pixijs/filters/issues",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pixijs/filters.git"
+  },
   "pre-commit": [
     "lint",
     "types"
