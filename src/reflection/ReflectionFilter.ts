@@ -3,13 +3,13 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './reflection.frag';
 import source from './reflection.wgsl';
 
-import type { FilterSystem, RenderSurface, Texture } from 'pixi.js';
+import type { FilterOptions, FilterSystem, RenderSurface, Texture } from 'pixi.js';
 
 /** [MIN, MAX] */
 type Range = [number, number] | Float32Array;
 
 /** Options for the ReflectionFilter constructor. */
-export interface ReflectionFilterOptions
+export interface ReflectionFilterOptions extends FilterOptions
 {
     /**
      * `true` to reflect the image, `false` for waves-only
@@ -54,7 +54,7 @@ export interface ReflectionFilterOptions
 export class ReflectionFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: ReflectionFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         mirror: true,
         boundary: 0.5,
         amplitude: [0, 20],
@@ -84,7 +84,15 @@ export class ReflectionFilter extends Filter
      */
     constructor(options?: ReflectionFilterOptions)
     {
-        options = { ...ReflectionFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            mirror,
+            boundary,
+            amplitude,
+            waveLength,
+            alpha,
+            time,
+            ...rest
+        } = { ...ReflectionFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -107,20 +115,21 @@ export class ReflectionFilter extends Filter
             glProgram,
             resources: {
                 reflectionUniforms: {
-                    uMirror: { value: options.mirror ? 1 : 0, type: 'f32' },
-                    uBoundary: { value: options.boundary, type: 'f32' },
-                    uAmplitude: { value: options.amplitude, type: 'vec2<f32>' },
-                    uWavelength: { value: options.waveLength, type: 'vec2<f32>' },
-                    uAlpha: { value: options.alpha, type: 'vec2<f32>' },
-                    uTime: { value: options.time, type: 'f32' },
+                    uMirror: { value: mirror ? 1 : 0, type: 'f32' },
+                    uBoundary: { value: boundary, type: 'f32' },
+                    uAmplitude: { value: amplitude, type: 'vec2<f32>' },
+                    uWavelength: { value: waveLength, type: 'vec2<f32>' },
+                    uAlpha: { value: alpha, type: 'vec2<f32>' },
+                    uTime: { value: time, type: 'f32' },
                     uDimensions: { value: new Float32Array(2), type: 'vec2<f32>' },
                 }
             },
+            ...rest
         });
 
         this.uniforms = this.resources.reflectionUniforms.uniforms;
 
-        Object.assign(this, options);
+        Object.assign(this, { mirror, boundary, amplitude, waveLength, alpha, time });
     }
 
     /**

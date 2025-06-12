@@ -3,10 +3,12 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './color-overlay.frag';
 import source from './color-overlay.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 type DeprecatedColor = number | number[] | Float32Array;
 
 /** Options for the ColorOverlayFilter constructor. */
-export interface ColorOverlayFilterOptions
+export interface ColorOverlayFilterOptions extends FilterOptions
 {
     /**
      * The color of the overlay
@@ -29,7 +31,7 @@ export interface ColorOverlayFilterOptions
 export class ColorOverlayFilter extends Filter
 {
     /** Default shockwave filter options */
-    public static readonly DEFAULT_OPTIONS: ColorOverlayFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         /** The color of the overlay */
         color: 0x000000,
         /** The alpha of the overlay */
@@ -71,6 +73,10 @@ export class ColorOverlayFilter extends Filter
 
         options = { ...ColorOverlayFilter.DEFAULT_OPTIONS, ...options };
 
+        options.color = options?.color ?? 0x000000;
+
+        const { color, alpha, ...rest } = options;
+
         const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
@@ -94,15 +100,16 @@ export class ColorOverlayFilter extends Filter
             resources: {
                 colorOverlayUniforms: {
                     uColor: { value: new Float32Array(3), type: 'vec3<f32>' },
-                    uAlpha: { value: options.alpha, type: 'f32' },
+                    uAlpha: { value: alpha, type: 'f32' },
                 },
             },
+            ...rest
         });
 
         this.uniforms = this.resources.colorOverlayUniforms.uniforms;
 
         this._color = new Color();
-        this.color = options.color ?? 0x000000;
+        this.color = color;
     }
 
     /**

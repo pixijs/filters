@@ -3,8 +3,10 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './bevel.frag';
 import source from './bevel.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 /** Options for the BevelFilter constructor. */
-export interface BevelFilterOptions
+export interface BevelFilterOptions extends FilterOptions
 {
     /**
      * The angle of the light in degrees
@@ -50,7 +52,7 @@ export interface BevelFilterOptions
 export class BevelFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: BevelFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         rotation: 45,
         thickness: 2,
         lightColor: 0xffffff,
@@ -77,7 +79,15 @@ export class BevelFilter extends Filter
      */
     constructor(options?: BevelFilterOptions)
     {
-        options = { ...BevelFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            rotation,
+            thickness,
+            lightColor,
+            lightAlpha,
+            shadowColor,
+            shadowAlpha,
+            ...rest
+        } = { ...BevelFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -102,25 +112,23 @@ export class BevelFilter extends Filter
             resources: {
                 bevelUniforms: {
                     uLightColor: { value: new Float32Array(3), type: 'vec3<f32>' },
-                    uLightAlpha: { value: options.lightAlpha, type: 'f32' },
+                    uLightAlpha: { value: lightAlpha, type: 'f32' },
                     uShadowColor: { value: new Float32Array(3), type: 'vec3<f32>' },
-                    uShadowAlpha: { value: options.shadowAlpha, type: 'f32' },
+                    uShadowAlpha: { value: shadowAlpha, type: 'f32' },
                     uTransform: { value: new Float32Array(2), type: 'vec2<f32>' },
                 }
             },
-            // Workaround: https://github.com/pixijs/filters/issues/230
-            // applies correctly only if there is at least a single-pixel padding with alpha=0 around an image
-            // To solve this problem, a padding of 1 put on the filter should suffice
             padding: 1,
+            ...rest
         });
 
         this.uniforms = this.resources.bevelUniforms.uniforms;
         this._lightColor = new Color();
         this._shadowColor = new Color();
-        this.lightColor = options.lightColor ?? 0xffffff;
-        this.shadowColor = options.shadowColor ?? 0x000000;
+        this.lightColor = lightColor ?? 0xffffff;
+        this.shadowColor = shadowColor ?? 0x000000;
 
-        Object.assign(this, options);
+        Object.assign(this, { rotation, thickness });
     }
 
     /**

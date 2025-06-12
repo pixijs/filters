@@ -3,10 +3,12 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './color-map.frag';
 import source from './color-map.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 type ColorMapTexture = TextureSource | Texture;
 
 /** Options for the ColorMapFilter constructor. */
-export interface ColorMapFilterOptions
+export interface ColorMapFilterOptions extends FilterOptions
 {
     /** The colorMap texture of the filter. */
     colorMap: ColorMapTexture;
@@ -32,7 +34,7 @@ export interface ColorMapFilterOptions
 export class ColorMapFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: ColorMapFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         colorMap: Texture.WHITE,
         nearest: false,
         mix: 1
@@ -87,6 +89,13 @@ export class ColorMapFilter extends Filter
 
         if (!options.colorMap) throw Error('No color map texture source was provided to ColorMapFilter');
 
+        const {
+            colorMap,
+            nearest,
+            mix,
+            ...rest
+        } = options;
+
         const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
@@ -109,20 +118,22 @@ export class ColorMapFilter extends Filter
             glProgram,
             resources: {
                 colorMapUniforms: {
-                    uMix: { value: options.mix, type: 'f32' },
+                    uMix: { value: mix, type: 'f32' },
                     uSize: { value: 0, type: 'f32' },
                     uSliceSize: { value: 0, type: 'f32' },
                     uSlicePixelSize: { value: 0, type: 'f32' },
                     uSliceInnerSize: { value: 0, type: 'f32' },
                 },
-                uMapTexture: options.colorMap.source,
-                uMapSampler: options.colorMap.source.style,
+                uMapTexture: colorMap.source,
+                uMapSampler: colorMap.source.style,
+
             },
+            ...rest
         });
 
         this.uniforms = this.resources.colorMapUniforms.uniforms;
 
-        Object.assign(this, options);
+        Object.assign(this, { colorMap, nearest, mix });
     }
 
     /** The mix from 0 to 1, where 0 is the original image and 1 is the color mapped image. */
