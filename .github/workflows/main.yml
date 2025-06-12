@@ -27,6 +27,11 @@ jobs:
         node-version: 20
     - name: Install Dependencies
       run: npm ci
+    # Workaround with Electron in Ubuntu 24+
+    # See: https://github.com/electron/electron/issues/42510
+    - name: Tune the Environment
+      run: |
+        sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
 
     - name: Build for Distribution
       run: xvfb-run --auto-servernum npm run dist
