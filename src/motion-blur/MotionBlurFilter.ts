@@ -4,8 +4,10 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './motion-blur.frag';
 import source from './motion-blur.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 /** Options for the MotionBlurFilter constructor. */
-export interface MotionBlurFilterOptions
+export interface MotionBlurFilterOptions extends FilterOptions
 {
     /**
      * Sets the velocity of the motion for blur effect
@@ -36,7 +38,7 @@ export interface MotionBlurFilterOptions
 export class MotionBlurFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: MotionBlurFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         velocity: { x: 0, y: 0 },
         kernelSize: 5,
         offset: 0,
@@ -81,7 +83,12 @@ export class MotionBlurFilter extends Filter
             if (args[2] !== undefined) options.offset = args[2];
         }
 
-        options = { ...MotionBlurFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            velocity,
+            kernelSize,
+            offset,
+            ...rest
+        } = { ...MotionBlurFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -105,16 +112,17 @@ export class MotionBlurFilter extends Filter
             glProgram,
             resources: {
                 motionBlurUniforms: {
-                    uVelocity: { value: options.velocity, type: 'vec2<f32>' },
-                    uKernelSize: { value: Math.trunc(options.kernelSize ?? 5), type: 'i32' },
-                    uOffset: { value: options.offset, type: 'f32' },
+                    uVelocity: { value: velocity, type: 'vec2<f32>' },
+                    uKernelSize: { value: Math.trunc(kernelSize ?? 5), type: 'i32' },
+                    uOffset: { value: offset, type: 'f32' },
                 }
             },
+            ...rest
         });
 
         this.uniforms = this.resources.motionBlurUniforms.uniforms;
 
-        Object.assign(this, options);
+        Object.assign(this, { velocity, kernelSize, offset });
     }
 
     /**

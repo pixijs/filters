@@ -3,10 +3,10 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './old-film.frag';
 import source from './old-film.wgsl';
 
-import type { FilterSystem, RenderSurface, Texture } from 'pixi.js';
+import type { FilterOptions, FilterSystem, RenderSurface, Texture } from 'pixi.js';
 
 /** Options for the OldFilmFilter constructor. */
-export interface OldFilmFilterOptions
+export interface OldFilmFilterOptions extends FilterOptions
 {
     /**
      * The amount of saturation of sepia effect,
@@ -71,7 +71,7 @@ export interface OldFilmFilterOptions
 export class OldFilmFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: OldFilmFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         sepia: 0.3,
         noise: 0.3,
         noiseSize: 1,
@@ -104,7 +104,19 @@ export class OldFilmFilter extends Filter
      */
     constructor(options?: OldFilmFilterOptions)
     {
-        options = { ...OldFilmFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            sepia,
+            noise,
+            noiseSize,
+            scratch,
+            scratchDensity,
+            scratchWidth,
+            vignetting,
+            vignettingAlpha,
+            vignettingBlur,
+            seed,
+            ...rest
+        } = { ...OldFilmFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -128,19 +140,31 @@ export class OldFilmFilter extends Filter
             glProgram,
             resources: {
                 oldFilmUniforms: {
-                    uSepia: { value: options.sepia, type: 'f32' },
+                    uSepia: { value: sepia, type: 'f32' },
                     uNoise: { value: new Float32Array(2), type: 'vec2<f32>' },
                     uScratch: { value: new Float32Array(3), type: 'vec3<f32>' },
                     uVignetting: { value: new Float32Array(3), type: 'vec3<f32>' },
-                    uSeed: { value: options.seed, type: 'f32' },
+                    uSeed: { value: seed, type: 'f32' },
                     uDimensions: { value: new Float32Array(2), type: 'vec2<f32>' },
                 }
             },
+            ...rest
         });
 
         this.uniforms = this.resources.oldFilmUniforms.uniforms;
 
-        Object.assign(this, options);
+        Object.assign(this, {
+            sepia,
+            noise,
+            noiseSize,
+            scratch,
+            scratchDensity,
+            scratchWidth,
+            vignetting,
+            vignettingAlpha,
+            vignettingBlur,
+            seed
+        });
     }
 
     /**

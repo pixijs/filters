@@ -14,8 +14,10 @@ import fragment from './advanced-bloom.frag';
 import source from './advanced-bloom.wgsl';
 import { ExtractBrightnessFilter } from './ExtractBrightnessFilter';
 
+import type { FilterOptions } from 'pixi.js';
+
 /** Options for the AdvancedBloomFilter constructor. */
-export interface AdvancedBloomFilterOptions
+export interface AdvancedBloomFilterOptions extends FilterOptions
 {
     /**
      * Defines how bright a color needs to be to affect bloom.
@@ -59,7 +61,7 @@ export interface AdvancedBloomFilterOptions
 export class AdvancedBloomFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: AdvancedBloomFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         threshold: 0.5,
         bloomScale: 1,
         brightness: 1,
@@ -89,6 +91,17 @@ export class AdvancedBloomFilter extends Filter
     {
         options = { ...AdvancedBloomFilter.DEFAULT_OPTIONS, ...options };
 
+        const {
+            threshold,
+            bloomScale,
+            brightness,
+            blur,
+            quality,
+            kernels,
+            pixelSize,
+            ...rest
+        } = options;
+
         const gpuProgram = GpuProgram.from({
             vertex: {
                 source: wgslVertex,
@@ -111,25 +124,26 @@ export class AdvancedBloomFilter extends Filter
             glProgram,
             resources: {
                 advancedBloomUniforms: {
-                    uBloomScale: { value: options.bloomScale, type: 'f32' },
-                    uBrightness: { value: options.brightness, type: 'f32' },
+                    uBloomScale: { value: bloomScale, type: 'f32' },
+                    uBrightness: { value: brightness, type: 'f32' },
                 },
                 uMapTexture: Texture.WHITE,
             },
+            ...rest
         });
 
         this.uniforms = this.resources.advancedBloomUniforms.uniforms;
 
         this._extractFilter = new ExtractBrightnessFilter({
-            threshold: options.threshold
+            threshold
         });
 
         this._blurFilter = new KawaseBlurFilter({
-            strength: options.kernels as [number, number] ?? options.blur,
-            quality: options.kernels ? undefined : options.quality,
+            strength: options.kernels as [number, number] ?? blur,
+            quality: options.kernels ? undefined : quality,
         });
 
-        Object.assign(this, options);
+        Object.assign(this, { threshold, bloomScale, brightness, blur, quality, kernels, pixelSize });
     }
 
     /**

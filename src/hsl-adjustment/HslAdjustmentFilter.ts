@@ -3,10 +3,12 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './hsladjustment.frag';
 import source from './hsladjustment.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 /**
  * Options for the HslAdjustmentFilter constructor.
  */
-export interface HslAdjustmentFilterOptions
+export interface HslAdjustmentFilterOptions extends FilterOptions
 {
     /**
      * The amount of hue in degrees (-180 to 180)
@@ -46,7 +48,7 @@ export interface HslAdjustmentFilterOptions
 export class HslAdjustmentFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: HslAdjustmentFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         hue: 0,
         saturation: 0,
         lightness: 0,
@@ -67,7 +69,14 @@ export class HslAdjustmentFilter extends Filter
      */
     constructor(options?: HslAdjustmentFilterOptions)
     {
-        options = { ...HslAdjustmentFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            hue,
+            saturation,
+            lightness,
+            colorize,
+            alpha,
+            ...rest
+        } = { ...HslAdjustmentFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -92,14 +101,15 @@ export class HslAdjustmentFilter extends Filter
             resources: {
                 hslUniforms: {
                     uHsl: { value: new Float32Array(3), type: 'vec3<f32>' },
-                    uColorize: { value: options.colorize ? 1 : 0, type: 'f32' },
-                    uAlpha: { value: options.alpha, type: 'f32' },
+                    uColorize: { value: colorize ? 1 : 0, type: 'f32' },
+                    uAlpha: { value: alpha, type: 'f32' },
                 },
             },
+            ...rest
         });
 
         this.uniforms = this.resources.hslUniforms.uniforms;
-        Object.assign(this, options);
+        Object.assign(this, { hue, saturation, lightness, colorize, alpha });
     }
 
     /**

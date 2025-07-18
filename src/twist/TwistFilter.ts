@@ -3,8 +3,10 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './twist.frag';
 import source from './twist.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 /** Options for the TwistFilter constructor. */
-export interface TwistFilterOptions
+export interface TwistFilterOptions extends FilterOptions
 {
     /**
      * Padding for the filter area
@@ -40,7 +42,7 @@ export interface TwistFilterOptions
 export class TwistFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: TwistFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         padding: 20,
         radius: 200,
         angle: 4,
@@ -57,7 +59,12 @@ export class TwistFilter extends Filter
      */
     constructor(options?: Partial<TwistFilterOptions>)
     {
-        options = { ...TwistFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            radius,
+            angle,
+            offset,
+            ...rest
+        } = { ...TwistFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -82,16 +89,16 @@ export class TwistFilter extends Filter
             resources: {
                 twistUniforms: {
                     uTwist: {
-                        value: [options.radius ?? 0, options.angle ?? 0],
+                        value: [radius ?? 0, angle ?? 0],
                         type: 'vec2<f32>'
                     },
                     uOffset: {
-                        value: options.offset,
+                        value: offset,
                         type: 'vec2<f32>'
                     },
                 }
             },
-            ...options,
+            ...rest,
         });
 
         this.uniforms = this.resources.twistUniforms.uniforms;

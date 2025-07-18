@@ -3,6 +3,8 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './tilt-shift.frag';
 import source from './tilt-shift.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 // @author Vico @vicocotea
 // original filter https://github.com/evanw/glfx.js/blob/master/src/filters/blur/tiltshift.js
 // by Evan Wallace : http://madebyevan.com/
@@ -10,7 +12,7 @@ import source from './tilt-shift.wgsl';
 /**
  * Options for creating filter.
  */
-interface TiltShiftAxisFilterOptions
+interface TiltShiftAxisFilterOptions extends FilterOptions
 {
     /** The strength of the blur. */
     blur?: number;
@@ -34,7 +36,7 @@ interface TiltShiftAxisFilterOptions
 export class TiltShiftAxisFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: TiltShiftAxisFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         /** The strength of the blur. */
         blur: 100,
         /** The strength of the blur gradient */
@@ -54,7 +56,14 @@ export class TiltShiftAxisFilter extends Filter
     {
         const { width, height } = ViewSystem.defaultOptions as { width: number, height: number };
 
-        options = {
+        const {
+            blur,
+            gradientBlur,
+            start,
+            end,
+            axis,
+            ...rest
+        } = {
             ...TiltShiftAxisFilter.DEFAULT_OPTIONS,
             /** The position to start the effect at. */
             start: { x: 0, y: height / 2 },
@@ -87,19 +96,20 @@ export class TiltShiftAxisFilter extends Filter
                 tiltShiftUniforms: {
                     uBlur: {
                         value: new Float32Array([
-                            options.blur as number,
-                            options.gradientBlur as number,
+                            blur as number,
+                            gradientBlur as number,
                         ]), type: 'vec2<f32>'
                     },
-                    uStart: { value: options.start, type: 'vec2<f32>' },
-                    uEnd: { value: options.end, type: 'vec2<f32>' },
+                    uStart: { value: start, type: 'vec2<f32>' },
+                    uEnd: { value: end, type: 'vec2<f32>' },
                     uDelta: { value: new Float32Array([0, 0]), type: 'vec2<f32>' },
                 },
             },
+            ...rest,
         });
 
         this.uniforms = this.resources.tiltShiftUniforms.uniforms;
-        this._tiltAxis = options.axis;
+        this._tiltAxis = axis;
     }
 
     /**

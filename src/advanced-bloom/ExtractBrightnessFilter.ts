@@ -3,7 +3,9 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './extract-brightness.frag';
 import source from './extract-brightness.wgsl';
 
-export interface ExtractBrightnessFilterOptions
+import type { FilterOptions } from 'pixi.js';
+
+export interface ExtractBrightnessFilterOptions extends FilterOptions
 {
     /**
      * Defines how bright a color needs to be extracted.
@@ -19,7 +21,7 @@ export interface ExtractBrightnessFilterOptions
 export class ExtractBrightnessFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: ExtractBrightnessFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         threshold: 0.5
     };
 
@@ -29,7 +31,10 @@ export class ExtractBrightnessFilter extends Filter
 
     constructor(options?: ExtractBrightnessFilterOptions)
     {
-        options = { ...ExtractBrightnessFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            threshold,
+            ...rest
+        } = { ...ExtractBrightnessFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -53,9 +58,10 @@ export class ExtractBrightnessFilter extends Filter
             glProgram,
             resources: {
                 extractBrightnessUniforms: {
-                    uThreshold: { value: options.threshold, type: 'f32' },
+                    uThreshold: { value: threshold, type: 'f32' },
                 }
             },
+            ...rest
         });
 
         this.uniforms = this.resources.extractBrightnessUniforms.uniforms;

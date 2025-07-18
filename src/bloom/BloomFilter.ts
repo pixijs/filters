@@ -10,10 +10,12 @@ import {
     TexturePool,
 } from 'pixi.js';
 
+import type { AlphaFilterOptions } from 'pixi.js';
+
 type DeprecatedBlurValue = number | PointData | number[];
 
 /** Options for the BloomFilter constructor. */
-export interface BloomFilterOptions
+export interface BloomFilterOptions extends Partial<AlphaFilterOptions>
 {
     /**
      * Sets the strength of the blur. If only a number is provided, it will assign to both x and y.
@@ -48,7 +50,7 @@ export interface BloomFilterOptions
 export class BloomFilter extends AlphaFilter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: BloomFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         strength: { x: 2, y: 2 },
         quality: 4,
         resolution: 1,
@@ -95,21 +97,28 @@ export class BloomFilter extends AlphaFilter
 
         options = { ...BloomFilter.DEFAULT_OPTIONS, ...options } as BloomFilterOptions;
 
-        super();
+        const {
+            strength,
+            quality,
+            resolution,
+            kernelSize
+        } = options;
+
+        super({ alpha: options?.alpha ?? 1 });
 
         this._strength = { x: 2, y: 2 };
 
-        if (options.strength)
+        if (strength)
         {
-            if (typeof options.strength === 'number')
+            if (typeof strength === 'number')
             {
-                this._strength.x = options.strength;
-                this._strength.y = options.strength;
+                this._strength.x = strength;
+                this._strength.y = strength;
             }
             else
             {
-                this._strength.x = options.strength.x;
-                this._strength.y = options.strength.y;
+                this._strength.x = strength.x;
+                this._strength.y = strength.y;
             }
         }
 
@@ -127,7 +136,7 @@ export class BloomFilter extends AlphaFilter
 
         this._blurYFilter.blendMode = 'screen';
 
-        Object.assign(this, options);
+        Object.assign(this, { strength, quality, resolution, kernelSize });
     }
 
     /**

@@ -5,10 +5,10 @@ import source from './god-ray.wgsl';
 import perlin from './perlin.frag';
 import sourcePerlin from './perlin.wgsl';
 
-import type { FilterSystem, PointData, RenderSurface, Texture } from 'pixi.js';
+import type { FilterOptions, FilterSystem, PointData, RenderSurface, Texture } from 'pixi.js';
 
 /** Options for the GodrayFilter constructor. */
-export interface GodrayFilterOptions
+export interface GodrayFilterOptions extends FilterOptions
 {
     /**
      * The angle/light-source of the rays in degrees. For instance,
@@ -66,7 +66,7 @@ export interface GodrayFilterOptions
 export class GodrayFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: GodrayFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         angle: 30,
         gain: 0.5,
         lacunarity: 2.5,
@@ -100,7 +100,16 @@ export class GodrayFilter extends Filter
      */
     constructor(options?: GodrayFilterOptions)
     {
-        options = { ...GodrayFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            angle,
+            gain,
+            lacunarity,
+            parallel,
+            time,
+            center,
+            alpha,
+            ...rest
+        } = { ...GodrayFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -126,16 +135,17 @@ export class GodrayFilter extends Filter
                     uLight: { value: new Float32Array(2), type: 'vec2<f32>' },
                     uParallel: { value: 0, type: 'f32' },
                     uAspect: { value: 0, type: 'f32' },
-                    uTime: { value: options.time, type: 'f32' },
+                    uTime: { value: time, type: 'f32' },
                     uRay: { value: new Float32Array(3), type: 'vec3<f32>' },
                     uDimensions: { value: new Float32Array(2), type: 'vec2<f32>' },
                 }
             },
+            ...rest
         });
 
         this.uniforms = this.resources.godrayUniforms.uniforms;
 
-        Object.assign(this, options);
+        Object.assign(this, { angle, gain, lacunarity, parallel, time, center, alpha });
     }
 
     /**

@@ -3,12 +3,14 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './convolution.frag';
 import source from './convolution.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 type FixedArray<T, L extends number> = [ T, ...Array<T> ] & { length: L };
 
 export type ConvolutionMatrix = Float32Array | FixedArray<number, 9>;
 
 /** Options for the ConvolutionFilter constructor. */
-export interface ConvolutionFilterOptions
+export interface ConvolutionFilterOptions extends FilterOptions
 {
     /**
      * An array of values used for matrix transformation, specified as a 9 point Array
@@ -44,7 +46,7 @@ export interface ConvolutionFilterOptions
 export class ConvolutionFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: ConvolutionFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         matrix: new Float32Array(9),
         width: 200,
         height: 200,
@@ -86,8 +88,14 @@ export class ConvolutionFilter extends Filter
 
         options = { ...ConvolutionFilter.DEFAULT_OPTIONS, ...options };
 
-        const width = options.width ?? 200;
-        const height = options.height ?? 200;
+        options.width = options?.width ?? 200;
+        options.height = options?.height ?? 200;
+        const {
+            matrix,
+            width,
+            height,
+            ...rest
+        } = options;
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -111,10 +119,11 @@ export class ConvolutionFilter extends Filter
             glProgram,
             resources: {
                 convolutionUniforms: {
-                    uMatrix: { value: options.matrix, type: 'mat3x3<f32>' },
-                    uTexelSize: { value: { x: 1 / width, y: 1 / height }, type: 'vec2<f32>' },
+                    uMatrix: { value: matrix, type: 'mat3x3<f32>' },
+                    uTexelSize: { value: { x: 1 / (width ?? 200), y: 1 / (height ?? 200) }, type: 'vec2<f32>' },
                 },
             },
+            ...rest
         });
 
         this.uniforms = this.resources.convolutionUniforms.uniforms;

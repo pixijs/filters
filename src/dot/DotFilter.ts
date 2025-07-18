@@ -3,8 +3,10 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './dot.frag';
 import source from './dot.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 /** Options for the DotFilter constructor. */
-export interface DotFilterOptions
+export interface DotFilterOptions extends FilterOptions
 {
     /**
      * The scale of the effect
@@ -36,7 +38,7 @@ export interface DotFilterOptions
 export class DotFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: DotFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         scale: 1,
         angle: 5,
         grayscale: true
@@ -70,12 +72,17 @@ export class DotFilter extends Filter
             if (args[2] !== undefined) options.grayscale = args[2];
         }
 
-        options = { ...DotFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            scale,
+            angle,
+            grayscale,
+            ...rest
+        } = { ...DotFilter.DEFAULT_OPTIONS, ...options };
 
         const dotUniforms = {
-            uScale: { value: options.scale, type: 'f32' },
-            uAngle: { value: options.angle, type: 'f32' },
-            uGrayScale: { value: options.grayscale ? 1 : 0, type: 'f32' },
+            uScale: { value: scale, type: 'f32' },
+            uAngle: { value: angle, type: 'f32' },
+            uGrayScale: { value: grayscale ? 1 : 0, type: 'f32' },
         };
 
         const gpuProgram = GpuProgram.from({
@@ -101,6 +108,7 @@ export class DotFilter extends Filter
             resources: {
                 dotUniforms,
             },
+            ...rest
         });
     }
 

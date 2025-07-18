@@ -3,10 +3,10 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './crt.frag';
 import source from './crt.wgsl';
 
-import type { FilterSystem, RenderSurface, Texture } from 'pixi.js';
+import type { FilterOptions, FilterSystem, RenderSurface, Texture } from 'pixi.js';
 
 /** Options for the CRTFilter constructor. */
-export interface CRTFilterOptions
+export interface CRTFilterOptions extends FilterOptions
 {
     /**
      * Bend of interlaced lines, higher value means more bend
@@ -77,7 +77,7 @@ export interface CRTFilterOptions
 export class CRTFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: CRTFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         curvature: 1.0,
         lineWidth: 1.0,
         lineContrast: 0.25,
@@ -118,6 +118,20 @@ export class CRTFilter extends Filter
     constructor(options?: CRTFilterOptions)
     {
         options = { ...CRTFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            curvature,
+            lineWidth,
+            lineContrast,
+            verticalLine,
+            noise,
+            noiseSize,
+            vignetting,
+            vignettingAlpha,
+            vignettingBlur,
+            time,
+            seed,
+            ...rest
+        } = options;
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -144,16 +158,29 @@ export class CRTFilter extends Filter
                     uLine: { value: new Float32Array(4), type: 'vec4<f32>' },
                     uNoise: { value: new Float32Array(2), type: 'vec2<f32>' },
                     uVignette: { value: new Float32Array(3), type: 'vec3<f32>' },
-                    uSeed: { value: options.seed, type: 'f32' },
-                    uTime: { value: options.time, type: 'f32' },
+                    uSeed: { value: seed, type: 'f32' },
+                    uTime: { value: time, type: 'f32' },
                     uDimensions: { value: new Float32Array(2), type: 'vec2<f32>' },
                 }
             },
+            ...rest
         });
 
         this.uniforms = this.resources.crtUniforms.uniforms;
 
-        Object.assign(this, options);
+        Object.assign(this, {
+            curvature,
+            lineWidth,
+            lineContrast,
+            verticalLine,
+            noise,
+            noiseSize,
+            vignetting,
+            vignettingAlpha,
+            vignettingBlur,
+            time,
+            seed
+        });
     }
 
     /**

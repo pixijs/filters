@@ -12,8 +12,10 @@ import { vertex, wgslVertex } from '../defaults';
 import fragment from './shockwave.frag';
 import source from './shockwave.wgsl';
 
+import type { FilterOptions } from 'pixi.js';
+
 /** Options for the ShockwaveFilter constructor. */
-export interface ShockwaveFilterOptions
+export interface ShockwaveFilterOptions extends FilterOptions
 {
     /**
      * The `x` and `y` center coordinates to change the position of the center of the circle of effect.
@@ -62,7 +64,7 @@ export interface ShockwaveFilterOptions
 export class ShockwaveFilter extends Filter
 {
     /** Default shockwave filter options */
-    public static readonly DEFAULT_OPTIONS: ShockwaveFilterOptions = {
+    public static readonly DEFAULT_OPTIONS = {
         /** The `x` and `y` center coordinates to change the position of the center of the circle of effect. */
         center: { x: 0, y: 0 },
         /** The speed about the shockwave ripples out. The unit is `pixel-per-second` */
@@ -120,7 +122,16 @@ export class ShockwaveFilter extends Filter
             if (args[2] !== undefined) options.time = args[2];
         }
 
-        options = { ...ShockwaveFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            center,
+            speed,
+            amplitude,
+            wavelength,
+            brightness,
+            radius,
+            time,
+            ...rest
+        } = { ...ShockwaveFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -144,19 +155,20 @@ export class ShockwaveFilter extends Filter
             glProgram,
             resources: {
                 shockwaveUniforms: {
-                    uTime: { value: options.time, type: 'f32' },
-                    uCenter: { value: options.center, type: 'vec2<f32>' },
-                    uSpeed: { value: options.speed, type: 'f32' },
+                    uTime: { value: time, type: 'f32' },
+                    uCenter: { value: center, type: 'vec2<f32>' },
+                    uSpeed: { value: speed, type: 'f32' },
                     uWave: { value: new Float32Array(4), type: 'vec4<f32>' },
                 },
             },
+            ...rest
         });
 
         this.time = 0;
 
         this.uniforms = this.resources.shockwaveUniforms.uniforms;
 
-        Object.assign(this, options);
+        Object.assign(this, { center, speed, amplitude, wavelength, brightness, radius, time });
     }
 
     public override apply(
