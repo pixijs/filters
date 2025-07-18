@@ -1,6 +1,6 @@
 struct MotionBlurUniforms {
   uVelocity: vec2<f32>,
-  uKernelSize: f32,
+  uKernelSize: i32,
   uOffset: f32,
 };
 
@@ -30,7 +30,7 @@ fn mainFragment(
 
   let velocity: vec2<f32> = uVelocity / gfu.uInputSize.xy;
   let offset: f32 = -uOffset / length(uVelocity) - 0.5;
-  let k: i32 = i32(min(uKernelSize - 1, MAX_KERNEL_SIZE - 1));
+  let k: i32 = min(uKernelSize - 1, MAX_KERNEL_SIZE - 1);
 
   var color: vec4<f32> = textureSample(uTexture, uSampler, uv);
 
@@ -42,4 +42,4 @@ fn mainFragment(
   return select(color / f32(uKernelSize), textureSample(uTexture, uSampler, uv), uKernelSize == 0);
 }
 
-const MAX_KERNEL_SIZE: f32 = 2048;
+const MAX_KERNEL_SIZE: i32 = 2048;
