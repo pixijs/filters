@@ -99,9 +99,9 @@ export class RGBSplitFilter extends Filter
             glProgram,
             resources: {
                 rgbSplitUniforms: {
-                    uRed: { value: options.red, type: 'vec2<f32>' },
-                    uGreen: { value: options.green, type: 'vec2<f32>' },
-                    uBlue: { value: options.blue, type: 'vec2<f32>' },
+                    uRed: { value: { x: 0, y: 0 }, type: 'vec2<f32>' },
+                    uGreen: { value: { x: 0, y: 0 }, type: 'vec2<f32>' },
+                    uBlue: { value: { x: 0, y: 0 }, type: 'vec2<f32>' },
                 }
             },
         });

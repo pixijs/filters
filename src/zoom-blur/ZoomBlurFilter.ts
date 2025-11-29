@@ -92,7 +92,7 @@ export class ZoomBlurFilter extends Filter
             resources: {
                 zoomBlurUniforms: {
                     uStrength: { value: options.strength, type: 'f32' },
-                    uCenter: { value: options.center, type: 'vec2<f32>' },
+                    uCenter: { value: { x: 0, y: 0 }, type: 'vec2<f32>' },
                     uRadii: { value: new Float32Array(2), type: 'vec2<f32>' },
                 }
             },
@@ -112,7 +112,7 @@ export class ZoomBlurFilter extends Filter
 
     /**
      * The center of the zoom
-     * @default [0,0]
+     * @default {x:0,y:0}
      */
     get center(): PointData { return this.uniforms.uCenter; }
     set center(value: PointData | number[])

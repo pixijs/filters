@@ -79,7 +79,7 @@ export class BulgePinchFilter extends Filter
             resources: {
                 bulgePinchUniforms: {
                     uDimensions: { value: [0, 0], type: 'vec2<f32>' },
-                    uCenter: { value: options.center, type: 'vec2<f32>' },
+                    uCenter: { value: { x: 0, y: 0 }, type: 'vec2<f32>' },
                     uRadius: { value: options.radius, type: 'f32' },
                     uStrength: { value: options.strength, type: 'f32' },
                 }
