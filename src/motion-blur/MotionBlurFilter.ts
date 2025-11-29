@@ -105,7 +105,7 @@ export class MotionBlurFilter extends Filter
             glProgram,
             resources: {
                 motionBlurUniforms: {
-                    uVelocity: { value: options.velocity, type: 'vec2<f32>' },
+                    uVelocity: { value: { x: 0, y: 0 }, type: 'vec2<f32>' },
                     uKernelSize: { value: Math.trunc(options.kernelSize ?? 5), type: 'i32' },
                     uOffset: { value: options.offset, type: 'f32' },
                 }

@@ -120,7 +120,7 @@ export class RadialBlurFilter extends Filter
             resources: {
                 radialBlurUniforms: {
                     uRadian: { value: 0, type: 'f32' },
-                    uCenter: { value: options.center, type: 'vec2<f32>' },
+                    uCenter: { value: { x: 0, y: 0 }, type: 'vec2<f32>' },
                     uKernelSize: { value: options.kernelSize, type: 'i32' },
                     uRadius: { value: options.radius, type: 'f32' },
                 }
