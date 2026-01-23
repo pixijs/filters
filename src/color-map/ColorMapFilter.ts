@@ -173,7 +173,6 @@ export class ColorMapFilter extends Filter
             throw new Error('The color map must have a resolution that matches H x H**2');
         }
 
-        source.style.scaleMode = this._nearest ? 'nearest' : 'linear';
         source.autoGenerateMipmaps = false;
 
         this._size = source.height;
@@ -185,6 +184,7 @@ export class ColorMapFilter extends Filter
         this.resources.uMapTexture = source;
         this.resources.uMapSampler = source.style;
         this._colorMap = value;
+        this.nearest = this._nearest;
     }
 
     /** Whether use NEAREST for colorMap texture. Does not affect alpha. */
