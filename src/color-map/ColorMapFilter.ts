@@ -1,14 +1,40 @@
-import { deprecation, Filter, GlProgram, GpuProgram, SCALE_MODE, Texture, TextureSource } from 'pixi.js';
+import { deprecation, Filter, GlProgram, GpuProgram, Texture, TextureSource } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './color-map.frag';
 import source from './color-map.wgsl';
 
+/**
+ * The texture must be `height` x `height^2` and divided into square slices.
+ * Each slice maps a color channel from 0-1 along the positive x (red) and y
+ * (green) axis. Each slice in sequence maps the shift in the blue channel.
+ *
+ * A 2x4 map would therefore look like this (each sub array is a row and each sub array
+ * of those represents an [r, g, b] pixel):
+ * ```
+ * [
+ *   [[0, 0, 0], [1, 0, 0], [0, 0, 1], [1, 0, 1]],
+ *   [[0, 1, 0], [1, 1, 0], [0, 1, 1], [1, 1, 1]]
+ * ]
+ * ```
+ *
+ * The first two pixels of each row are used to sample the color where the blue channel
+ * is 0 and pixel three and four are for where the blue channel is 1. The map can not
+ * transform alpha.
+ *
+ * This is a very small map and will not look very smooth.
+ * A usably large map would be to big to show as an example.
+ *
+ * A common pitfall when generating a color map texture is forgetting to work in
+ * a linear color space.
+ **/
 type ColorMapTexture = TextureSource | Texture;
 
 /** Options for the ColorMapFilter constructor. */
 export interface ColorMapFilterOptions
 {
-    /** The colorMap texture of the filter. */
+    /**
+     * The colorMap texture.
+     **/
     colorMap: ColorMapTexture;
     /**
      *  The mix from 0 to 1, where 0 is the original image and 1 is the color mapped image.
@@ -16,15 +42,14 @@ export interface ColorMapFilterOptions
      */
     mix?: number;
     /**
-     * Whether use NEAREST scale mode for `colorMap` texture.
+     * Whether use NEAREST scale mode for `colorMap` texture. Does not affect alpha.
      * @default false
      */
     nearest?: boolean;
 }
 
 /**
- * The ColorMapFilter applies a color-map effect to an object.<br>
- * ![original](../screenshots/original.png)![filter](../screenshots/color-map.png)
+ * The ColorMapFilter applies a color-map effect.
  *
  * @class
  * @extends Filter
@@ -41,18 +66,14 @@ export class ColorMapFilter extends Filter
     public uniforms: {
         uMix: number;
         uSize: number;
-        uSliceSize: number;
+        uPixelSize: number;
         uSlicePixelSize: number;
-        uSliceInnerSize: number;
+        uNearest: number;
     };
 
     private _size = 0;
-    private _sliceSize = 0;
-    private _slicePixelSize = 0;
-    private _sliceInnerSize = 0;
     private _nearest = false;
-    private _scaleMode: SCALE_MODE = 'linear';
-    private _colorMap!: ColorMapTexture;
+    private _colorMap: ColorMapTexture;
 
     /**
      * @param options - Options for the ColorMapFilter constructor.
@@ -108,21 +129,23 @@ export class ColorMapFilter extends Filter
             gpuProgram,
             glProgram,
             resources: {
-                colorMapUniforms: {
+                cmu: {
                     uMix: { value: options.mix, type: 'f32' },
                     uSize: { value: 0, type: 'f32' },
-                    uSliceSize: { value: 0, type: 'f32' },
+                    uPixelSize: { value: 0, type: 'f32' },
                     uSlicePixelSize: { value: 0, type: 'f32' },
-                    uSliceInnerSize: { value: 0, type: 'f32' },
+                    uNearest: { value: 0, type: 'f32' },
                 },
                 uMapTexture: options.colorMap.source,
                 uMapSampler: options.colorMap.source.style,
             },
         });
 
-        this.uniforms = this.resources.colorMapUniforms.uniforms;
+        this.uniforms = this.resources.cmu.uniforms;
 
-        Object.assign(this, options);
+        this.colorMap = options.colorMap;
+        this._colorMap = options.colorMap;
+        this.nearest = options.nearest ?? this.nearest;
     }
 
     /** The mix from 0 to 1, where 0 is the original image and 1 is the color mapped image. */
@@ -135,67 +158,64 @@ export class ColorMapFilter extends Filter
      */
     get colorSize(): number { return this._size; }
 
-    /** The colorMap texture. */
+    /**
+     * @inheritdoc ColorMapFilterOptions.colorMap
+     **/
     get colorMap(): ColorMapTexture { return this._colorMap; }
     set colorMap(value: ColorMapTexture)
     {
-        if (!value || value === this.colorMap) return;
+        if (!value) return;
 
         const source = value instanceof Texture ? value.source : value;
 
-        source.style.scaleMode = this._scaleMode;
+        if (source.height !== source.width / source.height)
+        {
+            throw new Error('The color map must have a resolution that matches H x H**2');
+        }
+
         source.autoGenerateMipmaps = false;
 
         this._size = source.height;
-        this._sliceSize = 1 / this._size;
-        this._slicePixelSize = this._sliceSize / this._size;
-        this._sliceInnerSize = this._slicePixelSize * (this._size - 1);
 
-        this.uniforms.uSize = this._size;
-        this.uniforms.uSliceSize = this._sliceSize;
-        this.uniforms.uSlicePixelSize = this._slicePixelSize;
-        this.uniforms.uSliceInnerSize = this._sliceInnerSize;
+        this.uniforms.uSize = source.height;
+        this.uniforms.uPixelSize = 1 / source.height;
+        this.uniforms.uSlicePixelSize = this.uniforms.uPixelSize / source.height;
 
         this.resources.uMapTexture = source;
+        this.resources.uMapSampler = source.style;
         this._colorMap = value;
+        this.nearest = this._nearest;
     }
 
-    /** Whether use NEAREST for colorMap texture. */
+    /** Whether use NEAREST for colorMap texture. Does not affect alpha. */
     get nearest(): boolean { return this._nearest; }
     set nearest(nearest: boolean)
     {
         this._nearest = nearest;
-        this._scaleMode = nearest ? 'nearest' : 'linear';
 
-        const texture = this._colorMap;
+        if (!this._colorMap?.source) return;
 
-        if (texture && texture.source)
-        {
-            texture.source.scaleMode = this._scaleMode;
-            texture.source.autoGenerateMipmaps = false;
-            texture.source.style.update();
-            texture.source.update();
-        }
+        this._colorMap.source.scaleMode = this._nearest ? 'nearest' : 'linear';
+        this._colorMap.source.autoGenerateMipmaps = false;
+        this._colorMap.source.style.update();
+        this._colorMap.source.update();
     }
 
     /**
      * If the colorMap is based on canvas,
-     * and the content of canvas has changed, then call `updateColorMap` for update texture.
+     * and the content of canvas has changed,
+     * then call `updateColorMap` for update texture.
      */
     updateColorMap(): void
     {
-        const texture = this._colorMap;
+        if (!this._colorMap?.source) return;
 
-        if (texture?.source)
-        {
-            texture.source.update();
-            this.colorMap = texture;
-        }
+        this._colorMap.source.update();
+        this.colorMap = this._colorMap;
     }
 
     /**
      * Destroys this filter
-     * @default false
      */
     destroy(): void
     {
