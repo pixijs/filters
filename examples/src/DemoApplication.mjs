@@ -228,16 +228,16 @@ export default class DemoApplication extends PIXI.Application
         }
 
         // Animate the overlay
-        overlay.tilePosition.x = animateTimer * -1;
-        overlay.tilePosition.y = animateTimer * -1;
+        overlay.tilePosition.x += delta * -1;
+        overlay.tilePosition.y += delta * -1;
 
         for (let i = 0; i < this.fishes.length; i++)
         {
             const fish = this.fishes[i];
 
-            fish.direction += fish.turnSpeed * 0.01;
-            fish.x += Math.sin(fish.direction) * fish.speed;
-            fish.y += Math.cos(fish.direction) * fish.speed;
+            fish.direction += fish.turnSpeed * 0.01 * delta;
+            fish.x += Math.sin(fish.direction) * fish.speed * delta;
+            fish.y += Math.cos(fish.direction) * fish.speed * delta;
 
             fish.rotation = -fish.direction - (Math.PI / 2);
 
