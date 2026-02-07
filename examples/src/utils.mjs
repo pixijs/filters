@@ -37,7 +37,8 @@ export function createTransparencyTexture(app, side, colorA, colorB)
                     height: halfSide,
                     x: halfSide,
                     y: 0,
-                }),new PIXI.Sprite({
+                }),
+                new PIXI.Sprite({
                     texture: PIXI.Texture.WHITE,
                     tint: colorB,
                     width: halfSide,
@@ -55,7 +56,7 @@ export function createTransparencyTexture(app, side, colorA, colorB)
                 }),
             ]
         })
-    })
+    });
 
     return texture;
 }

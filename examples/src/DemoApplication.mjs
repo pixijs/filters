@@ -1,4 +1,4 @@
-import { createTransparencyTexture } from "./utils.mjs";
+import { createTransparencyTexture } from './utils.mjs';
 
 /** Demo show a bunch of fish and a lil-gui controls */
 export default class DemoApplication extends PIXI.Application
@@ -103,7 +103,7 @@ export default class DemoApplication extends PIXI.Application
             width: initWidth,
             height: initHeight,
         });
-        this.stage.addChild(this.transparency)
+        this.stage.addChild(this.transparency);
 
         // Setup the container
         this.pond = new PIXI.Container();
