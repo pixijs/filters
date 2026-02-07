@@ -4,15 +4,16 @@ export default function ()
     {
         const tColor = {
             targetColor: new PIXI.Color(this.targetColor).toRgbArray(),
-            targetAlpha: 1,
+            alpha: 1,
         };
-        const updateTarget = () => {
-            this.targetColor = [...tColor.targetColor, tColor.targetAlpha];
-        }
+        const updateTarget = () => { this.targetColor = [...tColor.targetColor, tColor.alpha]; };
 
         folder.addColor(this, 'originalColor');
-        folder.addColor(tColor, 'targetColor').onChange(() => updateTarget());
-        folder.add(tColor, 'targetAlpha', 0, 1).name("targetColor alpha").onChange(() => updateTarget());
+        const target = folder.addFolder('Target Color');
+
+        target.addColor(tColor, 'targetColor').onChange(() => updateTarget());
+        target.add(tColor, 'alpha', 0, 1).name("↳ alpha").onChange(() => updateTarget());
         folder.add(this, 'tolerance', 0, 1);
+        folder.add(this, 'smoothness', 0, 1);
     });
 }

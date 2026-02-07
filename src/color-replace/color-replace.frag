@@ -5,13 +5,16 @@ uniform sampler2D uTexture;
 uniform vec3 uOriginalColor;
 uniform vec4 uTargetColor;
 uniform float uTolerance;
+uniform float uSmoothness;
 
 void main(void) {
     vec4 c = texture(uTexture, vTextureCoord);
     float colorDistance = c.a >= 0.00001 ? length(uOriginalColor - (c.rgb / c.a)) : 0.0;
-    float doReplace = step(colorDistance, uTolerance);
+    float doReplace = uSmoothness <= 0.0
+        ? step(uTolerance, colorDistance)
+        : smoothstep(uTolerance - uSmoothness, uTolerance + uSmoothness, colorDistance);
     finalColor = vec4(
-        mix(c.rgb, uTargetColor.rgb * c.a * uTargetColor.a, doReplace),
-        mix(c.a, uTargetColor.a, doReplace)
+        mix(uTargetColor.rgb * c.a * uTargetColor.a, c.rgb, doReplace),
+        mix(uTargetColor.a, c.a, doReplace)
     );
 }
