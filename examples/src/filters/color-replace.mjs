@@ -12,7 +12,7 @@ export default function ()
         const target = folder.addFolder('Target Color');
 
         target.addColor(tColor, 'targetColor').onChange(() => updateTarget());
-        target.add(tColor, 'alpha', 0, 1).name("↳ alpha").onChange(() => updateTarget());
+        target.add(tColor, 'alpha', 0, 1).name('↳ alpha').onChange(() => updateTarget());
         folder.add(this, 'tolerance', 0, 1);
         folder.add(this, 'smoothness', 0, 1);
     });
