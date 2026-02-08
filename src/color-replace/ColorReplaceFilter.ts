@@ -1,4 +1,4 @@
-import { Color, ColorSource, deprecation, Filter, GlProgram, GpuProgram } from 'pixi.js';
+import { Color, ColorSource, deprecation, Filter, FilterOptions, GlProgram, GpuProgram } from 'pixi.js';
 import { vertex, wgslVertex } from '../defaults';
 import fragment from './color-replace.frag';
 import source from './color-replace.wgsl';
@@ -20,8 +20,9 @@ export interface ColorReplaceFilterOptions
      */
     originalColor?: ColorSource;
     /**
-     * The resulting color.
+     * The resulting color. Supports alpha.
      * @example [1.0, 1.0, 1.0] = 0xffffff
+     * @example [1.0, 1.0, 1.0, 0.33] ~= 0xffffff54
      * @default 0x000000
      */
     targetColor?: ColorSource;
@@ -30,6 +31,12 @@ export interface ColorReplaceFilterOptions
      * @default 0.4
      */
     tolerance?: number;
+    /**
+     * How smooth the tolerance is. As long as smoothness is less than or equal to `0` the filter uses a sharp cutoff and
+     * if it is more than `0` it uses `smoothstep` to ease the transition.
+     * @default 0
+     */
+    smoothness?: number;
 }
 
 /**
@@ -46,13 +53,13 @@ export interface ColorReplaceFilterOptions
  *   originalColor: [1, 0, 0],
  *   targetColor: [0, 0, 1],
  *   tolerance: 0.001
- *   })];
+ *  })];
  *  // replaces the RGB color 220, 220, 220 with the RGB color 225, 200, 215
  *  someOtherSprite.filters = [new ColorReplaceFilter({
  *   originalColor: [220/255.0, 220/255.0, 220/255.0],
  *   targetColor: [225/255.0, 200/255.0, 215/255.0],
  *   tolerance: 0.001
- *   })];
+ *  })];
  *  // replaces the RGB color 220, 220, 220 with the RGB color 225, 200, 215
  *  someOtherSprite.filters = [new ColorReplaceFilter({ originalColor: 0xdcdcdc, targetColor: 0xe1c8d7, tolerance: 0.001 })];
  *
@@ -60,25 +67,27 @@ export interface ColorReplaceFilterOptions
 export class ColorReplaceFilter extends Filter
 {
     /** Default values for options. */
-    public static readonly DEFAULT_OPTIONS: ColorReplaceFilterOptions = {
+    public static readonly DEFAULT_OPTIONS: Required<ColorReplaceFilterOptions> & FilterOptions = {
         originalColor: 0xff0000,
         targetColor: 0x000000,
-        tolerance: 0.4
+        tolerance: 0.4,
+        smoothness: 0,
     };
 
     public uniforms: {
-        uOriginalColor: Float32Array,
-        uTargetColor: Float32Array,
-        uTolerance: number,
+        uOriginalColor: Float32Array;
+        uTargetColor: Float32Array;
+        uTolerance: number;
+        uSmoothness: number;
     };
 
-    private _originalColor: Color;
-    private _targetColor: Color;
+    private _originalColor = new Color();
+    private _targetColor = new Color();
 
     /**
      * @param options - Options for the ColorReplaceFilter constructor.
      */
-    constructor(options?: ColorReplaceFilterOptions);
+    constructor(options?: ColorReplaceFilterOptions & FilterOptions);
     /**
      * @deprecated since 6.0.0
      *
@@ -91,7 +100,7 @@ export class ColorReplaceFilter extends Filter
      */
     constructor(originalColor?: number, newColor?: number, epsilon?: number);
     /** @ignore */
-    constructor(...args: [ColorReplaceFilterOptions?] | [DeprecatedColor?, DeprecatedColor?, number?])
+    constructor(...args: [(ColorReplaceFilterOptions & FilterOptions)?] | [DeprecatedColor?, DeprecatedColor?, number?])
     {
         let options = args[0] ?? {};
 
@@ -106,7 +115,13 @@ export class ColorReplaceFilter extends Filter
             if (args[2] !== undefined) options.tolerance = args[2];
         }
 
-        options = { ...ColorReplaceFilter.DEFAULT_OPTIONS, ...options };
+        const {
+            originalColor,
+            targetColor,
+            tolerance,
+            smoothness,
+            ...rest
+        } = { ...ColorReplaceFilter.DEFAULT_OPTIONS, ...options };
 
         const gpuProgram = GpuProgram.from({
             vertex: {
@@ -131,20 +146,20 @@ export class ColorReplaceFilter extends Filter
             resources: {
                 colorReplaceUniforms: {
                     uOriginalColor: { value: new Float32Array(3), type: 'vec3<f32>' },
-                    uTargetColor: { value: new Float32Array(3), type: 'vec3<f32>' },
-                    uTolerance: { value: options.tolerance, type: 'f32' },
+                    uTargetColor: { value: new Float32Array(4), type: 'vec4<f32>' },
+                    uTolerance: { value: tolerance, type: 'f32' },
+                    uSmoothness: { value: smoothness, type: 'f32' },
                 }
             },
+            ...rest,
         });
 
         this.uniforms = this.resources.colorReplaceUniforms.uniforms;
 
-        this._originalColor = new Color();
-        this._targetColor = new Color();
-        this.originalColor = options.originalColor ?? 0xff0000;
-        this.targetColor = options.targetColor ?? 0x000000;
-
-        Object.assign(this, options);
+        this.originalColor = originalColor;
+        this.targetColor = targetColor;
+        this.tolerance = tolerance;
+        this.smoothness = smoothness;
     }
 
     /**
@@ -156,27 +171,20 @@ export class ColorReplaceFilter extends Filter
     set originalColor(value: ColorSource)
     {
         this._originalColor.setValue(value);
-        const [r, g, b] = this._originalColor.toArray();
-
-        this.uniforms.uOriginalColor[0] = r;
-        this.uniforms.uOriginalColor[1] = g;
-        this.uniforms.uOriginalColor[2] = b;
+        this.uniforms.uOriginalColor.set(this._originalColor.toRgbArray(), 0);
     }
 
     /**
       * The resulting color.
       * @example [1.0, 1.0, 1.0] = 0xffffff
+      * @example [1.0, 1.0, 1.0, 1.0] = 0xffffffff
       * @default 0x000000
       */
     get targetColor(): ColorSource { return this._targetColor.value as ColorSource; }
     set targetColor(value: ColorSource)
     {
         this._targetColor.setValue(value);
-        const [r, g, b] = this._targetColor.toArray();
-
-        this.uniforms.uTargetColor[0] = r;
-        this.uniforms.uTargetColor[1] = g;
-        this.uniforms.uTargetColor[2] = b;
+        this.uniforms.uTargetColor.set(this._targetColor.toArray(), 0);
     }
 
     /**
@@ -185,6 +193,13 @@ export class ColorReplaceFilter extends Filter
       */
     get tolerance(): number { return this.uniforms.uTolerance; }
     set tolerance(value: number) { this.uniforms.uTolerance = value; }
+
+    /**
+      * How smooth the tolerance is. `0` is sharp, `1` is very smooth.
+      * @default 0
+      */
+    get smoothness(): number { return this.uniforms.uSmoothness; }
+    set smoothness(value: number) { this.uniforms.uSmoothness = value; }
 
     /**
      * @deprecated since 6.0.0

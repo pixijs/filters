@@ -1,3 +1,5 @@
+import { createTransparencyTexture } from './utils.mjs';
+
 /** Demo show a bunch of fish and a lil-gui controls */
 export default class DemoApplication extends PIXI.Application
 {
@@ -22,6 +24,7 @@ export default class DemoApplication extends PIXI.Application
         this.rendering = true;
         this.events = new PIXI.EventEmitter();
         this.animateTimer = 0;
+        this.transparency = null;
         this.bg = null;
         this.pond = null;
         this.fishCount = 20;
@@ -94,6 +97,14 @@ export default class DemoApplication extends PIXI.Application
         const { resources } = this;
         const { bounds, initWidth, initHeight } = this;
 
+        // Setup transparency background
+        this.transparency = new PIXI.TilingSprite({
+            texture: createTransparencyTexture(this, 24, '#121212', '#1c1c1c'),
+            width: initWidth,
+            height: initHeight,
+        });
+        this.stage.addChild(this.transparency);
+
         // Setup the container
         this.pond = new PIXI.Container();
         this.pond.filterArea = this.filterArea;
@@ -149,7 +160,7 @@ export default class DemoApplication extends PIXI.Application
      */
     handleResize()
     {
-        const { padding, bg, overlay, filterArea, bounds } = this;
+        const { padding, bg, overlay, filterArea, bounds, transparency } = this;
 
         const width = this.domElement.offsetWidth;
         const height = this.domElement.offsetHeight;
@@ -187,6 +198,9 @@ export default class DemoApplication extends PIXI.Application
         filterArea.width = width - (filterAreaPadding * 2);
         filterArea.height = height - (filterAreaPadding * 2);
 
+        transparency.width = width;
+        transparency.height = height;
+
         this.events.emit('resize', width, height);
 
         this.renderer.resize(width, height);
@@ -214,16 +228,16 @@ export default class DemoApplication extends PIXI.Application
         }
 
         // Animate the overlay
-        overlay.tilePosition.x = animateTimer * -1;
-        overlay.tilePosition.y = animateTimer * -1;
+        overlay.tilePosition.x += delta * -1;
+        overlay.tilePosition.y += delta * -1;
 
         for (let i = 0; i < this.fishes.length; i++)
         {
             const fish = this.fishes[i];
 
-            fish.direction += fish.turnSpeed * 0.01;
-            fish.x += Math.sin(fish.direction) * fish.speed;
-            fish.y += Math.cos(fish.direction) * fish.speed;
+            fish.direction += fish.turnSpeed * 0.01 * delta;
+            fish.x += Math.sin(fish.direction) * fish.speed * delta;
+            fish.y += Math.cos(fish.direction) * fish.speed * delta;
 
             fish.rotation = -fish.direction - (Math.PI / 2);
 
@@ -335,8 +349,6 @@ export default class DemoApplication extends PIXI.Application
                 }
 
                 this.pondFilters = pondFilters;
-                // TODO: seems like a bug, requiring invalidation
-                this.pond.filters = [];
                 this.pond.filters = pondFilters;
             }
         };
