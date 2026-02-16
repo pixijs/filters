@@ -390,9 +390,9 @@ export class DropShadowFilter extends Filter
 
         // Optimized padding calculation for mobile performance
         // Old formula: offsetPadding + (blur * 2) + (quality * 4)
-        // New formula reduces excessive padding on high-quality settings
-        const blurPadding = Math.ceil(currentBlur * 1.5);
-        const qualityPadding = Math.min(currentQuality * 2, 8); // Cap quality padding to prevent excessive texture sizes
+        // New formula: more conservative optimization to prevent visual artifacts
+        const blurPadding = Math.ceil(currentBlur * 1.8); // Less aggressive than 1.5, safer than 2.0
+        const qualityPadding = Math.min(currentQuality * 2.5, 12); // Higher cap to prevent artifacts
         
         const newPadding = offsetPadding + blurPadding + qualityPadding;
         
