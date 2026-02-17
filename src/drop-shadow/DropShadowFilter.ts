@@ -388,13 +388,13 @@ export class DropShadowFilter extends Filter
             Math.abs(currentOffsetY),
         );
 
-        // Optimized padding calculation for mobile performance
-        // Old formula: offsetPadding + (blur * 2) + (quality * 4)
-        // New formula: more conservative optimization to prevent visual artifacts
-        const blurPadding = Math.ceil(currentBlur * 1.8); // Less aggressive than 1.5, safer than 2.0
-        const qualityPadding = Math.min(currentQuality * 2.5, 12); // Higher cap to prevent artifacts
+        // Mobile-optimized padding: reduce where safe, but never below the original formula
+        // to prevent shadow clipping at any blur/quality combination.
+        const optimizedPadding = Math.ceil(currentBlur * 1.8) + Math.min(currentQuality * 2.5, 12);
+        const safePadding = (currentBlur * 2) + (currentQuality * 4);
+        const blurQualityPadding = Math.max(optimizedPadding, safePadding);
         
-        const newPadding = offsetPadding + blurPadding + qualityPadding;
+        const newPadding = offsetPadding + blurQualityPadding;
         
         // Update cache
         this._lastPadding = newPadding;
