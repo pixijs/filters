@@ -191,6 +191,165 @@ export class KawaseBlurFilter extends Filter
     }
 
     /**
+     * Applies the blur at a reduced resolution for better performance on mobile/Apple GPUs.
+     *
+     * Instead of blurring at full resolution, this method:
+     * 1. Downscales the input to the given `scaleFactor` (e.g. 0.5 = half resolution)
+     * 2. Performs all blur passes at the reduced resolution
+     * 3. Upscales the result back to the output
+     *
+     * This dramatically reduces per-pixel work and texture bandwidth per pass,
+     * which is the primary bottleneck on tile-based deferred rendering (TBDR)
+     * GPUs used by Apple (M-series, A-series).
+     *
+     * @param filterManager - The filter manager
+     * @param input - The input texture
+     * @param output - The output render surface
+     * @param clearMode - Whether to clear the output
+     * @param scaleFactor - The downscale factor (0.5 = half resolution). Must be > 0 and <= 1.
+     */
+    public applyDownsampled(
+        filterManager: FilterSystem,
+        input: Texture,
+        output: RenderSurface,
+        clearMode: boolean,
+        scaleFactor = 0.5,
+    ): void
+    {
+        // Clamp scaleFactor to a valid range
+        scaleFactor = Math.min(1, Math.max(0.125, scaleFactor));
+
+        // If scale factor is 1, just apply normally
+        if (scaleFactor >= 1)
+        {
+            this.apply(filterManager, input, output, clearMode);
+
+            return;
+        }
+
+        // If blur is 0, nothing to do
+        if (this._blur === 0)
+        {
+            filterManager.applyFilter(this, input, output, clearMode);
+
+            return;
+        }
+
+        const scaledWidth = Math.max(1, Math.round(input.frame.width * scaleFactor));
+        const scaledHeight = Math.max(1, Math.round(input.frame.height * scaleFactor));
+        const resolution = input.source._resolution;
+
+        // Get a downscaled texture for blur processing
+        const downscaled = TexturePool.getOptimalTexture(
+            scaledWidth, scaledHeight, resolution, false
+        );
+
+        // Downsample: render input into the smaller texture
+        filterManager.applyFilter(this._getPassthroughFilter(), input, downscaled, true);
+
+        // Compute UV offsets relative to the downscaled texture size
+        const uvX = this.pixelSizeX / downscaled.source.width;
+        const uvY = this.pixelSizeY / downscaled.source.height;
+
+        if (this._quality === 1)
+        {
+            const offset = this._kernels[0] + 0.5;
+
+            this.uniforms.uOffset[0] = offset * uvX;
+            this.uniforms.uOffset[1] = offset * uvY;
+
+            // Blur at low res, output directly to the upscaled output
+            filterManager.applyFilter(this, downscaled, output, clearMode);
+        }
+        else
+        {
+            // We need a second downscaled texture for ping-pong
+            const pingPong = TexturePool.getOptimalTexture(
+                scaledWidth, scaledHeight, resolution, false
+            );
+
+            let source: Texture = downscaled;
+            let target: Texture = pingPong;
+
+            const last = this._quality - 1;
+
+            for (let i = 0; i < last; i++)
+            {
+                const offset = this._kernels[i] + 0.5;
+
+                this.uniforms.uOffset[0] = offset * uvX;
+                this.uniforms.uOffset[1] = offset * uvY;
+                filterManager.applyFilter(this, source, target, true);
+
+                // Swap
+                const tmp = source;
+
+                source = target;
+                target = tmp;
+            }
+
+            // Final pass: render from downscaled to full-res output (implicit upscale)
+            const offset = this._kernels[last] + 0.5;
+
+            this.uniforms.uOffset[0] = offset * uvX;
+            this.uniforms.uOffset[1] = offset * uvY;
+            filterManager.applyFilter(this, source, output, clearMode);
+
+            TexturePool.returnTexture(pingPong);
+        }
+
+        TexturePool.returnTexture(downscaled);
+    }
+
+    /** A simple passthrough filter used for downsampling/upsampling via the GPU's bilinear filtering */
+    private _passthroughFilter: Filter | null = null;
+
+    private _getPassthroughFilter(): Filter
+    {
+        if (!this._passthroughFilter)
+        {
+            this._passthroughFilter = new Filter({
+                gpuProgram: GpuProgram.from({
+                    vertex: {
+                        source: wgslVertex,
+                        entryPoint: 'mainVertex',
+                    },
+                    fragment: {
+                        source: `
+                        @group(0) @binding(1) var uTexture: texture_2d<f32>;
+                        @group(0) @binding(2) var uSampler: sampler;
+                        @fragment
+                        fn mainFragment(
+                            @builtin(position) position: vec4<f32>,
+                            @location(0) uv : vec2<f32>
+                        ) -> @location(0) vec4<f32> {
+                            return textureSample(uTexture, uSampler, uv);
+                        }
+                        `,
+                        entryPoint: 'mainFragment',
+                    },
+                }),
+                glProgram: GlProgram.from({
+                    vertex,
+                    fragment: `
+                    in vec2 vTextureCoord;
+                    out vec4 finalColor;
+                    uniform sampler2D uTexture;
+
+                    void main(void){
+                        finalColor = texture(uTexture, vTextureCoord);
+                    }
+                    `,
+                    name: 'kawase-blur-passthrough',
+                }),
+                resources: {},
+            });
+        }
+
+        return this._passthroughFilter;
+    }
+
+    /**
       * The amount of blur, value greater than `0`.
       * @default 4
       */
