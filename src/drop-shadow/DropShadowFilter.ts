@@ -64,6 +64,20 @@ export interface DropShadowFilterOptions
      * @default 1
      */
     resolution?: number;
+    /**
+     * When enabled, performs blur at reduced resolution for significantly better performance
+     * on Apple GPUs (M-series Macs and iPhones) that use tile-based deferred rendering.
+     *
+     * This reduces texture bandwidth by performing blur passes at half resolution,
+     * which is the primary bottleneck on TBDR architectures. Since drop shadows are
+     * inherently blurry, the visual quality difference is negligible.
+     *
+     * Set to `false` to disable downsampling, or a number between 0 and 1 to control
+     * the scale factor (e.g., 0.5 = half resolution, 0.25 = quarter resolution).
+     *
+     * @default 0.5
+     */
+    downsample?: boolean | number;
 }
 
 /**
@@ -85,6 +99,7 @@ export class DropShadowFilter extends Filter
         quality: 3,
         pixelSize: { x: 1, y: 1 },
         resolution: 1,
+        downsample: 0.5,
     };
 
     public uniforms: {
@@ -98,6 +113,13 @@ export class DropShadowFilter extends Filter
      * @default false
      */
     public shadowOnly = false;
+
+    /**
+     * The downsampling scale factor for the blur pass. Set to `false` or `1` to disable.
+     * Values between 0.125 and 1 are valid; lower values = more performance, less quality.
+     * @default 0.5
+     */
+    public downsample: boolean | number;
 
     private _color!: Color;
     private _blurFilter: KawaseBlurFilter;
@@ -157,7 +179,7 @@ export class DropShadowFilter extends Filter
                 },
                 fragment: {
                     source: `
-                    @group(0) @binding(1) var uTexture: texture_2d<f32>; 
+                    @group(0) @binding(1) var uTexture: texture_2d<f32>;
                     @group(0) @binding(2) var uSampler: sampler;
                     @fragment
                     fn mainFragment(
@@ -186,6 +208,8 @@ export class DropShadowFilter extends Filter
             resources: {},
         });
 
+        this.downsample = options.downsample ?? 0.5;
+
         Object.assign(this, options);
     }
 
@@ -201,17 +225,60 @@ export class DropShadowFilter extends Filter
         clearMode: boolean,
     ): void
     {
+        // Early exit: if shadow is fully transparent, skip all shadow rendering
+        if (this.uniforms.uAlpha <= 0)
+        {
+            if (!this.shadowOnly)
+            {
+                filterManager.applyFilter(this._basePass, input, output, clearMode);
+            }
+
+            return;
+        }
+
         const renderTarget = TexturePool.getSameSizeTexture(input);
 
+        // Apply the shadow color/offset pass
         filterManager.applyFilter(this, input, renderTarget, true);
-        this._blurFilter.apply(filterManager, renderTarget, output, clearMode);
 
+        // Determine the effective downsample scale factor
+        const scaleFactor = this._getDownsampleFactor();
+
+        // Apply the blur -- use downsampled path if enabled
+        if (scaleFactor < 1)
+        {
+            this._blurFilter.applyDownsampled(
+                filterManager, renderTarget, output, clearMode, scaleFactor
+            );
+        }
+        else
+        {
+            this._blurFilter.apply(filterManager, renderTarget, output, clearMode);
+        }
+
+        // Composite the original image on top if not shadow-only
         if (!this.shadowOnly)
         {
             filterManager.applyFilter(this._basePass, input, output, false);
         }
 
         TexturePool.returnTexture(renderTarget);
+    }
+
+    /**
+     * Resolves the effective downsample factor from the `downsample` option.
+     * @returns A number between 0.125 and 1 (1 = no downsampling).
+     */
+    private _getDownsampleFactor(): number
+    {
+        if (this.downsample === false) return 1;
+        if (this.downsample === true) return 0.5;
+        if (typeof this.downsample === 'number')
+        {
+            return Math.min(1, Math.max(0.125, this.downsample));
+        }
+
+        return 1;
     }
 
     /**
@@ -344,6 +411,9 @@ export class DropShadowFilter extends Filter
             Math.abs(this.offsetY),
         );
 
-        this.padding = offsetPadding + (this.blur * 2) + (this.quality * 4);
+        // Optimized padding: use tighter multipliers to reduce overdraw.
+        // The blur spread is bounded by blur * 2 (Kawase samples at diagonal offsets)
+        // and the quality adds padding for each pass, but capped to avoid excessive overdraw.
+        this.padding = offsetPadding + (this.blur * 2) + Math.min(this.quality * 4, 16);
     }
 }
