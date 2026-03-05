@@ -294,7 +294,11 @@ export class DropShadowFilter extends Filter
 
     /** Sets the kernels of the Blur Filter */
     get kernels(): number[] { return this._blurFilter.kernels; }
-    set kernels(value: number[]) { this._blurFilter.kernels = value; }
+    set kernels(value: number[])
+    {
+        this._blurFilter.kernels = value;
+        this._updatePadding();
+    }
 
     /**
      * Sets the pixelSize of the Kawase Blur filter
@@ -317,6 +321,7 @@ export class DropShadowFilter extends Filter
         }
 
         this._blurFilter.pixelSize = value;
+        this._updatePadding();
     }
 
     /**
@@ -324,14 +329,22 @@ export class DropShadowFilter extends Filter
      * @default 1
      */
     get pixelSizeX(): number { return this._blurFilter.pixelSizeX; }
-    set pixelSizeX(value: number) { this._blurFilter.pixelSizeX = value; }
+    set pixelSizeX(value: number)
+    {
+        this._blurFilter.pixelSizeX = value;
+        this._updatePadding();
+    }
 
     /**
      * Sets the pixelSize of the Kawase Blur filter on the `y` axis
      * @default 1
      */
     get pixelSizeY(): number { return this._blurFilter.pixelSizeY; }
-    set pixelSizeY(value: number) { this._blurFilter.pixelSizeY = value; }
+    set pixelSizeY(value: number)
+    {
+        this._blurFilter.pixelSizeY = value;
+        this._updatePadding();
+    }
 
     /**
      * Recalculate the proper padding amount.
