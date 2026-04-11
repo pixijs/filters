@@ -91,17 +91,11 @@ export class DropShadowFilter extends Filter
         uAlpha: number;
         uColor: Float32Array;
         uOffset: PointData;
+        uShadowOnly: number;
     };
-
-    /**
-     * Hide the contents, only show the shadow.
-     * @default false
-     */
-    public shadowOnly = false;
 
     private _color!: Color;
     private _blurFilter: KawaseBlurFilter;
-    private _basePass: Filter;
 
     /**
      * @param options - Options for the DropShadowFilter constructor.
@@ -135,7 +129,9 @@ export class DropShadowFilter extends Filter
                     uAlpha: { value: options.alpha, type: 'f32' },
                     uColor: { value: new Float32Array(3), type: 'vec3<f32>' },
                     uOffset: { value: options.offset, type: 'vec2<f32>' },
-                }
+                    uShadowOnly: { value: options.shadowOnly ? 1 : 0, type: 'f32' },
+                },
+                uMapTexture: Texture.EMPTY,
             },
             resolution: options.resolution,
         });
@@ -147,43 +143,6 @@ export class DropShadowFilter extends Filter
         this._blurFilter = new KawaseBlurFilter({
             strength: options.kernels as [number, number] ?? options.blur,
             quality: options.kernels ? undefined : options.quality,
-        });
-
-        this._basePass = new Filter({
-            gpuProgram: GpuProgram.from({
-                vertex: {
-                    source: wgslVertex,
-                    entryPoint: 'mainVertex',
-                },
-                fragment: {
-                    source: `
-                    @group(0) @binding(1) var uTexture: texture_2d<f32>; 
-                    @group(0) @binding(2) var uSampler: sampler;
-                    @fragment
-                    fn mainFragment(
-                        @builtin(position) position: vec4<f32>,
-                        @location(0) uv : vec2<f32>
-                    ) -> @location(0) vec4<f32> {
-                        return textureSample(uTexture, uSampler, uv);
-                    }
-                    `,
-                    entryPoint: 'mainFragment',
-                },
-            }),
-            glProgram: GlProgram.from({
-                vertex,
-                fragment: `
-                in vec2 vTextureCoord;
-                out vec4 finalColor;
-                uniform sampler2D uTexture;
-
-                void main(void){
-                    finalColor = texture(uTexture, vTextureCoord);
-                }
-                `,
-                name: 'drop-shadow-filter',
-            }),
-            resources: {},
         });
 
         Object.assign(this, options);
@@ -201,17 +160,18 @@ export class DropShadowFilter extends Filter
         clearMode: boolean,
     ): void
     {
-        const renderTarget = TexturePool.getSameSizeTexture(input);
+        // Blur the raw input once, then composite shadow + foreground in a single pass.
+        // The shadow alpha is sampled from the blurred texture at the offset position
+        // inside the shader, which avoids the extra tint + copy passes of the previous
+        // implementation (3 passes -> 2 passes per apply call).
+        const blurredTarget = TexturePool.getSameSizeTexture(input);
 
-        filterManager.applyFilter(this, input, renderTarget, true);
-        this._blurFilter.apply(filterManager, renderTarget, output, clearMode);
+        this._blurFilter.apply(filterManager, input, blurredTarget, true);
 
-        if (!this.shadowOnly)
-        {
-            filterManager.applyFilter(this._basePass, input, output, false);
-        }
+        this.resources.uMapTexture = blurredTarget.source;
+        filterManager.applyFilter(this, input, output, clearMode);
 
-        TexturePool.returnTexture(renderTarget);
+        TexturePool.returnTexture(blurredTarget);
     }
 
     /**
@@ -269,6 +229,13 @@ export class DropShadowFilter extends Filter
      */
     get alpha(): number { return this.uniforms.uAlpha; }
     set alpha(value: number) { this.uniforms.uAlpha = value; }
+
+    /**
+     * Hide the contents, only show the shadow.
+     * @default false
+     */
+    get shadowOnly(): boolean { return this.uniforms.uShadowOnly === 1; }
+    set shadowOnly(value: boolean) { this.uniforms.uShadowOnly = value ? 1 : 0; }
 
     /**
      * The strength of the shadow's blur.

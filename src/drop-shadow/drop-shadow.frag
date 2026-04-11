@@ -3,20 +3,24 @@ in vec2 vTextureCoord;
 out vec4 finalColor;
 
 uniform sampler2D uTexture;
+uniform sampler2D uMapTexture;
 uniform float uAlpha;
 uniform vec3 uColor;
 uniform vec2 uOffset;
+uniform float uShadowOnly;
 
 uniform vec4 uInputSize;
 
 void main(void){
-    vec4 sample = texture(uTexture, vTextureCoord - uOffset * uInputSize.zw);
+    // Sample the blurred shape for the shadow alpha at the offset position
+    float shadowAlpha = texture(uMapTexture, vTextureCoord - uOffset * uInputSize.zw).a * uAlpha;
 
-    // Premultiply alpha
-    sample.rgb = uColor.rgb * sample.a;
+    // Premultiplied shadow color
+    vec4 shadow = vec4(uColor.rgb * shadowAlpha, shadowAlpha);
 
-    // alpha user alpha
-    sample *= uAlpha;
+    // Foreground - hidden when rendering shadow only
+    vec4 fg = texture(uTexture, vTextureCoord) * (1.0 - uShadowOnly);
 
-    finalColor = sample;
+    // Composite foreground over shadow (premultiplied alpha)
+    finalColor = fg + shadow * (1.0 - fg.a);
 }
