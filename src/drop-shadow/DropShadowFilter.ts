@@ -147,6 +147,8 @@ export class DropShadowFilter extends Filter
         this._blurFilter = new KawaseBlurFilter({
             strength: options.kernels as [number, number] ?? options.blur,
             quality: options.kernels ? undefined : options.quality,
+            pixelSize: options.pixelSize,
+            resolution: options.resolution,
         });
 
         this._basePass = new Filter({

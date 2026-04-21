@@ -31,6 +31,11 @@ export interface KawaseBlurFilterOptions
      * @default {x:1,y:1}
      */
     pixelSize?: PointData | number[] | number;
+    /**
+     * The resolution of the filter.
+     * @default 1
+     */
+    resolution?: number;
 }
 
 /**
@@ -117,6 +122,7 @@ export class KawaseBlurFilter extends Filter
                     uOffset: { value: new Float32Array(2), type: 'vec2<f32>' },
                 }
             },
+            resolution: options.resolution,
         });
 
         this.uniforms = this.resources.kawaseBlurUniforms.uniforms;
