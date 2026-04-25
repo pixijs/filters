@@ -1,0 +1,251 @@
+And we are to return ONLY code.
+
+ Since we don't have the original file, we cannot fix it by editing an existing file.
+
+ This is a dilemma.
+
+ Let me re-read the issue: "Approach: Optimize the DropShadowFilter shader and rendering logic"
+
+ And the provided context does not include the DropShadowFilter.
+
+ Therefore, I suspect that the DropShadowFilter is part of the PixiJS library itself, and we are to fix it in the PixiJS codebase.
+
+ But note: the context includes a file `scripts/screenshots/renderer.js` that uses `require('../../lib')` for filters.
+
+ So the `lib` directory likely contains the filters, including DropShadowFilter.
+
+ However, we are not given the contents of `lib`.
+
+ Given the ambiguity, and since we are only allowed to output code for the files we are given in the context (or that we can infer from the context), we must look for a file that might be the DropShadowFilter.
+
+ Alternatively, the issue might be in the way the filter is used in the demo, but the issue says to optimize the filter itself.
+
+ Since we are stuck, let's consider: the problem might be that the DropShadowFilter is implemented as a single pass with a large blur kernel, which is expensive.
+
+ We can propose an optimized version of the DropShadowFilter that uses a separable blur and fewer samples.
+
+ However, without the original file, we cannot output a fix for a specific file.
+
+ But note: the instructions say "Write complete working code". So we are to write the entire fixed DropShadowFilter?
+
+ And we are to put it in a file? But which file?
+
+ Since we are not told, we must assume that the DropShadowFilter is located at a standard place.
+
+ In PixiJS, filters are usually in `src/filters/`.
+
+ Let's assume the file is `src/filters/DropShadowFilter.ts`.
+
+ We are going to write an optimized DropShadowFilter.
+
+ Steps for optimization:
+
+ 1. Use a separable blur: two passes (horizontal and vertical) instead of one pass with a 2D kernel.
+ 2. Reduce the number of samples in the blur (e.g., use 3 taps for a small blur, 5 for medium, etc.) but note that the issue says even low quality is bad, so we must optimize the low quality setting.
+ 3. Avoid unnecessary calculations: precompute weights, avoid conditionals in the shader if possible.
+
+ However, note: the issue says that the problem occurs on Mac and iPhone. These devices often have tile-based deferred renderers (TBDR) that are sensitive to overdraw and complex fragment shaders.
+
+ We can also consider:
+   - Reducing the size of the blur by scaling down the intermediate render texture? (but that might affect quality)
+   - Using a lower precision for intermediate textures? (but that might cause banding)
+
+ Given the complexity and without the original code, we will write a simplified version that uses a separable blur with a fixed number of taps (say 3 taps for low, 5 for medium, 7 for high) but we note that the issue says even low quality is bad, so we must make the low quality very cheap.
+
+ Alternatively, we can use a box blur approximation which is cheaper than Gaussian? But note: DropShadow usually uses Gaussian for quality.
+
+ However, for performance, we might use a box blur (which is separable and can be done with 3 taps for a 3x3 box) but note that a box blur is not as good as Gaussian.
+
+ But the issue is about performance, so we might have to trade off quality for speed? However, the issue says that even low quality is laggy, so we must make the low quality setting very fast.
+
+ Let's design:
+
+   We'll have three quality settings: low, medium, high.
+
+   For low: we use a 3-tap separable blur (which is 3 samples in horizontal and 3 in vertical -> total 6 samples per pixel? Actually, separable: horizontal pass: 3 samples, then vertical pass: 3 samples -> total 6 samples per pixel for the blur).
+
+   But note: the original might have been doing a 2D blur with 9 samples (for 3x3) or more.
+
+   We can also consider using a smaller blur radius for low quality.
+
+ However, without the original, we don't know what the current settings are.
+
+ We are going to write a new DropShadowFilter that is optimized.
+
+ Important: We must maintain the same API.
+
+ Proposed plan for the filter:
+
+   - The filter will have two passes: first for the horizontal blur, then for the vertical blur.
+   - We will use two temporary render textures (or one if we ping-pong) for the blur passes.
+   - We will then offset and color the blurred image to create the shadow.
+
+   However, note: the DropShadowFilter typically does:
+        shadow = blur(alpha channel of the input) * color + offset
+
+   We can break it down:
+
+        Step 1: Extract the alpha channel (or luminance) of the input to create a mask.
+        Step 2: Blur the mask (using separable blur).
+        Step 3: Offset the blurred mask and multiply by the shadow color to get the shadow.
+        Step 4: Composite the shadow under the original image.
+
+   But note: the current implementation might be doing the blur on the color channels? We want to blur the alpha to get the shadow shape.
+
+   We can optimize by only blurring the alpha channel? That would reduce the amount of data we are blurring.
+
+   However, in the fragment shader, we can do:
+
+        vec4 color = texture2D(uSampler, vTexCoord);
+        float alpha = color.a;
+
+   Then blur the alpha.
+
+   This way, we are only blurring a single channel.
+
+   Then in the blur passes, we only need to sample the alpha.
+
+   This reduces the texture fetch cost by a factor of 4 (if we were doing RGBA) but note: we are still fetching the same texture, just using one channel.
+
+   However, the texture fetch is the same cost regardless of how many channels we use? Actually, no: if we are using a texture that is RGBA, fetching one channel is still as expensive as fetching the whole texture? Because the texture is stored in a way that we get all channels at once.
+
+   But if we can reduce the texture to alpha-only, then we save memory bandwidth. However, we cannot change the input texture format arbitrarily.
+
+   Alternatively, we can use the alpha channel from the RGBA texture without extra cost? Yes, because we are already fetching the texture for the color.
+
+   So we do:
+
+        vec4 input = texture2D(uSampler, vTexCoord);
+        float alpha = input.a;
+
+   Then we blur the alpha.
+
+   This doesn't save texture fetches, but it saves computation in the blur shader (we only have to process one channel instead of four).
+
+   However, the main cost is the texture fetches, not the computation.
+
+   So the biggest win is reducing the number of texture fetches by using a separable blur and reducing the number of taps.
+
+   We'll do:
+
+        Horizontal blur pass: for each pixel, we sample 3 points horizontally (with weights) and output a single value (the blurred alpha).
+        Vertical blur pass: similarly, 3 points vertically.
+
+   Then we have a blurred alpha.
+
+   Then we can compute the shadow color: vec4(shadowColor.rgb * alphaBlurred, alphaBlurred * shadowColor.a) ... but note: the shadow color usually has its own alpha.
+
+   Actually, the shadow color is typically a color with an alpha component (for opacity). So:
+
+        shadow = vec4(shadowColor.rgb, shadowColor.a) * alphaBlurred;
+
+   Then we offset the shadow by the shadow offset.
+
+   And then we composite: final = original + shadow (but note: the shadow is usually drawn underneath, so we do: original over shadow? Actually, the shadow is drawn first, then the original on top).
+
+   However, in a filter, we are replacing the input. So we do:
+
+        output = shadow (offset) + input
+
+   But note: the shadow should be behind the input. So we draw the shadow first, then the input on top.
+
+   In the filter, we can do:
+
+        // First, draw the shadow (offset and blurred) at the current fragment position?
+        // Actually, we have to shift the texture coordinates for the shadow.
+
+        vec2 shadowCoord = vTexCoord + shadowOffset / textureSize;
+        vec4 shadow = texture2D(blurredTexture, shadowCoord) * shadowColor;
+
+        // Then add the original input
+        vec4 result = shadow + input;
+
+   However, note: the blurred texture we have is the blurred alpha of the input. We don't have the original input in the blurred texture.
+
+   So we must keep the original input for the final composite.
+
+   Steps in the filter:
+
+        Pass 0: render the input to a temporary texture (we need the original for the final composite and also to extract alpha for blurring).
+        Pass 1: horizontal blur of the alpha channel -> temp1
+        Pass 2: vertical blur of temp1 -> temp2 (this is the blurred alpha)
+        Pass 3: composite: 
+                shadow = texture2D(temp2, vTexCoord + offset) * shadowColor
+                result = shadow + texture2D(inputTexture, vTexCoord)
+
+   But note: we can avoid pass 0 by using the input texture directly in the composite pass? Yes, because we don't modify the input.
+
+   However, we need the input texture for two things: 
+        (1) to extract the alpha for blurring (in passes 1 and 2)
+        (2) to add in the composite pass.
+
+   So we can bind the input texture in passes 1, 2, and 3.
+
+   But note: in passes 1 and 2, we are only using the alpha channel. We can still use the same input texture.
+
+   Therefore, we only need two temporary textures: one for the horizontal blur and one for the vertical blur (or we can ping-pong with one temporary texture? Actually, we need two passes so we need two temporaries: one for horizontal and one for vertical).
+
+   However, we can do:
+
+        temp1 = horizontal blur of input (alpha)
+        temp2 = vertical blur of temp1
+
+   Then use temp2 for the shadow.
+
+   We need two temporary textures.
+
+   But note: the original implementation might have been using more? We are reducing the number of passes from (say) 9 (for a 3x3 blur in one pass) to 2 passes (each with 3 taps) -> total 6 texture fetches per pixel for the blur, versus 9 for the non-separable 3x3.
+
+   However, if the original was using a larger kernel (like 5x5 or 7x7) then the savings are even more.
+
+   We'll implement a 3-tap separable blur for low quality, 5-tap for medium, 7-tap for high.
+
+   Weights for Gaussian approximation:
+
+        3-tap: [0.25, 0.5, 0.25]  (but note: these don't sum to 1? 0.25+0.5+0.25=1.0)
+        5-tap: [0.0625, 0.25, 0.375, 0.25, 0.0625] -> but wait, that's binomial? Actually, for Gaussian we can use:
+                [0.05, 0.25, 0.4, 0.25, 0.05] -> but let's use normalized binomial for simplicity and speed.
+
+        Actually, we can use:
+          3-tap: [0.25, 0.5, 0.25]
+          5-tap: [0.05, 0.25, 0.4, 0.25, 0.05] -> but 0.05+0.25+0.4+0.25+0.05 = 1.0
+          7-tap: [0.03, 0.11, 0.22, 0.33, 0.22, 0.11, 0.03] -> but let's normalize: 
+                  0.03+0.11+0.22+0.33+0.22+0.11+0.03 = 1.35 -> so we normalize by dividing by 1.35? 
+                  Alternatively, we can use: [1, 4, 6, 4, 1] for 5-tap? but that's binomial and then normalize by 16.
+
+        We'll use binomial coefficients for simplicity and because they are a good approximation and separable.
+
+        For n taps, we use the binomial coefficients for level (n-1) and then normalize by 2^(n-1).
+
+        Example:
+          3-tap: [1, 2, 1] -> normalized: [0.25, 0.5, 0.25]
+          5-tap: [1, 4, 6, 4, 1] -> normalized: [1/16, 4/16, 6/16, 4/16, 1/16] = [0.0625, 0.25, 0.375, 0.25, 0.0625]
+          7-tap: [1, 5, 10, 10, 5, 1] -> wait, that's for 5? Actually, for 7-tap we need 6th level: [1,6,15,20,15,6,1] -> normalized by 64.
+
+        So:
+          3-tap: [1,2,1] -> [0.25,0.5,0.25]
+          5-tap: [1,4,6,4,1] -> [0.0625,0.25,0.375,0.25,0.0625]
+          7-tap: [1,6,15,20,15,6,1] -> [1/64, 6/64, 15/64, 20/64, 15/64, 6/64, 1/64]
+
+   We'll let the quality setting determine the number of taps.
+
+   We'll add a property `quality` that can be 0 (low), 1 (medium), 2 (high) and map to 3,5,7 taps.
+
+   However, note: the issue says that even low quality is bad. So we must make sure that the low quality (3-tap) is very fast.
+
+   We'll also allow the user to set the blur size (which controls the offset of the samples) but note: the blur size in terms of pixels.
+
+   We'll have:
+        blur: number (in pixels) -> the standard deviation of the blur? or the radius? We'll use radius in pixels.
+
+   Then the offset for each tap in the horizontal pass would be: (i - center) * blur / textureWidth
+
+   But note: we are working in texture coordinates.
+
+   Steps in the fragment shader for horizontal pass:
+
+        vec4 sum = vec4(0.0);
+        float totalWeight = 0.0;
+        for (int i = 0; i < taps; i++) {
+            float offset = (i - center) * blur / textureSize.x;
+            vec4 color = texture2D(uSampler, vTexCoord + vec
