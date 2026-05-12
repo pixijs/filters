@@ -147,6 +147,8 @@ export class DropShadowFilter extends Filter
         this._blurFilter = new KawaseBlurFilter({
             strength: options.kernels as [number, number] ?? options.blur,
             quality: options.kernels ? undefined : options.quality,
+            pixelSize: options.pixelSize,
+            resolution: options.resolution,
         });
 
         this._basePass = new Filter({
@@ -294,7 +296,11 @@ export class DropShadowFilter extends Filter
 
     /** Sets the kernels of the Blur Filter */
     get kernels(): number[] { return this._blurFilter.kernels; }
-    set kernels(value: number[]) { this._blurFilter.kernels = value; }
+    set kernels(value: number[])
+    {
+        this._blurFilter.kernels = value;
+        this._updatePadding();
+    }
 
     /**
      * Sets the pixelSize of the Kawase Blur filter
@@ -317,6 +323,7 @@ export class DropShadowFilter extends Filter
         }
 
         this._blurFilter.pixelSize = value;
+        this._updatePadding();
     }
 
     /**
@@ -324,14 +331,22 @@ export class DropShadowFilter extends Filter
      * @default 1
      */
     get pixelSizeX(): number { return this._blurFilter.pixelSizeX; }
-    set pixelSizeX(value: number) { this._blurFilter.pixelSizeX = value; }
+    set pixelSizeX(value: number)
+    {
+        this._blurFilter.pixelSizeX = value;
+        this._updatePadding();
+    }
 
     /**
      * Sets the pixelSize of the Kawase Blur filter on the `y` axis
      * @default 1
      */
     get pixelSizeY(): number { return this._blurFilter.pixelSizeY; }
-    set pixelSizeY(value: number) { this._blurFilter.pixelSizeY = value; }
+    set pixelSizeY(value: number)
+    {
+        this._blurFilter.pixelSizeY = value;
+        this._updatePadding();
+    }
 
     /**
      * Recalculate the proper padding amount.
@@ -344,6 +359,6 @@ export class DropShadowFilter extends Filter
             Math.abs(this.offsetY),
         );
 
-        this.padding = offsetPadding + (this.blur * 2) + (this.quality * 4);
+        this.padding = offsetPadding + this._blurFilter.padding;
     }
 }
