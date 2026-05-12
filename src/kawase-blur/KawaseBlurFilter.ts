@@ -31,6 +31,11 @@ export interface KawaseBlurFilterOptions
      * @default {x:1,y:1}
      */
     pixelSize?: PointData | number[] | number;
+    /**
+     * The resolution of the filter.
+     * @default 1
+     */
+    resolution?: number;
 }
 
 /**
@@ -49,6 +54,7 @@ export class KawaseBlurFilter extends Filter
         quality: 3,
         clamp: false,
         pixelSize: { x: 1, y: 1 },
+        resolution: 1,
     };
 
     public uniforms: {
@@ -83,7 +89,7 @@ export class KawaseBlurFilter extends Filter
         if (typeof options === 'number' || Array.isArray(options))
         {
             // eslint-disable-next-line max-len
-            deprecation('6.0.0', 'KawaseBlurFilter constructor params are now options object. See params: { strength, quality, clamp, pixelSize }');
+            deprecation('6.0.0', 'KawaseBlurFilter constructor params are now options object. See params: { strength, quality, clamp, pixelSize, resolution }');
 
             options = { strength: options as number | [number, number] };
 
@@ -117,6 +123,7 @@ export class KawaseBlurFilter extends Filter
                     uOffset: { value: new Float32Array(2), type: 'vec2<f32>' },
                 }
             },
+            resolution: options.resolution,
         });
 
         this.uniforms = this.resources.kawaseBlurUniforms.uniforms;
@@ -242,20 +249,16 @@ export class KawaseBlurFilter extends Filter
     {
         if (typeof value === 'number')
         {
-            this.pixelSizeX = this.pixelSizeY = value;
-
-            return;
+            value = { x: value, y: value };
         }
 
         if (Array.isArray(value))
         {
-            this.pixelSizeX = value[0];
-            this.pixelSizeY = value[1];
-
-            return;
+            value = { x: value[0], y: value[1] };
         }
 
         this._pixelSize = value;
+        this._updatePadding();
     }
 
     /**
@@ -263,14 +266,22 @@ export class KawaseBlurFilter extends Filter
       * @default 1
       */
     get pixelSizeX(): number { return this.pixelSize.x; }
-    set pixelSizeX(value: number) { this.pixelSize.x = value; }
+    set pixelSizeX(value: number)
+    {
+        this.pixelSize.x = value;
+        this._updatePadding();
+    }
 
     /**
       * The size of the pixels on the `y` axis. Large size is blurrier. For advanced usage.
       * @default 1
       */
     get pixelSizeY(): number { return this.pixelSize.y; }
-    set pixelSizeY(value: number) { this.pixelSize.y = value; }
+    set pixelSizeY(value: number)
+    {
+        this.pixelSize.y = value;
+        this._updatePadding();
+    }
 
     /**
       * Get the if the filter is clamped
@@ -281,7 +292,10 @@ export class KawaseBlurFilter extends Filter
     /** Update padding based on kernel data */
     private _updatePadding()
     {
-        this.padding = Math.ceil(this._kernels.reduce((acc, v) => acc + v + 0.5, 0));
+        const pixelSize = Math.max(Math.abs(this.pixelSizeX), Math.abs(this.pixelSizeY));
+        const kernelSize = this._kernels.reduce((acc, v) => acc + v + 0.5, 0);
+
+        this.padding = Math.ceil(kernelSize * pixelSize);
     }
 
     /** Auto generate kernels by blur & quality */
