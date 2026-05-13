@@ -148,6 +148,7 @@ export class DropShadowFilter extends Filter
             strength: options.kernels as [number, number] ?? options.blur,
             quality: options.kernels ? undefined : options.quality,
         });
+        this._blurFilter.resolution = options.resolution ?? 1;
 
         this._basePass = new Filter({
             gpuProgram: GpuProgram.from({
